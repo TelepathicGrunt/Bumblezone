@@ -1,12 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantmentApplication;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
+import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
@@ -142,15 +144,15 @@ public class BumblezoneAPI {
     /**
      * Returns what level Comb Cutter enchantment the passed in itemstack has.
      */
-    public static int getCombCutterLevelForItem(ItemStack toolUsed) {
-        return EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), toolUsed);
+    public static int getCombCutterLevelForItem(ItemStack toolUsed, Level level) {
+        return CombCutterEnchantmentApplication.getCombCutterEnchantLevel(toolUsed, level);
     }
 
     /**
      * Returns what level Comb Cutter enchantment the currently used itemstack has for the passed in player.
      */
-    public static int getCombCutterLevelForItem(ServerPlayer serverPlayer) {
-        return EnchantmentHelper.getEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), serverPlayer);
+    public static int getCombCutterLevelForPlayer(ServerPlayer serverPlayer) {
+        return EnchantmentHelper.getEnchantmentLevel(EnchantmentUtils.getEnchantmentHolder(BzEnchantments.COMB_CUTTER, serverPlayer.level()), serverPlayer);
     }
 
 }

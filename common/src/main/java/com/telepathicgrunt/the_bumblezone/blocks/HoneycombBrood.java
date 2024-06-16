@@ -14,6 +14,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
@@ -29,6 +30,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
@@ -341,7 +343,7 @@ public class HoneycombBrood extends ProperFacingBlock {
     @Override
     public BlockState playerWillDestroy(Level world, BlockPos position, BlockState state, Player playerEntity) {
         if (world instanceof ServerLevel serverLevel && serverLevel.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
-            if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, playerEntity.getMainHandItem()) != 0) {
+            if (EnchantmentHelper.hasTag(playerEntity.getMainHandItem(), EnchantmentTags.PREVENTS_BEE_SPAWNS_WHEN_MINING)) {
                 BlockState blockState = world.getBlockState(position);
                 int stage = blockState.getValue(STAGE);
                 if (stage == 3) {

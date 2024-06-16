@@ -1,0 +1,21 @@
+{
+  "description": {
+    "translate": "enchantment.the_bumblezone.potent_poison"
+  },
+  "supported_items": "#the_bumblezone:enchantable/potent_poison",
+  "slots": [
+    "mainhand"
+  ],
+  "weight": 4,
+  "max_level": 3,
+  "anvil_cost": 3,
+  "max_cost": {
+    "base": 50,
+    "per_level_above_first": 0
+  },
+  "min_cost": {
+    "base": 8,
+    "per_level_above_first": 5
+  },
+  "effects": {}
+}

@@ -8,40 +8,34 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.LivingEntityDataModule;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
+import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
 
 import java.util.Optional;
 
-public class NeurotoxinsEnchantment extends Enchantment {
+public class NeurotoxinsEnchantmentApplication {
 
-    public NeurotoxinsEnchantment() {
-        super(Enchantment.definition(
-                BzTags.NEUROTOXIN_ENCHANTABLE,
-                1,
-                BzGeneralConfigs.neurotoxinMaxLevel,
-                Enchantment.dynamicCost(14, 3),
-                Enchantment.constantCost(50),
-                6,
-                EquipmentSlot.MAINHAND)
-        );
+    public static int getNeurotoxinEnchantLevel(ItemStack stack, Level level) {
+        Holder<Enchantment> neurotoxin = EnchantmentUtils.getEnchantmentHolder(BzEnchantments.NEUROTOXINS, level);
+        return Math.min(EnchantmentHelper.getItemEnchantmentLevel(neurotoxin, stack), BzGeneralConfigs.neurotoxinMaxLevel);
     }
 
     public static void entityHurtEvent(EntityAttackedEvent event) {
-        if(event.entity().level().isClientSide()) {
+        if(event.entity() == null || event.entity().level().isClientSide() || event.entity().getType().is(EntityTypeTags.UNDEAD)) {
             return;
         }
 
@@ -65,12 +59,11 @@ public class NeurotoxinsEnchantment extends Enchantment {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public static void applyNeurotoxins(Entity attacker, Entity victim, ItemStack itemStack) {
-        int level = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), itemStack);
-        level = Math.min(level, BzGeneralConfigs.neurotoxinMaxLevel);
+    public static void applyNeurotoxins(Entity attacker, LivingEntity victim, ItemStack itemStack) {
+        int neurotoxinEnchantLevel = getNeurotoxinEnchantLevel(itemStack, victim.level());
 
-        if(level > 0 && victim instanceof LivingEntity livingEntity && !livingEntity.getType().is(EntityTypeTags.UNDEAD)) {
-            if (livingEntity.hasEffect(BzEffects.PARALYZED.holder())) {
+        if(neurotoxinEnchantLevel > 0) {
+            if (victim.hasEffect(BzEffects.PARALYZED.holder())) {
                 return;
             }
 
@@ -81,29 +74,29 @@ public class NeurotoxinsEnchantment extends Enchantment {
                 Optional<LivingEntityDataModule> capOptional = ModuleHelper.getModule(attacker, ModuleRegistry.LIVING_ENTITY_DATA);
                 if (capOptional.isPresent()) {
                     capability = capOptional.orElseThrow(RuntimeException::new);
-                    float healthModifier = Math.max(100 - livingEntity.getHealth(), 10) / 100f;
-                    applyChance = (healthModifier * level) * (capability.getMissedParalysis() + 1);
+                    float healthModifier = Math.max(100 - victim.getHealth(), 10) / 100f;
+                    applyChance = (healthModifier * neurotoxinEnchantLevel) * (capability.getMissedParalysis() + 1);
                 }
             }
 
-            if(livingEntity.getRandom().nextFloat() < applyChance) {
-                livingEntity.addEffect(new MobEffectInstance(
+            if(victim.getRandom().nextFloat() < applyChance) {
+                victim.addEffect(new MobEffectInstance(
                         BzEffects.PARALYZED.holder(),
-                        Math.min(100 * level, BzGeneralConfigs.paralyzedMaxTickDuration),
-                        level,
+                        Math.min(100 * neurotoxinEnchantLevel, BzGeneralConfigs.paralyzedMaxTickDuration),
+                        neurotoxinEnchantLevel,
                         false,
                         true,
                         true));
 
                 if (attacker instanceof LivingEntity livingAttacker) {
-                    livingEntity.setLastHurtByMob(livingAttacker);
-                    ((MobAccessor)livingEntity).getTargetSelector().tick();
+                    victim.setLastHurtByMob(livingAttacker);
+                    ((MobAccessor)victim).getTargetSelector().tick();
                 }
 
                 if (itemStack.is(BzItems.STINGER_SPEAR.get()) && attacker instanceof ServerPlayer serverPlayer) {
                     BzCriterias.STINGER_SPEAR_PARALYZING_TRIGGER.get().trigger(serverPlayer);
 
-                    if (livingEntity.getHealth() > 70) {
+                    if (victim.getHealth() > 70) {
                         BzCriterias.STINGER_SPEAR_PARALYZE_BOSS_TRIGGER.get().trigger(serverPlayer);
                     }
                 }

@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
+import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantmentApplication;
+import com.telepathicgrunt.the_bumblezone.enchantments.PotentPoisonEnchantmentApplication;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
@@ -8,13 +10,16 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
+import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -26,6 +31,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -43,7 +49,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
 
     public ThrownStingerSpearEntity(Level level, LivingEntity livingEntity, ItemStack ammo, ItemStack weaponItem) {
         super(BzEntities.THROWN_STINGER_SPEAR_ENTITY.get(), livingEntity, level, ammo, weaponItem);
-        this.entityData.set(ID_LOYALTY, (byte)EnchantmentHelper.getLoyalty(weaponItem));
+        this.entityData.set(ID_LOYALTY, this.getLoyaltyFromItem(weaponItem));
         this.entityData.set(ID_FOIL, weaponItem.hasFoil());
     }
 
@@ -52,6 +58,13 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         super.defineSynchedData(builder);
         builder.define(ID_LOYALTY, (byte)0);
         builder.define(ID_FOIL, false);
+    }
+
+    private byte getLoyaltyFromItem(ItemStack itemStack) {
+        Level var3 = this.level();
+        return var3 instanceof ServerLevel serverLevel
+                ? (byte) Mth.clamp(EnchantmentHelper.getTridentReturnToOwnerAcceleration(serverLevel, itemStack, this), 0, 127)
+                : 0;
     }
 
     @Override
@@ -94,24 +107,30 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
     @Override
     protected void onHitEntity(EntityHitResult entityHitResult) {
         Entity entity = entityHitResult.getEntity();
+        Entity owner = this.getOwner();
+        Level level = this.level();
+
         float damageAmount = StingerSpearItem.BASE_THROWN_DAMAGE;
-        if (entity instanceof LivingEntity livingentity) {
-            damageAmount += EnchantmentHelper.getDamageBonus(this.getPickupItemStackOrigin(), livingentity.getType());
+        DamageSource damageSource = this.damageSources().trident(this, owner == null ? this : owner);
+        if (level instanceof ServerLevel serverLevel) {
+            damageAmount += EnchantmentHelper.modifyDamage(serverLevel, this.getWeaponItem(), entity, damageSource, damageAmount);
         }
 
-        Entity owner = this.getOwner();
         DamageSource damagesource = damageSources().trident(this, owner == null ? this : owner);
         dealtDamage = true;
-        SoundEvent soundevent = BzSounds.STINGER_SPEAR_HIT.get();
         if (entity.hurt(damagesource, damageAmount)) {
             if (entity.getType() == EntityType.ENDERMAN) {
                 return;
             }
 
             if (entity instanceof LivingEntity hitEntity) {
-                if (owner instanceof LivingEntity) {
-                    EnchantmentHelper.doPostHurtEffects(hitEntity, owner);
-                    EnchantmentHelper.doPostDamageEffects((LivingEntity)owner, hitEntity);
+                if (level instanceof ServerLevel serverLevel) {
+                    EnchantmentHelper.doPostAttackEffectsWithItemSource(serverLevel, entity, damageSource, this.getWeaponItem());
+                }
+
+                if (owner instanceof LivingEntity livingEntity) {
+                    this.doKnockback(livingEntity, damageSource);
+                    this.doPostHurtEffects(livingEntity);
                 }
 
                 this.doPostHurtEffects(hitEntity);
@@ -132,27 +151,20 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         }
 
         this.setDeltaMovement(this.getDeltaMovement().multiply(-0.01D, -0.1D, -0.01D));
-        this.playSound(soundevent, 1.0F, 1.0F);
+        this.playSound(BzSounds.STINGER_SPEAR_HIT.get(), 1.0F, 1.0F);
     }
 
     @Override
-    protected void doPostHurtEffects(LivingEntity livingEntity) {
-       if (!livingEntity.getType().is(EntityTypeTags.UNDEAD)) {
-           int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get(), this.getPickupItemStackOrigin());
-           livingEntity.addEffect(new MobEffectInstance(
-                    MobEffects.POISON,
-                    100 + 100 * (potentPoisonLevel - ((potentPoisonLevel - 1) / 2)),
-                    potentPoisonLevel, // 0, 1, 2, 3 level poison if
-                    false,
-                    true,
-                    true));
+    protected void doPostHurtEffects(LivingEntity victim) {
+       if (!victim.getType().is(EntityTypeTags.UNDEAD)) {
+           PotentPoisonEnchantmentApplication.doPostAttackBoostedPoison(this.getPickupItemStackOrigin(), victim);
 
             if (this.getOwner() instanceof ServerPlayer serverPlayer) {
                 BzCriterias.STINGER_SPEAR_POISONING_TRIGGER.get().trigger(serverPlayer);
             }
 
-            if (this.getOwner() instanceof LivingEntity ownerEntity && !livingEntity.getType().is(BzTags.PARALYZED_IMMUNE)) {
-                int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), this.getPickupItemStackOrigin());
+            if (this.getOwner() instanceof LivingEntity ownerEntity && !victim.getType().is(BzTags.PARALYZED_IMMUNE)) {
+                int neuroToxinLevel = NeurotoxinsEnchantmentApplication.getNeurotoxinEnchantLevel(this.getPickupItemStackOrigin(), victim.level());
                 if (neuroToxinLevel > 0) {
                     this.getPickupItemStackOrigin().hurtAndBreak(4, ownerEntity, EquipmentSlot.MAINHAND);
                 }
@@ -217,7 +229,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
         dealtDamage = compoundTag.getBoolean("DealtDamage");
-        this.entityData.set(ID_LOYALTY, (byte) EnchantmentHelper.getLoyalty(this.getPickupItemStackOrigin()));
+        this.entityData.set(ID_LOYALTY, this.getLoyaltyFromItem(this.getWeaponItem()));
         this.entityData.set(ID_FOIL, compoundTag.getBoolean("IsFoil"));
     }
 

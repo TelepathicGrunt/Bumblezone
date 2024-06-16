@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.datacomponents.CrystalCannonData;
-import com.telepathicgrunt.the_bumblezone.mixin.enchantments.EnchantmentAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -9,12 +8,13 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import com.telepathicgrunt.the_bumblezone.utils.TriState;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -25,7 +25,6 @@ import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -94,29 +93,11 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
             ItemStack mutableCrystalCannon = livingEntity.getItemInHand(InteractionHand.MAIN_HAND);
 
             int numberOfCrystals = getNumberOfCrystals(mutableCrystalCannon);
-            int quickCharge = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, mutableCrystalCannon);
             int remainingDuration = this.getUseDuration(mutableCrystalCannon, livingEntity) - currentDuration;
-            if (remainingDuration >= 20 - (quickCharge * 3) && numberOfCrystals > 0) {
+            if (remainingDuration / (float)getChargeDuration(mutableCrystalCannon, livingEntity) > 0.8f && numberOfCrystals > 0) {
                 int crystalsToSpawn = getAndClearStoredCrystals(level, mutableCrystalCannon);
                 for (int crystalIndex = 0; crystalIndex < crystalsToSpawn; crystalIndex++) {
                     AbstractArrow newCrystal = BzItems.HONEY_CRYSTAL_SHARDS.get().createArrow(level, crystalCannon, livingEntity, mutableCrystalCannon);
-
-                    double weaponDamage = newCrystal.getBaseDamage();
-                    int power = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER, crystalCannon);
-                    if (power > 0) {
-                        weaponDamage += (power * 0.5D) + 0.5D;
-                    }
-                    newCrystal.setBaseDamage(weaponDamage);
-
-                    int punch = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH, crystalCannon);
-                    if (punch > 0) {
-                        newCrystal.setKnockback(newCrystal.getKnockback() + punch);
-                    }
-
-                    int pierce = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, crystalCannon);
-                    if (pierce > 0) {
-                        newCrystal.setPierceLevel((byte) pierce);
-                    }
 
                     newCrystal.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
                     shootProjectile(livingEntity, newCrystal, crystalIndex, 1, 1.0F, 0, null);
@@ -228,7 +209,12 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
 
     @Override
     public int getUseDuration(ItemStack itemStack, LivingEntity livingEntity) {
-        return 72000;
+        return getChargeDuration(itemStack, livingEntity) + 3;
+    }
+
+    public int getChargeDuration(ItemStack itemStack, LivingEntity livingEntity) {
+        float chargeTime = EnchantmentHelper.modifyCrossbowChargingTime(itemStack, livingEntity, 1.25F);
+        return Mth.floor(chargeTime * 20.0F);
     }
 
     @Override
@@ -237,7 +223,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
     }
 
     @Override
-    public TriState bz$canEnchant(ItemStack itemstack, Enchantment enchantment) {
-        return ((EnchantmentAccessor)enchantment).getBuiltInRegistryHolder().is(BzTags.ENCHANTABLES_CRYSTAL_CANNON_FORCED_ALLOWED) ? TriState.ALLOW : TriState.PASS;
+    public TriState bz$canEnchant(ItemStack itemstack, Holder<Enchantment> enchantment) {
+        return enchantment.is(BzTags.ENCHANTABLES_CRYSTAL_CANNON_FORCED_ALLOWED) ? TriState.ALLOW : TriState.PASS;
     }
 }

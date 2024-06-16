@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantmentApplication;
+import com.telepathicgrunt.the_bumblezone.enchantments.PotentPoisonEnchantmentApplication;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
@@ -7,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
+import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -100,25 +103,18 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack itemStack, LivingEntity enemy, LivingEntity user) {
+    public boolean hurtEnemy(ItemStack itemStack, LivingEntity victim, LivingEntity user) {
         int durabilityDecrease = 1;
 
-        if (!enemy.getType().is(EntityTypeTags.UNDEAD)) {
-            int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get(), itemStack);
-            enemy.addEffect(new MobEffectInstance(
-                    MobEffects.POISON,
-                    100 + 100 * (potentPoisonLevel - ((potentPoisonLevel - 1) / 2)),
-                    potentPoisonLevel, // 0, 1, 2, 3
-                    false,
-                    true,
-                    true));
+        if (!victim.getType().is(EntityTypeTags.UNDEAD)) {
+            PotentPoisonEnchantmentApplication.doPostAttackBoostedPoison(itemStack, victim);
 
             if (user instanceof ServerPlayer serverPlayer) {
                 BzCriterias.STINGER_SPEAR_POISONING_TRIGGER.get().trigger(serverPlayer);
             }
 
-            if (!enemy.getType().is(BzTags.PARALYZED_IMMUNE)) {
-                int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), itemStack);
+            if (!victim.getType().is(BzTags.PARALYZED_IMMUNE)) {
+                int neuroToxinLevel = NeurotoxinsEnchantmentApplication.getNeurotoxinEnchantLevel(itemStack, victim.level());
                 if (neuroToxinLevel > 0) {
                     durabilityDecrease = 4;
                 }
@@ -128,8 +124,8 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
         itemStack.hurtAndBreak(durabilityDecrease, user, EquipmentSlot.MAINHAND);
 
         if (user instanceof ServerPlayer serverPlayer &&
-            enemy.getType() == EntityType.WITHER &&
-            enemy.isDeadOrDying() &&
+            victim.getType() == EntityType.WITHER &&
+            victim.isDeadOrDying() &&
             PlayerDataHandler.rootAdvancementDone(serverPlayer))
         {
             BzCriterias.STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER.get().trigger(serverPlayer);

@@ -4,7 +4,9 @@ import com.telepathicgrunt.the_bumblezone.entities.nonliving.BeeStingerEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.platform.BzArrowItem;
+import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -31,7 +33,12 @@ public class BeeStinger extends BzArrowItem {
 
     @Override
     public OptionalBoolean bz$isInfinite(ItemStack stack, ItemStack bow, Player player) {
-        int enchantLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY, bow);
-        return enchantLevel > 0 ? OptionalBoolean.of(true) : OptionalBoolean.EMPTY;
+        if (player == null && player.level().isClientSide()) {
+            return OptionalBoolean.EMPTY;
+        }
+
+        int enchantLevel = EnchantmentHelper.processAmmoUse((ServerLevel) player.level(), stack, bow, 1);
+        return (enchantLevel == 0 || EnchantmentHelper.getItemEnchantmentLevel(EnchantmentUtils.getEnchantmentHolder(Enchantments.INFINITY, player.level()), bow) > 0)
+                ? OptionalBoolean.of(true) : OptionalBoolean.EMPTY;
     }
 }

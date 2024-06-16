@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
-import com.telepathicgrunt.the_bumblezone.mixin.enchantments.EnchantmentAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -8,11 +7,13 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import com.telepathicgrunt.the_bumblezone.utils.TriState;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -30,7 +31,6 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
@@ -61,9 +61,8 @@ public class BeeCannon extends Item implements ItemExtension {
             ItemStack mutableBeeCannon = player.getItemInHand(InteractionHand.MAIN_HAND);
 
             int numberOfBees = getNumberOfBees(mutableBeeCannon);
-            int quickCharge = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, beeCannon);
             int remainingDuration = this.getUseDuration(mutableBeeCannon, livingEntity) - currentDuration;
-            if (remainingDuration >= 20 - (quickCharge * 3) && numberOfBees > 0) {
+            if (remainingDuration / (float)getChargeDuration(mutableBeeCannon, livingEntity) > 0.8f && numberOfBees > 0) {
                 List<Entity> bees = tryReleaseBees(level, mutableBeeCannon);
                 if (bees.isEmpty()) {
                     return;
@@ -239,7 +238,12 @@ public class BeeCannon extends Item implements ItemExtension {
 
     @Override
     public int getUseDuration(ItemStack itemStack, LivingEntity livingEntity) {
-        return 72000;
+        return getChargeDuration(itemStack, livingEntity) + 3;
+    }
+
+    public int getChargeDuration(ItemStack itemStack, LivingEntity livingEntity) {
+        float chargeTime = EnchantmentHelper.modifyCrossbowChargingTime(itemStack, livingEntity, 1.25F);
+        return Mth.floor(chargeTime * 20.0F);
     }
 
     @Override
@@ -248,7 +252,7 @@ public class BeeCannon extends Item implements ItemExtension {
     }
 
     @Override
-    public TriState bz$canEnchant(ItemStack itemstack, Enchantment enchantment) {
-        return ((EnchantmentAccessor)enchantment).getBuiltInRegistryHolder().is(BzTags.ENCHANTABLES_BEE_CANNON_FORCED_ALLOWED) ? TriState.ALLOW : TriState.PASS;
+    public TriState bz$canEnchant(ItemStack itemstack, Holder<Enchantment> enchantment) {
+        return enchantment.is(BzTags.ENCHANTABLES_BEE_CANNON_FORCED_ALLOWED) ? TriState.ALLOW : TriState.PASS;
     }
 }

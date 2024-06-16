@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.MusicPacketFromServer;
+import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -293,17 +294,17 @@ public class EssenceBlockBlue extends EssenceBlock {
                 mob.setTarget(serverPlayer);
                 if (mob instanceof Drowned drowned) {
                     ItemStack swimBoots = Items.LEATHER_BOOTS.getDefaultInstance();
-                    swimBoots.enchant(Enchantments.DEPTH_STRIDER, 3);
+                    swimBoots.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.DEPTH_STRIDER, serverLevel), 3);
                     drowned.equipItemIfPossible(swimBoots);
                     drowned.setDropChance(EquipmentSlot.FEET, 0.2f);
 
                     ItemStack leggings = Items.LEATHER_LEGGINGS.getDefaultInstance();
-                    leggings.enchant(Enchantments.THORNS, 1);
+                    leggings.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.THORNS, serverLevel), 1);
                     drowned.equipItemIfPossible(leggings);
                     drowned.setDropChance(EquipmentSlot.LEGS, 0.2f);
 
                     ItemStack chestplate = Items.LEATHER_CHESTPLATE.getDefaultInstance();
-                    chestplate.enchant(Enchantments.PROJECTILE_PROTECTION, 1);
+                    chestplate.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.PROJECTILE_PROTECTION, serverLevel), 1);
                     drowned.equipItemIfPossible(chestplate);
                     drowned.setDropChance(EquipmentSlot.CHEST, 0.2f);
 
@@ -311,10 +312,10 @@ public class EssenceBlockBlue extends EssenceBlock {
                             Items.TURTLE_HELMET.getDefaultInstance() :
                             Items.LEATHER_HELMET.getDefaultInstance();
                     if (serverLevel.getRandom().nextFloat() < 0.75f) {
-                        helmet.enchant(Enchantments.AQUA_AFFINITY, 1);
+                        helmet.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.AQUA_AFFINITY, serverLevel), 1);
                     }
                     else {
-                        helmet.enchant(Enchantments.RESPIRATION, 3);
+                        helmet.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.RESPIRATION, serverLevel), 3);
                     }
                     drowned.equipItemIfPossible(helmet);
                     drowned.setDropChance(EquipmentSlot.HEAD, 0.15f);
@@ -322,16 +323,16 @@ public class EssenceBlockBlue extends EssenceBlock {
                     if (isStrong) {
                         ItemStack trident = Items.TRIDENT.getDefaultInstance();
                         if (serverLevel.getRandom().nextFloat() < 0.25) {
-                            trident.enchant(Enchantments.CHANNELING, 1);
+                            trident.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.CHANNELING, serverLevel), 1);
                         }
                         else if (serverLevel.getRandom().nextFloat() < 0.25) {
-                            trident.enchant(Enchantments.LOYALTY, 1);
+                            trident.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.LOYALTY, serverLevel), 1);
                         }
                         else if (serverLevel.getRandom().nextFloat() < 0.25) {
-                            trident.enchant(Enchantments.IMPALING, 1);
+                            trident.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.IMPALING, serverLevel), 1);
                         }
                         else {
-                            trident.enchant(Enchantments.RIPTIDE, 1);
+                            trident.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.RIPTIDE, serverLevel), 1);
                         }
                         drowned.setItemSlot(EquipmentSlot.MAINHAND, trident);
                         drowned.setDropChance(EquipmentSlot.MAINHAND, 0.9f);

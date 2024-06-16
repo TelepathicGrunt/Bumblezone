@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.platform;
 
 import com.telepathicgrunt.the_bumblezone.utils.TriState;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -37,7 +38,7 @@ public interface ItemExtension {
         return false;
     }
 
-    default TriState bz$canEnchant(ItemStack itemstack, Enchantment enchantment) {
+    default TriState bz$canEnchant(ItemStack itemstack, Holder<Enchantment> enchantment) {
         return TriState.PASS;
     }
 }

@@ -55,7 +55,7 @@ public class FakePotionCandleRecipeCreator {
         }
         potions.sort(Comparator.comparingInt(a -> a.value().getEffects().size()));
         for (Holder<Potion> potion : potions) {
-            if (potion.value().getEffects().stream().allMatch(e -> GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.DISALLOWED_POTION_CANDLE_EFFECTS, e.getEffect().value()))) {
+            if (potion.value().getEffects().stream().allMatch(e -> e.getEffect().is(BzTags.DISALLOWED_POTION_CANDLE_EFFECTS))) {
                 continue;
             }
 

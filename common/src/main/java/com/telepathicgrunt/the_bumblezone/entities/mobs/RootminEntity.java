@@ -19,6 +19,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -61,6 +62,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -492,7 +494,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
             if (!this.level().isClientSide()) {
                if (!instantBuild && this.getFlowerBlock() != null) {
                   ItemStack itemStack = new ItemStack(Items.DIAMOND_PICKAXE);
-                  itemStack.enchant(Enchantments.SILK_TOUCH, 1);
+                  itemStack.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.SILK_TOUCH, this.level()), 1);
                   LootParams.Builder builder = new LootParams.Builder((ServerLevel) this.level()).withParameter(LootContextParams.ORIGIN, this.position()).withParameter(LootContextParams.TOOL, itemStack).withOptionalParameter(LootContextParams.THIS_ENTITY, this);
                   List<ItemStack> flowerDrops = this.getFlowerBlock().getDrops(builder);
                   for (ItemStack flowerDrop : flowerDrops) {
@@ -742,7 +744,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       Entity sourceEntity = damageSource.getEntity() == null ? this : damageSource.getEntity();
       if (flower != null) {
          ItemStack itemStack = new ItemStack(Items.DIAMOND_PICKAXE);
-         itemStack.enchant(Enchantments.SILK_TOUCH, 1);
+         itemStack.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.SILK_TOUCH, level), 1);
          LootParams.Builder builder = new LootParams.Builder((ServerLevel) this.level())
                  .withParameter(LootContextParams.ORIGIN, this.position())
                  .withParameter(LootContextParams.TOOL, itemStack)

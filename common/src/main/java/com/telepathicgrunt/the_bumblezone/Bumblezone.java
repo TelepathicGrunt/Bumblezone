@@ -8,8 +8,8 @@ import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
-import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
-import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantment;
+import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantmentApplication;
+import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantmentApplication;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
@@ -76,7 +76,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFeatures;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -149,9 +148,9 @@ public class Bumblezone {
         PlayerItemUseEvent.EVENT_HIGH.addListener(ItemUseOnBlock::onEarlyItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.
         ProjectileHitEvent.EVENT_HIGH.addListener(ProjectileImpact::onProjectileImpact); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
         EntityVisibilityEvent.EVENT.addListener(HiddenEffect::hideEntity);
-        EntityAttackedEvent.EVENT.addListener(NeurotoxinsEnchantment::entityHurtEvent);
+        EntityAttackedEvent.EVENT.addListener(NeurotoxinsEnchantmentApplication::entityHurtEvent);
         EntityAttackedEvent.EVENT.addListener(HoneyCrystalShield::handledPlayerHurtBehavior);
-        PlayerBreakSpeedEvent.EVENT.addListener(CombCutterEnchantment::attemptFasterMining);
+        PlayerBreakSpeedEvent.EVENT.addListener(CombCutterEnchantmentApplication::attemptFasterMining);
         PlayerDataHandler.initEvents();
         PlayerGrantAdvancementEvent.EVENT.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
         RegisterWanderingTradesEvent.EVENT.addListener(WanderingTrades::addWanderingTrades);
@@ -193,7 +192,6 @@ public class Bumblezone {
         BzParticles.PARTICLE_TYPES.init();
         BzPredicates.POS_RULE_TEST.init();
         BzDimension.CHUNK_GENERATOR.init();
-        BzEnchantments.ENCHANTMENTS.init();
         BzSurfaceRules.SURFACE_RULES.init();
         BzDimension.DENSITY_FUNCTIONS.init();
         BzBlockEntities.BLOCK_ENTITIES.init();

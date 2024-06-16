@@ -26,8 +26,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -97,7 +95,7 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
                     float miningProgress = (float) (timeDiff + 1);
 
                     float blockDestroyTime = belowBlockState.getDestroySpeed(level, belowBlockPos);
-                    float playerMiningSpeed = getPlayerDestroySpeed(player, itemStack, ((beeWearablesCount - 1) * 0.1F) + 0.3F);
+                    float playerMiningSpeed = getPlayerDestroySpeed(player, ((beeWearablesCount - 1) * 0.1F) + 0.3F);
                     int finalMiningProgress = (int) ((miningProgress * playerMiningSpeed) / blockDestroyTime);
 
                     if (!(finalMiningProgress == 0 && playerMiningSpeed < 0.001f) && (finalMiningProgress != lastSentState)) {
@@ -254,10 +252,9 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
         }
     }
 
-    public static float getPlayerDestroySpeed(Player player, ItemStack beeBoots, float currentSpeed) {
-        int efficencyLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.EFFICIENCY, beeBoots);
-        if (efficencyLevel > 0) {
-            currentSpeed += efficencyLevel / 4f;
+    public static float getPlayerDestroySpeed(Player player, float currentSpeed) {
+        if (currentSpeed > 1.0F) {
+            currentSpeed += (float)player.getAttributeValue(Attributes.MINING_EFFICIENCY);
         }
 
         if (MobEffectUtil.hasDigSpeed(player)) {
@@ -265,7 +262,7 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
         }
 
         if (player.hasEffect(BzEffects.BEENERGIZED.holder())) {
-            currentSpeed *= 1.0F + ((float)(player.getEffect(BzEffects.BEENERGIZED.holder()).getAmplifier() + 1) );
+            currentSpeed *= 1.0F + ((float)(player.getEffect(BzEffects.BEENERGIZED.holder()).getAmplifier() + 1));
         }
 
         if (player.hasEffect(MobEffects.DIG_SLOWDOWN)) {
@@ -280,8 +277,8 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
         }
 
         currentSpeed *= (float)player.getAttributeValue(Attributes.BLOCK_BREAK_SPEED);
-        if (player.isEyeInFluid(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(player)) {
-            currentSpeed /= 5.0F;
+        if (player.isEyeInFluid(FluidTags.WATER)) {
+            currentSpeed *= (float)player.getAttribute(Attributes.SUBMERGED_MINING_SPEED).getValue();
         }
 
         if (!player.onGround()) {

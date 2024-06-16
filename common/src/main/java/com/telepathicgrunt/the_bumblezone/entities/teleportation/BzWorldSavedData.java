@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerLevelTickEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
+import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.ChatFormatting;
@@ -283,7 +284,7 @@ public class BzWorldSavedData extends SavedData {
 		ServerPlayer serverPlayer = PlatformHooks.getFakePlayer(level, null);
 		ItemStack fakeHandItem = Items.STONE_PICKAXE.getDefaultInstance();
 		ItemEnchantments.Mutable mutableItemEnchantments = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
-		mutableItemEnchantments.set(Enchantments.SILK_TOUCH, 1);
+		mutableItemEnchantments.set(EnchantmentUtils.getEnchantmentHolder(Enchantments.SILK_TOUCH, level), 1);
 		fakeHandItem.set(DataComponents.ENCHANTMENTS, mutableItemEnchantments.toImmutable());
 		serverPlayer.setItemInHand(InteractionHand.MAIN_HAND, fakeHandItem);
 		return serverPlayer;

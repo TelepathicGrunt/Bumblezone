@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
-import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
+import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantmentApplication;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -29,7 +29,7 @@ public class BeehiveMixin {
     @Inject(method = "useItemOn(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/ItemInteractionResult;",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/BeehiveBlock;dropHoneycomb(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V"))
     private void bumblezone$combDropIncrease(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult, CallbackInfoReturnable<ItemInteractionResult> cir) {
-        CombCutterEnchantment.increasedCombDrops(player, level, blockPos);
+        CombCutterEnchantmentApplication.increasedCombDrops(player, level, blockPos);
     }
 
     @Inject(method = "angerNearbyBees(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V",

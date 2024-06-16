@@ -17,12 +17,14 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -74,7 +76,7 @@ public class BeeAggression {
         BlockState blockState = event.state();
 
         if (player instanceof ServerPlayer serverPlayer && blockState.is(BzTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED)) {
-            if (blockState.is(BzBlocks.HONEYCOMB_BROOD.get()) && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, serverPlayer.getMainHandItem()) != 0) {
+            if (blockState.is(BzBlocks.HONEYCOMB_BROOD.get()) && EnchantmentHelper.hasTag(serverPlayer.getMainHandItem(), EnchantmentTags.PREVENTS_BEE_SPAWNS_WHEN_MINING)) {
                 return;
             }
 

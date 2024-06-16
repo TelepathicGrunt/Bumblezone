@@ -31,6 +31,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.utils.fabric.PlatformHooksImpl;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
@@ -157,8 +158,14 @@ public class FabricEventManager {
         ServerTickEvents.START_WORLD_TICK.register(world -> ServerLevelTickEvent.EVENT.invoke(new ServerLevelTickEvent(world, false)));
         ServerTickEvents.END_WORLD_TICK.register(world -> ServerLevelTickEvent.EVENT.invoke(new ServerLevelTickEvent(world, true)));
 
-        ServerLifecycleEvents.SERVER_STARTING.register((a) -> ServerGoingToStartEvent.EVENT.invoke(new ServerGoingToStartEvent(a)));
-        ServerLifecycleEvents.SERVER_STOPPING.register((a) -> ServerGoingToStopEvent.EVENT.invoke(ServerGoingToStopEvent.INSTANCE));
+        ServerLifecycleEvents.SERVER_STARTING.register((a) -> {
+            ServerGoingToStartEvent.EVENT.invoke(new ServerGoingToStartEvent(a));
+            PlatformHooksImpl.currentRegistryAccess = a.registryAccess();
+        });
+        ServerLifecycleEvents.SERVER_STOPPING.register((a) -> {
+            ServerGoingToStopEvent.EVENT.invoke(ServerGoingToStopEvent.INSTANCE);
+            PlatformHooksImpl.currentRegistryAccess = null;
+        });
 
         ServerWorldEvents.LOAD.register((server, level) -> {
             setupWanderingTrades();

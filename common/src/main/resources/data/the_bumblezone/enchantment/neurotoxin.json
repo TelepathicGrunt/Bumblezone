@@ -1,0 +1,21 @@
+{
+  "description": {
+    "translate": "enchantment.the_bumblezone.neurotoxin"
+  },
+  "supported_items": "#the_bumblezone:enchantable/neurotoxin",
+  "slots": [
+    "mainhand"
+  ],
+  "weight": 1,
+  "max_level": 2,
+  "anvil_cost": 6,
+  "max_cost": {
+    "base": 50,
+    "per_level_above_first": 0
+  },
+  "min_cost": {
+    "base": 14,
+    "per_level_above_first": 3
+  },
+  "effects": {}
+}

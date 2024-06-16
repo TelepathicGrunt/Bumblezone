@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCrystalShieldCurrentLevelData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCrystalShieldDefinedLevelsData;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
-import com.telepathicgrunt.the_bumblezone.mixin.enchantments.EnchantmentAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.items.PlayerDamageShieldInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
@@ -11,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import com.telepathicgrunt.the_bumblezone.utils.TriState;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,7 +28,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -198,16 +197,8 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
         }
     }
 
-    public static void setShieldCooldown(Player playerEntity, LivingEntity livingEntity){
-        float disableChance = 0.25F + (float) EnchantmentHelper.getBlockEfficiency(livingEntity) * 0.05F;
-        if (livingEntity.getRandom().nextFloat() < disableChance) {
-            playerEntity.getCooldowns().addCooldown(BzItems.HONEY_CRYSTAL_SHIELD.get(), 100);
-            livingEntity.level().broadcastEntityEvent(playerEntity, (byte)30);
-        }
-    }
-
     @Override
-    public TriState bz$canEnchant(ItemStack itemstack, Enchantment enchantment) {
-        return ((EnchantmentAccessor)enchantment).getBuiltInRegistryHolder().is(BzTags.ENCHANTABLES_HONEY_CRYSTAL_SHIELD_FORCED_DISALLOWED) ? TriState.DENY : TriState.PASS;
+    public TriState bz$canEnchant(ItemStack itemstack, Holder<Enchantment> enchantment) {
+        return enchantment.is(BzTags.ENCHANTABLES_HONEY_CRYSTAL_SHIELD_FORCED_DISALLOWED) ? TriState.DENY : TriState.PASS;
     }
 }

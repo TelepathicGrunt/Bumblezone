@@ -5,15 +5,20 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.minecraft.world.level.Level;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,36 +49,40 @@ public class EnchantmentUtils {
 		return 1395L + sum(level - 30, 112, 9);
 	}
 
-	public static Map<ResourceLocation, EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(int level, ItemStack itemStack, int xpTier) {
+	public static Map<ResourceLocation, EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(Level level, int enchantmentLevel, ItemStack itemStack, int xpTier) {
 		Map<ResourceLocation, EnchantmentInstance> map = new HashMap<>();
 		boolean bookFlag = itemStack.is(Items.BOOK) || itemStack.is(Items.ENCHANTED_BOOK);
 		boolean allowTreasure = xpTier == 7;
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(itemStack);
-		for(Enchantment enchantment : BuiltInRegistries.ENCHANTMENT) {
+		Registry<Enchantment> enchantmentRegistry = level.registryAccess().registry(Registries.ENCHANTMENT).get();
+		enchantmentRegistry.holders().forEach(enchantment -> {
 
-			boolean forceAllowed = GeneralUtils.isInTag(BuiltInRegistries.ENCHANTMENT, BzTags.FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS, enchantment);
-			boolean disallowed = GeneralUtils.isInTag(BuiltInRegistries.ENCHANTMENT, BzTags.DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS, enchantment);
+			boolean forceAllowed = enchantment.is(BzTags.FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
+			boolean disallowed = enchantment.is(BzTags.DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
 			if (!forceAllowed && disallowed) {
-				continue;
+				return;
 			}
 
-			int minLevelAllowed = enchantment.getMinLevel();
-			if (existingEnchantments.containsKey(enchantment)) {
-				minLevelAllowed = Math.max(minLevelAllowed, existingEnchantments.get(enchantment) + 1);
+			int minLevelAllowed = enchantment.value().getMinLevel();
+			if (existingEnchantments.containsKey(enchantment.value())) {
+				minLevelAllowed = Math.max(minLevelAllowed, existingEnchantments.get(enchantment.value()) + 1);
 			}
 
-			if ((!enchantment.isTreasureOnly() || allowTreasure) && (forceAllowed || enchantment.isDiscoverable()) && (bookFlag || (enchantment.canEnchant(itemStack) && enchantment.isPrimaryItem(itemStack)))) {
-				for(int i = enchantment.getMaxLevel(); i > minLevelAllowed - 1; --i) {
-					if (forceAllowed || level >= enchantment.getMinCost(i)) {
+			if (((enchantment.is(EnchantmentTags.NON_TREASURE) || (enchantment.is(EnchantmentTags.TREASURE) && allowTreasure)) &&
+				(bookFlag || (enchantment.value().canEnchant(itemStack) && enchantment.value().isPrimaryItem(itemStack)))) ||
+				forceAllowed)
+			{
+				for (int i = enchantment.value().getMaxLevel(); i > minLevelAllowed - 1; --i) {
+					if (forceAllowed || enchantmentLevel >= enchantment.value().getMinCost(i)) {
 						EnchantmentInstance enchantmentInstance = new EnchantmentInstance(enchantment, xpTier <= 2 ? 1 : i);
 						if (xpTier > EnchantmentUtils.getEnchantmentTierCost(enchantmentInstance)) {
-							map.put(BuiltInRegistries.ENCHANTMENT.getKey(enchantmentInstance.enchantment), enchantmentInstance);
+							map.put(enchantmentRegistry.getKey(enchantmentInstance.enchantment.value()), enchantmentInstance);
 							break;
 						}
 					}
 				}
 			}
-		}
+		});
 		return map;
 	}
 
@@ -91,16 +100,16 @@ public class EnchantmentUtils {
 	public static int getEnchantmentTierCost(EnchantmentInstance enchantmentInstance) {
 		return getEnchantmentTierCost(
 				enchantmentInstance.level,
-				enchantmentInstance.enchantment.getMinCost(2),
-				enchantmentInstance.enchantment.isTreasureOnly(),
-				enchantmentInstance.enchantment.isCurse());
+				enchantmentInstance.enchantment.value().getMinCost(2),
+				enchantmentInstance.enchantment.is(EnchantmentTags.TREASURE),
+				enchantmentInstance.enchantment.is(EnchantmentTags.CURSE));
 	}
 
 	public static int getEnchantmentTierCost(int level, int minCost, boolean isTreasureOnly, boolean isCurse) {
 		int cost = 0;
 
 		cost += minCost / 10;
-		cost += level / 1.5f;
+		cost += (int) (level / 1.5f);
 
 		if (isTreasureOnly) {
 			cost += 2;
@@ -112,5 +121,13 @@ public class EnchantmentUtils {
 		cost += BzGeneralConfigs.crystallineFlowerExtraTierCost;
 
 		return Math.max(1, Math.min(6, cost));
+	}
+
+	public static Holder<Enchantment> getEnchantmentHolder(ResourceLocation enchantmentRL, Level level) {
+		return level.registryAccess().registry(Registries.ENCHANTMENT).get().getHolder(enchantmentRL).orElse(null);
+	}
+
+	public static Holder<Enchantment> getEnchantmentHolder(ResourceKey<Enchantment> enchantmentRL, Level level) {
+		return level.registryAccess().registry(Registries.ENCHANTMENT).get().getHolder(enchantmentRL).orElse(null);
 	}
 }

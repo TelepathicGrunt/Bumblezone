@@ -2,7 +2,9 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.HoneyCrystalShardEntity;
 import com.telepathicgrunt.the_bumblezone.platform.BzArrowItem;
+import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -23,7 +25,12 @@ public class HoneyCrystalShards extends BzArrowItem {
 
     @Override
     public OptionalBoolean bz$isInfinite(ItemStack stack, ItemStack bow, Player player) {
-        int enchantLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY, bow);
-        return enchantLevel > 0 ? OptionalBoolean.of(true) : OptionalBoolean.EMPTY;
+        if (player == null && player.level().isClientSide()) {
+            return OptionalBoolean.EMPTY;
+        }
+
+        int enchantLevel = EnchantmentHelper.processAmmoUse((ServerLevel) player.level(), stack, bow, 1);
+        return (enchantLevel == 0 || EnchantmentHelper.getItemEnchantmentLevel(EnchantmentUtils.getEnchantmentHolder(Enchantments.INFINITY, player.level()), bow) > 0)
+                ? OptionalBoolean.of(true) : OptionalBoolean.EMPTY;
     }
 }

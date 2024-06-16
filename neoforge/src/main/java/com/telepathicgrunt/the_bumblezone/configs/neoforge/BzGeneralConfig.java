@@ -187,8 +187,9 @@ public class BzGeneralConfig {
 
         neurotoxinMaxLevel = builder
                 .comment(" \n-----------------------------------------------------\n",
-                        " Maximum level that Neurotoxin enchantment can be." +
-                        " Will not retroactively fixed existing enchanted items.\n")
+                        " Maximum level that Neurotoxin enchantment's strength can be regardless of the enchantment's level.\n" +
+                        " Note, changing this won't change enchantment's own max level. Just that this config set to 2 will make level 3 enchant behave like level 2.\n" +
+                        " To change an enchantment's max level display, datapack replace data/the_bumblezone/enchantment/neurotoxin.json file.\n")
                 .translation("the_bumblezone.config.neurotoxinmaxlevel")
                 .defineInRange("neurotoxinMaxLevel", 2, 1, 255);
 

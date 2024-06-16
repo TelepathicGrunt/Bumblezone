@@ -5,6 +5,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -48,7 +49,7 @@ public class ArenaSpecialBlockHandlerProcessor extends StructureProcessor {
                     }
                 }
                 ItemStack itemStack = new ItemStack(Items.DIAMOND_PICKAXE);
-                itemStack.enchant(Enchantments.SILK_TOUCH, 1);
+                itemStack.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.SILK_TOUCH, level), 1);
                 Block.dropResources(structureBlockState, level, structureBlockInfoWorld.pos(), blockEntity, null, itemStack);
                 return null;
             }
@@ -63,7 +64,7 @@ public class ArenaSpecialBlockHandlerProcessor extends StructureProcessor {
                     }
                     else {
                         ItemStack itemStack = new ItemStack(Items.DIAMOND_PICKAXE);
-                        itemStack.enchant(Enchantments.SILK_TOUCH, 1);
+                        itemStack.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.SILK_TOUCH, level), 1);
                         Block.dropResources(inWorldBlockState, level, structureBlockInfoWorld.pos(), blockEntity, null, itemStack);
                         level.destroyBlock(structureBlockInfoWorld.pos(), false);
                     }

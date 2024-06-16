@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -40,6 +41,8 @@ import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
+import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
 
 import java.util.Arrays;
@@ -205,5 +208,9 @@ public class PlatformHooksImpl {
 
     public static Fluid getBucketItemFluid(BucketItem stack) {
         return stack.content;
+    }
+
+    public static RegistryAccess getCurrentRegistryAccess() {
+        return ServerLifecycleHooks.getCurrentServer().registryAccess();
     }
 }

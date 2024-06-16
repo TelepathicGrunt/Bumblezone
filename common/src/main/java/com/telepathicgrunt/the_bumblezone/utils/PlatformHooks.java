@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -191,5 +192,11 @@ public class PlatformHooks {
     @Contract(pure = true)
     public static Fluid getBucketItemFluid(BucketItem stack) {
         throw new NotImplementedException("PlatformHooks getBucketItemFluid is not implemented!");
+    }
+
+    @ExpectPlatform
+    @Contract(pure = true)
+    public static RegistryAccess getCurrentRegistryAccess() {
+        throw new NotImplementedException("PlatformHooks getCurrentRegistryAccess is not implemented!");
     }
 }

@@ -16,6 +16,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -270,5 +271,10 @@ public class PlatformHooksImpl {
 
     public static Fluid getBucketItemFluid(BucketItem stack) {
         return ((BucketItemAccessor)stack).bz$getContents();
+    }
+
+    public static RegistryAccess currentRegistryAccess = null;
+    public static RegistryAccess getCurrentRegistryAccess() {
+        return currentRegistryAccess;
     }
 }

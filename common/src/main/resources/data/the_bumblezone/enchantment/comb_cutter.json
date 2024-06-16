@@ -1,0 +1,21 @@
+{
+  "description": {
+    "translate": "enchantment.the_bumblezone.comb_cutter"
+  },
+  "supported_items": "#the_bumblezone:enchantable/comb_cutter",
+  "slots": [
+    "mainhand"
+  ],
+  "weight": 1,
+  "max_level": 1,
+  "anvil_cost": 5,
+  "max_cost": {
+    "base": 24,
+    "per_level_above_first": 0
+  },
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 0
+  },
+  "effects": {}
+}
