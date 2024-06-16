@@ -137,11 +137,12 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
                         vertexConsumer,
                         packedLight,
                         p,
-                        FastColor.ARGB32.colorFromFloat(
-                            GeneralUtils.getRed(biomeColor) / 255f,
-                            GeneralUtils.getGreen(biomeColor) / 255f,
-                            GeneralUtils.getBlue(biomeColor) / 255f,
-                            bl2 ? 0.15f : 1.0f));
+                        FastColor.ARGB32.color(
+                            bl2 ? 38 : 255,
+                            GeneralUtils.getRed(biomeColor),
+                            GeneralUtils.getGreen(biomeColor),
+                            GeneralUtils.getBlue(biomeColor)
+                        ));
             }
         }
     }

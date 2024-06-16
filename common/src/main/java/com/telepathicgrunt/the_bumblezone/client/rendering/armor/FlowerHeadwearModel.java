@@ -60,7 +60,7 @@ public class FlowerHeadwearModel extends HumanoidModel<LivingEntity> {
                 blue = GeneralUtils.getBlue(FlowerHeadwearColoring.DEFAULT_COLOR);
             }
 
-            head.render(poseStack, buffer, light, overlay, FastColor.ARGB32.color(red, green, blue, 1));
+            head.render(poseStack, buffer, light, overlay, FastColor.ARGB32.color(1, red, green, blue));
         }
     }
 
