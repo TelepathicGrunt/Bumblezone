@@ -21,7 +21,7 @@ public class EnchantmentMixin {
     private void bumblezone$customAllowDisallowEnchantments1(ItemStack itemStack, CallbackInfoReturnable<Boolean> cir) {
         if (itemStack.getItem() instanceof ItemExtension itemExtension) {
             Registry<Enchantment> enchantmentRegistry = PlatformHooks.getCurrentRegistryAccess().registry(Registries.ENCHANTMENT).get();
-            TriState result = itemExtension.bz$canEnchant(itemStack, enchantmentRegistry.createIntrusiveHolder((Enchantment) (Object) this));
+            TriState result = itemExtension.bz$canEnchant(itemStack, enchantmentRegistry.getHolderOrThrow(enchantmentRegistry.getResourceKey((Enchantment) (Object) this).get()));
             if (result != TriState.PASS) {
                 cir.setReturnValue(result == TriState.ALLOW);
             }
@@ -34,7 +34,7 @@ public class EnchantmentMixin {
     private void bumblezone$customAllowDisallowEnchantments2(ItemStack itemStack, CallbackInfoReturnable<Boolean> cir) {
         if (itemStack.getItem() instanceof ItemExtension itemExtension) {
             Registry<Enchantment> enchantmentRegistry = PlatformHooks.getCurrentRegistryAccess().registry(Registries.ENCHANTMENT).get();
-            TriState result = itemExtension.bz$canEnchant(itemStack, enchantmentRegistry.createIntrusiveHolder((Enchantment) (Object) this));
+            TriState result = itemExtension.bz$canEnchant(itemStack, enchantmentRegistry.getHolderOrThrow(enchantmentRegistry.getResourceKey((Enchantment) (Object) this).get()));
             if (result != TriState.PASS) {
                 cir.setReturnValue(result == TriState.ALLOW);
             }

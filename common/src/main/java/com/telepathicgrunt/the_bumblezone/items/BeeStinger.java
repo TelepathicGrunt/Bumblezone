@@ -32,7 +32,7 @@ public class BeeStinger extends BzArrowItem {
     }
 
     @Override
-    public OptionalBoolean bz$isInfinite(ItemStack stack, ItemStack bow, Player player) {
+    public OptionalBoolean bz$isInfinite(ItemStack stack, ItemStack bow, LivingEntity player) {
         if (player == null && player.level().isClientSide()) {
             return OptionalBoolean.EMPTY;
         }

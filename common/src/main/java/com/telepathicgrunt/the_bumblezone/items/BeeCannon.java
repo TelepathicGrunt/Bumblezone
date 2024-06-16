@@ -62,7 +62,7 @@ public class BeeCannon extends Item implements ItemExtension {
 
             int numberOfBees = getNumberOfBees(mutableBeeCannon);
             int remainingDuration = this.getUseDuration(mutableBeeCannon, livingEntity) - currentDuration;
-            if (remainingDuration / (float)getChargeDuration(mutableBeeCannon, livingEntity) > 0.8f && numberOfBees > 0) {
+            if (remainingDuration / (float)getChargeDuration(mutableBeeCannon, livingEntity) > 0.99f && numberOfBees > 0) {
                 List<Entity> bees = tryReleaseBees(level, mutableBeeCannon);
                 if (bees.isEmpty()) {
                     return;
@@ -238,7 +238,7 @@ public class BeeCannon extends Item implements ItemExtension {
 
     @Override
     public int getUseDuration(ItemStack itemStack, LivingEntity livingEntity) {
-        return getChargeDuration(itemStack, livingEntity) + 3;
+        return 72000;
     }
 
     public int getChargeDuration(ItemStack itemStack, LivingEntity livingEntity) {

@@ -94,6 +94,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStructurePlacementType;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSubPredicates;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSurfaceRules;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
@@ -194,6 +195,7 @@ public class Bumblezone {
         BzDimension.CHUNK_GENERATOR.init();
         BzSurfaceRules.SURFACE_RULES.init();
         BzDimension.DENSITY_FUNCTIONS.init();
+        BzSubPredicates.SUB_PREDICATES.init();
         BzBlockEntities.BLOCK_ENTITIES.init();
         BzCriterias.CRITERION_TRIGGERS.init();
         BzArmorMaterials.ARMOR_MATERIAL.init();

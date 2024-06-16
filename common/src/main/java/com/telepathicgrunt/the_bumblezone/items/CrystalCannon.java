@@ -94,8 +94,8 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
 
             int numberOfCrystals = getNumberOfCrystals(mutableCrystalCannon);
             int remainingDuration = this.getUseDuration(mutableCrystalCannon, livingEntity) - currentDuration;
-            if (remainingDuration / (float)getChargeDuration(mutableCrystalCannon, livingEntity) > 0.8f && numberOfCrystals > 0) {
-                int crystalsToSpawn = getAndClearStoredCrystals(level, mutableCrystalCannon);
+            if (remainingDuration / (float)getChargeDuration(mutableCrystalCannon, livingEntity) > 0.99f && numberOfCrystals > 0) {
+                int crystalsToSpawn = getAndClearStoredCrystals(mutableCrystalCannon);
                 for (int crystalIndex = 0; crystalIndex < crystalsToSpawn; crystalIndex++) {
                     AbstractArrow newCrystal = BzItems.HONEY_CRYSTAL_SHARDS.get().createArrow(level, crystalCannon, livingEntity, mutableCrystalCannon);
 
@@ -157,7 +157,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
         }
     }
 
-    public static int getAndClearStoredCrystals(Level level, ItemStack crystalCannonItem) {
+    public static int getAndClearStoredCrystals(ItemStack crystalCannonItem) {
         int numberOfCrystals = getNumberOfCrystals(crystalCannonItem);
         if (numberOfCrystals > 0) {
             crystalCannonItem.set(BzDataComponents.CRYSTAL_CANNON_DATA.get(), new CrystalCannonData(0));
@@ -209,7 +209,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
 
     @Override
     public int getUseDuration(ItemStack itemStack, LivingEntity livingEntity) {
-        return getChargeDuration(itemStack, livingEntity) + 3;
+        return 72000;
     }
 
     public int getChargeDuration(ItemStack itemStack, LivingEntity livingEntity) {
