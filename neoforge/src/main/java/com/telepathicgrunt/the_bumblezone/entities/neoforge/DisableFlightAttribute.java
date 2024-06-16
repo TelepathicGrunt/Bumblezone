@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.entities.neoforge;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
@@ -14,9 +15,9 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import java.util.UUID;
 
 public class DisableFlightAttribute {
+    public static final ResourceLocation DISABLE_FLIGHT_RL = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "disable_flight");
     public static final AttributeModifier DISABLE_FLIGHT = new AttributeModifier(
-            UUID.fromString("4fb10ad4-37b2-4fe8-b5a3-3431b948d4d2"),
-            Bumblezone.MODID,
+            DISABLE_FLIGHT_RL,
             -1D,
             AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 
@@ -31,7 +32,7 @@ public class DisableFlightAttribute {
         {
             AttributeInstance attributeInstance = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT);
 
-            if (attributeInstance != null && attributeInstance.hasModifier(DISABLE_FLIGHT)) {
+            if (attributeInstance != null && attributeInstance.hasModifier(DISABLE_FLIGHT_RL)) {
                  removeAttributeIfNotInHeavyAir(player, attributeInstance);
             }
         }

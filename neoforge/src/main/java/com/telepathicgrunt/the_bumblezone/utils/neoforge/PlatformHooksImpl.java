@@ -186,7 +186,7 @@ public class PlatformHooksImpl {
         player.onUpdateAbilities();
 
         AttributeInstance attributeInstance = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT);
-        if (attributeInstance != null && !attributeInstance.hasModifier(DisableFlightAttribute.DISABLE_FLIGHT)) {
+        if (attributeInstance != null && !attributeInstance.hasModifier(DisableFlightAttribute.DISABLE_FLIGHT_RL)) {
             attributeInstance.addTransientModifier(DisableFlightAttribute.DISABLE_FLIGHT);
         }
     }
