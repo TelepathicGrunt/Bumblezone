@@ -365,6 +365,14 @@
       "required": false
     },
     {
+      "id": "healpgood:heart_crystal",
+      "required": false
+    },
+    {
+      "id": "healpgood:polished_heart_crystal",
+      "required": false
+    },
+    {
       "id": "hexcasting:amethyst_dust_block",
       "required": false
     },
