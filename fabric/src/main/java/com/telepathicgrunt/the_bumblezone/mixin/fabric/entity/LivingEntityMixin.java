@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.entity;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -80,45 +81,17 @@ public abstract class LivingEntityMixin {
         return FinishUseItemEvent.EVENT.invoke(new FinishUseItemEvent((LivingEntity) ((Object) this), copy, getUseItemRemainingTicks()), stack);
     }
 
-    @Inject(method = "baseTick()V", at = @At(value = "TAIL"))
-    private void bumblezone$breathing(CallbackInfo ci) {
-        LivingEntity livingEntity = (LivingEntity) (Object) this;
-        boolean invulnerable = livingEntity instanceof Player && ((Player) livingEntity).getAbilities().invulnerable;
-        if (livingEntity.isAlive()) {
-            if (livingEntity.isEyeInFluid(BzTags.SPECIAL_HONEY_LIKE)) {
-                if (!livingEntity.canBreatheUnderwater() && !MobEffectUtil.hasWaterBreathing(livingEntity) && !invulnerable) {
-                    int respiration = EnchantmentHelper.getRespiration(livingEntity);
-                    livingEntity.setAirSupply(
-                            respiration > 0 && livingEntity.level().random.nextInt(respiration + 1) > 0 ?
-                                    livingEntity.getAirSupply() - 4 :
-                                    livingEntity.getAirSupply() - 5
-                    );
-                    if (livingEntity.getAirSupply() == -20) {
-                        livingEntity.setAirSupply(0);
-                        Vec3 vector3d = livingEntity.getDeltaMovement();
-                        SimpleParticleType simpleParticleType = livingEntity.isEyeInFluid(BzTags.BZ_HONEY_FLUID) ? BzParticles.HONEY_PARTICLE.get() : BzParticles.ROYAL_JELLY_PARTICLE.get();
-
-                        for (int i = 0; i < 8; ++i) {
-                            double d2 = livingEntity.getRandom().nextDouble() - livingEntity.getRandom().nextDouble();
-                            double d3 = livingEntity.getRandom().nextDouble() - livingEntity.getRandom().nextDouble();
-                            double d4 = livingEntity.getRandom().nextDouble() - livingEntity.getRandom().nextDouble();
-                            livingEntity.level().addParticle(simpleParticleType, livingEntity.getX() + d2, livingEntity.getY() + d3, livingEntity.getZ() + d4, vector3d.x, vector3d.y, vector3d.z);
-                        }
-
-                        livingEntity.hurt(livingEntity.level().damageSources().drown(), 2.0F);
-                    }
-                }
-
-                if (!livingEntity.level().isClientSide() && livingEntity.isPassenger() && livingEntity.getVehicle() != null && livingEntity.getVehicle().dismountsUnderwater()) {
-                    livingEntity.stopRiding();
-                }
-            }
+    @ModifyExpressionValue(method = "baseTick()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isEyeInFluid(Lnet/minecraft/tags/TagKey;)Z"))
+    private boolean bumblezone$breathing(boolean original) {
+        if (!original) {
+            return ((LivingEntity) (Object) this).isEyeInFluid(BzTags.SPECIAL_HONEY_LIKE);
         }
+        return original;
     }
 
     @ModifyReturnValue(method = "getEquipmentSlotForItem",
             at = @At(value = "RETURN"))
-    private static EquipmentSlot bumblezone$correctSlotForItems(EquipmentSlot equipmentSlot, ItemStack stack) {
+    private EquipmentSlot bumblezone$correctSlotForItems(EquipmentSlot equipmentSlot, ItemStack stack) {
         if(stack.getItem() instanceof ItemExtension extension) {
             return extension.bz$getEquipmentSlot(stack);
         }

@@ -79,8 +79,7 @@ import java.util.UUID;
 
 public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Saddleable, PlayerRideable {
 
-    private static final ResourceLocation FRIENDSHIP_HEALTH_BOOST = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "Friendship Health Boost");
-    private static final EntityDataAccessor<Boolean> SADDLED = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
+     private static final EntityDataAccessor<Boolean> SADDLED = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> QUEEN = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> FRIENDSHIP = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.INT);
     private static final MutableComponent QUEEN_NAME = Component.translatable("entity.the_bumblezone.beehemoth_queen");
@@ -92,7 +91,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     private boolean wasOnGround = false;
     public float flyingSpeed = 0.02F;
 
-    private static final UUID FRIENDSHIP_HEALTH_BOOST_ATTRIBUTE_UUID = UUID.fromString("EBFE5A86-FE64-11ED-BE56-0242AC120002");
+    private static final ResourceLocation FRIENDSHIP_HEALTH_BOOST = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "friendship_health_boost");
     private static final int MAX_FRIENDSHIP_HEALTH_BOOST_AMOUNT = 20;
 
     public BeehemothEntity(EntityType<? extends BeehemothEntity> type, Level world) {

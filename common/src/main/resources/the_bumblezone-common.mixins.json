@@ -62,7 +62,6 @@
     "gameplay.ItemCooldownsAccessor",
     "gameplay.ServerPlayerGameModeMixin",
     "items.GlassBottleUseMixin",
-    "items.HoneyShieldPlayerMixin",
     "items.MapItemMixin",
     "items.PlayerDamageShieldInvoker",
     "items.SpawnEggItemAccessor",
@@ -75,7 +74,6 @@
     "world.ServerWorldMixin",
     "world.SinglePoolElementAccessor",
     "world.StructurePoolAccessor",
-    "world.StructureProcessorAccessor",
     "world.StructureTemplateAccessor",
     "world.StructureTemplateMixin"
   ],

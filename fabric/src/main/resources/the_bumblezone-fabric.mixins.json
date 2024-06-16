@@ -19,7 +19,6 @@
   "mixins": [
     "block.FireBlockMixin",
     "block.PistonStructureResolverMixin",
-    "block.PoiTypesAccessor",
     "block.ShulkerBoxBlockEntityMixin",
     "entity.AnimalMixin",
     "entity.BaseSpawnerMixin",
@@ -39,8 +38,6 @@
     "fluid.BzLiquidBlockMixin",
     "item.BucketItemAccessor",
     "item.ItemStackMixin",
-    "item.ProjectileWeaponItemMixin",
-    "item.RecordItemMixin",
     "loot.LootTableMixin",
     "util.FileUtilMixin"
   ]

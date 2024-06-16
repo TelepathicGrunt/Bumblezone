@@ -1,8 +1,8 @@
 {
   "description": {
-    "translate": "enchantment.the_bumblezone.neurotoxin"
+    "translate": "enchantment.the_bumblezone.neurotoxins"
   },
-  "supported_items": "#the_bumblezone:enchantable/neurotoxin",
+  "supported_items": "#the_bumblezone:enchantable/neurotoxins",
   "slots": [
     "mainhand"
   ],
