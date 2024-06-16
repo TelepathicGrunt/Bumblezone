@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    {
-      "id": "#c:stained_glass_panes",
-      "required": false
-    }
-  ]
-}
