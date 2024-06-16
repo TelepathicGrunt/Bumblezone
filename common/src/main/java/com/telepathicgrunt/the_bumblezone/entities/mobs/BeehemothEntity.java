@@ -245,7 +245,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
             if (!doNothingWithCurrentHealth) {
                 attributeInstance.removeModifier(FRIENDSHIP_HEALTH_BOOST);
                 attributeInstance.addTransientModifier(new AttributeModifier(
-                        ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "Friendship Health Boost"),
+                        ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "friendship_health_boost"),
                         healthBoost,
                         AttributeModifier.Operation.ADD_VALUE));
 

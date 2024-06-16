@@ -283,7 +283,7 @@ public class EssenceBlockGreen extends EssenceBlock {
             if (livingEntityAttributeHealth != null) {
                 float extraHealth = ROOTMIN_HEALTH - rootminEntity.getMaxHealth();
                 livingEntityAttributeHealth.addPermanentModifier(new AttributeModifier(
-                        ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "Essence Arena Health Boost"),
+                        ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence_arena_health_boost"),
                         extraHealth,
                         AttributeModifier.Operation.ADD_VALUE));
                 rootminEntity.heal(extraHealth + rootminEntity.getMaxHealth());
@@ -292,7 +292,7 @@ public class EssenceBlockGreen extends EssenceBlock {
             AttributeInstance knockbackResistanceAttribute = rootminEntity.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
             if (knockbackResistanceAttribute != null) {
                 knockbackResistanceAttribute.addPermanentModifier(new AttributeModifier(
-                        ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "Essence Arena Knockback Resistance Boost"),
+                        ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence_arena_knockback_resistance_boost"),
                         0.25d,
                         AttributeModifier.Operation.ADD_VALUE));
             }

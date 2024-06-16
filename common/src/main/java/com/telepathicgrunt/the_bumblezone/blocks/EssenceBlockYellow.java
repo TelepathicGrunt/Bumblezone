@@ -283,7 +283,7 @@ public class EssenceBlockYellow extends EssenceBlock {
                     AttributeInstance livingEntityAttributeHealth = livingEntity.getAttribute(Attributes.MAX_HEALTH);
                     if (livingEntityAttributeHealth != null) {
                         livingEntityAttributeHealth.addPermanentModifier(new AttributeModifier(
-                                ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "Essence Arena Health Boost"),
+                                ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence_arena_health_boost"),
                                 mobHealthBoost,
                                 AttributeModifier.Operation.ADD_VALUE));
                         livingEntity.heal(mobHealthBoost);
@@ -292,7 +292,7 @@ public class EssenceBlockYellow extends EssenceBlock {
                     AttributeInstance livingEntityAttributeAttack = livingEntity.getAttribute(Attributes.ATTACK_DAMAGE);
                     if (livingEntityAttributeAttack != null) {
                         livingEntityAttributeAttack.addPermanentModifier(new AttributeModifier(
-                                ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "Essence Arena Damage Boost"),
+                                ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence_arena_damage_boost"),
                                 mobAttackBoost,
                                 AttributeModifier.Operation.ADD_VALUE));
                     }
@@ -300,7 +300,7 @@ public class EssenceBlockYellow extends EssenceBlock {
                     AttributeInstance livingEntityAttributeKnockback = livingEntity.getAttribute(Attributes.ATTACK_KNOCKBACK);
                     if (livingEntityAttributeKnockback != null) {
                         livingEntityAttributeKnockback.addPermanentModifier(new AttributeModifier(
-                                ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "Essence Arena Knockback Boost"),
+                                ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence_arena_knockback_boost"),
                                 isEssenced ? 0.3 : 0.6,
                                 AttributeModifier.Operation.ADD_VALUE));
                     }
@@ -308,7 +308,7 @@ public class EssenceBlockYellow extends EssenceBlock {
                     AttributeInstance livingEntityAttributeSpeed = livingEntity.getAttribute(Attributes.MOVEMENT_SPEED);
                     if (livingEntityAttributeSpeed != null) {
                         livingEntityAttributeSpeed.addPermanentModifier(new AttributeModifier(
-                                ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "Essence Arena Speed Boost"),
+                                ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence_arena_speed_boost"),
                                 isEssenced ? 0.065 : 0.085,
                                 AttributeModifier.Operation.ADD_VALUE));
                     }
@@ -316,7 +316,7 @@ public class EssenceBlockYellow extends EssenceBlock {
                     AttributeInstance livingEntityAttributeFlyingSpeed = livingEntity.getAttribute(Attributes.FLYING_SPEED);
                     if (livingEntityAttributeFlyingSpeed != null) {
                         livingEntityAttributeFlyingSpeed.addPermanentModifier(new AttributeModifier(
-                                ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "Essence Arena Flying Speed Boost"),
+                                ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence_arena_flying_speed_boost"),
                                 isEssenced ? 0.065 : 0.085,
                                 AttributeModifier.Operation.ADD_VALUE));
                     }
@@ -324,7 +324,7 @@ public class EssenceBlockYellow extends EssenceBlock {
                     AttributeInstance livingEntityAttributeFollowRange = livingEntity.getAttribute(Attributes.FOLLOW_RANGE);
                     if (livingEntityAttributeFollowRange != null) {
                         livingEntityAttributeFollowRange.addPermanentModifier(new AttributeModifier(
-                                ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "Essence Arena Sight Boost"),
+                                ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence_arena_sight_boost"),
                                 32,
                                 AttributeModifier.Operation.ADD_VALUE));
                     }
