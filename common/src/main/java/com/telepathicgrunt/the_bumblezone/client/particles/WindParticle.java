@@ -38,7 +38,7 @@ public class WindParticle extends TextureSheetParticle {
         Vector3f directionVec = new Vector3f((float) this.xd, (float) this.yd, (float) this.zd).normalize();
         facingCameraMode = (quaternionf, camera, f) -> {
             quaternionf.identity();
-            quaternionf.rotateX(Mth.PI / 2);
+            quaternionf.rotateX(-Mth.PI / 2);
             quaternionf.lookAlong(directionVec, camera.getLookVector()).conjugate();
         };
     }
