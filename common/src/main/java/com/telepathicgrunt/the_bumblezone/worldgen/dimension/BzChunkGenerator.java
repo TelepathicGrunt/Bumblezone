@@ -66,7 +66,6 @@ import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 import java.util.function.Predicate;
 
 public class BzChunkGenerator extends NoiseBasedChunkGenerator {

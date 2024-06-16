@@ -12,8 +12,6 @@ import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
-import java.util.UUID;
-
 public class DisableFlightAttribute {
     public static final ResourceLocation DISABLE_FLIGHT_RL = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "disable_flight");
     public static final AttributeModifier DISABLE_FLIGHT = new AttributeModifier(

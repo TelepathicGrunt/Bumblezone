@@ -42,7 +42,6 @@ import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
-import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
 
 import java.util.Arrays;

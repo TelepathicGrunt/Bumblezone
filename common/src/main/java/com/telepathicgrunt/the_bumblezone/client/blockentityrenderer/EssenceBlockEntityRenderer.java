@@ -1,7 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.client.blockentityrenderer;
 
-import com.google.common.collect.ImmutableMap;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
