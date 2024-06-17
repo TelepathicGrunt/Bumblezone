@@ -47,8 +47,7 @@ public class FlowerHeadwearModel extends HumanoidModel<LivingEntity> {
             int green;
             int blue;
             ItemStack stack = this.entityLiving.getItemBySlot(slot);
-            if (stack.getItem() instanceof FlowerHeadwearHelmet flowerHeadwearHelmet)
-            {
+            if (stack.getItem() instanceof FlowerHeadwearHelmet) {
                 int color = DyedItemColor.getOrDefault(stack, FlowerHeadwearColoring.DEFAULT_COLOR);
                 red = GeneralUtils.getRed(color);
                 green = GeneralUtils.getGreen(color);
@@ -60,7 +59,7 @@ public class FlowerHeadwearModel extends HumanoidModel<LivingEntity> {
                 blue = GeneralUtils.getBlue(FlowerHeadwearColoring.DEFAULT_COLOR);
             }
 
-            head.render(poseStack, buffer, light, overlay, FastColor.ARGB32.color(1, red, green, blue));
+            head.render(poseStack, buffer, light, overlay, FastColor.ARGB32.color(255, red, green, blue));
         }
     }
 
