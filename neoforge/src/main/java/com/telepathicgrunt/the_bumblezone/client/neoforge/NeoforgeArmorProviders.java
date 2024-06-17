@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.client.armor.ArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterArmorProviderEvent;
 import net.minecraft.world.item.Item;
 
-public class ForgeArmorProviders {
+public class NeoforgeArmorProviders {
     private static boolean initialized = false;
 
     public static void setupArmor() {

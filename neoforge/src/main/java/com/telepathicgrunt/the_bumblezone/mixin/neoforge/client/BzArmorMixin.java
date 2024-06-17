@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.neoforge.client;
 
 import com.telepathicgrunt.the_bumblezone.client.armor.ArmorModelProvider;
-import com.telepathicgrunt.the_bumblezone.client.neoforge.ForgeArmorProviders;
+import com.telepathicgrunt.the_bumblezone.client.neoforge.NeoforgeArmorProviders;
 import com.telepathicgrunt.the_bumblezone.items.BzArmor;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
@@ -48,7 +48,7 @@ public class BzArmorMixin extends ArmorItem {
             @Override
             public @NotNull Model getGenericArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
                 if (provider == null) {
-                    provider = ForgeArmorProviders.get(itemStack.getItem());
+                    provider = NeoforgeArmorProviders.get(itemStack.getItem());
                 }
                 return provider.getFinalModel(livingEntity, itemStack, equipmentSlot, original);
             }
