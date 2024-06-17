@@ -19,7 +19,7 @@ import net.minecraft.world.level.Level;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class FlowerHeadwearHelmet extends ArmorItem implements ItemExtension {
+public class FlowerHeadwearHelmet extends BzArmor implements ItemExtension {
     public FlowerHeadwearHelmet(Holder<ArmorMaterial> material, Type armorType, Properties properties) {
         super(material, armorType, properties);
     }

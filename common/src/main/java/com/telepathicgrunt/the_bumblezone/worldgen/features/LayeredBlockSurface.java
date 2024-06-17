@@ -73,7 +73,7 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
         for (int xOffset = 0; xOffset <= 15; xOffset++) {
             for (int zOffset = 0; zOffset <= 15; zOffset++) {
                 mutable.set(startPos.getX() + xOffset, maxY, startPos.getZ() + zOffset);
-                if(targetBiome != context.level().getBiome(mutable).value()) {
+                if(targetBiome != context.level().getBiomeManager().getNoiseBiomeAtPosition(mutable).value()) {
                     continue;
                 }
 
