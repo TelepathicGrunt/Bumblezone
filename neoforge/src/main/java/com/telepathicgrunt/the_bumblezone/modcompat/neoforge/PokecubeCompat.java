@@ -45,7 +45,7 @@ public class PokecubeCompat implements ModCompat {
 //        // Pokecube mobs crash if done in worldgen due to onInitialSpawn not being worldgen safe in their code.
 //        if(world instanceof WorldGenRegion) return false;
 //
-//        // randomly pick a Pokecube mob entry
+//        // randomly pick a Pokecube mob tag
 //        PokedexEntry pokemonDatabase = pokemonListToUse.get(world.getRandom().nextInt(pokemonListToUse.size()));
 //        PokedexEntry.SpawnData spawn = pokemonDatabase.getSpawnData();
 //        if(spawn == null) return false;

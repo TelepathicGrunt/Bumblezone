@@ -7,8 +7,10 @@
   ],
   "possible_rewards": [
     {
-      "id": "minecraft:brick",
-      "count": 4,
+      "item": {
+        "id": "minecraft:brick",
+        "count": 4
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": true

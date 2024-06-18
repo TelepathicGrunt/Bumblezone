@@ -31,6 +31,8 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -38,6 +40,8 @@ import java.time.Month;
 import java.time.Year;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -90,11 +94,12 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         ).apply(instance, instance.stable(RawTradeInputEntry::new)));
     }
 
-    public record RawTradeOutputEntry(String entry, boolean required, int count, int xpReward, int weight) {
+    public record RawTradeOutputEntry(Optional<String> tag, Optional<ItemStack> itemstack, boolean required, int count, int xpReward, int weight) {
         public static final Codec<RawTradeOutputEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-                Codec.STRING.fieldOf("id").forGetter(e -> e.entry),
+                Codec.STRING.optionalFieldOf("tag").forGetter(e -> e.tag),
+                ItemStack.CODEC.optionalFieldOf("item").forGetter(e -> e.itemstack),
                 Codec.BOOL.fieldOf("required").forGetter(e -> e.required),
-                Codec.intRange(1, 64).fieldOf("count").forGetter(e -> e.count),
+                Codec.intRange(1, 64).fieldOf("count_output_for_tags").orElse(1).forGetter(e -> e.count),
                 ExtraCodecs.NON_NEGATIVE_INT.fieldOf("xp_reward").forGetter(e -> e.xpReward),
                 ExtraCodecs.POSITIVE_INT.fieldOf("weight").forGetter(e -> e.weight)
         ).apply(instance, instance.stable(RawTradeOutputEntry::new)));
@@ -107,10 +112,10 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         ).apply(instance, instance.stable(TradeWantEntry::new)));
     }
 
-    public record TradeResultEntry(Optional<TagKey<Item>> tagKey, HolderSet<Item> resultItems, int count, int xpReward, int weight) {
+    public record TradeResultEntry(Optional<TagKey<Item>> tagKey, List<ItemStack> resultItems, int count, int xpReward, int weight) {
         public static final MapCodec<TradeResultEntry> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
                 TagKey.codec(Registries.ITEM).optionalFieldOf("tagkey").forGetter(e -> e.tagKey),
-                RegistryCodecs.homogeneousList(Registries.ITEM, BuiltInRegistries.ITEM.byNameCodec()).fieldOf("wantItems").forGetter(e -> e.resultItems),
+                ItemStack.CODEC.listOf().fieldOf("wantItems").forGetter(e -> e.resultItems),
                 Codec.intRange(1, 64).fieldOf("count").forGetter(e -> e.count),
                 ExtraCodecs.NON_NEGATIVE_INT.fieldOf("xp_reward").forGetter(e -> e.xpReward),
                 ExtraCodecs.POSITIVE_INT.fieldOf("weight").forGetter(e -> e.weight)
@@ -286,20 +291,23 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         List<TradeResultEntry> tradeResultEntries = new ArrayList<>();
 
         for (RawTradeOutputEntry rawTradeOutputEntry : rawTradeOutputEntries) {
-            if (rawTradeOutputEntry.entry.startsWith("#")) {
-                TagKey<Item> tagKey = TagKey.create(Registries.ITEM, ResourceLocation.tryParse(rawTradeOutputEntry.entry.replace("#", "")));
+            if (rawTradeOutputEntry.tag().isPresent()) {
+                TagKey<Item> tagKey = TagKey.create(Registries.ITEM, ResourceLocation.tryParse(rawTradeOutputEntry.tag().get().replace("#", "")));
                 Optional<HolderSet.Named<Item>> tag = BuiltInRegistries.ITEM.getTag(tagKey);
-                if (tag.isEmpty() && rawTradeOutputEntry.required) {
-                    Bumblezone.LOGGER.error("Trade result entry is set to required but " + rawTradeOutputEntry.entry + " tag does not exist.");
+                if (tag.isEmpty()) {
+                    if (rawTradeOutputEntry.required) {
+                        Bumblezone.LOGGER.error("Trade result tag is set to required but " + rawTradeOutputEntry + " tag entry does not exist.");
+                    }
                 }
-                else tag.ifPresent(holders -> tradeResultEntries.add(new TradeResultEntry(Optional.of(tagKey), holders, rawTradeOutputEntry.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
+                else tag.ifPresent(holders -> tradeResultEntries.add(new TradeResultEntry(Optional.of(tagKey), holders.stream().map(i -> i.value().getDefaultInstance()).collect(Collectors.toCollection(ArrayList::new)), rawTradeOutputEntry.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
             }
             else {
-                Optional<Holder.Reference<Item>> item = BuiltInRegistries.ITEM.getHolder(ResourceKey.create(Registries.ITEM, ResourceLocation.tryParse(rawTradeOutputEntry.entry)));
-                if (item.isEmpty() && rawTradeOutputEntry.required) {
-                    Bumblezone.LOGGER.error("Trade result entry is set to required but " + rawTradeOutputEntry.entry + " item does not exist.");
+                if (rawTradeOutputEntry.itemstack().isEmpty() || rawTradeOutputEntry.itemstack().get().isEmpty()) {
+                    if (rawTradeOutputEntry.required) {
+                        Bumblezone.LOGGER.error("Trade result entry is set to required but " + rawTradeOutputEntry + " itemstack entry does not exist.");
+                    }
                 }
-                else item.ifPresent(itemHolder -> tradeResultEntries.add(new TradeResultEntry(Optional.empty(), HolderSet.direct(itemHolder), rawTradeOutputEntry.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
+                else rawTradeOutputEntry.itemstack().ifPresent(itemHolder -> tradeResultEntries.add(new TradeResultEntry(Optional.empty(), Arrays.asList(itemHolder), rawTradeOutputEntry.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
             }
         }
 
@@ -311,7 +319,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         for (Item item : wantItems) {
             List<WeightedTradeResult> resultItems = new ArrayList<>();
             for (TradeResultEntry tradeResultEntry : tradeResultEntries) {
-                resultItems.add(new WeightedTradeResult(tradeResultEntry.tagKey(), Optional.of(tradeResultEntry.resultItems().stream().map(Holder::value).toList()), tradeResultEntry.count(), tradeResultEntry.xpReward(), tradeResultEntry.weight()));
+                resultItems.add(new WeightedTradeResult(tradeResultEntry.tagKey(), Optional.of(tradeResultEntry.resultItems()), tradeResultEntry.count(), tradeResultEntry.xpReward(), tradeResultEntry.weight()));
             }
 
             Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>> temp = new Object2ObjectOpenHashMap<>();
@@ -339,8 +347,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
             }
 
             for (TradeResultEntry tradeResultEntry : tradeResultEntries) {
-                List<Item> resultItems = tradeResultEntry.resultItems().stream().map(Holder::value).toList();
-                existingTrades.add(new WeightedTradeResult(tradeResultEntry.tagKey, Optional.of(resultItems), tradeResultEntry.count(), tradeResultEntry.xpReward(), tradeResultEntry.weight()));
+                existingTrades.add(new WeightedTradeResult(tradeResultEntry.tagKey, Optional.of(tradeResultEntry.resultItems()), tradeResultEntry.count(), tradeResultEntry.xpReward(), tradeResultEntry.weight()));
             }
 
             if (needsSorting) {
@@ -356,11 +363,11 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         for (Item item : items) {
             if (tempQueenTrades.containsKey(item)) {
                 List<WeightedTradeResult> existingTrades = new ArrayList<>(tempQueenTrades.get(item).getFirst().unwrap());
-                existingTrades.add(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items), 1, 0 , 1));
+                existingTrades.add(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items.stream().map(Item::getDefaultInstance).toList()), 1, 0 , 1));
                 tempQueenTrades.put(item, Pair.of(WeightedRandomList.create(existingTrades), null));
             }
             else {
-                tempQueenTrades.put(item, Pair.of(WeightedRandomList.create(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items), 1, 0 , 1)), tradeRandomizeEntry.tagKey.orElse(null)));
+                tempQueenTrades.put(item, Pair.of(WeightedRandomList.create(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items.stream().map(Item::getDefaultInstance).toList()), 1, 0 , 1)), tradeRandomizeEntry.tagKey.orElse(null)));
             }
         }
     }

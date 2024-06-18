@@ -520,11 +520,11 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
 
             static final Codec<String> SINGLE_CHARACTER_STRING_CODEC = Codec.STRING.comapFlatMap((string) -> {
                 if (string.length() != 1) {
-                    return DataResult.error(() -> "Invalid key entry: '" + string + "' is an invalid symbol (must be 1 character only).");
+                    return DataResult.error(() -> "Invalid key tag: '" + string + "' is an invalid symbol (must be 1 character only).");
                 }
                 else {
                     return " ".equals(string) ?
-                            DataResult.error(() -> "Invalid key entry: ' ' is a reserved symbol.") :
+                            DataResult.error(() -> "Invalid key tag: ' ' is a reserved symbol.") :
                             DataResult.success(String.valueOf(string.charAt(0)));
                 }
             }, String::valueOf);

@@ -13,78 +13,100 @@
   ],
   "possible_rewards": [
     {
-      "id": "minecraft:cooked_chicken",
-      "count": 1,
+      "item": {
+        "id": "minecraft:cooked_chicken",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 10,
       "required": true
     },
     {
-      "id": "minecraft:baked_potato",
-      "count": 3,
+      "item": {
+        "id": "minecraft:baked_potato",
+        "count": 3
+      },
       "xp_reward": 0,
       "weight": 3,
       "required": true
     },
     {
-      "id": "minecraft:rabbit_stew",
-      "count": 1,
+      "item": {
+        "id": "minecraft:rabbit_stew",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "farmersdelight:roast_chicken",
-      "count": 1,
+      "item": {
+        "id": "farmersdelight:roast_chicken",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "farmersdelight:stuffed_potato",
-      "count": 1,
+      "item": {
+        "id": "farmersdelight:stuffed_potato",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "farmersdelight:steak_and_potatoes",
-      "count": 1,
+      "item": {
+        "id": "farmersdelight:steak_and_potatoes",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "candlelight:chicken_teriyaki",
-      "count": 1,
+      "item": {
+        "id": "candlelight:chicken_teriyaki",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "croptopia:baked_sweet_potato",
-      "count": 2,
+      "item": {
+        "id": "croptopia:baked_sweet_potato",
+        "count": 2
+      },
       "xp_reward": 0,
       "weight": 2,
       "required": false
     },
     {
-      "id": "croptopia:mashed_potatoes",
-      "count": 1,
+      "item": {
+        "id": "croptopia:mashed_potatoes",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "simplefarming:baked_sweet_potato",
-      "count": 2,
+      "item": {
+        "id": "simplefarming:baked_sweet_potato",
+        "count": 2
+      },
       "xp_reward": 0,
       "weight": 2,
       "required": false
     },
     {
-      "id": "thingamajigs:roast_turkey",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:roast_turkey",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false

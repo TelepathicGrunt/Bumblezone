@@ -14,589 +14,757 @@
   ],
   "possible_rewards": [
     {
-      "id": "minecraft:carved_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "minecraft:carved_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 10,
       "required": true
     },
     {
-      "id": "minecraft:jack_o_lantern",
-      "count": 1,
+      "item": {
+        "id": "minecraft:jack_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 3,
       "required": true
     },
     {
-      "id": "many_flowers:jack_flower",
-      "count": 1,
+      "item": {
+        "id": "many_flowers:jack_flower",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "blockus:soul_o_lantern",
-      "count": 1,
-      "xp_reward": 0,
-      "weight": 3,
-      "required": false
-    },
-    {
-      "id": "blockus:redstone_o_lantern",
-      "count": 1,
+      "item": {
+        "id": "blockus:soul_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 3,
       "required": false
     },
     {
-      "id": "hauntedharvest:carved_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "blockus:redstone_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 3,
       "required": false
     },
     {
-      "id": "hauntedharvest:candy_corn",
-      "count": 2,
+      "item": {
+        "id": "hauntedharvest:carved_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
+      "weight": 3,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "hauntedharvest:candy_corn",
+        "count": 2
+      },
+      "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "spectrum:rock_candy",
-      "count": 1,
+      "item": {
+        "id": "spectrum:rock_candy",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "spectrum:topaz_rock_candy",
-      "count": 1,
+      "item": {
+        "id": "spectrum:topaz_rock_candy",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "spectrum:amethyst_rock_candy",
-      "count": 1,
+      "item": {
+        "id": "spectrum:amethyst_rock_candy",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "spectrum:citrine_rock_candy",
-      "count": 1,
+      "item": {
+        "id": "spectrum:citrine_rock_candy",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "spectrum:onyx_rock_candy",
-      "count": 1,
+      "item": {
+        "id": "spectrum:onyx_rock_candy",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "spectrum:moonstone_rock_candy",
-      "count": 1,
+      "item": {
+        "id": "spectrum:moonstone_rock_candy",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "spectrum:star_candy",
-      "count": 1,
+      "item": {
+        "id": "spectrum:star_candy",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "spectrum:purple_star_candy",
-      "count": 1,
+      "item": {
+        "id": "spectrum:purple_star_candy",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "neapolitan:chocolate_bar",
-      "count": 1,
+      "item": {
+        "id": "neapolitan:chocolate_bar",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "neapolitan:mint_chocolate",
-      "count": 1,
+      "item": {
+        "id": "neapolitan:mint_chocolate",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "neapolitan:mint_candies",
-      "count": 2,
+      "item": {
+        "id": "neapolitan:mint_candies",
+        "count": 2
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "croptopia:candy_corn",
-      "count": 1,
+      "item": {
+        "id": "croptopia:candy_corn",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "supplementaries:candy",
-      "count": 4,
+      "item": {
+        "id": "supplementaries:candy",
+        "count": 4
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "reliquary:witch_hat",
-      "count": 1,
+      "item": {
+        "id": "reliquary:witch_hat",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "born_in_chaos_v1:holiday_candy",
-      "count": 2,
+      "item": {
+        "id": "born_in_chaos_v1:holiday_candy",
+        "count": 2
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "born_in_chaos_v1:mint_candy",
-      "count": 4,
+      "item": {
+        "id": "born_in_chaos_v1:mint_candy",
+        "count": 4
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "born_in_chaos_v1:evil_carved_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "born_in_chaos_v1:evil_carved_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "born_in_chaos_v1:infernal_evil_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "born_in_chaos_v1:infernal_evil_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "born_in_chaos_v1:flaming_evil_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "born_in_chaos_v1:flaming_evil_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "hauntedharvest:jack_o_lantern",
-      "count": 1,
+      "item": {
+        "id": "hauntedharvest:jack_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "undergarden:carved_gloomgourd",
-      "count": 1,
+      "item": {
+        "id": "undergarden:carved_gloomgourd",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "undergarden:gloom_o_lantern",
-      "count": 1,
+      "item": {
+        "id": "undergarden:gloom_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "batsgalore:generic_candy",
-      "count": 3,
+      "item": {
+        "id": "batsgalore:generic_candy",
+        "count": 3
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "batsgalore:skull_candy",
-      "count": 3,
+      "item": {
+        "id": "batsgalore:skull_candy",
+        "count": 3
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "batsgalore:bitesized_jelly",
-      "count": 3,
+      "item": {
+        "id": "batsgalore:bitesized_jelly",
+        "count": 3
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "batsgalore:pumpkin_chocolate_bar",
-      "count": 3,
+      "item": {
+        "id": "batsgalore:pumpkin_chocolate_bar",
+        "count": 3
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "eidolon:grape_candy",
-      "count": 1,
+      "item": {
+        "id": "eidolon:grape_candy",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "eidolon:warlock_hat",
-      "count": 1,
+      "item": {
+        "id": "eidolon:warlock_hat",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "cloudstorage:cotton_candy",
-      "count": 1,
+      "item": {
+        "id": "cloudstorage:cotton_candy",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "irons_spellbooks:pumpkin_helmet",
-      "count": 1,
+      "item": {
+        "id": "irons_spellbooks:pumpkin_helmet",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "goety:dark_hat",
-      "count": 1,
+      "item": {
+        "id": "goety:dark_hat",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "goety:witch_hat",
-      "count": 1,
+      "item": {
+        "id": "goety:witch_hat",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "biomemakeover:witch_hat",
-      "count": 1,
+      "item": {
+        "id": "biomemakeover:witch_hat",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "biomemakeover:cowboy_hat",
-      "count": 1,
+      "item": {
+        "id": "biomemakeover:cowboy_hat",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "herbalbrews:witch_hat",
-      "count": 1,
+      "item": {
+        "id": "herbalbrews:witch_hat",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "ars_nouveau:wixie_hat",
-      "count": 1,
+      "item": {
+        "id": "ars_nouveau:wixie_hat",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:anguished_carved_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "chipped:anguished_carved_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:bad_time_carved_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "chipped:bad_time_carved_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:creepy_carved_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "chipped:creepy_carved_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:devious_carved_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "chipped:devious_carved_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:horrified_carved_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "chipped:horrified_carved_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:overjoyed_carved_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "chipped:overjoyed_carved_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:silly_carved_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "chipped:silly_carved_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:horrified_carved_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "chipped:horrified_carved_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:smiling_carved_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "chipped:smiling_carved_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:horrified_carved_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "chipped:horrified_carved_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:spooky_carved_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "chipped:spooky_carved_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:traditional_carved_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "chipped:traditional_carved_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:upside_down_carved_pumpkin",
-      "count": 1,
+      "item": {
+        "id": "chipped:upside_down_carved_pumpkin",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:anguished_carved_jack_o_lantern",
-      "count": 1,
+      "item": {
+        "id": "chipped:anguished_carved_jack_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:bad_time_carved_jack_o_lantern",
-      "count": 1,
+      "item": {
+        "id": "chipped:bad_time_carved_jack_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:creepy_carved_jack_o_lantern",
-      "count": 1,
+      "item": {
+        "id": "chipped:creepy_carved_jack_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:devious_carved_jack_o_lantern",
-      "count": 1,
+      "item": {
+        "id": "chipped:devious_carved_jack_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:horrified_carved_jack_o_lantern",
-      "count": 1,
+      "item": {
+        "id": "chipped:horrified_carved_jack_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:overjoyed_carved_jack_o_lantern",
-      "count": 1,
+      "item": {
+        "id": "chipped:overjoyed_carved_jack_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:silly_carved_jack_o_lantern",
-      "count": 1,
+      "item": {
+        "id": "chipped:silly_carved_jack_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:horrified_carved_jack_o_lantern",
-      "count": 1,
+      "item": {
+        "id": "chipped:horrified_carved_jack_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:smiling_carved_jack_o_lantern",
-      "count": 1,
+      "item": {
+        "id": "chipped:smiling_carved_jack_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:horrified_carved_jack_o_lantern",
-      "count": 1,
+      "item": {
+        "id": "chipped:horrified_carved_jack_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:spooky_carved_jack_o_lantern",
-      "count": 1,
+      "item": {
+        "id": "chipped:spooky_carved_jack_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:traditional_carved_jack_o_lantern",
-      "count": 1,
+      "item": {
+        "id": "chipped:traditional_carved_jack_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chipped:upside_down_carved_jack_o_lantern",
-      "count": 1,
+      "item": {
+        "id": "chipped:upside_down_carved_jack_o_lantern",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:white_jol",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:white_jol",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:light_gray_jol",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:light_gray_jol",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:gray_jol",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:gray_jol",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:black_jol",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:black_jol",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:brown_jol",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:brown_jol",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:red_jol",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:red_jol",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:yellow_jol",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:yellow_jol",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:lime_jol",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:lime_jol",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:green_jol",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:green_jol",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:cyan_jol",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:cyan_jol",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:light_blue_jol",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:light_blue_jol",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:blue_jol",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:blue_jol",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:purple_jol",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:purple_jol",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:magenta_jol",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:magenta_jol",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:pink_jol",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:pink_jol",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false

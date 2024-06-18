@@ -23,8 +23,10 @@
   ],
   "possible_rewards": [
     {
-      "id": "the_bumblezone:honeycomb_brood_block",
-      "count": 1,
+      "item": {
+        "id": "the_bumblezone:honeycomb_brood_block",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": true

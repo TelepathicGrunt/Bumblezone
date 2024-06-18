@@ -7,92 +7,116 @@
   ],
   "possible_rewards": [
     {
-      "id": "minecraft:sweet_berries",
-      "count": 1,
+      "item": {
+        "id": "minecraft:sweet_berries",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 4,
       "required": true
     },
     {
-      "id": "#minecraft:saplings",
-      "count": 1,
+      "tag": "minecraft:saplings",
+      "count_output_for_tags": 1,
       "xp_reward": 0,
       "weight": 2,
       "required": true
     },
     {
-      "id": "minecraft:rose_bush",
-      "count": 1,
+      "item": {
+        "id": "minecraft:rose_bush",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "wildberries:cranberries",
-      "count": 1,
+      "item": {
+        "id": "wildberries:cranberries",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "wildberries:blueberries",
-      "count": 1,
+      "item": {
+        "id": "wildberries:blueberries",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "wildberries:raspberry",
-      "count": 1,
+      "item": {
+        "id": "wildberries:raspberry",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "wildberries:blackberry",
-      "count": 1,
+      "item": {
+        "id": "wildberries:blackberry",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "moreberries:blue_berries",
-      "count": 1,
+      "item": {
+        "id": "moreberries:blue_berries",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "moreberries:yellow_berries",
-      "count": 1,
+      "item": {
+        "id": "moreberries:yellow_berries",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "moreberries:orange_berries",
-      "count": 1,
+      "item": {
+        "id": "moreberries:orange_berries",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "moreberries:purple_berries",
-      "count": 1,
+      "item": {
+        "id": "moreberries:purple_berries",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "moreberries:green_berries",
-      "count": 1,
+      "item": {
+        "id": "moreberries:green_berries",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "moreberries:black_berries",
-      "count": 1,
+      "item": {
+        "id": "moreberries:black_berries",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false

@@ -14,78 +14,100 @@
   ],
   "possible_rewards": [
     {
-      "id": "minecraft:firework_rocket",
-      "count": 3,
+      "item": {
+        "id": "minecraft:firework_rocket",
+        "count": 3
+      },
       "xp_reward": 0,
       "weight": 10,
       "required": true
     },
     {
-      "id": "minecraft:firework_star",
-      "count": 2,
+      "item": {
+        "id": "minecraft:firework_star",
+        "count": 2
+      },
       "xp_reward": 0,
       "weight": 6,
       "required": true
     },
     {
-      "id": "alexsmobs:enderiophage_rocket",
-      "count": 2,
+      "item": {
+        "id": "alexsmobs:enderiophage_rocket",
+        "count": 2
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "immersiveengineering:firework",
-      "count": 1,
+      "item": {
+        "id": "immersiveengineering:firework",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 2,
       "required": false
     },
     {
-      "id": "galosphere:glow_flare",
-      "count": 1,
+      "item": {
+        "id": "galosphere:glow_flare",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 2,
       "required": false
     },
     {
-      "id": "alexscaves:glow_ink_bomb",
-      "count": 1,
+      "item": {
+        "id": "alexscaves:glow_ink_bomb",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 2,
       "required": false
     },
     {
-      "id": "simplehats:fireworks",
-      "count": 1,
+      "item": {
+        "id": "simplehats:fireworks",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "galosphere:spectre_flare",
-      "count": 1,
+      "item": {
+        "id": "galosphere:spectre_flare",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "additionaladditions:glow_stick",
-      "count": 1,
+      "item": {
+        "id": "additionaladditions:glow_stick",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "chalk:glow_chalk",
-      "count": 1,
+      "item": {
+        "id": "chalk:glow_chalk",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:firework_display",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:firework_display",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false

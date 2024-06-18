@@ -267,43 +267,55 @@
   ],
   "possible_rewards": [
     {
-      "id": "minecraft:melon_slice",
-      "count": 2,
+      "item": {
+        "id": "minecraft:melon_slice",
+        "count": 2
+      },
       "xp_reward": 1,
       "weight": 10,
       "required": true
     },
     {
-      "id": "minecraft:cookie",
-      "count": 3,
+      "item": {
+        "id": "minecraft:cookie",
+        "count": 3
+      },
       "xp_reward": 1,
       "weight": 5,
       "required": true
     },
     {
-      "id": "minecraft:apple",
-      "count": 2,
+      "item": {
+        "id": "minecraft:apple",
+        "count": 2
+      },
       "xp_reward": 1,
       "weight": 3,
       "required": true
     },
     {
-      "id": "minecraft:pumpkin_pie",
-      "count": 1,
+      "item": {
+        "id": "minecraft:pumpkin_pie",
+        "count": 1
+      },
       "xp_reward": 1,
       "weight": 1,
       "required": true
     },
     {
-      "id": "minecraft:cake",
-      "count": 1,
+      "item": {
+        "id": "minecraft:cake",
+        "count": 1
+      },
       "xp_reward": 1,
       "weight": 1,
       "required": true
     },
     {
-      "id": "minecraft:rabbit_stew",
-      "count": 1,
+      "item": {
+        "id": "minecraft:rabbit_stew",
+        "count": 1
+      },
       "xp_reward": 1,
       "weight": 1,
       "required": true

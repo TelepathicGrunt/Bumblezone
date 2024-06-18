@@ -18,253 +18,325 @@
   ],
   "possible_rewards": [
     {
-      "id": "minecraft:snowball",
-      "count": 3,
+      "item": {
+        "id": "minecraft:snowball",
+        "count": 3
+      },
       "xp_reward": 0,
       "weight": 20,
       "required": true
     },
     {
-      "id": "minecraft:sweet_berries",
-      "count": 3,
+      "item": {
+        "id": "minecraft:sweet_berries",
+        "count": 3
+      },
       "xp_reward": 0,
       "weight": 20,
       "required": true
     },
     {
-      "id": "minecraft:milk_bucket",
-      "count": 1,
+      "item": {
+        "id": "minecraft:milk_bucket",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 5,
       "required": true
     },
     {
-      "id": "aether:candy_cane",
-      "count": 4,
+      "item": {
+        "id": "aether:candy_cane",
+        "count": 4
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "batsgalore:generic_candy",
-      "count": 3,
+      "item": {
+        "id": "batsgalore:generic_candy",
+        "count": 3
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "batsgalore:candy_cane",
-      "count": 3,
+      "item": {
+        "id": "batsgalore:candy_cane",
+        "count": 3
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "batsgalore:elf_hat",
-      "count": 1,
+      "item": {
+        "id": "batsgalore:elf_hat",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "batsgalore:reindeer_nose",
-      "count": 1,
+      "item": {
+        "id": "batsgalore:reindeer_nose",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "aether:candy_cane",
-      "count": 2,
+      "item": {
+        "id": "aether:candy_cane",
+        "count": 2
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "endermanoverhaul:snowy_hood",
-      "count": 1,
+      "item": {
+        "id": "endermanoverhaul:snowy_hood",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "minecolonies:santa_hat",
-      "count": 1,
+      "item": {
+        "id": "minecolonies:santa_hat",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "rats:santa_hat",
-      "count": 1,
+      "item": {
+        "id": "rats:santa_hat",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "create_confectionery:candy_cane",
-      "count": 4,
+      "item": {
+        "id": "create_confectionery:candy_cane",
+        "count": 4
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "create_confectionery:gingerbread_man",
-      "count": 4,
+      "item": {
+        "id": "create_confectionery:gingerbread_man",
+        "count": 4
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "spectrum:star_candy",
-      "count": 1,
+      "item": {
+        "id": "spectrum:star_candy",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "spectrum:purple_star_candy",
-      "count": 1,
+      "item": {
+        "id": "spectrum:purple_star_candy",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "simplefarming:candy",
-      "count": 2,
+      "item": {
+        "id": "simplefarming:candy",
+        "count": 2
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "simplefarming:candy_cane",
-      "count": 3,
+      "item": {
+        "id": "simplefarming:candy_cane",
+        "count": 3
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "snowyspirit:candy_cane",
-      "count": 3,
+      "item": {
+        "id": "snowyspirit:candy_cane",
+        "count": 3
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "snowyspirit:gingerbread_cookie",
-      "count": 4,
+      "item": {
+        "id": "snowyspirit:gingerbread_cookie",
+        "count": 4
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "farmersdelight:chicken_soup",
-      "count": 1,
+      "item": {
+        "id": "farmersdelight:chicken_soup",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "festive_delight:festive_chicken_block",
-      "count": 1,
+      "item": {
+        "id": "festive_delight:festive_chicken_block",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "festive_delight:festive_chicken_block",
-      "count": 1,
+      "item": {
+        "id": "festive_delight:festive_chicken_block",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "festive_delight:festive_chiken_block",
-      "count": 1,
+      "item": {
+        "id": "festive_delight:festive_chiken_block",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "snowyspirit:snow_globe",
-      "count": 1,
+      "item": {
+        "id": "snowyspirit:snow_globe",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "snowyspirit:sled_oak",
-      "count": 1,
+      "item": {
+        "id": "snowyspirit:sled_oak",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "snowyspirit:wreath",
-      "count": 1,
+      "item": {
+        "id": "snowyspirit:wreath",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "manyideas_christmas:wreath",
-      "count": 1,
+      "item": {
+        "id": "manyideas_christmas:wreath",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "aether:present",
-      "count": 1,
+      "item": {
+        "id": "aether:present",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "expandedstorage:present",
-      "count": 1,
+      "item": {
+        "id": "expandedstorage:present",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "expandedstorage:red_mini_present",
-      "count": 1,
+      "item": {
+        "id": "expandedstorage:red_mini_present",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "expandedstorage:white_mini_present",
-      "count": 1,
+      "item": {
+        "id": "expandedstorage:white_mini_present",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "expandedstorage:candy_cane_mini_present",
-      "count": 1,
+      "item": {
+        "id": "expandedstorage:candy_cane_mini_present",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "expandedstorage:green_mini_present",
-      "count": 1,
+      "item": {
+        "id": "expandedstorage:green_mini_present",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "expandedstorage:lavender_mini_present",
-      "count": 1,
+      "item": {
+        "id": "expandedstorage:lavender_mini_present",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "expandedstorage:pink_amethyst_mini_present",
-      "count": 1,
+      "item": {
+        "id": "expandedstorage:pink_amethyst_mini_present",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
@@ -284,50 +356,62 @@
       "required": false
     },
     {
-      "id": "tombstone:christmas_hat",
-      "count": 1,
+      "item": {
+        "id": "tombstone:christmas_hat",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:christmas_component",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:christmas_component",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:festive_door",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:festive_door",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:santa_statue",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:santa_statue",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:santa_inflatable",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:santa_inflatable",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "thingamajigs:present_pile",
-      "count": 1,
+      "item": {
+        "id": "thingamajigs:present_pile",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "#supplementaries:presents",
-      "count": 1,
+      "tag": "supplementaries:presents",
+      "count_output_for_tags": 1,
       "xp_reward": 0,
       "weight": 1,
       "required": false

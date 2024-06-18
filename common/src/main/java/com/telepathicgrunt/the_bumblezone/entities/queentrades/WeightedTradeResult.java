@@ -10,6 +10,7 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.Optional;
 public class WeightedTradeResult implements WeightedEntry {
     public static final Codec<WeightedTradeResult> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
             TagKey.codec(Registries.ITEM).optionalFieldOf("t").forGetter(e -> e.tagKey),
-            BuiltInRegistries.ITEM.byNameCodec().listOf().optionalFieldOf("w").forGetter(e -> e.items),
+            ItemStack.CODEC.listOf().optionalFieldOf("w").forGetter(e -> e.items),
             Codec.intRange(1, 64).fieldOf("c").forGetter(e -> e.count),
             ExtraCodecs.NON_NEGATIVE_INT.fieldOf("xp").forGetter(e -> e.xpReward),
             ExtraCodecs.POSITIVE_INT.fieldOf("w8").forGetter(e -> e.weight),
@@ -27,7 +28,7 @@ public class WeightedTradeResult implements WeightedEntry {
 
     public final Optional<TagKey<Item>> tagKey;
 
-    private final Optional<List<Item>> items;
+    private final Optional<List<ItemStack>> items;
 
     public final int count;
 
@@ -37,7 +38,7 @@ public class WeightedTradeResult implements WeightedEntry {
 
     private int totalGroupWeight;
 
-    public WeightedTradeResult(Optional<TagKey<Item>> tagKey, Optional<List<Item>> items, int count, int xpReward, int weight, int totalGroupWeight) {
+    public WeightedTradeResult(Optional<TagKey<Item>> tagKey, Optional<List<ItemStack>> items, int count, int xpReward, int weight, int totalGroupWeight) {
         this.tagKey = tagKey;
         this.items = tagKey != null && tagKey.isPresent() ? Optional.empty() : items;
         this.count = count;
@@ -46,7 +47,7 @@ public class WeightedTradeResult implements WeightedEntry {
         this.totalGroupWeight = totalGroupWeight;
     }
 
-    public WeightedTradeResult(Optional<TagKey<Item>> tagKey, Optional<List<Item>> items, int count, int xpReward, int weight) {
+    public WeightedTradeResult(Optional<TagKey<Item>> tagKey, Optional<List<ItemStack>> items, int count, int xpReward, int weight) {
         this.tagKey = tagKey;
         this.items = tagKey != null && tagKey.isPresent() ? Optional.empty() : items;
         this.count = count;
@@ -67,10 +68,14 @@ public class WeightedTradeResult implements WeightedEntry {
         this.totalGroupWeight = totalGroupWeight;
     }
 
-    public List<Item> getItems() {
-        List<Item> itemsToReturn = new ArrayList<>();
+    public List<ItemStack> getItems() {
+        List<ItemStack> itemsToReturn = new ArrayList<>();
         if (tagKey != null && tagKey.isPresent()) {
-            itemsToReturn = tagKey.map(BuiltInRegistries.ITEM::getOrCreateTag).get().stream().map(Holder::value).toList();
+            itemsToReturn = tagKey.map(BuiltInRegistries.ITEM::getOrCreateTag).get().stream().map(v -> {
+                ItemStack stack = v.value().getDefaultInstance();
+                stack.grow(this.count);
+                return stack;
+            }).toList();
         }
         else if (items.isPresent()){
             itemsToReturn = items.get();

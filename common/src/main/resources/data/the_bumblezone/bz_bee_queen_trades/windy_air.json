@@ -39,22 +39,28 @@
   ],
   "possible_rewards": [
     {
-      "id": "the_bumblezone:windy_air",
-      "count": 1,
+      "item": {
+        "id": "the_bumblezone:windy_air",
+        "count": 1
+      },
       "xp_reward": 1,
       "weight": 1,
       "required": true
     },
     {
-      "id": "the_bumblezone:windy_air",
-      "count": 2,
+      "item": {
+        "id": "the_bumblezone:windy_air",
+        "count": 2
+      },
       "xp_reward": 1,
       "weight": 3,
       "required": true
     },
     {
-      "id": "the_bumblezone:windy_air",
-      "count": 3,
+      "item": {
+        "id": "the_bumblezone:windy_air",
+        "count": 3
+      },
       "xp_reward": 1,
       "weight": 2,
       "required": true

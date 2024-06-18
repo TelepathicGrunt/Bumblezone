@@ -13,246 +13,284 @@
   ],
   "possible_rewards": [
     {
-      "id": "#the_bumblezone:dyes/black",
-      "count": 2,
+      "tag": "the_bumblezone:dyes/black",
+      "count_output_for_tags": 2,
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "#the_bumblezone:dyes/blue",
-      "count": 2,
+      "tag": "the_bumblezone:dyes/blue",
+      "count_output_for_tags": 2,
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "#the_bumblezone:dyes/brown",
-      "count": 2,
+      "tag": "the_bumblezone:dyes/brown",
+      "count_output_for_tags": 2,
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "#the_bumblezone:dyes/cyan",
-      "count": 2,
+      "tag": "the_bumblezone:dyes/cyan",
+      "count_output_for_tags": 2,
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "#the_bumblezone:dyes/gray",
-      "count": 2,
+      "tag": "the_bumblezone:dyes/gray",
+      "count_output_for_tags": 2,
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "#the_bumblezone:dyes/green",
-      "count": 2,
+      "tag": "the_bumblezone:dyes/green",
+      "count_output_for_tags": 2,
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "#the_bumblezone:dyes/light_blue",
-      "count": 2,
+      "tag": "the_bumblezone:dyes/light_blue",
+      "count_output_for_tags": 2,
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "#the_bumblezone:dyes/light_gray",
-      "count": 2,
+      "tag": "the_bumblezone:dyes/light_gray",
+      "count_output_for_tags": 2,
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "#the_bumblezone:dyes/lime",
-      "count": 2,
+      "tag": "the_bumblezone:dyes/lime",
+      "count_output_for_tags": 2,
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "#the_bumblezone:dyes/magenta",
-      "count": 2,
+      "tag": "the_bumblezone:dyes/magenta",
+      "count_output_for_tags": 2,
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "#the_bumblezone:dyes/orange",
-      "count": 2,
+      "tag": "the_bumblezone:dyes/orange",
+      "count_output_for_tags": 2,
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "#the_bumblezone:dyes/pink",
-      "count": 2,
+      "tag": "the_bumblezone:dyes/pink",
+      "count_output_for_tags": 2,
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "#the_bumblezone:dyes/purple",
-      "count": 2,
+      "tag": "the_bumblezone:dyes/purple",
+      "count_output_for_tags": 2,
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "#the_bumblezone:dyes/red",
-      "count": 2,
+      "tag": "the_bumblezone:dyes/red",
+      "count_output_for_tags": 2,
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "#the_bumblezone:dyes/white",
-      "count": 2,
+      "tag": "the_bumblezone:dyes/white",
+      "count_output_for_tags": 2,
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "#the_bumblezone:dyes/yellow",
-      "count": 2,
+      "tag": "the_bumblezone:dyes/yellow",
+      "count_output_for_tags": 2,
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "minecraft:turtle_egg",
-      "count": 1,
+      "item": {
+        "id": "minecraft:turtle_egg",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": true
     },
     {
-      "id": "naturalist:duck_egg",
-      "count": 1,
+      "item": {
+        "id": "naturalist:duck_egg",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "duckling:duck_egg",
-      "count": 1,
+      "item": {
+        "id": "duckling:duck_egg",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "earthmobsmod:duck_egg",
-      "count": 1,
+      "item": {
+        "id": "earthmobsmod:duck_egg",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "earthmobsmod:fancy_egg",
-      "count": 1,
+      "item": {
+        "id": "earthmobsmod:fancy_egg",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "quark:egg_parrot_red_blue",
-      "count": 1,
+      "item": {
+        "id": "quark:egg_parrot_red_blue",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "quark:egg_parrot_blue",
-      "count": 1,
+      "item": {
+        "id": "quark:egg_parrot_blue",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "quark:egg_parrot_green",
-      "count": 1,
+      "item": {
+        "id": "quark:egg_parrot_green",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "quark:egg_parrot_yellow_blue",
-      "count": 1,
+      "item": {
+        "id": "quark:egg_parrot_yellow_blue",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "quark:egg_parrot_gray",
-      "count": 1,
+      "item": {
+        "id": "quark:egg_parrot_gray",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "mysticsbiomes:pink_egg",
-      "count": 1,
+      "item": {
+        "id": "mysticsbiomes:pink_egg",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "mysticsbiomes:orange_egg",
-      "count": 1,
+      "item": {
+        "id": "mysticsbiomes:orange_egg",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "mysticsbiomes:pink_egg",
-      "count": 1,
+      "item": {
+        "id": "mysticsbiomes:pink_egg",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "mysticsbiomes:yellow_egg",
-      "count": 1,
+      "item": {
+        "id": "mysticsbiomes:yellow_egg",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "mysticsbiomes:lime_egg",
-      "count": 1,
+      "item": {
+        "id": "mysticsbiomes:lime_egg",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "mysticsbiomes:cyan_egg",
-      "count": 1,
+      "item": {
+        "id": "mysticsbiomes:cyan_egg",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "mysticsbiomes:purple_egg",
-      "count": 1,
+      "item": {
+        "id": "mysticsbiomes:purple_egg",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "deep_aether:quail_egg",
-      "count": 1,
+      "item": {
+        "id": "deep_aether:quail_egg",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "alexsmobs:emu_egg",
-      "count": 1,
+      "item": {
+        "id": "alexsmobs:emu_egg",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false

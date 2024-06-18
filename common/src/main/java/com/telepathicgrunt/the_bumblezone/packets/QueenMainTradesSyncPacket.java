@@ -60,10 +60,10 @@ public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedRan
                 ListTag secondHalf = tradeCompound.getList("output", Tag.TAG_COMPOUND);
 
                 DataResult<MainTradeRowInput> dataResult1 = MainTradeRowInput.CODEC.parse(NbtOps.INSTANCE, firstHalf);
-                dataResult1.error().ifPresent(e -> Bumblezone.LOGGER.error("Failed to parse Queen Main Trade packet entry (first half): {}", e));
+                dataResult1.error().ifPresent(e -> Bumblezone.LOGGER.error("Failed to parse Queen Main Trade packet tag (first half): {}", e));
 
                 DataResult<WeightedRandomList<WeightedTradeResult>> dataResult2 = WeightedRandomList.codec(WeightedTradeResult.CODEC).parse(NbtOps.INSTANCE, secondHalf);
-                dataResult2.error().ifPresent(e -> Bumblezone.LOGGER.error("Failed to parse Queen Main Trade packet entry (second half): {}", e));
+                dataResult2.error().ifPresent(e -> Bumblezone.LOGGER.error("Failed to parse Queen Main Trade packet tag (second half): {}", e));
 
 
                 dataResult1.result().ifPresent(input -> dataResult2.result().ifPresent(output -> parsedData.add(Pair.of(input, output))));
@@ -80,11 +80,11 @@ public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedRan
 
                 CompoundTag pairData = new CompoundTag();
                 DataResult<Tag> dataResult1 = MainTradeRowInput.CODEC.encodeStart(NbtOps.INSTANCE, tradeRow.getFirst());
-                dataResult1.error().ifPresent(e -> Bumblezone.LOGGER.error("Failed to encode Queen Main Trade packet entry (first half): {}", e));
+                dataResult1.error().ifPresent(e -> Bumblezone.LOGGER.error("Failed to encode Queen Main Trade packet tag (first half): {}", e));
                 dataResult1.result().ifPresent(r -> pairData.put("input", r));
 
                 DataResult<Tag> dataResult = WeightedRandomList.codec(WeightedTradeResult.CODEC).encodeStart(NbtOps.INSTANCE, tradeRow.getSecond());
-                dataResult.error().ifPresent(e -> Bumblezone.LOGGER.error("Failed to encode Queen Main Trade packet entry (second half): {}", e));
+                dataResult.error().ifPresent(e -> Bumblezone.LOGGER.error("Failed to encode Queen Main Trade packet tag (second half): {}", e));
                 dataResult.result().ifPresent(r -> pairData.put("output", r));
 
                 listTag.add(pairData);

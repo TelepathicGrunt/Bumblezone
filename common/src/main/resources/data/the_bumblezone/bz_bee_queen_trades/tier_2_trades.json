@@ -211,57 +211,71 @@
   ],
   "possible_rewards": [
     {
-      "id": "the_bumblezone:bee_stinger",
-      "count": 3,
+      "item": {
+        "id": "the_bumblezone:bee_stinger",
+        "count": 3
+      },
       "xp_reward": 2,
       "weight": 56,
       "required": true
     },
     {
-      "id": "the_bumblezone:honey_crystal_shards",
-      "count": 3,
+      "item": {
+        "id": "the_bumblezone:honey_crystal_shards",
+        "count": 3
+      },
       "xp_reward": 2,
       "weight": 38,
       "required": true
     },
     {
-      "id": "the_bumblezone:pollen_puff",
-      "count": 2,
+      "item": {
+        "id": "the_bumblezone:pollen_puff",
+        "count": 2
+      },
       "xp_reward": 2,
       "weight": 31,
       "required": true
     },
     {
-      "id": "the_bumblezone:beehive_beeswax",
-      "count": 1,
+      "item": {
+        "id": "the_bumblezone:beehive_beeswax",
+        "count": 1
+      },
       "xp_reward": 2,
       "weight": 17,
       "required": true
     },
     {
-      "id": "the_bumblezone:honey_crystal",
-      "count": 1,
+      "item": {
+        "id": "the_bumblezone:honey_crystal",
+        "count": 1
+      },
       "xp_reward": 2,
       "weight": 17,
       "required": true
     },
     {
-      "id": "minecraft:honey_bottle",
-      "count": 1,
+      "item": {
+        "id": "minecraft:honey_bottle",
+        "count": 1
+      },
       "xp_reward": 2,
       "weight": 10,
       "required": true
     },
     {
-      "id": "the_bumblezone:carvable_wax",
-      "count": 2,
+      "item": {
+        "id": "the_bumblezone:carvable_wax",
+        "count": 2
+      },
       "xp_reward": 2,
       "weight": 8,
       "required": true
     },
     {
-      "id": "#minecraft:candles",
-      "count": 2,
+      "tag": "minecraft:candles",
+      "count_output_for_tags": 2,
       "xp_reward": 2,
       "weight": 1,
       "required": true

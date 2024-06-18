@@ -117,7 +117,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     private int underWaterTicks;
     private int poseTicks;
     private boolean hasTrades = true;
-    private static final WeightedTradeResult ESSENCE_DROP = new WeightedTradeResult(null, Optional.of(List.of(BzItems.ESSENCE_OF_THE_BEES.get())), 1, 1000, 1);
+    private static final WeightedTradeResult ESSENCE_DROP = new WeightedTradeResult(null, Optional.of(List.of(BzItems.ESSENCE_OF_THE_BEES.get().getDefaultInstance())), 1, 1000, 1);
 
     public BeeQueenEntity(EntityType<? extends BeeQueenEntity> type, Level world) {
         super(type, world);
@@ -887,11 +887,10 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
 
         int remainingItemToSpawn = reward.count * rewardMultiplier;
-        Item chosenItem = reward.getItems().get(random.nextInt(reward.getItems().size()));
-        int itemStackMaxSize = chosenItem.getDefaultMaxStackSize();
-
+        ItemStack chosenItem = reward.getItems().get(random.nextInt(reward.getItems().size()));
+        int itemStackMaxSize = chosenItem.getMaxStackSize();
         while (remainingItemToSpawn > 0) {
-            ItemStack rewardItem = chosenItem.getDefaultInstance().copyWithCount(1);
+            ItemStack rewardItem = chosenItem.copyWithCount(1);
             setQueenPose(BeeQueenState.ITEM_THROW);
 
             int currentItemStackCount = Math.min(remainingItemToSpawn, itemStackMaxSize);

@@ -7,8 +7,10 @@
   ],
   "possible_rewards": [
     {
-      "id": "minecraft:bubble_coral_block",
-      "count": 1,
+      "item": {
+        "id": "minecraft:bubble_coral_block",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": true

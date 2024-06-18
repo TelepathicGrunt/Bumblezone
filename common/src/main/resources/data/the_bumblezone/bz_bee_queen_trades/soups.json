@@ -23,36 +23,46 @@
   ],
   "possible_rewards": [
     {
-      "id": "minecraft:glistering_melon_slice",
-      "count": 2,
+      "item": {
+        "id": "minecraft:glistering_melon_slice",
+        "count": 2
+      },
       "xp_reward": 1,
       "weight": 1,
       "required": true
     },
     {
-      "id": "minecraft:bread",
-      "count": 2,
+      "item": {
+        "id": "minecraft:bread",
+        "count": 2
+      },
       "xp_reward": 1,
       "weight": 1,
       "required": true
     },
     {
-      "id": "minecraft:baked_potato",
-      "count": 2,
+      "item": {
+        "id": "minecraft:baked_potato",
+        "count": 2
+      },
       "xp_reward": 1,
       "weight": 1,
       "required": true
     },
     {
-      "id": "minecraft:paper",
-      "count": 4,
+      "item": {
+        "id": "minecraft:paper",
+        "count": 4
+      },
       "xp_reward": 1,
       "weight": 1,
       "required": true
     },
     {
-      "id": "minecraft:apple",
-      "count": 4,
+      "item": {
+        "id": "minecraft:apple",
+        "count": 4
+      },
       "xp_reward": 1,
       "weight": 4,
       "required": true
