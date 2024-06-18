@@ -1,3 +1,9 @@
+### **(V.7.4.4 Changes) (1.20.1 Minecraft)**
+
+##### Entities:
+Fixed Rootmins spawned in Floral Meadow not using flowers from `the_bumblezone:biomes/floral_meadow_rootmin_flowers`.
+
+
 ### **(V.7.4.3 Changes) (1.20.1 Minecraft)**
 
 ##### Blocks:

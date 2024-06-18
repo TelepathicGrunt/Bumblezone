@@ -101,11 +101,11 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                         rootminBlockList.removeIf(block -> block.defaultBlockState().is(context.config().disallowedRootminFlowerTag));
                         BlockState chosenRootminFlower;
 
-                        if (blockList.isEmpty()) {
+                        if (rootminBlockList.isEmpty()) {
                             chosenRootminFlower = Blocks.AIR.defaultBlockState();
                         }
                         else {
-                            chosenRootminFlower = blockList.get(randomSource.nextInt(blockList.size())).defaultBlockState();
+                            chosenRootminFlower = rootminBlockList.get(randomSource.nextInt(rootminBlockList.size())).defaultBlockState();
                         }
 
                         rootmin.finalizeSpawn(

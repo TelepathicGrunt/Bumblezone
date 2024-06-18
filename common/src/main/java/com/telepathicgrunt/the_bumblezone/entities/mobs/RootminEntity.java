@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.goals.RootminAngryGoal;
@@ -39,6 +40,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -67,6 +69,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -152,16 +155,23 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    @Nullable
    public BlockState getFlowerBlock() {
-      BlockState state = this.entityData.get(FLOWER_BLOCK_STATE).orElse(null);
-      state = getFlowerOrSetIfMissing(state);
-      return state;
+      return this.entityData.get(FLOWER_BLOCK_STATE).orElse(null);
    }
 
    @Nullable
    private BlockState getFlowerOrSetIfMissing(BlockState state) {
       if (state == null && !this.level().isClientSide() && !this.checkedDefaultFlowerTag) {
+
+         TagKey<Block> blockTag;
+         if (this.level().getBiomeManager().getNoiseBiomeAtPosition(this.blockPosition()).is(new ResourceLocation(Bumblezone.MODID, "floral_meadow"))) {
+            blockTag = BzTags.ROOTMIN_FLORAL_MEADOW_FLOWERS;
+         }
+         else {
+            blockTag = BzTags.ROOTMIN_DEFAULT_FLOWERS;
+         }
+
          List<Block> blockList = BuiltInRegistries.BLOCK
-                 .getTag(BzTags.ROOTMIN_DEFAULT_FLOWERS)
+                 .getTag(blockTag)
                  .map(holders -> holders
                          .stream()
                          .map(Holder::value)
@@ -169,12 +179,8 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                  ).orElseGet(ArrayList::new);
 
          state = blockList.isEmpty() ?
-                 null :
+                 Blocks.AIR.defaultBlockState() :
                  blockList.get(this.getRandom().nextInt(blockList.size())).defaultBlockState();
-
-         if (state != null && state.isAir()) {
-            state = null;
-         }
 
          setFlowerBlock(state);
          this.checkedDefaultFlowerTag = true;
@@ -386,9 +392,15 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       }
    }
 
+   @Nullable
    @Override
-   public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn, CompoundTag dataTag) {
-      return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+   public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag compoundTag) {
+      spawnGroupData = super.finalizeSpawn(serverLevelAccessor, difficultyInstance, mobSpawnType, spawnGroupData, compoundTag);
+
+      BlockState state = getFlowerBlock();
+      getFlowerOrSetIfMissing(state);
+
+      return spawnGroupData;
    }
 
    @Override
