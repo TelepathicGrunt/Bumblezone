@@ -1,3 +1,11 @@
+### **(V.7.4.5 Changes) (1.20.1 Minecraft)**
+
+##### Entities:
+Fixed Rootmins in Tree Dungeons not having a flower.
+
+Changes Pyro bee spawned in structures to use the HasVisualFire boolean nbt field instead of actually burning.
+
+
 ### **(V.7.4.4 Changes) (1.20.1 Minecraft)**
 
 ##### Entities:
