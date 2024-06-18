@@ -26,8 +26,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.telepathicgrunt.the_bumblezone.Bumblezone.GSON;
+
 public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadListener {
-    private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().setLenient().disableHtmlEscaping().excludeFieldsWithoutExposeAnnotation().create();
     public static final PollenPuffEntityPollinateManager POLLEN_PUFF_ENTITY_POLLINATE_MANAGER = new PollenPuffEntityPollinateManager();
 
     public record EntryObject(BzNbtPredicate nbtPredicate, WeightedStateProvider weightedStateProvider) {

@@ -50,8 +50,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.telepathicgrunt.the_bumblezone.Bumblezone.GSON;
+
 public class QueensTradeManager extends SimpleJsonResourceReloadListener {
-    private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().setLenient().disableHtmlEscaping().excludeFieldsWithoutExposeAnnotation().create();
     public static final QueensTradeManager QUEENS_TRADE_MANAGER = new QueensTradeManager();
 
     private final List<TradeCollection> rawTrades = new ArrayList<>();

@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.menus;
 
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
+import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlowerDataManager;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -95,7 +96,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                 if (!BzGeneralConfigs.crystallineFlowerConsumeItemUI) {
                     return false;
                 }
-                if (itemStack.is(BzTags.CANNOT_CONSUMED_ITEMS)) {
+                if (CrystallineFlowerDataManager.CRYSTALLINE_FLOWER_DATA_MANAGER.disallowConsume.contains(itemStack.getItem())) {
                     return false;
                 }
                 else if (!itemStack.getItem().canFitInsideContainerItems()) {

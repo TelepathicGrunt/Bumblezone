@@ -85,13 +85,6 @@ public class BzTags {
     public static final TagKey<Item> DAMAGEABLE_CANDLE_LIGHTING_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "candle_lightables/damageable"));
     public static final TagKey<Item> CONSUMABLE_CANDLE_LIGHTING_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "candle_lightables/consumable"));
     public static final TagKey<Item> INFINITE_CANDLE_LIGHTING_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "candle_lightables/infinite"));
-    public static final TagKey<Item> XP_2_WHEN_CONSUMED_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_2_when_consumed"));
-    public static final TagKey<Item> XP_5_WHEN_CONSUMED_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_5_when_consumed"));
-    public static final TagKey<Item> XP_25_WHEN_CONSUMED_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_25_when_consumed"));
-    public static final TagKey<Item> XP_100_WHEN_CONSUMED_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_100_when_consumed"));
-    public static final TagKey<Item> XP_1000_WHEN_CONSUMED_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_1000_when_consumed"));
-    public static final TagKey<Item> XP_MAXED_WHEN_CONSUMED_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_maxed_when_consumed"));
-    public static final TagKey<Item> CANNOT_CONSUMED_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/cannot_consume"));
     public static final TagKey<Item> CAN_BE_ENCHANTED_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/can_be_enchanted"));
     public static final TagKey<Item> BEEHEMOTH_DESIRED_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "mob_luring/beehemoth"));
     public static final TagKey<Item> BEEHEMOTH_FAST_LURING_DESIRED_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "mob_luring/beehemoth_fast_luring"));

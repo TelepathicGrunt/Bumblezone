@@ -1,0 +1,8 @@
+{
+  "item_consume_data": [
+    {
+      "tag": "the_bumblezone:crystalline_flower/xp_25_when_consumed",
+      "xp_granted": 25
+    }
+  ]
+}

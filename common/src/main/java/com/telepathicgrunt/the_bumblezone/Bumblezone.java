@@ -1,8 +1,11 @@
 package com.telepathicgrunt.the_bumblezone;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mojang.logging.LogUtils;
 import com.teamresourceful.resourcefullib.common.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
+import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlowerDataManager;
 import com.telepathicgrunt.the_bumblezone.blocks.InfinityBarrier;
 import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
@@ -113,6 +116,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class Bumblezone {
+    public static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().setLenient().disableHtmlEscaping().excludeFieldsWithoutExposeAnnotation().create();
 
     // Note to self:
     // -XX:+AllowEnchancedClassRedefinition arg with JetBrainsRuntime SDK (JBRSDK) + Single HotSwap Plugin to enable better hotswapping
@@ -156,6 +160,7 @@ public class Bumblezone {
         PlayerGrantAdvancementEvent.EVENT.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
         RegisterWanderingTradesEvent.EVENT.addListener(WanderingTrades::addWanderingTrades);
         TagsUpdatedEvent.EVENT.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
+        TagsUpdatedEvent.EVENT.addListener(CrystallineFlowerDataManager.CRYSTALLINE_FLOWER_DATA_MANAGER::resolveFlowerData);
         ServerGoingToStopEvent.EVENT.addListener(ThreadExecutor::handleServerStoppingEvent);
         ServerGoingToStartEvent.EVENT.addListener(Bumblezone::serverAboutToStart);
         RegisterReloadListenerEvent.EVENT.addListener(Bumblezone::registerDatapackListener);
@@ -239,6 +244,7 @@ public class Bumblezone {
     public static void registerDatapackListener(final RegisterReloadListenerEvent event) {
         event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "queens_trades"), QueensTradeManager.QUEENS_TRADE_MANAGER);
         event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "pollen_puff"), PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
+        event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower"), CrystallineFlowerDataManager.CRYSTALLINE_FLOWER_DATA_MANAGER);
     }
 
     private static void serverAboutToStart(final ServerGoingToStartEvent event) {

@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
@@ -159,7 +160,7 @@ public class CrystallineFlower extends BaseEntityBlock {
         }
         else if (entity instanceof ItemEntity itemEntity && BzGeneralConfigs.crystallineFlowerConsumeItemEntities) {
             ItemStack stack = itemEntity.getItem();
-            if (stack.is(BzTags.CAN_BE_ENCHANTED_ITEMS) || stack.is(BzTags.CANNOT_CONSUMED_ITEMS) || stack.is(BzItems.HONEY_CRYSTAL_SHARDS.get())) {
+            if (stack.is(BzTags.CAN_BE_ENCHANTED_ITEMS) || CrystallineFlowerDataManager.CRYSTALLINE_FLOWER_DATA_MANAGER.disallowConsume.contains(stack.getItem()) || stack.is(BzItems.HONEY_CRYSTAL_SHARDS.get())) {
                 return;
             }
 
@@ -383,26 +384,16 @@ public class CrystallineFlower extends BaseEntityBlock {
     }
 
     public static int getXpPerItem(ItemStack stack) {
-        if (stack.is(BzTags.XP_2_WHEN_CONSUMED_ITEMS)) {
-            return 2;
-        }
-        else if (stack.is(BzTags.XP_5_WHEN_CONSUMED_ITEMS)) {
-            return 5;
-        }
-        else if (stack.is(BzTags.XP_25_WHEN_CONSUMED_ITEMS)) {
-            return 25;
-        }
-        else if (stack.is(BzTags.XP_100_WHEN_CONSUMED_ITEMS)) {
-            return 100;
-        }
-        else if (stack.is(BzTags.XP_1000_WHEN_CONSUMED_ITEMS)) {
-            return 1000;
-        }
-        else if (stack.is(BzTags.XP_MAXED_WHEN_CONSUMED_ITEMS)) {
-            return Integer.MAX_VALUE;
+        if (CrystallineFlowerDataManager.CRYSTALLINE_FLOWER_DATA_MANAGER.disallowConsume.contains(stack.getItem())) {
+            return 0;
         }
 
-        return 1;
+        Pair<Integer, Boolean> xpValue = CrystallineFlowerDataManager.CRYSTALLINE_FLOWER_DATA_MANAGER.itemToXp.get(stack.getItem());
+        if (xpValue != null) {
+            return xpValue.getSecond() ? Integer.MAX_VALUE : xpValue.getFirst();
+        }
+
+        return CrystallineFlowerDataManager.CRYSTALLINE_FLOWER_DATA_MANAGER.allowNormalConsumption ? 1 : 0;
     }
 
     public static int getXpToHighestAvailableTier(CrystallineFlowerBlockEntity crystallineFlowerBlockEntity, int tiersToMax, List<Boolean> obstructedAbove) {
