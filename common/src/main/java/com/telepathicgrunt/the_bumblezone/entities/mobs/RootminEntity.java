@@ -646,6 +646,9 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    @Override
    public void tick() {
+      BlockState state = getFlowerBlock();
+      getFlowerOrSetIfMissing(state);
+
       super.tick();
 
       if (this.hurtTime == 9) {

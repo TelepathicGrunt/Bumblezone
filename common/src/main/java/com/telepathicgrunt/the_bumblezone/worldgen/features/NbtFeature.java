@@ -52,7 +52,7 @@ public class NbtFeature <T extends NbtFeatureConfig> extends Feature<T> {
         // offset the feature's position
         BlockPos position = context.origin().above(context.config().structureYOffset);
 
-        StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(rotation).setRotationPivot(halfLengths).setIgnoreEntities(false);
+        StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(rotation).setRotationPivot(halfLengths).setIgnoreEntities(false).setFinalizeEntities(true);
         Registry<StructureProcessorList> processorListRegistry = context.level().getLevel().getServer().registryAccess().registryOrThrow(Registries.PROCESSOR_LIST);
         StructureProcessorList emptyProcessor = processorListRegistry.get(EMPTY);
 
