@@ -34,7 +34,7 @@ public class RootminHideGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (this.mob.getTarget() != null) {
+        if (this.mob.getTarget() != null && this.mob.getTarget().isAlive()) {
             if (this.mob.getTarget() instanceof Player player) {
                 if (player.getUUID().equals(this.mob.superHatedPlayer)) {
                     return false;

@@ -862,33 +862,37 @@ public class CosmicCrystalEntity extends LivingEntity {
                 }
             }
 
-            this.level().playSound(
-                    this,
-                    this.blockPosition(),
-                    BzSounds.COSMIC_CRYSTAL_ENTITY_LASER.get(),
-                    SoundSource.HOSTILE,
-                    1.2f,
-                    1);
+            if (this.level().getGameTime() % 10 == 0) {
+                this.level().playSound(
+                        this,
+                        this.blockPosition(),
+                        BzSounds.COSMIC_CRYSTAL_ENTITY_LASER.get(),
+                        SoundSource.HOSTILE,
+                        1.2f,
+                        1);
 
-            this.level().playSound(
-                    this,
-                    BlockPos.containing(hitResult.getLocation()),
-                    BzSounds.COSMIC_CRYSTAL_ENTITY_LASER.get(),
-                    SoundSource.HOSTILE,
-                    1.2f,
-                    1);
+                this.level().playSound(
+                        this,
+                        BlockPos.containing(hitResult.getLocation()),
+                        BzSounds.COSMIC_CRYSTAL_ENTITY_LASER.get(),
+                        SoundSource.HOSTILE,
+                        1.2f,
+                        1);
+            }
         }
         else if (!this.laserChargeSoundPlayed &&
                 CosmicCrystalEntity.isLaserState(this.getCosmicCrystalState()) &&
                 this.currentStateTimeTick > this.getLaserStartDelay() - 10)
         {
-            this.level().playSound(
-                    this,
-                    this.blockPosition(),
-                    BzSounds.COSMIC_CRYSTAL_ENTITY_LASER_CHARGE.get(),
-                    SoundSource.HOSTILE,
-                    1.2f,
-                    1);
+            if (this.level().getGameTime() % 10 == 0) {
+                this.level().playSound(
+                        this,
+                        this.blockPosition(),
+                        BzSounds.COSMIC_CRYSTAL_ENTITY_LASER_CHARGE.get(),
+                        SoundSource.HOSTILE,
+                        1.2f,
+                        1);
+            }
 
             this.laserChargeSoundPlayed = true;
         }
