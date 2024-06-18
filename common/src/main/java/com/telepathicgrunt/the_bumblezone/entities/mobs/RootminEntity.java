@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.goals.RootminAngryGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.RootminAntiGoal;
@@ -39,6 +40,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -152,16 +154,22 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    @Nullable
    public BlockState getFlowerBlock() {
-      BlockState state = this.entityData.get(FLOWER_BLOCK_STATE).orElse(null);
-      state = getFlowerOrSetIfMissing(state);
-      return state;
+      return this.entityData.get(FLOWER_BLOCK_STATE).orElse(null);
    }
 
    @Nullable
    private BlockState getFlowerOrSetIfMissing(BlockState state) {
       if (state == null && !this.level().isClientSide() && !this.checkedDefaultFlowerTag) {
+         TagKey<Block> blockTag;
+         if (this.level().getBiomeManager().getNoiseBiomeAtPosition(this.blockPosition()).is(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "floral_meadow"))) {
+            blockTag = BzTags.ROOTMIN_FLORAL_MEADOW_FLOWERS;
+         }
+         else {
+            blockTag = BzTags.ROOTMIN_DEFAULT_FLOWERS;
+         }
+
          List<Block> blockList = BuiltInRegistries.BLOCK
-                 .getTag(BzTags.ROOTMIN_DEFAULT_FLOWERS)
+                 .getTag(blockTag)
                  .map(holders -> holders
                          .stream()
                          .map(Holder::value)
@@ -388,8 +396,13 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    }
 
    @Override
-   public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn) {
-      return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn);
+   public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, SpawnGroupData spawnData) {
+      spawnData = super.finalizeSpawn(level, difficulty, reason, spawnData);
+
+      BlockState state = getFlowerBlock();
+      getFlowerOrSetIfMissing(state);
+
+      return spawnData;
    }
 
    @Override

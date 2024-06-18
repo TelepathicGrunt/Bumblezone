@@ -104,7 +104,7 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                             chosenRootminFlower = Blocks.AIR.defaultBlockState();
                         }
                         else {
-                            chosenRootminFlower = blockList.get(randomSource.nextInt(blockList.size())).defaultBlockState();
+                            chosenRootminFlower = rootminBlockList.get(randomSource.nextInt(rootminBlockList.size())).defaultBlockState();
                         }
 
                         rootmin.finalizeSpawn(
