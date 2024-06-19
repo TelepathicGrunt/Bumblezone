@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.utils.fabric;
 
 import com.mojang.authlib.GameProfile;
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.mixin.fabric.entity.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.fabric.item.BucketItemAccessor;
@@ -275,6 +276,10 @@ public class PlatformHooksImpl {
 
     public static RegistryAccess currentRegistryAccess = null;
     public static RegistryAccess getCurrentRegistryAccess() {
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT ) {
+            return GeneralUtilsClient.getClientRegistryAccess();
+        }
+
         return currentRegistryAccess;
     }
 }

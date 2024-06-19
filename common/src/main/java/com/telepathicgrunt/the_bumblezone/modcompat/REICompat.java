@@ -104,7 +104,7 @@ public class REICompat implements REIClientPlugin {
 
     private static void addInfo(Fluid fluid) {
         BuiltinClientPlugin.getInstance().registerInformation(
-                EntryStacks.of(fluid, 1),
+                EntryStacks.of(fluid, 1000),
                 Component.translatable(BuiltInRegistries.FLUID.getKey(fluid).toString()),
                 (text) -> {
                     text.add(Component.translatable(Bumblezone.MODID + "." + BuiltInRegistries.FLUID.getKey(fluid).getPath() + ".description"));

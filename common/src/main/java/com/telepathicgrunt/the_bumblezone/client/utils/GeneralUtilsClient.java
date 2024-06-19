@@ -4,6 +4,7 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -17,6 +18,10 @@ public class GeneralUtilsClient {
 
     public static Player getClientPlayer() {
         return Minecraft.getInstance().player;
+    }
+
+    public static RegistryAccess getClientRegistryAccess() {
+        return Minecraft.getInstance().getConnection().registryAccess();
     }
 
     /////////////////////////////////////////////////////////////////////////////////

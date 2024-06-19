@@ -71,14 +71,13 @@ dependencies {
 //    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}:generators")// Mekanism: Generators
 //    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}:tools")// Mekanism: Tools
 
-    //modRuntimeOnly("mezz.jei:jei-${project.jei_mc}-forge:${project.jei}")
+    //modRuntimeOnly("mezz.jei:jei-${project.jei_mc}-neoforge:${project.jei}")
     //modRuntimeOnly("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
 
-    //modCompileOnly("dev.emi:emi-forge:${emi}:api")
-    //modRuntimeOnly("dev.emi:emi-forge:${emi}")
+    //modRuntimeOnly("dev.emi:emi-neoforge:${emi}")
 
-    //modRuntimeOnly("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config}")
-    //modRuntimeOnly("dev.architectury:architectury-forge:${project.architectury}")
+    //modRuntimeOnly("me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config}")
+    //modRuntimeOnly("dev.architectury:architectury-neoforge:${project.architectury}")
     //modRuntimeOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}")
     modCompileOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}:api")
 

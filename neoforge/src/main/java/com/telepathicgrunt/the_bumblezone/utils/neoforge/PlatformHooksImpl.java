@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.utils.neoforge;
 
 import com.mojang.authlib.GameProfile;
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.entities.neoforge.DisableFlightAttribute;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
@@ -31,6 +32,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.fml.ModList;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.common.NeoForge;
@@ -210,6 +212,10 @@ public class PlatformHooksImpl {
     }
 
     public static RegistryAccess getCurrentRegistryAccess() {
+        if (FMLEnvironment.dist.isClient()) {
+            return GeneralUtilsClient.getClientRegistryAccess();
+        }
+
         return ServerLifecycleHooks.getCurrentServer().registryAccess();
     }
 }

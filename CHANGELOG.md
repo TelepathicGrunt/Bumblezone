@@ -3,7 +3,7 @@
 ##### Mod Compat:
 Fixed crash with Mekanism.
 
-Fixed crash with JEI.
+Fixed crash with JEI, EMI, and REI.
 
 
 ### **(V.7.6.0 Changes) (1.21 Minecraft)**
