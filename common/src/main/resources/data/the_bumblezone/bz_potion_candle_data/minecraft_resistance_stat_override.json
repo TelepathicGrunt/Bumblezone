@@ -1,0 +1,7 @@
+{
+  "effect": "minecraft:resistance",
+  "override": {
+    "max_level_cap": 4,
+    "min_level_cap": 0
+  }
+}

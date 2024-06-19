@@ -1,0 +1,6 @@
+{
+  "effect": "minecraft:night_vision",
+  "override": {
+    "linger_base_duration_in_seconds": 15
+  }
+}

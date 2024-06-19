@@ -5,9 +5,10 @@ import com.google.gson.GsonBuilder;
 import com.mojang.logging.LogUtils;
 import com.teamresourceful.resourcefullib.common.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
-import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlowerDataManager;
+import com.telepathicgrunt.the_bumblezone.blocks.datamanagers.CrystallineFlowerDataManager;
 import com.telepathicgrunt.the_bumblezone.blocks.InfinityBarrier;
 import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
+import com.telepathicgrunt.the_bumblezone.blocks.datamanagers.PotionCandleDataManager;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
@@ -19,8 +20,8 @@ import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
-import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
-import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
+import com.telepathicgrunt.the_bumblezone.entities.datamanagers.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
+import com.telepathicgrunt.the_bumblezone.entities.datamanagers.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationBackend;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
@@ -245,6 +246,7 @@ public class Bumblezone {
         event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "queens_trades"), QueensTradeManager.QUEENS_TRADE_MANAGER);
         event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "pollen_puff"), PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
         event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower"), CrystallineFlowerDataManager.CRYSTALLINE_FLOWER_DATA_MANAGER);
+        event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle"), PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER);
     }
 
     private static void serverAboutToStart(final ServerGoingToStartEvent event) {

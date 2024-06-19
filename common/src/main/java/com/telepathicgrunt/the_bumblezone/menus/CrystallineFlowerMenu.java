@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.menus;
 
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
-import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlowerDataManager;
+import com.telepathicgrunt.the_bumblezone.blocks.datamanagers.CrystallineFlowerDataManager;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;

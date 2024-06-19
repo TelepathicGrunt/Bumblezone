@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.blocks;
+package com.telepathicgrunt.the_bumblezone.blocks.datamanagers;
 
 import com.google.gson.JsonElement;
 import com.mojang.datafixers.util.Pair;

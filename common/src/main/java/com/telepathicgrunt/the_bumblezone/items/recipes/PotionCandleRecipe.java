@@ -6,6 +6,7 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.PotionCandleBlockEntity;
+import com.telepathicgrunt.the_bumblezone.blocks.datamanagers.PotionCandleDataManager;
 import com.telepathicgrunt.the_bumblezone.mixin.containers.ShapedRecipePatternAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -176,9 +177,9 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     public static void balanceMainStats(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger amplifier, AtomicInteger potionEffectsFound) {
         amplifier.set(amplifier.get() / potionEffectsFound.get());
 
-        // Resistance level 5 or higher is 100% damage immunity.
-        if (chosenEffect.equals(MobEffects.DAMAGE_RESISTANCE.value()) && amplifier.get() > 4) {
-            amplifier.set(4);
+        if (PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER.effectToOverrideStats.containsKey(chosenEffect)) {
+            PotionCandleDataManager.OverrideData overrideData = PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER.effectToOverrideStats.get(chosenEffect);
+            amplifier.set(GeneralUtils.constrainToRange(amplifier.get(), overrideData.minLevelCap(), overrideData.maxLevelCap()));
         }
 
         float durationBaseMultiplier = ((0.4f / (0.9f * potionEffectsFound.get())) + (amplifier.get() * 0.22f));
@@ -189,13 +190,10 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             int activationAmounts = (int)Math.ceil((double) maxDuration.intValue() / thresholdTime);
             maxDuration.set((int) (activationAmounts * thresholdTime));
         }
-        else {
-            if (GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.TEN_SECONDS_POTION_CANDLE_EFFECTS, chosenEffect)) {
-                maxDuration.set(Math.min(200, maxDuration.get()));
-            }
-            else if (GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.ONE_MINUTE_POTION_CANDLE_EFFECTS, chosenEffect)) {
-                maxDuration.set(Math.min(1200, maxDuration.get()));
-            }
+
+        if (PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER.effectToOverrideStats.containsKey(chosenEffect)) {
+            PotionCandleDataManager.OverrideData overrideData = PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER.effectToOverrideStats.get(chosenEffect);
+            maxDuration.set(GeneralUtils.constrainToRange(maxDuration.get(), overrideData.minBurnDurationCap() * 20, overrideData.maxBurnDurationCap() * 20));
         }
     }
 
@@ -204,7 +202,8 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
                                                      AtomicInteger amplifier,
                                                      int splashCount,
                                                      int lingerCount,
-                                                     int outputCount) {
+                                                     int outputCount)
+    {
         ItemStack resultStack = getResultStack(outputCount);
 
         CustomData customData = resultStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
@@ -219,12 +218,16 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         if (chosenEffect.isInstantenous()) {
             blockEntityTag.putInt(PotionCandleBlockEntity.LINGER_TIME_TAG, 1);
         }
-        else if (chosenEffect.equals(MobEffects.NIGHT_VISION.value())) {
-            setLingerTime(chosenEffect, lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_NIGHT_VISION_LINGER_TIME);
-        }
         else {
             setLingerTime(chosenEffect, lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_LINGER_TIME);
         }
+
+        if (PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER.effectToOverrideStats.containsKey(chosenEffect)) {
+            PotionCandleDataManager.OverrideData overrideData = PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER.effectToOverrideStats.get(chosenEffect);
+            overrideData.baseLingerTime().ifPresent(baseLingerTime ->
+                    setLingerTime(chosenEffect, lingerCount, blockEntityTag, baseLingerTime * 20));
+        }
+
         resultStack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(blockEntityTag));
         return resultStack;
     }
@@ -232,11 +235,9 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     private static void setLingerTime(MobEffect chosenEffect, int lingerCount, CompoundTag blockEntityTag, int baseLingerTime) {
         int lingerTime = baseLingerTime + (lingerCount * baseLingerTime * 2);
 
-        if (GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.TEN_SECONDS_POTION_CANDLE_EFFECTS, chosenEffect)) {
-            lingerTime = Math.min(200, lingerTime);
-        }
-        else if (GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.ONE_MINUTE_POTION_CANDLE_EFFECTS, chosenEffect)) {
-            lingerTime = Math.min(1200, lingerTime);
+        if (PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER.effectToOverrideStats.containsKey(chosenEffect)) {
+            PotionCandleDataManager.OverrideData overrideData = PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER.effectToOverrideStats.get(chosenEffect);
+            lingerTime = Math.min(lingerTime, overrideData.maxBurnDurationCap() * 20);
         }
 
         blockEntityTag.putInt(PotionCandleBlockEntity.LINGER_TIME_TAG, lingerTime);

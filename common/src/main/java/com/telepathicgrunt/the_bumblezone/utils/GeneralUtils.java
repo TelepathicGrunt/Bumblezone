@@ -832,6 +832,12 @@ public class GeneralUtils {
 
     /////////////////////////////////////////////////////////////////////////////////
 
+    public static int constrainToRange(int value, int min, int max) {
+        return Math.min(Math.max(value, min), max);
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
     // For comparison with POI
 //            PoiManager poiManager = ((ServerLevel)world).getPoiManager();
 //            for (int i = 0; i < 1000; i++) {

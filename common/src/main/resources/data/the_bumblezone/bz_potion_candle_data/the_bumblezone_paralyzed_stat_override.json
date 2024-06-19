@@ -1,0 +1,7 @@
+{
+  "effect": "the_bumblezone:paralyzed",
+  "override": {
+    "max_burn_duration_cap_in_seconds": 10,
+    "min_burn_duration_cap_in_seconds": 1
+  }
+}

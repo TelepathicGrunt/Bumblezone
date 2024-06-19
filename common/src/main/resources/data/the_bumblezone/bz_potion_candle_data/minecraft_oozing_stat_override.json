@@ -1,0 +1,8 @@
+{
+  "effect": "minecraft:oozing",
+  "override": {
+    "max_burn_duration_cap_in_seconds": 20,
+    "min_burn_duration_cap_in_seconds": 5,
+    "linger_base_duration_in_seconds": 1
+  }
+}

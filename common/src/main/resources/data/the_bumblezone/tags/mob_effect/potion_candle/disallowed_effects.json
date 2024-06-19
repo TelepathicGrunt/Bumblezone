@@ -1,4 +1,9 @@
 {
   "replace": false,
-  "values": []
+  "values": [
+    "minecraft:hero_of_the_village",
+    "minecraft:bad_omen",
+    "minecraft:trial_omen",
+    "minecraft:raid_omen"
+  ]
 }

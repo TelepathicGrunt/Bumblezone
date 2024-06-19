@@ -33,7 +33,6 @@ public class PotionCandleBlockEntity extends BlockEntity {
     public static final int DEFAULT_MAX_DURATION = 12000;
     public static final int DEFAULT_RANGE = 3;
     public static final int DEFAULT_LINGER_TIME = 60;
-    public static final int DEFAULT_NIGHT_VISION_LINGER_TIME = 240;
     public static final String COLOR_TAG = "color";
     public static final String STATUS_EFFECT_TAG = "status";
     public static final String AMPLIFIER_TAG = "amplifier";

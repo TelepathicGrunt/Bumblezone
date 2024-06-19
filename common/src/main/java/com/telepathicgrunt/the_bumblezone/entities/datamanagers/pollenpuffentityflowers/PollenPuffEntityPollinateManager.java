@@ -1,7 +1,5 @@
-package com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers;
+package com.telepathicgrunt.the_bumblezone.entities.datamanagers.pollenpuffentityflowers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;

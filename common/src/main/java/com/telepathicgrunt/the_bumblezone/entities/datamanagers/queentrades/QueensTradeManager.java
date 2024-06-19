@@ -1,7 +1,5 @@
-package com.telepathicgrunt.the_bumblezone.entities.queentrades;
+package com.telepathicgrunt.the_bumblezone.entities.datamanagers.queentrades;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
@@ -32,7 +30,6 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -41,7 +38,6 @@ import java.time.Year;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
