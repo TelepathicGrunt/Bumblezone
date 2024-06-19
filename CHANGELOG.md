@@ -1,3 +1,11 @@
+### **(V.7.6.1 Changes) (1.21 Minecraft)**
+
+##### Mod Compat:
+Fixed crash with Mekanism.
+
+Fixed crash with JEI.
+
+
 ### **(V.7.6.0 Changes) (1.21 Minecraft)**
 
 ##### Major:

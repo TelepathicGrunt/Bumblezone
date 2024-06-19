@@ -38,9 +38,6 @@ dependencies {
     modCompileOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
     modRuntimeOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
 
-    modCompileOnly("maven.modrinth:sodium:${rootProject.sodium}")
-    //modRuntimeOnly("maven.modrinth:sodium:${rootProject.sodium}")
-
     modCompileOnly("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}") { transitive false }
     modCompileOnly("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}") { transitive false }
     modCompileOnly("dev.emi:trinkets:${rootProject.trinkets}") { transitive false }

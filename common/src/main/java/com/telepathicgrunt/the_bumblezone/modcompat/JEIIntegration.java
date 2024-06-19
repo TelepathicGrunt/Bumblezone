@@ -60,7 +60,7 @@ public class JEIIntegration implements IModPlugin {
 
     private static <T> void addFluidData(IRecipeRegistration registration, Fluid fluid, IPlatformFluidHelper<T> platformFluidHelper) {
         registration.addIngredientInfo(
-                platformFluidHelper.create(fluid, 1),
+                platformFluidHelper.create(fluid.builtInRegistryHolder(), 1),
                 platformFluidHelper.getFluidIngredientType(),
                 Component.translatable(Bumblezone.MODID + "." + BuiltInRegistries.FLUID.getKey(fluid).getPath() + ".description"));
     }

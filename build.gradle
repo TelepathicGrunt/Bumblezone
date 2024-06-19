@@ -167,7 +167,7 @@ allprojects {
             }
         }
         maven {
-            url = "https://maven.theillusivec4.top/"
+            url = "https://maven.octo-studios.com/releases"
             content {
                 includeGroup 'top.theillusivec4.curios'
             }
