@@ -5,6 +5,7 @@ import com.teamresourceful.resourcefullib.common.network.base.ClientboundPacketT
 import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.client.Minecraft;
@@ -43,7 +44,7 @@ public record UpdateFallingBlockPacket(int fallingBlockId, short layer) implemen
         @Override
         public Runnable handle(UpdateFallingBlockPacket message) {
             return () -> {
-                Entity entity = Minecraft.getInstance().level.getEntity(message.fallingBlockId);
+                Entity entity = GeneralUtilsClient.getClientLevel().getEntity(message.fallingBlockId);
                 if (entity instanceof FallingBlockEntity fallingBlockEntity && fallingBlockEntity.getBlockState().is(BzBlocks.PILE_OF_POLLEN.get())) {
                     ((FallingBlockEntityAccessor) fallingBlockEntity).setBlockState(BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int) message.layer));
                 }

@@ -4,6 +4,7 @@ import com.teamresourceful.resourcefullib.common.network.Packet;
 import com.teamresourceful.resourcefullib.common.network.base.ClientboundPacketType;
 import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -94,7 +95,7 @@ public record MobEffectClientSyncPacket(int entityId, ResourceLocation effectRl,
         @Override
         public Runnable handle(MobEffectClientSyncPacket message) {
             return () -> {
-                Entity entity = Minecraft.getInstance().level.getEntity(message.entityId());
+                Entity entity = GeneralUtilsClient.getClientLevel().getEntity(message.entityId());
                 if (entity instanceof LivingEntity) {
                     BuiltInRegistries.MOB_EFFECT.getHolder(message.effectRl()).ifPresent(mobEffect -> {
                         if (message.effectDurationTicks() == 0) {

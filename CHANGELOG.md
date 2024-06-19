@@ -1,5 +1,8 @@
 ### **(V.7.6.2 Changes) (1.21 Minecraft)**
 
+##### Misc:
+Fixed crash when starting up server due to classloading issues in packet initialization.
+
 ##### Items:
 Throwing Pollen Puff at the Bogged mob may spawn Red Mushroom or Brown Mushroom nearby! (If mushroom can be placed at spot)
 

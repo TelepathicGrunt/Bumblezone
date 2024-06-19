@@ -10,6 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,10 @@ public class GeneralUtilsClient {
 
     public static Player getClientPlayer() {
         return Minecraft.getInstance().player;
+    }
+
+    public static Level getClientLevel() {
+        return Minecraft.getInstance().level;
     }
 
     public static RegistryAccess getClientRegistryAccess() {
