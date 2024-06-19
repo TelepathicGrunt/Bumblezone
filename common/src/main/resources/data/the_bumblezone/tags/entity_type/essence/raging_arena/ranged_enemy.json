@@ -3,6 +3,8 @@
   "values": [
     "minecraft:ghast",
     "minecraft:blaze",
-    "minecraft:stray"
+    "minecraft:stray",
+    "minecraft:bogged",
+    "minecraft:breeze"
   ]
 }

@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "the_bumblezone:beehemoth",
+    "minecraft:breeze",
     {
       "id": "alexscaves:gloomoth",
       "required": false

@@ -1,3 +1,19 @@
+### **(V.7.6.2 Changes) (1.21 Minecraft)**
+
+##### Items:
+Throwing Pollen Puff at the Bogged mob may spawn Red Mushroom or Brown Mushroom nearby! (If mushroom can be placed at spot)
+
+Throwing Dirt Pellet at Breeze will deal extra damage now!
+
+##### Blocks:
+Windy Air and Heavy Air no longer affects Breeze mob.
+
+String Curtains now will block Breeze pathfinding through it.
+
+##### Structures:
+Added Breeze and Bogged to the enemies that can spawn in the Red Sempiternal Sanctum's essence arena event!
+
+
 ### **(V.7.6.1 Changes) (1.21 Minecraft)**
 
 ##### Advancements:
