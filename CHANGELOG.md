@@ -3,6 +3,9 @@
 ##### Advancements:
 Halved the requirements for many Queen's Desire advancements to reduce grind.
 
+##### Structures:
+Made Sempiternal Sanctums spawn a tiny bit more commonly. Tiny bit.
+
 ##### Mod Compat:
 Fixed crash with Mekanism.
 
