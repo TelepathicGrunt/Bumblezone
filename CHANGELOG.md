@@ -1,5 +1,8 @@
 ### **(V.7.6.1 Changes) (1.21 Minecraft)**
 
+##### Advancements:
+Halved the requirements for many Queen's Desire advancements to reduce grind.
+
 ##### Mod Compat:
 Fixed crash with Mekanism.
 

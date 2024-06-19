@@ -25,7 +25,7 @@
     "pollen_puff_spawn_flower": {
       "trigger": "the_bumblezone:pollen_puff_spawn_flower",
       "conditions": {
-        "target_count": 16
+        "target_count": 8
       }
     }
   },

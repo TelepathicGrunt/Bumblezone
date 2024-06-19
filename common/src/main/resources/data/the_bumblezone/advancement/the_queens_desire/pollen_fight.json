@@ -25,7 +25,7 @@
     "pollen_puff_hit": {
       "trigger": "the_bumblezone:pollen_puff_hit",
       "conditions": {
-        "target_count": 48
+        "target_count": 24
       }
     }
   },
