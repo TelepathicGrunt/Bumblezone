@@ -1,3 +1,9 @@
+### **(V.7.6.3 Changes) (1.21 Minecraft)**
+
+##### Blocks:
+Fixed broken Honey Cocoon textures when Anti-Trypophobia resourcepack is enabled.
+
+
 ### **(V.7.6.2 Changes) (1.21 Minecraft)**
 
 ##### Misc:
