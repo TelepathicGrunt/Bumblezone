@@ -3,6 +3,9 @@
 ##### Blocks:
 Fixed broken Honey Cocoon textures when Anti-Trypophobia resourcepack is enabled.
 
+##### Fluids:
+Fixed other textures bleeding into diagonal Honey Fluid textures as tiny squares.
+
 
 ### **(V.7.6.2 Changes) (1.21 Minecraft)**
 
