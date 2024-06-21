@@ -95,8 +95,8 @@ public class EssenceBlockGreen extends EssenceBlock {
     }
 
     @Override
-    public ItemStack getEssenceItemReward() {
-        return BzItems.ESSENCE_LIFE.get().getDefaultInstance();
+    public ResourceLocation getEssenceItemReward() {
+        return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "gameplay/rewards/green_arena_victory");
     }
 
     @Override

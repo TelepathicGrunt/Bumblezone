@@ -76,8 +76,8 @@ public class EssenceBlockPurple extends EssenceBlock {
     }
 
     @Override
-    public ItemStack getEssenceItemReward() {
-        return BzItems.ESSENCE_KNOWING.get().getDefaultInstance();
+    public ResourceLocation getEssenceItemReward() {
+        return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "gameplay/rewards/purple_arena_victory");
     }
 
     @Override
