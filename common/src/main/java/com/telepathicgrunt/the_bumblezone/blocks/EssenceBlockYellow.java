@@ -83,7 +83,7 @@ public class EssenceBlockYellow extends EssenceBlock {
 
     @Override
     public int getEventTimeFrame() {
-        return 5400;
+        return 6000;
     }
 
     @Override
