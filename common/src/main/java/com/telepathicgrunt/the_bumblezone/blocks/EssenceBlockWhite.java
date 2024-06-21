@@ -53,8 +53,8 @@ public class EssenceBlockWhite extends EssenceBlock {
     }
 
     @Override
-    public ItemStack getEssenceItemReward() {
-        return BzItems.ESSENCE_CONTINUITY.get().getDefaultInstance();
+    public ResourceLocation getEssenceItemReward() {
+        return new ResourceLocation(Bumblezone.MODID, "gameplay/rewards/white_arena_victory");
     }
 
     @Override

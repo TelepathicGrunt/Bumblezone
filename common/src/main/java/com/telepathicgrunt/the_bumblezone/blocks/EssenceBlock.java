@@ -179,7 +179,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
 
     public abstract ServerEssenceEvent getServerEssenceEvent();
 
-    public abstract ItemStack getEssenceItemReward();
+    public abstract ResourceLocation getEssenceItemReward();
 
     public abstract void awardPlayerWinStat(ServerPlayer serverPlayer);
 

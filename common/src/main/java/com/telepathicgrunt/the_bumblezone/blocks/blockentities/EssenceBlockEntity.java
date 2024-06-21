@@ -8,10 +8,12 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
@@ -36,6 +38,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -390,15 +396,27 @@ public class EssenceBlockEntity extends BlockEntity {
 
                         if (won) {
                             if (blockState.getBlock() instanceof EssenceBlock essenceBlock) {
-                                BzCriterias.ESSENCE_EVENT_REWARD_TRIGGER.trigger(serverPlayer, essenceBlock.getEssenceItemReward());
-                                if (!serverPlayer.addItem(essenceBlock.getEssenceItemReward())) {
-                                    ItemStack reward = essenceBlock.getEssenceItemReward();
-                                    serverPlayer.drop(reward, false);
+
+                                LootTable lootTable = serverLevel.getServer().getLootData().getLootTable(essenceBlock.getEssenceItemReward());
+
+                                if (lootTable != null) {
+                                    LootParams.Builder lootParams = new LootParams.Builder(serverLevel)
+                                            .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockPos))
+                                            .withParameter(LootContextParams.THIS_ENTITY, serverPlayer);
+                                    ObjectArrayList<ItemStack> newItems = new ObjectArrayList<>();
+                                    lootTable.getRandomItems(lootParams.create(LootContextParamSets.ADVANCEMENT_REWARD), newItems::add);
+
+                                    for (ItemStack reward : newItems) {
+                                        BzCriterias.ESSENCE_EVENT_REWARD_TRIGGER.trigger(serverPlayer, reward);
+                                        if (!serverPlayer.addItem(reward)) {
+                                            serverPlayer.drop(reward, false);
+                                        }
+                                    }
                                 }
 
                                 int xpReward = essenceBlock.getEssenceXpReward();
                                 if (essenceBlockEntity.isBeaten()) {
-                                    xpReward *= 0.1d;
+                                    xpReward = (int) (xpReward * 0.1d);
                                 }
                                 serverPlayer.giveExperiencePoints(xpReward);
                                 essenceBlock.awardPlayerWinStat(serverPlayer);

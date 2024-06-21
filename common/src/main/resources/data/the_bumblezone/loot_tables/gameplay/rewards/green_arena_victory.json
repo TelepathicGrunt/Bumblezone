@@ -1,0 +1,16 @@
+{
+  "random_sequence": "the_bumblezone:gameplay/rewards",
+  "type": "minecraft:advancement_reward",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:essence_life",
+          "conditions": []
+        }
+      ]
+    }
+  ]
+}

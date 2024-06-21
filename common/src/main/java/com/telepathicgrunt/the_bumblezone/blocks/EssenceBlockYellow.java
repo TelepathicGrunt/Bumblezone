@@ -73,8 +73,8 @@ public class EssenceBlockYellow extends EssenceBlock {
     }
 
     @Override
-    public ItemStack getEssenceItemReward() {
-        return BzItems.ESSENCE_RADIANCE.get().getDefaultInstance();
+    public ResourceLocation getEssenceItemReward() {
+        return new ResourceLocation(Bumblezone.MODID, "gameplay/rewards/yellow_arena_victory");
     }
 
     @Override

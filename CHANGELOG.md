@@ -9,6 +9,13 @@ Fixed other textures bleeding into diagonal Honey Fluid textures as tiny squares
 ##### Structures:
 Added 30 extra seconds to complete Yellow and Red Essence Arena events in Sempiternal Sanctums.
 
+Arena victory rewards are now loot tables! You can add to or change rewards from completing Sempiternal Sanctums!
+  `the_bumblezome:gameplay/rewards/red_arena_victory`
+  `the_bumblezome:gameplay/rewards/yellow_arena_victory`
+  `the_bumblezome:gameplay/rewards/green_arena_victory`
+  `the_bumblezome:gameplay/rewards/blue_arena_victory`
+  `the_bumblezome:gameplay/rewards/purple_arena_victory`
+  `the_bumblezome:gameplay/rewards/white_arena_victory`
 
 ### **(V.7.4.5 Changes) (1.20.1 Minecraft)**
 
