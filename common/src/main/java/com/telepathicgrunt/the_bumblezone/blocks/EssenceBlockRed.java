@@ -51,7 +51,7 @@ public class EssenceBlockRed extends EssenceBlock {
 
     @Override
     public int getEventTimeFrame() {
-        return 8000;
+        return 8600;
     }
 
     @Override
