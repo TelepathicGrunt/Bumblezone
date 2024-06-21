@@ -8,6 +8,9 @@ Mute the 24th and later Vexes in Yellow Sempiternal Sanctum's arena event to red
 ##### Fluids:
 Fixed when using a very high resolution texture pack, that other textures bleed into diagonal Honey Fluid textures as tiny squares.
 
+##### Items:
+Fixed Stinger Spear, fired Bee Stinger, and fired Honey Crystal Shards unable to break Decorated Pots properly.
+
 
 ### **(V.7.4.6 Changes) (1.20.1 Minecraft)**
 
