@@ -2,6 +2,9 @@
   "replace": false,
   "values": [
     "the_bumblezone:pollen_puff",
-    "the_bumblezone:dirt_pellet"
+    "the_bumblezone:dirt_pellet",
+    "the_bumblezone:bee_stinger",
+    "the_bumblezone:honey_crystal_shard",
+    "the_bumblezone:thrown_stinger_spear"
   ]
 }
