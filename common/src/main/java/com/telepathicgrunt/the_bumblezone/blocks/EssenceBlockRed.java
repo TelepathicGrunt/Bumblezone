@@ -87,8 +87,8 @@ public class EssenceBlockRed extends EssenceBlock {
     }
 
     @Override
-    public ItemStack getEssenceItemReward() {
-        return BzItems.ESSENCE_RAGING.get().getDefaultInstance();
+    public ResourceLocation getEssenceItemReward() {
+        return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "gameplay/rewards/red_arena_victory");
     }
 
     @Override

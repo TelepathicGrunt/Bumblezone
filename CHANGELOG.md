@@ -6,8 +6,19 @@ Fixed broken Honey Cocoon textures when Anti-Trypophobia resourcepack is enabled
 ##### Fluids:
 Fixed other textures bleeding into diagonal Honey Fluid textures as tiny squares.
 
+##### Items:
+Fixed crash when Sugar Water Bucket is attempted to be used in Nether.
+
 ##### Structures:
 Added 30 extra seconds to complete Yellow and Red Essence Arena events in Sempiternal Sanctums.
+
+Arena victory rewards are now loot tables! You can add to or change rewards from completing Sempiternal Sanctums!
+ `the_bumblezome:gameplay/rewards/red_arena_victory`
+ `the_bumblezome:gameplay/rewards/yellow_arena_victory`
+ `the_bumblezome:gameplay/rewards/green_arena_victory`
+ `the_bumblezome:gameplay/rewards/blue_arena_victory`
+ `the_bumblezome:gameplay/rewards/purple_arena_victory`
+ `the_bumblezome:gameplay/rewards/white_arena_victory`
 
 
 ### **(V.7.6.2 Changes) (1.21 Minecraft)**
