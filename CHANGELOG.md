@@ -1,8 +1,12 @@
 ### **(V.7.6.4 Changes) (1.21 Minecraft)**
+
 ##### Structures:
 Made Purple Sempiternal Sanctum arena's Purple Spikes a bit more visible.
 
 Mute the 24th and later Vexes in Yellow Sempiternal Sanctum's arena event to reduce chances of reaching sound limit.
+
+##### Fluids:
+Fixed when using a very high resolution texture pack, that other textures bleed into diagonal Honey Fluid textures as tiny squares.
 
 
 ### **(V.7.6.3 Changes) (1.21 Minecraft)**

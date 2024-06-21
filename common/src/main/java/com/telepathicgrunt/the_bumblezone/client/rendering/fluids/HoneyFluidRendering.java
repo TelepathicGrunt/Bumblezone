@@ -124,7 +124,7 @@ public class HoneyFluidRendering {
                     if (isDiagonal) {
                         textureAtlasSprite = sprites[3];
                         if (Math.abs(vec3.x()) == Math.abs(vec3.z())) {
-                            sizing = 1.42f;
+                            sizing = 1.415f;
                         }
                         else {
                             sizing = 1.215f;
