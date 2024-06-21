@@ -17,6 +17,7 @@ Arena victory rewards are now loot tables! You can add to or change rewards from
   `the_bumblezome:gameplay/rewards/purple_arena_victory`
   `the_bumblezome:gameplay/rewards/white_arena_victory`
 
+
 ### **(V.7.4.5 Changes) (1.20.1 Minecraft)**
 
 ##### Entities:
