@@ -341,6 +341,10 @@ public class EssenceBlockYellow extends EssenceBlock {
                         rabbit.setVariant(Rabbit.Variant.EVIL);
                     }
                 }
+
+                if (entity instanceof Vex vex && eventEntitiesInArena.size() > 25) {
+                    vex.setSilent(true);
+                }
             }
         }
     }
