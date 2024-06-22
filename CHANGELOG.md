@@ -11,6 +11,9 @@ Fixed when using a very high resolution texture pack, that other textures bleed 
 ##### Items:
 Fixed Stinger Spear, fired Bee Stinger, and fired Honey Crystal Shards unable to break Decorated Pots properly.
 
+##### Teleporting:
+Send more packets when teleporting by Bumblezone. Might fix some sync issues?
+
 
 ### **(V.7.6.3 Changes) (1.21 Minecraft)**
 
