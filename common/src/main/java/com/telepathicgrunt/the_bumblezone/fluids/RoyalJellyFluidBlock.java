@@ -128,7 +128,7 @@ public class RoyalJellyFluidBlock extends BzLiquidBlock {
                 return false;
             }
 
-            if (currentFluid.getHeight(world, pos) >= 0.44444445F || (lavadownflag && currentFluid.hasProperty(BOTTOM_LEVEL) && currentFluid.getValue(BOTTOM_LEVEL) == 0)) {
+            if (!lavadownflag || currentFluid.hasProperty(BOTTOM_LEVEL) && currentFluid.getValue(BOTTOM_LEVEL) == 0) {
                 world.setBlockAndUpdate(pos, BzBlocks.SUGAR_INFUSED_COBBLESTONE.get().defaultBlockState());
                 this.triggerMixEffects(world, pos);
                 return false;
