@@ -21,6 +21,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -225,5 +226,10 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
     @Override
     public TriState bz$canEnchant(ItemStack itemstack, Holder<Enchantment> enchantment) {
         return enchantment.is(BzTags.ENCHANTABLES_CRYSTAL_CANNON_FORCED_ALLOWED) ? TriState.ALLOW : TriState.PASS;
+    }
+
+    // Overrides neo method
+    public ItemStack getDefaultCreativeAmmo(@Nullable Player player, ItemStack projectileWeaponItem) {
+        return BzItems.HONEY_CRYSTAL_SHARDS.get().getDefaultInstance();
     }
 }
