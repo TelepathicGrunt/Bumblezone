@@ -16,7 +16,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.protocol.game.ClientboundChangeDifficultyPacket;
+import net.minecraft.network.protocol.game.ClientboundPlayerAbilitiesPacket;
 import net.minecraft.network.protocol.game.ClientboundRespawnPacket;
+import net.minecraft.network.protocol.game.ClientboundSetExperiencePacket;
 import net.minecraft.network.protocol.game.CommonPlayerSpawnInfo;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
@@ -316,11 +318,14 @@ public class BzWorldSavedData extends SavedData {
 
 			if (PlatformHooks.isDimensionAllowed(serverPlayer, destination.dimension())) {
 				serverPlayer.connection.send(new ClientboundRespawnPacket(new CommonPlayerSpawnInfo(destination.dimensionTypeRegistration(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), serverPlayer.getLastDeathLocation(), serverPlayer.getPortalCooldown()), (byte)3));
-				serverPlayer.connection.send(new ClientboundChangeDifficultyPacket(destination.getDifficulty(), destination.getLevelData().isDifficultyLocked()));
 				serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y + 0.1f, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
-				serverPlayer.setPortalCooldown(100);
+				serverPlayer.connection.send(new ClientboundChangeDifficultyPacket(destination.getDifficulty(), destination.getLevelData().isDifficultyLocked()));
+				serverPlayer.connection.send(new ClientboundSetExperiencePacket(serverPlayer.experienceProgress, serverPlayer.totalExperience, serverPlayer.experienceLevel));
+				serverPlayer.connection.send(new ClientboundPlayerAbilitiesPacket(serverPlayer.getAbilities()));
+				serverPlayer.server.getPlayerList().sendActivePlayerEffects(serverPlayer);
 				serverPlayer.server.getPlayerList().sendLevelInfo(serverPlayer, destination);
-				serverPlayer.server.getPlayerList().sendAllPlayerInfo(serverPlayer);
+				serverPlayer.server.getPlayerList().sendPlayerPermissionLevel(serverPlayer);
+				serverPlayer.setPortalCooldown(100);
 				serverPlayer.addEffect(new MobEffectInstance(
 						MobEffects.SLOW_FALLING,
 						20,
@@ -328,6 +333,7 @@ public class BzWorldSavedData extends SavedData {
 						false,
 						false,
 						false));
+				serverPlayer.server.getPlayerList().sendAllPlayerInfo(serverPlayer);
 				teleportedEntity = destination.getPlayerByUUID(serverPlayer.getUUID());
 			}
 			else {
