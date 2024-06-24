@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.TreeDungeonFeatureConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -62,8 +63,8 @@ public class TreeDungeon extends NbtFeature<TreeDungeonFeatureConfig> {
         if (context.level() instanceof WorldGenRegion) {
             StructureManager structureManager = context.level().getLevel().structureManager();
 
-            for (Holder<Structure> configuredStructureFeature : configuredStructureFeatureRegistry.getTagOrEmpty(BzTags.NO_DUNGEONS)) {
-                StructureStart startForFeature = structureManager.getStructureAt(context.origin(), configuredStructureFeature.value());
+            for (Holder<Structure> structure : configuredStructureFeatureRegistry.getTagOrEmpty(BzTags.NO_DUNGEONS)) {
+                StructureStart startForFeature = GeneralUtils.getStructureAt(context.level(), structureManager, context.origin(), structure.value());
                 if (startForFeature.isValid()) {
                     return false;
                 }

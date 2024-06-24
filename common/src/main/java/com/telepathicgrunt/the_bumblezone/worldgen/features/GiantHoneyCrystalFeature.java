@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.GlisteringHoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.UnsafeBulkSectionAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -52,15 +53,15 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
 
             if (origin.getY() > 130 && origin.getY() < 148) {
                 Structure thronePillar = structureRegistry.get(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "throne_pillar"));
-                if (thronePillar != null && structureManager.getStructureAt(origin, thronePillar).isValid()) {
+                if (thronePillar != null && GeneralUtils.getStructureAt(context.level(), structureManager, context.origin(), thronePillar).isValid()) {
                     return false;
                 }
             }
 
             Optional<HolderSet.Named<Structure>> optionalHolders = structureRegistry.getTag(BzTags.NO_GIANT_SPIKES);
             if (optionalHolders.isPresent()) {
-                for (Holder<Structure> structureHolder : optionalHolders.get()) {
-                    if (structureManager.getStructureAt(origin, structureHolder.value()).isValid()) {
+                for (Holder<Structure> structure : optionalHolders.get()) {
+                    if (GeneralUtils.getStructureAt(context.level(), structureManager, context.origin(), structure.value()).isValid()) {
                         return false;
                     }
                 }

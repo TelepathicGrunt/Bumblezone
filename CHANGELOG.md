@@ -6,6 +6,9 @@ Improve the interaction between Honey Fluids and Lava.
 ##### Items:
 (NeoForge): Made Crystal Cannon now tell Neo API that its default ammo is Honey Crystal Shards.
 
+#### Misc:
+Changed how I detect structures within features. May resolve issues where game gets deadlocked/stuck during worldgen.
+
 
 ### **(V.7.6.4 Changes) (1.21 Minecraft)**
 
