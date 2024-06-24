@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.mixin.world.StructureTemplateAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import it.unimi.dsi.fastutil.longs.LongSet;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -46,6 +47,7 @@ import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JigsawBlock;
@@ -59,9 +61,12 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.chunk.LevelChunkSection;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.material.FluidState;
@@ -78,6 +83,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -828,6 +834,42 @@ public class GeneralUtils {
         j %= 60;
         k %= 60;
         return String.format(Locale.ROOT, "%02d:%02d", k, j);
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    public static int constrainToRange(int value, int min, int max) {
+        return Math.min(Math.max(value, min), max);
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    public static StructureStart getStructureAt(LevelReader level, StructureManager structureManager, BlockPos blockPos, Structure structure) {
+        for(StructureStart structureStart : startsForStructure(level, structureManager, SectionPos.of(blockPos), structure)) {
+            if (structureStart.getBoundingBox().isInside(blockPos)) {
+                return structureStart;
+            }
+        }
+
+        return StructureStart.INVALID_START;
+    }
+
+    public static List<StructureStart> startsForStructure(LevelReader level, StructureManager structureManager, SectionPos sectionPos, Structure structure) {
+        ChunkAccess chunkAccess = level.getChunk(sectionPos.x(), sectionPos.z(), ChunkStatus.STRUCTURE_REFERENCES);
+        LongSet references = chunkAccess.getReferencesForStructure(structure);
+        ImmutableList.Builder<StructureStart> builder = ImmutableList.builder();
+        fillStartsForStructure(level, structureManager, chunkAccess, structure, references, builder::add);
+        return builder.build();
+    }
+
+    public static void fillStartsForStructure(LevelReader level, StructureManager structureManager, ChunkAccess chunkAccess, Structure structure, LongSet references, Consumer<StructureStart> consumer) {
+        for (long ref : references) {
+            SectionPos sectionPos = SectionPos.of(new ChunkPos(ref), level.getMinSection());
+            StructureStart structureStart = structureManager.getStartForStructure(sectionPos, structure, chunkAccess);
+            if (structureStart != null && structureStart.isValid()) {
+                consumer.accept(structureStart);
+            }
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////
