@@ -1,8 +1,0 @@
-{
-    "pack": {
-        "description": "The Bumblezone resources",
-        "pack_format": 26,
-        "_comment": "Bees Bees and more BEES!",
-        "supported_formats": [0, 1000000]
-    }
-}

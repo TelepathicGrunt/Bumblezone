@@ -24,12 +24,12 @@ license="https://github.com/TelepathicGrunt/Bumblezone/blob/latest-released/LICE
 [[dependencies.the_bumblezone]]
     modId="minecraft"
     type="required"
-    versionRange="[1.20.5,)"
+    versionRange="[1.21,)"
 
 [[dependencies.the_bumblezone]]
     modId="neoforge"
     type="required"
-    versionRange="[20.6.72-beta,)"
+    versionRange="[20.6.72-beta,21.0.31-beta)"
 
 [[dependencies.the_bumblezone]]
     modId="productivebees"

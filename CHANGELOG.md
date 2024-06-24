@@ -9,6 +9,8 @@ Improve the interaction between Honey Fluids and Lava.
 #### Misc:
 Changed how I detect structures within features. May resolve issues where game gets deadlocked/stuck during worldgen.
 
+Fixed a mixin crash on Fabric
+
 
 ### **(V.7.6.4 Changes) (1.21 Minecraft)**
 
