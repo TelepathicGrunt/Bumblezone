@@ -82,11 +82,11 @@ import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
 import net.neoforged.neoforge.event.entity.living.BabyEntitySpawnEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
-import net.neoforged.neoforge.event.entity.living.LivingAttackEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
-import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.AdvancementEvent;
 import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -401,11 +401,8 @@ public class NeoForgeEventManager {
         EntitySpawnEvent.EVENT.invoke(new EntitySpawnEvent(event.getEntity(), event.getLevel(), event.getEntity().isBaby(), event.getEntity().getSpawnType()), event.isCanceled());
     }
 
-    private static void onEntityHurtLowest(LivingHurtEvent event) {
-        boolean cancel = EntityHurtEvent.EVENT_LOWEST.invoke(new EntityHurtEvent(event.getEntity(), event.getSource(), event.getAmount()), event.isCanceled());
-        if (cancel) {
-            event.setCanceled(true);
-        }
+    private static void onEntityHurtLowest(LivingDamageEvent.Post event) {
+        EntityHurtEvent.EVENT_LOWEST.invoke(new EntityHurtEvent(event.getEntity(), event.getSource(), event.getNewDamage()));
     }
 
     private static void onEntityDeath(LivingDeathEvent event) {
@@ -423,7 +420,7 @@ public class NeoForgeEventManager {
     }
 
 
-    private static void onEntityAttacked(LivingAttackEvent event) {
+    private static void onEntityAttacked(LivingIncomingDamageEvent event) {
         boolean cancel = EntityAttackedEvent.EVENT.invoke(new EntityAttackedEvent(event.getEntity(), event.getSource(), event.getAmount()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);

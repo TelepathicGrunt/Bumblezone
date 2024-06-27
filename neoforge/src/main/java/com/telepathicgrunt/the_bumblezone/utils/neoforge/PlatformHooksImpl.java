@@ -35,9 +35,9 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.common.ToolAction;
 import net.neoforged.neoforge.common.util.BlockSnapshot;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
@@ -175,7 +175,7 @@ public class PlatformHooksImpl {
     }
 
     public static boolean isToolAction(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
-        return Arrays.stream(targetToolAction).anyMatch(actionString -> stack.canPerformAction(ToolAction.get(actionString)))
+        return Arrays.stream(targetToolAction).anyMatch(actionString -> stack.canPerformAction(ItemAbility.get(actionString)))
                 || targetBackupClass.isInstance(stack.getItem());
     }
 

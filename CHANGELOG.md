@@ -1,3 +1,9 @@
+### **(V.7.6.6 Changes) (1.21 Minecraft)**
+
+##### Misc:
+(NeoForge): Update to run on Neo 21.0.40-beta or newer
+
+
 ### **(V.7.6.5 Changes) (1.21 Minecraft)**
 
 ##### Fluids:
