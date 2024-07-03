@@ -127,9 +127,9 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
                         true,
                         true));
 
-                if (attacker instanceof LivingEntity livingAttacker) {
-                    livingEntity.setLastHurtByMob(livingAttacker);
-                    ((MobAccessor)livingEntity).getTargetSelector().tick();
+                if (attacker instanceof LivingEntity livingAttacker && livingEntity instanceof Mob mob) {
+                    mob.setLastHurtByMob(livingAttacker);
+                    ((MobAccessor)mob).getTargetSelector().tick();
                 }
 
                 if (itemStack.is(BzItems.STINGER_SPEAR.get()) && attacker instanceof ServerPlayer serverPlayer) {

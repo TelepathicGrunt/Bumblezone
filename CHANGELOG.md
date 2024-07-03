@@ -1,3 +1,9 @@
+### **(V.7.4.9 Changes) (1.20.1 Minecraft)**
+
+##### Enchantments:
+Fixed Neurotoxins enchantment to not crash when used against another player or non-mob.
+
+
 ### **(V.7.4.8 Changes) (1.20.1 Minecraft)**
 
 ##### Fluids:
