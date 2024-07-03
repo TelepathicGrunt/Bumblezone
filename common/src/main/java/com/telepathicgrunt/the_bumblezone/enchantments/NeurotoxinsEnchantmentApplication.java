@@ -19,6 +19,7 @@ import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -88,9 +89,9 @@ public class NeurotoxinsEnchantmentApplication {
                         true,
                         true));
 
-                if (attacker instanceof LivingEntity livingAttacker) {
-                    victim.setLastHurtByMob(livingAttacker);
-                    ((MobAccessor)victim).getTargetSelector().tick();
+                if (attacker instanceof LivingEntity livingAttacker && victim instanceof Mob mob) {
+                    mob.setLastHurtByMob(livingAttacker);
+                    ((MobAccessor)mob).getTargetSelector().tick();
                 }
 
                 if (itemStack.is(BzItems.STINGER_SPEAR.get()) && attacker instanceof ServerPlayer serverPlayer) {
