@@ -6,6 +6,8 @@ Fixed missing translations for Bumblezone Music Discs.
 ##### Enchantments:
 Fixed Neurotoxins enchantment to not crash when used against another player or non-mob.
 
+Fixed bug where Comb Cutter could be put onto Axes.
+
 
 ### **(V.7.6.6 Changes) (1.21 Minecraft)**
 

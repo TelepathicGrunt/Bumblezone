@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     "#minecraft:enchantable/trident",
-    "the_bumblezone:stinger_spear"
+    "the_bumblezone:stinger_spear",
+    {
+      "id": "#c:tools/spear",
+      "required": false
+    }
   ]
 }
