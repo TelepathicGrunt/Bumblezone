@@ -7,7 +7,7 @@ Fixed Buzzing Briefcase deleting bees when clicking any bee changing buttons.
 Extended the Red Sempiternal Sanctum's arena event to be 9 minutes long due to the increased difficulty that Breeze and Bogged mobs brings to the fight.
 
 ##### Mod Compat:
-Re-enabled Productive Bees compat.
+(NeoForge): Re-enabled Productive Bees compat.
 
 
 ### **(V.7.6.7 Changes) (1.21 Minecraft)**
