@@ -1,3 +1,9 @@
+### **(V.7.6.9 Changes) (1.21 Minecraft)**
+
+##### Fluids:
+(NeoForge): Fixed Bumblezone fluids not giving correct bucket when using an empty bucket on them.
+
+
 ### **(V.7.6.8 Changes) (1.21 Minecraft)**
 
 ##### Items:

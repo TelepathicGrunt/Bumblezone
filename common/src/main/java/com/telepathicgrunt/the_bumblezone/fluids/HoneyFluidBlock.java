@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.fluids;
 
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzLiquidBlock;
+import com.telepathicgrunt.the_bumblezone.fluids.base.FluidGetter;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
@@ -32,14 +34,14 @@ import net.minecraft.world.phys.Vec3;
 
 import static net.minecraft.world.level.material.FlowingFluid.FALLING;
 
-public class HoneyFluidBlock extends BzLiquidBlock {
+public class HoneyFluidBlock extends LiquidBlock implements FluidGetter {
 
     public static final int maxBottomLayer = 8;
     public static final IntegerProperty BOTTOM_LEVEL = IntegerProperty.create("bottom_level", 0, maxBottomLayer);
     public static final BooleanProperty ABOVE_FLUID = BooleanProperty.create("above_support");
 
     public HoneyFluidBlock(FluidData baseFluid) {
-        super(baseFluid, BlockBehaviour.Properties.of()
+        super(baseFluid.still().get(), BlockBehaviour.Properties.of()
                 .mapColor(MapColor.TERRACOTTA_ORANGE)
                 .liquid()
                 .noCollission()
@@ -57,6 +59,11 @@ public class HoneyFluidBlock extends BzLiquidBlock {
                 .setValue(ABOVE_FLUID, false));
 
         baseFluid.setBlock(() -> this);
+    }
+
+    @Override
+    public FlowingFluid getFluid() {
+        return this.fluid;
     }
 
     @Override

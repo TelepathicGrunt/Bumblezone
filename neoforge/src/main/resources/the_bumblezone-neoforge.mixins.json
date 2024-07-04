@@ -4,7 +4,6 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "block.BlockExtensionMixin",
-    "block.BzLiquidBlockMixin",
     "block.FireBlockInvoker",
     "block.FireBlockMixin",
     "effect.WrathOfTheHiveEffectMixin",
