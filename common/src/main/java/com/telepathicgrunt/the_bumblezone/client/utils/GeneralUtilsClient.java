@@ -31,16 +31,14 @@ public class GeneralUtilsClient {
 
     /////////////////////////////////////////////////////////////////////////////////
 
-    public static List<MutableComponent> autoWrappedTooltip(String lengthText, String wrappingText) {
+    public static List<MutableComponent> autoWrappedTooltip(int lengthText, String wrappingText) {
         List<MutableComponent> list = new ArrayList<>();
 
-        String translatedLengthString = Language.getInstance().getOrDefault(lengthText);
-
-        if (translatedLengthString.length() > 10) {
+        if (lengthText > 10) {
             String translatedWrapString = Language.getInstance().getOrDefault(wrappingText);
-            if (translatedWrapString.length() > translatedLengthString.length()) {
-                list.add(Component.literal(translatedWrapString.substring(0, translatedLengthString.length())));
-                list.add(Component.literal(translatedWrapString.substring(translatedLengthString.length())));
+            if (translatedWrapString.length() > lengthText) {
+                list.add(Component.literal(translatedWrapString.substring(0, lengthText)));
+                list.add(Component.literal(translatedWrapString.substring(lengthText)));
             }
             else {
                 list.add(Component.translatable(wrappingText));
