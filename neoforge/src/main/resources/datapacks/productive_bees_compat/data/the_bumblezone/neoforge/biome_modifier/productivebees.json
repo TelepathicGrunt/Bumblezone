@@ -1,0 +1,6 @@
+{
+    "type": "neoforge:add_features",
+    "biomes": "#the_bumblezone:the_bumblezone",
+    "features": "#the_bumblezone:productive_bees_combs",
+    "step": "underground_ores"
+}

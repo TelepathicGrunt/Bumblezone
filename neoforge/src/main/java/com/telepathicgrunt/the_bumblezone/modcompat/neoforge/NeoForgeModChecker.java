@@ -27,8 +27,8 @@ public class NeoForgeModChecker {
 //            modid = "pokecube_mobs";
 //            loadupModCompat(modid, () -> new PokecubeCompat());
 
-//            modid = "productivebees";
-//            loadupModCompat(modid, () -> new ProductiveBeesCompat());
+            modid = "productivebees";
+            loadupModCompat(modid, () -> new ProductiveBeesCompat());
 
             modid = "bk";
             loadupModCompat(modid, () -> new BeekeeperCompat());

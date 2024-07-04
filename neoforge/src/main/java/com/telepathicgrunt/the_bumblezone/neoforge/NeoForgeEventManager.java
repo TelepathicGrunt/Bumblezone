@@ -225,7 +225,7 @@ public class NeoForgeEventManager {
             AddBuiltinDataPacks.EVENT.invoke(new AddBuiltinDataPacks((id, displayName, mode) -> {
                 event.addPackFinders(
                         ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "datapacks/" + id.getPath()),
-                        PackType.CLIENT_RESOURCES,
+                        PackType.SERVER_DATA,
                         displayName,
                         PackSource.BUILT_IN,
                         mode == AddBuiltinDataPacks.PackMode.FORCE_ENABLED,
