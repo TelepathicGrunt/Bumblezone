@@ -1,5 +1,8 @@
 ### **(V.7.6.9 Changes) (1.21 Minecraft)**
 
+##### Blocks:
+Fixed Bumblezone blocks treating any enchantment like it is Silk Touch when mined.
+
 ##### Fluids:
 (NeoForge): Fixed Bumblezone fluids not giving correct bucket when using an empty bucket on them.
 
