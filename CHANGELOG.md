@@ -1,5 +1,8 @@
 ### **(V.7.6.7 Changes) (1.21 Minecraft)**
 
+##### Items:
+Fixed missing translations for Bumblezone Music Discs.
+
 ##### Enchantments:
 Fixed Neurotoxins enchantment to not crash when used against another player or non-mob.
 
