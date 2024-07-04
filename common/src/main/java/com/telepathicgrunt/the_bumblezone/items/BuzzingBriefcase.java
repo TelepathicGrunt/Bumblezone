@@ -330,11 +330,8 @@ public class BuzzingBriefcase extends Item {
     }
 
     public static void overrwriteBees(ItemStack briefcaseItem, List<Entity> bees) {
-        CompoundTag briefcaseTag = briefcaseItem.get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()).copyTag();
-        briefcaseTag.remove(TAG_BEES);
-        briefcaseTag.remove(TAG_VARANT_BEES);
+        briefcaseItem.set(BzDataComponents.BUZZING_BRIEFCASE_DATA.get(), CustomData.of(new CompoundTag()));
         bees.forEach(bee -> tryAddBee(briefcaseItem, bee));
-        briefcaseItem.set(BzDataComponents.BUZZING_BRIEFCASE_DATA.get(), CustomData.of(briefcaseTag));
     }
 
     public static boolean tryAddBee(ItemStack briefcaseItem, Entity bee) {

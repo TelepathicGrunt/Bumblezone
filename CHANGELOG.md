@@ -1,5 +1,8 @@
 ### **(V.7.6.8 Changes) (1.21 Minecraft)**
 
+##### Items:
+Fixed Buzzing Briefcase deleting bees when clicking any bee changing buttons.
+
 ##### Structures:
 Extended the Red Sempiternal Sanctum's arena event to be 9 minutes long due to the increased difficulty that Breeze and Bogged mobs brings to the fight.
 
