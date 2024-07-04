@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.fluids;
 
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzLiquidBlock;
+import com.telepathicgrunt.the_bumblezone.fluids.base.FluidGetter;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,18 +12,20 @@ import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 
 
-public class SugarWaterBlock extends BzLiquidBlock {
+public class SugarWaterBlock extends LiquidBlock implements FluidGetter {
 
     public SugarWaterBlock(FluidData baseFluid) {
-        super(baseFluid, BlockBehaviour.Properties.of()
+        super(baseFluid.still().get(), BlockBehaviour.Properties.of()
                 .mapColor(MapColor.WATER)
                 .liquid()
                 .noCollission()
@@ -33,6 +36,11 @@ public class SugarWaterBlock extends BzLiquidBlock {
                 .sound(SoundType.EMPTY)
                 .pushReaction(PushReaction.DESTROY));
         baseFluid.setBlock(() -> this);
+    }
+
+    @Override
+    public FlowingFluid getFluid() {
+        return this.fluid;
     }
 
     @Override
