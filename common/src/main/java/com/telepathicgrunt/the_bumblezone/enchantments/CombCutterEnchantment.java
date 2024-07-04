@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.enchantments;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerBreakSpeedEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.BzEnchantment;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
@@ -119,9 +120,7 @@ public class CombCutterEnchantment extends BzEnchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return PlatformHooks.isToolAction(stack, ShearsItem.class, "shears_carve") ||
-                PlatformHooks.isToolAction(stack, SwordItem.class, "sword_dig") ||
-                stack.is(Items.BOOK);
+        return stack.is(BzTags.ENCHANTABLE_COMB_CUTTER) || stack.is(Items.BOOK);
     }
 
     @Override

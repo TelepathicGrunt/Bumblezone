@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:trident",
+    "the_bumblezone:stinger_spear",
+    {
+      "id": "#forge:tools/tridents",
+      "required": false
+    },
+    {
+      "id": "#c:spears",
+      "required": false
+    },
+    {
+      "id": "#c:tools/spear",
+      "required": false
+    }
+  ]
+}

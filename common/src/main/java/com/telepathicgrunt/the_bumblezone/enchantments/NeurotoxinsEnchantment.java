@@ -10,11 +10,13 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.LivingEntityDataModule;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.platform.BzEnchantment;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -25,6 +27,9 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
@@ -57,16 +62,6 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
     @Override
     public int getMaxLevel() {
         return BzGeneralConfigs.neurotoxinMaxLevel;
-    }
-
-    @Override
-    public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof StingerSpearItem;
-    }
-
-    @Override
-    public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack) {
-        return OptionalBoolean.of(this.canEnchant(stack));
     }
 
     public static void entityHurtEvent(EntityAttackedEvent event) {
@@ -150,5 +145,15 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean canEnchant(ItemStack stack) {
+        return stack.is(BzTags.ENCHANTABLE_NEUROTOXINS) || stack.is(Items.BOOK);
+    }
+
+    @Override
+    public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack) {
+        return OptionalBoolean.of(this.canEnchant(stack));
     }
 }

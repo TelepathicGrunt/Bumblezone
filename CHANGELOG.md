@@ -3,6 +3,11 @@
 ##### Enchantments:
 Fixed Neurotoxins enchantment to not crash when used against another player or non-mob.
 
+Bumblezone enchantments now use item tags for what items they can apply on. These tags are:
+ `the_bumblezone:enchantable/comb_cutter`
+ `the_bumblezone:enchantable/neurotoxins`
+ `the_bumblezone:enchantable/potent_poison`
+
 
 ### **(V.7.4.8 Changes) (1.20.1 Minecraft)**
 

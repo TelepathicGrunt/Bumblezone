@@ -116,6 +116,9 @@ public class BzTags {
     public static final TagKey<Item> ABILITY_ESSENCE_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "ability_essence_items"));
     public static final TagKey<Item> WASHING_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "washing_items"));
     public static final TagKey<Item> SUSPICIOUS_PILE_OF_POLLEN_ADDITIONAL_BRUSHES = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "suspicious_pile_of_pollen/additional_allowed_brushes"));
+    public static final TagKey<Item> ENCHANTABLE_COMB_CUTTER = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "enchantable/comb_cutter"));
+    public static final TagKey<Item> ENCHANTABLE_NEUROTOXINS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "enchantable/neurotoxins"));
+    public static final TagKey<Item> ENCHANTABLE_POTENT_POISON = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "enchantable/potent_poison"));
 
     public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(getPlatformTagNamespace(), "honey"));
     public static final TagKey<Fluid> BZ_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "honey"));
