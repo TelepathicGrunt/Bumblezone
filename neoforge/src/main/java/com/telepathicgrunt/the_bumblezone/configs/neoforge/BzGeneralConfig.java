@@ -50,7 +50,6 @@ public class BzGeneralConfig {
     public static ModConfigSpec.IntValue crystallineFlowerEnchantingPowerAllowedPerTier;
     public static ModConfigSpec.IntValue crystallineFlowerExtraXpNeededForTiers;
     public static ModConfigSpec.IntValue crystallineFlowerExtraTierCost;
-    public static ModConfigSpec.BooleanValue keepEssenceOfTheBeesOnRespawning;
     public static ModConfigSpec.BooleanValue repeatableEssenceEvents;
     public static ModConfigSpec.IntValue cosmicCrystalHealth;
     public static ModConfigSpec.IntValue ragingEssenceAbilityUse;
@@ -411,12 +410,6 @@ public class BzGeneralConfig {
 
         builder.push("Essence Options");
 
-        keepEssenceOfTheBeesOnRespawning = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " Whether Essence of the Bees's effect should stay on the player if they die and then respawn.\n")
-                .translation("the_bumblezone.config.keepessenceofthebeesonrespawning")
-                .define("keepEssenceOfTheBeesOnRespawning", true);
-
         repeatableEssenceEvents = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " Whether the Essence events in Sempiternal Sanctums can be repeated after beating it once.\n")
@@ -563,7 +556,6 @@ public class BzGeneralConfig {
         BzGeneralConfigs.crystallineFlowerEnchantingPowerAllowedPerTier = crystallineFlowerEnchantingPowerAllowedPerTier.get();
         BzGeneralConfigs.crystallineFlowerExtraXpNeededForTiers = crystallineFlowerExtraXpNeededForTiers.get();
         BzGeneralConfigs.crystallineFlowerExtraTierCost = crystallineFlowerExtraTierCost.get();
-        BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning.get();
         BzGeneralConfigs.repeatableEssenceEvents = repeatableEssenceEvents.get();
         BzGeneralConfigs.cosmicCrystalHealth = cosmicCrystalHealth.get();
         BzGeneralConfigs.ragingEssenceAbilityUse = ragingEssenceAbilityUse.get();

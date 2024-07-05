@@ -1254,7 +1254,6 @@
   "the_bumblezone.midnightconfig.essenceItemHUDVisualEffectLayers": "HUD Visual Effect Layer Count",
   "the_bumblezone.midnightconfig.essenceItemHUDVisualEffectSpeed": "HUD Visual Effect Spin Speed",
   "the_bumblezone.midnightconfig.essenceComment": "§o§6    Essence Configs",
-  "the_bumblezone.midnightconfig.keepEssenceOfTheBeesOnRespawning": "Keep Bee Essence On Respawning",
   "the_bumblezone.midnightconfig.repeatableEssenceEvents": "Can Repeat Essence Event After Winning",
   "the_bumblezone.midnightconfig.cosmicCrystalHealth": "Cosmic Crystal Max Health",
   "the_bumblezone.midnightconfig.ragingEssenceAbilityUse": "Raging Essence Ability Use (per second)",
