@@ -1,3 +1,9 @@
+### **(V.7.6.10 Changes) (1.21 Minecraft)**
+
+##### Blocks:
+Fixed missing particle texture when falling onto carpet or trapdoor that is over Bumblezone fluids.
+
+
 ### **(V.7.6.9 Changes) (1.21 Minecraft)**
 
 ##### Blocks:
