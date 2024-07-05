@@ -128,21 +128,4 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
     public ResourceLocation id() {
         return ID;
     }
-
-//    public void onPlayerCopy(PlayerDataModule oldModule, PlayerDataModule thisModule, ServerPlayer player, boolean isPersistent) {
-//        if (isPersistent) {
-//            ModuleSerializer.super.onPlayerCopy(oldModule, thisModule, player, true);
-//        }
-//        else if (BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning) {
-//            thisModule.isBeeEssenced = oldModule.isBeeEssenced;
-//        }
-//        else {
-//            thisModule.isBeeEssenced = false;
-//            Component message = Component.translatable("system.the_bumblezone.lost_bee_essence").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
-//            player.displayClientMessage(message, true);
-//        }
-//
-//        thisModule.gottenWelcomed = oldModule.gottenWelcomed;
-//        thisModule.gottenWelcomedInDimension = oldModule.gottenWelcomedInDimension;
-//    }
 }

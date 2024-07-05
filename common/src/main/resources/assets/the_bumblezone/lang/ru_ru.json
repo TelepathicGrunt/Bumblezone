@@ -647,7 +647,6 @@
   "the_bumblezone.midnightconfig.beeQueenBonusTradeAmountTillSatified": "Супер-обмен считать за N обменов",
   "the_bumblezone.midnightconfig.specialBeeSpawning": "Спавн уникальных пчёл",
   "the_bumblezone.midnightconfig.nearbyBeesPerPlayerInBz": "Ближайших пчёл на игрока в Жужжилище",
-  "the_bumblezone.midnightconfig.keepEssenceOfTheBeesOnRespawning": "Эссенция пчёл не теряется при смерти",
   "the_bumblezone.midnightconfig.modCompatComment": "§o§6Раздел совместимости с модами",
   "the_bumblezone.midnightconfig.allowFriendsAndFoesBeekeeperTradesCompat": "Разрешить Совместимость Обмена с Пчеловодом из Friends And Foes",
   "the_bumblezone.midnightconfig.clientComment": "§o§6Раздел клиента",

@@ -1130,7 +1130,6 @@
     "the_bumblezone.midnightconfig.radianceEssenceArmorDurabilityXCoord": "耐久度X坐标",
     "the_bumblezone.midnightconfig.radianceEssenceArmorDurabilityYCoord": "耐久度Y坐标",
     "the_bumblezone.midnightconfig.essenceComment": "§o§6    精华配置",
-    "the_bumblezone.midnightconfig.keepEssenceOfTheBeesOnRespawning": "重生时保留蜜蜂精华",
     "the_bumblezone.midnightconfig.repeatableEssenceEvents": "赢得精华事件后可重复",
     "the_bumblezone.midnightconfig.cosmicCrystalHealth": "宇宙水晶最大生命值",
     "the_bumblezone.midnightconfig.ragingEssenceAbilityUse": "狂暴精华能力使用（每秒）",

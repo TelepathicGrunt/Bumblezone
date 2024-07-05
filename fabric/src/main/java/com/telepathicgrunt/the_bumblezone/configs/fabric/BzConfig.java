@@ -105,9 +105,6 @@ public class BzConfig extends MidnightConfig {
     public static Comment essenceComment;
 
     @Entry
-    public static boolean keepEssenceOfTheBeesOnRespawning = true;
-
-    @Entry
     public static boolean repeatableEssenceEvents = true;
 
     @Entry
@@ -457,7 +454,6 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.beeSoupBrewingRecipe = beeSoupBrewingRecipe;
         BzGeneralConfigs.nearbyBeesPerPlayerInBz = nearbyBeesPerPlayerInBz;
         BzGeneralConfigs.allowWanderingTraderMusicDiscsTrades = allowWanderingTraderMusicDiscsTrades;
-        BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning;
         BzGeneralConfigs.repeatableEssenceEvents = repeatableEssenceEvents;
         BzGeneralConfigs.cosmicCrystalHealth = cosmicCrystalHealth;
         BzGeneralConfigs.ragingEssenceAbilityUse = ragingEssenceAbilityUse;

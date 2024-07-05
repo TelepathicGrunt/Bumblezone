@@ -1238,7 +1238,6 @@
   "the_bumblezone.midnightconfig.essenceItemHUDVisualEffectLayers": "Кількість шарів візуального ефекту",
   "the_bumblezone.midnightconfig.essenceItemHUDVisualEffectSpeed": "Швидкість обертання візуального ефекту",
   "the_bumblezone.midnightconfig.essenceComment": "§o§6    Конфігурація есенції",
-  "the_bumblezone.midnightconfig.keepEssenceOfTheBeesOnRespawning": "Зберігати есенцію бджіл при відродженні",
   "the_bumblezone.midnightconfig.repeatableEssenceEvents": "Можна повторити подію есенції після перемоги",
   "the_bumblezone.midnightconfig.cosmicCrystalHealth": "Максимальне здоров'я космічного кристала",
   "the_bumblezone.midnightconfig.ragingEssenceAbilityUse": "Використання здатності есенції люті (на секунду)",

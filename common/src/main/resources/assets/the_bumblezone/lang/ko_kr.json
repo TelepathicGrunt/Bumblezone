@@ -579,7 +579,6 @@
   "the_bumblezone.midnightconfig.beehemothSpeed": "Beehemoth Speed",
   "the_bumblezone.midnightconfig.specialBeeSpawning": "Special Bee Spawning",
   "the_bumblezone.midnightconfig.nearbyBeesPerPlayerInBz": "Nearby Bees Per Player In Bz",
-  "the_bumblezone.midnightconfig.keepEssenceOfTheBeesOnRespawning": "Keep Bee Essence On Respawning",
   "the_bumblezone.midnightconfig.modCompatComment": "Mod Compat Section",
   "the_bumblezone.midnightconfig.allowFriendsAndFoesBeekeeperTradesCompat": "Allow Friends And Foes Bee keeper Trades Compat",
   "the_bumblezone.midnightconfig.clientComment": "Client Section",

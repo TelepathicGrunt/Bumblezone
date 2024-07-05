@@ -6,6 +6,10 @@ Fixed missing particle texture when falling onto carpet or trapdoor that is over
 ##### Advancements:
 Fixed killed tracker advancements for Bumblezone internally crashing on entity kills.
 
+##### Configs:
+Removed keepEssenceOfTheBeesOnRespawning config option as it is a bit too difficult to reimplement and that I don't think anyone set it to false.
+ Basically, Essence of the Bees kept on respawn is now permanent default.
+
 
 ### **(V.7.6.9 Changes) (1.21 Minecraft)**
 

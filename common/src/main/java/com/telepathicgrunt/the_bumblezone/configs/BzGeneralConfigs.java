@@ -41,7 +41,6 @@ public class BzGeneralConfigs {
     public static boolean beeQueenSpecialDayTrades = true;
     public static boolean beeQueenRespawning = true;
     public static boolean superCandlesBurnsMobs = true;
-    public static boolean keepEssenceOfTheBeesOnRespawning = true;
     public static boolean allowWanderingTraderMusicDiscsTrades = true;
     public static boolean crystallineFlowerConsumeItemEntities = true;
     public static boolean crystallineFlowerConsumeExperienceOrbEntities = true;
