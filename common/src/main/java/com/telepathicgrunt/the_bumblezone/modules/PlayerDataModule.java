@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modules;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
@@ -26,7 +27,8 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
             Codec.INT.fieldOf("honeySlimeBred").forGetter(module -> module.honeySlimeBred),
             Codec.INT.fieldOf("beesFed").forGetter(module -> module.beesFed),
             Codec.INT.fieldOf("queenBeeTrade").forGetter(module -> module.queenBeeTrade),
-            Codec.unboundedMap(ResourceLocation.CODEC, Codec.INT).fieldOf("mobsKilledTracker").forGetter(module -> module.mobsKilledTracker)
+            Codec.unboundedMap(ResourceLocation.CODEC, Codec.INT).fieldOf("mobsKilledTracker")
+                    .xmap(Object2IntOpenHashMap::new, Object2IntOpenHashMap::new).forGetter(module -> module.mobsKilledTracker)
     ).apply(instance, PlayerDataModule::new));
 
     public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "player_data");
@@ -46,7 +48,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
     public int honeySlimeBred;
     public int beesFed;
     public int queenBeeTrade;
-    public final Map<ResourceLocation, Integer> mobsKilledTracker;
+    public final Object2IntOpenHashMap<ResourceLocation> mobsKilledTracker;
 
     public PlayerDataModule(boolean isBeeEssenced,
                             boolean gottenWelcomed,
@@ -63,7 +65,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
                             int honeySlimeBred,
                             int beesFed,
                             int queenBeeTrade,
-                            Map<ResourceLocation, Integer> mobsKilledTracker) {
+                            Object2IntOpenHashMap<ResourceLocation> mobsKilledTracker) {
         this.isBeeEssenced = isBeeEssenced;
         this.gottenWelcomed = gottenWelcomed;
         this.gottenWelcomedInDimension = gottenWelcomedInDimension;

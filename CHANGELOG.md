@@ -3,6 +3,9 @@
 ##### Blocks:
 Fixed missing particle texture when falling onto carpet or trapdoor that is over Bumblezone fluids.
 
+##### Advancements:
+Fixed killed tracker advancements for Bumblezone internally crashing on entity kills.
+
 
 ### **(V.7.6.9 Changes) (1.21 Minecraft)**
 
