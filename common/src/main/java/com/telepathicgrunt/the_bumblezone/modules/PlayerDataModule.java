@@ -1,14 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.modules;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.resources.ResourceLocation;
-
-import java.util.Map;
 
 public class PlayerDataModule implements Module<PlayerDataModule> {
     public static final Codec<PlayerDataModule> CODEC = RecordCodecBuilder.create((instance) -> instance.group(

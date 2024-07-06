@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
 import com.telepathicgrunt.the_bumblezone.blocks.StateReturningBrushableBlock;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.BlockEntityAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.blocks.BrushableBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -28,7 +29,7 @@ public class StateFocusedBrushableBlockEntity extends BrushableBlockEntity {
             return;
         }
 
-        this.dropContent(player);
+        ((BrushableBlockEntityAccessor)this).bumblezone$callDropContent(player);
 
         BlockState blockState = this.getBlockState();
         this.level.levelEvent(3008, this.getBlockPos(), Block.getId(blockState));

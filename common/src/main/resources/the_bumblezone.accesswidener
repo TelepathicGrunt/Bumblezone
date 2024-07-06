@@ -5,19 +5,10 @@ accessible class net/minecraft/world/level/levelgen/SurfaceRules$Context
 
 accessible class net/minecraft/world/entity/animal/Bee$BeeWanderGoal
 accessible class net/minecraft/world/level/levelgen/DensityFunctions$BeardifierMarker
-accessible class net/minecraft/world/level/levelgen/blockpredicates/MatchingBlocksPredicate
 
-accessible class net/minecraft/client/renderer/RenderType$CompositeRenderType
-accessible class net/minecraft/client/renderer/RenderStateShard$TextureStateShard
 accessible method net/minecraft/client/renderer/RenderType$CompositeRenderType state ()Lnet/minecraft/client/renderer/RenderType$CompositeState;
 accessible field net/minecraft/client/renderer/RenderType$CompositeState textureState Lnet/minecraft/client/renderer/RenderStateShard$EmptyTextureStateShard;
-accessible field net/minecraft/client/renderer/RenderStateShard NO_CULL Lnet/minecraft/client/renderer/RenderStateShard$CullStateShard;
-accessible field net/minecraft/client/renderer/RenderStateShard NO_OVERLAY Lnet/minecraft/client/renderer/RenderStateShard$OverlayStateShard;
-accessible field net/minecraft/client/renderer/RenderStateShard NO_TRANSPARENCY Lnet/minecraft/client/renderer/RenderStateShard$TransparencyStateShard;
-accessible field net/minecraft/client/renderer/RenderStateShard RENDERTYPE_ENERGY_SWIRL_SHADER Lnet/minecraft/client/renderer/RenderStateShard$ShaderStateShard;
-accessible field net/minecraft/client/renderer/RenderStateShard TRANSLUCENT_TRANSPARENCY Lnet/minecraft/client/renderer/RenderStateShard$TransparencyStateShard;
 accessible class net/minecraft/client/renderer/FogRenderer$FogData
-accessible method net/minecraft/client/renderer/blockentity/BlockEntityRenderers register (Lnet/minecraft/world/level/block/entity/BlockEntityType;Lnet/minecraft/client/renderer/blockentity/BlockEntityRendererProvider;)V
 
 accessible method net/minecraft/world/entity/item/FallingBlockEntity <init> (Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/level/block/state/BlockState;)V
 accessible method net/minecraft/client/particle/SuspendedParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/client/particle/SpriteSet;DDD)V
@@ -29,14 +20,11 @@ extendable class net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator
 accessible class net/minecraft/client/particle/ParticleEngine$MutableSpriteSet
 accessible method net/minecraft/client/particle/ParticleEngine$MutableSpriteSet <init> ()V
 
-accessible method net/minecraft/world/item/Item getPlayerPOVHitResult (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/ClipContext$Fluid;)Lnet/minecraft/world/phys/BlockHitResult;
-
-extendable method net/minecraft/world/level/material/FlowingFluid canHoldFluid (Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/Fluid;)Z
-
-accessible method net/minecraft/world/level/block/entity/BrushableBlockEntity dropContent (Lnet/minecraft/world/entity/player/Player;)V
-extendable method net/minecraft/world/level/block/entity/BrushableBlockEntity brushingCompleted (Lnet/minecraft/world/entity/player/Player;)V
-
 accessible method net/minecraft/world/damagesource/DamageSources source (Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/damagesource/DamageSource;
 accessible method net/minecraft/world/damagesource/DamageSources source (Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;
 
-accessible method net/minecraft/client/gui/screens/MenuScreens register (Lnet/minecraft/world/inventory/MenuType;Lnet/minecraft/client/gui/screens/MenuScreens$ScreenConstructor;)V
+extendable method net/minecraft/world/level/material/FlowingFluid canHoldFluid (Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/Fluid;)Z
+
+extendable method net/minecraft/world/level/block/entity/BrushableBlockEntity brushingCompleted (Lnet/minecraft/world/entity/player/Player;)V
+
+accessible class net/minecraft/client/gui/screens/MenuScreens$ScreenConstructor

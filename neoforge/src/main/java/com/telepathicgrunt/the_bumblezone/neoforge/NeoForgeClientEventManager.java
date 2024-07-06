@@ -29,10 +29,7 @@ import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -41,8 +38,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.MenuType;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -51,6 +46,7 @@ import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import net.neoforged.neoforge.client.event.RenderBlockScreenEffectEvent;
@@ -84,6 +80,7 @@ public class NeoForgeClientEventManager {
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterEntityRenderers);
         modEventBus.addListener(NeoForgeClientEventManager::onEntityLayers);
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterDimensionEffects);
+        modEventBus.addListener(NeoForgeClientEventManager::onRegisterScreens);
     }
 
     public static void onClientSetup(FMLClientSetupEvent event) {
@@ -91,14 +88,13 @@ public class NeoForgeClientEventManager {
             ClientSetupEnqueuedEvent.EVENT.invoke(new ClientSetupEnqueuedEvent(Runnable::run));
             RegisterEffectRenderersEvent.EVENT.invoke(RegisterEffectRenderersEvent.INSTANCE);
             RegisterRenderTypeEvent.EVENT.invoke(new RegisterRenderTypeEvent(ItemBlockRenderTypes::setRenderLayer, ItemBlockRenderTypes::setRenderLayer));
-            RegisterMenuScreenEvent.EVENT.invoke(new RegisterMenuScreenEvent(NeoForgeClientEventManager::registerScreen));
             RegisterItemPropertiesEvent.EVENT.invoke(new RegisterItemPropertiesEvent(ItemProperties::register));
             RegisterBlockEntityRendererEvent.EVENT.invoke(new RegisterBlockEntityRendererEvent<>(BlockEntityRenderers::register));
         });
     }
 
-    private static <M extends AbstractContainerMenu, U extends Screen & MenuAccess<M>> void registerScreen(MenuType<? extends M> arg, RegisterMenuScreenEvent.ScreenConstructor<M, U> arg2) {
-        MenuScreens.register(arg, arg2::create);
+    private static void onRegisterScreens(RegisterMenuScreensEvent event) {
+        RegisterMenuScreenEvent.EVENT.invoke(new RegisterMenuScreenEvent(event::register));
     }
 
     private static void onRegisterKeys(RegisterKeyMappingsEvent event) {

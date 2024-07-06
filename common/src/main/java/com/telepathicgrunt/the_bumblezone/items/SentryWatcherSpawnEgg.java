@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.SentryWatcherEntity;
+import com.telepathicgrunt.the_bumblezone.mixin.items.ItemAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -147,7 +148,7 @@ public class SentryWatcherSpawnEgg extends Item {
 
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
-        BlockHitResult blockHitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
+        BlockHitResult blockHitResult = ItemAccessor.bumblezone$callGetPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
         if (blockHitResult.getType() != HitResult.Type.BLOCK) {
             return InteractionResultHolder.pass(itemStack);
         }

@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.mixin.enchantments;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import com.telepathicgrunt.the_bumblezone.utils.TriState;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;

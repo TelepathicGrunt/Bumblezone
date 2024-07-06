@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.mixin.fabric.entity.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.fabric.item.BucketItemAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.items.ItemAccessor;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.fabric.RestrictedPortalsCompat;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
@@ -170,7 +171,7 @@ public class PlatformHooksImpl {
 
     public static  InteractionResultHolder<ItemStack> performItemUse(Level world, Player user, InteractionHand hand, Fluid fluid, BzCustomBucketItem bzCustomBucketItem) {
         ItemStack itemStack = user.getItemInHand(hand);
-        BlockHitResult blockHitResult = Item.getPlayerPOVHitResult(world, user, fluid == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
+        BlockHitResult blockHitResult = ItemAccessor.bumblezone$callGetPlayerPOVHitResult(world, user, fluid == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
         if (blockHitResult.getType() == HitResult.Type.MISS) {
             return InteractionResultHolder.pass(itemStack);
         }

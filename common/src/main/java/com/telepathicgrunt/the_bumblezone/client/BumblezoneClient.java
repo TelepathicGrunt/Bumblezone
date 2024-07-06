@@ -78,6 +78,7 @@ import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.items.essence.AbilityEssenceItem;
+import com.telepathicgrunt.the_bumblezone.mixin.blocks.BlockEntityRenderersAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.client.ClientLevelAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -93,7 +94,6 @@ import earth.terrarium.athena.api.client.models.FactoryManager;
 import net.minecraft.Util;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.BrushableBlockRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.core.component.DataComponents;
@@ -188,8 +188,8 @@ public class BumblezoneClient {
     }
 
     public static void registerBlockEntityRenderers(RegisterBlockEntityRendererEvent<?> event) {
-        BlockEntityRenderers.register(BzBlockEntities.ESSENCE_BLOCK.get(), EssenceBlockEntityRenderer::new);
-        BlockEntityRenderers.register(BzBlockEntities.STATE_FOCUSED_BRUSHABLE_BLOCK_ENTITY.get(), BrushableBlockRenderer::new);
+        BlockEntityRenderersAccessor.bumblezone$callRegister(BzBlockEntities.ESSENCE_BLOCK.get(), EssenceBlockEntityRenderer::new);
+        BlockEntityRenderersAccessor.bumblezone$callRegister(BzBlockEntities.STATE_FOCUSED_BRUSHABLE_BLOCK_ENTITY.get(), BrushableBlockRenderer::new);
     }
 
     public static void registerEffectRenderers(RegisterEffectRenderersEvent event) {
