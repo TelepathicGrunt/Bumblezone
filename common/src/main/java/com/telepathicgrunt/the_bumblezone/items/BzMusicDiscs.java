@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.utils.SuppliedMap;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundEvent;
@@ -18,7 +17,6 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.function.IntSupplier;
 import java.util.function.Supplier;
-import java.util.Optional;
 
 public class BzMusicDiscs extends RecordItem {
 
@@ -40,15 +38,8 @@ public class BzMusicDiscs extends RecordItem {
     public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag) {
         list.add(this.getDisplayName().withStyle(ChatFormatting.GRAY));
         if (this.hasDownload) {
-            Optional<Integer> songDescLength = itemStack.get(DataComponents.JUKEBOX_PLAYABLE)
-                    .song()
-                    .unwrap(tooltipContext.registries())
-                    .map(holder -> holder.value().description().getString().length());
-
-            int length = songDescLength.orElse(20);
-
             List<MutableComponent> componentList = GeneralUtilsClient.autoWrappedTooltip(
-                    length,
+                    this.getDescriptionId() + ".desc",
                     this.getDescriptionId() + ".download");
 
             componentList.forEach(component -> list.add(
