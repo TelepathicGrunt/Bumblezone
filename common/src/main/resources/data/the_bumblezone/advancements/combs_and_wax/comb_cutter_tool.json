@@ -28,7 +28,7 @@
             "predicates": {
               "minecraft:enchantments": [
                 {
-                  "enchantments": "the_bumblezone:comb_cutter",
+                  "enchantment": "the_bumblezone:comb_cutter",
                   "levels": {
                     "min": 1
                   }
