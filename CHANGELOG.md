@@ -14,8 +14,6 @@ Fixed killed tracker advancements for Bumblezone internally crashing on entity k
 ##### Blocks:
 Fixed broken Honey Cocoon textures when Anti-Trypophobia resourcepack is enabled.
 
-Fixed Bumblezone blocks treating any enchantment like it is Silk Touch when mined.
-
 Fixed missing particle texture when falling onto carpet or trapdoor that is over Bumblezone fluids.
 
 ##### Fluids:

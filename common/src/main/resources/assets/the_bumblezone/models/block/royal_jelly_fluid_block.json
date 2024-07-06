@@ -1,6 +1,6 @@
 {
   "render_type": "minecraft:translucent",
   "textures": {
-    "particle": "the_bumblezone:block/royal_jelly_fluid_still"
+    "particle": "the_bumblezone:block/royal_jelly_fluid/still"
   }
 }
