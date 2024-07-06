@@ -1,3 +1,11 @@
+### **(V.7.6.11 Changes) (1.21 Minecraft)**
+
+##### Items:
+Fixed Honey Bucket not spawning Glistering Honey Crystal when placing in Nether.
+
+Fixed missing particle texture when falling onto carpet or trapdoor that is over Bumblezone fluids. For real this time!
+
+
 ### **(V.7.6.10 Changes) (1.21 Minecraft)**
 
 ##### Blocks:
