@@ -4,7 +4,7 @@ import com.teamresourceful.resourcefullib.common.network.Packet;
 import com.teamresourceful.resourcefullib.common.network.base.ClientboundPacketType;
 import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import net.minecraft.client.Minecraft;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -42,7 +42,7 @@ public record SyncHorseOwnerUUIDPacketFromServer(int horseId, UUID ownerUUID) im
         @Override
         public Runnable handle(SyncHorseOwnerUUIDPacketFromServer message) {
             return () -> {
-                Entity entity = Minecraft.getInstance().level.getEntity(message.horseId());
+                Entity entity = GeneralUtilsClient.getClientLevel().getEntity(message.horseId());
                 if (entity instanceof AbstractHorse abstractHorse) {
                     abstractHorse.setOwnerUUID(message.ownerUUID());
                 }
