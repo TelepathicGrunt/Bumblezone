@@ -19,6 +19,7 @@ import net.minecraft.network.protocol.game.ClientboundChangeDifficultyPacket;
 import net.minecraft.network.protocol.game.ClientboundPlayerAbilitiesPacket;
 import net.minecraft.network.protocol.game.ClientboundRespawnPacket;
 import net.minecraft.network.protocol.game.ClientboundSetExperiencePacket;
+import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import net.minecraft.network.protocol.game.CommonPlayerSpawnInfo;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
@@ -322,7 +323,9 @@ public class BzWorldSavedData extends SavedData {
 				serverPlayer.connection.send(new ClientboundChangeDifficultyPacket(destination.getDifficulty(), destination.getLevelData().isDifficultyLocked()));
 				serverPlayer.connection.send(new ClientboundSetExperiencePacket(serverPlayer.experienceProgress, serverPlayer.totalExperience, serverPlayer.experienceLevel));
 				serverPlayer.connection.send(new ClientboundPlayerAbilitiesPacket(serverPlayer.getAbilities()));
-				serverPlayer.server.getPlayerList().sendActivePlayerEffects(serverPlayer);
+				for(MobEffectInstance mobEffectInstance : serverPlayer.getActiveEffects()) {
+					serverPlayer.connection.send(new ClientboundUpdateMobEffectPacket(serverPlayer.getId(), mobEffectInstance, false));
+				}
 				serverPlayer.server.getPlayerList().sendLevelInfo(serverPlayer, destination);
 				serverPlayer.server.getPlayerList().sendPlayerPermissionLevel(serverPlayer);
 				serverPlayer.setPortalCooldown(100);

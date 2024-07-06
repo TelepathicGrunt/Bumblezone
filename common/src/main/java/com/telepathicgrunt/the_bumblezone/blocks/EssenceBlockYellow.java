@@ -97,7 +97,7 @@ public class EssenceBlockYellow extends EssenceBlock {
 
     @Override
     public ResourceLocation getEssenceItemReward() {
-        return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "gameplay/rewards/yellow_arena_victory");
+        return new ResourceLocation(Bumblezone.MODID, "gameplay/rewards/yellow_arena_victory");
     }
 
     @Override
@@ -346,6 +346,10 @@ public class EssenceBlockYellow extends EssenceBlock {
                     if (entity instanceof Rabbit rabbit) {
                         rabbit.setVariant(Rabbit.Variant.EVIL);
                     }
+                }
+
+                if (entity instanceof Vex vex && eventEntitiesInArena.size() > 25) {
+                    vex.setSilent(true);
                 }
             }
         }

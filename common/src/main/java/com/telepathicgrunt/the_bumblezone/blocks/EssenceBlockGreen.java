@@ -96,7 +96,7 @@ public class EssenceBlockGreen extends EssenceBlock {
 
     @Override
     public ResourceLocation getEssenceItemReward() {
-        return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "gameplay/rewards/green_arena_victory");
+        return new ResourceLocation(Bumblezone.MODID, "gameplay/rewards/green_arena_victory");
     }
 
     @Override
