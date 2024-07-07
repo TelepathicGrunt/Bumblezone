@@ -1,3 +1,9 @@
+### **(V.7.6.13 Changes) (1.21 Minecraft)**
+
+##### Entities:
+Fixed some Bee Queen trades to check for correct `c` tags.
+
+
 ### **(V.7.6.12 Changes) (1.21 Minecraft)**
 
 ##### Misc:
