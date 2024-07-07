@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.entity;
 
-import com.telepathicgrunt.the_bumblezone.events.entity.BabySpawnEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzBabySpawnEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.animal.Animal;
@@ -20,7 +20,7 @@ public class AnimalMixin {
         cancellable = true)
     public void bumblezone$onSpawnChildFromBreeding(ServerLevel serverLevel, Animal otherParent, CallbackInfo ci, AgeableMob baby) {
         Animal parent = (Animal)(Object)this;
-        if (BabySpawnEvent.EVENT.invoke(new BabySpawnEvent(parent, otherParent, parent.getLoveCause(), baby))) {
+        if (BzBabySpawnEvent.EVENT.invoke(new BzBabySpawnEvent(parent, otherParent, parent.getLoveCause(), baby))) {
             parent.setAge(6000);
             otherParent.setAge(6000);
             parent.resetLove();

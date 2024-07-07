@@ -8,7 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.renderer.GameRenderer;
@@ -28,9 +28,9 @@ public class PileOfPollenRenderer {
     private static final ResourceLocation TEXTURE_POLLEN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/pile_of_pollen/pile_of_pollen.png");
     private static final ResourceLocation TEXTURE_POLLEN_SUSPICIOUS = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/pile_of_pollen/pile_of_pollen_suspicious_1.png");
 
-    public static boolean pileOfPollenOverlay(BlockRenderedOnScreenEvent event) {
+    public static boolean pileOfPollenOverlay(BzBlockRenderedOnScreenEvent event) {
         BlockState blockState = event.state();
-        if (event.type().equals(BlockRenderedOnScreenEvent.Type.BLOCK) && blockState.is(BzTags.POLLEN_BLOCKS)) {
+        if (event.type().equals(BzBlockRenderedOnScreenEvent.Type.BLOCK) && blockState.is(BzTags.POLLEN_BLOCKS)) {
             Player playerEntity = event.player();
             PoseStack matrixStack = event.stack();
             boolean isInPollen = false;

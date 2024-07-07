@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import com.telepathicgrunt.the_bumblezone.events.RegisterVillagerTradesEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzRegisterVillagerTradesEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -17,14 +17,14 @@ public class FriendsAndFoesCompat implements ModCompat {
     public FriendsAndFoesCompat() {
         if(BzModCompatibilityConfigs.allowFriendsAndFoesBeekeeperTradesCompat) {
             BEEKEEPER = BuiltInRegistries.VILLAGER_PROFESSION.getOptional(ResourceLocation.fromNamespaceAndPath("friendsandfoes", "beekeeper"));
-            RegisterVillagerTradesEvent.EVENT.addListener(FriendsAndFoesCompat::setupFriendsAndFoesTrades);
+            BzRegisterVillagerTradesEvent.EVENT.addListener(FriendsAndFoesCompat::setupFriendsAndFoesTrades);
         }
 
        // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.friendsAndFoesPresent = true;
     }
 
-    public static void setupFriendsAndFoesTrades(RegisterVillagerTradesEvent event) {
+    public static void setupFriendsAndFoesTrades(BzRegisterVillagerTradesEvent event) {
         if(BEEKEEPER.isPresent() && event.type() == BEEKEEPER.get()) {
             event.addTrade(2,
                     new GeneralUtils.BasicItemTrade(Items.EMERALD, BzItems.STICKY_HONEY_RESIDUE.get(), 1, 2, 10, 8, 0.05F));

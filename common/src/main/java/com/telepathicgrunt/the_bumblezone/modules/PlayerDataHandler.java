@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.modules;
 
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
-import com.telepathicgrunt.the_bumblezone.events.entity.BabySpawnEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.FinishUseItemEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzBabySpawnEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityDeathEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzFinishUseItemEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -20,13 +20,13 @@ import net.minecraft.world.item.ItemStack;
 public class PlayerDataHandler {
 
     public static void initEvents() {
-        BabySpawnEvent.EVENT.addListener(PlayerDataHandler::onBeeBreed);
-        BabySpawnEvent.EVENT.addListener(PlayerDataHandler::onHoneySlimeBred);
-        EntityDeathEvent.EVENT_LOWEST.addListener(PlayerDataHandler::onEntityKilled);
-        FinishUseItemEvent.EVENT.addListener(PlayerDataHandler::onHoneyBottleDrank);
+        BzBabySpawnEvent.EVENT.addListener(PlayerDataHandler::onBeeBreed);
+        BzBabySpawnEvent.EVENT.addListener(PlayerDataHandler::onHoneySlimeBred);
+        BzEntityDeathEvent.EVENT_LOWEST.addListener(PlayerDataHandler::onEntityKilled);
+        BzFinishUseItemEvent.EVENT.addListener(PlayerDataHandler::onHoneyBottleDrank);
     }
 
-    public static void onBeeBreed(boolean cancelled, BabySpawnEvent event) {
+    public static void onBeeBreed(boolean cancelled, BzBabySpawnEvent event) {
         if (cancelled) return;
         if (!(event.child() instanceof Bee)) return;
         if (event.player() instanceof ServerPlayer player && rootAdvancementDone(player)) {
@@ -46,7 +46,7 @@ public class PlayerDataHandler {
         }
     }
 
-    public static void onEntityKilled(boolean cancelled, EntityDeathEvent event) {
+    public static void onEntityKilled(boolean cancelled, BzEntityDeathEvent event) {
         if (cancelled) return;
         if (event.entity() == null) return;
         if (event.source() == null) return;
@@ -60,7 +60,7 @@ public class PlayerDataHandler {
         }
     }
 
-    public static void onHoneyBottleDrank(ItemStack result, FinishUseItemEvent event) {
+    public static void onHoneyBottleDrank(ItemStack result, BzFinishUseItemEvent event) {
         if (!event.item().is(BzTags.HONEY_DRUNK_TRIGGER_ITEMS)) return;
 
         if (event.user() instanceof ServerPlayer player && rootAdvancementDone(player)) {
@@ -98,7 +98,7 @@ public class PlayerDataHandler {
         }
     }
 
-    public static void onHoneySlimeBred(boolean cancelled, BabySpawnEvent event) {
+    public static void onHoneySlimeBred(boolean cancelled, BzBabySpawnEvent event) {
         if (cancelled) return;
         if (!(event.child() instanceof HoneySlimeEntity)) return;
         if (event.player() instanceof ServerPlayer serverPlayer && rootAdvancementDone(serverPlayer)) {

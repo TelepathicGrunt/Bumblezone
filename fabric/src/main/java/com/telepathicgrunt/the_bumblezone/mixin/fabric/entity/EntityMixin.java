@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.fabric.entity;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityTravelingToDimensionEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTravelingToDimensionEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.BzEntityHooks;
 import net.minecraft.tags.TagKey;
@@ -55,7 +55,7 @@ public abstract class EntityMixin implements BzEntityHooks {
             at = @At("HEAD"),
             cancellable = true)
     private void bumblezone$onChangeDimension(DimensionTransition dimensionTransition, CallbackInfoReturnable<Entity> cir) {
-        if (EntityTravelingToDimensionEvent.EVENT.invoke(new EntityTravelingToDimensionEvent(dimensionTransition.newLevel().dimension(), (Entity)(Object)this))) {
+        if (BzEntityTravelingToDimensionEvent.EVENT.invoke(new BzEntityTravelingToDimensionEvent(dimensionTransition.newLevel().dimension(), (Entity)(Object)this))) {
             cir.setReturnValue(null);
         }
     }

@@ -4,7 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.Collection;
 
 public class DebugDevOpCommands {
-    public static void createCommand(RegisterCommandsEvent commandEvent) {
+    public static void createCommand(BzRegisterCommandsEvent commandEvent) {
         if (!PlatformHooks.isDevEnvironment()) {
             return;
         }

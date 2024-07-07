@@ -3,6 +3,8 @@
 ##### Misc:
 Add to more `c` tags. May see a bit better mod compat.
 
+(NeoForge): Updated to run on Neo 21.0.75-beta or newer
+
 
 ### **(V.7.6.11 Changes) (1.21 Minecraft)**
 

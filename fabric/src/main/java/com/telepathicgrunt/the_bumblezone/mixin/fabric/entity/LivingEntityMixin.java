@@ -4,11 +4,11 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityHurtEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityTickEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityVisibilityEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.FinishUseItemEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityAttackedEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityHurtEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityVisibilityEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzFinishUseItemEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
@@ -38,19 +38,19 @@ public abstract class LivingEntityMixin {
     @ModifyReturnValue(method = "getVisibilityPercent",
             at = @At(value = "RETURN"))
     private double bumblezone$onEntityVisibility(double visibility, @Nullable Entity entity) {
-        EntityVisibilityEvent event = new EntityVisibilityEvent(visibility, (LivingEntity) ((Object) this), entity);
-        EntityVisibilityEvent.EVENT.invoke(event);
+        BzEntityVisibilityEvent event = new BzEntityVisibilityEvent(visibility, (LivingEntity) ((Object) this), entity);
+        BzEntityVisibilityEvent.EVENT.invoke(event);
         return event.visibility();
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void bumblezone$onTick(CallbackInfo ci) {
-        EntityTickEvent.EVENT.invoke(new EntityTickEvent((LivingEntity) ((Object) this)));
+        BzEntityTickEvent.EVENT.invoke(new BzEntityTickEvent((LivingEntity) ((Object) this)));
     }
 
     @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
     private void bumblezone$onHurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        if (EntityAttackedEvent.EVENT.invoke(new EntityAttackedEvent((LivingEntity) ((Object) this), source, amount))) {
+        if (BzEntityAttackedEvent.EVENT.invoke(new BzEntityAttackedEvent((LivingEntity) ((Object) this), source, amount))) {
             cir.setReturnValue(false);
         }
     }
@@ -60,7 +60,7 @@ public abstract class LivingEntityMixin {
                     target = "Lnet/minecraft/world/entity/LivingEntity;getDamageAfterArmorAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F",
                     ordinal = 0))
     private void bumblezone$onActualHurt(DamageSource source, float amount, CallbackInfo cir) {
-        EntityHurtEvent.EVENT_LOWEST.invoke(new EntityHurtEvent((LivingEntity) ((Object) this), source, amount));
+        BzEntityHurtEvent.EVENT_LOWEST.invoke(new BzEntityHurtEvent((LivingEntity) ((Object) this), source, amount));
     }
 
     @WrapOperation(
@@ -69,7 +69,7 @@ public abstract class LivingEntityMixin {
     private ItemStack bumblezone$onCompleteUsingItem(ItemStack instance, Level level, LivingEntity livingEntity, Operation<ItemStack> operation) {
         ItemStack copy = instance.copy();
         ItemStack stack = operation.call(instance, level, livingEntity);
-        return FinishUseItemEvent.EVENT.invoke(new FinishUseItemEvent((LivingEntity) ((Object) this), copy, getUseItemRemainingTicks()), stack);
+        return BzFinishUseItemEvent.EVENT.invoke(new BzFinishUseItemEvent((LivingEntity) ((Object) this), copy, getUseItemRemainingTicks()), stack);
     }
 
     @ModifyExpressionValue(method = "baseTick()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isEyeInFluid(Lnet/minecraft/tags/TagKey;)Z"))

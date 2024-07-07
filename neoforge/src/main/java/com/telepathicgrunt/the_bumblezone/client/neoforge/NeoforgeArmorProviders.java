@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.client.neoforge;
 
 import com.telepathicgrunt.the_bumblezone.client.armor.ArmorModelProvider;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterArmorProviderEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterArmorProviderEvent;
 import net.minecraft.world.item.Item;
 
 public class NeoforgeArmorProviders {
@@ -10,7 +10,7 @@ public class NeoforgeArmorProviders {
     public static void setupArmor() {
         if (initialized) return;
         initialized = true;
-        RegisterArmorProviderEvent.EVENT.invoke(new RegisterArmorProviderEvent(ArmorModelProvider::register));
+        BzRegisterArmorProviderEvent.EVENT.invoke(new BzRegisterArmorProviderEvent(ArmorModelProvider::register));
     }
 
     public static ArmorModelProvider get(Item item) {

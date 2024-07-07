@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerBreakSpeedEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerBreakSpeedEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
@@ -60,7 +60,7 @@ public class CombCutterEnchantmentApplication {
         });
     }
 
-    public static void attemptFasterMining(PlayerBreakSpeedEvent event){
+    public static void attemptFasterMining(BzPlayerBreakSpeedEvent event){
         if (getTargetBlocks().contains(event.state().getBlock())){
             mineFaster(event, false);
         }
@@ -69,7 +69,7 @@ public class CombCutterEnchantmentApplication {
         }
     }
 
-    private static void mineFaster(PlayerBreakSpeedEvent event, boolean lesserTarget) {
+    private static void mineFaster(BzPlayerBreakSpeedEvent event, boolean lesserTarget) {
         Player playerEntity = event.player();
         ItemStack itemStack = playerEntity.getMainHandItem();
         int equipmentLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentUtils.getEnchantmentHolder(BzEnchantments.COMB_CUTTER, playerEntity.level()), playerEntity);

@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzProjectileHitEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.BroodBlockModdedCompatDispenseBehavior;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
@@ -60,7 +60,7 @@ public class PotionOfBeesCompat implements ModCompat {
             setupDispenserCompat(LINGERING_POTION_OF_BEES.get()); // adds compatibility with bee lingering potions in dispensers
         }
 
-        ProjectileHitEvent.EVENT.addListener(PotionOfBeesCompat::onProjectileHit);
+        BzProjectileHitEvent.EVENT.addListener(PotionOfBeesCompat::onProjectileHit);
 
         // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.potionOfBeesPresent = true;
@@ -129,7 +129,7 @@ public class PotionOfBeesCompat implements ModCompat {
     /*
      * Check for if potion of bee's item was thrown and impacted empty honeycomb block to revive it
      */
-    private static void onProjectileHit(boolean cancelled, ProjectileHitEvent event) {
+    private static void onProjectileHit(boolean cancelled, BzProjectileHitEvent event) {
         if(BzModCompatibilityConfigs.allowPotionOfBeesRevivingEmptyBroodBlock && event.projectile() != null) {
             if (SPLASH_POTION_OF_BEES_ENTITY.isPresent() && event.projectile().getType() == SPLASH_POTION_OF_BEES_ENTITY.get()) {
                 PotionOfBeesCompat.reviveLarvaBlockEvent(event.projectile(), event.hitResult(), 1);

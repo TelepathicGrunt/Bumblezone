@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.entities.teleportation;
 
 
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -13,7 +13,7 @@ import net.minecraft.world.phys.HitResult;
 
 public class ItemUseOnBlock {
 
-    public static InteractionResult onItemUseOnBlock(PlayerItemUseOnBlockEvent event) {
+    public static InteractionResult onItemUseOnBlock(BzPlayerItemUseOnBlockEvent event) {
         if (event.usingStack().is(BzTags.DO_ITEM_RIGHT_CLICK_CHECK_EARLIER)) {
             return InteractionResult.PASS;
         }
@@ -31,7 +31,7 @@ public class ItemUseOnBlock {
         return success ? InteractionResult.SUCCESS : null;
     }
 
-    public static boolean onEarlyItemUseOnBlock(PlayerItemUseEvent event) {
+    public static boolean onEarlyItemUseOnBlock(BzPlayerItemUseEvent event) {
         if (!event.usingStack().is(BzTags.DO_ITEM_RIGHT_CLICK_CHECK_EARLIER)) {
             return false;
         }

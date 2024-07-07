@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityAttackedEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.AbstractArrowAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.MobAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -35,7 +35,7 @@ public class NeurotoxinsEnchantmentApplication {
         return Math.min(EnchantmentHelper.getItemEnchantmentLevel(neurotoxin, stack), BzGeneralConfigs.neurotoxinMaxLevel);
     }
 
-    public static void entityHurtEvent(EntityAttackedEvent event) {
+    public static void entityHurtEvent(BzEntityAttackedEvent event) {
         if(event.entity() == null || event.entity().level().isClientSide() || event.entity().getType().is(EntityTypeTags.UNDEAD)) {
             return;
         }

@@ -5,7 +5,7 @@ import com.teamresourceful.resourcefullib.common.network.base.ClientboundPacketT
 import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.datamanagers.queentrades.QueensTradeManager;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzDatapackSyncEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.RandomizeTradeRowInput;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -26,7 +26,7 @@ public record QueenRandomizerTradesSyncPacket(List<RandomizeTradeRowInput> recip
     public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "queen_randomize_trades_sync_packet");
     public static final ClientboundPacketType<QueenRandomizerTradesSyncPacket> TYPE = new QueenRandomizerTradesSyncPacket.Handler();
 
-    public static void sendToClient(DatapackSyncEvent event) {
+    public static void sendToClient(BzDatapackSyncEvent event) {
         MessageHandler.DEFAULT_CHANNEL.sendToPlayer(new QueenRandomizerTradesSyncPacket(QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades), event.player());
     }
 

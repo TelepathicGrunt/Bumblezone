@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityHurtEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityHurtEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -102,7 +102,7 @@ public class CalmingEssence extends AbilityEssenceItem {
         return false;
     }
 
-    public static void OnAttack(EntityHurtEvent event) {
+    public static void OnAttack(BzEntityHurtEvent event) {
         DamageSource damageSource = event.source();
         LivingEntity livingEntity = event.entity();
         if (livingEntity instanceof Mob && damageSource.getEntity() instanceof ServerPlayer serverPlayer) {

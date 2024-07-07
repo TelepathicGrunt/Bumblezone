@@ -8,7 +8,7 @@ import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.TagsUpdatedEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzTagsUpdatedEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.util.WeightedRandomListAccessor;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.MainTradeRowInput;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.RandomizeTradeRowInput;
@@ -138,7 +138,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
     }
 
     // KEEP THIS HERE BECAUSE ABOVE FIRES BEFORE TAGS ARE READY
-    public void resolveQueenTrades(final TagsUpdatedEvent event) {
+    public void resolveQueenTrades(final BzTagsUpdatedEvent event) {
         if (rawTrades.isEmpty()) {
             return;
         }

@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerEntityInteractEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerEntityInteractEvent;
 import com.telepathicgrunt.the_bumblezone.items.PollenPuff;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
@@ -38,7 +38,7 @@ public class BeeInteractivity {
     private static final ResourceLocation PRODUCTIVE_BEES_HONEY_TREAT = ResourceLocation.fromNamespaceAndPath("productivebees", "honey_treat");
 
     @Nullable
-    public static InteractionResult onEntityInteractEvent(@Nullable InteractionResult result, PlayerEntityInteractEvent event) {
+    public static InteractionResult onEntityInteractEvent(@Nullable InteractionResult result, BzPlayerEntityInteractEvent event) {
         Entity entity = event.entity();
         Player player = event.player();
         InteractionHand hand = event.hand();

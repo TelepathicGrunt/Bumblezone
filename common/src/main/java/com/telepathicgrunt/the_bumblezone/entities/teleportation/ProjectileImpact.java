@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.teleportation;
 
-import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzProjectileHitEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -10,7 +10,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
 public class ProjectileImpact {
-    public static boolean onProjectileImpact(ProjectileHitEvent event) {
+    public static boolean onProjectileImpact(BzProjectileHitEvent event) {
         Projectile projectile = event.projectile();
         if (projectile.getOwner() == null) {
             return false;

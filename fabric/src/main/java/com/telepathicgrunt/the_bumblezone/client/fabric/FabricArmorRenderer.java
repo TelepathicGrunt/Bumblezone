@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.client.fabric;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.client.armor.ArmorModelProvider;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterArmorProviderEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterArmorProviderEvent;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -31,7 +31,7 @@ public class FabricArmorRenderer implements ArmorRenderer {
     }
 
     public static void setupArmor() {
-        RegisterArmorProviderEvent.EVENT.invoke(new RegisterArmorProviderEvent((item, provider) -> {
+        BzRegisterArmorProviderEvent.EVENT.invoke(new BzRegisterArmorProviderEvent((item, provider) -> {
             ArmorModelProvider.register(item, provider);
             ArmorRenderer.register(new FabricArmorRenderer(provider), item);
         }));

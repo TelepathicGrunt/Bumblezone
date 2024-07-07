@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.neoforge;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntitySpawnEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -32,7 +32,7 @@ public class TropicraftCompat implements ModCompat {
     }
 
     @Override
-    public boolean onBeeSpawn(EntitySpawnEvent event, boolean isChild) {
+    public boolean onBeeSpawn(BzEntitySpawnEvent event, boolean isChild) {
         if (!BzModCompatibilityConfigs.spawnTropicraftBeesMob || TROPIBEE.isEmpty()) {
             return false;
         }

@@ -8,23 +8,23 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenc
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceStructureMessage;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.RadianceEssenceArmorMessage;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
-import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.KeyInputEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockColorEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockEntityRendererEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterDimensionEffectsEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterEffectRenderersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterEntityLayersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterEntityRenderersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterItemColorEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterItemPropertiesEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterKeyMappingEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterMenuScreenEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterParticleEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterRenderTypeEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterShaderEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzClientTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzKeyInputEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockColorEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockEntityRendererEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterDimensionEffectsEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEffectRenderersEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEntityLayersEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEntityRenderersEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterItemColorEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterItemPropertiesEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterKeyMappingEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterMenuScreenEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterParticleEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterRenderTypeEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterShaderEvent;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -41,6 +41,7 @@ import net.minecraft.core.particles.ParticleType;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
@@ -85,24 +86,24 @@ public class NeoForgeClientEventManager {
 
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            ClientSetupEnqueuedEvent.EVENT.invoke(new ClientSetupEnqueuedEvent(Runnable::run));
-            RegisterEffectRenderersEvent.EVENT.invoke(RegisterEffectRenderersEvent.INSTANCE);
-            RegisterRenderTypeEvent.EVENT.invoke(new RegisterRenderTypeEvent(ItemBlockRenderTypes::setRenderLayer, ItemBlockRenderTypes::setRenderLayer));
-            RegisterItemPropertiesEvent.EVENT.invoke(new RegisterItemPropertiesEvent(ItemProperties::register));
-            RegisterBlockEntityRendererEvent.EVENT.invoke(new RegisterBlockEntityRendererEvent<>(BlockEntityRenderers::register));
+            BzClientSetupEnqueuedEvent.EVENT.invoke(new BzClientSetupEnqueuedEvent(Runnable::run));
+            BzRegisterEffectRenderersEvent.EVENT.invoke(BzRegisterEffectRenderersEvent.INSTANCE);
+            BzRegisterRenderTypeEvent.EVENT.invoke(new BzRegisterRenderTypeEvent(ItemBlockRenderTypes::setRenderLayer, ItemBlockRenderTypes::setRenderLayer));
+            BzRegisterItemPropertiesEvent.EVENT.invoke(new BzRegisterItemPropertiesEvent(ItemProperties::register));
+            BzRegisterBlockEntityRendererEvent.EVENT.invoke(new BzRegisterBlockEntityRendererEvent<>(BlockEntityRenderers::register));
         });
     }
 
     private static void onRegisterScreens(RegisterMenuScreensEvent event) {
-        RegisterMenuScreenEvent.EVENT.invoke(new RegisterMenuScreenEvent(event::register));
+        BzRegisterMenuScreenEvent.EVENT.invoke(new BzRegisterMenuScreenEvent(event::register));
     }
 
     private static void onRegisterKeys(RegisterKeyMappingsEvent event) {
-        RegisterKeyMappingEvent.EVENT.invoke(new RegisterKeyMappingEvent(event::register));
+        BzRegisterKeyMappingEvent.EVENT.invoke(new BzRegisterKeyMappingEvent(event::register));
     }
 
     private static void onRegisterItemColors(RegisterColorHandlersEvent.Item event) {
-        RegisterItemColorEvent.EVENT.invoke(new RegisterItemColorEvent(event::register, event.getBlockColors()::getColor));
+        BzRegisterItemColorEvent.EVENT.invoke(new BzRegisterItemColorEvent(event::register, event.getBlockColors()::getColor));
         BzItems.ITEMS.stream()
                 .map(RegistryEntry::get)
                 .filter(item -> item instanceof DispenserAddedSpawnEgg)
@@ -111,23 +112,23 @@ public class NeoForgeClientEventManager {
     }
 
     private static void onRegisterBlockColors(RegisterColorHandlersEvent.Block event) {
-        RegisterBlockColorEvent.EVENT.invoke(new RegisterBlockColorEvent(event::register));
+        BzRegisterBlockColorEvent.EVENT.invoke(new BzRegisterBlockColorEvent(event::register));
     }
 
     private static void onRegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        RegisterEntityRenderersEvent.EVENT.invoke(new RegisterEntityRenderersEvent(event::registerEntityRenderer));
+        BzRegisterEntityRenderersEvent.EVENT.invoke(new BzRegisterEntityRenderersEvent(event::registerEntityRenderer));
     }
 
     private static void onEntityLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        RegisterEntityLayersEvent.EVENT.invoke(new RegisterEntityLayersEvent(event::registerLayerDefinition));
+        BzRegisterEntityLayersEvent.EVENT.invoke(new BzRegisterEntityLayersEvent(event::registerLayerDefinition));
     }
 
     private static void onRegisterDimensionEffects(RegisterDimensionSpecialEffectsEvent event) {
-        RegisterDimensionEffectsEvent.EVENT.invoke(new RegisterDimensionEffectsEvent(event::register));
+        BzRegisterDimensionEffectsEvent.EVENT.invoke(new BzRegisterDimensionEffectsEvent(event::register));
     }
 
     public static void onRegisterShaders(RegisterShadersEvent event) {
-        RegisterShaderEvent.EVENT.invoke(new RegisterShaderEvent((name, vertexFormat, safeShaderCallback) -> {
+        BzRegisterShaderEvent.EVENT.invoke(new BzRegisterShaderEvent((name, vertexFormat, safeShaderCallback) -> {
             ShaderInstance shaderInstance;
             try {
                 shaderInstance = new ShaderInstance(Minecraft.getInstance().getResourceManager(), name, vertexFormat);
@@ -140,33 +141,33 @@ public class NeoForgeClientEventManager {
     }
 
     private static void onKeyInput(InputEvent.Key event) {
-        KeyInputEvent.EVENT.invoke(new KeyInputEvent(event.getKey(), event.getScanCode(), event.getAction()));
+        BzKeyInputEvent.EVENT.invoke(new BzKeyInputEvent(event.getKey(), event.getScanCode(), event.getAction()));
     }
 
-    private static void onClientTickPre(net.neoforged.neoforge.client.event.ClientTickEvent.Pre event) {
-        ClientTickEvent.EVENT.invoke(new ClientTickEvent(false));
+    private static void onClientTickPre(ClientTickEvent.Pre event) {
+        BzClientTickEvent.EVENT.invoke(new BzClientTickEvent(false));
     }
 
-    private static void onClientTickPost(net.neoforged.neoforge.client.event.ClientTickEvent.Post event) {
-        ClientTickEvent.EVENT.invoke(new ClientTickEvent(true));
+    private static void onClientTickPost(ClientTickEvent.Post event) {
+        BzClientTickEvent.EVENT.invoke(new BzClientTickEvent(true));
     }
 
     public static void onBlockScreen(RenderBlockScreenEffectEvent event) {
-        BlockRenderedOnScreenEvent.Type type = switch (event.getOverlayType()) {
-            case BLOCK -> BlockRenderedOnScreenEvent.Type.BLOCK;
-            case FIRE -> BlockRenderedOnScreenEvent.Type.FIRE;
-            case WATER -> BlockRenderedOnScreenEvent.Type.WATER;
+        BzBlockRenderedOnScreenEvent.Type type = switch (event.getOverlayType()) {
+            case BLOCK -> BzBlockRenderedOnScreenEvent.Type.BLOCK;
+            case FIRE -> BzBlockRenderedOnScreenEvent.Type.FIRE;
+            case WATER -> BzBlockRenderedOnScreenEvent.Type.WATER;
         };
-        event.setCanceled(BlockRenderedOnScreenEvent.EVENT.invoke(new BlockRenderedOnScreenEvent(
+        event.setCanceled(BzBlockRenderedOnScreenEvent.EVENT.invoke(new BzBlockRenderedOnScreenEvent(
                 event.getPlayer(), event.getPoseStack(), type, event.getBlockState(), event.getBlockPos())));
     }
 
     public static void onRegisterParticles(RegisterParticleProvidersEvent event) {
-        RegisterParticleEvent.EVENT.invoke(new RegisterParticleEvent(NeoForgeClientEventManager.registerParticle(event)));
+        BzRegisterParticleEvent.EVENT.invoke(new BzRegisterParticleEvent(NeoForgeClientEventManager.registerParticle(event)));
     }
 
-    private static RegisterParticleEvent.Registrar registerParticle(RegisterParticleProvidersEvent event) {
-        return new RegisterParticleEvent.Registrar() {
+    private static BzRegisterParticleEvent.Registrar registerParticle(RegisterParticleProvidersEvent event) {
+        return new BzRegisterParticleEvent.Registrar() {
             @Override
             public <T extends ParticleOptions> void register(ParticleType<T> type, Function<SpriteSet, ParticleProvider<T>> registration) {
                 event.registerSpriteSet(type, registration::apply);

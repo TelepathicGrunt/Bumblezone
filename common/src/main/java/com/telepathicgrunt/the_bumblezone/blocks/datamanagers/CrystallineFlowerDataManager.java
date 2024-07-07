@@ -7,7 +7,7 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.TagsUpdatedEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzTagsUpdatedEvent;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -74,7 +74,7 @@ public class CrystallineFlowerDataManager extends SimpleJsonResourceReloadListen
     }
 
     // KEEP THIS HERE BECAUSE ABOVE FIRES BEFORE TAGS ARE READY
-    public void resolveFlowerData(final TagsUpdatedEvent event) {
+    public void resolveFlowerData(final BzTagsUpdatedEvent event) {
         for (FlowerData flowerData : cachedFlowerData) {
             flowerData.allowNormalConsumption().ifPresent(b -> allowNormalConsumption = b);
 

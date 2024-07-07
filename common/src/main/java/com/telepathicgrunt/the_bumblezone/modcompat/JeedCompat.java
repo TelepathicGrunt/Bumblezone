@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinDataPacks;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinDataPacks;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -13,7 +13,7 @@ public class JeedCompat implements ModCompat {
                 addBuiltinDataPacks.add(
                         ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "jeed_effects_compat"),
                         Component.literal("Bumblezone - JEED Compat"),
-                        AddBuiltinDataPacks.PackMode.FORCE_ENABLED
+                        BzAddBuiltinDataPacks.PackMode.FORCE_ENABLED
                 )
         );
 

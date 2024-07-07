@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.VariantBeeEntity;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemAttackBlockEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemAttackBlockEvent;
 import com.telepathicgrunt.the_bumblezone.menus.BuzzingBriefcaseMenuProvider;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
@@ -75,7 +75,7 @@ public class BuzzingBriefcase extends Item {
         return new InteractionResultHolder<>(InteractionResult.PASS, stack);
     }
 
-    public static InteractionResult onLeftClickBlock(PlayerItemAttackBlockEvent event) {
+    public static InteractionResult onLeftClickBlock(BzPlayerItemAttackBlockEvent event) {
         Player player = event.user();
         ItemStack briefcaseItem = player.getItemInHand(event.hand());
 

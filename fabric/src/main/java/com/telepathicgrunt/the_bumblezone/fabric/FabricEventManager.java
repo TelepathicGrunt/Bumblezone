@@ -2,30 +2,30 @@ package com.telepathicgrunt.the_bumblezone.fabric;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
-import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
-import com.telepathicgrunt.the_bumblezone.events.RegisterBrewingRecipeEvent;
-import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
-import com.telepathicgrunt.the_bumblezone.events.RegisterVillagerTradesEvent;
-import com.telepathicgrunt.the_bumblezone.events.RegisterWanderingTradesEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinDataPacks;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterDataSerializersEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterEntityAttributesEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterFlammabilityEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterReloadListenerEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterSpawnPlacementsEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStartEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStopEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerLevelTickEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.SetupEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.TagsUpdatedEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemAttackBlockEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddCreativeTabEntriesEvent;
+import com.telepathicgrunt.the_bumblezone.events.block.BzBlockBreakEvent;
+import com.telepathicgrunt.the_bumblezone.events.item.BzRegisterBrewingRecipeEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterCommandsEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzRegisterVillagerTradesEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzRegisterWanderingTradesEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityDeathEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinDataPacks;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinResourcePacks;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzDatapackSyncEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzFinalSetupEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterDataSerializersEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterEntityAttributesEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterFlammabilityEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterReloadListenerEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterSpawnPlacementsEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerGoingToStartEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerGoingToStopEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerLevelTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzSetupEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzTagsUpdatedEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemAttackBlockEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.fabric.fabricapi.BiomeModificationContextImplMixin;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -106,22 +106,22 @@ import java.util.stream.Collectors;
 
 public class FabricEventManager {
 
-    private static final Map<ResourceKey<CreativeModeTab>, AddCreativeTabEntriesEvent.Type> TYPES = Util.make(new IdentityHashMap<>(), map -> {
-        map.put(CreativeModeTabs.BUILDING_BLOCKS, AddCreativeTabEntriesEvent.Type.BUILDING);
-        map.put(CreativeModeTabs.COLORED_BLOCKS, AddCreativeTabEntriesEvent.Type.COLORED);
-        map.put(CreativeModeTabs.NATURAL_BLOCKS, AddCreativeTabEntriesEvent.Type.NATURAL);
-        map.put(CreativeModeTabs.FUNCTIONAL_BLOCKS, AddCreativeTabEntriesEvent.Type.FUNCTIONAL);
-        map.put(CreativeModeTabs.REDSTONE_BLOCKS, AddCreativeTabEntriesEvent.Type.REDSTONE);
-        map.put(CreativeModeTabs.TOOLS_AND_UTILITIES, AddCreativeTabEntriesEvent.Type.TOOLS);
-        map.put(CreativeModeTabs.COMBAT, AddCreativeTabEntriesEvent.Type.COMBAT);
-        map.put(CreativeModeTabs.FOOD_AND_DRINKS, AddCreativeTabEntriesEvent.Type.FOOD);
-        map.put(CreativeModeTabs.INGREDIENTS, AddCreativeTabEntriesEvent.Type.INGREDIENTS);
-        map.put(CreativeModeTabs.SPAWN_EGGS, AddCreativeTabEntriesEvent.Type.SPAWN_EGGS);
-        map.put(CreativeModeTabs.OP_BLOCKS, AddCreativeTabEntriesEvent.Type.OPERATOR);
+    private static final Map<ResourceKey<CreativeModeTab>, BzAddCreativeTabEntriesEvent.Type> TYPES = Util.make(new IdentityHashMap<>(), map -> {
+        map.put(CreativeModeTabs.BUILDING_BLOCKS, BzAddCreativeTabEntriesEvent.Type.BUILDING);
+        map.put(CreativeModeTabs.COLORED_BLOCKS, BzAddCreativeTabEntriesEvent.Type.COLORED);
+        map.put(CreativeModeTabs.NATURAL_BLOCKS, BzAddCreativeTabEntriesEvent.Type.NATURAL);
+        map.put(CreativeModeTabs.FUNCTIONAL_BLOCKS, BzAddCreativeTabEntriesEvent.Type.FUNCTIONAL);
+        map.put(CreativeModeTabs.REDSTONE_BLOCKS, BzAddCreativeTabEntriesEvent.Type.REDSTONE);
+        map.put(CreativeModeTabs.TOOLS_AND_UTILITIES, BzAddCreativeTabEntriesEvent.Type.TOOLS);
+        map.put(CreativeModeTabs.COMBAT, BzAddCreativeTabEntriesEvent.Type.COMBAT);
+        map.put(CreativeModeTabs.FOOD_AND_DRINKS, BzAddCreativeTabEntriesEvent.Type.FOOD);
+        map.put(CreativeModeTabs.INGREDIENTS, BzAddCreativeTabEntriesEvent.Type.INGREDIENTS);
+        map.put(CreativeModeTabs.SPAWN_EGGS, BzAddCreativeTabEntriesEvent.Type.SPAWN_EGGS);
+        map.put(CreativeModeTabs.OP_BLOCKS, BzAddCreativeTabEntriesEvent.Type.OPERATOR);
     });
 
     public static void init() {
-        AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) -> {
+        BzAddBuiltinResourcePacks.EVENT.invoke(new BzAddBuiltinResourcePacks((id, displayName, mode) -> {
             ModContainer container = getModPack(id);
             ResourceManagerHelper.registerBuiltinResourcePack(
                     ResourceLocation.fromNamespaceAndPath(container.getMetadata().getId(), id.getPath()),
@@ -131,7 +131,7 @@ public class FabricEventManager {
             );
         }));
 
-        AddBuiltinDataPacks.EVENT.invoke(new AddBuiltinDataPacks((id, displayName, mode) -> {
+        BzAddBuiltinDataPacks.EVENT.invoke(new BzAddBuiltinDataPacks((id, displayName, mode) -> {
             ModContainer container = getModPack(id);
             ResourceManagerHelperImpl.registerBuiltinResourcePack(
                     ResourceLocation.fromNamespaceAndPath(container.getMetadata().getId(), id.getPath()),
@@ -143,27 +143,27 @@ public class FabricEventManager {
         }));
 
         ItemGroupEvents.MODIFY_ENTRIES_ALL.register((tab, entries) ->
-                AddCreativeTabEntriesEvent.EVENT.invoke(new AddCreativeTabEntriesEvent(
-                        TYPES.getOrDefault(BuiltInRegistries.CREATIVE_MODE_TAB.getResourceKey(tab).orElse(null), AddCreativeTabEntriesEvent.Type.CUSTOM),
+                BzAddCreativeTabEntriesEvent.EVENT.invoke(new BzAddCreativeTabEntriesEvent(
+                        TYPES.getOrDefault(BuiltInRegistries.CREATIVE_MODE_TAB.getResourceKey(tab).orElse(null), BzAddCreativeTabEntriesEvent.Type.CUSTOM),
                         tab,
                         entries.shouldShowOpRestrictedItems(),
                         entries::accept)));
 
-        RegisterEntityAttributesEvent.EVENT.invoke(new RegisterEntityAttributesEvent(FabricDefaultAttributeRegistry::register));
-        SetupEvent.EVENT.invoke(new SetupEvent(Runnable::run));
-        FinalSetupEvent.EVENT.invoke(new FinalSetupEvent(Runnable::run));
+        BzRegisterEntityAttributesEvent.EVENT.invoke(new BzRegisterEntityAttributesEvent(FabricDefaultAttributeRegistry::register));
+        BzSetupEvent.EVENT.invoke(new BzSetupEvent(Runnable::run));
+        BzFinalSetupEvent.EVENT.invoke(new BzFinalSetupEvent(Runnable::run));
 
-        RegisterDataSerializersEvent.EVENT.invoke(new RegisterDataSerializersEvent((id, serializer) -> EntityDataSerializers.registerSerializer(serializer)));
+        BzRegisterDataSerializersEvent.EVENT.invoke(new BzRegisterDataSerializersEvent((id, serializer) -> EntityDataSerializers.registerSerializer(serializer)));
 
-        ServerTickEvents.START_WORLD_TICK.register(world -> ServerLevelTickEvent.EVENT.invoke(new ServerLevelTickEvent(world, false)));
-        ServerTickEvents.END_WORLD_TICK.register(world -> ServerLevelTickEvent.EVENT.invoke(new ServerLevelTickEvent(world, true)));
+        ServerTickEvents.START_WORLD_TICK.register(world -> BzServerLevelTickEvent.EVENT.invoke(new BzServerLevelTickEvent(world, false)));
+        ServerTickEvents.END_WORLD_TICK.register(world -> BzServerLevelTickEvent.EVENT.invoke(new BzServerLevelTickEvent(world, true)));
 
         ServerLifecycleEvents.SERVER_STARTING.register((a) -> {
-            ServerGoingToStartEvent.EVENT.invoke(new ServerGoingToStartEvent(a));
+            BzServerGoingToStartEvent.EVENT.invoke(new BzServerGoingToStartEvent(a));
             PlatformHooksImpl.currentRegistryAccess = a.registryAccess();
         });
         ServerLifecycleEvents.SERVER_STOPPING.register((a) -> {
-            ServerGoingToStopEvent.EVENT.invoke(ServerGoingToStopEvent.INSTANCE);
+            BzServerGoingToStopEvent.EVENT.invoke(BzServerGoingToStopEvent.INSTANCE);
             PlatformHooksImpl.currentRegistryAccess = null;
         });
 
@@ -172,23 +172,23 @@ public class FabricEventManager {
             setupVillagerTrades();
         });
 
-        RegisterFlammabilityEvent.EVENT.invoke(new RegisterFlammabilityEvent(FlammableBlockRegistry.getDefaultInstance()::add));
+        BzRegisterFlammabilityEvent.EVENT.invoke(new BzRegisterFlammabilityEvent(FlammableBlockRegistry.getDefaultInstance()::add));
 
-        RegisterReloadListenerEvent.EVENT.invoke(new RegisterReloadListenerEvent((id, listener) ->
+        BzRegisterReloadListenerEvent.EVENT.invoke(new BzRegisterReloadListenerEvent((id, listener) ->
                 ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricReloadListener(id, listener))));
-        RegisterSpawnPlacementsEvent.EVENT.invoke(new RegisterSpawnPlacementsEvent(FabricEventManager::registerPlacement));
+        BzRegisterSpawnPlacementsEvent.EVENT.invoke(new BzRegisterSpawnPlacementsEvent(FabricEventManager::registerPlacement));
         CommonLifecycleEvents.TAGS_LOADED.register((registry, client) ->
-                TagsUpdatedEvent.EVENT.invoke(new TagsUpdatedEvent(registry, client)));
+                BzTagsUpdatedEvent.EVENT.invoke(new BzTagsUpdatedEvent(registry, client)));
         PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, blockentity) ->
-                !BlockBreakEvent.EVENT_LOWEST.invoke(new BlockBreakEvent(player, state)));
+                !BzBlockBreakEvent.EVENT_LOWEST.invoke(new BzBlockBreakEvent(player, state)));
         CommandRegistrationCallback.EVENT.register((dispatcher, context, environment) ->
-                RegisterCommandsEvent.EVENT.invoke(new RegisterCommandsEvent(dispatcher, environment, context)));
+                BzRegisterCommandsEvent.EVENT.invoke(new BzRegisterCommandsEvent(dispatcher, environment, context)));
 
-        RegisterBrewingRecipeEvent.EVENT.invoke(new RegisterBrewingRecipeEvent((input, item, output) ->
+        BzRegisterBrewingRecipeEvent.EVENT.invoke(new BzRegisterBrewingRecipeEvent((input, item, output) ->
             FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> builder.registerPotionRecipe(input, Ingredient.of(item), output))));
 
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) ->
-                DatapackSyncEvent.EVENT.invoke(new DatapackSyncEvent(player)));
+                BzDatapackSyncEvent.EVENT.invoke(new BzDatapackSyncEvent(player)));
 
         AttackBlockCallback.EVENT.register(FabricEventManager::onItemAttackBlock);
         UseBlockCallback.EVENT.register(FabricEventManager::onItemUseOnBlock);
@@ -245,11 +245,11 @@ public class FabricEventManager {
         return FabricLoader.getInstance().getModContainer(pack.getNamespace()).orElseThrow();
     }
 
-    private static <T extends Mob> void registerPlacement(EntityType<T> type, RegisterSpawnPlacementsEvent.Placement<T> placement) {
+    private static <T extends Mob> void registerPlacement(EntityType<T> type, BzRegisterSpawnPlacementsEvent.Placement<T> placement) {
         SpawnPlacements.register(type, placement.spawn(), placement.height(), placement.predicate());
     }
 
-    private static ResourcePackActivationType toType(AddBuiltinResourcePacks.PackMode mode) {
+    private static ResourcePackActivationType toType(BzAddBuiltinResourcePacks.PackMode mode) {
         return switch (mode) {
             case USER_CONTROLLED -> ResourcePackActivationType.NORMAL;
             case ENABLED_BY_DEFAULT -> ResourcePackActivationType.DEFAULT_ENABLED;
@@ -257,7 +257,7 @@ public class FabricEventManager {
         };
     }
 
-    private static ResourcePackActivationType toType(AddBuiltinDataPacks.PackMode mode) {
+    private static ResourcePackActivationType toType(BzAddBuiltinDataPacks.PackMode mode) {
         return switch (mode) {
             case USER_CONTROLLED -> ResourcePackActivationType.NORMAL;
             case ENABLED_BY_DEFAULT -> ResourcePackActivationType.DEFAULT_ENABLED;
@@ -269,7 +269,7 @@ public class FabricEventManager {
         var trades = VillagerTrades.WANDERING_TRADER_TRADES;
         List<VillagerTrades.ItemListing> basic = Arrays.stream(trades.get(1)).collect(Collectors.toList());
         List<VillagerTrades.ItemListing> rare = Arrays.stream(trades.get(2)).collect(Collectors.toList());
-        RegisterWanderingTradesEvent.EVENT.invoke(new RegisterWanderingTradesEvent(basic::add, rare::add));
+        BzRegisterWanderingTradesEvent.EVENT.invoke(new BzRegisterWanderingTradesEvent(basic::add, rare::add));
         trades.put(1, basic.toArray(new VillagerTrades.ItemListing[0]));
         trades.put(2, rare.toArray(new VillagerTrades.ItemListing[0]));
     }
@@ -288,7 +288,7 @@ public class FabricEventManager {
                     listings.put(i, new ArrayList<>());
                 }
             }
-            RegisterVillagerTradesEvent.EVENT.invoke(new RegisterVillagerTradesEvent(profession, (i, listing) -> listings.get(i.intValue()).add(listing)));
+            BzRegisterVillagerTradesEvent.EVENT.invoke(new BzRegisterVillagerTradesEvent(profession, (i, listing) -> listings.get(i.intValue()).add(listing)));
             for (int i = 1; i <= 5; i++) {
                 profTrades.put(i, listings.get(i).toArray(new VillagerTrades.ItemListing[0]));
             }
@@ -302,30 +302,30 @@ public class FabricEventManager {
     }
 
     public static InteractionResult onItemAttackBlock(Player player, Level world, InteractionHand hand, BlockPos pos, Direction direction) {
-        PlayerItemAttackBlockEvent event = new PlayerItemAttackBlockEvent(player, world, hand, player.getItemInHand(hand));
-        InteractionResult result = PlayerItemAttackBlockEvent.EVENT_HIGH.invoke(event);
+        BzPlayerItemAttackBlockEvent event = new BzPlayerItemAttackBlockEvent(player, world, hand, player.getItemInHand(hand));
+        InteractionResult result = BzPlayerItemAttackBlockEvent.EVENT_HIGH.invoke(event);
         return result != null ? result : InteractionResult.PASS;
     }
 
     public static InteractionResult onItemUseOnBlock(Player player, Level world, InteractionHand hand, BlockHitResult hitResult) {
-        PlayerItemUseOnBlockEvent event = new PlayerItemUseOnBlockEvent(player, world, hand, hitResult, player.getItemInHand(hand));
-        InteractionResult result = PlayerItemUseOnBlockEvent.EVENT_HIGH.invoke(event);
+        BzPlayerItemUseOnBlockEvent event = new BzPlayerItemUseOnBlockEvent(player, world, hand, hitResult, player.getItemInHand(hand));
+        InteractionResult result = BzPlayerItemUseOnBlockEvent.EVENT_HIGH.invoke(event);
         return result != null ? result : InteractionResult.PASS;
     }
 
     public static InteractionResultHolder<ItemStack> onItemUse(Player player, Level level, InteractionHand hand) {
-        PlayerItemUseEvent event = new PlayerItemUseEvent(player, level, player.getItemInHand(hand));
-        if (PlayerItemUseEvent.EVENT_HIGH.invoke(event)) {
+        BzPlayerItemUseEvent event = new BzPlayerItemUseEvent(player, level, player.getItemInHand(hand));
+        if (BzPlayerItemUseEvent.EVENT_HIGH.invoke(event)) {
             return InteractionResultHolder.success(event.usingStack());
         }
         return InteractionResultHolder.pass(event.usingStack());
     }
 
     private static boolean allowLivingEntityDeath(LivingEntity livingEntity, DamageSource damageSource, float damage) {
-        if (EntityDeathEvent.EVENT.invoke(new EntityDeathEvent(livingEntity, damageSource))) {
+        if (BzEntityDeathEvent.EVENT.invoke(new BzEntityDeathEvent(livingEntity, damageSource))) {
             return false;
         }
-        else if (EntityDeathEvent.EVENT_LOWEST.invoke(new EntityDeathEvent(livingEntity, damageSource))) {
+        else if (BzEntityDeathEvent.EVENT_LOWEST.invoke(new BzEntityDeathEvent(livingEntity, damageSource))) {
             return false;
         }
 

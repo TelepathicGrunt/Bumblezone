@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.serialization.MapCodec;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -311,7 +311,7 @@ public class StringCurtain extends Block {
         return super.useItemOn(itemStack, blockstate, world, position, playerEntity, playerHand, raytraceResult);
     }
 
-    public static InteractionResult onBlockInteractEvent(PlayerItemUseOnBlockEvent event) {
+    public static InteractionResult onBlockInteractEvent(BzPlayerItemUseOnBlockEvent event) {
         Player player = event.user();
         InteractionHand interactionHand = event.hand();
         ItemStack heldItem = player.getItemInHand(interactionHand);

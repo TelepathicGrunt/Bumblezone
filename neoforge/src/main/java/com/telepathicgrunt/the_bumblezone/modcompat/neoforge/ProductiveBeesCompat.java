@@ -5,8 +5,8 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinDataPacks;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntitySpawnEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinDataPacks;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.BroodBlockModdedCompatDispenseBehavior;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
@@ -100,7 +100,7 @@ public class ProductiveBeesCompat implements ModCompat {
                 addBuiltinDataPacks.add(
                         ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "productive_bees_compat"),
                         Component.literal("Bumblezone - Productive Bees Compat"),
-                        AddBuiltinDataPacks.PackMode.FORCE_ENABLED
+                        BzAddBuiltinDataPacks.PackMode.FORCE_ENABLED
                 )
         );
 
@@ -179,7 +179,7 @@ public class ProductiveBeesCompat implements ModCompat {
     }
 
     @Override
-    public boolean onBeeSpawn(EntitySpawnEvent event, boolean isChild) {
+    public boolean onBeeSpawn(BzEntitySpawnEvent event, boolean isChild) {
         if (!BzModCompatibilityConfigs.spawnProductiveBeesBeesMob) {
             return false;
         }

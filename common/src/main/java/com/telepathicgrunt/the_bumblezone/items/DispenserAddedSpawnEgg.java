@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.MapCodec;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.SetupEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzSetupEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.items.SpawnEggItemAccessor;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -65,7 +65,7 @@ public class DispenserAddedSpawnEgg extends SpawnEggItem {
         return getType(ItemStack.EMPTY).requiredFeatures();
     }
 
-    public static void onSetup(SetupEvent event) {
+    public static void onSetup(BzSetupEvent event) {
         var spawnEggMap = SpawnEggItemAccessor.bz$getIdMap();
         for (var entry : DispenserAddedSpawnEgg.SPAWN_EGGS) {
             spawnEggMap.put(entry.getFirst().get(), entry.getSecond());

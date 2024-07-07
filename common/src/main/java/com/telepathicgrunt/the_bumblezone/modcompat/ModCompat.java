@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.mojang.datafixers.util.Pair;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntitySpawnEvent;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -32,7 +32,7 @@ public interface ModCompat {
     /**
      * Called when a bee spawns in the world.
      */
-    default boolean onBeeSpawn(EntitySpawnEvent event, boolean isBaby) {
+    default boolean onBeeSpawn(BzEntitySpawnEvent event, boolean isBaby) {
         return false;
     }
 

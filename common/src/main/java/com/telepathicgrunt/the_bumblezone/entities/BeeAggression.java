@@ -5,10 +5,10 @@ import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
-import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityHurtEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.block.BzBlockBreakEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityHurtEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerPickupItemEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.FlowerHeadwearHelmet;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
@@ -65,7 +65,7 @@ public class BeeAggression {
     }
 
     //if player mines a tagged angerable block, bees gets very mad...
-    public static void minedBlockAnger(boolean cancelled, BlockBreakEvent event) {
+    public static void minedBlockAnger(boolean cancelled, BzBlockBreakEvent event) {
         if (cancelled) {
             return;
         }
@@ -83,7 +83,7 @@ public class BeeAggression {
     }
 
     //if player picks up a tagged angerable item, bees gets very mad...
-    public static void pickupItemAnger(PlayerPickupItemEvent event) {
+    public static void pickupItemAnger(BzPlayerPickupItemEvent event) {
         Player player = event.player();
         ItemStack itemStack = event.item();
 
@@ -125,7 +125,7 @@ public class BeeAggression {
         }
     }
 
-    public static void onLivingEntityHurt(EntityHurtEvent event) {
+    public static void onLivingEntityHurt(BzEntityHurtEvent event) {
         LivingEntity livingEntity = event.entity();
         if (event.amount() > 0 &&
             livingEntity != null &&
@@ -243,7 +243,7 @@ public class BeeAggression {
         return SET_OF_BEE_NAMED_ENTITIES.contains(type);
     }
 
-    public static void playerTick(PlayerTickEvent event) {
+    public static void playerTick(BzPlayerTickEvent event) {
         Player playerEntity = event.player();
 
         //removes the wrath of the hive if it is disallowed outside dimension

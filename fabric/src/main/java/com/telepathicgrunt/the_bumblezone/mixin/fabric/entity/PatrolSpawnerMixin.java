@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.entity;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntitySpawnEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -26,7 +26,7 @@ public class PatrolSpawnerMixin {
                                          CallbackInfoReturnable<Boolean> cir,
                                          @Local(ordinal = 0) PatrollingMonster patrollingMonster)
     {
-        if (EntitySpawnEvent.EVENT.invoke(new EntitySpawnEvent(patrollingMonster, serverLevel, patrollingMonster.isBaby(), MobSpawnType.PATROL))) {
+        if (BzEntitySpawnEvent.EVENT.invoke(new BzEntitySpawnEvent(patrollingMonster, serverLevel, patrollingMonster.isBaby(), MobSpawnType.PATROL))) {
             cir.setReturnValue(false);
         }
     }

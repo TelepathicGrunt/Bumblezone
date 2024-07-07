@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat.neoforge;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinDataPacks;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinDataPacks;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -31,7 +31,7 @@ public class BuzzierBeesCompat implements ModCompat {
                 addBuiltinDataPacks.add(
                         ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "buzzier_bees_compat"),
                         Component.literal("Bumblezone - Buzzier Bees Compat"),
-                        AddBuiltinDataPacks.PackMode.FORCE_ENABLED
+                        BzAddBuiltinDataPacks.PackMode.FORCE_ENABLED
                 )
         );
 

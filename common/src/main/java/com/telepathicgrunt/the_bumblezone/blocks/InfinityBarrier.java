@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.InfinityBarrierBlockEntity;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
@@ -113,7 +113,7 @@ public class InfinityBarrier extends BaseEntityBlock implements BlockExtension {
         return OptionalBoolean.TRUE;
     }
 
-    public static InteractionResult onBlockInteractEvent(PlayerItemUseOnBlockEvent event) {
+    public static InteractionResult onBlockInteractEvent(BzPlayerItemUseOnBlockEvent event) {
         Player player = event.user();
         InteractionHand interactionHand = event.hand();
         BlockState blockState = event.level().getBlockState(event.hitResult().getBlockPos());

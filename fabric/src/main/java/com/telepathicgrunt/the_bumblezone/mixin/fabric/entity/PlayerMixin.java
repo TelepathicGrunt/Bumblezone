@@ -4,9 +4,9 @@ import com.google.common.util.concurrent.AtomicDouble;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerBreakSpeedEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerEntityInteractEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerBreakSpeedEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerEntityInteractEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.BzShieldItem;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -47,7 +47,7 @@ public abstract class PlayerMixin extends Entity {
             at = @At("RETURN"))
     private float bumblezone$onGetDigSpeed(float speed, BlockState state) {
         AtomicDouble eventSpeed = new AtomicDouble(speed);
-        PlayerBreakSpeedEvent.EVENT.invoke(new PlayerBreakSpeedEvent((Player) ((Object)this), state, eventSpeed));
+        BzPlayerBreakSpeedEvent.EVENT.invoke(new BzPlayerBreakSpeedEvent((Player) ((Object)this), state, eventSpeed));
         return eventSpeed.floatValue();
     }
 
@@ -57,7 +57,7 @@ public abstract class PlayerMixin extends Entity {
                     ordinal = 0),
             cancellable = true)
     private void bumblezone$onInteractOn(Entity entity, InteractionHand interactionHand, CallbackInfoReturnable<InteractionResult> cir) {
-        InteractionResult result = PlayerEntityInteractEvent.EVENT.invoke(new PlayerEntityInteractEvent((Player) ((Object)this), entity, interactionHand));
+        InteractionResult result = BzPlayerEntityInteractEvent.EVENT.invoke(new BzPlayerEntityInteractEvent((Player) ((Object)this), entity, interactionHand));
         if (result != null) {
             cir.setReturnValue(result);
         }
@@ -66,22 +66,22 @@ public abstract class PlayerMixin extends Entity {
     @Inject(method = "tick",
             at = @At("HEAD"))
     private void bumblezone$onTickPre(CallbackInfo ci) {
-        PlayerTickEvent eventObject = new PlayerTickEvent((Player) ((Object)this), false);
+        BzPlayerTickEvent eventObject = new BzPlayerTickEvent((Player) ((Object)this), false);
 
-        PlayerTickEvent.EVENT.invoke(eventObject);
+        BzPlayerTickEvent.EVENT.invoke(eventObject);
         if (this.level().isClientSide()) {
-            PlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
+            BzPlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
         }
     }
 
     @Inject(method = "tick",
             at = @At("TAIL"))
     private void bumblezone$onTickPost(CallbackInfo ci) {
-        PlayerTickEvent eventObject = new PlayerTickEvent((Player) ((Object)this), true);
+        BzPlayerTickEvent eventObject = new BzPlayerTickEvent((Player) ((Object)this), true);
 
-        PlayerTickEvent.EVENT.invoke(eventObject);
+        BzPlayerTickEvent.EVENT.invoke(eventObject);
         if (this.level().isClientSide()) {
-            PlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
+            BzPlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
         }
     }
 

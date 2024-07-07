@@ -2,8 +2,8 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinDataPacks;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntitySpawnEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinDataPacks;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
@@ -51,7 +51,7 @@ public class ResourcefulBeesCompat implements ModCompat {
             addBuiltinDataPacks.add(
                 ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "resourcefulbees_compat"),
                 Component.literal("Bumblezone - Resourceful Bees Compat"),
-                AddBuiltinDataPacks.PackMode.FORCE_ENABLED
+                BzAddBuiltinDataPacks.PackMode.FORCE_ENABLED
             )
         );
 
@@ -81,7 +81,7 @@ public class ResourcefulBeesCompat implements ModCompat {
     }
 
     @Override
-    public boolean onBeeSpawn(EntitySpawnEvent event, boolean isBaby) {
+    public boolean onBeeSpawn(BzEntitySpawnEvent event, boolean isBaby) {
         if (!BzModCompatibilityConfigs.spawnResourcefulBeesBeesMob || (event.spawnType() == MobSpawnType.DISPENSER && !BzModCompatibilityConfigs.allowResourcefulBeesSpawnFromDispenserFedBroodBlock)) {
                return false;
         }

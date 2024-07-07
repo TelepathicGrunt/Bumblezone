@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.entity;
 
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityTravelingToDimensionEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTravelingToDimensionEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -19,7 +19,7 @@ public class ServerPlayerMixin {
             at = @At("HEAD"),
             cancellable = true)
     private void bumblezone$onTravelToDimension(DimensionTransition dimensionTransition, CallbackInfoReturnable<Entity> cir) {
-        if (EntityTravelingToDimensionEvent.EVENT.invoke(new EntityTravelingToDimensionEvent(dimensionTransition.newLevel().dimension(), (ServerPlayer)(Object)this))) {
+        if (BzEntityTravelingToDimensionEvent.EVENT.invoke(new BzEntityTravelingToDimensionEvent(dimensionTransition.newLevel().dimension(), (ServerPlayer)(Object)this))) {
             cir.setReturnValue(null);
         }
     }
@@ -28,7 +28,7 @@ public class ServerPlayerMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;level()Lnet/minecraft/world/level/Level;"),
             cancellable = true)
     private void bumblezone$onTeleportTo(ServerLevel serverLevel, double d, double e, double f, float g, float h, CallbackInfo ci) {
-        if (EntityTravelingToDimensionEvent.EVENT.invoke(new EntityTravelingToDimensionEvent(serverLevel.dimension(), (ServerPlayer)(Object)this))) {
+        if (BzEntityTravelingToDimensionEvent.EVENT.invoke(new BzEntityTravelingToDimensionEvent(serverLevel.dimension(), (ServerPlayer)(Object)this))) {
             ci.cancel();
         }
     }

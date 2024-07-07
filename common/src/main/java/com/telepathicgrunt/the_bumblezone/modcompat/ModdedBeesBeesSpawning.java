@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntitySpawnEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -12,7 +12,7 @@ public class ModdedBeesBeesSpawning {
 	 * Manual spawning of modded Bees so it can be disabled real time by config.
 	 * works by making a chance of bees spawning also spawn modded bees
 	 */
-	public static boolean onEntitySpawn(EntitySpawnEvent event) {
+	public static boolean onEntitySpawn(BzEntitySpawnEvent event) {
 
 		if (event.spawnType() == MobSpawnType.NATURAL ||
 			event.spawnType() == MobSpawnType.SPAWNER ||

@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.advancements;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerGrantAdvancementEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerGrantAdvancementEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import net.minecraft.advancements.AdvancementHolder;
@@ -46,7 +46,7 @@ public class TargetAdvancementDoneTrigger extends SimpleCriterionTrigger<TargetA
         }
     }
 
-    public static void OnAdvancementGiven(PlayerGrantAdvancementEvent event) {
+    public static void OnAdvancementGiven(BzPlayerGrantAdvancementEvent event) {
         if (event.player() instanceof ServerPlayer serverPlayer) {
             BzCriterias.TARGET_ADVANCEMENT_DONE_TRIGGER.get().trigger(serverPlayer);
         }

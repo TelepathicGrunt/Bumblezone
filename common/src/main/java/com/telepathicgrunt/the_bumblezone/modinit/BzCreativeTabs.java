@@ -4,7 +4,7 @@ import com.teamresourceful.resourcefullib.common.registry.RegistryEntry;
 import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistries;
 import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddCreativeTabEntriesEvent;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -191,8 +191,8 @@ public class BzCreativeTabs {
                             CUSTOM_CREATIVE_TAB_ITEMS.stream().map(item -> setSpecialItemStackNbt(item.get().getDefaultInstance())).forEach(output::accept)
                     ).build());
 
-    public static void addCreativeTabEntries(AddCreativeTabEntriesEvent event) {
-        if (event.type() == AddCreativeTabEntriesEvent.Type.REDSTONE) {
+    public static void addCreativeTabEntries(BzAddCreativeTabEntriesEvent event) {
+        if (event.type() == BzAddCreativeTabEntriesEvent.Type.REDSTONE) {
             Stream.of(
                     BzItems.STICKY_HONEY_REDSTONE,
                     BzItems.REDSTONE_HONEY_WEB,
@@ -201,7 +201,7 @@ public class BzCreativeTabs {
             ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
 
-        if (event.type() == AddCreativeTabEntriesEvent.Type.FUNCTIONAL) {
+        if (event.type() == BzAddCreativeTabEntriesEvent.Type.FUNCTIONAL) {
             Stream.of(
                     BzItems.HONEYCOMB_BROOD,
                     BzItems.GLISTERING_HONEY_CRYSTAL,
@@ -231,7 +231,7 @@ public class BzCreativeTabs {
             ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
 
-        if (event.type() == AddCreativeTabEntriesEvent.Type.COLORED) {
+        if (event.type() == BzAddCreativeTabEntriesEvent.Type.COLORED) {
             Stream.of(
                     BzItems.SUPER_CANDLE,
                     BzItems.SUPER_CANDLE_WHITE,
@@ -269,7 +269,7 @@ public class BzCreativeTabs {
             ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
 
-        if (event.type() == AddCreativeTabEntriesEvent.Type.COMBAT) {
+        if (event.type() == BzAddCreativeTabEntriesEvent.Type.COMBAT) {
             Stream.of(
                     BzItems.BEE_STINGER,
                     BzItems.STINGER_SPEAR,
@@ -289,13 +289,13 @@ public class BzCreativeTabs {
             ).map(item -> setSpecialItemStackNbt(item.get().getDefaultInstance())).forEach(event::add);
         }
 
-        if (event.type() == AddCreativeTabEntriesEvent.Type.TOOLS) {
+        if (event.type() == BzAddCreativeTabEntriesEvent.Type.TOOLS) {
             Stream.of(
                     BzItems.BUZZING_BRIEFCASE
             ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
 
-        if (event.type() == AddCreativeTabEntriesEvent.Type.INGREDIENTS) {
+        if (event.type() == BzAddCreativeTabEntriesEvent.Type.INGREDIENTS) {
             Stream.of(
                     BzItems.BANNER_PATTERN_BEE,
                     BzItems.BANNER_PATTERN_HONEYCOMBS,
@@ -308,7 +308,7 @@ public class BzCreativeTabs {
             ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
 
-        if (event.type() == AddCreativeTabEntriesEvent.Type.FOOD) {
+        if (event.type() == BzAddCreativeTabEntriesEvent.Type.FOOD) {
             Stream.of(
                     BzItems.HONEY_CRYSTAL_SHARDS,
                     BzItems.BEE_BREAD,
@@ -317,7 +317,7 @@ public class BzCreativeTabs {
             ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
 
-        if (event.type() == AddCreativeTabEntriesEvent.Type.SPAWN_EGGS) {
+        if (event.type() == BzAddCreativeTabEntriesEvent.Type.SPAWN_EGGS) {
             Stream.of(
                     BzItems.HONEY_SLIME_SPAWN_EGG,
                     BzItems.VARIANT_BEE_SPAWN_EGG,
@@ -328,7 +328,7 @@ public class BzCreativeTabs {
             ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
 
-        if (event.type() == AddCreativeTabEntriesEvent.Type.OPERATOR && event.hasPermission()) {
+        if (event.type() == BzAddCreativeTabEntriesEvent.Type.OPERATOR && event.hasPermission()) {
             Stream.of(
                     BzItems.HEAVY_AIR
             ).map(item -> item.get().getDefaultInstance()).forEach(event::add);

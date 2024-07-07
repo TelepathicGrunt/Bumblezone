@@ -54,25 +54,25 @@ import com.telepathicgrunt.the_bumblezone.client.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceActivityData;
-import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.KeyInputEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterArmorProviderEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockColorEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockEntityRendererEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterDimensionEffectsEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterEffectRenderersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterEntityLayersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterEntityRenderersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterItemColorEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterItemPropertiesEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterKeyMappingEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterMenuScreenEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterParticleEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterRenderTypeEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterShaderEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzClientTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzKeyInputEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterArmorProviderEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockColorEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockEntityRendererEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterDimensionEffectsEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEffectRenderersEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEntityLayersEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEntityRenderersEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterItemColorEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterItemPropertiesEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterKeyMappingEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterMenuScreenEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterParticleEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterRenderTypeEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterShaderEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
@@ -150,53 +150,53 @@ public class BumblezoneClient {
 
     public static void init() {
         FactoryManager.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "connected"), ConnectedBlockModel.FACTORY);
-        PlayerTickEvent.CLIENT_EVENT.addListener(MusicHandler::tickMusicFader);
+        BzPlayerTickEvent.CLIENT_EVENT.addListener(MusicHandler::tickMusicFader);
 
-        RegisterParticleEvent.EVENT.addListener(BumblezoneClient::onParticleSetup);
-        RegisterEntityRenderersEvent.EVENT.addListener(BumblezoneClient::registerEntityRenderers);
-        RegisterEntityLayersEvent.EVENT.addListener(BumblezoneClient::registerEntityLayers);
-        RegisterKeyMappingEvent.EVENT.addListener(BumblezoneClient::registerKeyBinding);
-        RegisterDimensionEffectsEvent.EVENT.addListener(BumblezoneClient::registerDimensionEffects);
-        RegisterShaderEvent.EVENT.addListener(BumblezoneClient::registerShaders);
-        RegisterBlockColorEvent.EVENT.addListener(InfinityBarrierColoring::registerBlockColors);
-        RegisterBlockColorEvent.EVENT.addListener(PotionCandleColoring::registerBlockColors);
-        RegisterItemColorEvent.EVENT.addListener(PotionCandleColoring::registerItemColors);
-        RegisterItemColorEvent.EVENT.addListener(FlowerHeadwearColoring::registerItemColors);
-        ClientTickEvent.EVENT.addListener(event -> {
+        BzRegisterParticleEvent.EVENT.addListener(BumblezoneClient::onParticleSetup);
+        BzRegisterEntityRenderersEvent.EVENT.addListener(BumblezoneClient::registerEntityRenderers);
+        BzRegisterEntityLayersEvent.EVENT.addListener(BumblezoneClient::registerEntityLayers);
+        BzRegisterKeyMappingEvent.EVENT.addListener(BumblezoneClient::registerKeyBinding);
+        BzRegisterDimensionEffectsEvent.EVENT.addListener(BumblezoneClient::registerDimensionEffects);
+        BzRegisterShaderEvent.EVENT.addListener(BumblezoneClient::registerShaders);
+        BzRegisterBlockColorEvent.EVENT.addListener(InfinityBarrierColoring::registerBlockColors);
+        BzRegisterBlockColorEvent.EVENT.addListener(PotionCandleColoring::registerBlockColors);
+        BzRegisterItemColorEvent.EVENT.addListener(PotionCandleColoring::registerItemColors);
+        BzRegisterItemColorEvent.EVENT.addListener(FlowerHeadwearColoring::registerItemColors);
+        BzClientTickEvent.EVENT.addListener(event -> {
             if (event.end()) {
                 StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer());
             }
         });
 
-        ClientSetupEnqueuedEvent.EVENT.addListener(BumblezoneClient::clientSetup);
-        BlockRenderedOnScreenEvent.EVENT.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
-        KeyInputEvent.EVENT.addListener(BeehemothControls::keyInput);
-        RegisterMenuScreenEvent.EVENT.addListener(BumblezoneClient::registerScreens);
-        RegisterItemPropertiesEvent.EVENT.addListener(BumblezoneClient::registerItemProperties);
-        RegisterRenderTypeEvent.EVENT.addListener(BumblezoneClient::registerRenderTypes);
-        RegisterArmorProviderEvent.EVENT.addListener(BumblezoneClient::registerArmorProviders);
-        RegisterEffectRenderersEvent.EVENT.addListener(BumblezoneClient::registerEffectRenderers);
-        RegisterBlockEntityRendererEvent.EVENT.addListener(BumblezoneClient::registerBlockEntityRenderers);
+        BzClientSetupEnqueuedEvent.EVENT.addListener(BumblezoneClient::clientSetup);
+        BzBlockRenderedOnScreenEvent.EVENT.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
+        BzKeyInputEvent.EVENT.addListener(BeehemothControls::keyInput);
+        BzRegisterMenuScreenEvent.EVENT.addListener(BumblezoneClient::registerScreens);
+        BzRegisterItemPropertiesEvent.EVENT.addListener(BumblezoneClient::registerItemProperties);
+        BzRegisterRenderTypeEvent.EVENT.addListener(BumblezoneClient::registerRenderTypes);
+        BzRegisterArmorProviderEvent.EVENT.addListener(BumblezoneClient::registerArmorProviders);
+        BzRegisterEffectRenderersEvent.EVENT.addListener(BumblezoneClient::registerEffectRenderers);
+        BzRegisterBlockEntityRendererEvent.EVENT.addListener(BumblezoneClient::registerBlockEntityRenderers);
 
         BzClientFluids.CLIENT_FLUIDS.init();
     }
 
-    public static void clientSetup(ClientSetupEnqueuedEvent event) {
+    public static void clientSetup(BzClientSetupEnqueuedEvent event) {
         Set<Item> particleMarkerBlocks = new HashSet<>(ClientLevelAccessor.getMARKER_PARTICLE_ITEMS());
         particleMarkerBlocks.add(BzItems.HEAVY_AIR.get());
         ClientLevelAccessor.setMARKER_PARTICLE_ITEMS(particleMarkerBlocks);
     }
 
-    public static void registerBlockEntityRenderers(RegisterBlockEntityRendererEvent<?> event) {
+    public static void registerBlockEntityRenderers(BzRegisterBlockEntityRendererEvent<?> event) {
         BlockEntityRenderersAccessor.bumblezone$callRegister(BzBlockEntities.ESSENCE_BLOCK.get(), EssenceBlockEntityRenderer::new);
         BlockEntityRenderersAccessor.bumblezone$callRegister(BzBlockEntities.STATE_FOCUSED_BRUSHABLE_BLOCK_ENTITY.get(), BrushableBlockRenderer::new);
     }
 
-    public static void registerEffectRenderers(RegisterEffectRenderersEvent event) {
+    public static void registerEffectRenderers(BzRegisterEffectRenderersEvent event) {
         event.register(BzEffects.HIDDEN.holder(), new HiddenEffectIconRenderer());
     }
 
-    public static void registerArmorProviders(RegisterArmorProviderEvent event) {
+    public static void registerArmorProviders(BzRegisterArmorProviderEvent event) {
         event.register(BzItems.FLOWER_HEADWEAR.get(), FlowerHeadwearModelProvider::new);
         event.register(BzItems.STINGLESS_BEE_HELMET_1.get(), BeeArmorModelProvider::new);
         event.register(BzItems.STINGLESS_BEE_HELMET_2.get(), BeeArmorModelProvider::new);
@@ -210,12 +210,12 @@ public class BumblezoneClient {
         event.register(BzItems.CARPENTER_BEE_BOOTS_2.get(), BeeArmorModelProvider::new);
     }
 
-    public static void registerKeyBinding(RegisterKeyMappingEvent event) {
+    public static void registerKeyBinding(BzRegisterKeyMappingEvent event) {
         event.register(BeehemothControls.KEY_BIND_BEEHEMOTH_UP);
         event.register(BeehemothControls.KEY_BIND_BEEHEMOTH_DOWN);
     }
 
-    private static void registerScreens(RegisterMenuScreenEvent event) {
+    private static void registerScreens(BzRegisterMenuScreenEvent event) {
         event.register(BzMenuTypes.STRICT_9x1.get(), StrictChestScreen::new);
         event.register(BzMenuTypes.STRICT_9x2.get(), StrictChestScreen::new);
         event.register(BzMenuTypes.STRICT_9x3.get(), StrictChestScreen::new);
@@ -227,7 +227,7 @@ public class BumblezoneClient {
     }
 
     @SuppressWarnings("ConstantConditions")
-    private static void registerItemProperties(RegisterItemPropertiesEvent event) {
+    private static void registerItemProperties(BzRegisterItemPropertiesEvent event) {
         // Allows shield to use the blocking json file for offset
         event.register(
                 BzItems.HONEY_CRYSTAL_SHIELD.get(),
@@ -337,7 +337,7 @@ public class BumblezoneClient {
         registerEssenceItemProperty(event, BzItems.ESSENCE_CONTINUITY.get());
     }
 
-    private static void registerEssenceItemProperty(RegisterItemPropertiesEvent event, Item item) {
+    private static void registerEssenceItemProperty(BzRegisterItemPropertiesEvent event, Item item) {
         event.register(
             item,
             ResourceLocation.withDefaultNamespace("state"),
@@ -364,7 +364,7 @@ public class BumblezoneClient {
         );
     }
 
-    private static void registerRenderTypes(RegisterRenderTypeEvent event) {
+    private static void registerRenderTypes(BzRegisterRenderTypeEvent event) {
         event.register(RenderType.translucent(),
                 BzFluids.SUGAR_WATER_FLUID.get(),
                 BzFluids.SUGAR_WATER_FLUID_FLOWING.get(),
@@ -403,7 +403,7 @@ public class BumblezoneClient {
         );
     }
 
-    public static void registerEntityLayers(RegisterEntityLayersEvent event) {
+    public static void registerEntityLayers(BzRegisterEntityLayersEvent event) {
         if (BzClientConfigs.useBackupModelForVariantBee) {
             event.register(BackupVariantBeeModel.LAYER_LOCATION, BackupVariantBeeModel::createBodyLayer);
         }
@@ -423,8 +423,7 @@ public class BumblezoneClient {
         event.register(CosmicCrystalModel.LAYER_LOCATION, CosmicCrystalModel::createBodyLayer);
     }
 
-    @SuppressWarnings("rawtypes")
-    public static void registerEntityRenderers(RegisterEntityRenderersEvent event) {
+    public static void registerEntityRenderers(BzRegisterEntityRenderersEvent event) {
         if (BzClientConfigs.useBackupModelForVariantBee) {
             event.register(BzEntities.VARIANT_BEE.get(), BackupVariantBeeRenderer::new);
         }
@@ -447,7 +446,7 @@ public class BumblezoneClient {
         event.register(BzEntities.COSMIC_CRYSTAL_ENTITY.get(), CosmicCrystalRenderer::new);
     }
 
-    public static void onParticleSetup(RegisterParticleEvent event) {
+    public static void onParticleSetup(BzRegisterParticleEvent event) {
         event.register(BzParticles.POLLEN_PARTICLE.get(), PollenPuffParticle.Factory::new);
         event.register(BzParticles.SPARKLE_PARTICLE.get(), SparkleParticle.Factory::new);
         event.register(BzParticles.HONEY_PARTICLE.get(), HoneyParticle.Factory::new);
@@ -462,11 +461,11 @@ public class BumblezoneClient {
         event.register(BzParticles.SHOCK_PARTICLE.get(), VoiceParticle.Factory::new);
     }
 
-    public static void registerDimensionEffects(RegisterDimensionEffectsEvent event) {
+    public static void registerDimensionEffects(BzRegisterDimensionEffectsEvent event) {
         event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "dimension_special_effects"), new BzDimensionSpecialEffects());
     }
 
-    public static void registerShaders(RegisterShaderEvent event) {
+    public static void registerShaders(BzRegisterShaderEvent event) {
         event.register(
             ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "rendertype_bumblezone_essence"),
             EssenceBlockEntityRenderer.POSITION_COLOR_NORMAL,

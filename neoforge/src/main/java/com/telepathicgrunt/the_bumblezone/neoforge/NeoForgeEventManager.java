@@ -3,44 +3,44 @@ package com.telepathicgrunt.the_bumblezone.neoforge;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.telepathicgrunt.the_bumblezone.configs.neoforge.BzGeneralConfig;
 import com.telepathicgrunt.the_bumblezone.entities.neoforge.DisableFlightAttribute;
-import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
-import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
-import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
-import com.telepathicgrunt.the_bumblezone.events.RegisterBrewingRecipeEvent;
-import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
-import com.telepathicgrunt.the_bumblezone.events.RegisterVillagerTradesEvent;
-import com.telepathicgrunt.the_bumblezone.events.RegisterWanderingTradesEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.BabySpawnEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityHurtEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityTickEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityTravelingToDimensionEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityVisibilityEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.FinishUseItemEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinDataPacks;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterDataSerializersEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterEntityAttributesEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterFlammabilityEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterReloadListenerEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterSpawnPlacementsEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStartEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStopEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerLevelTickEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.SetupEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.TagsUpdatedEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerBreakSpeedEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerEntityInteractEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerGrantAdvancementEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemAttackBlockEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.block.BzBlockBreakEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzBabySpawnEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityAttackedEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityDeathEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityHurtEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntitySpawnEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTravelingToDimensionEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityVisibilityEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzFinishUseItemEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzProjectileHitEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzRegisterVillagerTradesEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzRegisterWanderingTradesEvent;
+import com.telepathicgrunt.the_bumblezone.events.item.BzRegisterBrewingRecipeEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinDataPacks;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinResourcePacks;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddCreativeTabEntriesEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzDatapackSyncEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzFinalSetupEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterCommandsEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterDataSerializersEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterEntityAttributesEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterFlammabilityEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterReloadListenerEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterSpawnPlacementsEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerGoingToStartEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerGoingToStopEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerLevelTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzSetupEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzTagsUpdatedEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerBreakSpeedEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerEntityInteractEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerGrantAdvancementEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemAttackBlockEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseOnBlockEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerPickupItemEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.fluids.neoforge.BzFluidBottlesWrapper;
 import com.telepathicgrunt.the_bumblezone.fluids.neoforge.BzFluidBucketWrapper;
 import com.telepathicgrunt.the_bumblezone.mixin.neoforge.block.FireBlockInvoker;
@@ -76,10 +76,13 @@ import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.TagsUpdatedEvent;
+import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
-import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.event.entity.living.BabyEntitySpawnEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
@@ -94,7 +97,9 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.event.village.WandererTradesEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
@@ -149,26 +154,26 @@ public class NeoForgeEventManager {
     }
 
     private static void onAddTabContents(BuildCreativeModeTabContentsEvent event) {
-        AddCreativeTabEntriesEvent.EVENT.invoke(new AddCreativeTabEntriesEvent(toType(BuiltInRegistries.CREATIVE_MODE_TAB.getResourceKey(event.getTab()).orElse(null)), event.getTab(), event.hasPermissions(), event::accept));
+        BzAddCreativeTabEntriesEvent.EVENT.invoke(new BzAddCreativeTabEntriesEvent(toType(BuiltInRegistries.CREATIVE_MODE_TAB.getResourceKey(event.getTab()).orElse(null)), event.getTab(), event.hasPermissions(), event::accept));
     }
 
-    private static AddCreativeTabEntriesEvent.Type toType(ResourceKey<CreativeModeTab> tab) {
-        if (CreativeModeTabs.BUILDING_BLOCKS.equals(tab)) return AddCreativeTabEntriesEvent.Type.BUILDING;
-        else if (CreativeModeTabs.COLORED_BLOCKS.equals(tab)) return AddCreativeTabEntriesEvent.Type.COLORED;
-        else if (CreativeModeTabs.NATURAL_BLOCKS.equals(tab)) return AddCreativeTabEntriesEvent.Type.NATURAL;
-        else if (CreativeModeTabs.FUNCTIONAL_BLOCKS.equals(tab)) return AddCreativeTabEntriesEvent.Type.FUNCTIONAL;
-        else if (CreativeModeTabs.REDSTONE_BLOCKS.equals(tab)) return AddCreativeTabEntriesEvent.Type.REDSTONE;
-        else if (CreativeModeTabs.TOOLS_AND_UTILITIES.equals(tab)) return AddCreativeTabEntriesEvent.Type.TOOLS;
-        else if (CreativeModeTabs.COMBAT.equals(tab)) return AddCreativeTabEntriesEvent.Type.COMBAT;
-        else if (CreativeModeTabs.FOOD_AND_DRINKS.equals(tab)) return AddCreativeTabEntriesEvent.Type.FOOD;
-        else if (CreativeModeTabs.INGREDIENTS.equals(tab)) return AddCreativeTabEntriesEvent.Type.INGREDIENTS;
-        else if (CreativeModeTabs.SPAWN_EGGS.equals(tab)) return AddCreativeTabEntriesEvent.Type.SPAWN_EGGS;
-        else if (CreativeModeTabs.OP_BLOCKS.equals(tab)) return AddCreativeTabEntriesEvent.Type.OPERATOR;
-        return AddCreativeTabEntriesEvent.Type.CUSTOM;
+    private static BzAddCreativeTabEntriesEvent.Type toType(ResourceKey<CreativeModeTab> tab) {
+        if (CreativeModeTabs.BUILDING_BLOCKS.equals(tab)) return BzAddCreativeTabEntriesEvent.Type.BUILDING;
+        else if (CreativeModeTabs.COLORED_BLOCKS.equals(tab)) return BzAddCreativeTabEntriesEvent.Type.COLORED;
+        else if (CreativeModeTabs.NATURAL_BLOCKS.equals(tab)) return BzAddCreativeTabEntriesEvent.Type.NATURAL;
+        else if (CreativeModeTabs.FUNCTIONAL_BLOCKS.equals(tab)) return BzAddCreativeTabEntriesEvent.Type.FUNCTIONAL;
+        else if (CreativeModeTabs.REDSTONE_BLOCKS.equals(tab)) return BzAddCreativeTabEntriesEvent.Type.REDSTONE;
+        else if (CreativeModeTabs.TOOLS_AND_UTILITIES.equals(tab)) return BzAddCreativeTabEntriesEvent.Type.TOOLS;
+        else if (CreativeModeTabs.COMBAT.equals(tab)) return BzAddCreativeTabEntriesEvent.Type.COMBAT;
+        else if (CreativeModeTabs.FOOD_AND_DRINKS.equals(tab)) return BzAddCreativeTabEntriesEvent.Type.FOOD;
+        else if (CreativeModeTabs.INGREDIENTS.equals(tab)) return BzAddCreativeTabEntriesEvent.Type.INGREDIENTS;
+        else if (CreativeModeTabs.SPAWN_EGGS.equals(tab)) return BzAddCreativeTabEntriesEvent.Type.SPAWN_EGGS;
+        else if (CreativeModeTabs.OP_BLOCKS.equals(tab)) return BzAddCreativeTabEntriesEvent.Type.OPERATOR;
+        return BzAddCreativeTabEntriesEvent.Type.CUSTOM;
     }
 
     private static void onSetup(FMLCommonSetupEvent event) {
-        SetupEvent.EVENT.invoke(new SetupEvent(event::enqueueWork));
+        BzSetupEvent.EVENT.invoke(new BzSetupEvent(event::enqueueWork));
 
         FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
                 BzFluids.SUGAR_WATER_FLUID_TYPE.get().flowing().get().getFluidType(),
@@ -181,27 +186,27 @@ public class NeoForgeEventManager {
         ));
 
         event.enqueueWork(() ->
-                RegisterFlammabilityEvent.EVENT.invoke(new RegisterFlammabilityEvent((item, igniteOdds, burnOdds) ->
+                BzRegisterFlammabilityEvent.EVENT.invoke(new BzRegisterFlammabilityEvent((item, igniteOdds, burnOdds) ->
                         ((FireBlockInvoker) Blocks.FIRE).callSetFlammable(item, igniteOdds, burnOdds)))
         );
     }
 
     private static void onFinalSetup(FMLCommonSetupEvent event) {
-        FinalSetupEvent.EVENT.invoke(new FinalSetupEvent(event::enqueueWork));
+        BzFinalSetupEvent.EVENT.invoke(new BzFinalSetupEvent(event::enqueueWork));
         event.enqueueWork(NeoForgeModChecker::setupModCompat);
     }
 
     private static void onServerStarting(ServerAboutToStartEvent event) {
-        ServerGoingToStartEvent.EVENT.invoke(new ServerGoingToStartEvent(event.getServer()));
+        BzServerGoingToStartEvent.EVENT.invoke(new BzServerGoingToStartEvent(event.getServer()));
     }
 
     private static void onServerStopping(ServerStoppingEvent event) {
-        ServerGoingToStopEvent.EVENT.invoke(ServerGoingToStopEvent.INSTANCE);
+        BzServerGoingToStopEvent.EVENT.invoke(BzServerGoingToStopEvent.INSTANCE);
     }
 
     private static void onRegistryEvent(RegisterEvent event) {
         if (event.getRegistryKey() == NeoForgeRegistries.Keys.ENTITY_DATA_SERIALIZERS) {
-            RegisterDataSerializersEvent.EVENT.invoke(new RegisterDataSerializersEvent(
+            BzRegisterDataSerializersEvent.EVENT.invoke(new BzRegisterDataSerializersEvent(
                     (id, serializer) -> event.register(NeoForgeRegistries.Keys.ENTITY_DATA_SERIALIZERS, id, () -> serializer)));
         }
     }
@@ -209,26 +214,26 @@ public class NeoForgeEventManager {
     private static void onRegisterPackFinder(AddPackFindersEvent event) {
 
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-            AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) -> {
+            BzAddBuiltinResourcePacks.EVENT.invoke(new BzAddBuiltinResourcePacks((id, displayName, mode) -> {
                 event.addPackFinders(
                     ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "resourcepacks/" + id.getPath()),
                     PackType.CLIENT_RESOURCES,
                     displayName,
                     PackSource.BUILT_IN,
-                    mode == AddBuiltinResourcePacks.PackMode.FORCE_ENABLED,
+                    mode == BzAddBuiltinResourcePacks.PackMode.FORCE_ENABLED,
                     Pack.Position.BOTTOM
                 );
             }));
         }
 
         if (event.getPackType() == PackType.SERVER_DATA) {
-            AddBuiltinDataPacks.EVENT.invoke(new AddBuiltinDataPacks((id, displayName, mode) -> {
+            BzAddBuiltinDataPacks.EVENT.invoke(new BzAddBuiltinDataPacks((id, displayName, mode) -> {
                 event.addPackFinders(
                         ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "datapacks/" + id.getPath()),
                         PackType.SERVER_DATA,
                         displayName,
                         PackSource.BUILT_IN,
-                        mode == AddBuiltinDataPacks.PackMode.FORCE_ENABLED,
+                        mode == BzAddBuiltinDataPacks.PackMode.FORCE_ENABLED,
                         Pack.Position.BOTTOM
                 );
             }));
@@ -236,83 +241,83 @@ public class NeoForgeEventManager {
     }
 
     private static void onBabySpawn(BabyEntitySpawnEvent event) {
-        boolean cancel = BabySpawnEvent.EVENT.invoke(new BabySpawnEvent(event.getParentA(), event.getParentB(), event.getCausedByPlayer(), event.getChild()), event.isCanceled());
+        boolean cancel = BzBabySpawnEvent.EVENT.invoke(new BzBabySpawnEvent(event.getParentA(), event.getParentB(), event.getCausedByPlayer(), event.getChild()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);
         }
     }
 
     private static void onRegisterAttributes(EntityAttributeCreationEvent event) {
-        RegisterEntityAttributesEvent.EVENT.invoke(new RegisterEntityAttributesEvent((entity, builder) -> event.put(entity, builder.build())));
+        BzRegisterEntityAttributesEvent.EVENT.invoke(new BzRegisterEntityAttributesEvent((entity, builder) -> event.put(entity, builder.build())));
     }
 
     private static void onAddVillagerTrades(VillagerTradesEvent event) {
-        RegisterVillagerTradesEvent.EVENT.invoke(new RegisterVillagerTradesEvent(event.getType(), (i, listing) -> event.getTrades().get(i.intValue()).add(listing)));
+        BzRegisterVillagerTradesEvent.EVENT.invoke(new BzRegisterVillagerTradesEvent(event.getType(), (i, listing) -> event.getTrades().get(i.intValue()).add(listing)));
     }
 
     private static void onWanderingTrades(WandererTradesEvent event) {
-        RegisterWanderingTradesEvent.EVENT.invoke(new RegisterWanderingTradesEvent(event.getGenericTrades()::add, event.getRareTrades()::add));
+        BzRegisterWanderingTradesEvent.EVENT.invoke(new BzRegisterWanderingTradesEvent(event.getGenericTrades()::add, event.getRareTrades()::add));
     }
 
-    private static void onRegisterCommand(net.neoforged.neoforge.event.RegisterCommandsEvent event) {
-        RegisterCommandsEvent.EVENT.invoke(new RegisterCommandsEvent(event.getDispatcher(), event.getCommandSelection(), event.getBuildContext()));
+    private static void onRegisterCommand(RegisterCommandsEvent event) {
+        BzRegisterCommandsEvent.EVENT.invoke(new BzRegisterCommandsEvent(event.getDispatcher(), event.getCommandSelection(), event.getBuildContext()));
     }
 
-    private static void onRegisterBrewingRecipies(net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent event) {
-        RegisterBrewingRecipeEvent.EVENT.invoke(new RegisterBrewingRecipeEvent(event.getBuilder()::addMix));
+    private static void onRegisterBrewingRecipies(RegisterBrewingRecipesEvent event) {
+        BzRegisterBrewingRecipeEvent.EVENT.invoke(new BzRegisterBrewingRecipeEvent(event.getBuilder()::addMix));
     }
 
     private static void onProjectileHit(ProjectileImpactEvent event) {
-        boolean cancel = ProjectileHitEvent.EVENT.invoke(new ProjectileHitEvent(event.getProjectile(), event.getRayTraceResult()), event.isCanceled());
+        boolean cancel = BzProjectileHitEvent.EVENT.invoke(new BzProjectileHitEvent(event.getProjectile(), event.getRayTraceResult()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);
         }
     }
 
     private static void onProjectileHitHighPriority(ProjectileImpactEvent event) {
-        boolean cancel = ProjectileHitEvent.EVENT_HIGH.invoke(new ProjectileHitEvent(event.getProjectile(), event.getRayTraceResult()), event.isCanceled());
+        boolean cancel = BzProjectileHitEvent.EVENT_HIGH.invoke(new BzProjectileHitEvent(event.getProjectile(), event.getRayTraceResult()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);
         }
     }
 
     private static void onBlockBreak(BlockEvent.BreakEvent event) {
-        boolean cancel = BlockBreakEvent.EVENT_LOWEST.invoke(new BlockBreakEvent(event.getPlayer(), event.getState()), event.isCanceled());
+        boolean cancel = BzBlockBreakEvent.EVENT_LOWEST.invoke(new BzBlockBreakEvent(event.getPlayer(), event.getState()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);
         }
     }
 
-    private static void onPlayerTickPre(net.neoforged.neoforge.event.tick.PlayerTickEvent.Pre event) {
-        PlayerTickEvent eventObject = new PlayerTickEvent(event.getEntity(), false);
+    private static void onPlayerTickPre(PlayerTickEvent.Pre event) {
+        BzPlayerTickEvent eventObject = new BzPlayerTickEvent(event.getEntity(), false);
 
-        PlayerTickEvent.EVENT.invoke(eventObject);
+        BzPlayerTickEvent.EVENT.invoke(eventObject);
         if (event.getEntity().level().isClientSide()) {
-            PlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
+            BzPlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
         }
 
         DisableFlightAttribute.onPlayerTickToRemoveDisabledFlight(event);
     }
 
-    private static void onPlayerTickPost(net.neoforged.neoforge.event.tick.PlayerTickEvent.Post event) {
-        PlayerTickEvent eventObject = new PlayerTickEvent(event.getEntity(), true);
+    private static void onPlayerTickPost(PlayerTickEvent.Post event) {
+        BzPlayerTickEvent eventObject = new BzPlayerTickEvent(event.getEntity(), true);
 
-        PlayerTickEvent.EVENT.invoke(eventObject);
+        BzPlayerTickEvent.EVENT.invoke(eventObject);
         if (event.getEntity().level().isClientSide()) {
-            PlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
+            BzPlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
         }
     }
 
     private static void onPickupItem(ItemEntityPickupEvent.Post event) {
-        PlayerPickupItemEvent.EVENT.invoke(new PlayerPickupItemEvent(event.getPlayer(), event.getItemEntity().getItem()));
+        BzPlayerPickupItemEvent.EVENT.invoke(new BzPlayerPickupItemEvent(event.getPlayer(), event.getItemEntity().getItem()));
     }
 
     private static void onGrantAdvancement(AdvancementEvent.AdvancementEarnEvent event) {
-        PlayerGrantAdvancementEvent.EVENT.invoke(new PlayerGrantAdvancementEvent(event.getAdvancement().value(), event.getEntity()));
+        BzPlayerGrantAdvancementEvent.EVENT.invoke(new BzPlayerGrantAdvancementEvent(event.getAdvancement().value(), event.getEntity()));
     }
 
     private static void onInteractEntity(PlayerInteractEvent.EntityInteract event) {
-        InteractionResult result = PlayerEntityInteractEvent.EVENT.invoke(new PlayerEntityInteractEvent(event.getEntity(), event.getTarget(), event.getHand()));
+        InteractionResult result = BzPlayerEntityInteractEvent.EVENT.invoke(new BzPlayerEntityInteractEvent(event.getEntity(), event.getTarget(), event.getHand()));
         if (result != null) {
             event.setCancellationResult(result);
             event.setCanceled(true);
@@ -321,23 +326,23 @@ public class NeoForgeEventManager {
 
     private static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
         AtomicDouble speed = new AtomicDouble(event.getNewSpeed());
-        PlayerBreakSpeedEvent.EVENT.invoke(new PlayerBreakSpeedEvent(event.getEntity(), event.getState(), speed));
+        BzPlayerBreakSpeedEvent.EVENT.invoke(new BzPlayerBreakSpeedEvent(event.getEntity(), event.getState(), speed));
         event.setNewSpeed(speed.floatValue());
     }
 
-    private static void onTagsUpdate(net.neoforged.neoforge.event.TagsUpdatedEvent event) {
-        TagsUpdatedEvent.EVENT.invoke(new TagsUpdatedEvent(event.getRegistryAccess(), event.getUpdateCause() == net.neoforged.neoforge.event.TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED));
+    private static void onTagsUpdate(TagsUpdatedEvent event) {
+        BzTagsUpdatedEvent.EVENT.invoke(new BzTagsUpdatedEvent(event.getRegistryAccess(), event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED));
     }
 
-    private static void onSpawnPlacements(SpawnPlacementRegisterEvent event) {
-        RegisterSpawnPlacementsEvent.EVENT.invoke(new RegisterSpawnPlacementsEvent(NeoForgeEventManager.registerPlacement(event)));
+    private static void onSpawnPlacements(RegisterSpawnPlacementsEvent event) {
+        BzRegisterSpawnPlacementsEvent.EVENT.invoke(new BzRegisterSpawnPlacementsEvent(NeoForgeEventManager.registerPlacement(event)));
     }
 
-    private static RegisterSpawnPlacementsEvent.Registrar registerPlacement(SpawnPlacementRegisterEvent event) {
-        return new RegisterSpawnPlacementsEvent.Registrar() {
+    private static BzRegisterSpawnPlacementsEvent.Registrar registerPlacement(RegisterSpawnPlacementsEvent event) {
+        return new BzRegisterSpawnPlacementsEvent.Registrar() {
             @Override
-            public <T extends Mob> void register(EntityType<T> type, RegisterSpawnPlacementsEvent.Placement<T> place) {
-                event.register(type, place.spawn(), place.height(), place.predicate(), SpawnPlacementRegisterEvent.Operation.AND);
+            public <T extends Mob> void register(EntityType<T> type, BzRegisterSpawnPlacementsEvent.Placement<T> place) {
+                event.register(type, place.spawn(), place.height(), place.predicate(), RegisterSpawnPlacementsEvent.Operation.AND);
             }
         };
     }
@@ -346,74 +351,74 @@ public class NeoForgeEventManager {
         if (event.getLevel().isClientSide()) {
             return;
         }
-        ServerLevelTickEvent.EVENT.invoke(new ServerLevelTickEvent(event.getLevel(), false));
+        BzServerLevelTickEvent.EVENT.invoke(new BzServerLevelTickEvent(event.getLevel(), false));
     }
 
     private static void onLevelTickPost(LevelTickEvent.Post event) {
         if (event.getLevel().isClientSide()) {
             return;
         }
-        ServerLevelTickEvent.EVENT.invoke(new ServerLevelTickEvent(event.getLevel(), true));
+        BzServerLevelTickEvent.EVENT.invoke(new BzServerLevelTickEvent(event.getLevel(), true));
     }
 
     private static void onAddReloadListeners(AddReloadListenerEvent event) {
-        RegisterReloadListenerEvent.EVENT.invoke(new RegisterReloadListenerEvent((id, listener) -> event.addListener(listener)));
+        BzRegisterReloadListenerEvent.EVENT.invoke(new BzRegisterReloadListenerEvent((id, listener) -> event.addListener(listener)));
     }
 
     private static void onDatapackSync(OnDatapackSyncEvent event) {
         if (FMLEnvironment.dist.isDedicatedServer()) {
             if (event.getPlayer() != null) {
-                DatapackSyncEvent.EVENT.invoke(new DatapackSyncEvent(event.getPlayer()));
+                BzDatapackSyncEvent.EVENT.invoke(new BzDatapackSyncEvent(event.getPlayer()));
             }
             else {
-                event.getPlayerList().getPlayers().forEach(player -> DatapackSyncEvent.EVENT.invoke(new DatapackSyncEvent(player)));
+                event.getPlayerList().getPlayers().forEach(player -> BzDatapackSyncEvent.EVENT.invoke(new BzDatapackSyncEvent(player)));
             }
         }
     }
 
     private static void onFinishUseItem(LivingEntityUseItemEvent.Finish event) {
-        ItemStack stack = FinishUseItemEvent.EVENT.invoke(new FinishUseItemEvent(event.getEntity(), event.getItem(), event.getDuration()));
+        ItemStack stack = BzFinishUseItemEvent.EVENT.invoke(new BzFinishUseItemEvent(event.getEntity(), event.getItem(), event.getDuration()));
         if (stack != null) {
             event.setResultStack(stack);
         }
     }
 
     private static void onEntityVisibility(LivingEvent.LivingVisibilityEvent event) {
-        EntityVisibilityEvent visibilityEvent = new EntityVisibilityEvent(event.getVisibilityModifier(), event.getEntity(), event.getLookingEntity());
-        EntityVisibilityEvent.EVENT.invoke(visibilityEvent);
+        BzEntityVisibilityEvent visibilityEvent = new BzEntityVisibilityEvent(event.getVisibilityModifier(), event.getEntity(), event.getLookingEntity());
+        BzEntityVisibilityEvent.EVENT.invoke(visibilityEvent);
         event.modifyVisibility(visibilityEvent.visibility() / event.getVisibilityModifier());
     }
 
     private static void onEntityDimensionTravel(EntityTravelToDimensionEvent event) {
-        boolean cancel = EntityTravelingToDimensionEvent.EVENT.invoke(new EntityTravelingToDimensionEvent(event.getDimension(), event.getEntity()), event.isCanceled());
+        boolean cancel = BzEntityTravelingToDimensionEvent.EVENT.invoke(new BzEntityTravelingToDimensionEvent(event.getDimension(), event.getEntity()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);
         }
     }
 
-    private static void onEntityTick(net.neoforged.neoforge.event.tick.EntityTickEvent.Post event) {
+    private static void onEntityTick(EntityTickEvent.Post event) {
         if (event.getEntity() instanceof LivingEntity livingEntity) {
-            EntityTickEvent.EVENT.invoke(new EntityTickEvent(livingEntity));
+            BzEntityTickEvent.EVENT.invoke(new BzEntityTickEvent(livingEntity));
         }
     }
 
     private static void onEntitySpawn(FinalizeSpawnEvent event) {
-        EntitySpawnEvent.EVENT.invoke(new EntitySpawnEvent(event.getEntity(), event.getLevel(), event.getEntity().isBaby(), event.getEntity().getSpawnType()), event.isCanceled());
+        BzEntitySpawnEvent.EVENT.invoke(new BzEntitySpawnEvent(event.getEntity(), event.getLevel(), event.getEntity().isBaby(), event.getEntity().getSpawnType()), event.isCanceled());
     }
 
     private static void onEntityHurtLowest(LivingDamageEvent.Post event) {
-        EntityHurtEvent.EVENT_LOWEST.invoke(new EntityHurtEvent(event.getEntity(), event.getSource(), event.getNewDamage()));
+        BzEntityHurtEvent.EVENT_LOWEST.invoke(new BzEntityHurtEvent(event.getEntity(), event.getSource(), event.getNewDamage()));
     }
 
     private static void onEntityDeath(LivingDeathEvent event) {
-        boolean cancel = EntityDeathEvent.EVENT.invoke(new EntityDeathEvent(event.getEntity(), event.getSource()), event.isCanceled());
+        boolean cancel = BzEntityDeathEvent.EVENT.invoke(new BzEntityDeathEvent(event.getEntity(), event.getSource()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);
         }
     }
 
     private static void onEntityDeathLowest(LivingDeathEvent event) {
-        boolean cancel = EntityDeathEvent.EVENT_LOWEST.invoke(new EntityDeathEvent(event.getEntity(), event.getSource()), event.isCanceled());
+        boolean cancel = BzEntityDeathEvent.EVENT_LOWEST.invoke(new BzEntityDeathEvent(event.getEntity(), event.getSource()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);
         }
@@ -421,23 +426,23 @@ public class NeoForgeEventManager {
 
 
     private static void onEntityAttacked(LivingIncomingDamageEvent event) {
-        boolean cancel = EntityAttackedEvent.EVENT.invoke(new EntityAttackedEvent(event.getEntity(), event.getSource(), event.getAmount()), event.isCanceled());
+        boolean cancel = BzEntityAttackedEvent.EVENT.invoke(new BzEntityAttackedEvent(event.getEntity(), event.getSource(), event.getAmount()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);
         }
     }
 
     public static void onItemAttackBlock(PlayerInteractEvent.LeftClickBlock event) {
-        PlayerItemAttackBlockEvent eventBz = new PlayerItemAttackBlockEvent(event.getEntity(), event.getLevel(), event.getHand(), event.getItemStack());
-        InteractionResult result = PlayerItemAttackBlockEvent.EVENT_HIGH.invoke(eventBz);
+        BzPlayerItemAttackBlockEvent eventBz = new BzPlayerItemAttackBlockEvent(event.getEntity(), event.getLevel(), event.getHand(), event.getItemStack());
+        InteractionResult result = BzPlayerItemAttackBlockEvent.EVENT_HIGH.invoke(eventBz);
         if (result != null) {
             event.setCanceled(true);
         }
     }
 
     public static void onItemUseOnBlock(PlayerInteractEvent.RightClickBlock event) {
-        PlayerItemUseOnBlockEvent eventBz = new PlayerItemUseOnBlockEvent(event.getEntity(), event.getLevel(), event.getHand(), event.getHitVec(), event.getItemStack());
-        InteractionResult result = PlayerItemUseOnBlockEvent.EVENT_HIGH.invoke(eventBz);
+        BzPlayerItemUseOnBlockEvent eventBz = new BzPlayerItemUseOnBlockEvent(event.getEntity(), event.getLevel(), event.getHand(), event.getHitVec(), event.getItemStack());
+        InteractionResult result = BzPlayerItemUseOnBlockEvent.EVENT_HIGH.invoke(eventBz);
         if (result != null) {
             event.setCanceled(true);
             event.setCancellationResult(result);
@@ -445,8 +450,8 @@ public class NeoForgeEventManager {
     }
 
     public static void onItemUse(PlayerInteractEvent.RightClickItem event) {
-        PlayerItemUseEvent eventBz = new PlayerItemUseEvent(event.getEntity(), event.getLevel(), event.getItemStack());
-        if (PlayerItemUseEvent.EVENT_HIGH.invoke(eventBz)) {
+        BzPlayerItemUseEvent eventBz = new BzPlayerItemUseEvent(event.getEntity(), event.getLevel(), event.getItemStack());
+        if (BzPlayerItemUseEvent.EVENT_HIGH.invoke(eventBz)) {
             event.setCanceled(true);
         }
     }

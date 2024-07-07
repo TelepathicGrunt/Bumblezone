@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyBeeLeggingsData;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTickEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.effects.MobEffectInstanceAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -160,7 +160,7 @@ public class HoneyBeeLeggings extends BeeArmor {
         }
     }
 
-    public static void armorStandTick(EntityTickEvent event) {
+    public static void armorStandTick(BzEntityTickEvent event) {
         LivingEntity livingEntity = event.entity();
         if (livingEntity instanceof ArmorStand armorStand) {
             ItemStack leggings = armorStand.getItemBySlot(EquipmentSlot.LEGS);

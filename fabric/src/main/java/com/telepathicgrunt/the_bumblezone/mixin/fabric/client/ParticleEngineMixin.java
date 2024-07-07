@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.client;
 
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterParticleEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterParticleEvent;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.client.particle.ParticleProvider;
@@ -37,7 +37,7 @@ public abstract class ParticleEngineMixin {
             at = @At("RETURN")
     )
     private void bumblezone$onInit(CallbackInfo ci) {
-        RegisterParticleEvent.EVENT.invoke(new RegisterParticleEvent(this::bumblezone$register));
+        BzRegisterParticleEvent.EVENT.invoke(new BzRegisterParticleEvent(this::bumblezone$register));
     }
 
     @Unique

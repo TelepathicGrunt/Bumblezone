@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.utils;
 
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStopEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerGoingToStopEvent;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -70,7 +70,7 @@ public class ThreadExecutor {
         }
     }
 
-    public static void handleServerStoppingEvent(ServerGoingToStopEvent ignoredEvent) {
+    public static void handleServerStoppingEvent(BzServerGoingToStopEvent ignoredEvent) {
         shutdownExecutorService();
     }
 

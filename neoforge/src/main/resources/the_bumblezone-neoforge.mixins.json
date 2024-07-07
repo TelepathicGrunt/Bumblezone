@@ -9,8 +9,7 @@
     "effect.WrathOfTheHiveEffectMixin",
     "entity.EntityMixin",
     "item.BzArrowItemMixin",
-    "item.ItemExtensionMixin",
-    "item.PotionCandleRecipeMixin"
+    "item.ItemExtensionMixin"
   ],
   "client": [
     "client.BzArmorMixin",

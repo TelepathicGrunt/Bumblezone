@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.neoforge;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinDataPacks;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinDataPacks;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import net.minecraft.network.chat.Component;
@@ -15,7 +15,7 @@ public class TokenEnchanterCompat implements ModCompat {
                 addBuiltinDataPacks.add(
                         ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "enchanted_token_compat"),
                         Component.literal("Bumblezone - Token Enchanter Compat"),
-                        AddBuiltinDataPacks.PackMode.FORCE_ENABLED
+                        BzAddBuiltinDataPacks.PackMode.FORCE_ENABLED
                 )
         );
 

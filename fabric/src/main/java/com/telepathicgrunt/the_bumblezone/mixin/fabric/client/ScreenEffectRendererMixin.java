@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ScreenEffectRenderer;
 import net.minecraft.world.entity.player.Player;
@@ -20,7 +20,7 @@ public abstract class ScreenEffectRendererMixin {
             locals = LocalCapture.CAPTURE_FAILHARD,
             cancellable = true)
     private static void bumblezone$blockRenderedOnScreenEvent(Minecraft minecraft, PoseStack poseStack, CallbackInfo ci, Player player, BlockState blockState) {
-        if (BlockRenderedOnScreenEvent.EVENT.invoke(new BlockRenderedOnScreenEvent(player, poseStack, BlockRenderedOnScreenEvent.Type.BLOCK, blockState, player.blockPosition()))) {
+        if (BzBlockRenderedOnScreenEvent.EVENT.invoke(new BzBlockRenderedOnScreenEvent(player, poseStack, BzBlockRenderedOnScreenEvent.Type.BLOCK, blockState, player.blockPosition()))) {
             ci.cancel();
         }
     }

@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.entity;
 
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerGrantAdvancementEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerGrantAdvancementEvent;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerPlayer;
@@ -21,7 +21,7 @@ public class PlayerAdvancementsMixin {
                     shift = At.Shift.AFTER))
     private void bumblezone$onAward(AdvancementHolder advancementHolder, String string, CallbackInfoReturnable<Boolean> cir) {
         if ( advancementHolder != null) {
-            PlayerGrantAdvancementEvent.EVENT.invoke(new PlayerGrantAdvancementEvent(advancementHolder.value(), this.player));
+            BzPlayerGrantAdvancementEvent.EVENT.invoke(new BzPlayerGrantAdvancementEvent(advancementHolder.value(), this.player));
         }
     }
 }

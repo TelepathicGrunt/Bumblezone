@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.entity;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
-import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzProjectileHitEvent;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.HitResult;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,10 +14,10 @@ public class ProjectileMixin {
     @WrapWithCondition(method = "hitTargetOrDeflectSelf(Lnet/minecraft/world/phys/HitResult;)Lnet/minecraft/world/entity/projectile/ProjectileDeflection;",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/Projectile;onHit(Lnet/minecraft/world/phys/HitResult;)V"))
     private boolean bumblezone$onHit(Projectile projectile, HitResult hitResult) {
-        ProjectileHitEvent event = new ProjectileHitEvent(projectile, hitResult);
-        if (ProjectileHitEvent.EVENT_HIGH.invoke(event)) {
+        BzProjectileHitEvent event = new BzProjectileHitEvent(projectile, hitResult);
+        if (BzProjectileHitEvent.EVENT_HIGH.invoke(event)) {
             return false;
         }
-        return !ProjectileHitEvent.EVENT.invoke(event);
+        return !BzProjectileHitEvent.EVENT.invoke(event);
     }
 }

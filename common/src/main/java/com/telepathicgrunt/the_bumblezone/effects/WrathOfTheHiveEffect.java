@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -290,7 +290,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
         }
     }
 
-    public static void onLivingEntityDeath(EntityDeathEvent event) {
+    public static void onLivingEntityDeath(BzEntityDeathEvent event) {
         LivingEntity livingEntity = event.entity();
         if (livingEntity != null) {
             WrathOfTheHiveEffect.calmTheBees(livingEntity.level(), livingEntity);

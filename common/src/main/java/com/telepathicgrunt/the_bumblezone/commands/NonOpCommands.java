@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.commands;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
@@ -45,7 +45,7 @@ public class NonOpCommands {
         QUEENS_DESIRED_KILLED_ENTITY_COUNTER
     }
 
-    public static void createCommand(RegisterCommandsEvent commandEvent) {
+    public static void createCommand(BzRegisterCommandsEvent commandEvent) {
         String commandString = "bumblezone_read_self_data";
         String dataArg = "data_to_check";
         String entityArg = "entity_to_check";

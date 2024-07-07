@@ -5,7 +5,7 @@ import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistries;
 import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
-import com.telepathicgrunt.the_bumblezone.events.RegisterBrewingRecipeEvent;
+import com.telepathicgrunt.the_bumblezone.events.item.BzRegisterBrewingRecipeEvent;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ItemStackSmeltingRecipe;
 import com.telepathicgrunt.the_bumblezone.items.recipes.NbtKeepingShapelessRecipe;
@@ -24,7 +24,7 @@ public class BzRecipes {
     public static final HolderRegistryEntry<RecipeSerializer<?>> NBT_KEEPING_SHAPELESS_RECIPE = RECIPES.registerHolder("nbt_keeping_shapeless_recipe", NbtKeepingShapelessRecipe.Serializer::new);
     public static final HolderRegistryEntry<RecipeSerializer<?>> ITEMSTACK_SMELTING_RECIPE = RECIPES.registerHolder("itemstack_smelting_recipe", ItemStackSmeltingRecipe.ItemStackSmeltingRecipeSerializer::new);
 
-    public static void registerBrewingStandRecipes(RegisterBrewingRecipeEvent event) {
+    public static void registerBrewingStandRecipes(BzRegisterBrewingRecipeEvent event) {
         if (BzGeneralConfigs.glisteringHoneyBrewingRecipe) {
             event.registrator().accept(Potions.AWKWARD, BzItems.GLISTERING_HONEY_CRYSTAL.get(), Potions.LUCK);
         }

@@ -27,41 +27,41 @@ import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleporta
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.ItemUseOnBlock;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.ProjectileImpact;
-import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
-import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
-import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
-import com.telepathicgrunt.the_bumblezone.events.RegisterBrewingRecipeEvent;
-import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
-import com.telepathicgrunt.the_bumblezone.events.RegisterWanderingTradesEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityHurtEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityTickEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityTravelingToDimensionEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityVisibilityEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinDataPacks;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterDataSerializersEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterEntityAttributesEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterFlammabilityEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterReloadListenerEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterSpawnPlacementsEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStartEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStopEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerLevelTickEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.SetupEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.TagsUpdatedEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerBreakSpeedEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerEntityInteractEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerGrantAdvancementEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemAttackBlockEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddCreativeTabEntriesEvent;
+import com.telepathicgrunt.the_bumblezone.events.block.BzBlockBreakEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzProjectileHitEvent;
+import com.telepathicgrunt.the_bumblezone.events.item.BzRegisterBrewingRecipeEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterCommandsEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzRegisterWanderingTradesEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityAttackedEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityDeathEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityHurtEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntitySpawnEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTravelingToDimensionEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityVisibilityEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinDataPacks;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinResourcePacks;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzDatapackSyncEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzFinalSetupEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterDataSerializersEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterEntityAttributesEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterFlammabilityEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterReloadListenerEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterSpawnPlacementsEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerGoingToStartEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerGoingToStopEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerLevelTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzSetupEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzTagsUpdatedEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerBreakSpeedEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerEntityInteractEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerGrantAdvancementEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemAttackBlockEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseOnBlockEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerPickupItemEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.BuzzingBriefcase;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
@@ -131,53 +131,53 @@ public class Bumblezone {
         BzTags.initTags();
 
         //Events
-        RegisterCommandsEvent.EVENT.addListener(BzCommands::registerCommand);
-        EntitySpawnEvent.EVENT.addListener(ModdedBeesBeesSpawning::onEntitySpawn);
-        PlayerTickEvent.EVENT.addListener(BeeAggression::playerTick);
-        EntityTickEvent.EVENT.addListener(HoneyBeeLeggings::armorStandTick);
-        PlayerPickupItemEvent.EVENT.addListener(BeeAggression::pickupItemAnger);
-        EntityHurtEvent.EVENT_LOWEST.addListener(CalmingEssence::OnAttack);
-        EntityHurtEvent.EVENT_LOWEST.addListener(BeeAggression::onLivingEntityHurt);
-        BlockBreakEvent.EVENT_LOWEST.addListener(BeeAggression::minedBlockAnger); // We want to make sure the block will be broken for angering bees
-        PlayerEntityInteractEvent.EVENT.addListener(BeeInteractivity::onEntityInteractEvent);
-        EntityDeathEvent.EVENT.addListener(WrathOfTheHiveEffect::onLivingEntityDeath);
-        EntityDeathEvent.EVENT.addListener(RagingEssence::OnEntityDeath);
-        EntityDeathEvent.EVENT.addListener(ContinuityEssence::CancelledDeath);
-        ServerLevelTickEvent.EVENT.addListener(BzWorldSavedData::worldTick);
-        PlayerTickEvent.EVENT.addListener(EntityTeleportationHookup::playerTick);
-        EntityTickEvent.EVENT.addListener(EntityTeleportationHookup::entityTick);
-        EntityTravelingToDimensionEvent.EVENT.addListener(EntityTeleportationBackend::entityChangingDimension);
-        PlayerItemAttackBlockEvent.EVENT_HIGH.addListener(BuzzingBriefcase::onLeftClickBlock);
-        PlayerItemUseOnBlockEvent.EVENT_HIGH.addListener(StringCurtain::onBlockInteractEvent);
-        PlayerItemUseOnBlockEvent.EVENT_HIGH.addListener(InfinityBarrier::onBlockInteractEvent);
-        PlayerItemUseOnBlockEvent.EVENT_HIGH.addListener(ItemUseOnBlock::onItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.
-        PlayerItemUseEvent.EVENT_HIGH.addListener(ItemUseOnBlock::onEarlyItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.
-        ProjectileHitEvent.EVENT_HIGH.addListener(ProjectileImpact::onProjectileImpact); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
-        EntityVisibilityEvent.EVENT.addListener(HiddenEffect::hideEntity);
-        EntityAttackedEvent.EVENT.addListener(NeurotoxinsEnchantmentApplication::entityHurtEvent);
-        EntityAttackedEvent.EVENT.addListener(HoneyCrystalShield::handledPlayerHurtBehavior);
-        PlayerBreakSpeedEvent.EVENT.addListener(CombCutterEnchantmentApplication::attemptFasterMining);
+        BzRegisterCommandsEvent.EVENT.addListener(BzCommands::registerCommand);
+        BzEntitySpawnEvent.EVENT.addListener(ModdedBeesBeesSpawning::onEntitySpawn);
+        BzPlayerTickEvent.EVENT.addListener(BeeAggression::playerTick);
+        BzEntityTickEvent.EVENT.addListener(HoneyBeeLeggings::armorStandTick);
+        BzPlayerPickupItemEvent.EVENT.addListener(BeeAggression::pickupItemAnger);
+        BzEntityHurtEvent.EVENT_LOWEST.addListener(CalmingEssence::OnAttack);
+        BzEntityHurtEvent.EVENT_LOWEST.addListener(BeeAggression::onLivingEntityHurt);
+        BzBlockBreakEvent.EVENT_LOWEST.addListener(BeeAggression::minedBlockAnger); // We want to make sure the block will be broken for angering bees
+        BzPlayerEntityInteractEvent.EVENT.addListener(BeeInteractivity::onEntityInteractEvent);
+        BzEntityDeathEvent.EVENT.addListener(WrathOfTheHiveEffect::onLivingEntityDeath);
+        BzEntityDeathEvent.EVENT.addListener(RagingEssence::OnEntityDeath);
+        BzEntityDeathEvent.EVENT.addListener(ContinuityEssence::CancelledDeath);
+        BzServerLevelTickEvent.EVENT.addListener(BzWorldSavedData::worldTick);
+        BzPlayerTickEvent.EVENT.addListener(EntityTeleportationHookup::playerTick);
+        BzEntityTickEvent.EVENT.addListener(EntityTeleportationHookup::entityTick);
+        BzEntityTravelingToDimensionEvent.EVENT.addListener(EntityTeleportationBackend::entityChangingDimension);
+        BzPlayerItemAttackBlockEvent.EVENT_HIGH.addListener(BuzzingBriefcase::onLeftClickBlock);
+        BzPlayerItemUseOnBlockEvent.EVENT_HIGH.addListener(StringCurtain::onBlockInteractEvent);
+        BzPlayerItemUseOnBlockEvent.EVENT_HIGH.addListener(InfinityBarrier::onBlockInteractEvent);
+        BzPlayerItemUseOnBlockEvent.EVENT_HIGH.addListener(ItemUseOnBlock::onItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.
+        BzPlayerItemUseEvent.EVENT_HIGH.addListener(ItemUseOnBlock::onEarlyItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.
+        BzProjectileHitEvent.EVENT_HIGH.addListener(ProjectileImpact::onProjectileImpact); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
+        BzEntityVisibilityEvent.EVENT.addListener(HiddenEffect::hideEntity);
+        BzEntityAttackedEvent.EVENT.addListener(NeurotoxinsEnchantmentApplication::entityHurtEvent);
+        BzEntityAttackedEvent.EVENT.addListener(HoneyCrystalShield::handledPlayerHurtBehavior);
+        BzPlayerBreakSpeedEvent.EVENT.addListener(CombCutterEnchantmentApplication::attemptFasterMining);
         PlayerDataHandler.initEvents();
-        PlayerGrantAdvancementEvent.EVENT.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
-        RegisterWanderingTradesEvent.EVENT.addListener(WanderingTrades::addWanderingTrades);
-        TagsUpdatedEvent.EVENT.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
-        TagsUpdatedEvent.EVENT.addListener(CrystallineFlowerDataManager.CRYSTALLINE_FLOWER_DATA_MANAGER::resolveFlowerData);
-        ServerGoingToStopEvent.EVENT.addListener(ThreadExecutor::handleServerStoppingEvent);
-        ServerGoingToStartEvent.EVENT.addListener(Bumblezone::serverAboutToStart);
-        RegisterReloadListenerEvent.EVENT.addListener(Bumblezone::registerDatapackListener);
-        AddBuiltinResourcePacks.EVENT.addListener(Bumblezone::setupBuiltInResourcePack);
-        AddBuiltinDataPacks.EVENT.addListener(Bumblezone::setupBuiltInDataPack);
-        SetupEvent.EVENT.addListener(Bumblezone::setup);
-        RegisterDataSerializersEvent.EVENT.addListener(Bumblezone::registerDataSerializers);
-        FinalSetupEvent.EVENT.addListener(Bumblezone::onFinalSetup); //run after all mods
-        RegisterFlammabilityEvent.EVENT.addListener(Bumblezone::onRegisterFlammablity);
-        SetupEvent.EVENT.addListener(DispenserAddedSpawnEgg::onSetup);
-        AddCreativeTabEntriesEvent.EVENT.addListener(BzCreativeTabs::addCreativeTabEntries);
-        RegisterEntityAttributesEvent.EVENT.addListener(BzEntities::registerEntityAttributes);
-        RegisterSpawnPlacementsEvent.EVENT.addListener(BzEntities::registerEntitySpawnRestrictions);
-        DatapackSyncEvent.EVENT.addListener(QueenRandomizerTradesSyncPacket::sendToClient);
-        DatapackSyncEvent.EVENT.addListener(QueenMainTradesSyncPacket::sendToClient);
-        RegisterBrewingRecipeEvent.EVENT.addListener(BzRecipes::registerBrewingStandRecipes);
+        BzPlayerGrantAdvancementEvent.EVENT.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
+        BzRegisterWanderingTradesEvent.EVENT.addListener(WanderingTrades::addWanderingTrades);
+        BzTagsUpdatedEvent.EVENT.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
+        BzTagsUpdatedEvent.EVENT.addListener(CrystallineFlowerDataManager.CRYSTALLINE_FLOWER_DATA_MANAGER::resolveFlowerData);
+        BzServerGoingToStopEvent.EVENT.addListener(ThreadExecutor::handleServerStoppingEvent);
+        BzServerGoingToStartEvent.EVENT.addListener(Bumblezone::serverAboutToStart);
+        BzRegisterReloadListenerEvent.EVENT.addListener(Bumblezone::registerDatapackListener);
+        BzAddBuiltinResourcePacks.EVENT.addListener(Bumblezone::setupBuiltInResourcePack);
+        BzAddBuiltinDataPacks.EVENT.addListener(Bumblezone::setupBuiltInDataPack);
+        BzSetupEvent.EVENT.addListener(Bumblezone::setup);
+        BzRegisterDataSerializersEvent.EVENT.addListener(Bumblezone::registerDataSerializers);
+        BzFinalSetupEvent.EVENT.addListener(Bumblezone::onFinalSetup); //run after all mods
+        BzRegisterFlammabilityEvent.EVENT.addListener(Bumblezone::onRegisterFlammablity);
+        BzSetupEvent.EVENT.addListener(DispenserAddedSpawnEgg::onSetup);
+        BzAddCreativeTabEntriesEvent.EVENT.addListener(BzCreativeTabs::addCreativeTabEntries);
+        BzRegisterEntityAttributesEvent.EVENT.addListener(BzEntities::registerEntityAttributes);
+        BzRegisterSpawnPlacementsEvent.EVENT.addListener(BzEntities::registerEntitySpawnRestrictions);
+        BzDatapackSyncEvent.EVENT.addListener(QueenRandomizerTradesSyncPacket::sendToClient);
+        BzDatapackSyncEvent.EVENT.addListener(QueenMainTradesSyncPacket::sendToClient);
+        BzRegisterBrewingRecipeEvent.EVENT.addListener(BzRecipes::registerBrewingStandRecipes);
 
         //Registration
         BzItems.ITEMS.init();
@@ -215,14 +215,14 @@ public class Bumblezone {
         BzStructurePlacementType.STRUCTURE_PLACEMENT_TYPE.init();
     }
 
-    public static void onRegisterFlammablity(RegisterFlammabilityEvent event) {
+    public static void onRegisterFlammablity(BzRegisterFlammabilityEvent event) {
         BzBlocks.CURTAINS.stream().map(RegistryEntry::get).forEach(block -> event.register(block, 60, 20));
         event.register(BzBlocks.HONEY_COCOON.get(), 200, 20);
         event.register(BzBlocks.PILE_OF_POLLEN.get(), BzGeneralConfigs.pileOfPollenHyperFireSpread ? 400 : 10, 40);
         event.register(BzBlocks.PILE_OF_POLLEN_SUSPICIOUS.get(), BzGeneralConfigs.pileOfPollenHyperFireSpread ? 400 : 10, 40);
     }
 
-    private static void setup(final SetupEvent event) {
+    private static void setup(final BzSetupEvent event) {
     	event.enqueueWork(() -> {
             BeeAggression.setupBeeHatingList();
             BzStats.initStatEntries();
@@ -232,39 +232,39 @@ public class Bumblezone {
         MessageHandler.init();
     }
 
-    private static void registerDataSerializers(RegisterDataSerializersEvent event) {
+    private static void registerDataSerializers(BzRegisterDataSerializersEvent event) {
         event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "queen_pose"), BeeQueenEntity.QUEEN_POSE_SERIALIZER);
         event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "rootmin_pose"), RootminEntity.ROOTMIN_POSE_SERIALIZER);
         event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "cosmic_crystal_state"), CosmicCrystalEntity.COSMIC_CRYSTAL_STATE_SERIALIZER);
     }
 
-    private static void onFinalSetup(final FinalSetupEvent event) {
+    private static void onFinalSetup(final BzFinalSetupEvent event) {
         event.enqueueWork(DispenserItemSetup::setupDispenserBehaviors);
     }
 
-    public static void registerDatapackListener(final RegisterReloadListenerEvent event) {
+    public static void registerDatapackListener(final BzRegisterReloadListenerEvent event) {
         event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "queens_trades"), QueensTradeManager.QUEENS_TRADE_MANAGER);
         event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "pollen_puff"), PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
         event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower"), CrystallineFlowerDataManager.CRYSTALLINE_FLOWER_DATA_MANAGER);
         event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle"), PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER);
     }
 
-    private static void serverAboutToStart(final ServerGoingToStartEvent event) {
+    private static void serverAboutToStart(final BzServerGoingToStartEvent event) {
         PollinatedSurfaceSource.RandomLayerStateRule.initNoise(event.getServer().getWorldData().worldGenOptions().seed());
         BiomeRegistryHolder.setupBiomeRegistry(event.getServer());
         ThreadExecutor.setupExecutorService();
     }
 
-    private static void setupBuiltInResourcePack(final AddBuiltinResourcePacks event) {
+    private static void setupBuiltInResourcePack(final BzAddBuiltinResourcePacks event) {
         event.add(
                 ResourceLocation.fromNamespaceAndPath(MODID, "anti_tropophobia"),
                 Component.literal("Bumblezone - Anti Trypophobia"),
-                AddBuiltinResourcePacks.PackMode.USER_CONTROLLED
+                BzAddBuiltinResourcePacks.PackMode.USER_CONTROLLED
         );
     }
 
-    public static final List<Consumer<AddBuiltinDataPacks>> MOD_COMPAT_DATAPACKS = new ArrayList<>();
-    private static void setupBuiltInDataPack(final AddBuiltinDataPacks event) {
+    public static final List<Consumer<BzAddBuiltinDataPacks>> MOD_COMPAT_DATAPACKS = new ArrayList<>();
+    private static void setupBuiltInDataPack(final BzAddBuiltinDataPacks event) {
         MOD_COMPAT_DATAPACKS.forEach(consumer -> consumer.accept(event));
     }
 }

@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.client;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.client.SoundEngineAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.client.SoundManagerAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -48,7 +48,7 @@ public class MusicHandler {
     private static final ResourceLocation BIOME_MUSIC = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "biome_music");
     public static boolean BUMBLEZONE_MUSIC_PLAYING = false;
 
-    public static void tickMusicFader(PlayerTickEvent event) {
+    public static void tickMusicFader(BzPlayerTickEvent event) {
         Minecraft minecraftClient = Minecraft.getInstance();
 
         Iterator<Map.Entry<ResourceLocation, MusicFader>> iterator = MUSIC_FADERS.entrySet().iterator();

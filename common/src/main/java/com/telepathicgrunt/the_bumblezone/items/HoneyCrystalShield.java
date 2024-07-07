@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCrystalShieldCurrentLevelData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCrystalShieldDefinedLevelsData;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityAttackedEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.items.PlayerDamageShieldInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
@@ -131,7 +131,7 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
     }
 
     //extra effects for honey shield such as slow attackers or melt shield when hit by fire
-    public static boolean handledPlayerHurtBehavior(EntityAttackedEvent event) {
+    public static boolean handledPlayerHurtBehavior(BzEntityAttackedEvent event) {
         if (event.entity() instanceof Player player) {
             slowPhysicalAttackers(event.source(), player);
             return damageShieldFromExplosionAndFire(event.source(), player);

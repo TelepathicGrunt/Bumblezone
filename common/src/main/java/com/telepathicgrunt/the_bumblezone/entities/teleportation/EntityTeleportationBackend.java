@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.entities.teleportation;
 import com.google.common.primitives.Doubles;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityTravelingToDimensionEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTravelingToDimensionEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -238,7 +238,7 @@ public class EntityTeleportationBackend {
         return false;
     }
 
-    public static void entityChangingDimension(EntityTravelingToDimensionEvent event) {
+    public static void entityChangingDimension(BzEntityTravelingToDimensionEvent event) {
         Entity entity = event.entity();
 
         // store entity's last position when entering bumblezone.

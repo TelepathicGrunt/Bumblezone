@@ -10,7 +10,7 @@ import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.datamanagers.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.datamanagers.queentrades.WeightedTradeResult;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzDatapackSyncEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.MainTradeRowInput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -29,7 +29,7 @@ public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedRan
     public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "queen_main_trades_sync_packet");
     public static final ClientboundPacketType<QueenMainTradesSyncPacket> TYPE = new QueenMainTradesSyncPacket.Handler();
 
-    public static void sendToClient(DatapackSyncEvent event) {
+    public static void sendToClient(BzDatapackSyncEvent event) {
         MessageHandler.DEFAULT_CHANNEL.sendToPlayer(new QueenMainTradesSyncPacket(QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades), event.player());
     }
 

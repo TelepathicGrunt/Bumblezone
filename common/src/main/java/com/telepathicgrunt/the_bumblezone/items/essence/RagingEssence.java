@@ -5,7 +5,7 @@ import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceActivityD
 import com.telepathicgrunt.the_bumblezone.datacomponents.RagingEssenceCurrentTargetData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.RagingEssenceStateData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.RagingEssenceTimerData;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -212,7 +212,7 @@ public class RagingEssence extends AbilityEssenceItem {
         }
     }
 
-    public static void OnEntityDeath(EntityDeathEvent event) {
+    public static void OnEntityDeath(BzEntityDeathEvent event) {
         DamageSource damageSource = event.source();
         LivingEntity livingEntity = event.entity();
         if (damageSource.getEntity() instanceof ServerPlayer player) {

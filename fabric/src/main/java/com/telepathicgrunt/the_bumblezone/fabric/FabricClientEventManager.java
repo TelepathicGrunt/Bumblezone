@@ -2,20 +2,20 @@ package com.telepathicgrunt.the_bumblezone.fabric;
 
 import com.telepathicgrunt.the_bumblezone.client.fabric.FabricArmorRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
-import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockColorEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockEntityRendererEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterDimensionEffectsEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterEffectRenderersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterEntityLayersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterEntityRenderersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterItemColorEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterItemPropertiesEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterKeyMappingEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterMenuScreenEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterRenderTypeEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterShaderEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzClientTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockColorEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockEntityRendererEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterDimensionEffectsEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEffectRenderersEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEntityLayersEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEntityRenderersEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterItemColorEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterItemPropertiesEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterKeyMappingEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterMenuScreenEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterRenderTypeEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterShaderEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
@@ -52,36 +52,36 @@ public class FabricClientEventManager {
                 });
 
         FabricArmorRenderer.setupArmor();
-        RegisterEntityRenderersEvent.EVENT.invoke(new RegisterEntityRenderersEvent(EntityRendererRegistry::register));
-        RegisterEntityLayersEvent.EVENT.invoke(new RegisterEntityLayersEvent((type, supplier) -> EntityModelLayerRegistry.registerModelLayer(type, supplier::get)));
-        RegisterKeyMappingEvent.EVENT.invoke(new RegisterKeyMappingEvent(KeyBindingHelper::registerKeyBinding));
-        RegisterDimensionEffectsEvent.EVENT.invoke(new RegisterDimensionEffectsEvent(DimensionRenderingRegistry::registerDimensionEffects));
-        RegisterBlockEntityRendererEvent.EVENT.invoke(new RegisterBlockEntityRendererEvent<>(BlockEntityRenderers::register));
-        RegisterBlockColorEvent.EVENT.invoke(new RegisterBlockColorEvent(ColorProviderRegistry.BLOCK::register));
-        RegisterItemColorEvent.EVENT.invoke(new RegisterItemColorEvent(ColorProviderRegistry.ITEM::register,
+        BzRegisterEntityRenderersEvent.EVENT.invoke(new BzRegisterEntityRenderersEvent(EntityRendererRegistry::register));
+        BzRegisterEntityLayersEvent.EVENT.invoke(new BzRegisterEntityLayersEvent((type, supplier) -> EntityModelLayerRegistry.registerModelLayer(type, supplier::get)));
+        BzRegisterKeyMappingEvent.EVENT.invoke(new BzRegisterKeyMappingEvent(KeyBindingHelper::registerKeyBinding));
+        BzRegisterDimensionEffectsEvent.EVENT.invoke(new BzRegisterDimensionEffectsEvent(DimensionRenderingRegistry::registerDimensionEffects));
+        BzRegisterBlockEntityRendererEvent.EVENT.invoke(new BzRegisterBlockEntityRendererEvent<>(BlockEntityRenderers::register));
+        BzRegisterBlockColorEvent.EVENT.invoke(new BzRegisterBlockColorEvent(ColorProviderRegistry.BLOCK::register));
+        BzRegisterItemColorEvent.EVENT.invoke(new BzRegisterItemColorEvent(ColorProviderRegistry.ITEM::register,
                 (state, level, pos, i) -> ColorProviderRegistry.BLOCK.get(state.getBlock()).getColor(state, level, pos, i)));
-        RegisterMenuScreenEvent.EVENT.invoke(new RegisterMenuScreenEvent(FabricClientEventManager::registerScreen));
-        RegisterItemPropertiesEvent.EVENT.invoke(new RegisterItemPropertiesEvent(ItemProperties::register));
-        RegisterRenderTypeEvent.EVENT.invoke(new RegisterRenderTypeEvent(BlockRenderLayerMap.INSTANCE::putFluid, BlockRenderLayerMap.INSTANCE::putBlock));
-        RegisterShaderEvent.EVENT.invoke(new RegisterShaderEvent(
+        BzRegisterMenuScreenEvent.EVENT.invoke(new BzRegisterMenuScreenEvent(FabricClientEventManager::registerScreen));
+        BzRegisterItemPropertiesEvent.EVENT.invoke(new BzRegisterItemPropertiesEvent(ItemProperties::register));
+        BzRegisterRenderTypeEvent.EVENT.invoke(new BzRegisterRenderTypeEvent(BlockRenderLayerMap.INSTANCE::putFluid, BlockRenderLayerMap.INSTANCE::putBlock));
+        BzRegisterShaderEvent.EVENT.invoke(new BzRegisterShaderEvent(
                 (name, vertexFormat, safeShaderConsumer) -> CoreShaderRegistrationCallback.EVENT.register(
                         context -> context.register(name, vertexFormat, safeShaderConsumer))
                 )
         );
 
-        RegisterEffectRenderersEvent.EVENT.invoke(RegisterEffectRenderersEvent.INSTANCE);
-        ClientSetupEnqueuedEvent.EVENT.invoke(new ClientSetupEnqueuedEvent(Runnable::run));
+        BzRegisterEffectRenderersEvent.EVENT.invoke(BzRegisterEffectRenderersEvent.INSTANCE);
+        BzClientSetupEnqueuedEvent.EVENT.invoke(new BzClientSetupEnqueuedEvent(Runnable::run));
 
         WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((worldRenderContext, result) -> {
             KnowingEssenceLootBlockOutlining.outlineLootBlocks(worldRenderContext.matrixStack(), worldRenderContext.camera(), worldRenderContext.worldRenderer());
             return true;
         });
 
-        ClientTickEvents.START_CLIENT_TICK.register((mc) -> ClientTickEvent.EVENT.invoke(ClientTickEvent.START));
-        ClientTickEvents.END_CLIENT_TICK.register((mc) -> ClientTickEvent.EVENT.invoke(ClientTickEvent.END));
+        ClientTickEvents.START_CLIENT_TICK.register((mc) -> BzClientTickEvent.EVENT.invoke(BzClientTickEvent.START));
+        ClientTickEvents.END_CLIENT_TICK.register((mc) -> BzClientTickEvent.EVENT.invoke(BzClientTickEvent.END));
     }
 
-    private static <T extends AbstractContainerMenu, U extends Screen & MenuAccess<T>> void registerScreen(MenuType<T> type, RegisterMenuScreenEvent.ScreenConstructor<T, U> provider) {
+    private static <T extends AbstractContainerMenu, U extends Screen & MenuAccess<T>> void registerScreen(MenuType<T> type, BzRegisterMenuScreenEvent.ScreenConstructor<T, U> provider) {
         MenuScreens.register(type, provider::create);
     }
 }

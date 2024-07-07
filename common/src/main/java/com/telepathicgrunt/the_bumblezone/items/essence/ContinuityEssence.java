@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.BzWorldSavedData;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.ServerPlayerAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import net.minecraft.ChatFormatting;
@@ -99,7 +99,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
     @Override
     void applyAbilityEffects(ItemStack itemStack, Level level, ServerPlayer serverPlayer) {}
 
-    public static boolean CancelledDeath(EntityDeathEvent event) {
+    public static boolean CancelledDeath(BzEntityDeathEvent event) {
         LivingEntity livingEntity = event.entity();
         if (livingEntity instanceof ServerPlayer player) {
             DamageSource source = event.source();

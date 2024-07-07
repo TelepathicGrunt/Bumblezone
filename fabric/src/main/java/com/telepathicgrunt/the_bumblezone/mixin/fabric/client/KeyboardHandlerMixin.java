@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.client;
 
-import com.telepathicgrunt.the_bumblezone.events.client.KeyInputEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzKeyInputEvent;
 import net.minecraft.client.KeyboardHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,6 +13,6 @@ public class KeyboardHandlerMixin {
     @Inject(method = "keyPress",
             at = @At(value = "HEAD"))
     private void bumblezone$keyPressHandling(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
-        KeyInputEvent.EVENT.invoke(new KeyInputEvent(key, scancode, action));
+        BzKeyInputEvent.EVENT.invoke(new BzKeyInputEvent(key, scancode, action));
     }
 }
