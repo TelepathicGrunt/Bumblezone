@@ -1,3 +1,9 @@
+### **(V.7.6.12 Changes) (1.21 Minecraft)**
+
+##### Misc:
+Add to more `c` tags. May see a bit better mod compat.
+
+
 ### **(V.7.6.11 Changes) (1.21 Minecraft)**
 
 ##### Items:
