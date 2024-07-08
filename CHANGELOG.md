@@ -3,6 +3,12 @@
 ##### Entities:
 Fixed some Bee Queen trades to check for correct `c` tags.
 
+##### Teleportation:
+(Fabric): Fixed using Enderpearls in Bumblezone erasing the player's data stored non-bumblezone dimension location.
+
+##### Misc:
+(Fabric): Requires Fabric API v0.100.6 or newer
+
 
 ### **(V.7.6.12 Changes) (1.21 Minecraft)**
 

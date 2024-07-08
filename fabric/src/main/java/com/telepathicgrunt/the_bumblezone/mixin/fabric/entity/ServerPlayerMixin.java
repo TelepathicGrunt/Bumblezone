@@ -19,7 +19,9 @@ public class ServerPlayerMixin {
             at = @At("HEAD"),
             cancellable = true)
     private void bumblezone$onTravelToDimension(DimensionTransition dimensionTransition, CallbackInfoReturnable<Entity> cir) {
-        if (BzEntityTravelingToDimensionEvent.EVENT.invoke(new BzEntityTravelingToDimensionEvent(dimensionTransition.newLevel().dimension(), (ServerPlayer)(Object)this))) {
+        if (!dimensionTransition.newLevel().dimension().equals(((ServerPlayer)(Object)this).serverLevel().dimension()) &&
+            BzEntityTravelingToDimensionEvent.EVENT.invoke(new BzEntityTravelingToDimensionEvent(dimensionTransition.newLevel().dimension(), (ServerPlayer)(Object)this)))
+        {
             cir.setReturnValue(null);
         }
     }
