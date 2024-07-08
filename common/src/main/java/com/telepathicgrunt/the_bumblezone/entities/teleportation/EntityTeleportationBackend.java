@@ -240,9 +240,15 @@ public class EntityTeleportationBackend {
 
     public static void entityChangingDimension(EntityTravelingToDimensionEvent event) {
         Entity entity = event.entity();
+        if (!(entity instanceof LivingEntity) ||
+            entity.level().isClientSide() ||
+            event.dimension().equals(entity.level().dimension()))
+        {
+            return;
+        }
 
         // store entity's last position when entering bumblezone.
-        if (entity instanceof LivingEntity livingEntity && !livingEntity.level().isClientSide() && event.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+        if (event.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             Optional<EntityPosAndDimModule> lazyOptional = ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM);
             if(lazyOptional.isPresent()) {
                 EntityPosAndDimModule capability = lazyOptional.orElseThrow(RuntimeException::new);
