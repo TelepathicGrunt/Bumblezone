@@ -52,6 +52,8 @@ public class BzEntities {
         event.register(BEEHEMOTH.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BeehemothEntity::checkMobSpawnRules);
         event.register(BEE_QUEEN.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BeeQueenEntity::checkMobSpawnRules);
         event.register(ROOTMIN.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
+        event.register(VARIANT_BEE.get(), SpawnPlacementTypes.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (beeEntityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true);
+        event.register(EntityType.BEE, SpawnPlacementTypes.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (beeEntityType, serverLevelAccessor, mobSpawnType, blockPos, randomSource) -> true);
     }
 
     public static void registerEntityAttributes(BzRegisterEntityAttributesEvent event) {
