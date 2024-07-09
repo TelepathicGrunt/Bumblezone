@@ -6,6 +6,11 @@ Fixed some Bee Queen trades to check for correct `c` tags.
 ##### Teleportation:
 (Fabric): Fixed using Enderpearls in Bumblezone erasing the player's data stored non-bumblezone dimension location.
 
+##### Structures:
+Fixed Stinger Spear not spawning in Stinger Spear Shrine or Sempiternal Sanctums
+
+Fixed several other structure data too. Structure NBT is now updated to 1.21.
+
 ##### Misc:
 (Fabric): Requires Fabric API v0.100.6 or newer
 

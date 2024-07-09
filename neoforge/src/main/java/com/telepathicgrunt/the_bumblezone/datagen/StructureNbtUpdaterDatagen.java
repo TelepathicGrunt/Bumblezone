@@ -18,7 +18,7 @@ public class StructureNbtUpdaterDatagen {
         final var output = gen.getPackOutput();
 
         if (event.includeServer()) {
-            gen.addProvider(true, new StructureNbtUpdater("structures", Bumblezone.MODID, exHelper, output));
+            gen.addProvider(true, new StructureNbtUpdater("structure", Bumblezone.MODID, exHelper, output));
         }
     }
 }
