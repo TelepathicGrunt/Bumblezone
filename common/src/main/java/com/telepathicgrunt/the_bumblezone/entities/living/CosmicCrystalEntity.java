@@ -1441,7 +1441,7 @@ public class CosmicCrystalEntity extends LivingEntity {
         }
         else {
             this.lastHurt = damageAmount;
-            this.invulnerableTime = 20;
+            this.invulnerableTime = 10;
             this.actuallyHurt(damageSource, damageAmount);
             this.hurtTime = this.hurtDuration = 10;
         }
