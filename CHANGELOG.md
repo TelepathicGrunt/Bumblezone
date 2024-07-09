@@ -1,3 +1,9 @@
+### **(V.7.6.14 Changes) (1.21 Minecraft)**
+
+##### Entities:
+Halved the invulnerability timer on Cosmic Crystal Entity so you can damage it twice as fast with very high fire rate weapons!.
+
+
 ### **(V.7.6.13 Changes) (1.21 Minecraft)**
 
 ##### Entities:

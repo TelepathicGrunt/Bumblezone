@@ -1446,7 +1446,7 @@ public class CosmicCrystalEntity extends LivingEntity {
         }
         else {
             this.lastHurt = damageAmount;
-            this.invulnerableTime = 20;
+            this.invulnerableTime = 10;
             this.actuallyHurt(damageSource, damageAmount);
             this.hurtTime = this.hurtDuration = 10;
         }
@@ -1522,10 +1522,7 @@ public class CosmicCrystalEntity extends LivingEntity {
     @Override
     protected void actuallyHurt(DamageSource damageSource, float damage) {
         if (!this.isInvulnerableTo(damageSource)) {
-            damage = this.getDamageAfterArmorAbsorb(damageSource, damage);
-            damage = this.getDamageAfterMagicAbsorb(damageSource, damage);
-            float var9 = Math.max(damage - this.getAbsorptionAmount(), 0.0F);
-            this.setAbsorptionAmount(this.getAbsorptionAmount() - (damage - var9));
+            float var9 = Math.max(damage, 0.0F);
             float h = damage - var9;
             if (h > 0.0F && h < 3.4028235E37F) {
                 Entity var6 = damageSource.getEntity();
@@ -1537,7 +1534,6 @@ public class CosmicCrystalEntity extends LivingEntity {
             if (var9 != 0.0F) {
                 this.getCombatTracker().recordDamage(damageSource, var9);
                 this.setHealth(this.getHealth() - var9);
-                this.setAbsorptionAmount(this.getAbsorptionAmount() - var9);
                 this.gameEvent(GameEvent.ENTITY_DAMAGE);
             }
         }
