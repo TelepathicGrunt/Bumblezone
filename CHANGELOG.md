@@ -3,6 +3,8 @@
 ##### Entities:
 Fixed some Bee Queen trades to check for correct `c` tags.
 
+Fixed Cosmic Crystal Entity crashing when damaged.
+
 ##### Teleportation:
 (Fabric): Fixed using Enderpearls in Bumblezone erasing the player's data stored non-bumblezone dimension location.
 

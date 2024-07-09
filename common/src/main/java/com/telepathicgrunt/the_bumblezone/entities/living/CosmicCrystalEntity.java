@@ -34,6 +34,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
@@ -64,6 +65,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.entity.EntityTypeTest;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -1515,6 +1517,30 @@ public class CosmicCrystalEntity extends LivingEntity {
         }
 
         return damageAmount > 0;
+    }
+
+    @Override
+    protected void actuallyHurt(DamageSource damageSource, float damage) {
+        if (!this.isInvulnerableTo(damageSource)) {
+            damage = this.getDamageAfterArmorAbsorb(damageSource, damage);
+            damage = this.getDamageAfterMagicAbsorb(damageSource, damage);
+            float var9 = Math.max(damage - this.getAbsorptionAmount(), 0.0F);
+            this.setAbsorptionAmount(this.getAbsorptionAmount() - (damage - var9));
+            float h = damage - var9;
+            if (h > 0.0F && h < 3.4028235E37F) {
+                Entity var6 = damageSource.getEntity();
+                if (var6 instanceof ServerPlayer serverPlayer) {
+                    serverPlayer.awardStat(Stats.DAMAGE_DEALT_ABSORBED, Math.round(h * 10.0F));
+                }
+            }
+
+            if (var9 != 0.0F) {
+                this.getCombatTracker().recordDamage(damageSource, var9);
+                this.setHealth(this.getHealth() - var9);
+                this.setAbsorptionAmount(this.getAbsorptionAmount() - var9);
+                this.gameEvent(GameEvent.ENTITY_DAMAGE);
+            }
+        }
     }
 
     @Override
