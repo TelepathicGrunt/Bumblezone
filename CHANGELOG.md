@@ -1,6 +1,8 @@
 ### **(V.7.6.14 Changes) (1.21 Minecraft)**
 
 ##### Entities:
+(Neoforge): Fixed crash with Bee Queen rendering
+
 Halved the invulnerability timer on Cosmic Crystal Entity so you can damage it twice as fast with very high fire rate weapons!.
 
 
