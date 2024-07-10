@@ -1,7 +1,10 @@
 ### **(V.7.6.15 Changes) (1.21 Minecraft)**
 
 ##### Blocks:
-Fixed wrong fluid overlay showing on some Bumblezone blocks when submerged.
+(Neoforge): Fixed wrong fluid overlay showing on some Bumblezone blocks when submerged.
+
+##### Entities:
+(Neoforge): Registered spawns for Bee and Variant Bee properly.
 
 
 ### **(V.7.6.14 Changes) (1.21 Minecraft)**
