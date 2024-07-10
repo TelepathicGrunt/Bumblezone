@@ -47,7 +47,7 @@ public interface BlockExtensionMixin extends IBlockExtension {
 
     @Override
     default boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter level, BlockPos pos, FluidState fluidState) {
-        return !this.bz$shouldNotDisplayFluidOverlay()
-                .orElseGet(() -> !IBlockExtension.super.shouldDisplayFluidOverlay(state, level, pos, fluidState));
+        return this.bz$shouldNotDisplayFluidOverlay()
+                .orElseGet(() -> IBlockExtension.super.shouldDisplayFluidOverlay(state, level, pos, fluidState));
     }
 }

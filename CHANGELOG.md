@@ -1,3 +1,9 @@
+### **(V.7.6.15 Changes) (1.21 Minecraft)**
+
+##### Blocks:
+Fixed wrong fluid overlay showing on some Bumblezone blocks when submerged.
+
+
 ### **(V.7.6.14 Changes) (1.21 Minecraft)**
 
 ##### Entities:
