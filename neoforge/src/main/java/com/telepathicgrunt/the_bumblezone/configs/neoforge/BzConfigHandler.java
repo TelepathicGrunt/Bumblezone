@@ -44,7 +44,7 @@ public class BzConfigHandler {
         copyToCommon(event.getConfig().getSpec());
     }
 
-    private static void copyToCommon(IConfigSpec<?> spec) {
+    private static void copyToCommon(IConfigSpec spec) {
         if (spec == BzClientConfig.GENERAL_SPEC) BzClientConfig.copyToCommon();
         if (spec == BzGeneralConfig.GENERAL_SPEC) BzGeneralConfig.copyToCommon();
         if (spec == BzWorldgenConfig.GENERAL_SPEC) BzWorldgenConfig.copyToCommon();

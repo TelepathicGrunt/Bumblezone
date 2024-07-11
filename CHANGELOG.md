@@ -8,6 +8,9 @@ Play sound when taking honey from Filled Porous Honeycomb Blocks.
 ##### Entities:
 (Neoforge): Registered spawns for Bee and Variant Bee properly.
 
+##### Misc:
+(Neoforge): Now requires 21.0.82-beta Neoforge or newer
+
 
 ### **(V.7.6.14 Changes) (1.21 Minecraft)**
 
