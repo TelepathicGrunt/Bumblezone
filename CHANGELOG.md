@@ -3,7 +3,12 @@
 ##### Blocks:
 Play sound when taking honey from Filled Porous Honeycomb Blocks.
 
+Fixed Crystalline Flower spawning fresh with tier 0 instead of tier 1.
+
 (Neoforge): Fixed wrong fluid overlay showing on some Bumblezone blocks when submerged.
+
+##### Enchantments:
+Fixed Bumblezone enchantments not tagged as `minecraft:non_treasure`.
 
 ##### Entities:
 (Neoforge): Registered spawns for Bee and Variant Bee properly.

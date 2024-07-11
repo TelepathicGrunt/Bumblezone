@@ -26,6 +26,6 @@ public record CrystallineFlowerData(int tier, int experience, UUID uuid) {
     public static UUID DEFAULT_UUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
 
     public CrystallineFlowerData() {
-        this(0, 0, UUID.randomUUID());
+        this(1, 0, UUID.randomUUID());
     }
 }

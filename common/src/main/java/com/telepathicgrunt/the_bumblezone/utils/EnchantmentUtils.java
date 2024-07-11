@@ -67,7 +67,10 @@ public class EnchantmentUtils {
 				minLevelAllowed = Math.max(minLevelAllowed, existingEnchantments.get(enchantment.value()) + 1);
 			}
 
-			if (((enchantment.is(EnchantmentTags.NON_TREASURE) || (enchantment.is(EnchantmentTags.TREASURE) && allowTreasure)) &&
+			if (((enchantment.is(EnchantmentTags.IN_ENCHANTING_TABLE) ||
+				enchantment.is(EnchantmentTags.ON_RANDOM_LOOT) ||
+				enchantment.is(EnchantmentTags.NON_TREASURE) ||
+				(enchantment.is(EnchantmentTags.TREASURE) && allowTreasure)) &&
 				(bookFlag || (enchantment.value().canEnchant(itemStack) && enchantment.value().isPrimaryItem(itemStack)))) ||
 				forceAllowed)
 			{
