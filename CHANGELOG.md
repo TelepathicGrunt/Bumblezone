@@ -1,6 +1,8 @@
 ### **(V.7.6.15 Changes) (1.21 Minecraft)**
 
 ##### Blocks:
+Play sound when taking honey from Filled Porous Honeycomb Blocks.
+
 (Neoforge): Fixed wrong fluid overlay showing on some Bumblezone blocks when submerged.
 
 ##### Entities:
