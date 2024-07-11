@@ -1,5 +1,8 @@
 ### **(V.7.4.11 Changes) (1.20.1 Minecraft)**
 
+##### Blocks:
+Play sound when taking honey from Filled Porous Honeycomb Blocks.
+
 ##### Entities:
 Halved the invulnerability timer on Cosmic Crystal Entity so you can damage it twice as fast with very high fire rate weapons!.
 

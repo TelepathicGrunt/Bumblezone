@@ -14,6 +14,8 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -62,6 +64,7 @@ public class FilledPorousHoneycomb extends Block {
          */
         if (itemstack.getItem() == Items.GLASS_BOTTLE) {
             world.setBlock(position, BzBlocks.POROUS_HONEYCOMB.get().defaultBlockState(), 3); // removed honey from this block
+            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
             GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
 
             if ((playerEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
