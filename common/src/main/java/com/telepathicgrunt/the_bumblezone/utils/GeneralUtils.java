@@ -895,7 +895,7 @@ public class GeneralUtils {
 //                long time42 = System.nanoTime();
 //
 //                if (i == 999) {
-//                    Bumblezone.LOGGER.warn("------------------------------");
+//                    Bumblezone.LOGGER.warn("--------------------------------");
 //                    Bumblezone.LOGGER.warn("A: {}", time32 - time31);
 //                    Bumblezone.LOGGER.warn("B: {}", time42 - time41);
 //                }

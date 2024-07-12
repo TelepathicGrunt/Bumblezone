@@ -18,34 +18,34 @@ public class BzWorldgenConfig {
     }
 
     private static void setupConfig(ModConfigSpec.Builder builder) {
-        builder.push("Dungeon Options");
+        builder.translation("the_bumblezone.configuration.dungeonoptions").push("Dungeon Options");
 
             beeDungeonRarity = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                        " How rare Bee Dungeons are. Higher numbers means more rare.",
                        " Default rate is 1. Setting to 1001 will disable Bee Dungeons.\n")
-                .translation("the_bumblezone.config.beedungeonrarity")
+                .translation("the_bumblezone.configuration.beedungeonrarity")
                 .defineInRange("beeDungeonRarity", 1, 1, 1001);
 
             treeDungeonRarity = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                        " How rare Tree Dungeons are. Higher numbers means more rare.",
                        " Default rate is 1. Setting to 1001 will disable Tree Dungeons.\n")
-                .translation("the_bumblezone.config.treedungeonrarity")
+                .translation("the_bumblezone.configuration.treedungeonrarity")
                 .defineInRange("treeDungeonRarity", 2, 1, 1001);
 
             spiderInfestedBeeDungeonRarity = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                        " How rare Spider Infested Bee Dungeons are. Higher numbers means more rare.",
                        " Default rate is 5. Setting to 1001 will disable Bee Dungeons.\n")
-                .translation("the_bumblezone.config.spiderinfestedbeedungeonrarity")
+                .translation("the_bumblezone.configuration.spiderinfestedbeedungeonrarity")
                 .defineInRange("spiderInfestedBeeDungeonRarity", 5, 1, 1001);
 
             spawnerRateSpiderBeeDungeon = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                        " How rare are Spider/Cave Spider Spawners in Spider Infested Bee Dungeons.",
                        " 0 is no spawners, 1 is maximum spawners, and default is 0.2D\n")
-                .translation("the_bumblezone.config.spawnerratespiderbeedungeon")
+                .translation("the_bumblezone.configuration.spawnerratespiderbeedungeon")
                 .defineInRange("spawnerRateSpiderBeeDungeon", 0.2D, 0D, 1D);
 
         builder.pop();

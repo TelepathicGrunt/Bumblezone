@@ -1,3 +1,9 @@
+### **(V.7.6.16 Changes) (1.21 Minecraft)**
+
+##### Configs:
+(Neoforge): Cleaned up and moved around several configs in preparation of future Neoforge Config GUI.
+
+
 ### **(V.7.6.15 Changes) (1.21 Minecraft)**
 
 ##### Blocks:

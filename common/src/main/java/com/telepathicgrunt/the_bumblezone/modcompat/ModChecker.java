@@ -136,11 +136,11 @@ public class ModChecker {
 	@ApiStatus.Internal
 	public static void printErrorToLogs(String currentModID) {
 		Bumblezone.LOGGER.error("""
-		  ------------------------------------------------NOTICE-------------------------------------------------------------------------
+		  --------------------------------------------------NOTICE------------------------------------------------
 		  
 		  ERROR: Something broke when trying to add mod compatibility with %s. Please let The Bumblezone developer (TelepathicGrunt) know about this!
 		  
-		  ------------------------------------------------NOTICE-------------------------------------------------------------------------
+		  --------------------------------------------------NOTICE------------------------------------------------
 		""".formatted(currentModID));
 	}
 
@@ -151,11 +151,11 @@ public class ModChecker {
 		ModInfo info = PlatformHooks.getModInfo(currentModID, checkQualifierInstead);
 
 		if (info != null && info.compare(minVersion) < 0) {
-			Bumblezone.LOGGER.info("------------------------------------------------NOTICE-------------------------------------------------------------------------");
+			Bumblezone.LOGGER.info("--------------------------------------------------NOTICE------------------------------------------------");
 			Bumblezone.LOGGER.info(" ");
 			Bumblezone.LOGGER.info("BUMBLEZONE: You're using a version of " + info.displayName() + " that is outdated. Please update " + info.displayName() + " to the latest version of that mod to enable compat with Bumblezone again.");
 			Bumblezone.LOGGER.info(" ");
-			Bumblezone.LOGGER.info("------------------------------------------------NOTICE-------------------------------------------------------------------------");
+			Bumblezone.LOGGER.info("--------------------------------------------------NOTICE------------------------------------------------");
 			return false;
 		}
 

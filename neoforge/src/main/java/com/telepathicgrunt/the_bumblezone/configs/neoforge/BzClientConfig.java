@@ -39,181 +39,187 @@ public class BzClientConfig {
     }
 
     private static void setupConfig(ModConfigSpec.Builder builder) {
-        builder.push("The Bumblezone Client Dimension Options");
+        builder.translation("the_bumblezone.configuration.clientdimensionoptions").push("The Bumblezone Client Dimension Options");
 
         fogBrightnessPercentage = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " How bright the fog is in the Bumblezone dimension. ",
                         " ",
                         " The brightness is represented as a percentage",
                         " so 0 will be pitch black, 50 will be half",
                         " as bright, 100 will be normal orange brightness,",
                         " and 100000 will be white.\n")
-                .translation("the_bumblezone.config.fogbrightnesspercentage")
+                .translation("the_bumblezone.configuration.fogbrightnesspercentage")
                 .defineInRange("fogBrightnessPercentage", 100D, 0D, 100000D);
 
         fogThickness = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " How thick the fog in Bumblezone is.",
                         " 2 is a little bit of fog and 50 is super thick fog. Decimal values are allowed.\n")
-                .translation("the_bumblezone.config.fogthickness")
+                .translation("the_bumblezone.configuration.fogthickness")
                 .defineInRange("fogThickness", 4D, 0D, 100D);
 
         enableDimensionFog = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " Whether Bumblezone dimension has thick fog or not.\n")
-                .translation("the_bumblezone.config.enabledimensionfog")
+                .translation("the_bumblezone.configuration.enabledimensionfog")
                 .define("enableDimensionFog", true);
 
         builder.pop();
 
-        builder.push("Essence Item HUD Rendering Configs");
+        builder.translation("the_bumblezone.configuration.essenceitemhudrenderingconfigs").push("Essence Item HUD Rendering Configs");
 
         essenceItemHUDVisualEffectLayers = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " How many of the rotating texture layers to show on HUD when Essence item is in offhand slot.",
                         " 0 to turn the rendering off.\n")
-                .translation("the_bumblezone.config.essenceitemhudvisualeffectlayers")
+                .translation("the_bumblezone.configuration.essenceitemhudvisualeffectlayers")
                 .defineInRange("essenceItemHUDVisualEffectLayers", 3, 0, 3);
 
         essenceItemHUDVisualEffectSpeed = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " How fast to spin the rotating texture layers on HUD when Essence item is in offhand slot.",
                         " 0.5 for half speed. 0 to turn the spinning off.\n")
-                .translation("the_bumblezone.config.essenceitemhudvisualeffectspeed")
+                .translation("the_bumblezone.configuration.essenceitemhudvisualeffectspeed")
                 .defineInRange("essenceItemHUDVisualEffectSpeed", 1.0D, 0, 100);
 
         builder.pop();
 
-        builder.push("Knowing Essence Highlighting Configs (see block and entity tags for even more options)");
+        builder.translation("the_bumblezone.configuration.knowingessencehighlightingconfigs").push("Knowing Essence Highlighting Configs (see block and entity tags for even more options)");
 
         knowingEssenceHighlightBosses = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " Whether Knowing Essence will highlight bosses in purple. (Does not override the forced highlighting entity tag)\n")
-                .translation("the_bumblezone.config.knowingEssenceHighlightBosses")
+                .translation("the_bumblezone.configuration.knowingessencehighlightbosses")
                 .define("knowingEssenceHighlightBosses", true);
 
 
         knowingEssenceHighlightMonsters = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " Whether Knowing Essence will highlight monsters in red. (Does not override the forced highlighting entity tag)\n")
-                .translation("the_bumblezone.config.knowingessencehighlightmonsters")
+                .translation("the_bumblezone.configuration.knowingessencehighlightmonsters")
                 .define("knowingEssenceHighlightMonsters", true);
 
         knowingEssenceHighlightTamed = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " Whether Knowing Essence will highlight mobs you tamed in green. (Does not override the forced highlighting entity tag)\n")
-                .translation("the_bumblezone.config.knowingessencehighlighttamed")
+                .translation("the_bumblezone.configuration.knowingessencehighlighttamed")
                 .define("knowingEssenceHighlightTamed", true);
 
         knowingEssenceHighlightLivingEntities = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " Whether Knowing Essence will highlight any other mobs in orange. (Does not override the forced highlighting entity tag)\n")
-                .translation("the_bumblezone.config.knowingessencehighlightlivingentities")
+                .translation("the_bumblezone.configuration.knowingessencehighlightlivingentities")
                 .define("knowingEssenceHighlightLivingEntities", true);
 
         knowingEssenceHighlightCommonItems = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " Whether Knowing Essence will highlight common items in world in white color.\n")
-                .translation("the_bumblezone.config.knowingessencehighlightcommonitems")
+                .translation("the_bumblezone.configuration.knowingessencehighlightcommonitems")
                 .define("knowingEssenceHighlightCommonItems", true);
 
         knowingEssenceHighlightUncommonItems = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " Whether Knowing Essence will highlight uncommon items in world in yellow color.\n")
-                .translation("the_bumblezone.config.knowingessencehighlightuncommonitems")
+                .translation("the_bumblezone.configuration.knowingessencehighlightuncommonitems")
                 .define("knowingEssenceHighlightUncommonItems", true);
 
         knowingEssenceHighlightRareItems = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " Whether Knowing Essence will highlight rare items in world in cyan color.\n")
-                .translation("the_bumblezone.config.knowingessencehighlightrareitems")
+                .translation("the_bumblezone.configuration.knowingessencehighlightrareitems")
                 .define("knowingEssenceHighlightRareItems", true);
 
         knowingEssenceHighlightEpicItems = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " Whether Knowing Essence will highlight epic items in world in purple color.\n")
-                .translation("the_bumblezone.config.knowingessencehighlightepicitems")
+                .translation("the_bumblezone.configuration.knowingessencehighlightepicitems")
                 .define("knowingEssenceHighlightEpicItems", true);
 
         knowingEssenceStructureNameClient = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " Whether Knowing Essence will tell you the name of structures you are in.\n")
-                .translation("the_bumblezone.config.knowingessencestructurenameclient")
+                .comment("----------------------------\n",
+                        " Whether Knowing Essence will tell you the name of structures you are in. (Server config can disable this)\n")
+                .translation("the_bumblezone.configuration.knowingessencestructurenameclient")
                 .define("knowingEssenceStructureNameClient", true);
 
         knowingEssenceStructureNameXCoord = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " X coordinate for where to render the structure name on screen. (Based on bottom left corner)\n")
-                .translation("the_bumblezone.config.knowingessencestructurenamexcoord")
+                .translation("the_bumblezone.configuration.knowingessencestructurenamexcoord")
                 .defineInRange("knowingEssenceStructureNameXCoord", 4, 0, 10000);
 
         knowingEssenceStructureNameYCoord = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " Y coordinate for where to render the structure name on screen. (Based on bottom left corner)\n")
-                .translation("the_bumblezone.config.knowingessencestructurenameycoord")
+                .translation("the_bumblezone.configuration.knowingessencestructurenameycoord")
                 .defineInRange("knowingEssenceStructureNameYCoord", 16, 0, 10000);
 
         builder.pop();
 
-        builder.push("Radiance Essence configs");
+        builder.translation("the_bumblezone.configuration.radianceessenceconfigs").push("Radiance Essence configs");
 
         radianceEssenceArmorDurability = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " Whether Radiance Essence will show the durability of your armor.\n")
-                .translation("the_bumblezone.config.radianceessencearmordurability")
+                .translation("the_bumblezone.configuration.radianceessencearmordurability")
                 .define("radianceEssenceArmorDurability", true);
 
         radianceEssenceArmorDurabilityXCoord = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " X coordinate for where to render the armor durability on screen. (Based on bottom left corner)\n")
-                .translation("the_bumblezone.config.radianceessencearmordurabilityxcoord")
+                .translation("the_bumblezone.configuration.radianceessencearmordurabilityxcoord")
                 .defineInRange("radianceEssenceArmorDurabilityXCoord", 4, 0, 10000);
 
         radianceEssenceArmorDurabilityYCoord = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " Y coordinate for where to render the armor durability on screen. (Based on bottom left corner)\n")
-                .translation("the_bumblezone.config.radianceessencearmordurabilityycoord")
+                .translation("the_bumblezone.configuration.radianceessencearmordurabilityycoord")
                 .defineInRange("radianceEssenceArmorDurabilityYCoord", 16, 0, 10000);
 
         builder.pop();
 
-        builder.push("Entity Model/Renderer configs");
+        builder.translation("the_bumblezone.configuration.entitymodelrendererconfigs").push("Entity Model/Renderer configs");
 
         useBackupModelForVariantBee = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " Turn this on if Variant Bee's model is messed up by another mod or resourcepack. Requires restart.\n")
-                .translation("the_bumblezone.config.usebackupmodelforvariantbee")
+                .translation("the_bumblezone.configuration.usebackupmodelforvariantbee")
                 .define("useBackupModelForVariantBee", false);
 
         renderBeeQueenBonusTradeItem = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " Whether to show the item on the Bee Queen that the Queen wants for Bonus Trades.\n")
-                .translation("the_bumblezone.config.renderbeequeenbonusTradeitem")
+                .translation("the_bumblezone.configuration.renderbeequeenbonustradeitem")
                 .define("renderBeeQueenBonusTradeItem", true);
 
         builder.pop();
 
+        builder.translation("the_bumblezone.configuration.musicconfigs").push("Music configs");
+
         playWrathOfHiveEffectMusic = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " If on, Flight of the Bumblebee by Rimsky Korsakov will play when you have Wrath of the Hive effect on.\n")
-                .translation("the_bumblezone.config.playwrathofhiveeffectmusic")
+                .translation("the_bumblezone.configuration.playwrathofhiveeffectmusic")
                 .define("playWrathOfHiveEffectMusic", true);
 
         playSempiternalSanctumMusic = builder
-                .comment(" \n-----------------------------------------------------\n",
+                .comment("----------------------------\n",
                         " If on, Bee-ware of the Temple by LudoCrypt will play when you are in Sempiternal Sanctum.\n")
-                .translation("the_bumblezone.config.playsempiternalsanctummusic")
+                .translation("the_bumblezone.configuration.playsempiternalsanctummusic")
                 .define("playSempiternalSanctumMusic", true);
 
+        builder.pop();
+
+        builder.translation("the_bumblezone.configuration.essenceblockconfigs").push("Essence Block configs");
+
         disableEssenceBlockShaders = builder
-                .comment("""
-                         \n-----------------------------------------------------
-                          Whether to not render the shader for Essence Blocks.
-                          Will default to normal block textures instead.
-                        """)
-                .translation("the_bumblezone.config.disableessenceblockshaders")
+                .comment("----------------------------\n",
+                        " Whether to not render the shader for Essence Blocks.\n",
+                        " Will default to normal block textures instead if shader is disabled.")
+                .translation("the_bumblezone.configuration.disableessenceblockshaders")
                 .define("disableEssenceBlockShaders", false);
+
+        builder.pop();
     }
 
     public static void copyToCommon() {

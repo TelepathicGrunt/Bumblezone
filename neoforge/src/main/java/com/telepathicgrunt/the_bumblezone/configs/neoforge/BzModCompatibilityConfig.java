@@ -10,7 +10,6 @@ public class BzModCompatibilityConfig {
 	public static final ModConfigSpec GENERAL_SPEC;
 
 	public static ModConfigSpec.ConfigValue<String> alternativeFluidToReplaceHoneyFluid;
-	public static ModConfigSpec.BooleanValue allowHoneyFluidTanksFeedingCompat;
 
 	public static ModConfigSpec.BooleanValue spawnPokecubeBeePokemon;
 	public static ModConfigSpec.BooleanValue beePokemonGetsProtectionEffect;
@@ -62,358 +61,345 @@ public class BzModCompatibilityConfig {
 	}
 
 	private static void setupConfig(ModConfigSpec.Builder builder) {
-		builder.push("Mod Compatibility Options");
-			builder.push("General Compat Options");
+		builder.translation("the_bumblezone.configuration.misccompatoptions").push("Misc Compat Options");
 
-			alternativeFluidToReplaceHoneyFluid = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" The fluid to replace Bumblezone's Honey Fluid in the dimension. Requires restart.",
-							" Note, this will not replace already placed Bumblezone Honey Fluid.\n")
-					.translation("the_bumblezone.config.alternativefluidtoreplacehoneyfluid")
-					.define("alternativeFluidToReplaceHoneyFluid", "");
+		alternativeFluidToReplaceHoneyFluid = builder
+				.comment("----------------------------\n",
+						" The fluid to replace Bumblezone's Honey Fluid in the dimension. Requires game restart.",
+						" Note, this will not replace already placed Bumblezone Honey Fluid.\n")
+				.translation("the_bumblezone.configuration.alternativefluidtoreplacehoneyfluid")
+				.define("alternativeFluidToReplaceHoneyFluid", "");
 
-			allowHoneyFluidTanksFeedingCompat = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Will let you feed any item that has a Forge fluid attachmentType attached and has",
-							" any fluid that is tagged c:honey inside. This works alongside the bee_feeding item tag.",
-							" An item can still be fed even if bee_feeding tag doesn't have the item as long as the",
-							" item fit the above conditions with the fluid attachmentType and this config is set to true.\n")
-					.translation("the_bumblezone.config.allowhoneyfluidtanksfeedingcompat")
-					.define("allowHoneyFluidTanksFeedingCompat", true);
+		builder.pop();
 
-			builder.pop();
+		builder.translation("the_bumblezone.configuration.pokecubecompat").push("Pokecube Compat");
 
-			builder.push("Pokecube Options");
+		spawnPokecubeBeePokemon = builder
+				.comment("----------------------------\n",
+						" Spawn Pokecube's bee-like pokemon in The Bumblezone and from Honey Brood Blocks.\n")
+				.translation("the_bumblezone.configuration.spawnpokecubebeepokemon")
+				.define("spawnPokecubeBeePokemon", true);
 
-			spawnPokecubeBeePokemon = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Spawn Pokecube's bee-like pokemon in The Bumblezone and from Honey Brood Blocks.\n")
-					.translation("the_bumblezone.config.spawnpokecubebeepokemon")
-					.define("spawnPokecubeBeePokemon", true);
+		beePokemonGetsProtectionEffect = builder
+				.comment("----------------------------\n",
+						" Pokecube's bee-like pokemon that spawn in The Bumblezone will get",
+						" Protection of the Hive effect. Attacking these pokemon in bumblezone will",
+						" give you Wrath of the Hive effect and swarmed of angry bees.\n")
+				.translation("the_bumblezone.configuration.beepokemongetsprotectioneffect")
+				.define("beePokemonGetsProtectionEffect", true);
 
-			beePokemonGetsProtectionEffect = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Pokecube's bee-like pokemon that spawn in The Bumblezone will get",
-							" Protection of the Hive effect. Attacking these pokemon in bumblezone will",
-							" give you Wrath of the Hive effect and swarmed of angry bees.\n")
-					.translation("the_bumblezone.config.beePokemonGetsProtectionEffect")
-					.define("beePokemonGetsProtectionEffect", true);
+		spawnrateOfPokecubeBeePokemon = builder
+				.comment("----------------------------\n",
+						" Chance of a Bee spawning from Honeycomb Brood Blocks being replaced by Pokecube's bee Pokemon.",
+						" 0 is no Pokemon mobs and 1 is max Pokemon mobs.\n")
+				.translation("the_bumblezone.configuration.spawnrateofpokecubebeepokemon")
+				.defineInRange("spawnrateOfPokecubeBeePokemon", 0.05D, 0D, 1D);
 
-			spawnrateOfPokecubeBeePokemon = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Chance of a Bee spawning from Honeycomb Brood Blocks being replaced by Pokecube's bee pokemon.",
-							" 0 is no PC's mobs and 1 is max PC's mobs.\n")
-					.translation("the_bumblezone.config.spawnrateofpokecubebeepokemon")
-					.defineInRange("spawnrateOfPokecubeBeePokemon", 0.05D, 0D, 1D);
+		builder.pop();
 
-			builder.pop();
+		builder.translation("the_bumblezone.configuration.tropicraftcompat").push("Tropicraft Compat");
 
-			builder.push("Tropicraft Options");
+		spawnTropicraftBeesMob = builder
+				.comment("----------------------------\n",
+						" Spawn Tropicraft's Tropibee in The Bumblezone and from Honey Brood Blocks alongside",
+						" regular bees at a spawnrateOfTropicraftBeesMobs chance when spawning regular bees.\n")
+				.translation("the_bumblezone.configuration.spawntropicraftbeesmob")
+				.define("spawnTropicraftBeesMob", true);
 
-			spawnTropicraftBeesMob = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Spawn Tropicraft's Tropibee in The Bumblezone and from Honey Brood Blocks alongside",
-							" regular bees at a spawnrateOfTropicraftBeesMobs chance when spawning regular bees.\n")
-					.translation("the_bumblezone.config.spawntropicraftbeesmob")
-					.define("spawnTropicraftBeesMob", true);
+		spawnrateOfTropicraftBeesMobs = builder
+				.comment("----------------------------\n",
+						" Chance of a Bee spawning from Honeycomb Brood Blocks in Bumblezone dimension being replaced by Tropicraft's Tropibee.",
+						" 0 is no Tropicraft's mobs and 1 is max Tropicraft's mobs.\n")
+				.translation("the_bumblezone.configuration.spawnrateoftropicraftbeesmobs")
+				.defineInRange("spawnrateOfTropicraftBeesMobs", 0.025D, 0D, 1D);
 
-			spawnrateOfTropicraftBeesMobs = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Chance of a Bee spawning from Honeycomb Brood Blocks in Bumblezone dimension being replaced by Tropicraft's Tropibee.",
-							" 0 is no Tropicraft's mobs and 1 is max Tropicraft's mobs.\n")
-					.translation("the_bumblezone.config.spawnrateoftropicraftbeesmobs")
-					.defineInRange("spawnrateOfTropicraftBeesMobs", 0.025D, 0D, 1D);
+		allowTropicraftSpawnFromDispenserFedBroodBlock = builder
+				.comment("----------------------------\n",
+						" Allow Honeycomb Brood blocks fed by Dispenser to be able to have chance of spawning Tropicraft's Tropibee.\n")
+				.translation("the_bumblezone.configuration.allowtropicraftspawnfromdispenserfedbroodblock")
+				.define("allowTropicraftSpawnFromDispenserFedBroodBlock", true);
 
-			allowTropicraftSpawnFromDispenserFedBroodBlock = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Allow Honeycomb Brood blocks fed by Dispenser to be able to have chance of spawning Tropicraft's Tropibee.\n")
-					.translation("the_bumblezone.config.allowtropicraftspawnfromdispenserfedbroodblock")
-					.define("allowTropicraftSpawnFromDispenserFedBroodBlock", true);
+		builder.pop();
 
-			builder.pop();
+		builder.translation("the_bumblezone.configuration.resourcefulbeescompat").push("Resourceful Bees Compat");
 
-			builder.push("Resourceful Bees Options");
+		spawnResourcefulBeesBeesMob = builder
+				.comment("----------------------------\n",
+						" Spawn Resourceful Bees in The Bumblezone and from Honey Brood Blocks alongside",
+						" regular bees at a spawnrateOfResourcefulBeesMobs chance.",
+						" You can datapack `the_bumblezone:resourcefulbees/spawnable_from_brood_block` entity tag",
+						" and/or `the_bumblezone:resourcefulbees/spawnable_from_chunk_creation` entity tag",
+						" for more control of what kinds of bees spawns.\n")
+				.translation("the_bumblezone.configuration.spawnresourcefulbeesbeesmob")
+				.define("spawnResourcefulBeesBeesMob", true);
 
-			spawnResourcefulBeesBeesMob = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Spawn Resourceful Bees in The Bumblezone and from Honey Brood Blocks alongside",
-							" regular bees at a spawnrateOfResourcefulBeesMobs chance when spawning regular bees.",
-							" You can datapack the_bumblezone:resourcefulbees/spawnable_from_brood_block entity tag",
-							" and/or datapack the_bumblezone:resourcefulbees/spawnable_from_chunk_creation entity tag",
-							" for more control of what kinds of bees spawns.\n")
-					.translation("the_bumblezone.config.spawnresourcefulbeesbeesmob")
-					.define("spawnResourcefulBeesBeesMob", true);
+		spawnrateOfResourcefulBeesMobsBrood = builder
+				.comment("----------------------------\n",
+						" Chance of a Bee spawning from Honeycomb Brood Blocks in Bumblezone dimension being replaced by Resourceful Bee's mob.",
+						" 0 is no Resourceful Bees mobs and 1 is max Resourceful Bees mobs.\n")
+				.translation("the_bumblezone.configuration.spawnrateofresourcefulbeesmobsbrood")
+				.defineInRange("spawnrateOfResourcefulBeesMobsBrood", 0.03D, 0D, 1D);
 
-			spawnrateOfResourcefulBeesMobsBrood = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Chance of a Bee spawning from Honeycomb Brood Blocks in Bumblezone dimension being replaced by Resourceful Bee's mob.",
-							" 0 is no RB's mobs and 1 is max RB's mobs.\n")
-					.translation("the_bumblezone.config.spawnrateofresourcefulbeesmobsbrood")
-					.defineInRange("spawnrateOfResourcefulBeesMobsBrood", 0.03D, 0D, 1D);
+		spawnrateOfResourcefulBeesMobsOther = builder
+				.comment("----------------------------\n",
+						" Chance of a regular Bee spawning in Bumblezone being replaced by Resourceful Bee's mob.",
+						" 0 is no Resourceful Bees mobs and 1 is max Resourceful Bees mobs.\n")
+				.translation("the_bumblezone.configuration.spawnrateofresourcefulbeesmobsother")
+				.defineInRange("spawnrateOfResourcefulBeesMobsOther", 0.008D, 0D, 1D);
 
-			spawnrateOfResourcefulBeesMobsOther = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Chance of a regular Bee spawning in Bumblezone being replaced by Resourceful Bee's mob.",
-							" 0 is no RB's mobs and 1 is max RB's mobs.\n")
-					.translation("the_bumblezone.config.spawnrateofresourcefulbeesmobsother")
-					.defineInRange("spawnrateOfResourcefulBeesMobsOther", 0.008D, 0D, 1D);
+		RBOreHoneycombSpawnRateBeeDungeon = builder
+				.comment("----------------------------\n",
+						" How much of Bee Dungeons is made of honeycombs from `the_bumblezone:resourcefulbees/spawns_in_bee_dungeons` block tag.",
+						" 0 is no Resourceful Bees honeycombs and 1 is max Resourceful Bees honeycombs.\n")
+				.translation("the_bumblezone.configuration.rborehoneycombspawnratebeedungeon")
+				.defineInRange("RBOreHoneycombSpawnRateBeeDungeon", 0.06D, 0D, 1D);
 
-			RBOreHoneycombSpawnRateBeeDungeon = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" How much of Bee Dungeons is made of honeycombs from the_bumblezone:resourcefulbees/spawns_in_bee_dungeons block tag.",
-							" 0 is no RB's honeycombs and 1 is max RB's honeycombs.\n")
-					.translation("the_bumblezone.config.rborehoneycombspawnratebeedungeon")
-					.defineInRange("RBOreHoneycombSpawnRateBeeDungeon", 0.06D, 0D, 1D);
+		RBOreHoneycombSpawnRateSpiderBeeDungeon = builder
+				.comment("----------------------------\n",
+						" How much of Spider Infested Bee Dungeons is made of honeycombs from `the_bumblezone:resourcefulbees/spawns_in_spider_infested_bee_dungeons` block tag.",
+						" 0 is no Resourceful Bees honeycombs and 1 is max Resourceful Bees honeycombs.\n")
+				.translation("the_bumblezone.configuration.rborehoneycombspawnratespiderbeedungeon")
+				.defineInRange("RBOreHoneycombSpawnRateSpiderBeeDungeon", 0.12D, 0D, 1D);
 
-			RBOreHoneycombSpawnRateSpiderBeeDungeon = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" How much of Spider Infested Bee Dungeons is made of honeycombs from the_bumblezone:resourcefulbees/spawns_in_spider_infested_bee_dungeons block tag.",
-							" 0 is no RB's honeycombs and 1 is max RB's honeycombs.\n")
-					.translation("the_bumblezone.config.rborehoneycombspawnratespiderbeedungeon")
-					.defineInRange("RBOreHoneycombSpawnRateSpiderBeeDungeon", 0.12D, 0D, 1D);
-
-			spawnResourcefulBeesHoneycombVeins = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Spawn Resourceful Bees's various honeycomb variants in The Bumblezone at all",
-							" kinds of heights and height bands. Start exploring to find where they spawn!",
-							" ",
-							" NOTE: Will require a restart of the world to take effect. \n")
-					.translation("the_bumblezone.config.spawnresourcefulbeeshoneycombveins")
-					.define("spawnResourcefulBeesHoneycombVeins", true);
+		spawnResourcefulBeesHoneycombVeins = builder
+				.comment("----------------------------\n",
+						" Spawn Resourceful Bees's various honeycomb variants in The Bumblezone at all",
+						" kinds of heights and height bands. Start exploring to find where they spawn!",
+						" ",
+						" NOTE: Will require a restart of the world to take effect.\n")
+				.translation("the_bumblezone.configuration.spawnresourcefulbeeshoneycombveins")
+				.define("spawnResourcefulBeesHoneycombVeins", true);
 
 
-			allowResourcefulBeesBeeJarRevivingEmptyBroodBlock = builder
-				.comment(" \n-----------------------------------------------------\n",
-						" Allow Bee Jars with bees inside to turn Empty Honeycomb Brood blocks into ",
+		allowResourcefulBeesBeeJarRevivingEmptyBroodBlock = builder
+			.comment("----------------------------\n",
+					" Allow Bee Jars with bees inside to turn Empty Honeycomb Brood blocks into",
+					" a regular Honeycomb Brood Block with a larva inside!\n")
+			.translation("the_bumblezone.configuration.allowresourcefulbeesbeejarrevivingemptybroodblock")
+			.define("allowResourcefulBeesBeeJarRevivingEmptyBroodBlock", true);
+
+		allowResourcefulBeesSpawnFromDispenserFedBroodBlock = builder
+			.comment("----------------------------\n",
+					" Allow Honeycomb Brood blocks fed by Dispenser to be able to have chance of spawning Resourceful Bees's bees.\n")
+			.translation("the_bumblezone.configuration.allowresourcefulbeesspawnfromdispenserfedbroodblock")
+			.define("allowResourcefulBeesSpawnFromDispenserFedBroodBlock", true);
+
+		builder.pop();
+
+		builder.translation("the_bumblezone.configuration.productivebeescompat").push("Productive Bees Compat");
+
+		spawnProductiveBeesBeesMob = builder
+				.comment("----------------------------\n",
+						" Spawn Productive Bees in The Bumblezone and from Honey Brood Blocks alongside",
+						" regular bees at a spawnrateOfProductiveBeesMobs chance when spawning regular bees.\n")
+				.translation("the_bumblezone.configuration.spawnproductivebeesbeesmob")
+				.define("spawnProductiveBeesBeesMob", true);
+
+		allowedBees = builder
+				.comment("----------------------------\n",
+						" Allow what Productive Bees bees should be able to spawn in Bumblezone.\n")
+				.translation("the_bumblezone.configuration.allowedbees")
+				.defineList("allowedBees",
+						List.of("productivebees:iron",
+								"productivebees:coal",
+								"productivebees:redstone",
+								"productivebees:copper",
+								"productivebees:lapis",
+								"productivebees:gold",
+								"productivebees:emerald",
+								"productivebees:obsidian",
+								"productivebees:experience",
+								"productivebees:magmatic",
+								"productivebees:amethyst",
+								"productivebees:prismarine",
+								"productivebees:crystalline",
+								"productivebees:sugarbag",
+								"productivebees:glowing",
+								"productivebees:frosty",
+								"productivebees:slimy",
+								"productivebees:silky",
+								"productivebees:blazing",
+								"productivebees:ender",
+								"productivebees:skeletal",
+								"productivebees:ghostly",
+								"productivebees:zombie"
+						), () -> "productivebees:", (t) -> true);
+
+		spawnrateOfProductiveBeesMobs = builder
+				.comment("----------------------------\n",
+						" Chance of a Bee spawning in Bumblezone or from Honeycomb Brood Blocks being replaced by Productive Bees mob.",
+						" 0 is no Productive Bees mobs and 1 is max Productive Bees mobs.\n")
+				.translation("the_bumblezone.configuration.spawnrateofproductivebeesmobs")
+				.defineInRange("spawnrateOfProductiveBeesMobs", 0.03D, 0D, 1D);
+
+		spawnProductiveBeesHoneycombVariants = builder
+				.comment("----------------------------\n",
+						" Spawn Productive Bees various honeycomb variants in The Bumblezone at all",
+						" kinds of heights and height bands. Start exploring to find where they spawn!",
+						" Disabling this config will make all Productive Bees comb blocks not spawn in Bumblezone dimension.",
+						" ",
+						" To add or remove specific combs from spawning, datapack replace this placed feature tag file:",
+						"`data/the_bumblezone/tags/worldgen/placed_feature/productive_bees_combs.json`",
+						" ",
+						" NOTE: This config will require a restart of the world to take effect.\n")
+				.translation("the_bumblezone.configuration.spawnproductivebeeshoneycombvariants")
+				.define("spawnProductiveBeesHoneycombVariants", true);
+
+		allowedCombsForDungeons = builder
+				.comment("----------------------------\n",
+						" Allow what Productive Bees combs should be able to spawn in Bumblezone dungeons.")
+				.translation("the_bumblezone.configuration.allowedcombsfordungeons")
+				.defineList("allowedCombsForDungeons",
+						List.of("productivebees:diamond",
+								"productivebees:iron",
+								"productivebees:coal",
+								"productivebees:redstone",
+								"productivebees:copper",
+								"productivebees:lapis",
+								"productivebees:gold",
+								"productivebees:emerald",
+								"productivebees:obsidian",
+								"productivebees:experience",
+								"productivebees:magmatic",
+								"productivebees:amethyst",
+								"productivebees:prismarine",
+								"productivebees:crystalline",
+								"productivebees:sugarbag",
+								"productivebees:glowing",
+								"productivebees:frosty",
+								"productivebees:slimy",
+								"productivebees:silky",
+								"productivebees:blazing",
+								"productivebees:ender",
+								"productivebees:skeletal",
+								"productivebees:ghostly",
+								"productivebees:zombie"
+						),  () -> "productivebees:", (t) -> true);
+
+		allowProductiveBeesBeeCageRevivingEmptyBroodBlock = builder
+			.comment("----------------------------\n",
+					" Allow Bee Cages with bees inside to turn Empty Honeycomb Brood blocks into",
+					" a regular Honeycomb Brood Block with a larva inside!\n")
+			.translation("the_bumblezone.configuration.allowproductivebeesbeecagerevivingemptybroodblock")
+			.define("allowProductiveBeesBeeCageRevivingEmptyBroodBlock", true);
+
+		allowProductiveBeesSpawnFromDispenserFedBroodBlock = builder
+			.comment("----------------------------\n",
+					" Allow Honeycomb Brood blocks fed by Dispenser to be able to have chance of spawning Productive Bees bees.\n")
+			.translation("the_bumblezone.configuration.allowproductivebeesspawnfromdispenserfedbroodblock")
+			.define("allowProductiveBeesSpawnFromDispenserFedBroodBlock", true);
+
+		allowHoneyTreatCompat = builder
+				.comment("----------------------------\n",
+						" Allow Honey Treat to be able to feed bees and Honeycomb Brood Blocks.\n")
+				.translation("the_bumblezone.configuration.allowhoneytreatcompat")
+				.define("allowHoneyTreatCompat", true);
+
+		PBOreHoneycombSpawnRateBeeDungeon = builder
+				.comment("----------------------------\n",
+						" How much of Bee Dungeons is made of ore-based honeycombs.",
+						" 0 is no Productive Bees honeycombs and 1 is max Productive Bees honeycombs.\n")
+				.translation("the_bumblezone.configuration.pborehoneycombspawnratebeedungeon")
+				.defineInRange("PBOreHoneycombSpawnRateBeeDungeon", 0.125D, 0D, 1D);
+
+		PBOreHoneycombSpawnRateSpiderBeeDungeon = builder
+				.comment("----------------------------\n",
+						" How much of Spider Infested Bee Dungeons is made of ore-based honeycombs.",
+						" 0 is no Productive Bees honeycombs and 1 is max Productive Bees honeycombs.\n")
+				.translation("the_bumblezone.configuration.pborehoneycombspawnratespiderbeedungeon")
+				.defineInRange("PBOreHoneycombSpawnRateSpiderBeeDungeon", 0.25D, 0D, 1D);
+
+		builder.pop();
+
+		builder.translation("the_bumblezone.configuration.friendsandfoescompat").push("Friends and Foes Compat");
+
+		allowFriendsAndFoesBeekeeperTradesCompat = builder
+				.comment("----------------------------\n",
+						" Adds Bumblezone items to Friends and Foes's Beekeeper trades!\n")
+				.translation("the_bumblezone.configuration.allowfriendsandfoesbeekeepertradescompat")
+				.define("allowFriendsAndFoesBeekeeperTradesCompat", true);
+
+		builder.pop();
+
+		builder.translation("the_bumblezone.configuration.quarkcompat").push("Quark Compat");
+
+		injectBzItemsIntoQuarkEnchantmentTooltipsCompat = builder
+				.comment("----------------------------\n",
+						" Adds Bumblezone items symbols to Quark's enchantment tooltips!\n")
+				.translation("the_bumblezone.configuration.injectbzitemsintoquarkenchantmenttooltipscompat")
+				.define("injectBzItemsIntoQuarkEnchantmentTooltipsCompat", true);
+
+		builder.pop();
+
+		builder.translation("the_bumblezone.configuration.buzzierbeescompat").push("Buzzier Bees Compat");
+
+		allowBeeBottleRevivingEmptyBroodBlock = builder
+				.comment("----------------------------\n",
+						" Allow Bee Bottle to turn Empty Honeycomb Brood blocks into a regular Honeycomb Brood Block with a larva inside!\n")
+				.translation("the_bumblezone.configuration.allowbeebottlerevivingemptybroodblock")
+				.define("allowBeeBottleRevivingEmptyBroodBlock", true);
+
+		builder.pop();
+
+		builder.translation("the_bumblezone.configuration.forbiddenarcanuscompat").push("Forbidden Arcanus Compat");
+
+		allowBeeBucketRevivingEmptyBroodBlock = builder
+				.comment("----------------------------\n",
+						" Allow Bee Bucket to turn Empty Honeycomb Brood blocks into a regular Honeycomb Brood Block with a larva inside!\n")
+				.translation("the_bumblezone.configuration.allowbeebucketrevivingemptybroodblock")
+				.define("allowBeeBucketRevivingEmptyBroodBlock", true);
+
+		builder.pop();
+
+
+		builder.translation("the_bumblezone.configuration.potionofbeescompat").push("Potion of Bees Compat");
+
+		allowPotionOfBeesRevivingEmptyBroodBlock = builder
+				.comment("----------------------------\n",
+						" Allow Potion of Bees to turn Empty Honeycomb Brood blocks into ",
 						" a regular Honeycomb Brood Block with a larva inside! \n")
-				.translation("the_bumblezone.config.allowresourcefulbeesbeejarrevivingemptybroodblock")
-				.define("allowResourcefulBeesBeeJarRevivingEmptyBroodBlock", true);
+				.translation("the_bumblezone.configuration.allowpotionofbeesrevivingemptybroodblock")
+				.define("allowPotionOfBeesRevivingEmptyBroodBlock", true);
 
-			allowResourcefulBeesSpawnFromDispenserFedBroodBlock = builder
-				.comment(" \n-----------------------------------------------------\n",
-						" Allow Honeycomb Brood blocks fed by Dispenser to be able to have chance of spawning Resourceful Bees's bees.\n")
-				.translation("the_bumblezone.config.allowresourcefulbeesspawnfromdispenserfedbroodblock")
-				.define("allowResourcefulBeesSpawnFromDispenserFedBroodBlock", true);
-
-			builder.pop();
-
-			builder.push("Productive Bees Options");
-
-			spawnProductiveBeesBeesMob = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Spawn Productive Bees in The Bumblezone and from Honey Brood Blocks alongside",
-							" regular bees at a spawnrateOfProductiveBeesMobs chance when spawning regular bees.\n")
-					.translation("the_bumblezone.config.spawnproductivebeesbeesmob")
-					.define("spawnProductiveBeesBeesMob", true);
-
-			spawnrateOfProductiveBeesMobs = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Chance of a Bee spawning in Bumblezone or from Honeycomb Brood Blocks being replaced by Productive Bee's mob.",
-							" 0 is no PB's mobs and 1 is max PB's mobs.\n")
-					.translation("the_bumblezone.config.spawnrateofproductivebeesmobs")
-					.defineInRange("spawnrateOfProductiveBeesMobs", 0.03D, 0D, 1D);
-
-			spawnProductiveBeesHoneycombVariants = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Spawn Productive Bees's various honeycomb variants in The Bumblezone at all",
-							" kinds of heights and height bands. Start exploring to find where they spawn!",
-							" Disabling this config will make all Productive Bees comb blocks not spawn in Bumblezone dimension.",
-							" ",
-							" To add or remove specific combs from spawning, datapack replace this placed feature tag file:",
-							"`data/the_bumblezone/tags/worldgen/placed_feature/productive_bees_combs.json`",
-							" ",
-							" NOTE: This config will require a restart of the world to take effect. \n")
-					.translation("the_bumblezone.config.spawnproductivebeeshoneycombvariants")
-					.define("spawnProductiveBeesHoneycombVariants", true);
-
-			allowedCombsForDungeons = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Allow what Productive Bees combs should be able to spawn in Bumblezone dungeons.")
-					.translation("the_bumblezone.config.allowedcombsfordungeons")
-					.defineList("allowedCombsForDungeons",
-							List.of("productivebees:diamond",
-									"productivebees:iron",
-									"productivebees:coal",
-									"productivebees:redstone",
-									"productivebees:copper",
-									"productivebees:lapis",
-									"productivebees:gold",
-									"productivebees:emerald",
-									"productivebees:obsidian",
-									"productivebees:experience",
-									"productivebees:magmatic",
-									"productivebees:amethyst",
-									"productivebees:prismarine",
-									"productivebees:crystalline",
-									"productivebees:sugarbag",
-									"productivebees:glowing",
-									"productivebees:frosty",
-									"productivebees:slimy",
-									"productivebees:silky",
-									"productivebees:blazing",
-									"productivebees:ender",
-									"productivebees:skeletal",
-									"productivebees:ghostly",
-									"productivebees:zombie"
-							), (t) -> true);
-
-			allowedBees = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Allow what Productive Bees bees should be able to spawn in Bumblezone. ")
-					.translation("the_bumblezone.config.allowedBees")
-					.defineList("allowedBees",
-							List.of("productivebees:iron",
-									"productivebees:coal",
-									"productivebees:redstone",
-									"productivebees:copper",
-									"productivebees:lapis",
-									"productivebees:gold",
-									"productivebees:emerald",
-									"productivebees:obsidian",
-									"productivebees:experience",
-									"productivebees:magmatic",
-									"productivebees:amethyst",
-									"productivebees:prismarine",
-									"productivebees:crystalline",
-									"productivebees:sugarbag",
-									"productivebees:glowing",
-									"productivebees:frosty",
-									"productivebees:slimy",
-									"productivebees:silky",
-									"productivebees:blazing",
-									"productivebees:ender",
-									"productivebees:skeletal",
-									"productivebees:ghostly",
-									"productivebees:zombie"
-							), (t) -> true);
-
-			allowProductiveBeesBeeCageRevivingEmptyBroodBlock = builder
-				.comment(" \n-----------------------------------------------------\n",
-						" Allow Bee Cages with bees inside to turn Empty Honeycomb Brood blocks into ",
-						" a regular Honeycomb Brood Block with a larva inside! \n")
-				.translation("the_bumblezone.config.allowproductivebeesbeecagerevivingemptybroodblock")
-				.define("allowProductiveBeesBeeCageRevivingEmptyBroodBlock", true);
-
-			allowProductiveBeesSpawnFromDispenserFedBroodBlock = builder
-				.comment(" \n-----------------------------------------------------\n",
-						" Allow Honeycomb Brood blocks fed by Dispenser to be able to have chance of spawning Productive Bees's bees.\n")
-				.translation("the_bumblezone.config.allowproductivebeesspawnfromdispenserfedbroodblock")
-				.define("allowProductiveBeesSpawnFromDispenserFedBroodBlock", true);
-
-			allowHoneyTreatCompat = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Allow Honey Treat to be able to feed bees and Honeycomb Brood Blocks.\n")
-					.translation("the_bumblezone.config.allowhoneytreatcompat")
-					.define("allowHoneyTreatCompat", true);
-
-			PBOreHoneycombSpawnRateBeeDungeon = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" How much of Bee Dungeons is made of ore-based honeycombs.",
-							" 0 is no PB's honeycombs and 1 is max PB's honeycombs.\n")
-					.translation("the_bumblezone.config.pborehoneycombspawnratebeedungeon")
-					.defineInRange("PBOreHoneycombSpawnRateBeeDungeon", 0.125D, 0D, 1D);
-
-			PBOreHoneycombSpawnRateSpiderBeeDungeon = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" How much of Spider Infested Bee Dungeons is made of ore-based honeycombs.",
-							" 0 is no PB's honeycombs and 1 is max PB's honeycombs.\n")
-					.translation("the_bumblezone.config.pborehoneycombspawnratespiderbeedungeon")
-					.defineInRange("PBOreHoneycombSpawnRateSpiderBeeDungeon", 0.25D, 0D, 1D);
-
-			builder.pop();
-
-			builder.push("Friends and Foes Options");
-
-			allowFriendsAndFoesBeekeeperTradesCompat = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Adds Bumblezone items to Friends and Foes's Beekeeper trades!\n")
-					.translation("the_bumblezone.config.allowfriendsandfoesbeekeepertradescompat")
-					.define("allowFriendsAndFoesBeekeeperTradesCompat", true);
-
-			builder.pop();
-
-			builder.push("Quark Options");
-
-			injectBzItemsIntoQuarkEnchantmentTooltipsCompat = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Adds Bumblezone items symbols to Quark's enchantment tooltips!\n")
-					.translation("the_bumblezone.config.injectbzitemsintoquarkenchantmenttooltipscompat")
-					.define("injectBzItemsIntoQuarkEnchantmentTooltipsCompat", true);
-
-			builder.pop();
-
-			builder.push("Buzzier Bees Options");
-
-			allowBeeBottleRevivingEmptyBroodBlock = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Allow Bee Bottle to turn Empty Honeycomb Brood blocks into a regular Honeycomb Brood Block with a larva inside! \n")
-					.translation("the_bumblezone.config.allowbeebottlerevivingemptybroodblock")
-					.define("allowBeeBottleRevivingEmptyBroodBlock", true);
-
-			builder.pop();
-
-			builder.push("Forbidden Arcanus Options");
-
-			allowBeeBucketRevivingEmptyBroodBlock = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Allow Bee Bucket to turn Empty Honeycomb Brood blocks into a regular Honeycomb Brood Block with a larva inside! \n")
-					.translation("the_bumblezone.config.allowbeebucketrevivingemptybroodblock")
-					.define("allowBeeBucketRevivingEmptyBroodBlock", true);
-
-			builder.pop();
+		builder.pop();
 
 
-			builder.push("Potion of Bees Options");
+		builder.translation("the_bumblezone.configuration.goodallcompat").push("Goodall Compat");
 
-			allowPotionOfBeesRevivingEmptyBroodBlock = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Allow Potion of Bees to turn Empty Honeycomb Brood blocks into ",
-							" a regular Honeycomb Brood Block with a larva inside! \n")
-					.translation("the_bumblezone.config.allowpotionofbeesrevivingemptybroodblock")
-					.define("allowPotionOfBeesRevivingEmptyBroodBlock", true);
+		allowGoodallBottledBeesRevivingEmptyBroodBlock = builder
+				.comment("----------------------------\n",
+						" Allow Bottled Bees to turn Empty Honeycomb Brood blocks into",
+						" a regular Honeycomb Brood Block with a larva inside!\n")
+				.translation("the_bumblezone.configuration.allowgoodallbottledbeesrevivingemptybroodblock")
+				.define("allowGoodallBottledBeesRevivingEmptyBroodBlock", true);
 
-			builder.pop();
-
-
-			builder.push("Goodall Options");
-
-			allowGoodallBottledBeesRevivingEmptyBroodBlock = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Allow Bottled Bees to turn Empty Honeycomb Brood blocks into ",
-							" a regular Honeycomb Brood Block with a larva inside! \n")
-					.translation("the_bumblezone.config.allowgoodallbottledbeesrevivingemptybroodblock")
-					.define("allowGoodallBottledBeesRevivingEmptyBroodBlock", true);
-
-			builder.pop();
+		builder.pop();
 
 
-			builder.push("Beekeeper Options");
+		builder.translation("the_bumblezone.configuration.beekeepercompat").push("Beekeeper Compat");
 
-			allowBeekeeperTradesCompat = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Adds Bumblezone items to Beekeeper mod's Beekeeper trades!\n")
-					.translation("the_bumblezone.config.allowbeekeepertradescompat")
-					.define("allowBeekeeperTradesCompat", true);
+		allowBeekeeperTradesCompat = builder
+				.comment("----------------------------\n",
+						" Adds Bumblezone items to Beekeeper mod's Beekeeper trades!\n")
+				.translation("the_bumblezone.configuration.allowbeekeepertradescompat")
+				.define("allowBeekeeperTradesCompat", true);
 
-			builder.pop();
+		builder.pop();
 
 
-			builder.push("Lootr Options");
+		builder.translation("the_bumblezone.configuration.lootrcompat").push("Lootr Compat");
 
-			allowLootrCompat = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Allow loot Cocoons to have compat with Lootr\n")
-					.translation("the_bumblezone.config.allowLootrCompat")
-					.define("allowLootrCompat", true);
-
-			builder.pop();
+		allowLootrCompat = builder
+				.comment("----------------------------\n",
+						" Allow loot Cocoons to have compat with Lootr\n")
+				.translation("the_bumblezone.configuration.allowlootrcompat")
+				.define("allowLootrCompat", true);
 
 		builder.pop();
 	}
 
 	public static void copyToCommon() {
 		BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid = alternativeFluidToReplaceHoneyFluid.get();
-		BzModCompatibilityConfigs.allowHoneyFluidTanksFeedingCompat = allowHoneyFluidTanksFeedingCompat.get();
 
 		BzModCompatibilityConfigs.allowPotionOfBeesRevivingEmptyBroodBlock = allowPotionOfBeesRevivingEmptyBroodBlock.get();
 
