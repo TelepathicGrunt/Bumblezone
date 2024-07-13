@@ -101,7 +101,7 @@ public class BzGeneralConfig {
 
         builder.pop();
 
-        builder.translation("the_bumblezone.configuration.beehemothspeed").push("Beehemoth Options");
+        builder.translation("the_bumblezone.configuration.beehemothoptions").push("Beehemoth Options");
 
         beehemothSpeed = builder
                 .comment("----------------------------\n",
