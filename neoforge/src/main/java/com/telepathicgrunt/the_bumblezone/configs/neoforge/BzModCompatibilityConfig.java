@@ -223,7 +223,7 @@ public class BzModCompatibilityConfig {
 								"productivebees:skeletal",
 								"productivebees:ghostly",
 								"productivebees:zombie"
-						), (t) -> true);
+						), () -> "productivebees:", (t) -> true);
 
 		spawnrateOfProductiveBeesMobs = builder
 				.comment("----------------------------\n",
@@ -274,7 +274,7 @@ public class BzModCompatibilityConfig {
 								"productivebees:skeletal",
 								"productivebees:ghostly",
 								"productivebees:zombie"
-						), (t) -> true);
+						),  () -> "productivebees:", (t) -> true);
 
 		allowProductiveBeesBeeCageRevivingEmptyBroodBlock = builder
 			.comment("----------------------------\n",

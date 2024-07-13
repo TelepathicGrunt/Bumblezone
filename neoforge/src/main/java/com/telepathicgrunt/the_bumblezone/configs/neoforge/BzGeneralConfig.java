@@ -97,7 +97,7 @@ public class BzGeneralConfig {
                         "enby_bee",
                         "reverse_bee",
                         "neapolitan_bee",
-                        "rainbow_bee"), entry -> true);
+                        "rainbow_bee"), () -> "", entry -> true);
 
         builder.pop();
 
@@ -368,7 +368,7 @@ public class BzGeneralConfig {
                         " The list is in order of the effect levels that the player will get as they make highlighted kills.",
                         " Adding or removing numbers will change the maximum number of rage tiers too.\n")
                 .translation("the_bumblezone.configuration.ragingessencestrengthlevels")
-                .defineList("ragingEssenceStrengthLevels", Arrays.asList(1, 2, 3, 5, 8, 14, 20), (entry) -> {
+                .defineList("ragingEssenceStrengthLevels", Arrays.asList(1, 2, 3, 5, 8, 14, 20), () -> 1, (entry) -> {
                     if (entry instanceof Integer integer) {
                         return integer > 0;
                     }
