@@ -4,13 +4,10 @@ import com.teamresourceful.resourcefullib.common.network.Packet;
 import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.teamresourceful.resourcefullib.common.network.base.ServerboundPacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.datacomponents.BumbleBeeChestplateData;
-import com.telepathicgrunt.the_bumblezone.items.BumbleBeeChestplate;
-import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
+import com.telepathicgrunt.the_bumblezone.packets.handlers.BumbleBeeChestplateFlyingPacketHandleBody;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Consumer;
 
@@ -42,18 +39,7 @@ public record BumbleBeeChestplateFlyingPacket(byte isFlying) implements Packet<B
 
         @Override
         public Consumer<Player> handle(BumbleBeeChestplateFlyingPacket message) {
-            return (player) -> {
-                ItemStack itemStack = BumbleBeeChestplate.getEntityBeeChestplate(player);
-                if(!itemStack.isEmpty()) {
-                    BumbleBeeChestplateData bumbleBeeChestplateData = itemStack.get(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get());
-                    itemStack.set(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get(), new BumbleBeeChestplateData(
-                        message.isFlying() != 0,
-                        bumbleBeeChestplateData.flyCounter(),
-                        bumbleBeeChestplateData.forcedMaxFlyingTickTime(),
-                        bumbleBeeChestplateData.requiredWearablesCountForForcedFlyingTime()
-                    ));
-                }
-            };
+            return (player) -> BumbleBeeChestplateFlyingPacketHandleBody.handle(message, player);
         }
 
         @Override

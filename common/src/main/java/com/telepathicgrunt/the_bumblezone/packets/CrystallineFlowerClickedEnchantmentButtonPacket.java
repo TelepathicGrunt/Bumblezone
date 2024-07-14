@@ -4,7 +4,7 @@ import com.teamresourceful.resourcefullib.common.network.Packet;
 import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.teamresourceful.resourcefullib.common.network.base.ServerboundPacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.menus.CrystallineFlowerMenu;
+import com.telepathicgrunt.the_bumblezone.packets.handlers.CrystallineFlowerClickedEnchantmentButtonPacketHandleBody;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -40,15 +40,7 @@ public record CrystallineFlowerClickedEnchantmentButtonPacket(int containerId, R
 
         @Override
         public Consumer<Player> handle(CrystallineFlowerClickedEnchantmentButtonPacket message) {
-            return (player) -> {
-                if(player == null) {
-                    return;
-                }
-
-                if (player.containerMenu.containerId == message.containerId() && player.containerMenu instanceof CrystallineFlowerMenu flowerMenu) {
-                    flowerMenu.clickMenuEnchantment(player, message.clickedButton());
-                }
-            };
+            return (player) -> CrystallineFlowerClickedEnchantmentButtonPacketHandleBody.handle(message, player);
         }
 
         @Override

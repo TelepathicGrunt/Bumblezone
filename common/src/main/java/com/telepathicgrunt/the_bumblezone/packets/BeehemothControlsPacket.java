@@ -4,7 +4,7 @@ import com.teamresourceful.resourcefullib.common.network.Packet;
 import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.teamresourceful.resourcefullib.common.network.base.ServerboundPacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
+import com.telepathicgrunt.the_bumblezone.packets.handlers.BeehemothControlsPacketHandleBody;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -45,20 +45,7 @@ public record BeehemothControlsPacket(byte upPressed, byte downPressed) implemen
 
         @Override
         public Consumer<Player> handle(BeehemothControlsPacket message) {
-            return (player) -> {
-                if(player == null) {
-                    return;
-                }
-
-                if (player.getVehicle() instanceof BeehemothEntity beehemothEntity) {
-                    if (message.upPressed() != 2) {
-                        beehemothEntity.movingStraightUp = message.upPressed() == 1;
-                    }
-                    if (message.downPressed() != 2) {
-                        beehemothEntity.movingStraightDown = message.downPressed() == 1;
-                    }
-                }
-            };
+            return (player) -> BeehemothControlsPacketHandleBody.handle(message, player);
         }
 
         @Override

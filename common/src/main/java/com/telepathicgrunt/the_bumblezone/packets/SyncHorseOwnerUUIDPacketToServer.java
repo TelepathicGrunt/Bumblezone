@@ -4,11 +4,9 @@ import com.teamresourceful.resourcefullib.common.network.Packet;
 import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.teamresourceful.resourcefullib.common.network.base.ServerboundPacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.packets.handlers.SyncHorseOwnerUUIDPacketToServerHandleBody;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.UUID;
@@ -42,12 +40,7 @@ public record SyncHorseOwnerUUIDPacketToServer(UUID horseUUID) implements Packet
 
         @Override
         public Consumer<Player> handle(SyncHorseOwnerUUIDPacketToServer message) {
-            return (player) -> {
-                Entity entity = ((ServerLevel)player.level()).getEntity(message.horseUUID());
-                if (entity instanceof AbstractHorse abstractHorse && abstractHorse.getOwnerUUID() != null) {
-                    SyncHorseOwnerUUIDPacketFromServer.sendToClient(abstractHorse, abstractHorse.getId(), abstractHorse.getOwnerUUID());
-                }
-            };
+            return (player) -> SyncHorseOwnerUUIDPacketToServerHandleBody.handle(message, player);
         }
 
         @Override

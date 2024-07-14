@@ -4,10 +4,9 @@ import com.teamresourceful.resourcefullib.common.network.Packet;
 import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.teamresourceful.resourcefullib.common.network.base.ServerboundPacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.packets.handlers.StinglessBeeHelmetSightPacketHandleBody;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.function.Consumer;
@@ -40,11 +39,7 @@ public record StinglessBeeHelmetSightPacket(byte giveAdvancement) implements Pac
 
         @Override
         public Consumer<Player> handle(StinglessBeeHelmetSightPacket message) {
-            return (player) -> {
-                if(player instanceof ServerPlayer serverPlayer && message.giveAdvancement() != 0) {
-                    BzCriterias.STINGLESS_BEE_HELMET_SUPER_SIGHT_TRIGGER.get().trigger(serverPlayer);
-                }
-            };
+            return (player) -> StinglessBeeHelmetSightPacketHandleBody.handle(message, player);
         }
 
         @Override

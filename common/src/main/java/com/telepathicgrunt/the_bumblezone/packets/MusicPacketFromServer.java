@@ -4,9 +4,7 @@ import com.teamresourceful.resourcefullib.common.network.Packet;
 import com.teamresourceful.resourcefullib.common.network.base.ClientboundPacketType;
 import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
-import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
-import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
+import com.telepathicgrunt.the_bumblezone.packets.handlers.MusicPacketFromServerHandleBody;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -40,11 +38,7 @@ public record MusicPacketFromServer(ResourceLocation musicRL, boolean play) impl
 
         @Override
         public Runnable handle(MusicPacketFromServer message) {
-            return () -> {
-                Player player = GeneralUtilsClient.getClientPlayer();
-                MusicHandler.playStopSempiternalSanctumMusic(player, message.musicRL(), message.play() && BzClientConfigs.playSempiternalSanctumMusic);
-                MusicHandler.playStopEssenceEventMusic(player, message.musicRL(), message.play() && BzClientConfigs.playSempiternalSanctumMusic);
-            };
+            return () -> MusicPacketFromServerHandleBody.handle(message);
         }
 
         @Override

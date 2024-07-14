@@ -4,13 +4,12 @@ import com.teamresourceful.resourcefullib.common.network.Packet;
 import com.teamresourceful.resourcefullib.common.network.base.ClientboundPacketType;
 import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
+import com.telepathicgrunt.the_bumblezone.packets.handlers.MobEffectClientSyncPacketHandleBody;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 
 public record MobEffectClientSyncPacket(int entityId, ResourceLocation effectRl, byte effectAmplifier, int effectDurationTicks, byte flags) implements Packet<MobEffectClientSyncPacket> {
 
@@ -93,20 +92,7 @@ public record MobEffectClientSyncPacket(int entityId, ResourceLocation effectRl,
 
         @Override
         public Runnable handle(MobEffectClientSyncPacket message) {
-            return () -> {
-                Entity entity = GeneralUtilsClient.getClientLevel().getEntity(message.entityId());
-                if (entity instanceof LivingEntity) {
-                    BuiltInRegistries.MOB_EFFECT.getHolder(message.effectRl()).ifPresent(mobEffect -> {
-                        if (message.effectDurationTicks() == 0) {
-                            ((LivingEntity) entity).removeEffect(mobEffect);
-                        }
-                        else {
-                            MobEffectInstance mobeffectinstance = new MobEffectInstance(mobEffect, message.effectDurationTicks(), message.effectAmplifier(), message.isEffectAmbient(), message.isEffectVisible(), message.effectShowsIcon());
-                            ((LivingEntity) entity).forceAddEffect(mobeffectinstance, null);
-                        }
-                    });
-                }
-            };
+            return () -> MobEffectClientSyncPacketHandleBody.handle(message);
         }
 
         @Override
