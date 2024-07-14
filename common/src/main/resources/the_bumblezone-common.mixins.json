@@ -8,7 +8,6 @@
     "blocks.BigDripleafBlockMixin",
     "blocks.BigDripleafStemBlockMixin",
     "blocks.BlockEntityAccessor",
-    "blocks.BlockEntityRenderersAccessor",
     "blocks.BrushableBlockEntityAccessor",
     "blocks.BubbleColumnBlockMixin",
     "blocks.DefaultDispenseItemBehaviorInvoker",
@@ -19,6 +18,7 @@
     "blocks.PistonBaseBlockMixin",
     "blocks.PistonMovingBlockEntityMixin",
     "blocks.PistonStructureResolverMixin",
+    "blocks.PointedDripstoneBlockMixin",
     "blocks.SmallDripleafBlockMixin",
     "blocks.StemBlockAccessor",
     "blocks.VineBlockAccessor",
@@ -81,6 +81,7 @@
     "world.StructureTemplateMixin"
   ],
   "client": [
+    "blocks.BlockEntityRenderersAccessor",
     "client.BlockRenderDispatcherAccessor",
     "client.ClientEntityMixin",
     "client.ClientLevelAccessor",
