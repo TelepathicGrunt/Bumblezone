@@ -12,8 +12,7 @@
     "item.ItemExtensionMixin"
   ],
   "client": [
-    "client.BzArmorMixin",
-    "client.BzEffectMixin"
+    "client.BzArmorMixin"
   ],
   "injectors": {
     "defaultRequire": 1

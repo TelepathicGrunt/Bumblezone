@@ -38,20 +38,4 @@ public class BzArmorMixin extends ArmorItem {
         }
         return bz$armorModelProvider.getArmorTexture(entity, stack, slot, layer);
     }
-
-    @Override
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(new IClientItemExtensions() {
-
-            private ArmorModelProvider provider;
-
-            @Override
-            public @NotNull Model getGenericArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
-                if (provider == null) {
-                    provider = NeoforgeArmorProviders.get(itemStack.getItem());
-                }
-                return provider.getFinalModel(livingEntity, itemStack, equipmentSlot, original);
-            }
-        });
-    }
 }
