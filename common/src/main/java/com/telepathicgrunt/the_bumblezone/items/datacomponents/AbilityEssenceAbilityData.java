@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.datacomponents;
+package com.telepathicgrunt.the_bumblezone.items.datacomponents;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

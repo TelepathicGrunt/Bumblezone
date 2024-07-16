@@ -80,6 +80,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFeatures;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -212,6 +213,7 @@ public class Bumblezone {
         BzDataComponents.DATA_COMPONENT_TYPE.init();
         BzLootFunctionTypes.LOOT_ITEM_FUNCTION_TYPE.init();
         BzLootConditionTypes.LOOT_ITEM_CONDITION_TYPE.init();
+        BzEnchantments.ENCHANTMENT_EFFECT_COMPONENT_TYPE.init();
         BzStructurePlacementType.STRUCTURE_PLACEMENT_TYPE.init();
     }
 

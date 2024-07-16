@@ -2,8 +2,8 @@ package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
-import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceActivityData;
-import com.telepathicgrunt.the_bumblezone.datacomponents.KnowingEssenceStructureData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.AbilityEssenceActivityData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.KnowingEssenceStructureData;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.FoxAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;

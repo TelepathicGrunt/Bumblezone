@@ -17,5 +17,11 @@
     "base": 14,
     "per_level_above_first": 3
   },
-  "effects": {}
+  "effects": {
+    "the_bumblezone:paralyze": {
+      "apply_on_undead": false,
+      "durability_drain_on_valid_target_hit": 4,
+      "duration_per_level": 100
+    }
+  }
 }

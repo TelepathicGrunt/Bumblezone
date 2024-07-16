@@ -17,5 +17,10 @@
     "base": 1,
     "per_level_above_first": 0
   },
-  "effects": {}
+  "effects": {
+    "the_bumblezone:comb_cutter": {
+      "main_target_block_base_speed_addition": 13,
+      "lesser_target_block_base_speed_addition": 3
+    }
+  }
 }

@@ -53,7 +53,7 @@ import com.telepathicgrunt.the_bumblezone.client.screens.CrystallineFlowerScreen
 import com.telepathicgrunt.the_bumblezone.client.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
-import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceActivityData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.AbilityEssenceActivityData;
 import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientTickEvent;

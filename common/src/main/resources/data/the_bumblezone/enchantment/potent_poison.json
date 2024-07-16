@@ -17,5 +17,14 @@
     "base": 8,
     "per_level_above_first": 5
   },
-  "effects": {}
+  "effects": {
+    "the_bumblezone:poison": {
+      "poison_level_per_enchant_level": 0.5,
+      "bonus_duration_amount": 100,
+      "enchant_level_interval_for_bonus_duration": 2,
+      "poison_level_per_enchant_level_stinger_spear": 1,
+      "bonus_duration_amount_stinger_spear": 100,
+      "enchant_level_interval_for_bonus_duration_stinger_spear": 2
+    }
+  }
 }

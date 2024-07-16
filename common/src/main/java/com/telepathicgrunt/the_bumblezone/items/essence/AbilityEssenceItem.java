@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
-import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceAbilityData;
-import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceActivityData;
-import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceCooldownData;
-import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceLastChargeData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.AbilityEssenceAbilityData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.AbilityEssenceActivityData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.AbilityEssenceCooldownData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.AbilityEssenceLastChargeData;
 import com.telepathicgrunt.the_bumblezone.mixin.gameplay.CooldownInstanceAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.gameplay.ItemCooldownsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;

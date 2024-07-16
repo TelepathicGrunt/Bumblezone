@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
-import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCrystalShieldCurrentLevelData;
-import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCrystalShieldDefinedLevelsData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.HoneyCrystalShieldCurrentLevelData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.HoneyCrystalShieldDefinedLevelsData;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityAttackedEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.items.PlayerDamageShieldInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;

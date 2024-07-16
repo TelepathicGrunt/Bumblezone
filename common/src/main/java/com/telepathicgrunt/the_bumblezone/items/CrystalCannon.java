@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
-import com.telepathicgrunt.the_bumblezone.datacomponents.CrystalCannonData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.CrystalCannonData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;

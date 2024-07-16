@@ -1,10 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
-import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceActivityData;
-import com.telepathicgrunt.the_bumblezone.datacomponents.RagingEssenceCurrentTargetData;
-import com.telepathicgrunt.the_bumblezone.datacomponents.RagingEssenceStateData;
-import com.telepathicgrunt.the_bumblezone.datacomponents.RagingEssenceTimerData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.AbilityEssenceActivityData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.RagingEssenceCurrentTargetData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.RagingEssenceStateData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.RagingEssenceTimerData;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;

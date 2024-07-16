@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
-import com.telepathicgrunt.the_bumblezone.datacomponents.CarpenterBeeBootsHangingData;
-import com.telepathicgrunt.the_bumblezone.datacomponents.CarpenterBeeBootsMiningData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.CarpenterBeeBootsHangingData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.CarpenterBeeBootsMiningData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;

@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
-import com.telepathicgrunt.the_bumblezone.datacomponents.CrystallineFlowerData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.CrystallineFlowerData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;

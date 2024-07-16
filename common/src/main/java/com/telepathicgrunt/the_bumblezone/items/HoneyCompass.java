@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
-import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCompassBaseData;
-import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCompassStateData;
-import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCompassTargetData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.HoneyCompassBaseData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.HoneyCompassStateData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.HoneyCompassTargetData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;

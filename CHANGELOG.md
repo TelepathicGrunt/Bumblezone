@@ -3,6 +3,18 @@
 ##### Blocks:
 Pointed Dripstone under Sugar Water now will fill below Cauldron with Water!
 
+##### Enchantments:
+Fixed Comb Cutter max level being capped by Neurotoxin max level config.
+
+Adjusted all enchantments to read a DataComponent marker on enchantments. 
+ You can now datapack these enchantment's data components onto other enchantments to get same effects or change some of the enchantment's settings!
+ Like a Neuroflame enchantment json that uses vanilla's ignite and Bumblezone paralyze to be en enchantment that is a combination of Fire Aspect and Neurotoxin enchantments.
+
+##### Items:
+Fixed Stinger Spear not applying weak poison by default.
+
+Fixed thrown Stinger Spear applying effects on thrower instead of victim.
+
 ##### Configs:
 (Neoforge): Cleaned up and moved around several configs in preparation of future Neoforge Config GUI.
 

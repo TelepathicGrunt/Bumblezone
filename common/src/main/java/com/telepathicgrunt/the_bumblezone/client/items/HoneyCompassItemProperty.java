@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.client.items;
 
-import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCompassTargetData;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.HoneyCompassTargetData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;

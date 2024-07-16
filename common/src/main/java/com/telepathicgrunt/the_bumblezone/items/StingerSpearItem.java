@@ -1,7 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantmentApplication;
 import com.telepathicgrunt.the_bumblezone.enchantments.PotentPoisonEnchantmentApplication;
+import com.telepathicgrunt.the_bumblezone.enchantments.datacomponents.ParalyzeMarker;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -14,6 +16,8 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -102,16 +106,25 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
         int durabilityDecrease = 1;
 
         if (!victim.getType().is(EntityTypeTags.UNDEAD)) {
-            PotentPoisonEnchantmentApplication.doPostAttackBoostedPoison(itemStack, victim);
+            boolean potentPoisonApplied = PotentPoisonEnchantmentApplication.doPostAttackBoostedPoison(itemStack, victim);
+            if (!potentPoisonApplied) {
+                victim.addEffect(new MobEffectInstance(
+                        MobEffects.POISON,
+                        100,
+                        0,
+                        false,
+                        true,
+                        true));
+            }
 
             if (user instanceof ServerPlayer serverPlayer) {
                 BzCriterias.STINGER_SPEAR_POISONING_TRIGGER.get().trigger(serverPlayer);
             }
 
             if (!victim.getType().is(BzTags.PARALYZED_IMMUNE)) {
-                int neuroToxinLevel = NeurotoxinsEnchantmentApplication.getNeurotoxinEnchantLevel(itemStack, victim.level());
-                if (neuroToxinLevel > 0) {
-                    durabilityDecrease = 4;
+                Pair<ParalyzeMarker, Integer> neurotoxin = NeurotoxinsEnchantmentApplication.getNeurotoxinEnchantLevel(itemStack);
+                if (neurotoxin != null && neurotoxin.getSecond() > 0) {
+                    durabilityDecrease = neurotoxin.getFirst().durabilityDrainOnValidTargetHit();
                 }
             }
         }

@@ -1,13 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
-import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.mojang.datafixers.util.Pair;
+import com.telepathicgrunt.the_bumblezone.enchantments.datacomponents.CombCutterMarker;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerBreakSpeedEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,7 +15,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeehiveBlock;
@@ -28,9 +27,8 @@ public class CombCutterEnchantmentApplication {
     private static final GeneralUtils.Lazy<Set<Block>> TARGET_BLOCKS = new GeneralUtils.Lazy<>();
     private static final GeneralUtils.Lazy<Set<Block>> LESSER_TARGET_BLOCKS = new GeneralUtils.Lazy<>();
 
-    public static int getCombCutterEnchantLevel(ItemStack stack, Level level) {
-        Holder<Enchantment> ncombCutterurotoxin = EnchantmentUtils.getEnchantmentHolder(BzEnchantments.COMB_CUTTER, level);
-        return Math.min(EnchantmentHelper.getItemEnchantmentLevel(ncombCutterurotoxin, stack), BzGeneralConfigs.neurotoxinMaxLevel);
+    public static Pair<CombCutterMarker, Integer> getCombCutterEnchantLevel(ItemStack stack) {
+        return EnchantmentHelper.getHighestLevel(stack, BzEnchantments.COMB_CUTTER_MARKER.get());
     }
 
     public static Set<Block> getTargetBlocks() {
@@ -72,9 +70,10 @@ public class CombCutterEnchantmentApplication {
     private static void mineFaster(BzPlayerBreakSpeedEvent event, boolean lesserTarget) {
         Player playerEntity = event.player();
         ItemStack itemStack = playerEntity.getMainHandItem();
-        int equipmentLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentUtils.getEnchantmentHolder(BzEnchantments.COMB_CUTTER, playerEntity.level()), playerEntity);
-        if (equipmentLevel > 0 && !itemStack.isEmpty()) {
-            double newSpeed = (equipmentLevel * equipmentLevel) + (lesserTarget ? 3 : 13);
+        Pair<CombCutterMarker, Integer> enchantAndLevel = getCombCutterEnchantLevel(itemStack);
+        if (enchantAndLevel != null && enchantAndLevel.getSecond() > 0 && !itemStack.isEmpty()) {
+            double newSpeed = (enchantAndLevel.getSecond() * enchantAndLevel.getSecond()) +
+                    (lesserTarget ? enchantAndLevel.getFirst().lesserTargetBlockBaseSpeedAddition() : enchantAndLevel.getFirst().mainTargetBlockBaseSpeedAddition());
 
             if (playerEntity.hasEffect(MobEffects.DIG_SLOWDOWN)) {
                 int amplifier = playerEntity.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier();

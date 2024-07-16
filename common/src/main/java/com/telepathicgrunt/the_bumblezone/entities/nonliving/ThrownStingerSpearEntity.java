@@ -1,7 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
+import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantmentApplication;
 import com.telepathicgrunt.the_bumblezone.enchantments.PotentPoisonEnchantmentApplication;
+import com.telepathicgrunt.the_bumblezone.enchantments.datacomponents.ParalyzeMarker;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
@@ -123,7 +125,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
                     EnchantmentHelper.doPostAttackEffectsWithItemSource(serverLevel, entity, damageSource, this.getWeaponItem());
                 }
 
-                if (owner instanceof LivingEntity livingEntity) {
+                if (hitEntity instanceof LivingEntity livingEntity) {
                     this.doKnockback(livingEntity, damageSource);
                     this.doPostHurtEffects(livingEntity);
                 }
@@ -159,9 +161,9 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
             }
 
             if (this.getOwner() instanceof LivingEntity ownerEntity && !victim.getType().is(BzTags.PARALYZED_IMMUNE)) {
-                int neuroToxinLevel = NeurotoxinsEnchantmentApplication.getNeurotoxinEnchantLevel(this.getPickupItemStackOrigin(), victim.level());
-                if (neuroToxinLevel > 0) {
-                    this.getPickupItemStackOrigin().hurtAndBreak(4, ownerEntity, EquipmentSlot.MAINHAND);
+                Pair<ParalyzeMarker, Integer> neurotoxin = NeurotoxinsEnchantmentApplication.getNeurotoxinEnchantLevel(this.getPickupItemStackOrigin());
+                if (neurotoxin != null && neurotoxin.getSecond() > 0) {
+                    this.getPickupItemStackOrigin().hurtAndBreak(neurotoxin.getFirst().durabilityDrainOnValidTargetHit(), ownerEntity, EquipmentSlot.MAINHAND);
                 }
             }
         }
