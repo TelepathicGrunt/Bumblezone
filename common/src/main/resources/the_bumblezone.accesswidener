@@ -36,3 +36,4 @@ accessible class net/minecraft/world/level/block/PointedDripstoneBlock$FluidInfo
 accessible method net/minecraft/world/level/block/PointedDripstoneBlock$FluidInfo <init> (Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/Fluid;Lnet/minecraft/world/level/block/state/BlockState;)V
 
 accessible class net/minecraft/client/gui/screens/MenuScreens$ScreenConstructor
+accessible method net/minecraft/world/entity/Entity getEncodeId ()Ljava/lang/String;

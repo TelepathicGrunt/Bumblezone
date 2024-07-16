@@ -15,6 +15,8 @@ Fixed Stinger Spear not applying weak poison by default.
 
 Fixed thrown Stinger Spear applying effects on thrower instead of victim.
 
+Fixed Bee Cannon crash.
+
 ##### Configs:
 (Neoforge): Cleaned up and moved around several configs in preparation of future Neoforge Config GUI.
 
