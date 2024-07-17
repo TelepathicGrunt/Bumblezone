@@ -1,5 +1,8 @@
 ### **(V.7.6.16 Changes) (1.21 Minecraft)**
 
+##### Misc:
+(NeoForge): Now requires Neo v21.0.102 or newer.
+
 ##### Blocks:
 Pointed Dripstone under Sugar Water now will fill below Cauldron with Water!
 
