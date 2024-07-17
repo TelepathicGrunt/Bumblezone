@@ -11,13 +11,13 @@ import java.util.Collections;
 
 public class REIQueenRandomizerTradesInfo extends BasicDisplay {
 
-	private final TagKey<Item> outputTag;
+	private final TagKey<Item> inOutTag;
 	private final int weight;
 	private final int groupWeight;
 
-	public REIQueenRandomizerTradesInfo(EntryIngredient inputs, EntryIngredient outputs, TagKey<Item> outputTag, int weight, int groupWeight) {
+	public REIQueenRandomizerTradesInfo(EntryIngredient inputs, EntryIngredient outputs, TagKey<Item> inOutTag, int weight, int groupWeight) {
 		super(Collections.singletonList(inputs), Collections.singletonList(outputs));
-		this.outputTag = outputTag;
+		this.inOutTag = inOutTag;
 		this.weight = weight;
 		this.groupWeight = groupWeight;
 	}
@@ -30,8 +30,8 @@ public class REIQueenRandomizerTradesInfo extends BasicDisplay {
 		return this.groupWeight;
 	}
 
-	public TagKey<Item> getOutputTag() {
-		return this.outputTag;
+	public TagKey<Item> getInOutTag() {
+		return this.inOutTag;
 	}
 
 	@Override

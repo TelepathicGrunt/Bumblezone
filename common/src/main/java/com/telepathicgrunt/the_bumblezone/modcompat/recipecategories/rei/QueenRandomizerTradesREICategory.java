@@ -67,7 +67,12 @@ public class QueenRandomizerTradesREICategory implements DisplayCategory<REIQuee
 
 		widgets.add(Widgets.createLabel(new Point(bounds.getX() + 86, bounds.getY() + 10), Component.translatable("the_bumblezone.recipe_viewers.queen_trade_colors", display.getOutputEntries().get(0).size())).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
 
-		if (display.getOutputTag() != null) {
+		if (display.getInOutTag() != null) {
+			widgets.add(Widgets.withTranslate(Widgets.createTexturedWidget(
+					new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"),
+					new Rectangle(bounds.getX() + 11, bounds.getY() + 11, 16, 16),
+					0, 0, 16, 16), new Matrix4f().translate(0, 0, 301)));
+
 			widgets.add(Widgets.withTranslate(Widgets.createTexturedWidget(
 					new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"),
 					new Rectangle(bounds.getX() + 69, bounds.getY() + 11, 16, 16),

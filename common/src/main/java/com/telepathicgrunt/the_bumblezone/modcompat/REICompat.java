@@ -22,6 +22,7 @@ import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.client.registry.screen.OverlayDecider;
 import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.plugin.client.BuiltinClientPlugin;
@@ -29,11 +30,13 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.material.Fluid;
 
@@ -79,14 +82,28 @@ public class REICompat implements REIClientPlugin {
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades.isEmpty()) {
             for (RandomizeTradeRowInput tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades) {
                 List<ItemStack> randomizeStack = tradeEntry.getWantItems().stream().map(e -> e.value().getDefaultInstance()).toList();
-                for (ItemStack input : randomizeStack) {
+                TagKey<Item> itemTagKey = tradeEntry.tagKey().orElse(null);
+
+                if (itemTagKey != null) {
                     registry.add(new REIQueenRandomizerTradesInfo(
-                            EntryIngredients.of(input),
-                            EntryIngredients.ofItemStacks(randomizeStack),
-                            tradeEntry.tagKey().orElse(null),
+                            EntryIngredients.ofIngredient(Ingredient.of(itemTagKey)),
+                            EntryIngredients.ofIngredient(Ingredient.of(itemTagKey)),
+                            itemTagKey,
                             1,
                             randomizeStack.size()
                     ), QUEEN_RANDOMIZE_TRADES);
+                }
+                else {
+                    EntryIngredient entryStacks = EntryIngredients.ofItemStacks(randomizeStack);
+                    for (ItemStack input : randomizeStack) {
+                        registry.add(new REIQueenRandomizerTradesInfo(
+                                EntryIngredients.of(input),
+                                entryStacks,
+                                null,
+                                1,
+                                randomizeStack.size()
+                        ), QUEEN_RANDOMIZE_TRADES);
+                    }
                 }
             }
         }

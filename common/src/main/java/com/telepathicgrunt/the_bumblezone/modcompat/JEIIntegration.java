@@ -29,6 +29,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -109,8 +110,20 @@ public class JEIIntegration implements IModPlugin {
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades.isEmpty()) {
             for (RandomizeTradeRowInput tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades) {
                 List<ItemStack> randomizeStack = tradeEntry.getWantItems().stream().map(e -> e.value().getDefaultInstance()).toList();
-                for (ItemStack input : randomizeStack) {
-                    randomizerTrades.add(new JEIQueenRandomizerTradesInfo(input, tradeEntry.tagKey().orElse(null), randomizeStack));
+                TagKey<Item> itemTagKey = tradeEntry.tagKey().orElse(null);
+                if (itemTagKey != null) {
+                    randomizerTrades.add(new JEIQueenRandomizerTradesInfo(
+                            null,
+                            itemTagKey,
+                            randomizeStack));
+                }
+                else {
+                    for (ItemStack input : randomizeStack) {
+                        randomizerTrades.add(new JEIQueenRandomizerTradesInfo(
+                                input,
+                                null,
+                                randomizeStack));
+                    }
                 }
             }
         }

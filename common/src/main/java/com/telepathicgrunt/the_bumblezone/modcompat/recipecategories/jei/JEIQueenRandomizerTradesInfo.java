@@ -7,6 +7,6 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
-public record JEIQueenRandomizerTradesInfo(ItemStack input, TagKey<Item> tagOutput, List<ItemStack> output) implements IRecipeCategoryExtension {
+public record JEIQueenRandomizerTradesInfo(ItemStack input, TagKey<Item> tagInAndOut, List<ItemStack> output) implements IRecipeCategoryExtension {
 
 }
