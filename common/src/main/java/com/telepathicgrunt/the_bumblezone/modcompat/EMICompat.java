@@ -84,10 +84,11 @@ public class EMICompat implements EmiPlugin {
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades.isEmpty()) {
             for (RandomizeTradeRowInput tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades) {
                 List<ItemStack> randomizeStack = tradeEntry.getWantItems().stream().map(e -> e.value().getDefaultInstance()).toList();
+                List<EmiStack> emiStackList = randomizeStack.stream().map(EmiStack::of).collect(Collectors.toList());
                 for (ItemStack input : randomizeStack) {
                     registry.addRecipe(new EMIQueenRandomizerTradesInfo(
                             EmiIngredient.of(Ingredient.of(input)),
-                            randomizeStack.stream().map(EmiStack::of).collect(Collectors.toList()),
+                            emiStackList,
                             tradeEntry.tagKey().orElse(null),
                             1,
                             randomizeStack.size()));

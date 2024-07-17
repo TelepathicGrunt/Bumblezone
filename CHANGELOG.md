@@ -17,8 +17,16 @@ Fixed thrown Stinger Spear applying effects on thrower instead of victim.
 
 Fixed Bee Cannon crash.
 
+##### Entities:
+Fixed randomizer trades not working with Bee Queen.
+
 ##### Configs:
 (Neoforge): Cleaned up and moved around several configs in preparation of future Neoforge Config GUI.
+
+##### Mod Compat:
+Recovered a significant amount of memory for EMI compat.
+
+Fixed Music Disc internal crash with EMI.
 
 
 ### **(V.7.6.15 Changes) (1.21 Minecraft)**

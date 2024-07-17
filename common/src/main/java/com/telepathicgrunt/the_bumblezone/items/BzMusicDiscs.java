@@ -24,7 +24,7 @@ public class BzMusicDiscs extends Item {
     @Override
     public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag) {
         super.appendHoverText(itemStack, tooltipContext, list, tooltipFlag);
-        if (this.hasDownload) {
+        if (this.hasDownload && tooltipContext.registries() != null) {
             Optional<Integer> songDescLength = itemStack.get(DataComponents.JUKEBOX_PLAYABLE)
                     .song()
                     .unwrap(tooltipContext.registries())

@@ -218,7 +218,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 }
 
                 List<WeightedTradeResult> tradeResults = tempQueenTradesFirstPass.get(item).getFirst().unwrap();
-                if (tradeResults.stream().anyMatch(r -> r.getItems().stream().anyMatch(t -> !wantSet.contains(t)))) {
+                if (tradeResults.stream().anyMatch(r -> r.getItems().stream().anyMatch(t -> !wantSet.contains(t.getItem())))) {
                     for (Item item2 : wantSet) {
                         tempQueenTradesFirstPass.put(item2, Pair.of(tempQueenTradesFirstPass.get(item2).getFirst(), null));
                     }
