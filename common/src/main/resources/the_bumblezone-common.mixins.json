@@ -17,6 +17,7 @@
     "blocks.PistonBaseBlockMixin",
     "blocks.PistonMovingBlockEntityMixin",
     "blocks.PistonStructureResolverMixin",
+    "blocks.PointedDripstoneBlockMixin",
     "blocks.SmallDripleafBlockMixin",
     "blocks.VineBlockAccessor",
     "blocks.WaterEquivalenceMixin",

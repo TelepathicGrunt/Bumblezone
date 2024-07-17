@@ -63,21 +63,25 @@ public record CrystallineFlowerEnchantmentPacket(int containerId, List<Enchantme
         public PacketContext handle(CrystallineFlowerEnchantmentPacket message) {
             return (player, level) -> {
                 if (GeneralUtilsClient.getClientPlayer() != null && GeneralUtilsClient.getClientPlayer().containerMenu.containerId == message.containerId){
-                    Map<ResourceLocation, EnchantmentSkeleton> map = new HashMap<>();
-                    for (EnchantmentSkeleton enchantmentSkeleton : message.enchantmentSkeletons()) {
-                        map.put(new ResourceLocation(enchantmentSkeleton.namespace, enchantmentSkeleton.path), enchantmentSkeleton);
-                    }
-                    CrystallineFlowerScreen.enchantmentsAvailable = map;
-
-                    Language language = Language.getInstance();
-                    CrystallineFlowerScreen.enchantmentsAvailableSortedList = map.keySet().stream().sorted((r1, r2) -> {
-                        String s1 = language.getOrDefault("enchantment."+r1.getNamespace()+"."+r1.getPath(), r1.getPath());
-                        String s2 = language.getOrDefault("enchantment."+r2.getNamespace()+"."+r2.getPath(), r2.getPath());
-                        return s1.compareTo(s2);
-                    }).collect(Collectors.toList());
-
                     if (GeneralUtilsClient.getClientPlayer().containerMenu instanceof CrystallineFlowerMenu crystallineFlowerMenu) {
+                        Map<ResourceLocation, EnchantmentSkeleton> map = new HashMap<>();
+                        for (EnchantmentSkeleton enchantmentSkeleton : message.enchantmentSkeletons()) {
+                            map.put(new ResourceLocation(enchantmentSkeleton.namespace, enchantmentSkeleton.path), enchantmentSkeleton);
+                        }
+                        crystallineFlowerMenu.selectedEnchantment = null;
+                        CrystallineFlowerScreen.enchantmentsAvailable = map;
+
+                        Language language = Language.getInstance();
+                        CrystallineFlowerScreen.enchantmentsAvailableSortedList = map.keySet().stream().sorted((r1, r2) -> {
+                            String s1 = language.getOrDefault("enchantment."+r1.getNamespace()+"."+r1.getPath(), r1.getPath());
+                            String s2 = language.getOrDefault("enchantment."+r2.getNamespace()+"."+r2.getPath(), r2.getPath());
+                            return s1.compareTo(s2);
+                        }).collect(Collectors.toList());
+
                         crystallineFlowerMenu.selectedEnchantment = message.selectedResourceLocation().equals(new ResourceLocation("minecraft", "empty")) ? null : message.selectedResourceLocation();
+                        if (!CrystallineFlowerScreen.enchantmentsAvailable.containsKey(crystallineFlowerMenu.selectedEnchantment)) {
+                            crystallineFlowerMenu.selectedEnchantment = CrystallineFlowerScreen.enchantmentsAvailable.keySet().stream().findFirst().orElse(null);
+                        }
                     }
                 }
             };
