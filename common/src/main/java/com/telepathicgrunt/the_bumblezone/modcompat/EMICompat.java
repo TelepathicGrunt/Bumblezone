@@ -27,6 +27,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -85,13 +86,26 @@ public class EMICompat implements EmiPlugin {
             for (RandomizeTradeRowInput tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades) {
                 List<ItemStack> randomizeStack = tradeEntry.getWantItems().stream().map(e -> e.value().getDefaultInstance()).toList();
                 List<EmiStack> emiStackList = randomizeStack.stream().map(EmiStack::of).collect(Collectors.toList());
-                for (ItemStack input : randomizeStack) {
+                TagKey<Item> itemTagKey = tradeEntry.tagKey().orElse(null);
+                if (itemTagKey != null) {
                     registry.addRecipe(new EMIQueenRandomizerTradesInfo(
-                            EmiIngredient.of(Ingredient.of(input)),
+                            EmiIngredient.of(Ingredient.of(itemTagKey)),
+                            true,
                             emiStackList,
-                            tradeEntry.tagKey().orElse(null),
+                            itemTagKey,
                             1,
                             randomizeStack.size()));
+                }
+                else {
+                    for (ItemStack input : randomizeStack) {
+                        registry.addRecipe(new EMIQueenRandomizerTradesInfo(
+                                EmiIngredient.of(Ingredient.of(input)),
+                                false,
+                                emiStackList,
+                                null,
+                                1,
+                                randomizeStack.size()));
+                    }
                 }
             }
         }

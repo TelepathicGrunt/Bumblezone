@@ -15,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.List;
 
@@ -65,7 +66,11 @@ public class QueenRandomizeTradesJEICategory implements IRecipeCategory<JEIQueen
     public void draw(JEIQueenRandomizerTradesInfo recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         guiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_colors", recipe.output().size()), 86, 10, 0xFF808080, false);
 
-        if (recipe.tagOutput() != null) {
+        if (recipe.input() == null) {
+            tagIcon.draw(guiGraphics, 11, 11);
+        }
+
+        if (recipe.tagInAndOut() != null) {
             tagIcon.draw(guiGraphics, 69, 11);
         }
     }
@@ -77,7 +82,13 @@ public class QueenRandomizeTradesJEICategory implements IRecipeCategory<JEIQueen
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, JEIQueenRandomizerTradesInfo recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addIngredient(VanillaTypes.ITEM_STACK, recipe.input());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addItemStacks(recipe.output());
+        if (recipe.input() == null) {
+            builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addIngredients(Ingredient.of(recipe.tagInAndOut()));
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addIngredients(Ingredient.of(recipe.tagInAndOut()));
+        }
+        else {
+            builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addIngredient(VanillaTypes.ITEM_STACK, recipe.input());
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addItemStacks(recipe.output());
+        }
     }
 }

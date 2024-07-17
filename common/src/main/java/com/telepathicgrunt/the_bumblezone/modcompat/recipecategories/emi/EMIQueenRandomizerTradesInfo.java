@@ -21,15 +21,17 @@ import java.util.List;
 public class EMIQueenRandomizerTradesInfo implements EmiRecipe {
 
 	private final EmiIngredient input;
+	private final boolean isTagInput;
 	private final List<EmiStack> outputs;
 	private final TagKey<Item> outputTag;
 	private final EmiIngredient visualOutputs;
 	private final int weight;
 	private final int groupWeight;
 
-	public EMIQueenRandomizerTradesInfo(EmiIngredient input, List<EmiStack> outputs, TagKey<Item> outputTag, int weight, int groupWeight) {
+	public EMIQueenRandomizerTradesInfo(EmiIngredient input, boolean isTagInput, List<EmiStack> outputs, TagKey<Item> outputTag, int weight, int groupWeight) {
 		super();
 		this.input = input;
+		this.isTagInput = isTagInput;
 		this.outputTag = outputTag;
 		this.outputs = outputs;
 		this.visualOutputs = EmiIngredient.of(outputs);
@@ -85,6 +87,10 @@ public class EMIQueenRandomizerTradesInfo implements EmiRecipe {
 
 		widgets.add(new SlotWidget(input, 5, 5));
 		widgets.add(new SlotWidget(visualOutputs, 63, 5));
+
+		if (isTagInput) {
+			widgets.add(new TextureWidget(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/tag_icon.png"), 11, 11, 16, 16, 0, 0, 16, 16, 16, 16));
+		}
 
 		if (this.getOutputTag() != null) {
 			widgets.add(new TextureWidget(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/tag_icon.png"), 69, 11, 16, 16, 0, 0, 16, 16, 16, 16));
