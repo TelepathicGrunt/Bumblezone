@@ -30,8 +30,9 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 	private final int xpReward;
 	private final int weight;
 	private final int groupWeight;
+	private final ResourceLocation id;
 
-	public EMIQueenTradesInfo(EmiIngredient input, TagKey<Item> inputTag, List<EmiStack> outputs, TagKey<Item> outputTag, int xp, int weight, int groupWeight) {
+	public EMIQueenTradesInfo(EmiIngredient input, TagKey<Item> inputTag, List<EmiStack> outputs, TagKey<Item> outputTag, int xp, int weight, int groupWeight, ResourceLocation id) {
 		super();
 		this.input = input;
 		this.inputTag = inputTag;
@@ -41,6 +42,7 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 		this.xpReward = xp;
 		this.weight = weight;
 		this.groupWeight = groupWeight;
+		this.id = id;
 	}
 
 	public int getXpReward() {
@@ -70,7 +72,7 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 
 	@Override
 	public @Nullable ResourceLocation getId() {
-		return null;
+		return id;
 	}
 
 	@Override
@@ -98,7 +100,7 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 		widgets.add(new TextureWidget(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/queen_trades_layout.png"), 0, 0, getDisplayWidth(), getDisplayHeight(), 0, 0));
 
 		widgets.add(new SlotWidget(input, 5, 5));
-		widgets.add(new SlotWidget(visualOutputs, 63, 5));
+		widgets.add(new SlotWidget(visualOutputs, 63, 5).recipeContext(this));
 
 		widgets.add(new TextWidget(Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", getXpReward()).getVisualOrderText(), 100,  11, 0xFF404040, false));
 

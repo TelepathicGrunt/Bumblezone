@@ -66,6 +66,7 @@ public class EMICompat implements EmiPlugin {
         registry.addWorkstation(QUEEN_TRADES, WORKSTATION);
         registry.addWorkstation(QUEEN_RANDOMIZE_TRADES, WORKSTATION);
 
+        long recipeId = 1;
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades.isEmpty()) {
             for (Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades) {
                 for (WeightedTradeResult weightedTradeResult : trade.getSecond().unwrap()) {
@@ -77,7 +78,9 @@ public class EMICompat implements EmiPlugin {
                             weightedTradeResult.tagKey.orElse(null),
                             weightedTradeResult.xpReward,
                             weightedTradeResult.weight,
-                            weightedTradeResult.getTotalWeight()));
+                            weightedTradeResult.getTotalWeight(),
+                            ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "" + recipeId)));
+                    recipeId++;
                 }
             }
         }
@@ -94,7 +97,9 @@ public class EMICompat implements EmiPlugin {
                             emiStackList,
                             itemTagKey,
                             1,
-                            randomizeStack.size()));
+                            randomizeStack.size(),
+                            ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "" + recipeId)));
+                    recipeId++;
                 }
                 else {
                     for (ItemStack input : randomizeStack) {
@@ -104,7 +109,9 @@ public class EMICompat implements EmiPlugin {
                                 emiStackList,
                                 null,
                                 1,
-                                randomizeStack.size()));
+                                randomizeStack.size(),
+                                ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "" + recipeId)));
+                        recipeId++;
                     }
                 }
             }

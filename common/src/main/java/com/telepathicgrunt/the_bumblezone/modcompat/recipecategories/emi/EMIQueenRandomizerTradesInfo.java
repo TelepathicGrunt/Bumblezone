@@ -27,8 +27,9 @@ public class EMIQueenRandomizerTradesInfo implements EmiRecipe {
 	private final EmiIngredient visualOutputs;
 	private final int weight;
 	private final int groupWeight;
+	private final ResourceLocation id;
 
-	public EMIQueenRandomizerTradesInfo(EmiIngredient input, boolean isTagInput, List<EmiStack> outputs, TagKey<Item> outputTag, int weight, int groupWeight) {
+	public EMIQueenRandomizerTradesInfo(EmiIngredient input, boolean isTagInput, List<EmiStack> outputs, TagKey<Item> outputTag, int weight, int groupWeight, ResourceLocation id) {
 		super();
 		this.input = input;
 		this.isTagInput = isTagInput;
@@ -37,6 +38,7 @@ public class EMIQueenRandomizerTradesInfo implements EmiRecipe {
 		this.visualOutputs = EmiIngredient.of(outputs);
 		this.weight = weight;
 		this.groupWeight = groupWeight;
+		this.id = id;
 	}
 
 	public int getWeight() {
@@ -58,7 +60,7 @@ public class EMIQueenRandomizerTradesInfo implements EmiRecipe {
 
 	@Override
 	public @Nullable ResourceLocation getId() {
-		return null;
+		return id;
 	}
 
 	@Override
@@ -86,7 +88,7 @@ public class EMIQueenRandomizerTradesInfo implements EmiRecipe {
 		widgets.add(new TextureWidget(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/queen_randomizer_trades_layout.png"), 0, 0, getDisplayWidth(), getDisplayHeight(), 0, 0));
 
 		widgets.add(new SlotWidget(input, 5, 5));
-		widgets.add(new SlotWidget(visualOutputs, 63, 5));
+		widgets.add(new SlotWidget(visualOutputs, 63, 5).recipeContext(this));
 
 		if (isTagInput) {
 			widgets.add(new TextureWidget(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/tag_icon.png"), 11, 11, 16, 16, 0, 0, 16, 16, 16, 16));
