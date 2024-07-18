@@ -141,7 +141,7 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
                 ItemStack heldItem = ((EntityCollisionContextAccessor)ctx).getHeldItem();
                 if (heldItem != null &&
                     !heldItem.isEmpty() &&
-                    (PlatformHooks.isToolAction(heldItem, BrushItem.class, "brush_brush") ||
+                    (PlatformHooks.isItemAbility(heldItem, BrushItem.class, "brush_brush") ||
                     (heldItem.is(BzTags.SUSPICIOUS_PILE_OF_POLLEN_ADDITIONAL_BRUSHES))))
                 {
                     StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();

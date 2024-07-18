@@ -111,6 +111,11 @@ public class PlatformHooksImpl {
     }
 
     @Contract(pure = true)
+    public static boolean isNeoForge() {
+        return true;
+    }
+
+    @Contract(pure = true)
     public static boolean isFakePlayer(ServerPlayer player) {
         return player instanceof FakePlayer;
     }
@@ -174,9 +179,9 @@ public class PlatformHooksImpl {
         return CommonHooks.onTravelToDimension(serverPlayer, dimension);
     }
 
-    public static boolean isToolAction(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
+    public static boolean isItemAbility(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
         return Arrays.stream(targetToolAction).anyMatch(actionString -> stack.canPerformAction(ItemAbility.get(actionString)))
-                || targetBackupClass.isInstance(stack.getItem());
+                || (targetBackupClass != null && targetBackupClass.isInstance(stack.getItem()));
     }
 
     public static void disableFlight(Player player) {

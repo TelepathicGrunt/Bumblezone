@@ -6,6 +6,7 @@
     "block.BlockExtensionMixin",
     "block.FireBlockInvoker",
     "block.FireBlockMixin",
+    "block.SuperCandleMixin",
     "effect.WrathOfTheHiveEffectMixin",
     "entity.EntityMixin",
     "item.BzArrowItemMixin",

@@ -126,6 +126,11 @@ public class PlatformHooksImpl {
     }
 
     @Contract(pure = true)
+    public static boolean isNeoForge() {
+        return false;
+    }
+
+    @Contract(pure = true)
     public static boolean isFakePlayer(ServerPlayer player) {
         //Crude way of doing it but it should work for almost all cases.
         return player != null && player.getClass() != ServerPlayer.class;
@@ -245,8 +250,8 @@ public class PlatformHooksImpl {
         return true;
     }
 
-    public static boolean isToolAction(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
-        return targetBackupClass.isInstance(stack.getItem());
+    public static boolean isItemAbility(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
+        return targetBackupClass != null && targetBackupClass.isInstance(stack.getItem());
     }
 
     public static void disableFlight(Player player) {

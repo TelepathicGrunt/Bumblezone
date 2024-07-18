@@ -151,8 +151,8 @@ public class CarvableWax extends ProperFacingBlock {
     @Override
     public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         if (blockState.hasProperty(CARVING) &&
-            (PlatformHooks.isToolAction(itemStack, ShearsItem.class, "shears_carve") ||
-            PlatformHooks.isToolAction(itemStack, SwordItem.class, "sword_dig")))
+            (PlatformHooks.isItemAbility(itemStack, ShearsItem.class, "shears_carve") ||
+            PlatformHooks.isItemAbility(itemStack, SwordItem.class, "sword_dig")))
         {
             level.setBlock(position, BzBlocks.CARVABLE_WAX.get().defaultBlockState().setValue(CARVING, blockState.getValue(CARVING).next()), 3);
             this.spawnDestroyParticles(level, playerEntity, position,blockState);

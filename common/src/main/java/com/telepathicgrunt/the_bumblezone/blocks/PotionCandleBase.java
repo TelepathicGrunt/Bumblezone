@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -184,8 +185,8 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
 
     @Override
     public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        if (player.getAbilities().mayBuild) {
-            if (CandleLightBehaviors(itemStack, blockState, level, blockPos, player, interactionHand)) {
+        if (player.mayInteract(level, blockPos) && (!PlatformHooks.isNeoForge() || !PlatformHooks.isItemAbility(itemStack, null, "firestarter_light"))) {
+            if (CandleUnlightBehaviors(itemStack, blockState, level, blockPos, player, false) || CandleLightBehaviors(itemStack, blockState, level, blockPos, player, interactionHand, false)) {
                 return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
         }

@@ -6,6 +6,8 @@
 ##### Blocks:
 Pointed Dripstone under Sugar Water now will fill below Cauldron with Water!
 
+(NeoForge): Super Candles and Potion Candles now work with any modded items that is given the "firestarter_light" ItemAbility
+
 ##### Enchantments:
 Fixed Comb Cutter max level being capped by Neurotoxin max level config.
 

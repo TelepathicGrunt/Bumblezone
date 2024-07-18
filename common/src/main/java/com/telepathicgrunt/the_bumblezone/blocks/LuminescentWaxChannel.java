@@ -47,8 +47,8 @@ public class LuminescentWaxChannel extends RotationAxisBlock implements Luminesc
     @Override
     public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         if (blockState.getBlock() instanceof LuminescentWaxChannel &&
-            (PlatformHooks.isToolAction(itemStack, ShearsItem.class, "shears_carve") ||
-            PlatformHooks.isToolAction(itemStack, SwordItem.class, "sword_dig")))
+            (PlatformHooks.isItemAbility(itemStack, ShearsItem.class, "shears_carve") ||
+            PlatformHooks.isItemAbility(itemStack, SwordItem.class, "sword_dig")))
         {
 
             Direction.Axis newAxisProp = blockState.getValue(AXIS);

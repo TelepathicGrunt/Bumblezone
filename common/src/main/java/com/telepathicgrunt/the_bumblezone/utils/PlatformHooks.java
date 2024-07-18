@@ -83,6 +83,12 @@ public class PlatformHooks {
 
     @ExpectPlatform
     @Contract(pure = true)
+    public static boolean isNeoForge() {
+        throw new NotImplementedException("PlatformHooks isNeoForge is not implemented!");
+    }
+
+    @ExpectPlatform
+    @Contract(pure = true)
     public static int getXpDrop(LivingEntity entity, Player attackingPlayer, int xp) {
         throw new NotImplementedException("PlatformHooks getXpDrop is not implemented!");
     }
@@ -160,8 +166,8 @@ public class PlatformHooks {
 
     @ExpectPlatform
     @Contract(pure = true)
-    public static boolean isToolAction(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
-        throw new NotImplementedException("PlatformHooks isToolAction is not implemented!");
+    public static boolean isItemAbility(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
+        throw new NotImplementedException("PlatformHooks isItemAbility is not implemented!");
     }
 
     @ExpectPlatform

@@ -51,8 +51,8 @@ public class AncientWax extends Block implements AncientWaxBase {
 
     @Override
     public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
-        if (PlatformHooks.isToolAction(itemStack, ShearsItem.class, "shears_carve") ||
-            PlatformHooks.isToolAction(itemStack, SwordItem.class, "sword_dig"))
+        if (PlatformHooks.isItemAbility(itemStack, ShearsItem.class, "shears_carve") ||
+            PlatformHooks.isItemAbility(itemStack, SwordItem.class, "sword_dig"))
         {
 
             ItemInteractionResult result = swapBlocks(level, blockState, position, BzTags.ANCIENT_WAX_FULL_BLOCKS);
