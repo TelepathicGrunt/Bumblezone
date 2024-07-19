@@ -3,6 +3,9 @@
 ##### Entities:
 Render friendship label for tamed Beehemoths again
 
+##### Lang:
+vi_vn.json translations now added by godkyo98! 
+
 
 ### **(V.7.6.16 Changes) (1.21 Minecraft)**
 
