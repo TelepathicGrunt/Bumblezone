@@ -16,6 +16,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.QueenTr
 import com.telepathicgrunt.the_bumblezone.modinit.BzCreativeTabs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -33,6 +34,7 @@ import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
@@ -41,6 +43,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @JeiPlugin
 public class JEIIntegration implements IModPlugin {
@@ -113,27 +116,28 @@ public class JEIIntegration implements IModPlugin {
 
         List<JEIQueenRandomizerTradesInfo> randomizerTrades = new LinkedList<>();
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades.isEmpty()) {
+            Map<TagKey<Item>, TagData> cacheJeiData = new Object2ObjectOpenHashMap<>();
+
             for (RandomizeTradeRowInput tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades) {
-                List<ItemStack> randomizeStack = tradeEntry.getWantItems().stream().map(e -> e.value().getDefaultInstance()).toList();
-                TagKey<Item> itemTagKey = tradeEntry.tagKey().orElse(null);
-                if (itemTagKey != null) {
-                    randomizerTrades.add(new JEIQueenRandomizerTradesInfo(
-                            null,
-                            itemTagKey,
-                            randomizeStack));
+                TagKey<Item> itemTagKey = tradeEntry.tagKey().get();
+                TagData tagData = cacheJeiData.getOrDefault(itemTagKey, null);
+                if (tagData == null) {
+                    List<ItemStack> randomizeStack = tradeEntry.getWantItems().stream().map(e -> e.value().getDefaultInstance()).toList();
+                    tagData = new TagData(randomizeStack.size(), randomizeStack, Ingredient.of(itemTagKey));
+                    cacheJeiData.put(itemTagKey, tagData);
                 }
-                else {
-                    for (ItemStack input : randomizeStack) {
-                        randomizerTrades.add(new JEIQueenRandomizerTradesInfo(
-                                input,
-                                null,
-                                randomizeStack));
-                    }
-                }
+
+                randomizerTrades.add(new JEIQueenRandomizerTradesInfo(
+                        itemTagKey,
+                        tagData.jeiIngredient(),
+                        tagData.listSize(),
+                        tagData.jeiItems()));
             }
         }
         registration.addRecipes(QUEEN_RANDOMIZE_TRADES, randomizerTrades);
     }
+
+    record TagData(int listSize, List<ItemStack> jeiItems, Ingredient jeiIngredient){}
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
