@@ -6,6 +6,8 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 
 @Mod(value = Bumblezone.MODID, dist = Dist.CLIENT)
@@ -17,6 +19,6 @@ public class BumblezoneNeoForgeClient {
         IEventBus eventBus = NeoForge.EVENT_BUS;
         NeoForgeClientEventManager.init(modEventBus, eventBus);
 
-        // container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+        container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
  }

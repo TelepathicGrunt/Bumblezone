@@ -29,7 +29,7 @@ license="https://github.com/TelepathicGrunt/Bumblezone/blob/latest-released/LICE
 [[dependencies.the_bumblezone]]
     modId="neoforge"
     type="required"
-    versionRange="[21.0.102-beta,)"
+    versionRange="[21.0.110-beta,)"
 
 [[dependencies.the_bumblezone]]
     modId="productivebees"

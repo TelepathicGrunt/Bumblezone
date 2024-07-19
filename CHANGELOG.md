@@ -1,5 +1,9 @@
 ### **(V.7.6.17 Changes) (1.21 Minecraft)**
 
+##### Misc:
+(NeoForge): Now requires Neo v21.0.110 or newer because now Bumblezone enabled the NeoForge Config GUI!
+ Configure Bumblezone all in-game now! Find the Config button in the Mod List screen on Title Screen or Pause Menu.
+
 ##### Entities:
 Render friendship label for tamed Beehemoths again
 
