@@ -4,9 +4,10 @@ import mezz.jei.api.recipe.category.extensions.IRecipeCategoryExtension;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.List;
 
-public record JEIQueenRandomizerTradesInfo(ItemStack input, TagKey<Item> tagInAndOut, List<ItemStack> output) implements IRecipeCategoryExtension {
+public record JEIQueenRandomizerTradesInfo(TagKey<Item> tagInAndOut, Ingredient ingredientInAndOut, int tagSize, List<ItemStack> output) implements IRecipeCategoryExtension {
 
 }

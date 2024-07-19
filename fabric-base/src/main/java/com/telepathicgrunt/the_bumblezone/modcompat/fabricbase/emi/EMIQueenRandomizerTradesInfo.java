@@ -29,13 +29,13 @@ public class EMIQueenRandomizerTradesInfo implements EmiRecipe {
 	private final int groupWeight;
 	private final ResourceLocation id;
 
-	public EMIQueenRandomizerTradesInfo(EmiIngredient input, boolean isTagInput, List<EmiStack> outputs, TagKey<Item> outputTag, int weight, int groupWeight, ResourceLocation id) {
+	public EMIQueenRandomizerTradesInfo(EmiIngredient input, boolean isTagInput, List<EmiStack> outputs, TagKey<Item> outputTag, EmiIngredient outputTagIng, int weight, int groupWeight, ResourceLocation id) {
 		super();
 		this.input = input;
 		this.isTagInput = isTagInput;
 		this.outputTag = outputTag;
 		this.outputs = outputs;
-		this.visualOutputs = EmiIngredient.of(outputs);
+		this.visualOutputs = outputTagIng;
 		this.weight = weight;
 		this.groupWeight = groupWeight;
 		this.id = id;

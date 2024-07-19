@@ -23,6 +23,7 @@ import dev.emi.emi.api.recipe.EmiInfoRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -37,6 +38,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.material.Fluid;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class EMICompat implements EmiPlugin {
@@ -85,37 +87,35 @@ public class EMICompat implements EmiPlugin {
         }
 
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades.isEmpty()) {
+            Map<TagKey<Item>, TagData> cacheEmiData = new Object2ObjectOpenHashMap<>();
+
             for (RandomizeTradeRowInput tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades) {
-                List<ItemStack> randomizeStack = tradeEntry.getWantItems().stream().map(e -> e.value().getDefaultInstance()).toList();
-                List<EmiStack> emiStackList = randomizeStack.stream().map(EmiStack::of).collect(Collectors.toList());
-                TagKey<Item> itemTagKey = tradeEntry.tagKey().orElse(null);
-                if (itemTagKey != null) {
-                    registry.addRecipe(new EMIQueenRandomizerTradesInfo(
-                            EmiIngredient.of(Ingredient.of(itemTagKey)),
-                            true,
-                            emiStackList,
-                            itemTagKey,
-                            1,
-                            randomizeStack.size(),
-                            new ResourceLocation(Bumblezone.MODID, "" + recipeId)));
-                    recipeId++;
+                TagKey<Item> itemTagKey = tradeEntry.tagKey().get();
+                TagData tagData = cacheEmiData.getOrDefault(itemTagKey, null);
+                if (tagData == null) {
+                    List<ItemStack> randomizeStack = tradeEntry.getWantItems().stream().map(e -> e.value().getDefaultInstance()).toList();
+                    List<EmiStack> emiStackList = randomizeStack.stream().map(EmiStack::of).collect(Collectors.toList());
+                    EmiIngredient emiIngredient = EmiIngredient.of(itemTagKey);
+
+                    tagData = new TagData(randomizeStack.size(), emiStackList, emiIngredient);
+                    cacheEmiData.put(itemTagKey, tagData);
                 }
-                else {
-                    for (ItemStack input : randomizeStack) {
-                        registry.addRecipe(new EMIQueenRandomizerTradesInfo(
-                                EmiIngredient.of(Ingredient.of(input)),
-                                false,
-                                emiStackList,
-                                null,
-                                1,
-                                randomizeStack.size(),
-                                new ResourceLocation(Bumblezone.MODID, "" + recipeId)));
-                        recipeId++;
-                    }
-                }
+
+                registry.addRecipe(new EMIQueenRandomizerTradesInfo(
+                        EmiIngredient.of(Ingredient.of(itemTagKey)),
+                        true,
+                        tagData.emiStack(),
+                        itemTagKey,
+                        tagData.emiIngredient(),
+                        1,
+                        tagData.listSize(),
+                        new ResourceLocation(Bumblezone.MODID, "" + recipeId)));
+                recipeId++;
             }
         }
     }
+
+    record TagData(int listSize, List<EmiStack> emiStack, EmiIngredient emiIngredient){}
 
     private static void registerExtraRecipes(Recipe<?> baseRecipe, EmiRegistry registry, boolean oneRecipeOnly) {
         if (baseRecipe instanceof PotionCandleRecipe potionCandleRecipe) {

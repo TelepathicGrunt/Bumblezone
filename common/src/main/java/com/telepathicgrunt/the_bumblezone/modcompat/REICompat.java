@@ -16,6 +16,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei.REIQuee
 import com.telepathicgrunt.the_bumblezone.modinit.BzCreativeTabs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
@@ -40,7 +41,9 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.material.Fluid;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class REICompat implements REIClientPlugin {
 
@@ -80,34 +83,29 @@ public class REICompat implements REIClientPlugin {
         }
 
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades.isEmpty()) {
-            for (RandomizeTradeRowInput tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades) {
-                List<ItemStack> randomizeStack = tradeEntry.getWantItems().stream().map(e -> e.value().getDefaultInstance()).toList();
-                TagKey<Item> itemTagKey = tradeEntry.tagKey().orElse(null);
+            Map<TagKey<Item>, TagData> cacheReiData = new Object2ObjectOpenHashMap<>();
 
-                if (itemTagKey != null) {
-                    registry.add(new REIQueenRandomizerTradesInfo(
-                            EntryIngredients.ofIngredient(Ingredient.of(itemTagKey)),
-                            EntryIngredients.ofIngredient(Ingredient.of(itemTagKey)),
-                            itemTagKey,
-                            1,
-                            randomizeStack.size()
-                    ), QUEEN_RANDOMIZE_TRADES);
+            for (RandomizeTradeRowInput tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades) {
+                TagKey<Item> itemTagKey = tradeEntry.tagKey().get();
+                TagData tagData = cacheReiData.getOrDefault(itemTagKey, null);
+                if (tagData == null) {
+                    List<ItemStack> randomizeStack = tradeEntry.getWantItems().stream().map(e -> e.value().getDefaultInstance()).toList();
+                    tagData = new TagData(randomizeStack.size(), Collections.singletonList(EntryIngredients.ofIngredient(Ingredient.of(itemTagKey))));
+                    cacheReiData.put(itemTagKey, tagData);
                 }
-                else {
-                    EntryIngredient entryStacks = EntryIngredients.ofItemStacks(randomizeStack);
-                    for (ItemStack input : randomizeStack) {
-                        registry.add(new REIQueenRandomizerTradesInfo(
-                                EntryIngredients.of(input),
-                                entryStacks,
-                                null,
-                                1,
-                                randomizeStack.size()
-                        ), QUEEN_RANDOMIZE_TRADES);
-                    }
-                }
+
+                registry.add(new REIQueenRandomizerTradesInfo(
+                        tagData.reiIngredient(),
+                        tagData.reiIngredient(),
+                        itemTagKey,
+                        1,
+                        tagData.listSize()
+                ), QUEEN_RANDOMIZE_TRADES);
             }
         }
     }
+
+    record TagData(int listSize, List<EntryIngredient> reiIngredient){}
 
     private static void addInfo(Item item) {
         BuiltinClientPlugin.getInstance().registerInformation(

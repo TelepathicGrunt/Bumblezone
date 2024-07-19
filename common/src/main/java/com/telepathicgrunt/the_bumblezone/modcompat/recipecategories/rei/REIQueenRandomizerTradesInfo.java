@@ -8,6 +8,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
 import java.util.Collections;
+import java.util.List;
 
 public class REIQueenRandomizerTradesInfo extends BasicDisplay {
 
@@ -15,8 +16,8 @@ public class REIQueenRandomizerTradesInfo extends BasicDisplay {
 	private final int weight;
 	private final int groupWeight;
 
-	public REIQueenRandomizerTradesInfo(EntryIngredient inputs, EntryIngredient outputs, TagKey<Item> inOutTag, int weight, int groupWeight) {
-		super(Collections.singletonList(inputs), Collections.singletonList(outputs));
+	public REIQueenRandomizerTradesInfo(List<EntryIngredient> inputs, List<EntryIngredient> outputs, TagKey<Item> inOutTag, int weight, int groupWeight) {
+		super(inputs, outputs);
 		this.inOutTag = inOutTag;
 		this.weight = weight;
 		this.groupWeight = groupWeight;
