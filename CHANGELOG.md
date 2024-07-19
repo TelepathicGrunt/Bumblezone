@@ -1,3 +1,9 @@
+### **(V.7.6.17 Changes) (1.21 Minecraft)**
+
+##### Entities:
+Render friendship label for tamed Beehemoths again
+
+
 ### **(V.7.6.16 Changes) (1.21 Minecraft)**
 
 ##### Misc:

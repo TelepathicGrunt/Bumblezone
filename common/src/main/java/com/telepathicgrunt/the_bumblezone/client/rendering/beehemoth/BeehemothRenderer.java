@@ -43,17 +43,17 @@ public class BeehemothRenderer extends MobRenderer<BeehemothEntity, BeehemothMod
         if (this.entityRenderDispatcher.distanceToSqr(entity) > 100.0) {
             return;
         }
-        float f = entity.getBbHeight() + 1F;
+        float f = entity.getBbHeight() + 0.75F;
         poseStack.pushPose();
         poseStack.translate(0.0f, f, 0.0f);
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
-        poseStack.scale(-0.025f, -0.025f, 0.025f);
+        poseStack.scale(0.025f, -0.025f, 0.025f);
         Matrix4f matrix4f = poseStack.last().pose();
-        float g = Minecraft.getInstance().options.getBackgroundOpacity(0.25f);
-        int k = (int)(g * 255.0f) << 24;
         Font font = this.getFont();
         float h = -font.width(component) / 2F;
-        font.drawInBatch(component, h, 0, 0x20FFFFFF, false, matrix4f, multiBufferSource, Font.DisplayMode.NORMAL, k, packedLight);
+        // float backgroundOpacity = Minecraft.getInstance().options.getBackgroundOpacity(0.25f);
+        // int backgroundOpacityAsInt = (int)(backgroundOpacity * 255.0f) << 24;
+        // font.drawInBatch(component, h, 0, 0x20FFFFFF, false, matrix4f, multiBufferSource, Font.DisplayMode.NORMAL, backgroundOpacityAsInt, packedLight);
         font.drawInBatch(component, h, 0, -1, false, matrix4f, multiBufferSource, Font.DisplayMode.NORMAL, 0, packedLight);
         poseStack.popPose();
     }
