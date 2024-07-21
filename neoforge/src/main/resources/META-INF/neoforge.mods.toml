@@ -30,15 +30,3 @@ license="https://github.com/TelepathicGrunt/Bumblezone/blob/latest-released/LICE
     modId="neoforge"
     type="required"
     versionRange="[21.0.110-beta,)"
-
-[[dependencies.the_bumblezone]]
-    modId="productivebees"
-    type="optional"
-    ordering="AFTER"
-    versionRange="[0,)"
-
-[[dependencies.the_bumblezone]]
-    modId="resourcefulbees"
-    type="optional"
-    ordering="AFTER"
-    versionRange="[0,)"

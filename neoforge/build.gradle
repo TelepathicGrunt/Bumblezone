@@ -58,6 +58,11 @@ dependencies {
 
     modCompileOnly("com.hollingsworth.ars_nouveau:ars_nouveau-${project.ars_nouveau}")
     modCompileOnly("curse.maven:ars_elemental-561470:${project.ars_elemental_file_id}")
+    modCompileOnly("software.bernie.geckolib:geckolib-neoforge-1.21:${geckolib_version}")
+    modCompileOnly("com.illusivesoulworks.caelus:caelus-neoforge:${caelus_version}:api")
+    // modRuntimeOnly("com.hollingsworth.ars_nouveau:ars_nouveau-${project.ars_nouveau}")
+    // modRuntimeOnly("software.bernie.geckolib:geckolib-neoforge-1.21:${geckolib_version}")
+    // modRuntimeOnly("com.illusivesoulworks.caelus:caelus-neoforge:${caelus_version}")
 
     // modRuntimeOnly("curse.maven:better-advancements-272515:4631253")
     // modRuntimeOnly("curse.maven:spit-it-out-857141:4614678")

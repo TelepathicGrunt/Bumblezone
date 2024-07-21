@@ -59,11 +59,11 @@ public class NeoForgeModChecker {
                 loadupModCompat(modid, () -> new PneumaticCraftCompat());
             }
 
-//            modid = "ars_nouveau";
-//            loadupModCompat(modid, () -> new ArsNouveauCompat());
+            modid = "ars_nouveau";
+            loadupModCompat(modid, () -> new ArsNouveauCompat());
 
-//            modid = "ars_elemental";
-//            loadupModCompat(modid, () -> new ArsElementalCompat());
+            modid = "ars_elemental";
+            loadupModCompat(modid, () -> new ArsElementalCompat());
 
             modid = "bloodmagic";
             loadupModCompat(modid, () -> new BloodMagicCompat());

@@ -3,6 +3,8 @@
 ##### Mod Compat:
 Recovered more amount of memory for EMI, REI compat. Around 10MB to 20MB in a sizable pack with EMI for example.
 
+(NeoForge): Reactivate Ars Nouveau compat
+
 
 ### **(V.7.6.17 Changes) (1.21 Minecraft)**
 
