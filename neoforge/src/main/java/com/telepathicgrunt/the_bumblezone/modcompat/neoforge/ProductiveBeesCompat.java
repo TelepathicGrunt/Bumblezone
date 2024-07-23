@@ -265,7 +265,11 @@ public class ProductiveBeesCompat implements ModCompat {
             return null;
         } else {
             CompoundTag newTag = new CompoundTag();
-            newTag.putString("type", SPIDER_DUNGEON_HONEYCOMBS.getOrFillFromInternal().get(random.nextInt(SPIDER_DUNGEON_HONEYCOMBS.getOrFillFromInternal().size())).toString());
+            String beeType = SPIDER_DUNGEON_HONEYCOMBS.getOrFillFromInternal().get(random.nextInt(SPIDER_DUNGEON_HONEYCOMBS.getOrFillFromInternal().size())).toString();
+            newTag.putString("type", beeType);
+            CompoundTag component = new CompoundTag();
+            component.putString("productivebees:bee_type", beeType);
+            newTag.put("components", component);
             return new StructureTemplate.StructureBlockInfo(worldPos, ModBlocks.CONFIGURABLE_COMB.get().defaultBlockState(), newTag);
         }
     }
@@ -279,7 +283,11 @@ public class ProductiveBeesCompat implements ModCompat {
             return null;
         } else {
             CompoundTag newTag = new CompoundTag();
-            newTag.putString("type", BEE_DUNGEON_HONEYCOMBS.getOrFillFromInternal().get(random.nextInt(BEE_DUNGEON_HONEYCOMBS.getOrFillFromInternal().size())).toString());
+            String beeType = BEE_DUNGEON_HONEYCOMBS.getOrFillFromInternal().get(random.nextInt(BEE_DUNGEON_HONEYCOMBS.getOrFillFromInternal().size())).toString();
+            newTag.putString("type", beeType);
+            CompoundTag component = new CompoundTag();
+            component.putString("productivebees:bee_type", beeType);
+            newTag.put("components", component);
             return new StructureTemplate.StructureBlockInfo(worldPos, ModBlocks.CONFIGURABLE_COMB.get().defaultBlockState(), newTag);
         }
     }

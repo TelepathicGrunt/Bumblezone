@@ -1,3 +1,9 @@
+### **(V.7.6.19 Changes) (1.21 Minecraft)**
+
+##### Mod Compat:
+Fixed comb block compat with Productive Bees. Some comb types were not spawning. And the comb blocks were not dropping configured item forms.
+
+
 ### **(V.7.6.18 Changes) (1.21 Minecraft)**
 
 ##### Mod Compat:

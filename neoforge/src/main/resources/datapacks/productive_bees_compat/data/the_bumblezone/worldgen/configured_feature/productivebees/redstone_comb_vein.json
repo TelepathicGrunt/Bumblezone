@@ -13,7 +13,10 @@
           "Name": "productivebees:configurable_comb"
         },
         "state_nbt": {
-          "type": "productivebees:redstone"
+          "type": "productivebees:redstone",
+          "components": {
+            "productivebees:bee_type": "productivebees:redstone"
+          }
         }
       }
     ]

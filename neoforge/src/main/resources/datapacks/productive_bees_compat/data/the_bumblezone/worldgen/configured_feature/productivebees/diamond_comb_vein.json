@@ -13,7 +13,10 @@
           "Name": "productivebees:configurable_comb"
         },
         "state_nbt": {
-          "type": "productivebees:diamond"
+          "type": "productivebees:diamond",
+          "components": {
+            "productivebees:bee_type": "productivebees:diamond"
+          }
         }
       }
     ]

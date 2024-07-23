@@ -13,7 +13,10 @@
           "Name": "productivebees:configurable_comb"
         },
         "state_nbt": {
-          "type": "productivebees:magmatic"
+          "type": "productivebees:magmatic",
+          "components": {
+            "productivebees:bee_type": "productivebees:magmatic"
+          }
         }
       }
     ]
