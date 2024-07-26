@@ -7,6 +7,22 @@
     "minecraft:iron_golem",
     "minecraft:blaze",
     "minecraft:wither",
-    "minecraft:warden"
+    "minecraft:warden",
+    {
+      "id": "more_babies:blaze",
+      "required": false
+    },
+    {
+      "id": "more_babies:iron_golem",
+      "required": false
+    },
+    {
+      "id": "more_babies:wither",
+      "required": false
+    },
+    {
+      "id": "more_babies:warden",
+      "required": false
+    }
   ]
 }

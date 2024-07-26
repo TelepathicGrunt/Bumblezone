@@ -103,6 +103,10 @@
       "required": false
     },
     {
+      "id": "more_babies:spider",
+      "required": false
+    },
+    {
       "id": "mutantmonsters:spider_pig",
       "required": false
     },

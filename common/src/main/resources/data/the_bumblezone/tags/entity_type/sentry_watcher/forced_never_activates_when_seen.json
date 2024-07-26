@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "the_bumblezone:cosmic_crystal_entity",
-    "minecraft:vex"
+    "minecraft:vex",
+    "the_bumblezone:cosmic_crystal_entity"
   ]
 }

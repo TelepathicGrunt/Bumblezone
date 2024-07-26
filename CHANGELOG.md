@@ -1,3 +1,9 @@
+### **(V.7.6.20 Changes) (1.21 Minecraft)**
+
+##### Mod Compat:
+Improved general compat with More Babies mod
+
+
 ### **(V.7.6.19 Changes) (1.21 Minecraft)**
 
 ##### Mod Compat:

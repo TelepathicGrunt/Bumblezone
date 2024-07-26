@@ -8,6 +8,14 @@
     "the_bumblezone:bee_queen",
     "the_bumblezone:sentry_watcher",
     "the_bumblezone:purple_spike_entity",
-    "the_bumblezone:cosmic_crystal_entity"
+    "the_bumblezone:cosmic_crystal_entity",
+    {
+      "id": "more_babies:breeze",
+      "required": false
+    },
+    {
+      "id": "more_babies:iron_golem",
+      "required": false
+    }
   ]
 }

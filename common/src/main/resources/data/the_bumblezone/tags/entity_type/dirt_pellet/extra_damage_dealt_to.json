@@ -14,6 +14,30 @@
     "minecraft:ender_dragon",
     "the_bumblezone:beehemoth",
     "the_bumblezone:variant_bee",
-    "#the_bumblezone:string_curtains/blocks_pathfinding_for_non_bee_mob"
+    "#the_bumblezone:string_curtains/blocks_pathfinding_for_non_bee_mob",
+    {
+      "id": "more_babies:bat",
+      "required": false
+    },
+    {
+      "id": "more_babies:parrot",
+      "required": false
+    },
+    {
+      "id": "more_babies:ghast",
+      "required": false
+    },
+    {
+      "id": "more_babies:blaze",
+      "required": false
+    },
+    {
+      "id": "more_babies:breeze",
+      "required": false
+    },
+    {
+      "id": "more_babies:wither",
+      "required": false
+    }
   ]
 }

@@ -7,6 +7,14 @@
     {
       "id": "#c:golems",
       "required": false
+    },
+    {
+      "id": "more_babies:iron_golem",
+      "required": false
+    },
+    {
+      "id": "more_babies:snow_golem",
+      "required": false
     }
   ]
 }

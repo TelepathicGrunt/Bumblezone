@@ -9,6 +9,18 @@
     "minecraft:breeze",
     "the_bumblezone:cosmic_crystal_entity",
     "#the_bumblezone:bee_like",
-    "#the_bumblezone:bees"
+    "#the_bumblezone:bees",
+    {
+      "id": "more_babies:blaze",
+      "required": false
+    },
+    {
+      "id": "more_babies:ghast",
+      "required": false
+    },
+    {
+      "id": "more_babies:breeze",
+      "required": false
+    }
   ]
 }
