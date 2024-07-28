@@ -3,6 +3,8 @@
 ##### Mod Compat:
 Improved general compat with More Babies mod
 
+##### Misc:
+(NeoForge): Now requires stable Neo v21.0.143 or newer.
 
 ### **(V.7.6.19 Changes) (1.21 Minecraft)**
 
