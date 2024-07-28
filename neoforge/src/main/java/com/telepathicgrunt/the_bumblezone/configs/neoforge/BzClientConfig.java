@@ -181,6 +181,7 @@ public class BzClientConfig {
         builder.translation("the_bumblezone.configuration.entitymodelrendererconfigs").push("Entity Model/Renderer configs");
 
         useBackupModelForVariantBee = builder
+                .gameRestart()
                 .comment("----------------------------\n",
                         " Turn this on if Variant Bee's model is messed up by another mod or resourcepack. Requires restart.\n")
                 .translation("the_bumblezone.configuration.usebackupmodelforvariantbee")

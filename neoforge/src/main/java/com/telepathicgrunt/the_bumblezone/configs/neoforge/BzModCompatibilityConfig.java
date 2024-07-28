@@ -64,6 +64,7 @@ public class BzModCompatibilityConfig {
 		builder.translation("the_bumblezone.configuration.misccompatoptions").push("Misc Compat Options");
 
 		alternativeFluidToReplaceHoneyFluid = builder
+				.gameRestart()
 				.comment("----------------------------\n",
 						" The fluid to replace Bumblezone's Honey Fluid in the dimension. Requires game restart.",
 						" Note, this will not replace already placed Bumblezone Honey Fluid.\n")
@@ -162,6 +163,7 @@ public class BzModCompatibilityConfig {
 				.defineInRange("RBOreHoneycombSpawnRateSpiderBeeDungeon", 0.12D, 0D, 1D);
 
 		spawnResourcefulBeesHoneycombVeins = builder
+				.worldRestart()
 				.comment("----------------------------\n",
 						" Spawn Resourceful Bees's various honeycomb variants in The Bumblezone at all",
 						" kinds of heights and height bands. Start exploring to find where they spawn!",
@@ -233,6 +235,7 @@ public class BzModCompatibilityConfig {
 				.defineInRange("spawnrateOfProductiveBeesMobs", 0.03D, 0D, 1D);
 
 		spawnProductiveBeesHoneycombVariants = builder
+				.worldRestart()
 				.comment("----------------------------\n",
 						" Spawn Productive Bees various honeycomb variants in The Bumblezone at all",
 						" kinds of heights and height bands. Start exploring to find where they spawn!",
