@@ -65,7 +65,7 @@ public final class BeeDedicatedSpawning {
 
                 for (int i = nearbyBees; i <= beesPerPlayer; i++) {
                     BlockPos newBeePos = GeneralUtils.getRandomBlockposWithinRange(serverPlayer, 45, 20);
-                    if (!world.isLoaded(newBeePos) || !world.getBlockState(newBeePos).isAir()) {
+                    if (!world.shouldTickBlocksAt(newBeePos) || !world.getBlockState(newBeePos).isAir()) {
                         continue;
                     }
 
