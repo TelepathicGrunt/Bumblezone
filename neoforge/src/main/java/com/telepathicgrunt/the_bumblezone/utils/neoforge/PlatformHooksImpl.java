@@ -117,7 +117,7 @@ public class PlatformHooksImpl {
 
     @Contract(pure = true)
     public static boolean isFakePlayer(ServerPlayer player) {
-        return player instanceof FakePlayer;
+        return player.isFakePlayer();
     }
 
     @Contract(pure = true)

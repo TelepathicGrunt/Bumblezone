@@ -11,6 +11,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
@@ -26,7 +28,7 @@ public final class BeeDedicatedSpawning {
         List<ServerPlayer> serverPlayers = world.players();
 
         // Remove all wild bees too far from a player.
-        for(Bee wildBee : allWildBees) {
+        for (Bee wildBee : allWildBees) {
             boolean isTooFar = true;
             
             for (ServerPlayer serverPlayer : serverPlayers) {
@@ -48,8 +50,8 @@ public final class BeeDedicatedSpawning {
 
         int beesPerPlayer = BzGeneralConfigs.nearbyBeesPerPlayerInBz;
         int maxWildBeeLimit = beesPerPlayer * serverPlayers.size();
-        if(allWildBees.size() <= maxWildBeeLimit) {
-            for(ServerPlayer serverPlayer : serverPlayers) {
+        if (allWildBees.size() <= maxWildBeeLimit) {
+            for (ServerPlayer serverPlayer : serverPlayers) {
                 if (PlatformHooks.isFakePlayer(serverPlayer)) {
                     continue;
                 }
@@ -63,7 +65,8 @@ public final class BeeDedicatedSpawning {
 
                 for (int i = nearbyBees; i <= beesPerPlayer; i++) {
                     BlockPos newBeePos = GeneralUtils.getRandomBlockposWithinRange(serverPlayer, 45, 20);
-                    if(!world.getBlockState(newBeePos).isAir()) {
+
+                    if (!world.isLoaded(newBeePos) || !world.getBlockState(newBeePos).isAir()) {
                         continue;
                     }
 
