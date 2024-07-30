@@ -28,7 +28,7 @@ public abstract class ServerWorldMixin extends Level {
 	}
 
 	@Unique
-	private static final int bumblezone$updateInterval = 20;
+	private static final int bumblezone$updateInterval = 21;
 
 	@Unique
 	private static int bumblezone$counter = 0;

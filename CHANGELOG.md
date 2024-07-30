@@ -1,3 +1,9 @@
+### **(V.7.4.14 Changes) (1.20.1 Minecraft)**
+
+##### Entities:
+Made sure Bees spawning in Bumblezone are spawned in generated/loaded chunks.
+
+
 ### **(V.7.4.13 Changes) (1.20.1 Minecraft)**
 
 ##### Mod Compat:
