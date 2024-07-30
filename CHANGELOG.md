@@ -3,6 +3,11 @@
 ##### Entities:
 Made sure Bees spawning in Bumblezone are spawned in generated/loaded chunks.
 
+##### Advancements:
+Fixed Crazy Trader advancement triggering at 126 Bee Queen trades instead of 128.
+
+Fixed Crazy Trader advancement not triggering if you somehow skip over the target trade amount.
+
 
 ### **(V.7.6.20 Changes) (1.21 Minecraft)**
 

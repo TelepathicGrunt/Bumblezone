@@ -32,7 +32,7 @@ public class CounterTrigger extends SimpleCriterionTrigger<CounterTrigger.Trigge
                 ).apply(instance, CounterTrigger.TriggerInstance::new));
 
         public boolean matches(int count) {
-            return count == targetCount();
+            return count >= targetCount();
         }
     }
 }
