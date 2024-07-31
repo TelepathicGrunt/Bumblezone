@@ -8,6 +8,8 @@ Fixed Crazy Trader advancement triggering at 126 Bee Queen trades instead of 128
 
 Fixed Crazy Trader advancement not triggering if you somehow skip over the target trade amount.
 
+Fixed Throne Pillar advancement not triggering when holding Throne Honey Compass.
+
 
 ### **(V.7.6.20 Changes) (1.21 Minecraft)**
 

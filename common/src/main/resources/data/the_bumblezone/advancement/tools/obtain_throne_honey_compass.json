@@ -30,7 +30,9 @@
             ],
             "components": {
               "the_bumblezone:honey_compass_base_data": {
-                "customName": "item.the_bumblezone.honey_compass_throne_structure"
+                "compassType": "structure",
+                "customName": "item.the_bumblezone.honey_compass_throne_structure",
+                "customDescription": "item.the_bumblezone.honey_compass_throne_description"
               }
             }
           }
