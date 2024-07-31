@@ -1,3 +1,9 @@
+### **(V.7.4.15 Changes) (1.20.1 Minecraft)**
+
+##### Mod Compat:
+Essence of Knowledge will now highlight Rare Ice's rare ice blocks.
+
+
 ### **(V.7.4.14 Changes) (1.20.1 Minecraft)**
 
 ##### Entities:

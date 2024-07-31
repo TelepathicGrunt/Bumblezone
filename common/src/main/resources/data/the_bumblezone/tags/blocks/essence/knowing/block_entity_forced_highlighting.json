@@ -4,6 +4,10 @@
     "the_bumblezone:crystalline_flower",
     "minecraft:beacon",
     "minecraft:conduit",
-    "minecraft:spawner"
+    "minecraft:spawner",
+    {
+      "id": "rare-ice:rare_ice",
+      "required": false
+    }
   ]
 }
