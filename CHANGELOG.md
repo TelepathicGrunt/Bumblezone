@@ -1,5 +1,11 @@
 ### **(V.7.6.21 Changes) (1.21 Minecraft)**
 
+##### Items:
+Essence of Knowledge will now highlight Vaults and Trial Spawners.
+
+
+### **(V.7.6.21 Changes) (1.21 Minecraft)**
+
 ##### Entities:
 Made sure Bees spawning in Bumblezone are spawned in generated/loaded chunks.
 
