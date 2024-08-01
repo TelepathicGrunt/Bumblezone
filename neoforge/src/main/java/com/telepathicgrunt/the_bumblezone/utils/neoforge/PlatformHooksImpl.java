@@ -34,6 +34,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.fml.util.thread.EffectiveSide;
 import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.common.NeoForge;
@@ -217,9 +218,12 @@ public class PlatformHooksImpl {
     }
 
     public static RegistryAccess getCurrentRegistryAccess() {
-        if (FMLEnvironment.dist.isClient()) {
-            return GeneralUtilsClient.getClientRegistryAccess();
+        try {
+            if (!EffectiveSide.get().isServer()) {
+                return GeneralUtilsClient.getClientRegistryAccess();
+            }
         }
+        catch (Throwable ignored) {}
 
         return ServerLifecycleHooks.getCurrentServer().registryAccess();
     }

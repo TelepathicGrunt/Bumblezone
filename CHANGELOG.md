@@ -3,6 +3,9 @@
 ##### Items:
 Essence of Knowledge will now highlight Vaults and Trial Spawners.
 
+Fixed Stinger Spear unabled to be enchanted with Loyalty or Impaling.
+ Added `the_bumblezone:enchantables/stinger_spear_forced_disallowed` enchantment tag to allow preventing unwanted enchantments on Stinger Spear.
+
 
 ### **(V.7.6.21 Changes) (1.21 Minecraft)**
 

@@ -10,6 +10,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
+import com.telepathicgrunt.the_bumblezone.utils.TriState;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -29,6 +31,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -140,5 +143,10 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
         }
 
         return true;
+    }
+
+    @Override
+    public TriState bz$canEnchant(ItemStack itemstack, Holder<Enchantment> enchantment) {
+        return enchantment.is(BzTags.ENCHANTABLES_STINGER_SPEAR_FORCED_DISALLOWED) ? TriState.DENY : TriState.PASS;
     }
 }

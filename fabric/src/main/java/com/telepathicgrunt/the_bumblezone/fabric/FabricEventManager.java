@@ -158,13 +158,13 @@ public class FabricEventManager {
         ServerTickEvents.START_WORLD_TICK.register(world -> BzServerLevelTickEvent.EVENT.invoke(new BzServerLevelTickEvent(world, false)));
         ServerTickEvents.END_WORLD_TICK.register(world -> BzServerLevelTickEvent.EVENT.invoke(new BzServerLevelTickEvent(world, true)));
 
-        ServerLifecycleEvents.SERVER_STARTING.register((a) -> {
-            BzServerGoingToStartEvent.EVENT.invoke(new BzServerGoingToStartEvent(a));
-            PlatformHooksImpl.currentRegistryAccess = a.registryAccess();
+        ServerLifecycleEvents.SERVER_STARTING.register((minecraftServer) -> {
+            BzServerGoingToStartEvent.EVENT.invoke(new BzServerGoingToStartEvent(minecraftServer));
+            PlatformHooksImpl.currentMinecraftServer = minecraftServer;
         });
-        ServerLifecycleEvents.SERVER_STOPPING.register((a) -> {
+        ServerLifecycleEvents.SERVER_STOPPING.register((minecraftServer) -> {
             BzServerGoingToStopEvent.EVENT.invoke(BzServerGoingToStopEvent.INSTANCE);
-            PlatformHooksImpl.currentRegistryAccess = null;
+            PlatformHooksImpl.currentMinecraftServer = null;
         });
 
         ServerWorldEvents.LOAD.register((server, level) -> {

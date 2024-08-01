@@ -16,10 +16,12 @@ import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -280,12 +282,15 @@ public class PlatformHooksImpl {
         return ((BucketItemAccessor)stack).bz$getContents();
     }
 
-    public static RegistryAccess currentRegistryAccess = null;
+    public static MinecraftServer currentMinecraftServer = null;
     public static RegistryAccess getCurrentRegistryAccess() {
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT ) {
-            return GeneralUtilsClient.getClientRegistryAccess();
+        try {
+            if (currentMinecraftServer == null || !currentMinecraftServer.isSameThread()) {
+                return GeneralUtilsClient.getClientRegistryAccess();
+            }
         }
+        catch (Throwable ignored) {}
 
-        return currentRegistryAccess;
+        return currentMinecraftServer.registryAccess();
     }
 }
