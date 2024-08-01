@@ -10,6 +10,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.items.essence.KnowingEssence;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.client.Camera;
@@ -35,6 +36,9 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.joml.Vector4d;
 
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -45,7 +49,8 @@ public class KnowingEssenceLootBlockOutlining {
     private static final double MAX_CORNER = 0.5D + DRAW_RADIUS;
     private static final Vector4d VECTOR_4D_MIN = new Vector4d(MIN_CORNER, MIN_CORNER, MIN_CORNER, 1.0D);
     private static final Vector4d VECTOR_4D_MAX = new Vector4d(MAX_CORNER, MAX_CORNER, MAX_CORNER, 1.0D);
-    private static final List<CachedChunkData> CACHED_CHUNK_DATA = new ObjectArrayList<>();
+    private static final LinkedHashSet<Long> CACHED_CHUNK_POS = new LinkedHashSet<>();
+    private static final Long2ObjectOpenHashMap<CachedChunkData> CACHED_CHUNK_DATA = new Long2ObjectOpenHashMap<>();
     private static final Set<Block> CACHED_TARGET_BLOCKS = new ObjectOpenHashSet<>();
     private static final Set<Block> CACHED_NONTARGET_BLOCKS = new ObjectOpenHashSet<>();
     private static final int chunkRadius = 4;
@@ -72,8 +77,9 @@ public class KnowingEssenceLootBlockOutlining {
 
             drawOutlines(poseStack, cameraPos);
         }
-        else if (!CACHED_CHUNK_DATA.isEmpty()) {
+        else if (!CACHED_CHUNK_POS.isEmpty()) {
             CACHED_CHUNK_DATA.clear();
+            CACHED_CHUNK_POS.clear();
         }
     }
 
@@ -82,26 +88,35 @@ public class KnowingEssenceLootBlockOutlining {
         if (currentTime > targetScanTime) {
             targetScanTime = currentTime + targetScanTimeIncrement;
 
-            while (CACHED_CHUNK_DATA.size() > chunksToCheck) {
-                CACHED_CHUNK_DATA.removeFirst();
-            }
-
             BlockPos worldSpot = BlockPos.containing(cameraPos);
             ChunkPos centerChunkPos = new ChunkPos(worldSpot);
             int currentChunk = 0;
+            LinkedHashSet<Long> copySet = new LinkedHashSet<>(CACHED_CHUNK_POS);
             for (int x = -chunkRadius; x <= chunkRadius; x++) {
                 for (int z = -chunkRadius; z <= chunkRadius; z++) {
+                    long chunkPosLong = ChunkPos.asLong(x + centerChunkPos.x, z + centerChunkPos.z);
+                    copySet.remove(chunkPosLong);
+
                     currentChunk++;
                     if (currentChunk <= chunkPerBatch * currentScanIncrement || currentChunk > chunkPerBatch * (currentScanIncrement + 1)) {
                         continue;
                     }
 
-                    CACHED_CHUNK_DATA.add(new CachedChunkData(new ObjectArrayList<>()));
                     LevelChunk chunk = level.getChunk(x + centerChunkPos.x, z + centerChunkPos.z);
 
-                    blockEntityScan(chunk, CACHED_CHUNK_DATA.size() - 1);
-                    blockScan(chunk, CACHED_CHUNK_DATA.size() - 1);
+                    // Reset cached data
+                    CACHED_CHUNK_DATA.put(chunkPosLong, new CachedChunkData(new ObjectArrayList<>()));
+                    CACHED_CHUNK_POS.add(chunkPosLong);
+
+                    blockEntityScan(chunk, chunkPosLong);
+                    blockScan(chunk, chunkPosLong);
                 }
+            }
+
+            while (!copySet.isEmpty()) {
+                long chunkPos = copySet.removeFirst();
+                CACHED_CHUNK_POS.remove(chunkPos);
+                CACHED_CHUNK_DATA.remove(chunkPos);
             }
 
             currentScanIncrement++;
@@ -111,7 +126,7 @@ public class KnowingEssenceLootBlockOutlining {
         }
     }
 
-    private static void blockEntityScan(LevelChunk chunk, int chunkIndex) {
+    private static void blockEntityScan(LevelChunk chunk, long chunkPosLong) {
         for (Map.Entry<BlockPos, BlockEntity> blockEntityEntry : chunk.getBlockEntities().entrySet()) {
             BlockEntity blockEntity = blockEntityEntry.getValue();
             BlockState blockState = blockEntity.getBlockState();
@@ -138,7 +153,7 @@ public class KnowingEssenceLootBlockOutlining {
                 int green = FastColor.ARGB32.green(colorInt);
                 int blue = FastColor.ARGB32.blue(colorInt);
 
-                CACHED_CHUNK_DATA.get(chunkIndex).cachedDrawData.add(
+                CACHED_CHUNK_DATA.get(chunkPosLong).cachedDrawData.add(
                     new CachedDrawData(
                         VECTOR_4D_MIN.x() + lootBlockPos.getX(),
                         VECTOR_4D_MIN.y() + lootBlockPos.getY(),
@@ -156,7 +171,7 @@ public class KnowingEssenceLootBlockOutlining {
         }
     }
 
-    private static void blockScan(LevelChunk chunk, int chunkIndex) {
+    private static void blockScan(LevelChunk chunk, long chunkPosLong) {
         for (int i = 0; i < chunk.getSectionsCount(); i++) {
             LevelChunkSection levelChunkSection = chunk.getSection(i);
             if (!levelChunkSection.hasOnlyAir() &&
@@ -188,7 +203,7 @@ public class KnowingEssenceLootBlockOutlining {
                                 int green = FastColor.ARGB32.green(colorInt);
                                 int blue = FastColor.ARGB32.blue(colorInt);
 
-                                CACHED_CHUNK_DATA.get(chunkIndex).cachedDrawData.add(
+                                CACHED_CHUNK_DATA.get(chunkPosLong).cachedDrawData.add(
                                         new CachedDrawData(
                                                 VECTOR_4D_MIN.x() + lootBlockPos.getX(),
                                                 VECTOR_4D_MIN.y() + lootBlockPos.getY(),
@@ -213,7 +228,7 @@ public class KnowingEssenceLootBlockOutlining {
     private static void drawOutlines(PoseStack poseStack, Vec3 cameraPos) {
         if (!CACHED_CHUNK_DATA.isEmpty()) {
             boolean hasEntry = false;
-            for (CachedChunkData cachedChunkData : CACHED_CHUNK_DATA) {
+            for (CachedChunkData cachedChunkData : CACHED_CHUNK_DATA.values()) {
                 if (!cachedChunkData.cachedDrawData.isEmpty()) {
                     hasEntry = true;
                     break;
@@ -230,7 +245,7 @@ public class KnowingEssenceLootBlockOutlining {
             RenderSystem.disableDepthTest();
             BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
             Matrix4f lastPose = poseStack.last().pose();
-            CACHED_CHUNK_DATA.forEach(cachedChunkData ->
+            CACHED_CHUNK_DATA.values().forEach(cachedChunkData ->
                     cachedChunkData.cachedDrawData.forEach(cachedDrawData ->
                             renderLineBox(
                                 bufferbuilder,
