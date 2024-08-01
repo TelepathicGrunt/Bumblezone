@@ -12,6 +12,10 @@
       "required": false
     },
     {
+      "id": "arts_and_crafts:lotus_flower",
+      "required": false
+    },
+    {
       "id": "biomesoplenty:pink_cherry_sapling",
       "required": false
     },

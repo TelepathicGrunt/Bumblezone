@@ -1,0 +1,32 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:infested_stone",
+    "minecraft:infested_cobblestone",
+    "minecraft:infested_stone_bricks",
+    "minecraft:infested_mossy_stone_bricks",
+    "minecraft:infested_cracked_stone_bricks",
+    "minecraft:infested_chiseled_stone_bricks",
+    "minecraft:infested_deepslate",
+    {
+      "id": "betterarcheology:vase",
+      "required": false
+    },
+    {
+      "id": "betterarcheology:vase_creeper",
+      "required": false
+    },
+    {
+      "id": "betterarcheology:vase_green",
+      "required": false
+    },
+    {
+      "id": "deeperdarker:ancient_vase",
+      "required": false
+    },
+    {
+      "id": "eldritch_end:suspicious_fronds",
+      "required": false
+    }
+  ]
+}

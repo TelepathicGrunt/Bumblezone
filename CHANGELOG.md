@@ -1,10 +1,18 @@
 ### **(V.7.6.21 Changes) (1.21 Minecraft)**
 
 ##### Items:
-Essence of Knowledge will now highlight Vaults and Trial Spawners.
+Essence of Knowledge will now highlight Silverfish infested blocks, Vaults, Decorated Pots, and Trial Spawners.
+ Added `the_bumblezone:essence/knowing/block_forced_highlighting` block tag to allow highlighting non-Block Entity blocks!
 
 Fixed Stinger Spear unabled to be enchanted with Loyalty or Impaling.
  Added `the_bumblezone:enchantables/stinger_spear_forced_disallowed` enchantment tag to allow preventing unwanted enchantments on Stinger Spear.
+
+##### Mod Compat:
+Pollen Puff thrown at Mobs of Mythology's Sporeling mob will spawn red or brown mushroom nearby if spot is valid.
+
+Pollen Puff thrown at Arts and Craft's Lotus Flower may multiply the block.
+
+Added Bee Queen color randomizing trades for Arts and Craft's Chalk Sticks, Paintbrushes, and Decorated Pots.
 
 
 ### **(V.7.6.21 Changes) (1.21 Minecraft)**
@@ -30,93 +38,3 @@ Improved general compat with More Babies mod
 
 ##### Misc:
 (NeoForge): Now requires stable Neo v21.0.143 or newer.
-
-
-### **(V.7.6.19 Changes) (1.21 Minecraft)**
-
-##### Mod Compat:
-Fixed comb block compat with Productive Bees. Some comb types were not spawning. And the comb blocks were not dropping configured item forms.
-
-
-### **(V.7.6.18 Changes) (1.21 Minecraft)**
-
-##### Mod Compat:
-Recovered more amount of memory for EMI, REI compat. Around 10MB to 20MB in a sizable pack with EMI for example.
-
-(NeoForge): Reactivate Ars Nouveau compat
-
-
-### **(V.7.6.17 Changes) (1.21 Minecraft)**
-
-##### Misc:
-(NeoForge): Now requires Neo v21.0.110 or newer because now Bumblezone enabled the NeoForge Config GUI!
- Configure Bumblezone all in-game now! Find the Config button in the Mod List screen on Title Screen or Pause Menu.
-
-##### Entities:
-Render friendship label for tamed Beehemoths again
-
-##### Lang:
-vi_vn.json translations now added by godkyo98! 
-
-
-### **(V.7.6.16 Changes) (1.21 Minecraft)**
-
-##### Misc:
-(NeoForge): Now requires Neo v21.0.102 or newer.
-
-##### Blocks:
-Pointed Dripstone under Sugar Water now will fill below Cauldron with Water!
-
-(NeoForge): Super Candles and Potion Candles now work with any modded items that is given the "firestarter_light" ItemAbility
-
-##### Enchantments:
-Fixed Comb Cutter max level being capped by Neurotoxin max level config.
-
-Adjusted all enchantments to read a DataComponent marker on enchantments. 
- You can now datapack these enchantment's data components onto other enchantments to get same effects or change some of the enchantment's settings!
- Like a Neuroflame enchantment json that uses vanilla's ignite and Bumblezone paralyze to be en enchantment that is a combination of Fire Aspect and Neurotoxin enchantments.
-
-##### Items:
-Fixed Stinger Spear not applying weak poison by default.
-
-Fixed thrown Stinger Spear applying effects on thrower instead of victim.
-
-Fixed Bee Cannon crash.
-
-##### Entities:
-Fixed randomizer trades not working with Bee Queen.
-
-##### Configs:
-(Neoforge): Cleaned up and moved around several configs in preparation of future Neoforge Config GUI.
-
-##### Mod Compat:
-Recovered a significant amount of memory for EMI compat.
-
-Fixed Music Disc internal crash with EMI.
-
-
-### **(V.7.6.15 Changes) (1.21 Minecraft)**
-
-##### Blocks:
-Play sound when taking honey from Filled Porous Honeycomb Blocks.
-
-Fixed Crystalline Flower spawning fresh with tier 0 instead of tier 1.
-
-(Neoforge): Fixed wrong fluid overlay showing on some Bumblezone blocks when submerged.
-
-##### Enchantments:
-Fixed Bumblezone enchantments not tagged as `minecraft:non_treasure`.
-
-##### Entities:
-(Neoforge): Registered spawns for Bee and Variant Bee properly.
-
-##### Misc:
-(Neoforge): Now requires 21.0.82-beta Neoforge or newer
-
-
-### **(V.7.6.14 Changes) (1.21 Minecraft)**
-
-##### Entities:
-(Neoforge): Fixed crash with Bee Queen rendering
-
-Halved the invulnerability timer on Cosmic Crystal Entity so you can damage it twice as fast with very high fire rate weapons!.

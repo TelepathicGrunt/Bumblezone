@@ -24,10 +24,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EnderChestBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BrushableBlockEntity;
+import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
 import net.minecraft.world.level.block.entity.EnderChestBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
@@ -71,6 +73,7 @@ public class KnowingEssenceLootBlockOutlining {
                             blockEntity instanceof RandomizableContainerBlockEntity ||
                             blockEntity instanceof BrushableBlockEntity ||
                             blockEntity instanceof EnderChestBlockEntity ||
+                            blockEntity instanceof DecoratedPotBlockEntity ||
                             block instanceof EnderChestBlock)
                             && !blockState.is(BzTags.KNOWING_BLOCK_ENTITY_PREVENT_HIGHLIGHTING))
                         {
@@ -107,6 +110,59 @@ public class KnowingEssenceLootBlockOutlining {
                                     255);
 
                             drewLines = true;
+                        }
+                    }
+
+                    for (int i = 0; i < chunk.getSectionsCount(); i++) {
+                        LevelChunkSection levelChunkSection = chunk.getSection(i);
+                        if (levelChunkSection.maybeHas(blockState -> blockState.is(BzTags.KNOWING_BLOCK_FORCED_HIGHLIGHTING))) {
+                            int minSectionY = chunk.getMinBuildHeight() + (i * 16);
+                            for (int sectionX = 0; sectionX < 16; sectionX++) {
+                                for (int sectionZ = 0; sectionZ < 16; sectionZ++) {
+                                    for (int sectionY = 0; sectionY < 16; sectionY++) {
+                                        BlockState state = levelChunkSection.getBlockState(sectionX, sectionY, sectionZ);
+                                        if (state.is(BzTags.KNOWING_BLOCK_FORCED_HIGHLIGHTING)) {
+
+                                            BlockPos lootBlockPos = new BlockPos(
+                                                    sectionX + (chunk.getPos().x << 4),
+                                                    minSectionY + sectionY,
+                                                    sectionZ +  (chunk.getPos().z << 4));
+
+                                            if (!((LevelRendererAccessor)levelRenderer).getCullingFrustum().isVisible(new AABB(
+                                                    lootBlockPos.getX() + MIN_CORNER,
+                                                    lootBlockPos.getY() + MIN_CORNER,
+                                                    lootBlockPos.getZ() + MIN_CORNER,
+                                                    lootBlockPos.getX() + MAX_CORNER,
+                                                    lootBlockPos.getY() + MAX_CORNER,
+                                                    lootBlockPos.getZ() + MAX_CORNER)))
+                                            {
+                                                continue;
+                                            }
+
+                                            int colorInt = state.getBlock().defaultMapColor().col;
+                                            int red = FastColor.ARGB32.red(colorInt);
+                                            int green = FastColor.ARGB32.green(colorInt);
+                                            int blue = FastColor.ARGB32.blue(colorInt);
+
+                                            renderLineBox(
+                                                    bufferbuilder,
+                                                    poseStack.last().pose(),
+                                                    (float) (VECTOR_4D_MIN.x() + lootBlockPos.getX() - cameraPos.x()),
+                                                    (float) (VECTOR_4D_MIN.y() + lootBlockPos.getY() - cameraPos.y()),
+                                                    (float) (VECTOR_4D_MIN.z() + lootBlockPos.getZ() - cameraPos.z()),
+                                                    (float) (VECTOR_4D_MAX.x() + lootBlockPos.getX() - cameraPos.x()),
+                                                    (float) (VECTOR_4D_MAX.y() + lootBlockPos.getY() - cameraPos.y()),
+                                                    (float) (VECTOR_4D_MAX.z() + lootBlockPos.getZ() - cameraPos.z()),
+                                                    red,
+                                                    green,
+                                                    blue,
+                                                    255);
+
+                                            drewLines = true;
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

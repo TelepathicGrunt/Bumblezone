@@ -219,7 +219,7 @@ public class PlatformHooksImpl {
 
     public static RegistryAccess getCurrentRegistryAccess() {
         try {
-            if (!EffectiveSide.get().isServer()) {
+            if (EffectiveSide.get().isClient()) {
                 return GeneralUtilsClient.getClientRegistryAccess();
             }
         }
