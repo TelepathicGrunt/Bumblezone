@@ -24,7 +24,7 @@ Don't forget to change &lt;modversion> with the actual latest version of this mo
 dependencies {
    ...
    NEOFORGE: 
-     compileOnly fg.deobf("com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-neoforge")
+     compileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-neoforge"
      
    FABRIC/QUILT: 
      modCompileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-fabric"
@@ -73,14 +73,14 @@ Don't forget to change &lt;modversion> with the actual latest version of this mo
 dependencies {
    ...
    NEOFORGE: 
-     implementation fg.deobf("com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-neoforge")
-     implementation fg.deobf("earth.terrarium.athena:athena-forge-1.20.5:3.4.0")
-     implementation fg.deobf("com.teamresourceful.resourcefullib:resourcefullib-forge-1.20.5:2.6.0-beta.7")
+     implementation "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-neoforge"
+     implementation "earth.terrarium.athena:athena-forge-1.20.5:3.4.0"
+     implementation "com.teamresourceful.resourcefullib:resourcefullib-forge-1.20.5:2.6.0-beta.7"
      
    FABRIC/QUILT: 
      modImplementation "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-fabric"
      modImplementation "earth.terrarium.athena:athena-fabric-1.20.5:3.4.0"
-     implementation fg.deobf("com.teamresourceful.resourcefullib:resourcefullib-fabric-1.20.5:2.6.0-beta.7")
+     implementation "com.teamresourceful.resourcefullib:resourcefullib-fabric-1.20.5:2.6.0-beta.7"
      modImplementation "maven.modrinth:midnightlib:1.5.5-fabric" 
    
    ARCH COMMON MODULE: 
