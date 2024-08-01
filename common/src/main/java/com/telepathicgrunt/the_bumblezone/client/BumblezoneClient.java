@@ -33,6 +33,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal.CosmicC
 import com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal.CosmicCrystalRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.electricring.ElectricRingModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.electricring.ElectricRingRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.client.rendering.honeycrystalshard.HoneyCrystalShardModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.honeycrystalshard.HoneyCrystalShardRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.honeyslime.HoneySlimeRendering;
@@ -53,6 +54,8 @@ import com.telepathicgrunt.the_bumblezone.client.screens.CrystallineFlowerScreen
 import com.telepathicgrunt.the_bumblezone.client.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
+import com.telepathicgrunt.the_bumblezone.entities.datamanagers.queentrades.QueensTradeManager;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzTagsUpdatedEvent;
 import com.telepathicgrunt.the_bumblezone.items.datacomponents.AbilityEssenceActivityData;
 import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
@@ -177,6 +180,7 @@ public class BumblezoneClient {
         BzRegisterArmorProviderEvent.EVENT.addListener(BumblezoneClient::registerArmorProviders);
         BzRegisterEffectRenderersEvent.EVENT.addListener(BumblezoneClient::registerEffectRenderers);
         BzRegisterBlockEntityRendererEvent.EVENT.addListener(BumblezoneClient::registerBlockEntityRenderers);
+        BzTagsUpdatedEvent.EVENT.addListener((tagsUpdatedEvent) -> KnowingEssenceLootBlockOutlining.resetTargetBlockCache());
 
         BzClientFluids.CLIENT_FLUIDS.init();
     }

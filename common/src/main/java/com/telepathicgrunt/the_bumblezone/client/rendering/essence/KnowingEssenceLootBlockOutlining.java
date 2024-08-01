@@ -9,8 +9,9 @@ import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.items.essence.KnowingEssence;
-import com.telepathicgrunt.the_bumblezone.mixin.client.LevelRendererAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -30,12 +31,13 @@ import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.joml.Vector4d;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class KnowingEssenceLootBlockOutlining {
     private static final double DRAW_RADIUS = 0.45D;
@@ -43,14 +45,183 @@ public class KnowingEssenceLootBlockOutlining {
     private static final double MAX_CORNER = 0.5D + DRAW_RADIUS;
     private static final Vector4d VECTOR_4D_MIN = new Vector4d(MIN_CORNER, MIN_CORNER, MIN_CORNER, 1.0D);
     private static final Vector4d VECTOR_4D_MAX = new Vector4d(MAX_CORNER, MAX_CORNER, MAX_CORNER, 1.0D);
+    private static final List<CachedChunkData> CACHED_CHUNK_DATA = new ObjectArrayList<>();
+    private static final Set<Block> CACHED_TARGET_BLOCKS = new ObjectOpenHashSet<>();
+    private static final Set<Block> CACHED_NONTARGET_BLOCKS = new ObjectOpenHashSet<>();
+    private static final int chunkRadius = 4;
+    private static final int chunksToCheck = ((chunkRadius * 2) + 1) * ((chunkRadius * 2) + 1);
+    private static final int chunkPerBatch = 3;
+    private static final int chunkBatches = chunksToCheck / chunkPerBatch;
+    private static final long scanAllChunkTimeframe = 1000;
+    private static final long targetScanTimeIncrement = scanAllChunkTimeframe / chunkBatches;
+    private static long targetScanTime = 0;
+    private static long currentScanIncrement = 0;
+
+    public static void resetTargetBlockCache() {
+        CACHED_TARGET_BLOCKS.clear();
+        CACHED_NONTARGET_BLOCKS.clear();
+    }
 
     public static void outlineLootBlocks(PoseStack poseStack, Camera camera, LevelRenderer levelRenderer) {
         Player player = GeneralUtilsClient.getClientPlayer();
         if (KnowingEssence.IsKnowingEssenceActive(player)) {
             Level level = player.level();
-
             Vec3 cameraPos = camera.getPosition();
+
+            scanChunks(cameraPos, level);
+
+            drawOutlines(poseStack, cameraPos);
+        }
+        else if (!CACHED_CHUNK_DATA.isEmpty()) {
+            CACHED_CHUNK_DATA.clear();
+        }
+    }
+
+    private static void scanChunks(Vec3 cameraPos, Level level) {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime > targetScanTime) {
+            targetScanTime = currentTime + targetScanTimeIncrement;
+
+            while (CACHED_CHUNK_DATA.size() > chunksToCheck) {
+                CACHED_CHUNK_DATA.removeFirst();
+            }
+
             BlockPos worldSpot = BlockPos.containing(cameraPos);
+            ChunkPos centerChunkPos = new ChunkPos(worldSpot);
+            int currentChunk = 0;
+            for (int x = -chunkRadius; x <= chunkRadius; x++) {
+                for (int z = -chunkRadius; z <= chunkRadius; z++) {
+                    currentChunk++;
+                    if (currentChunk <= chunkPerBatch * currentScanIncrement || currentChunk > chunkPerBatch * (currentScanIncrement + 1)) {
+                        continue;
+                    }
+
+                    CACHED_CHUNK_DATA.add(new CachedChunkData(new ObjectArrayList<>()));
+                    LevelChunk chunk = level.getChunk(x + centerChunkPos.x, z + centerChunkPos.z);
+
+                    blockEntityScan(chunk, CACHED_CHUNK_DATA.size() - 1);
+                    blockScan(chunk, CACHED_CHUNK_DATA.size() - 1);
+                }
+            }
+
+            currentScanIncrement++;
+            if (currentScanIncrement >= chunkBatches) {
+                currentScanIncrement = 0;
+            }
+        }
+    }
+
+    private static void blockEntityScan(LevelChunk chunk, int chunkIndex) {
+        for (Map.Entry<BlockPos, BlockEntity> blockEntityEntry : chunk.getBlockEntities().entrySet()) {
+            BlockEntity blockEntity = blockEntityEntry.getValue();
+            BlockState blockState = blockEntity.getBlockState();
+            Block block = blockState.getBlock();
+            if (CACHED_NONTARGET_BLOCKS.contains(block)) {
+                continue;
+            }
+
+            if (CACHED_TARGET_BLOCKS.contains(block) ||
+                ((blockState.is(BzTags.KNOWING_BLOCK_ENTITY_FORCED_HIGHLIGHTING) ||
+                    blockEntity instanceof RandomizableContainerBlockEntity ||
+                    blockEntity instanceof BrushableBlockEntity ||
+                    blockEntity instanceof EnderChestBlockEntity ||
+                    blockEntity instanceof DecoratedPotBlockEntity ||
+                    block instanceof EnderChestBlock)
+                    && !blockState.is(BzTags.KNOWING_BLOCK_ENTITY_PREVENT_HIGHLIGHTING)))
+            {
+                CACHED_TARGET_BLOCKS.add(block);
+
+                BlockPos lootBlockPos = blockEntityEntry.getKey();
+
+                int colorInt = block.defaultMapColor().col;
+                int red = FastColor.ARGB32.red(colorInt);
+                int green = FastColor.ARGB32.green(colorInt);
+                int blue = FastColor.ARGB32.blue(colorInt);
+
+                CACHED_CHUNK_DATA.get(chunkIndex).cachedDrawData.add(
+                    new CachedDrawData(
+                        VECTOR_4D_MIN.x() + lootBlockPos.getX(),
+                        VECTOR_4D_MIN.y() + lootBlockPos.getY(),
+                        VECTOR_4D_MIN.z() + lootBlockPos.getZ(),
+                        VECTOR_4D_MAX.x() + lootBlockPos.getX(),
+                        VECTOR_4D_MAX.y() + lootBlockPos.getY(),
+                        VECTOR_4D_MAX.z() + lootBlockPos.getZ(),
+                        red,
+                        green,
+                        blue));
+            }
+            else {
+                CACHED_NONTARGET_BLOCKS.add(block);
+            }
+        }
+    }
+
+    private static void blockScan(LevelChunk chunk, int chunkIndex) {
+        for (int i = 0; i < chunk.getSectionsCount(); i++) {
+            LevelChunkSection levelChunkSection = chunk.getSection(i);
+            if (!levelChunkSection.hasOnlyAir() &&
+                levelChunkSection.maybeHas(blockState ->
+                    !CACHED_NONTARGET_BLOCKS.contains(blockState.getBlock()) &&
+                    (CACHED_TARGET_BLOCKS.contains(blockState.getBlock()) || blockState.is(BzTags.KNOWING_BLOCK_FORCED_HIGHLIGHTING))))
+            {
+                int minSectionY = chunk.getMinBuildHeight() + (i * 16);
+                for (int sectionX = 0; sectionX < 16; sectionX++) {
+                    for (int sectionZ = 0; sectionZ < 16; sectionZ++) {
+                        for (int sectionY = 0; sectionY < 16; sectionY++) {
+                            BlockState blockState = levelChunkSection.getBlockState(sectionX, sectionY, sectionZ);
+                            Block block = blockState.getBlock();
+
+                            if (CACHED_NONTARGET_BLOCKS.contains(block)) {
+                                continue;
+                            }
+
+                            if (CACHED_TARGET_BLOCKS.contains(blockState.getBlock()) || blockState.is(BzTags.KNOWING_BLOCK_FORCED_HIGHLIGHTING)) {
+                                CACHED_TARGET_BLOCKS.add(block);
+
+                                BlockPos lootBlockPos = new BlockPos(
+                                        sectionX + (chunk.getPos().x << 4),
+                                        minSectionY + sectionY,
+                                        sectionZ +  (chunk.getPos().z << 4));
+
+                                int colorInt = block.defaultMapColor().col;
+                                int red = FastColor.ARGB32.red(colorInt);
+                                int green = FastColor.ARGB32.green(colorInt);
+                                int blue = FastColor.ARGB32.blue(colorInt);
+
+                                CACHED_CHUNK_DATA.get(chunkIndex).cachedDrawData.add(
+                                        new CachedDrawData(
+                                                VECTOR_4D_MIN.x() + lootBlockPos.getX(),
+                                                VECTOR_4D_MIN.y() + lootBlockPos.getY(),
+                                                VECTOR_4D_MIN.z() + lootBlockPos.getZ(),
+                                                VECTOR_4D_MAX.x() + lootBlockPos.getX(),
+                                                VECTOR_4D_MAX.y() + lootBlockPos.getY(),
+                                                VECTOR_4D_MAX.z() + lootBlockPos.getZ(),
+                                                red,
+                                                green,
+                                                blue));
+                            }
+                            else {
+                                CACHED_NONTARGET_BLOCKS.add(block);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private static void drawOutlines(PoseStack poseStack, Vec3 cameraPos) {
+        if (!CACHED_CHUNK_DATA.isEmpty()) {
+            boolean hasEntry = false;
+            for (CachedChunkData cachedChunkData : CACHED_CHUNK_DATA) {
+                if (!cachedChunkData.cachedDrawData.isEmpty()) {
+                    hasEntry = true;
+                    break;
+                }
+            }
+            if (!hasEntry) {
+                return;
+            }
 
             poseStack.pushPose();
 
@@ -58,149 +229,59 @@ public class KnowingEssenceLootBlockOutlining {
             RenderSystem.setShader(GameRenderer::getPositionColorShader);
             RenderSystem.disableDepthTest();
             BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
-
-            boolean drewLines = false;
-            int chunkRadius = 4;
-            ChunkPos centerChunkPos = new ChunkPos(worldSpot);
-            for (int x = -chunkRadius; x <= chunkRadius; x++) {
-                for (int z = -chunkRadius; z <= chunkRadius; z++) {
-                    LevelChunk chunk = level.getChunk(x + centerChunkPos.x, z + centerChunkPos.z);
-                    for (Map.Entry<BlockPos, BlockEntity> blockEntityEntry : chunk.getBlockEntities().entrySet()) {
-                        BlockEntity blockEntity = blockEntityEntry.getValue();
-                        BlockState blockState = blockEntity.getBlockState();
-                        Block block = blockState.getBlock();
-                        if ((blockState.is(BzTags.KNOWING_BLOCK_ENTITY_FORCED_HIGHLIGHTING) ||
-                            blockEntity instanceof RandomizableContainerBlockEntity ||
-                            blockEntity instanceof BrushableBlockEntity ||
-                            blockEntity instanceof EnderChestBlockEntity ||
-                            blockEntity instanceof DecoratedPotBlockEntity ||
-                            block instanceof EnderChestBlock)
-                            && !blockState.is(BzTags.KNOWING_BLOCK_ENTITY_PREVENT_HIGHLIGHTING))
-                        {
-                             BlockPos lootBlockPos = blockEntityEntry.getKey();
-
-                            if (!((LevelRendererAccessor)levelRenderer).getCullingFrustum().isVisible(new AABB(
-                                    lootBlockPos.getX() + MIN_CORNER,
-                                    lootBlockPos.getY() + MIN_CORNER,
-                                    lootBlockPos.getZ() + MIN_CORNER,
-                                    lootBlockPos.getX() + MAX_CORNER,
-                                    lootBlockPos.getY() + MAX_CORNER,
-                                    lootBlockPos.getZ() + MAX_CORNER)))
-                            {
-                                continue;
-                            }
-
-                            int colorInt = block.defaultMapColor().col;
-                            int red = FastColor.ARGB32.red(colorInt);
-                            int green = FastColor.ARGB32.green(colorInt);
-                            int blue = FastColor.ARGB32.blue(colorInt);
-
+            Matrix4f lastPose = poseStack.last().pose();
+            CACHED_CHUNK_DATA.forEach(cachedChunkData ->
+                    cachedChunkData.cachedDrawData.forEach(cachedDrawData ->
                             renderLineBox(
-                                    bufferbuilder,
-                                    poseStack.last().pose(),
-                                    (float) (VECTOR_4D_MIN.x() + lootBlockPos.getX() - cameraPos.x()),
-                                    (float) (VECTOR_4D_MIN.y() + lootBlockPos.getY() - cameraPos.y()),
-                                    (float) (VECTOR_4D_MIN.z() + lootBlockPos.getZ() - cameraPos.z()),
-                                    (float) (VECTOR_4D_MAX.x() + lootBlockPos.getX() - cameraPos.x()),
-                                    (float) (VECTOR_4D_MAX.y() + lootBlockPos.getY() - cameraPos.y()),
-                                    (float) (VECTOR_4D_MAX.z() + lootBlockPos.getZ() - cameraPos.z()),
-                                    red,
-                                    green,
-                                    blue,
-                                    255);
-
-                            drewLines = true;
-                        }
-                    }
-
-                    for (int i = 0; i < chunk.getSectionsCount(); i++) {
-                        LevelChunkSection levelChunkSection = chunk.getSection(i);
-                        if (levelChunkSection.maybeHas(blockState -> blockState.is(BzTags.KNOWING_BLOCK_FORCED_HIGHLIGHTING))) {
-                            int minSectionY = chunk.getMinBuildHeight() + (i * 16);
-                            for (int sectionX = 0; sectionX < 16; sectionX++) {
-                                for (int sectionZ = 0; sectionZ < 16; sectionZ++) {
-                                    for (int sectionY = 0; sectionY < 16; sectionY++) {
-                                        BlockState state = levelChunkSection.getBlockState(sectionX, sectionY, sectionZ);
-                                        if (state.is(BzTags.KNOWING_BLOCK_FORCED_HIGHLIGHTING)) {
-
-                                            BlockPos lootBlockPos = new BlockPos(
-                                                    sectionX + (chunk.getPos().x << 4),
-                                                    minSectionY + sectionY,
-                                                    sectionZ +  (chunk.getPos().z << 4));
-
-                                            if (!((LevelRendererAccessor)levelRenderer).getCullingFrustum().isVisible(new AABB(
-                                                    lootBlockPos.getX() + MIN_CORNER,
-                                                    lootBlockPos.getY() + MIN_CORNER,
-                                                    lootBlockPos.getZ() + MIN_CORNER,
-                                                    lootBlockPos.getX() + MAX_CORNER,
-                                                    lootBlockPos.getY() + MAX_CORNER,
-                                                    lootBlockPos.getZ() + MAX_CORNER)))
-                                            {
-                                                continue;
-                                            }
-
-                                            int colorInt = state.getBlock().defaultMapColor().col;
-                                            int red = FastColor.ARGB32.red(colorInt);
-                                            int green = FastColor.ARGB32.green(colorInt);
-                                            int blue = FastColor.ARGB32.blue(colorInt);
-
-                                            renderLineBox(
-                                                    bufferbuilder,
-                                                    poseStack.last().pose(),
-                                                    (float) (VECTOR_4D_MIN.x() + lootBlockPos.getX() - cameraPos.x()),
-                                                    (float) (VECTOR_4D_MIN.y() + lootBlockPos.getY() - cameraPos.y()),
-                                                    (float) (VECTOR_4D_MIN.z() + lootBlockPos.getZ() - cameraPos.z()),
-                                                    (float) (VECTOR_4D_MAX.x() + lootBlockPos.getX() - cameraPos.x()),
-                                                    (float) (VECTOR_4D_MAX.y() + lootBlockPos.getY() - cameraPos.y()),
-                                                    (float) (VECTOR_4D_MAX.z() + lootBlockPos.getZ() - cameraPos.z()),
-                                                    red,
-                                                    green,
-                                                    blue,
-                                                    255);
-
-                                            drewLines = true;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            
-            if (drewLines) {
-                BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
-            }
+                                bufferbuilder,
+                                lastPose,
+                                (float) (cachedDrawData.minX - cameraPos.x()),
+                                (float) (cachedDrawData.minY - cameraPos.y()),
+                                (float) (cachedDrawData.minZ - cameraPos.z()),
+                                (float) (cachedDrawData.maxX - cameraPos.x()),
+                                (float) (cachedDrawData.maxY - cameraPos.y()),
+                                (float) (cachedDrawData.maxZ - cameraPos.z()),
+                                cachedDrawData.red,
+                                cachedDrawData.green,
+                                cachedDrawData.blue
+                    )));
+            BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
             poseStack.popPose();
             RenderSystem.enableDepthTest();
             RenderType.cutout().clearRenderState();
         }
     }
 
-    private static void renderLineBox(BufferBuilder builder, Matrix4f pose, float minX, float minY, float minZ, float maxX, float maxY, float maxZ, int red, int green, int blue, int alpha) {
-        builder.addVertex(pose, minX, minY, minZ).setColor(red, green, blue, alpha).setNormal(1.0F, 0.0F, 0.0F);
-        builder.addVertex(pose, maxX, minY, minZ).setColor(red, green, blue, alpha).setNormal(1.0F, 0.0F, 0.0F);
-        builder.addVertex(pose, minX, minY, minZ).setColor(red, green, blue, alpha).setNormal(0.0F, 1.0F, 0.0F);
-        builder.addVertex(pose, minX, maxY, minZ).setColor(red, green, blue, alpha).setNormal(0.0F, 1.0F, 0.0F);
-        builder.addVertex(pose, minX, minY, minZ).setColor(red, green, blue, alpha).setNormal(0.0F, 0.0F, 1.0F);
-        builder.addVertex(pose, minX, minY, maxZ).setColor(red, green, blue, alpha).setNormal(0.0F, 0.0F, 1.0F);
-        builder.addVertex(pose, maxX, minY, minZ).setColor(red, green, blue, alpha).setNormal(0.0F, 1.0F, 0.0F);
-        builder.addVertex(pose, maxX, maxY, minZ).setColor(red, green, blue, alpha).setNormal(0.0F, 1.0F, 0.0F);
-        builder.addVertex(pose, maxX, maxY, minZ).setColor(red, green, blue, alpha).setNormal(-1.0F, 0.0F, 0.0F);
-        builder.addVertex(pose, minX, maxY, minZ).setColor(red, green, blue, alpha).setNormal(-1.0F, 0.0F, 0.0F);
-        builder.addVertex(pose, minX, maxY, minZ).setColor(red, green, blue, alpha).setNormal(0.0F, 0.0F, 1.0F);
-        builder.addVertex(pose, minX, maxY, maxZ).setColor(red, green, blue, alpha).setNormal(0.0F, 0.0F, 1.0F);
-        builder.addVertex(pose, minX, maxY, maxZ).setColor(red, green, blue, alpha).setNormal(0.0F, -1.0F, 0.0F);
-        builder.addVertex(pose, minX, minY, maxZ).setColor(red, green, blue, alpha).setNormal(0.0F, -1.0F, 0.0F);
-        builder.addVertex(pose, minX, minY, maxZ).setColor(red, green, blue, alpha).setNormal(1.0F, 0.0F, 0.0F);
-        builder.addVertex(pose, maxX, minY, maxZ).setColor(red, green, blue, alpha).setNormal(1.0F, 0.0F, 0.0F);
-        builder.addVertex(pose, maxX, minY, maxZ).setColor(red, green, blue, alpha).setNormal(0.0F, 0.0F, -1.0F);
-        builder.addVertex(pose, maxX, minY, minZ).setColor(red, green, blue, alpha).setNormal(0.0F, 0.0F, -1.0F);
-        builder.addVertex(pose, minX, maxY, maxZ).setColor(red, green, blue, alpha).setNormal(1.0F, 0.0F, 0.0F);
-        builder.addVertex(pose, maxX, maxY, maxZ).setColor(red, green, blue, alpha).setNormal(1.0F, 0.0F, 0.0F);
-        builder.addVertex(pose, maxX, minY, maxZ).setColor(red, green, blue, alpha).setNormal(0.0F, 1.0F, 0.0F);
-        builder.addVertex(pose, maxX, maxY, maxZ).setColor(red, green, blue, alpha).setNormal(0.0F, 1.0F, 0.0F);
-        builder.addVertex(pose, maxX, maxY, minZ).setColor(red, green, blue, alpha).setNormal(0.0F, 0.0F, 1.0F);
-        builder.addVertex(pose, maxX, maxY, maxZ).setColor(red, green, blue, alpha).setNormal(0.0F, 0.0F, 1.0F);
+    private static void renderLineBox(BufferBuilder builder, Matrix4f pose, float minX, float minY, float minZ, float maxX, float maxY, float maxZ, int red, int green, int blue) {
+        builder.addVertex(pose, minX, minY, minZ).setColor(red, green, blue, 255).setNormal(1.0F, 0.0F, 0.0F);
+        builder.addVertex(pose, maxX, minY, minZ).setColor(red, green, blue, 255).setNormal(1.0F, 0.0F, 0.0F);
+        builder.addVertex(pose, minX, minY, minZ).setColor(red, green, blue, 255).setNormal(0.0F, 1.0F, 0.0F);
+        builder.addVertex(pose, minX, maxY, minZ).setColor(red, green, blue, 255).setNormal(0.0F, 1.0F, 0.0F);
+        builder.addVertex(pose, minX, minY, minZ).setColor(red, green, blue, 255).setNormal(0.0F, 0.0F, 1.0F);
+        builder.addVertex(pose, minX, minY, maxZ).setColor(red, green, blue, 255).setNormal(0.0F, 0.0F, 1.0F);
+        builder.addVertex(pose, maxX, minY, minZ).setColor(red, green, blue, 255).setNormal(0.0F, 1.0F, 0.0F);
+        builder.addVertex(pose, maxX, maxY, minZ).setColor(red, green, blue, 255).setNormal(0.0F, 1.0F, 0.0F);
+        builder.addVertex(pose, maxX, maxY, minZ).setColor(red, green, blue, 255).setNormal(-1.0F, 0.0F, 0.0F);
+        builder.addVertex(pose, minX, maxY, minZ).setColor(red, green, blue, 255).setNormal(-1.0F, 0.0F, 0.0F);
+        builder.addVertex(pose, minX, maxY, minZ).setColor(red, green, blue, 255).setNormal(0.0F, 0.0F, 1.0F);
+        builder.addVertex(pose, minX, maxY, maxZ).setColor(red, green, blue, 255).setNormal(0.0F, 0.0F, 1.0F);
+        builder.addVertex(pose, minX, maxY, maxZ).setColor(red, green, blue, 255).setNormal(0.0F, -1.0F, 0.0F);
+        builder.addVertex(pose, minX, minY, maxZ).setColor(red, green, blue, 255).setNormal(0.0F, -1.0F, 0.0F);
+        builder.addVertex(pose, minX, minY, maxZ).setColor(red, green, blue, 255).setNormal(1.0F, 0.0F, 0.0F);
+        builder.addVertex(pose, maxX, minY, maxZ).setColor(red, green, blue, 255).setNormal(1.0F, 0.0F, 0.0F);
+        builder.addVertex(pose, maxX, minY, maxZ).setColor(red, green, blue, 255).setNormal(0.0F, 0.0F, -1.0F);
+        builder.addVertex(pose, maxX, minY, minZ).setColor(red, green, blue, 255).setNormal(0.0F, 0.0F, -1.0F);
+        builder.addVertex(pose, minX, maxY, maxZ).setColor(red, green, blue, 255).setNormal(1.0F, 0.0F, 0.0F);
+        builder.addVertex(pose, maxX, maxY, maxZ).setColor(red, green, blue, 255).setNormal(1.0F, 0.0F, 0.0F);
+        builder.addVertex(pose, maxX, minY, maxZ).setColor(red, green, blue, 255).setNormal(0.0F, 1.0F, 0.0F);
+        builder.addVertex(pose, maxX, maxY, maxZ).setColor(red, green, blue, 255).setNormal(0.0F, 1.0F, 0.0F);
+        builder.addVertex(pose, maxX, maxY, minZ).setColor(red, green, blue, 255).setNormal(0.0F, 0.0F, 1.0F);
+        builder.addVertex(pose, maxX, maxY, maxZ).setColor(red, green, blue, 255).setNormal(0.0F, 0.0F, 1.0F);
+    }
+
+    private record CachedChunkData(List<CachedDrawData> cachedDrawData){
+    }
+
+    private record CachedDrawData(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, int red, int green, int blue) {
     }
 }
