@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "tropicraft:black_beach_float",
+    "required": false
+  },
+  {
+    "id": "tropicraft:blue_beach_float",
+    "required": false
+  },
+  {
+    "id": "tropicraft:brown_beach_float",
+    "required": false
+  },
+  {
+    "id": "tropicraft:cyan_beach_float",
+    "required": false
+  },
+  {
+    "id": "tropicraft:gray_beach_float",
+    "required": false
+  },
+  {
+    "id": "tropicraft:green_beach_float",
+    "required": false
+  },
+  {
+    "id": "tropicraft:light_blue_beach_float",
+    "required": false
+  },
+  {
+    "id": "tropicraft:light_gray_beach_float",
+    "required": false
+  },
+  {
+    "id": "tropicraft:lime_beach_float",
+    "required": false
+  },
+  {
+    "id": "tropicraft:magenta_beach_float",
+    "required": false
+  },
+  {
+    "id": "tropicraft:orange_beach_float",
+    "required": false
+  },
+  {
+    "id": "tropicraft:pink_beach_float",
+    "required": false
+  },
+  {
+    "id": "tropicraft:purple_beach_float",
+    "required": false
+  },
+  {
+    "id": "tropicraft:red_beach_float",
+    "required": false
+  },
+  {
+    "id": "tropicraft:white_beach_float",
+    "required": false
+  },
+  {
+    "id": "tropicraft:yellow_beach_float",
+    "required": false
+  }]
+}

@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "tropicraft:black_umbrella",
+    "required": false
+  },
+  {
+    "id": "tropicraft:blue_umbrella",
+    "required": false
+  },
+  {
+    "id": "tropicraft:brown_umbrella",
+    "required": false
+  },
+  {
+    "id": "tropicraft:cyan_umbrella",
+    "required": false
+  },
+  {
+    "id": "tropicraft:gray_umbrella",
+    "required": false
+  },
+  {
+    "id": "tropicraft:green_umbrella",
+    "required": false
+  },
+  {
+    "id": "tropicraft:light_blue_umbrella",
+    "required": false
+  },
+  {
+    "id": "tropicraft:light_gray_umbrella",
+    "required": false
+  },
+  {
+    "id": "tropicraft:lime_umbrella",
+    "required": false
+  },
+  {
+    "id": "tropicraft:magenta_umbrella",
+    "required": false
+  },
+  {
+    "id": "tropicraft:orange_umbrella",
+    "required": false
+  },
+  {
+    "id": "tropicraft:pink_umbrella",
+    "required": false
+  },
+  {
+    "id": "tropicraft:purple_umbrella",
+    "required": false
+  },
+  {
+    "id": "tropicraft:red_umbrella",
+    "required": false
+  },
+  {
+    "id": "tropicraft:white_umbrella",
+    "required": false
+  },
+  {
+    "id": "tropicraft:yellow_umbrella",
+    "required": false
+  }]
+}

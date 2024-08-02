@@ -1,0 +1,9 @@
+{
+  "is_color_randomizer_trade": true,
+  "randomizes": [
+    {
+      "id": "#alexs_caves:radon_lamps",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "floralis:black_dye_block",
+    "required": false
+  },
+  {
+    "id": "floralis:blue_dye_block",
+    "required": false
+  },
+  {
+    "id": "floralis:brown_dye_block",
+    "required": false
+  },
+  {
+    "id": "floralis:cyan_dye_block",
+    "required": false
+  },
+  {
+    "id": "floralis:gray_dye_block",
+    "required": false
+  },
+  {
+    "id": "floralis:green_dye_block",
+    "required": false
+  },
+  {
+    "id": "floralis:light_blue_dye_block",
+    "required": false
+  },
+  {
+    "id": "floralis:light_gray_dye_block",
+    "required": false
+  },
+  {
+    "id": "floralis:lime_dye_block",
+    "required": false
+  },
+  {
+    "id": "floralis:magenta_dye_block",
+    "required": false
+  },
+  {
+    "id": "floralis:orange_dye_block",
+    "required": false
+  },
+  {
+    "id": "floralis:pink_dye_block",
+    "required": false
+  },
+  {
+    "id": "floralis:purple_dye_block",
+    "required": false
+  },
+  {
+    "id": "floralis:red_dye_block",
+    "required": false
+  },
+  {
+    "id": "floralis:white_dye_block",
+    "required": false
+  },
+  {
+    "id": "floralis:yellow_dye_block",
+    "required": false
+  }]
+}

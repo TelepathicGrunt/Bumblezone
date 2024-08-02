@@ -1,0 +1,8 @@
+{
+  "is_color_randomizer_trade": true,
+  "randomizes": [
+  {
+    "id": "#the_bumblezone:modded/ad_astra_industrial_lamps",
+    "required": false
+  }]
+}

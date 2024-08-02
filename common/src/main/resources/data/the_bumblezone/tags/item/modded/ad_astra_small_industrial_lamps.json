@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "ad_astra:small_black_industrial_lamp",
+    "required": false
+  },
+  {
+    "id": "ad_astra:small_blue_industrial_lamp",
+    "required": false
+  },
+  {
+    "id": "ad_astra:small_brown_industrial_lamp",
+    "required": false
+  },
+  {
+    "id": "ad_astra:small_cyan_industrial_lamp",
+    "required": false
+  },
+  {
+    "id": "ad_astra:small_gray_industrial_lamp",
+    "required": false
+  },
+  {
+    "id": "ad_astra:small_green_industrial_lamp",
+    "required": false
+  },
+  {
+    "id": "ad_astra:small_light_blue_industrial_lamp",
+    "required": false
+  },
+  {
+    "id": "ad_astra:small_light_gray_industrial_lamp",
+    "required": false
+  },
+  {
+    "id": "ad_astra:small_lime_industrial_lamp",
+    "required": false
+  },
+  {
+    "id": "ad_astra:small_magenta_industrial_lamp",
+    "required": false
+  },
+  {
+    "id": "ad_astra:small_orange_industrial_lamp",
+    "required": false
+  },
+  {
+    "id": "ad_astra:small_pink_industrial_lamp",
+    "required": false
+  },
+  {
+    "id": "ad_astra:small_purple_industrial_lamp",
+    "required": false
+  },
+  {
+    "id": "ad_astra:small_red_industrial_lamp",
+    "required": false
+  },
+  {
+    "id": "ad_astra:small_white_industrial_lamp",
+    "required": false
+  },
+  {
+    "id": "ad_astra:small_yellow_industrial_lamp",
+    "required": false
+  }]
+}

@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "botanypotstiers:elite_black_terracotta_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_blue_terracotta_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_brown_terracotta_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_cyan_terracotta_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_gray_terracotta_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_green_terracotta_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_light_blue_terracotta_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_light_gray_terracotta_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_lime_terracotta_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_magenta_terracotta_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_orange_terracotta_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_pink_terracotta_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_purple_terracotta_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_red_terracotta_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_white_terracotta_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_yellow_terracotta_botany_pot",
+    "required": false
+  }]
+}

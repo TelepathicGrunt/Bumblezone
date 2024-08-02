@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "botanypotstiers:elite_black_concrete_botany_hopper_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_blue_concrete_botany_hopper_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_brown_concrete_botany_hopper_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_cyan_concrete_botany_hopper_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_gray_concrete_botany_hopper_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_green_concrete_botany_hopper_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_light_blue_concrete_botany_hopper_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_light_gray_concrete_botany_hopper_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_lime_concrete_botany_hopper_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_magenta_concrete_botany_hopper_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_orange_concrete_botany_hopper_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_pink_concrete_botany_hopper_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_purple_concrete_botany_hopper_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_red_concrete_botany_hopper_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_white_concrete_botany_hopper_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:elite_yellow_concrete_botany_hopper_pot",
+    "required": false
+  }]
+}

@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "convenientdecor:black_plastic_shovel",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:blue_plastic_shovel",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:brown_plastic_shovel",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:cyan_plastic_shovel",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:gray_plastic_shovel",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:green_plastic_shovel",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:light_blue_plastic_shovel",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:light_gray_plastic_shovel",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:lime_plastic_shovel",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:magenta_plastic_shovel",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:orange_plastic_shovel",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:pink_plastic_shovel",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:purple_plastic_shovel",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:red_plastic_shovel",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:white_plastic_shovel",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:yellow_plastic_shovel",
+    "required": false
+  }]
+}

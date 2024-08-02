@@ -1,0 +1,8 @@
+{
+  "is_color_randomizer_trade": true,
+  "randomizes": [
+  {
+    "id": "#the_bumblezone:modded/skinnedlanterns_paper_soul_lantern_blocks",
+    "required": false
+  }]
+}

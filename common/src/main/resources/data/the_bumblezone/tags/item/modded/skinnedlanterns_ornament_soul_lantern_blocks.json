@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "skinnedlanterns:ornament_black_soul_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_blue_soul_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_brown_soul_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_cyan_soul_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_gray_soul_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_green_soul_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_light_blue_soul_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_light_gray_soul_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_lime_soul_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_magenta_soul_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_orange_soul_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_pink_soul_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_purple_soul_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_red_soul_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_white_soul_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_yellow_soul_lantern_block",
+    "required": false
+  }]
+}
