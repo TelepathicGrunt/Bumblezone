@@ -14,6 +14,8 @@ Essence of Knowledge will now highlight Rare Ice's rare ice blocks and certain o
 
 Added Bee Queen color randomizing trades for Arts and Craft's Chalk Sticks, Paintbrushes, and Decorated Pots.
 
+Added Bee Queen color randomizing trades for Handcrafted's crockery, cushions, and sheets!
+
 
 ### **(V.7.4.14 Changes) (1.20.1 Minecraft)**
 
