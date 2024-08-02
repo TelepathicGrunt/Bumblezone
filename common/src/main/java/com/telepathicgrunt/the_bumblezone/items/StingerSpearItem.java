@@ -73,7 +73,7 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
             int remainingDuration = this.getUseDuration(itemStack, player) - currentDuration;
             if (remainingDuration >= 10) {
                 if (!level.isClientSide) {
-                    itemStack.hurtAndBreak(1, player, livingEntity.getUsedItemHand()  == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+                    itemStack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(livingEntity.getUsedItemHand()));
                     ThrownStingerSpearEntity thrownStingerSpear = new ThrownStingerSpearEntity(level, player, itemStack, itemStack);
                     thrownStingerSpear.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 3.0F, 1.0F);
                     if (player.getAbilities().instabuild) {

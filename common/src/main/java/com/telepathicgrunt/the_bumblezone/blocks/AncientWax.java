@@ -11,6 +11,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
@@ -64,7 +65,7 @@ public class AncientWax extends Block implements AncientWaxBase {
                     BzCriterias.CARVE_WAX_TRIGGER.get().trigger(serverPlayer, position);
 
                     if (!serverPlayer.getAbilities().instabuild) {
-                        itemStack.hurtAndBreak(1, serverPlayer, playerHand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+                        itemStack.hurtAndBreak(1, serverPlayer, LivingEntity.getSlotForHand(playerHand));
                     }
                 }
 
