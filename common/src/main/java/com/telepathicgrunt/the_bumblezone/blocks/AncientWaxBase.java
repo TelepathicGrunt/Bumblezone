@@ -85,7 +85,7 @@ public interface AncientWaxBase {
                 }
 
                 level.setBlock(blockPos, newState, 3);
-                return ItemInteractionResult.SUCCESS;
+                return ItemInteractionResult.sidedSuccess(level.isClientSide());
             }
 
         }
