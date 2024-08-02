@@ -1,0 +1,37 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "ae2:mysterious_cube",
+      "required": false
+    },
+    {
+      "id": "betterarcheology:vase",
+      "required": false
+    },
+    {
+      "id": "betterarcheology:vase_creeper",
+      "required": false
+    },
+    {
+      "id": "betterarcheology:vase_green",
+      "required": false
+    },
+    {
+      "id": "deeperdarker:ancient_vase",
+      "required": false
+    },
+    {
+      "id": "deeperdarker:infested_sculk",
+      "required": false
+    },
+    {
+      "id": "eldritch_end:suspicious_fronds",
+      "required": false
+    },
+    {
+      "id": "oxidized:copper_trap",
+      "required": false
+    }
+  ]
+}

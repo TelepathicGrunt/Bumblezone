@@ -20,6 +20,7 @@ import com.telepathicgrunt.the_bumblezone.client.particles.SparkleParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.VoiceParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.WindParticle;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HiddenEffectIconRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.client.rendering.variantbee.BackupVariantBeeRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.variantbee.BackupVariantBeeModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.armor.BeeArmorModel;
@@ -74,6 +75,7 @@ import com.telepathicgrunt.the_bumblezone.events.client.RegisterMenuScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterParticleEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterRenderTypeEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterShaderEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.TagsUpdatedEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
@@ -179,6 +181,7 @@ public class BumblezoneClient {
         RegisterArmorProviderEvent.EVENT.addListener(BumblezoneClient::registerArmorProviders);
         RegisterEffectRenderersEvent.EVENT.addListener(BumblezoneClient::registerEffectRenderers);
         RegisterBlockEntityRendererEvent.EVENT.addListener(BumblezoneClient::registerBlockEntityRenderers);
+        TagsUpdatedEvent.EVENT.addListener((tagsUpdatedEvent) -> KnowingEssenceLootBlockOutlining.resetTargetBlockCache());
     }
 
     public static void clientSetup(ClientSetupEnqueuedEvent event) {

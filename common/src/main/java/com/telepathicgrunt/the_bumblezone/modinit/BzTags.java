@@ -55,6 +55,8 @@ public class BzTags {
     public static final TagKey<Block> LUMINESCENT_WAX_LIGHT_NODES = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "luminescent_wax/light_nodes"));
     public static final TagKey<Block> KNOWING_BLOCK_ENTITY_FORCED_HIGHLIGHTING = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/knowing/block_entity_forced_highlighting"));
     public static final TagKey<Block> KNOWING_BLOCK_ENTITY_PREVENT_HIGHLIGHTING = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/knowing/block_entity_prevent_highlighting"));
+    public static final TagKey<Block> KNOWING_BLOCK_FORCED_HIGHLIGHTING = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/knowing/block_forced_highlighting"));
+    public static final TagKey<Block> KNOWING_BLOCK_PREVENT_HIGHLIGHTING = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/knowing/block_prevent_highlighting"));
     public static final TagKey<Block> LIFE_FORCE_DISALLOWED_GROW_PLANT = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/life/force_disallowed_grow_plant"));
     public static final TagKey<Block> LIFE_GROW_PLANTS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/life/grow_plants"));
     public static final TagKey<Block> LIFE_THREE_HIGH_PILLAR_PLANT = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/life/three_high_pillar_plant"));

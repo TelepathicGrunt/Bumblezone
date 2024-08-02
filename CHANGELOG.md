@@ -1,7 +1,14 @@
 ### **(V.7.4.15 Changes) (1.20.1 Minecraft)**
 
+##### Items:
+Essence of Knowledge will now highlight Silverfish infested blocks, Vaults, Decorated Pots, and Trial Spawners.
+ Added `the_bumblezone:essence/knowing/block_disable_highlighting` block tag to disallow highlighting non-Block Entity blocks!
+ Added `the_bumblezone:essence/knowing/block_forced_highlighting` block tag to force allow highlighting non-Block Entity blocks!
+
 ##### Mod Compat:
-Essence of Knowledge will now highlight Rare Ice's rare ice blocks.
+Essence of Knowledge will now highlight Rare Ice's rare ice blocks and certain other mod's blocks now.
+
+Added Bee Queen color randomizing trades for Arts and Craft's Chalk Sticks, Paintbrushes, and Decorated Pots.
 
 
 ### **(V.7.4.14 Changes) (1.20.1 Minecraft)**
@@ -14,23 +21,3 @@ Made sure Bees spawning in Bumblezone are spawned in generated/loaded chunks.
 
 ##### Mod Compat:
 Recovered more amount of memory for EMI, REI compat. Around 10MB to 20MB in a sizable pack with EMI for example.
-
-
-### **(V.7.4.12 Changes) (1.20.1 Minecraft)**
-
-##### Blocks:
-Pointed Dripstone under Sugar Water now will fill below Cauldron with Water!
-
-##### Mod Compat:
-Recovered a significant amount of memory for EMI compat.
-
-
-### **(V.7.4.11 Changes) (1.20.1 Minecraft)**
-
-##### Blocks:
-Play sound when taking honey from Filled Porous Honeycomb Blocks.
-
-##### Entities:
-Halved the invulnerability timer on Cosmic Crystal Entity so you can damage it twice as fast with very high fire rate weapons!
-
-
