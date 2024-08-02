@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.FoxAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
@@ -104,16 +105,19 @@ public class KnowingEssence extends AbilityEssenceItem {
                     List<StructureStart> structureStarts = structureManager.startsForStructure(new ChunkPos(serverPlayer.blockPosition()), s -> true);
                     List<Structure> structures = new ArrayList<>();
 
+                    Registry<Structure> structureRegistry = level.registryAccess().registry(Registries.STRUCTURE).get();
+
                     for(StructureStart structureStart : structureStarts) {
                         if (structureStart.getBoundingBox().isInside(serverPlayer.blockPosition())) {
-                            structures.add(structureStart.getStructure());
+                            if (!GeneralUtils.isInTag(structureRegistry, BzTags.KNOWING_PREVENT_DISPLAYING_NAME, structureStart.getStructure())) {
+                                structures.add(structureStart.getStructure());
+                            }
                         }
                     }
 
                     CompoundTag tag = stack.getOrCreateTag();
                     if (!structures.isEmpty()) {
                         StringBuilder stringBuilder = new StringBuilder();
-                        Registry<Structure> structureRegistry = level.registryAccess().registry(Registries.STRUCTURE).get();
                         int structureCount = 0;
 
                         for (Structure structure : structures) {

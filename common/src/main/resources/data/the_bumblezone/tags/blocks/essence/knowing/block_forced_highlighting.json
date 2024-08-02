@@ -30,7 +30,15 @@
       "required": false
     },
     {
+      "id": "graveyard:vase_block",
+      "required": false
+    },
+    {
       "id": "oxidized:copper_trap",
+      "required": false
+    },
+    {
+      "id": "supplementaries:urn",
       "required": false
     }
   ]

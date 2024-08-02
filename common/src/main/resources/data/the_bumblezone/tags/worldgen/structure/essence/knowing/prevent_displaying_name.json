@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "alexscaves:acid_pit",
+      "required": false
+    },
+    {
+      "id": "alexscaves:ferrocave",
+      "required": false
+    },
+    {
+      "id": "alexscaves:forlorn_canyon",
+      "required": false
+    },
+    {
+      "id": "alexscaves:ocean_trench",
+      "required": false
+    },
+    {
+      "id": "alexscaves:dino_bowl",
+      "required": false
+    }
+  ]
+}
