@@ -19,9 +19,7 @@ Pollen Puff thrown at Mobs of Mythology's Sporeling mob will spawn red or brown 
 
 Pollen Puff thrown at Arts and Craft's Lotus Flower may multiply the block.
 
-Added Bee Queen color randomizing trades for Arts and Craft's Chalk Sticks, Paintbrushes, and Decorated Pots.
-
-Added Bee Queen color randomizing trades for Handcrafted's crockery, cushions, and sheets!
+Added Bee Queen color randomizing trades for Arts and Craft, Handcrafted, MekanismAdditions, Mo' Glass, SecurityCraft!
 
 
 ### **(V.7.6.21 Changes) (1.21 Minecraft)**

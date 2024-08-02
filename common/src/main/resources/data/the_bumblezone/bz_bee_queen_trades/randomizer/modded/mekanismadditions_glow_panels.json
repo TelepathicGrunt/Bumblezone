@@ -1,0 +1,11 @@
+
+
+{
+  "is_color_randomizer_trade": true,
+  "randomizes": [
+    {
+      "id": "#mekanismadditions:glow_panels",
+      "required": false
+    }
+  ]
+}
