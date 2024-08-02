@@ -56,6 +56,7 @@ public class ModChecker {
 	public static boolean tropicraftPresent = false;
 	public static boolean jeedPresent = false;
 	public static boolean tokenEnchanterPresent = false;
+	public static boolean framedBlocksPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --

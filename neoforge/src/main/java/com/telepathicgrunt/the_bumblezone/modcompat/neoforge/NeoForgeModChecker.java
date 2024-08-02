@@ -2,6 +2,8 @@ package com.telepathicgrunt.the_bumblezone.modcompat.neoforge;
 
 import com.telepathicgrunt.the_bumblezone.modcompat.BeekeeperCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.neoforge.framedblocks.FramedBlocksCompat;
+import net.neoforged.bus.api.IEventBus;
 
 import static com.telepathicgrunt.the_bumblezone.modcompat.ModChecker.loadupModCompat;
 import static com.telepathicgrunt.the_bumblezone.modcompat.ModChecker.printErrorToLogs;
@@ -20,6 +22,21 @@ public class NeoForgeModChecker {
      * <p>
      * {@link ModChecker}
      */
+
+    public static void setupEarlyModCompat(IEventBus modEventBus) {
+        String modid = "";
+        try {
+            modid = "framedblocks";
+            if (ModChecker.isNotOutdated(modid, "10.1.2", false)) {
+                loadupModCompat(modid, () -> new FramedBlocksCompat(modEventBus));
+            }
+        }
+        catch (Throwable e) {
+            printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");
+            e.printStackTrace();
+        }
+    }
+
     public static void setupModCompat() {
         String modid = "";
         try {
