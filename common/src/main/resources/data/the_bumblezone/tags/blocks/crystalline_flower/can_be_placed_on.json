@@ -505,6 +505,10 @@
       "required": false
     },
     {
+      "id": "securitycraft:reinforced_amethyst_block",
+      "required": false
+    },
+    {
       "id": "silentgear:raw_azure_silver_block",
       "required": false
     },

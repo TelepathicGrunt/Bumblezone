@@ -12,9 +12,7 @@ Essence of Knowledge will now highlight Silverfish infested blocks, Vaults, Deco
 ##### Mod Compat:
 Essence of Knowledge will now highlight Rare Ice's rare ice blocks and certain other mod's blocks now.
 
-Added Bee Queen color randomizing trades for Arts and Craft's Chalk Sticks, Paintbrushes, and Decorated Pots.
-
-Added Bee Queen color randomizing trades for Handcrafted's crockery, cushions, and sheets!
+Added Bee Queen color randomizing trades for Arts and Craft, Handcrafted, MekanismAdditions, Mo' Glass, SecurityCraft!
 
 
 ### **(V.7.4.14 Changes) (1.20.1 Minecraft)**

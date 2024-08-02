@@ -1,0 +1,10 @@
+
+{
+  "is_color_randomizer_trade": true,
+  "randomizes": [
+    {
+      "id": "#mekanismadditions:balloons",
+      "required": false
+    }
+  ]
+}

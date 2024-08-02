@@ -1,0 +1,9 @@
+{
+  "is_color_randomizer_trade": true,
+  "randomizes": [
+    {
+      "id": "#securitycraft:reinforced/glazed_terracotta",
+      "required": false
+    }
+  ]
+}
