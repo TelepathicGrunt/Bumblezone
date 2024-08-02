@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
 
 public class LuminescentWaxChannel extends RotationAxisBlock implements LuminescentWaxBase {
@@ -46,6 +47,18 @@ public class LuminescentWaxChannel extends RotationAxisBlock implements Luminesc
 
     @Override
     public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
+        BlockState rotatedState = tryRotate(itemStack, blockState, level, position, playerEntity, playerHand);
+        if (rotatedState != null) {
+            level.setBlock(position, rotatedState, 3);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        }
+
+        return super.useItemOn(itemStack, blockState, level, position, playerEntity, playerHand, raytraceResult);
+    }
+
+    @Override
+    @Nullable
+    public BlockState tryRotate(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand) {
         if (blockState.getBlock() instanceof LuminescentWaxChannel &&
             (PlatformHooks.isItemAbility(itemStack, ShearsItem.class, "shears_carve") ||
             PlatformHooks.isItemAbility(itemStack, SwordItem.class, "sword_dig")))
@@ -59,12 +72,6 @@ public class LuminescentWaxChannel extends RotationAxisBlock implements Luminesc
                 newRotateProperty = 0;
             }
 
-            level.setBlock(position,
-                    blockState
-                        .setValue(AXIS, newAxisProp)
-                        .setValue(ROTATION, newRotateProperty),
-                    3);
-
             this.spawnDestroyParticles(level, playerEntity, position, blockState);
 
             playerEntity.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
@@ -76,10 +83,10 @@ public class LuminescentWaxChannel extends RotationAxisBlock implements Luminesc
                 }
             }
 
-            return ItemInteractionResult.SUCCESS;
+            return blockState.setValue(AXIS, newAxisProp).setValue(ROTATION, newRotateProperty);
         }
 
-        return super.useItemOn(itemStack, blockState, level, position, playerEntity, playerHand, raytraceResult);
+        return null;
     }
 
     @Override

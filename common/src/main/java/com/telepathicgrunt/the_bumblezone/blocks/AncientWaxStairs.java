@@ -2,26 +2,20 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShearsItem;
-import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
 
 public class AncientWaxStairs extends StairBlock implements AncientWaxBase {
@@ -59,27 +53,24 @@ public class AncientWaxStairs extends StairBlock implements AncientWaxBase {
 
     @Override
     public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
-        if (PlatformHooks.isItemAbility(itemStack, ShearsItem.class, "shears_carve") ||
-            PlatformHooks.isItemAbility(itemStack, SwordItem.class, "sword_dig"))
-        {
-
-            ItemInteractionResult result = swapBlocks(level, blockState, position, BzTags.ANCIENT_WAX_STAIRS);
-            if (result.consumesAction()) {
-                this.spawnDestroyParticles(level, playerEntity, position, blockState);
-
-                playerEntity.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
-                if (playerEntity instanceof ServerPlayer serverPlayer) {
-                    BzCriterias.CARVE_WAX_TRIGGER.get().trigger(serverPlayer, position);
-
-                    if (!serverPlayer.getAbilities().instabuild) {
-                        itemStack.hurtAndBreak(1, serverPlayer, playerHand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
-                    }
-                }
-
-                return result;
-            }
+        BlockState swappedState = trySwap(itemStack, blockState, level, position, playerEntity, playerHand);
+        if (swappedState != null) {
+            level.setBlock(position, swappedState, 3);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide());
         }
 
         return super.useItemOn(itemStack, blockState, level, position, playerEntity, playerHand, raytraceResult);
+    }
+
+    @Override
+    @Nullable
+    public BlockState trySwap(ItemStack itemStack, BlockState currentState, Level level, BlockPos blockPos, Player playerEntity, InteractionHand playerHand) {
+        BlockState swappedState = trySwap(itemStack, currentState, blockPos, playerEntity, playerHand, BzTags.ANCIENT_WAX_STAIRS);
+        if (swappedState != null) {
+            this.spawnDestroyParticles(level, playerEntity, blockPos, currentState);
+            return swappedState;
+        }
+
+        return null;
     }
 }

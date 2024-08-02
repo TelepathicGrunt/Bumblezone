@@ -1,10 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.neoforge.framedblocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.blocks.CarvableWax;
+import com.telepathicgrunt.the_bumblezone.blocks.*;
 import com.telepathicgrunt.the_bumblezone.mixin.neoforge.block.UseOnContextAccessor;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -18,7 +19,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import xfacthd.framedblocks.api.block.blockentity.FramedBlockEntity;
 import xfacthd.framedblocks.api.camo.CamoContainer;
 import xfacthd.framedblocks.api.camo.CamoContainerFactory;
+import xfacthd.framedblocks.api.camo.block.AbstractBlockCamoContainer;
 import xfacthd.framedblocks.api.util.FramedConstants;
+import xfacthd.framedblocks.common.data.camo.block.BlockCamoContainer;
 
 public final class FramedBlocksCompat implements ModCompat {
 
@@ -39,22 +42,43 @@ public final class FramedBlocksCompat implements ModCompat {
     private static void onItemUsedOnBlock(UseItemOnBlockEvent event) {
         Level level = event.getLevel();
         Player player = event.getPlayer();
-        if (player == null || !(level.getBlockEntity(event.getPos()) instanceof FramedBlockEntity be)) {
+        BlockPos pos = event.getPos();
+        if (player == null || !(level.getBlockEntity(pos) instanceof FramedBlockEntity be)) {
             return;
         }
 
         BlockHitResult hit = ((UseOnContextAccessor) event.getUseOnContext()).bz$getHitResult();
         CamoContainer<?, ?> camo = be.getCamo(hit, player);
-        if (!(camo instanceof CarvableWaxBlockCamoContainer waxCamo) || !(waxCamo.getState().getBlock() instanceof CarvableWax wax)) {
-            return;
-        }
-
-        BlockState carvedState = wax.tryCarve(event.getItemStack(), waxCamo.getState(), level, event.getPos(), player, event.getHand());
-        if (carvedState != null) {
-            if (!level.isClientSide()) {
-                be.setCamo(new CarvableWaxBlockCamoContainer(carvedState), hit, player);
+        if (camo instanceof CarvableWaxBlockCamoContainer waxCamo && waxCamo.getState().getBlock() instanceof CarvableWax wax) {
+            BlockState carvedState = wax.tryCarve(event.getItemStack(), waxCamo.getState(), level, pos, player, event.getHand());
+            if (carvedState != null) {
+                if (!level.isClientSide()) {
+                    be.setCamo(new CarvableWaxBlockCamoContainer(carvedState), hit, player);
+                }
+                event.cancelWithResult(ItemInteractionResult.sidedSuccess(level.isClientSide()));
             }
-            event.cancelWithResult(ItemInteractionResult.sidedSuccess(level.isClientSide()));
+        }
+        else if (camo instanceof AbstractBlockCamoContainer<?> blockCamo) {
+            if (blockCamo.getState().getBlock() instanceof LuminescentWaxBase lumiWax) {
+                BlockState rotatedState = lumiWax.tryRotate(event.getItemStack(), blockCamo.getState(), level, pos, player, event.getHand());
+                if (rotatedState != null) {
+                    if (!level.isClientSide()) {
+                        //be.setCamo(blockCamo.copyWithState(blockCamo, rotatedState), hit, player);
+                        be.setCamo(new BlockCamoContainer(rotatedState), hit, player);
+                    }
+                    event.cancelWithResult(ItemInteractionResult.sidedSuccess(level.isClientSide()));
+                }
+            }
+            else if (blockCamo.getState().getBlock() instanceof AncientWax ancientWax) {
+                BlockState swappedState = ancientWax.trySwap(event.getItemStack(), blockCamo.getState(), level, pos, player, event.getHand());
+                if (swappedState != null) {
+                    if (!level.isClientSide()) {
+                        //be.setCamo(blockCamo.copyWithState(blockCamo, swappedState), hit, player);
+                        be.setCamo(new BlockCamoContainer(swappedState), hit, player);
+                    }
+                    event.cancelWithResult(ItemInteractionResult.sidedSuccess(level.isClientSide()));
+                }
+            }
         }
     }
 }
