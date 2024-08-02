@@ -1,13 +1,20 @@
 ### **(V.7.6.21 Changes) (1.21 Minecraft)**
 
+##### Blocks:
+Fix case where carving Carvable Wax or Ancient Wax on servers could cause hand to swing twice.
+
 ##### Items:
-Essence of Knowledge will now highlight Silverfish infested blocks, Vaults, Decorated Pots, and Trial Spawners.
- Added `the_bumblezone:essence/knowing/block_forced_highlighting` block tag to allow highlighting non-Block Entity blocks!
+Essence of Knowledge will now highlight Silverfish infested blocks, Vaults, Decorated Pots, Brewing Stands, Chiseled Bookshelves, and Trial Spawners.
+ Added `the_bumblezone:essence/knowing/block_disable_highlighting` block tag to disallow highlighting non-Block Entity blocks!
+ Added `the_bumblezone:essence/knowing/block_forced_highlighting` block tag to force allow highlighting non-Block Entity blocks!
+ Added `the_bumblezone:essence/knowing/prevent_displaying_name` structure tag.
 
 Fixed Stinger Spear unabled to be enchanted with Loyalty or Impaling.
  Added `the_bumblezone:enchantables/stinger_spear_forced_disallowed` enchantment tag to allow preventing unwanted enchantments on Stinger Spear.
 
 ##### Mod Compat:
+Essence of Knowledge will now highlight certain other mod's blocks now.
+
 Pollen Puff thrown at Mobs of Mythology's Sporeling mob will spawn red or brown mushroom nearby if spot is valid.
 
 Pollen Puff thrown at Arts and Craft's Lotus Flower may multiply the block.
