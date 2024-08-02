@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "nightlights:frog_black",
+    "required": false
+  },
+  {
+    "id": "nightlights:frog_blue",
+    "required": false
+  },
+  {
+    "id": "nightlights:frog_brown",
+    "required": false
+  },
+  {
+    "id": "nightlights:frog_cyan",
+    "required": false
+  },
+  {
+    "id": "nightlights:frog_gray",
+    "required": false
+  },
+  {
+    "id": "nightlights:frog_green",
+    "required": false
+  },
+  {
+    "id": "nightlights:frog_light_blue",
+    "required": false
+  },
+  {
+    "id": "nightlights:frog_light_gray",
+    "required": false
+  },
+  {
+    "id": "nightlights:frog_lime",
+    "required": false
+  },
+  {
+    "id": "nightlights:frog_magenta",
+    "required": false
+  },
+  {
+    "id": "nightlights:frog_orange",
+    "required": false
+  },
+  {
+    "id": "nightlights:frog_pink",
+    "required": false
+  },
+  {
+    "id": "nightlights:frog_purple",
+    "required": false
+  },
+  {
+    "id": "nightlights:frog_red",
+    "required": false
+  },
+  {
+    "id": "nightlights:frog_white",
+    "required": false
+  },
+  {
+    "id": "nightlights:frog_yellow",
+    "required": false
+  }]
+}

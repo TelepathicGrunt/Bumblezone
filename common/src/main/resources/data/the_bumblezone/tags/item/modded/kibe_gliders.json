@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "kibe:black_glider",
+    "required": false
+  },
+  {
+    "id": "kibe:blue_glider",
+    "required": false
+  },
+  {
+    "id": "kibe:brown_glider",
+    "required": false
+  },
+  {
+    "id": "kibe:cyan_glider",
+    "required": false
+  },
+  {
+    "id": "kibe:gray_glider",
+    "required": false
+  },
+  {
+    "id": "kibe:green_glider",
+    "required": false
+  },
+  {
+    "id": "kibe:light_blue_glider",
+    "required": false
+  },
+  {
+    "id": "kibe:light_gray_glider",
+    "required": false
+  },
+  {
+    "id": "kibe:lime_glider",
+    "required": false
+  },
+  {
+    "id": "kibe:magenta_glider",
+    "required": false
+  },
+  {
+    "id": "kibe:orange_glider",
+    "required": false
+  },
+  {
+    "id": "kibe:pink_glider",
+    "required": false
+  },
+  {
+    "id": "kibe:purple_glider",
+    "required": false
+  },
+  {
+    "id": "kibe:red_glider",
+    "required": false
+  },
+  {
+    "id": "kibe:white_glider",
+    "required": false
+  },
+  {
+    "id": "kibe:yellow_glider",
+    "required": false
+  }]
+}

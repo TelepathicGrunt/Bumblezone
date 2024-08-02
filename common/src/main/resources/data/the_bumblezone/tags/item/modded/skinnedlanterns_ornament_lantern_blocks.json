@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "skinnedlanterns:ornament_black_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_blue_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_brown_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_cyan_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_gray_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_green_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_light_blue_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_light_gray_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_lime_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_magenta_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_orange_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_pink_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_purple_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_red_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_white_lantern_block",
+    "required": false
+  },
+  {
+    "id": "skinnedlanterns:ornament_yellow_lantern_block",
+    "required": false
+  }]
+}

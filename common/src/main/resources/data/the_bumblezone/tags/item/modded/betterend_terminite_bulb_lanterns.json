@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "betterend:terminite_bulb_lantern_black",
+    "required": false
+  },
+  {
+    "id": "betterend:terminite_bulb_lantern_blue",
+    "required": false
+  },
+  {
+    "id": "betterend:terminite_bulb_lantern_brown",
+    "required": false
+  },
+  {
+    "id": "betterend:terminite_bulb_lantern_cyan",
+    "required": false
+  },
+  {
+    "id": "betterend:terminite_bulb_lantern_gray",
+    "required": false
+  },
+  {
+    "id": "betterend:terminite_bulb_lantern_green",
+    "required": false
+  },
+  {
+    "id": "betterend:terminite_bulb_lantern_light_blue",
+    "required": false
+  },
+  {
+    "id": "betterend:terminite_bulb_lantern_light_gray",
+    "required": false
+  },
+  {
+    "id": "betterend:terminite_bulb_lantern_lime",
+    "required": false
+  },
+  {
+    "id": "betterend:terminite_bulb_lantern_magenta",
+    "required": false
+  },
+  {
+    "id": "betterend:terminite_bulb_lantern_orange",
+    "required": false
+  },
+  {
+    "id": "betterend:terminite_bulb_lantern_pink",
+    "required": false
+  },
+  {
+    "id": "betterend:terminite_bulb_lantern_purple",
+    "required": false
+  },
+  {
+    "id": "betterend:terminite_bulb_lantern_red",
+    "required": false
+  },
+  {
+    "id": "betterend:terminite_bulb_lantern_white",
+    "required": false
+  },
+  {
+    "id": "betterend:terminite_bulb_lantern_yellow",
+    "required": false
+  }]
+}

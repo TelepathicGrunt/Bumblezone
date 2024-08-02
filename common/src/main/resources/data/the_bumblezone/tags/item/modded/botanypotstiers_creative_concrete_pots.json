@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "botanypotstiers:creative_black_concrete_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:creative_blue_concrete_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:creative_brown_concrete_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:creative_cyan_concrete_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:creative_gray_concrete_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:creative_green_concrete_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:creative_light_blue_concrete_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:creative_light_gray_concrete_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:creative_lime_concrete_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:creative_magenta_concrete_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:creative_orange_concrete_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:creative_pink_concrete_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:creative_purple_concrete_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:creative_red_concrete_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:creative_white_concrete_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:creative_yellow_concrete_pot",
+    "required": false
+  }]
+}

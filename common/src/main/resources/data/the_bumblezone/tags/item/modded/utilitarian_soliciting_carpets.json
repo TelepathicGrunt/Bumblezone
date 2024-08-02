@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "utilitarian:black_soliciting_carpet",
+    "required": false
+  },
+  {
+    "id": "utilitarian:blue_soliciting_carpet",
+    "required": false
+  },
+  {
+    "id": "utilitarian:brown_soliciting_carpet",
+    "required": false
+  },
+  {
+    "id": "utilitarian:cyan_soliciting_carpet",
+    "required": false
+  },
+  {
+    "id": "utilitarian:gray_soliciting_carpet",
+    "required": false
+  },
+  {
+    "id": "utilitarian:green_soliciting_carpet",
+    "required": false
+  },
+  {
+    "id": "utilitarian:light_blue_soliciting_carpet",
+    "required": false
+  },
+  {
+    "id": "utilitarian:light_gray_soliciting_carpet",
+    "required": false
+  },
+  {
+    "id": "utilitarian:lime_soliciting_carpet",
+    "required": false
+  },
+  {
+    "id": "utilitarian:magenta_soliciting_carpet",
+    "required": false
+  },
+  {
+    "id": "utilitarian:orange_soliciting_carpet",
+    "required": false
+  },
+  {
+    "id": "utilitarian:pink_soliciting_carpet",
+    "required": false
+  },
+  {
+    "id": "utilitarian:purple_soliciting_carpet",
+    "required": false
+  },
+  {
+    "id": "utilitarian:red_soliciting_carpet",
+    "required": false
+  },
+  {
+    "id": "utilitarian:white_soliciting_carpet",
+    "required": false
+  },
+  {
+    "id": "utilitarian:yellow_soliciting_carpet",
+    "required": false
+  }]
+}

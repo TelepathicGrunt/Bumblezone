@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "nightlights:mushroom_black",
+    "required": false
+  },
+  {
+    "id": "nightlights:mushroom_blue",
+    "required": false
+  },
+  {
+    "id": "nightlights:mushroom_brown",
+    "required": false
+  },
+  {
+    "id": "nightlights:mushroom_cyan",
+    "required": false
+  },
+  {
+    "id": "nightlights:mushroom_gray",
+    "required": false
+  },
+  {
+    "id": "nightlights:mushroom_green",
+    "required": false
+  },
+  {
+    "id": "nightlights:mushroom_light_blue",
+    "required": false
+  },
+  {
+    "id": "nightlights:mushroom_light_gray",
+    "required": false
+  },
+  {
+    "id": "nightlights:mushroom_lime",
+    "required": false
+  },
+  {
+    "id": "nightlights:mushroom_magenta",
+    "required": false
+  },
+  {
+    "id": "nightlights:mushroom_orange",
+    "required": false
+  },
+  {
+    "id": "nightlights:mushroom_pink",
+    "required": false
+  },
+  {
+    "id": "nightlights:mushroom_purple",
+    "required": false
+  },
+  {
+    "id": "nightlights:mushroom_red",
+    "required": false
+  },
+  {
+    "id": "nightlights:mushroom_white",
+    "required": false
+  },
+  {
+    "id": "nightlights:mushroom_yellow",
+    "required": false
+  }]
+}

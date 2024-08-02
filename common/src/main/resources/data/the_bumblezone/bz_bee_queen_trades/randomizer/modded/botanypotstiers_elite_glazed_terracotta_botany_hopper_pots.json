@@ -1,0 +1,8 @@
+{
+  "is_color_randomizer_trade": true,
+  "randomizes": [
+  {
+    "id": "#the_bumblezone:modded/botanypotstiers_elite_glazed_terracotta_botany_hopper_pots",
+    "required": false
+  }]
+}

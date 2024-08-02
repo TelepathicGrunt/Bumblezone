@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "betternether:quartz_glass_black",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_blue",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_brown",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_cyan",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_gray",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_green",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_light_blue",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_light_gray",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_lime",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_magenta",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_orange",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_pink",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_purple",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_red",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_white",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_yellow",
+    "required": false
+  }]
+}

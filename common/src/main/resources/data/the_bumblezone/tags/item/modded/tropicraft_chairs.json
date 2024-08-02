@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "tropicraft:black_chair",
+    "required": false
+  },
+  {
+    "id": "tropicraft:blue_chair",
+    "required": false
+  },
+  {
+    "id": "tropicraft:brown_chair",
+    "required": false
+  },
+  {
+    "id": "tropicraft:cyan_chair",
+    "required": false
+  },
+  {
+    "id": "tropicraft:gray_chair",
+    "required": false
+  },
+  {
+    "id": "tropicraft:green_chair",
+    "required": false
+  },
+  {
+    "id": "tropicraft:light_blue_chair",
+    "required": false
+  },
+  {
+    "id": "tropicraft:light_gray_chair",
+    "required": false
+  },
+  {
+    "id": "tropicraft:lime_chair",
+    "required": false
+  },
+  {
+    "id": "tropicraft:magenta_chair",
+    "required": false
+  },
+  {
+    "id": "tropicraft:orange_chair",
+    "required": false
+  },
+  {
+    "id": "tropicraft:pink_chair",
+    "required": false
+  },
+  {
+    "id": "tropicraft:purple_chair",
+    "required": false
+  },
+  {
+    "id": "tropicraft:red_chair",
+    "required": false
+  },
+  {
+    "id": "tropicraft:white_chair",
+    "required": false
+  },
+  {
+    "id": "tropicraft:yellow_chair",
+    "required": false
+  }]
+}

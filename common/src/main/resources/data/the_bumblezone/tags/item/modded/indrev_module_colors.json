@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "indrev:module_color_black",
+    "required": false
+  },
+  {
+    "id": "indrev:module_color_blue",
+    "required": false
+  },
+  {
+    "id": "indrev:module_color_brown",
+    "required": false
+  },
+  {
+    "id": "indrev:module_color_cyan",
+    "required": false
+  },
+  {
+    "id": "indrev:module_color_gray",
+    "required": false
+  },
+  {
+    "id": "indrev:module_color_green",
+    "required": false
+  },
+  {
+    "id": "indrev:module_color_light_blue",
+    "required": false
+  },
+  {
+    "id": "indrev:module_color_light_gray",
+    "required": false
+  },
+  {
+    "id": "indrev:module_color_lime",
+    "required": false
+  },
+  {
+    "id": "indrev:module_color_magenta",
+    "required": false
+  },
+  {
+    "id": "indrev:module_color_orange",
+    "required": false
+  },
+  {
+    "id": "indrev:module_color_pink",
+    "required": false
+  },
+  {
+    "id": "indrev:module_color_purple",
+    "required": false
+  },
+  {
+    "id": "indrev:module_color_red",
+    "required": false
+  },
+  {
+    "id": "indrev:module_color_white",
+    "required": false
+  },
+  {
+    "id": "indrev:module_color_yellow",
+    "required": false
+  }]
+}
