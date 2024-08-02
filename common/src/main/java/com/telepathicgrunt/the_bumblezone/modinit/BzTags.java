@@ -185,6 +185,7 @@ public class BzTags {
     public static final TagKey<Structure> HONEY_COMPASS_THRONE_LOCATING = TagKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "honey_compass/throne_locating"));
     public static final TagKey<Structure> BEE_QUEEN_MINING_FATIGUE = TagKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "bee_queen_mining_fatigue"));
     public static final TagKey<Structure> SEMPITERNAL_SANCTUMS = TagKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "sempiternal_sanctums"));
+    public static final TagKey<Structure> KNOWING_PREVENT_DISPLAYING_NAME = TagKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence/knowing/prevent_displaying_name"));
 
     public static final TagKey<MobEffect> HEAVY_AIR_REMOVE_EFFECTS = TagKey.create(Registries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "heavy_air/remove_effects"));
     public static final TagKey<MobEffect> DISALLOWED_POTION_CANDLE_EFFECTS = TagKey.create(Registries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/disallowed_effects"));

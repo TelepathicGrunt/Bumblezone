@@ -2,11 +2,27 @@
   "replace": false,
   "values": [
     "the_bumblezone:crystalline_flower",
+    "minecraft:chiseled_bookshelf",
+    "minecraft:brewing_stand",
     "minecraft:beacon",
     "minecraft:conduit",
     "minecraft:spawner",
-    "minecraft:trial_spawner",
-    "minecraft:vault",
+    {
+      "id": "apotheosis:boss_spawner",
+      "required": false
+    },
+    {
+      "id": "#create:toolboxes",
+      "required": false
+    },
+    {
+      "id": "graveyard:vase_block",
+      "required": false
+    },
+    {
+      "id": "quark:monster_box",
+      "required": false
+    },
     {
       "id": "rare-ice:rare_ice",
       "required": false
