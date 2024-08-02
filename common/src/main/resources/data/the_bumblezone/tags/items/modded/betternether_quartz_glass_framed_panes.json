@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "betternether:quartz_glass_framed_pane_black",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_framed_pane_blue",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_framed_pane_brown",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_framed_pane_cyan",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_framed_pane_gray",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_framed_pane_green",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_framed_pane_light_blue",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_framed_pane_light_gray",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_framed_pane_lime",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_framed_pane_magenta",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_framed_pane_orange",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_framed_pane_pink",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_framed_pane_purple",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_framed_pane_red",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_framed_pane_white",
+    "required": false
+  },
+  {
+    "id": "betternether:quartz_glass_framed_pane_yellow",
+    "required": false
+  }]
+}

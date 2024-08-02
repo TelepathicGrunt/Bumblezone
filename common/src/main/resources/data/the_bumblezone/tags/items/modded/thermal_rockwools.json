@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "thermal:black_rockwool",
+    "required": false
+  },
+  {
+    "id": "thermal:blue_rockwool",
+    "required": false
+  },
+  {
+    "id": "thermal:brown_rockwool",
+    "required": false
+  },
+  {
+    "id": "thermal:cyan_rockwool",
+    "required": false
+  },
+  {
+    "id": "thermal:gray_rockwool",
+    "required": false
+  },
+  {
+    "id": "thermal:green_rockwool",
+    "required": false
+  },
+  {
+    "id": "thermal:light_blue_rockwool",
+    "required": false
+  },
+  {
+    "id": "thermal:light_gray_rockwool",
+    "required": false
+  },
+  {
+    "id": "thermal:lime_rockwool",
+    "required": false
+  },
+  {
+    "id": "thermal:magenta_rockwool",
+    "required": false
+  },
+  {
+    "id": "thermal:orange_rockwool",
+    "required": false
+  },
+  {
+    "id": "thermal:pink_rockwool",
+    "required": false
+  },
+  {
+    "id": "thermal:purple_rockwool",
+    "required": false
+  },
+  {
+    "id": "thermal:red_rockwool",
+    "required": false
+  },
+  {
+    "id": "thermal:white_rockwool",
+    "required": false
+  },
+  {
+    "id": "thermal:yellow_rockwool",
+    "required": false
+  }]
+}

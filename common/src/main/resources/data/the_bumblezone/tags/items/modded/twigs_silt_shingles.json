@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "twigs:black_silt_shingles",
+    "required": false
+  },
+  {
+    "id": "twigs:blue_silt_shingles",
+    "required": false
+  },
+  {
+    "id": "twigs:brown_silt_shingles",
+    "required": false
+  },
+  {
+    "id": "twigs:cyan_silt_shingles",
+    "required": false
+  },
+  {
+    "id": "twigs:gray_silt_shingles",
+    "required": false
+  },
+  {
+    "id": "twigs:green_silt_shingles",
+    "required": false
+  },
+  {
+    "id": "twigs:light_blue_silt_shingles",
+    "required": false
+  },
+  {
+    "id": "twigs:light_gray_silt_shingles",
+    "required": false
+  },
+  {
+    "id": "twigs:lime_silt_shingles",
+    "required": false
+  },
+  {
+    "id": "twigs:magenta_silt_shingles",
+    "required": false
+  },
+  {
+    "id": "twigs:orange_silt_shingles",
+    "required": false
+  },
+  {
+    "id": "twigs:pink_silt_shingles",
+    "required": false
+  },
+  {
+    "id": "twigs:purple_silt_shingles",
+    "required": false
+  },
+  {
+    "id": "twigs:red_silt_shingles",
+    "required": false
+  },
+  {
+    "id": "twigs:white_silt_shingles",
+    "required": false
+  },
+  {
+    "id": "twigs:yellow_silt_shingles",
+    "required": false
+  }]
+}

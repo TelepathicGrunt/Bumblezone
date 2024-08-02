@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "convenientdecor:black_rain_boots",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:blue_rain_boots",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:brown_rain_boots",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:cyan_rain_boots",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:gray_rain_boots",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:green_rain_boots",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:light_blue_rain_boots",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:light_gray_rain_boots",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:lime_rain_boots",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:magenta_rain_boots",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:orange_rain_boots",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:pink_rain_boots",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:purple_rain_boots",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:red_rain_boots",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:white_rain_boots",
+    "required": false
+  },
+  {
+    "id": "convenientdecor:yellow_rain_boots",
+    "required": false
+  }]
+}

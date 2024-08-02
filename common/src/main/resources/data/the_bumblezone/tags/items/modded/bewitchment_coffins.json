@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "bewitchment:black_coffin",
+    "required": false
+  },
+  {
+    "id": "bewitchment:blue_coffin",
+    "required": false
+  },
+  {
+    "id": "bewitchment:brown_coffin",
+    "required": false
+  },
+  {
+    "id": "bewitchment:cyan_coffin",
+    "required": false
+  },
+  {
+    "id": "bewitchment:gray_coffin",
+    "required": false
+  },
+  {
+    "id": "bewitchment:green_coffin",
+    "required": false
+  },
+  {
+    "id": "bewitchment:light_blue_coffin",
+    "required": false
+  },
+  {
+    "id": "bewitchment:light_gray_coffin",
+    "required": false
+  },
+  {
+    "id": "bewitchment:lime_coffin",
+    "required": false
+  },
+  {
+    "id": "bewitchment:magenta_coffin",
+    "required": false
+  },
+  {
+    "id": "bewitchment:orange_coffin",
+    "required": false
+  },
+  {
+    "id": "bewitchment:pink_coffin",
+    "required": false
+  },
+  {
+    "id": "bewitchment:purple_coffin",
+    "required": false
+  },
+  {
+    "id": "bewitchment:red_coffin",
+    "required": false
+  },
+  {
+    "id": "bewitchment:white_coffin",
+    "required": false
+  },
+  {
+    "id": "bewitchment:yellow_coffin",
+    "required": false
+  }]
+}

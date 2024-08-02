@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "nightlights:octopus_black",
+    "required": false
+  },
+  {
+    "id": "nightlights:octopus_blue",
+    "required": false
+  },
+  {
+    "id": "nightlights:octopus_brown",
+    "required": false
+  },
+  {
+    "id": "nightlights:octopus_cyan",
+    "required": false
+  },
+  {
+    "id": "nightlights:octopus_gray",
+    "required": false
+  },
+  {
+    "id": "nightlights:octopus_green",
+    "required": false
+  },
+  {
+    "id": "nightlights:octopus_light_blue",
+    "required": false
+  },
+  {
+    "id": "nightlights:octopus_light_gray",
+    "required": false
+  },
+  {
+    "id": "nightlights:octopus_lime",
+    "required": false
+  },
+  {
+    "id": "nightlights:octopus_magenta",
+    "required": false
+  },
+  {
+    "id": "nightlights:octopus_orange",
+    "required": false
+  },
+  {
+    "id": "nightlights:octopus_pink",
+    "required": false
+  },
+  {
+    "id": "nightlights:octopus_purple",
+    "required": false
+  },
+  {
+    "id": "nightlights:octopus_red",
+    "required": false
+  },
+  {
+    "id": "nightlights:octopus_white",
+    "required": false
+  },
+  {
+    "id": "nightlights:octopus_yellow",
+    "required": false
+  }]
+}

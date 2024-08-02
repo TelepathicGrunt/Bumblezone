@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "nightlights:hanging_lights_black",
+    "required": false
+  },
+  {
+    "id": "nightlights:hanging_lights_blue",
+    "required": false
+  },
+  {
+    "id": "nightlights:hanging_lights_brown",
+    "required": false
+  },
+  {
+    "id": "nightlights:hanging_lights_cyan",
+    "required": false
+  },
+  {
+    "id": "nightlights:hanging_lights_gray",
+    "required": false
+  },
+  {
+    "id": "nightlights:hanging_lights_green",
+    "required": false
+  },
+  {
+    "id": "nightlights:hanging_lights_light_blue",
+    "required": false
+  },
+  {
+    "id": "nightlights:hanging_lights_light_gray",
+    "required": false
+  },
+  {
+    "id": "nightlights:hanging_lights_lime",
+    "required": false
+  },
+  {
+    "id": "nightlights:hanging_lights_magenta",
+    "required": false
+  },
+  {
+    "id": "nightlights:hanging_lights_orange",
+    "required": false
+  },
+  {
+    "id": "nightlights:hanging_lights_pink",
+    "required": false
+  },
+  {
+    "id": "nightlights:hanging_lights_purple",
+    "required": false
+  },
+  {
+    "id": "nightlights:hanging_lights_red",
+    "required": false
+  },
+  {
+    "id": "nightlights:hanging_lights_white",
+    "required": false
+  },
+  {
+    "id": "nightlights:hanging_lights_yellow",
+    "required": false
+  }]
+}

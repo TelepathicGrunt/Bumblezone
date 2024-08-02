@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "botanypotstiers:ultra_black_concrete_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:ultra_blue_concrete_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:ultra_brown_concrete_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:ultra_cyan_concrete_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:ultra_gray_concrete_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:ultra_green_concrete_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:ultra_light_blue_concrete_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:ultra_light_gray_concrete_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:ultra_lime_concrete_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:ultra_magenta_concrete_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:ultra_orange_concrete_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:ultra_pink_concrete_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:ultra_purple_concrete_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:ultra_red_concrete_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:ultra_white_concrete_botany_pot",
+    "required": false
+  },
+  {
+    "id": "botanypotstiers:ultra_yellow_concrete_botany_pot",
+    "required": false
+  }]
+}

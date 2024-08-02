@@ -1,0 +1,8 @@
+{
+  "is_color_randomizer_trade": true,
+  "randomizes": [
+  {
+    "id": "#enderio:clear_glass_da",
+    "required": false
+  }]
+}

@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "graveyard:black_urn",
+    "required": false
+  },
+  {
+    "id": "graveyard:blue_urn",
+    "required": false
+  },
+  {
+    "id": "graveyard:brown_urn",
+    "required": false
+  },
+  {
+    "id": "graveyard:cyan_urn",
+    "required": false
+  },
+  {
+    "id": "graveyard:gray_urn",
+    "required": false
+  },
+  {
+    "id": "graveyard:green_urn",
+    "required": false
+  },
+  {
+    "id": "graveyard:light_blue_urn",
+    "required": false
+  },
+  {
+    "id": "graveyard:light_gray_urn",
+    "required": false
+  },
+  {
+    "id": "graveyard:lime_urn",
+    "required": false
+  },
+  {
+    "id": "graveyard:magenta_urn",
+    "required": false
+  },
+  {
+    "id": "graveyard:orange_urn",
+    "required": false
+  },
+  {
+    "id": "graveyard:pink_urn",
+    "required": false
+  },
+  {
+    "id": "graveyard:purple_urn",
+    "required": false
+  },
+  {
+    "id": "graveyard:red_urn",
+    "required": false
+  },
+  {
+    "id": "graveyard:white_urn",
+    "required": false
+  },
+  {
+    "id": "graveyard:yellow_urn",
+    "required": false
+  }]
+}
