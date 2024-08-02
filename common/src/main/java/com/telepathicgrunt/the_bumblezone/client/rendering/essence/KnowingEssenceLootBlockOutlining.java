@@ -24,6 +24,7 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EnderChestBlock;
+import net.minecraft.world.level.block.InfestedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BrushableBlockEntity;
 import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
@@ -91,7 +92,7 @@ public class KnowingEssenceLootBlockOutlining {
             BlockPos worldSpot = BlockPos.containing(cameraPos);
             ChunkPos centerChunkPos = new ChunkPos(worldSpot);
             int currentChunk = 0;
-            LinkedHashSet<Long> copySet = new LinkedHashSet<>(CACHED_CHUNK_POS);
+            HashSet<Long> copySet = new HashSet<>(CACHED_CHUNK_POS);
             for (int x = -chunkRadius; x <= chunkRadius; x++) {
                 for (int z = -chunkRadius; z <= chunkRadius; z++) {
                     long chunkPosLong = ChunkPos.asLong(x + centerChunkPos.x, z + centerChunkPos.z);
@@ -113,10 +114,9 @@ public class KnowingEssenceLootBlockOutlining {
                 }
             }
 
-            while (!copySet.isEmpty()) {
-                long chunkPos = copySet.removeFirst();
+            for (Long chunkPos : copySet) {
                 CACHED_CHUNK_POS.remove(chunkPos);
-                CACHED_CHUNK_DATA.remove(chunkPos);
+                CACHED_CHUNK_DATA.remove(chunkPos.longValue());
             }
 
             currentScanIncrement++;
@@ -177,7 +177,9 @@ public class KnowingEssenceLootBlockOutlining {
             if (!levelChunkSection.hasOnlyAir() &&
                 levelChunkSection.maybeHas(blockState ->
                     !CACHED_NONTARGET_BLOCKS.contains(blockState.getBlock()) &&
-                    (CACHED_TARGET_BLOCKS.contains(blockState.getBlock()) || blockState.is(BzTags.KNOWING_BLOCK_FORCED_HIGHLIGHTING))))
+                    (CACHED_TARGET_BLOCKS.contains(blockState.getBlock()) ||
+                        blockState.is(BzTags.KNOWING_BLOCK_FORCED_HIGHLIGHTING) ||
+                        (blockState.getBlock() instanceof InfestedBlock && !blockState.is(BzTags.KNOWING_BLOCK_PREVENT_HIGHLIGHTING)))))
             {
                 int minSectionY = chunk.getMinBuildHeight() + (i * 16);
                 for (int sectionX = 0; sectionX < 16; sectionX++) {
@@ -190,7 +192,10 @@ public class KnowingEssenceLootBlockOutlining {
                                 continue;
                             }
 
-                            if (CACHED_TARGET_BLOCKS.contains(blockState.getBlock()) || blockState.is(BzTags.KNOWING_BLOCK_FORCED_HIGHLIGHTING)) {
+                            if (CACHED_TARGET_BLOCKS.contains(blockState.getBlock()) ||
+                                blockState.is(BzTags.KNOWING_BLOCK_FORCED_HIGHLIGHTING) ||
+                                (blockState.getBlock() instanceof InfestedBlock && !blockState.is(BzTags.KNOWING_BLOCK_PREVENT_HIGHLIGHTING)))
+                            {
                                 CACHED_TARGET_BLOCKS.add(block);
 
                                 BlockPos lootBlockPos = new BlockPos(

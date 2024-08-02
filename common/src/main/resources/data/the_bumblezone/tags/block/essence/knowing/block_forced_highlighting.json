@@ -1,13 +1,10 @@
 {
   "replace": false,
   "values": [
-    "minecraft:infested_stone",
-    "minecraft:infested_cobblestone",
-    "minecraft:infested_stone_bricks",
-    "minecraft:infested_mossy_stone_bricks",
-    "minecraft:infested_cracked_stone_bricks",
-    "minecraft:infested_chiseled_stone_bricks",
-    "minecraft:infested_deepslate",
+    {
+      "id": "ae2:mysterious_cube",
+      "required": false
+    },
     {
       "id": "betterarcheology:vase",
       "required": false
@@ -25,7 +22,15 @@
       "required": false
     },
     {
+      "id": "deeperdarker:infested_sculk",
+      "required": false
+    },
+    {
       "id": "eldritch_end:suspicious_fronds",
+      "required": false
+    },
+    {
+      "id": "oxidized:copper_trap",
       "required": false
     }
   ]
