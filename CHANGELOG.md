@@ -1,5 +1,8 @@
 ### **(V.7.4.15 Changes) (1.20.1 Minecraft)**
 
+##### Blocks:
+Fix case where carving Carvable Wax or Ancient Wax on servers could cause hand to swing twice.
+
 ##### Items:
 Essence of Knowledge will now highlight Silverfish infested blocks, Vaults, Decorated Pots, and Trial Spawners.
  Added `the_bumblezone:essence/knowing/block_disable_highlighting` block tag to disallow highlighting non-Block Entity blocks!

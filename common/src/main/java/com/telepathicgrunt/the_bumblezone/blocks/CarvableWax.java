@@ -155,7 +155,7 @@ public class CarvableWax extends ProperFacingBlock {
                 }
             }
 
-            return InteractionResult.SUCCESS;
+            return InteractionResult.sidedSuccess(world.isClientSide());
         }
 
         return super.use(blockState, world, position, playerEntity, playerHand, raytraceResult);

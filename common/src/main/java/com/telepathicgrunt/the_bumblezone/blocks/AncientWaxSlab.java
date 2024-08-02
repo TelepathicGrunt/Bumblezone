@@ -45,7 +45,7 @@ public class AncientWaxSlab extends SlabBlock implements AncientWaxBase {
         {
 
             InteractionResult result = swapBlocks(world, blockState, position, BzTags.ANCIENT_WAX_SLABS);
-            if (result == InteractionResult.SUCCESS) {
+            if (result.consumesAction()) {
                 this.spawnDestroyParticles(world, playerEntity, position, blockState);
 
                 playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
