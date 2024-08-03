@@ -1,4 +1,4 @@
-### **(V.7.6.21 Changes) (1.21 Minecraft)**
+### **(V.7.6.22 Changes) (1.21 Minecraft)**
 
 ##### Dimensions:
 Adjusted terrain noise to make chunk generation faster in Bumblezone!
