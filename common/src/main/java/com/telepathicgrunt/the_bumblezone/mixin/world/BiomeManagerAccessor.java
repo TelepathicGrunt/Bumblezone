@@ -12,9 +12,4 @@ public interface BiomeManagerAccessor {
 
     @Accessor("biomeZoomSeed")
     long getBiomeZoomSeed();
-
-    @Invoker("getFiddledDistance")
-    static double callGetFiddledDistance(long l, int i, int j, int k, double d, double e, double f) {
-        throw new UnsupportedOperationException();
-    }
 }
