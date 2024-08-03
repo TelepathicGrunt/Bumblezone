@@ -1,5 +1,9 @@
 ### **(V.7.4.15 Changes) (1.20.1 Minecraft)**
 
+##### Dimensions:
+Adjusted terrain noise to make chunk generation faster in Bumblezone!
+ Also prevents Tectonic from making Bumblezone chunk generation slower/more memory intensive.
+
 ##### Blocks:
 Fix case where carving Carvable Wax or Ancient Wax on servers could cause hand to swing twice.
 
