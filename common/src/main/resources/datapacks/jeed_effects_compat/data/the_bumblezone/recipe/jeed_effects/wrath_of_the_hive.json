@@ -12,13 +12,13 @@
       "item": "the_bumblezone:honeycomb_brood_block"
     },
     {
-      "item": "the_bumblezone:bee_queen_spawn_egg"
-    }
-  ],
-  "neoforge:conditions": [
+      "item": "minecraft:bee_spawn_egg"
+    },
     {
-      "type": "neoforge:mod_loaded",
-      "modid": "jeed"
+      "item": "the_bumblezone:variant_bee_spawn_egg"
+    },
+    {
+      "item": "the_bumblezone:bee_queen_spawn_egg"
     }
   ]
 }

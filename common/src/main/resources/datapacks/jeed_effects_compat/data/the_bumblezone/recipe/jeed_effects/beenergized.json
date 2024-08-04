@@ -1,0 +1,12 @@
+{
+  "type": "jeed:effect_provider",
+  "effect": "the_bumblezone:beenergized",
+  "providers": [
+    {
+      "item": "the_bumblezone:royal_jelly_bucket"
+    },
+    {
+      "item": "the_bumblezone:luminescent_wax_channel_red"
+    }
+  ]
+}

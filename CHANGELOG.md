@@ -30,6 +30,8 @@ Pollen Puff thrown at Arts and Craft's Lotus Flower may multiply the block.
 
 Added Bee Queen color randomizing trades for a ton of mods now!
 
+Improved JEED's descriptions of Bumblezone's effects.
+
 
 ### **(V.7.6.21 Changes) (1.21 Minecraft)**
 

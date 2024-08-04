@@ -4,12 +4,9 @@
   "providers": [
     {
       "item": "the_bumblezone:stinger_spear"
-    }
-  ],
-  "neoforge:conditions": [
+    },
     {
-      "type": "neoforge:mod_loaded",
-      "modid": "jeed"
+      "item": "the_bumblezone:bee_stinger"
     }
   ]
 }

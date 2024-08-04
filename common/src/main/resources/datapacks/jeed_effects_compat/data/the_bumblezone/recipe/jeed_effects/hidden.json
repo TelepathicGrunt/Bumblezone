@@ -4,12 +4,9 @@
   "providers": [
     {
       "item": "the_bumblezone:pile_of_pollen"
-    }
-  ],
-  "neoforge:conditions": [
+    },
     {
-      "type": "neoforge:mod_loaded",
-      "modid": "jeed"
+      "item": "the_bumblezone:pile_of_pollen_suspicious"
     }
   ]
 }

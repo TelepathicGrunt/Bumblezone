@@ -4,12 +4,12 @@
   "providers": [
     {
       "item": "the_bumblezone:honeycomb_brood_block"
-    }
-  ],
-  "neoforge:conditions": [
+    },
     {
-      "type": "neoforge:mod_loaded",
-      "modid": "jeed"
+      "item": "minecraft:bee_spawn_egg"
+    },
+    {
+      "item": "the_bumblezone:variant_bee_spawn_egg"
     }
   ]
 }
