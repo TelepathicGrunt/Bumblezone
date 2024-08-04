@@ -7,6 +7,9 @@ Adjusted terrain noise to make chunk generation faster in Bumblezone!
 ##### Blocks:
 Fix case where carving Carvable Wax or Ancient Wax on servers could cause hand to swing twice.
 
+Pile of Pollen and Suspicious Pile of Pollen now does not vertically slow entities if they have Slow Falling effect on.
+ Makes traversing them less insufferable when having Slow Falling on.
+
 ##### Items:
 Essence of Knowledge will now highlight Silverfish infested blocks, Vaults, Decorated Pots, Brewing Stands, Chiseled Bookshelves, and Trial Spawners.
  Added `the_bumblezone:essence/knowing/block_disable_highlighting` block tag to disallow highlighting non-Block Entity blocks!
@@ -15,6 +18,8 @@ Essence of Knowledge will now highlight Silverfish infested blocks, Vaults, Deco
 
 Fixed Stinger Spear unabled to be enchanted with Loyalty or Impaling.
  Added `the_bumblezone:enchantables/stinger_spear_forced_disallowed` enchantment tag to allow preventing unwanted enchantments on Stinger Spear.
+
+Sugar Water Bottle, Royal Jelly Bottle, and Bee Soup now make used of `usingConvertsTo` so they should have better compat with other mods.
 
 ##### Mod Compat:
 Essence of Knowledge will now highlight certain other mod's blocks now.

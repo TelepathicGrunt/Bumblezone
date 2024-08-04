@@ -34,13 +34,6 @@ public class SugarWaterBottle extends Item {
             return new ItemStack(Items.GLASS_BOTTLE);
         }
         else {
-            if (livingEntity instanceof Player player && !((Player)livingEntity).getAbilities().instabuild) {
-                ItemStack itemstack = new ItemStack(Items.GLASS_BOTTLE);
-                if (!player.getInventory().add(itemstack)) {
-                    player.drop(itemstack, false);
-                }
-            }
-
             return itemStack;
         }
     }

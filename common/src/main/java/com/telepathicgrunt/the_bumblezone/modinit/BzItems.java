@@ -7,7 +7,6 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.CarvableWax;
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
-import com.telepathicgrunt.the_bumblezone.fluids.base.BzBucketItem;
 import com.telepathicgrunt.the_bumblezone.items.BeeBread;
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.BeeStinger;
@@ -23,7 +22,6 @@ import com.telepathicgrunt.the_bumblezone.items.CrystallineFlowerBlockItem;
 import com.telepathicgrunt.the_bumblezone.items.DirtPellet;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.items.FlowerHeadwearHelmet;
-import com.telepathicgrunt.the_bumblezone.items.FoodBowlItem;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCompass;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShards;
@@ -158,13 +156,13 @@ public class BzItems {
 
     //items
     public static final RegistryEntry<Item> ROYAL_JELLY_BUCKET = ITEMS.register("royal_jelly_bucket", () -> new BzCustomBucketItem(BzFluids.ROYAL_JELLY_FLUID_TYPE.get(), new Item.Properties().rarity(Rarity.EPIC).craftRemainder(Items.BUCKET).stacksTo(1)));
-    public static final RegistryEntry<Item> ROYAL_JELLY_BOTTLE = ITEMS.register("royal_jelly_bottle", () -> new RoyalJellyBottle((new Item.Properties().rarity(Rarity.EPIC)).craftRemainder(Items.GLASS_BOTTLE).food(new FoodProperties.Builder().nutrition(12).saturationModifier(1.0F).effect(new MobEffectInstance(MobEffects.SLOW_FALLING, 9600, 0), 1.0F).effect(new MobEffectInstance(MobEffects.JUMP, 9600, 3), 1.0F).effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 9600, 1), 1.0F).effect(new MobEffectInstance(BzEffects.BEENERGIZED.holder(), 9600, 2), 1.0F).build()).stacksTo(16)));
+    public static final RegistryEntry<Item> ROYAL_JELLY_BOTTLE = ITEMS.register("royal_jelly_bottle", () -> new RoyalJellyBottle((new Item.Properties().rarity(Rarity.EPIC)).craftRemainder(Items.GLASS_BOTTLE).food(new FoodProperties.Builder().usingConvertsTo(Items.GLASS_BOTTLE).nutrition(12).saturationModifier(1.0F).effect(new MobEffectInstance(MobEffects.SLOW_FALLING, 9600, 0), 1.0F).effect(new MobEffectInstance(MobEffects.JUMP, 9600, 3), 1.0F).effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 9600, 1), 1.0F).effect(new MobEffectInstance(BzEffects.BEENERGIZED.holder(), 9600, 2), 1.0F).build()).stacksTo(16)));
     public static final RegistryEntry<Item> HONEY_BUCKET = ITEMS.register("honey_bucket", () -> new BzCustomBucketItem(BzFluids.HONEY_FLUID_TYPE.get(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryEntry<Item> SUGAR_WATER_BUCKET = ITEMS.register("sugar_water_bucket", () -> new BzCustomBucketItem(BzFluids.SUGAR_WATER_FLUID_TYPE.get(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
-    public static final RegistryEntry<Item> SUGAR_WATER_BOTTLE = ITEMS.register("sugar_water_bottle", () -> new SugarWaterBottle((new Item.Properties()).craftRemainder(Items.GLASS_BOTTLE).food(new FoodProperties.Builder().nutrition(1).saturationModifier(0.05F).effect(new MobEffectInstance(MobEffects.DIG_SPEED, 600, 0), 1.0F).build()).stacksTo(16)));
+    public static final RegistryEntry<Item> SUGAR_WATER_BOTTLE = ITEMS.register("sugar_water_bottle", () -> new SugarWaterBottle((new Item.Properties()).craftRemainder(Items.GLASS_BOTTLE).food(new FoodProperties.Builder().usingConvertsTo(Items.GLASS_BOTTLE).nutrition(1).saturationModifier(0.05F).effect(new MobEffectInstance(MobEffects.DIG_SPEED, 600, 0), 1.0F).build()).stacksTo(16)));
     public static final RegistryEntry<Item> HONEY_COMPASS = ITEMS.register("honey_compass", () -> new HoneyCompass(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryEntry<Item> BEE_BREAD = ITEMS.register("bee_bread", () -> new BeeBread(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationModifier(0.1F).alwaysEdible().effect(new MobEffectInstance(BzEffects.BEENERGIZED.holder(), 6000, 0), 1.0F).effect(new MobEffectInstance(MobEffects.CONFUSION, 120, 1), 1.0F).build())));
-    public static final RegistryEntry<Item> BEE_SOUP = ITEMS.register("bee_soup", () -> new FoodBowlItem(new Item.Properties().craftRemainder(Items.BOWL).food(new FoodProperties.Builder().nutrition(12).saturationModifier(1.6F).effect(new MobEffectInstance(BzEffects.BEENERGIZED.holder(), 12000, 1), 1.0F).effect(new MobEffectInstance(MobEffects.LEVITATION, 800, 0), 0.2F).effect(new MobEffectInstance(MobEffects.POISON, 800, 0), 0.2F).effect(new MobEffectInstance(MobEffects.SLOW_FALLING, 6000, 0), 0.2F).effect(new MobEffectInstance(MobEffects.LUCK, 18000, 0), 0.2F).effect(new MobEffectInstance(BzEffects.PARALYZED.holder(), Math.min(BzGeneralConfigs.paralyzedMaxTickDuration, 200), 0), 0.2F).build())));
+    public static final RegistryEntry<Item> BEE_SOUP = ITEMS.register("bee_soup", () -> new Item(new Item.Properties().craftRemainder(Items.BOWL).food(new FoodProperties.Builder().usingConvertsTo(Items.BOWL).nutrition(12).saturationModifier(1.6F).effect(new MobEffectInstance(BzEffects.BEENERGIZED.holder(), 12000, 1), 1.0F).effect(new MobEffectInstance(MobEffects.LEVITATION, 800, 0), 0.2F).effect(new MobEffectInstance(MobEffects.POISON, 800, 0), 0.2F).effect(new MobEffectInstance(MobEffects.SLOW_FALLING, 6000, 0), 0.2F).effect(new MobEffectInstance(MobEffects.LUCK, 18000, 0), 0.2F).effect(new MobEffectInstance(BzEffects.PARALYZED.holder(), Math.min(BzGeneralConfigs.paralyzedMaxTickDuration, 200), 0), 0.2F).build())));
     public static final RegistryEntry<Item> BUZZING_BRIEFCASE = ITEMS.register("buzzing_briefcase", () -> new BuzzingBriefcase(new Item.Properties().stacksTo(1)));
     public static final RegistryEntry<Item> POLLEN_PUFF = ITEMS.register("pollen_puff", () -> new PollenPuff(new Item.Properties().stacksTo(16)));
     public static final RegistryEntry<Item> DIRT_PELLET = ITEMS.register("dirt_pellet", () -> new DirtPellet(new Item.Properties().stacksTo(16)));

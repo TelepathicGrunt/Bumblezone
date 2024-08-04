@@ -21,6 +21,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
@@ -250,7 +251,7 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
                 if(deltaMovement.y > 0) {
                     newYDelta *= (1D - layerValueMinusOne * 0.01D);
                 }
-                else {
+                else if (!(entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(MobEffects.SLOW_FALLING))) {
                     newYDelta *= (0.84D - layerValueMinusOne * 0.03D);
                 }
 
