@@ -125,7 +125,7 @@ public class RoyalJellyBlock extends HalfTransparentBlock implements BlockExtens
     }
 
     private void maybeDoSlideAchievement(Entity entity, BlockPos blockPos) {
-        if (entity instanceof ServerPlayer serverPlayer && serverPlayer.level().getGameTime() % 20L == 0L) {
+        if (entity instanceof ServerPlayer serverPlayer && serverPlayer.level().getGameTime() % 20L == 17L) {
             CriteriaTriggers.HONEY_BLOCK_SLIDE.trigger(serverPlayer, serverPlayer.level().getBlockState(blockPos));
         }
     }

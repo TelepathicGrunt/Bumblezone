@@ -284,7 +284,7 @@ public class EssenceBlockEntity extends BlockEntity {
     private static void performArenaTick(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity) {
         boolean endEvent = false;
 
-        if (serverLevel.getGameTime() % 20 == 0) {
+        if (serverLevel.getGameTime() % 20 == 1) {
             for (int i = essenceBlockEntity.getPlayerInArena().size() - 1; i >= 0; i--) {
                 UUID playerUUID = essenceBlockEntity.getPlayerInArena().get(i);
                 ServerPlayer serverPlayer = (ServerPlayer) serverLevel.getPlayerByUUID(playerUUID);

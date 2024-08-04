@@ -29,7 +29,7 @@ public interface AncientWaxBase {
     default void applyEntityEffects(BlockState currentState, Entity collidingEntity) {
         if (collidingEntity instanceof LivingEntity livingEntity &&
             !collidingEntity.level().isClientSide() &&
-            collidingEntity.tickCount % 10 == 0)
+            collidingEntity.tickCount % 10 == 2)
         {
             if (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator())) {
                 return;

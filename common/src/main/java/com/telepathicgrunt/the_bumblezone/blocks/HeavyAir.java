@@ -106,7 +106,7 @@ public class HeavyAir extends Block {
             return;
         }
 
-        if (entity instanceof LivingEntity livingEntity && livingEntity.tickCount % 10 == 0) {
+        if (entity instanceof LivingEntity livingEntity && livingEntity.tickCount % 10 == 9) {
             List<Holder<MobEffect>> effectsToRemove = BuiltInRegistries.MOB_EFFECT.getTag(BzTags.HEAVY_AIR_REMOVE_EFFECTS)
                     .stream()
                     .flatMap(HolderSet.ListBacked::stream)
