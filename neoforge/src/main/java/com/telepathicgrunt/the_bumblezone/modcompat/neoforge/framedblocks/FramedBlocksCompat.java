@@ -21,7 +21,6 @@ import xfacthd.framedblocks.api.camo.CamoContainer;
 import xfacthd.framedblocks.api.camo.CamoContainerFactory;
 import xfacthd.framedblocks.api.camo.block.AbstractBlockCamoContainer;
 import xfacthd.framedblocks.api.util.FramedConstants;
-import xfacthd.framedblocks.common.data.camo.block.BlockCamoContainer;
 
 public final class FramedBlocksCompat implements ModCompat {
 
@@ -63,8 +62,7 @@ public final class FramedBlocksCompat implements ModCompat {
                 BlockState rotatedState = lumiWax.tryRotate(event.getItemStack(), blockCamo.getState(), level, pos, player, event.getHand());
                 if (rotatedState != null) {
                     if (!level.isClientSide()) {
-                        //be.setCamo(blockCamo.copyWithState(blockCamo, rotatedState), hit, player);
-                        be.setCamo(new BlockCamoContainer(rotatedState), hit, player);
+                        be.setCamo(blockCamo.copyWithState(rotatedState), hit, player);
                     }
                     event.cancelWithResult(ItemInteractionResult.sidedSuccess(level.isClientSide()));
                 }
@@ -73,8 +71,7 @@ public final class FramedBlocksCompat implements ModCompat {
                 BlockState swappedState = ancientWax.trySwap(event.getItemStack(), blockCamo.getState(), level, pos, player, event.getHand());
                 if (swappedState != null) {
                     if (!level.isClientSide()) {
-                        //be.setCamo(blockCamo.copyWithState(blockCamo, swappedState), hit, player);
-                        be.setCamo(new BlockCamoContainer(swappedState), hit, player);
+                        be.setCamo(blockCamo.copyWithState(swappedState), hit, player);
                     }
                     event.cancelWithResult(ItemInteractionResult.sidedSuccess(level.isClientSide()));
                 }
