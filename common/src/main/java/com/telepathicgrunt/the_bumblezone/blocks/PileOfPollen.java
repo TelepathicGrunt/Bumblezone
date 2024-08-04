@@ -18,6 +18,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
@@ -294,7 +295,7 @@ public class PileOfPollen extends FallingBlock {
             if (deltaMovement.y > 0) {
                 newYDelta *= (1D - layerValueMinusOne * 0.01D);
             }
-            else {
+            else if (!(entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(MobEffects.SLOW_FALLING))) {
                 newYDelta *= (0.84D - layerValueMinusOne * 0.03D);
             }
 
