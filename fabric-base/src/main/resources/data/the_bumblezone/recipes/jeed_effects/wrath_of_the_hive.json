@@ -12,6 +12,12 @@
       "item": "the_bumblezone:honeycomb_brood_block"
     },
     {
+      "item": "minecraft:bee_spawn_egg"
+    },
+    {
+      "item": "the_bumblezone:variant_bee_spawn_egg"
+    },
+    {
       "item": "the_bumblezone:bee_queen_spawn_egg"
     }
   ],

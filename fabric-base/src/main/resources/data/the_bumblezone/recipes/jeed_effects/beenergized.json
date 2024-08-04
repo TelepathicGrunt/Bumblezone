@@ -1,12 +1,12 @@
 {
   "type": "jeed:effect_provider",
-  "effect": "the_bumblezone:paralyzed",
+  "effect": "the_bumblezone:beenergized",
   "providers": [
     {
-      "item": "the_bumblezone:stinger_spear"
+      "item": "the_bumblezone:royal_jelly_bucket"
     },
     {
-      "item": "the_bumblezone:bee_stinger"
+      "item": "the_bumblezone:luminescent_wax_channel_red"
     }
   ],
   "fabric:load_conditions": [

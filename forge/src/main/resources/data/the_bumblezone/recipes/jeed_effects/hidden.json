@@ -4,6 +4,9 @@
   "providers": [
     {
       "item": "the_bumblezone:pile_of_pollen"
+    },
+    {
+      "item": "the_bumblezone:pile_of_pollen_suspicious"
     }
   ],
   "conditions": [

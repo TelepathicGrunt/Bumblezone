@@ -21,6 +21,8 @@ Essence of Knowledge will now highlight Rare Ice's rare ice blocks and certain o
 
 Added Bee Queen color randomizing trades for a ton of mods now!
 
+Improved JEED's descriptions of Bumblezone's effects.
+
 
 ### **(V.7.4.14 Changes) (1.20.1 Minecraft)**
 
