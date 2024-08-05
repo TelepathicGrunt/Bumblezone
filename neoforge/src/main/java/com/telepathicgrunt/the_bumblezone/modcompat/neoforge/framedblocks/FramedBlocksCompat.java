@@ -38,6 +38,12 @@ public final class FramedBlocksCompat implements ModCompat {
         ModChecker.framedBlocksPresent = true;
     }
 
+    /**
+     * Event handler for managing custom interactions with carvable wax, ancient wax and luminescent wax when applied
+     * as a camo to a framed block. To do so, the camo is retrieved from the framed block via the player's interaction
+     * point on the block, the stored state is modified as necessary and then a new camo container with the modified
+     * state is written back to the framed block
+     */
     private static void onItemUsedOnBlock(UseItemOnBlockEvent event) {
         Level level = event.getLevel();
         Player player = event.getPlayer();
@@ -52,7 +58,7 @@ public final class FramedBlocksCompat implements ModCompat {
             BlockState carvedState = wax.tryCarve(event.getItemStack(), waxCamo.getState(), level, pos, player, event.getHand());
             if (carvedState != null) {
                 if (!level.isClientSide()) {
-                    be.setCamo(new CarvableWaxBlockCamoContainer(carvedState), hit, player);
+                    be.setCamo(waxCamo.copyWithState(carvedState), hit, player);
                 }
                 event.cancelWithResult(ItemInteractionResult.sidedSuccess(level.isClientSide()));
             }

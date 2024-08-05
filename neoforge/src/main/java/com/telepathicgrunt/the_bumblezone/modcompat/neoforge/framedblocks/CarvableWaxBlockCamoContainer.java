@@ -7,8 +7,14 @@ import xfacthd.framedblocks.api.camo.block.AbstractBlockCamoContainerFactory;
 
 import java.util.Set;
 
+/**
+ * Container for camos made of {@link CarvableWax}
+ */
 final class CarvableWaxBlockCamoContainer extends AbstractBlockCamoContainer<CarvableWaxBlockCamoContainer> {
 
+    /**
+     * Set of carvable wax patterns which change visually when rotated
+     */
     private static final Set<CarvableWax.Carving> ROTATABLE = Set.of(
             CarvableWax.Carving.WAVY,
             CarvableWax.Carving.CHISELED,
@@ -21,6 +27,9 @@ final class CarvableWaxBlockCamoContainer extends AbstractBlockCamoContainer<Car
         super(state);
     }
 
+    /**
+     * {@return whether the camo state held by this camo container can be rotated with the framed screwdriver}
+     */
     @Override
     public boolean canRotateCamo() {
         CarvableWax.Carving carving = getState().getValue(CarvableWax.CARVING);
@@ -39,6 +48,15 @@ final class CarvableWaxBlockCamoContainer extends AbstractBlockCamoContainer<Car
         return content.equals(((CarvableWaxBlockCamoContainer) obj).content);
     }
 
+    @Override
+    public String toString()
+    {
+        return "CarvableWaxBlockCamoContainer{" + content + "}";
+    }
+
+    /**
+     * {@return the camo container factory used to create and manage camo containers of this type}
+     */
     @Override
     public AbstractBlockCamoContainerFactory<CarvableWaxBlockCamoContainer> getFactory() {
         return FramedBlocksCompat.WAX_BLOCK_CAMO_FACTORY.value();
