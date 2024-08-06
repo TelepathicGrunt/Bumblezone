@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.neoforge;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.neoforge.BzConfigHandler;
+import com.telepathicgrunt.the_bumblezone.modcompat.neoforge.NeoForgeModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.neoforge.BzAttachmentTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.neoforge.BzBiomeModifiers;
 import com.telepathicgrunt.the_bumblezone.modinit.neoforge.BzGlobalLootModifier;
@@ -30,5 +31,7 @@ public class BumblezoneNeoForge {
         NeoForgeEventManager.init(modEventBus, eventBus);
 
         NeoForgeMod.enableProperFilenameValidation();
+
+        NeoForgeModChecker.setupEarlyModCompat(modEventBus);
     }
 }

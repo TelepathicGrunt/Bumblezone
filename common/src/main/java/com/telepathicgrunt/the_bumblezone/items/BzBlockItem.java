@@ -6,6 +6,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 public class BzBlockItem extends BlockItem {
     private final boolean fitInContainers;
@@ -47,5 +48,10 @@ public class BzBlockItem extends BlockItem {
             placingState = CarvableWax.getFacingStateForPlacement(placingState, context);
         }
         return placingState != null && this.canPlace(context, placingState) ? placingState : null;
+    }
+
+    @Nullable
+    public BlockState getBlockState() {
+        return blockState;
     }
 }

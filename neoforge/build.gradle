@@ -90,6 +90,7 @@ dependencies {
     // modRuntimeOnly("com.telepathicgrunt:CommandStructures-Neoforge:${project.commandstructures_neoforge}")
     // modRuntimeOnly("com.telepathicgrunt:StructureVoidToggle-Neoforge:${project.structurevoidtoggle_neoforge}")
 
+    modCompileOnly("curse.maven:framedblocks-441647:${project.framedblocks_file_id}")
 }
 
 processResources {

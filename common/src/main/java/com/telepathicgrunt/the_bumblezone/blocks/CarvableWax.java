@@ -13,7 +13,7 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -30,6 +30,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
 
 public class CarvableWax extends ProperFacingBlock {
@@ -111,6 +112,10 @@ public class CarvableWax extends ProperFacingBlock {
      */
     @Override
     public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+        return toItemStack(state);
+    }
+
+    public ItemStack toItemStack(BlockState state) {
         if (state.hasProperty(CARVING)) {
             Carving pattern = state.getValue(CARVING);
 
@@ -151,11 +156,21 @@ public class CarvableWax extends ProperFacingBlock {
 
     @Override
     public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
+        BlockState carvedState = tryCarve(itemStack, blockState, level, position, playerEntity, playerHand);
+        if (carvedState != null) {
+            level.setBlock(position, carvedState, 3);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        }
+
+        return super.useItemOn(itemStack, blockState, level, position, playerEntity, playerHand, raytraceResult);
+    }
+
+    @Nullable
+    public BlockState tryCarve(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand) {
         if (blockState.hasProperty(CARVING) &&
             (PlatformHooks.isItemAbility(itemStack, ShearsItem.class, "shears_carve") ||
             PlatformHooks.isItemAbility(itemStack, SwordItem.class, "sword_dig")))
         {
-            level.setBlock(position, BzBlocks.CARVABLE_WAX.get().defaultBlockState().setValue(CARVING, blockState.getValue(CARVING).next()), 3);
             this.spawnDestroyParticles(level, playerEntity, position,blockState);
 
             playerEntity.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
@@ -163,14 +178,14 @@ public class CarvableWax extends ProperFacingBlock {
                 BzCriterias.CARVE_WAX_TRIGGER.get().trigger(serverPlayer, position);
 
                 if (!serverPlayer.getAbilities().instabuild) {
-                    itemStack.hurtAndBreak(1, serverPlayer, playerHand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+                    itemStack.hurtAndBreak(1, serverPlayer, LivingEntity.getSlotForHand(playerHand));
                 }
             }
 
-            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+            return BzBlocks.CARVABLE_WAX.get().defaultBlockState().setValue(CARVING, blockState.getValue(CARVING).next());
         }
 
-        return super.useItemOn(itemStack, blockState, level, position, playerEntity, playerHand, raytraceResult);
+        return null;
     }
 
     /**
