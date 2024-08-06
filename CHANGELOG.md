@@ -32,6 +32,8 @@ Added Bee Queen color randomizing trades for a ton of mods now!
 
 Improved JEED's descriptions of Bumblezone's effects.
 
+Improved compat with Framed Blocks mod regarding Carvable Wax, Ancient Wax, and Luminescence Wax. Special Thanks to XFactHD for adding the compat work!
+
 
 ### **(V.7.6.21 Changes) (1.21 Minecraft)**
 
