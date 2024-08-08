@@ -1,3 +1,12 @@
+### **(V.7.6.23 Changes) (1.21.1 Minecraft)**
+
+#### Misc:
+Updated to 1.21.1 Minecraft.
+
+#### Blocks:
+Fixed Block Entity validation issues with Suspicious Pile of Pollen.
+
+
 ### **(V.7.6.22 Changes) (1.21 Minecraft)**
 
 ##### Dimensions:
@@ -34,27 +43,3 @@ Improved JEED's descriptions of Bumblezone's effects.
 
 Improved compat with Framed Blocks mod regarding Carvable Wax, Ancient Wax, and Luminescence Wax. Special Thanks to XFactHD for adding the compat work!
 
-
-### **(V.7.6.21 Changes) (1.21 Minecraft)**
-
-##### Entities:
-Made sure Bees spawning in Bumblezone are spawned in generated/loaded chunks.
-
-##### Advancements:
-Fixed Crazy Trader advancement triggering at 126 Bee Queen trades instead of 128.
-
-Fixed Crazy Trader advancement not triggering if you somehow skip over the target trade amount.
-
-Fixed Throne Pillar advancement not triggering when holding Throne Honey Compass.
-
-
-### **(V.7.6.20 Changes) (1.21 Minecraft)**
-
-##### Mod Compat:
-Improved general compat with More Babies mod
-
-##### Configs:
-(NeoForge): Marked restart-needed configs as needing restarts.
-
-##### Misc:
-(NeoForge): Now requires stable Neo v21.0.143 or newer.

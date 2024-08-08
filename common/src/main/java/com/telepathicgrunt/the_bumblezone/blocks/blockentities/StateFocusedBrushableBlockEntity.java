@@ -24,6 +24,11 @@ public class StateFocusedBrushableBlockEntity extends BrushableBlockEntity {
     }
 
     @Override
+    public boolean isValidBlockState(BlockState blockState) {
+        return BzBlockEntities.STATE_FOCUSED_BRUSHABLE_BLOCK_ENTITY.get().isValid(blockState);
+    }
+
+    @Override
     protected void brushingCompleted(Player player) {
         if (this.level == null || this.level.getServer() == null) {
             return;

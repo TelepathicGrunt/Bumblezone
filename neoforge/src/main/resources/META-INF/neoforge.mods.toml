@@ -24,9 +24,9 @@ license="https://github.com/TelepathicGrunt/Bumblezone/blob/latest-released/LICE
 [[dependencies.the_bumblezone]]
     modId="minecraft"
     type="required"
-    versionRange="[1.21,)"
+    versionRange="[1.21.1,)"
 
 [[dependencies.the_bumblezone]]
     modId="neoforge"
     type="required"
-    versionRange="[21.0.143,)"
+    versionRange="[21.1.0,)"
