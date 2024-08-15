@@ -1,3 +1,13 @@
+### **(V.7.4.16 Changes) (1.20.1 Minecraft)**
+
+##### Mod Compat:
+Allow Mutant Monster's Endersoul Hands to allow teleporting to Bumblezone when crouch right clicking beehives!
+
+Allow Bosses of Mass Destruction's Earthdiver Spear to allow teleporting to Bumblezone when right clicking beehives!
+
+Allow Bosses of Mass Destruction's Charged Ender Pearl to allow teleporting to Bumblezone when thrown at beehives!
+
+
 ### **(V.7.4.15 Changes) (1.20.1 Minecraft)**
 
 ##### Dimensions:

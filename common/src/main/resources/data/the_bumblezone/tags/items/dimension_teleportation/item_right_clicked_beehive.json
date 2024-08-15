@@ -16,6 +16,10 @@
     {
       "id": "ars_nouveau:creative_spell_book",
       "required": false
+    },
+    {
+      "id": "bosses_of_mass_destruction:earthdive_spear",
+      "required": false
     }
   ]
 }

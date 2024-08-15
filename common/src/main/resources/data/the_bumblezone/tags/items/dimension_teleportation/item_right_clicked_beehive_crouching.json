@@ -8,6 +8,10 @@
     {
       "id": "travelstaff:travel_staff",
       "required": false
+    },
+    {
+      "id": "mutantmonsters:endersoul_hand",
+      "required": false
     }
   ]
 }
