@@ -1426,8 +1426,6 @@
   "the_bumblezone.configuration.allowproductivebeesbeecagerevivingemptybroodblock.tooltip": "Cho phép Lồng Ong có ong bên trong biến các Khối Tổ Ong Trống thành Khối Tổ Ong Thường với ấu trùng bên trong!",
   "the_bumblezone.configuration.allowproductivebeesspawnfromdispenserfedbroodblock": "Productive Bees Từ Khối Máy Phân Phối",
   "the_bumblezone.configuration.allowproductivebeesspawnfromdispenserfedbroodblock.tooltip": "Cho phép các Khối Tổ Ong được nuôi bởi Máy Phân Phối có cơ hội sinh ra ong của Productive Bees.",
-  "the_bumblezone.configuration.allowhoneytreatcompat": "Honey Treat Cho Ong Ăn",
-  "the_bumblezone.configuration.allowhoneytreatcompat.tooltip": "Cho phép Honey Treat để cho ong và các Khối Tổ Ong ăn.",
   "the_bumblezone.configuration.pborehoneycombspawnratebeedungeon": "Tỷ Lệ Gạch Quặng Tổ Ong Trong Hầm Ngục",
   "the_bumblezone.configuration.pborehoneycombspawnratebeedungeon.tooltip": "Tỷ lệ hầm ngục Ong được làm từ các khối mật ong chứa quặng. 0 là không có mật ong của Productive Bees và 1 là tối đa mật ong của Productive Bees.",
   "the_bumblezone.configuration.pborehoneycombspawnratespiderbeedungeon": "Tỷ Lệ Gạch Quặng Hầm Ngục Ong Nhiễm Nhện",

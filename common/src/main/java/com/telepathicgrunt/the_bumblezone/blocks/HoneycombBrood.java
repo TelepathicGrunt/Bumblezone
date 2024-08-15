@@ -70,7 +70,6 @@ public class HoneycombBrood extends ProperFacingBlock {
 
     public static final MapCodec<HoneycombBrood> CODEC = Block.simpleCodec(HoneycombBrood::new);
 
-    private static final ResourceLocation HONEY_TREAT = ResourceLocation.fromNamespaceAndPath("productivebees", "honey_treat");
     public static final IntegerProperty STAGE = BlockStateProperties.AGE_3;
 
     public HoneycombBrood() {
@@ -143,38 +142,6 @@ public class HoneycombBrood extends ProperFacingBlock {
                 }
             }
 
-            return ItemInteractionResult.SUCCESS;
-        }
-        else if (BzModCompatibilityConfigs.allowHoneyTreatCompat && BuiltInRegistries.ITEM.getKey(itemStack.getItem()).equals(HONEY_TREAT)) {
-            if (!level.isClientSide()) {
-                // spawn bee if at final stage and front isn't blocked off
-                int stage = blockState.getValue(STAGE);
-                if (stage == 3) {
-                    spawnBroodMob(level, random, blockState, position, stage);
-                }
-                else {
-                    int stageIncrease = random.nextFloat() < 0.2f ? 2 : 1;
-                    level.setBlockAndUpdate(position, blockState.setValue(STAGE, Math.min(3, stage + stageIncrease)));
-                }
-
-                if (random.nextFloat() < 0.30F || stage == 3) {
-                    applyProtection(playerEntity);
-                }
-            }
-
-            // block grew one stage or bee was spawned
-            level.playSound(
-                    playerEntity,
-                    playerEntity.getX(),
-                    playerEntity.getY(),
-                    playerEntity.getZ(),
-                    SoundEvents.BOTTLE_EMPTY,
-                    SoundSource.BLOCKS,
-                    1.0F,
-                    1.0F);
-
-            // removes used item
-            GeneralUtils.givePlayerItem(playerEntity, playerHand, ItemStack.EMPTY, true, true);
             return ItemInteractionResult.SUCCESS;
         }
         /*

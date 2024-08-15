@@ -30,7 +30,6 @@ public class BzModCompatibilityConfig {
 
 	public static ModConfigSpec.BooleanValue spawnProductiveBeesBeesMob;
 	public static ModConfigSpec.DoubleValue spawnrateOfProductiveBeesMobs;
-	public static ModConfigSpec.BooleanValue allowHoneyTreatCompat;
 	public static ModConfigSpec.BooleanValue allowProductiveBeesBeeCageRevivingEmptyBroodBlock;
 	public static ModConfigSpec.BooleanValue allowProductiveBeesSpawnFromDispenserFedBroodBlock;
 	public static ModConfigSpec.BooleanValue spawnProductiveBeesHoneycombVariants;
@@ -292,12 +291,6 @@ public class BzModCompatibilityConfig {
 			.translation("the_bumblezone.configuration.allowproductivebeesspawnfromdispenserfedbroodblock")
 			.define("allowProductiveBeesSpawnFromDispenserFedBroodBlock", true);
 
-		allowHoneyTreatCompat = builder
-				.comment("----------------------------\n",
-						" Allow Honey Treat to be able to feed bees and Honeycomb Brood Blocks.\n")
-				.translation("the_bumblezone.configuration.allowhoneytreatcompat")
-				.define("allowHoneyTreatCompat", true);
-
 		PBOreHoneycombSpawnRateBeeDungeon = builder
 				.comment("----------------------------\n",
 						" How much of Bee Dungeons is made of ore-based honeycombs.",
@@ -423,7 +416,6 @@ public class BzModCompatibilityConfig {
 		BzModCompatibilityConfigs.allowedBees = allowedBees.get().stream().map(String::toString).collect(Collectors.toList());
 		BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock = allowProductiveBeesBeeCageRevivingEmptyBroodBlock.get();
 		BzModCompatibilityConfigs.allowProductiveBeesSpawnFromDispenserFedBroodBlock = allowProductiveBeesSpawnFromDispenserFedBroodBlock.get();
-		BzModCompatibilityConfigs.allowHoneyTreatCompat = allowHoneyTreatCompat.get();
 		BzModCompatibilityConfigs.PBOreHoneycombSpawnRateBeeDungeon = PBOreHoneycombSpawnRateBeeDungeon.get();
 		BzModCompatibilityConfigs.PBOreHoneycombSpawnRateSpiderBeeDungeon = PBOreHoneycombSpawnRateSpiderBeeDungeon.get();
 

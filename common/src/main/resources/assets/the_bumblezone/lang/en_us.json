@@ -1426,8 +1426,6 @@
   "the_bumblezone.configuration.allowproductivebeesbeecagerevivingemptybroodblock.tooltip": "Allow Bee Cages with bees inside to turn Empty Honeycomb Brood blocks into a regular Honeycomb Brood Block with a larva inside!",
   "the_bumblezone.configuration.allowproductivebeesspawnfromdispenserfedbroodblock": "Productive Bees From Dispenser Block",
   "the_bumblezone.configuration.allowproductivebeesspawnfromdispenserfedbroodblock.tooltip": "Allow Honeycomb Brood blocks fed by Dispenser to be able to have chance of spawning Productive Bees bees.",
-  "the_bumblezone.configuration.allowhoneytreatcompat": "Bee Feedable Honey Treat",
-  "the_bumblezone.configuration.allowhoneytreatcompat.tooltip": "Allow Honey Treat to be able to feed bees and Honeycomb Brood Blocks.",
   "the_bumblezone.configuration.pborehoneycombspawnratebeedungeon": "Bee Dungeon Ore Comb Rates",
   "the_bumblezone.configuration.pborehoneycombspawnratebeedungeon.tooltip": "How much of Bee Dungeons is made of ore-based honeycombs. 0 is no Productive Bees honeycombs and 1 is max Productive Bees honeycombs.",
   "the_bumblezone.configuration.pborehoneycombspawnratespiderbeedungeon": "Spider Infested Ore Comb Rates",
