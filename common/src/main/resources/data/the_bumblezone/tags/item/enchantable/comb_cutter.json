@@ -3,6 +3,10 @@
   "values": [
     "#minecraft:enchantable/sword",
     "#minecraft:swords",
-    "minecraft:shears"
+    "minecraft:shears",
+    {
+      "id": "#farmersdelight:tools/knives",
+      "required": false
+    }
   ]
 }
