@@ -1,5 +1,8 @@
 ### **(V.7.6.24 Changes) (1.21.1 Minecraft)**
 
+##### Entities:
+Fixed Cosmic Crystal Entity breaking non-arena blocks when arena is despawned.
+
 ##### Mod Compat:
 Fixed Bumblezone breaking Productive Bees's Honey Treat behaviour by removing all Honey Treat compat from Bumblezone.
  You won't get Protection of the Bees now when feeding Honey Treat to bees. Better this way to prevent issues with Productive Bees.
