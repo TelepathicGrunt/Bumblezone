@@ -149,7 +149,7 @@ public class TwoToneSpikeFeature extends Feature<TwoToneSpikeFeatureConfig> {
                                 origin.getZ() + z + currentZSlant);
 
                         BlockState state = level.getBlockState(blockpos$Mutable);
-                        if (!state.canOcclude() && !state.is(BzBlocks.CRYSTALLINE_FLOWER.get())) {
+                        if (!state.canOcclude() && !state.is(BzBlocks.CRYSTALLINE_FLOWER.get()) && !state.is(BzTags.AIR_LIKE)) {
                             BlockState newState;
                             if (layer > ((height * 2) / 3f) +
                                     noiseGen.noise3_Classic(
