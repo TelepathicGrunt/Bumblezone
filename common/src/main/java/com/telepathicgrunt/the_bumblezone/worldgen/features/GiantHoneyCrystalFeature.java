@@ -45,7 +45,8 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
         RandomSource random = context.random();
         BlockPos origin = context.origin();
 
-        if (level.getBlockState(origin).canOcclude()) {
+        BlockState currentState = level.getBlockState(origin);
+        if (currentState.canOcclude() || currentState.is(BzTags.AIR_LIKE)) {
             return false;
         }
 

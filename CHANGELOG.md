@@ -3,6 +3,11 @@
 ##### Entities:
 Fixed Cosmic Crystal Entity breaking non-arena blocks when arena is despawned.
 
+##### Structures:
+Fixed Giant Spikes of Glistering Honey Crystal from spawning in Sempiternal Sanctum's Heavy Air or other structure's Windy Air areas.
+
+Fixed Howling Construct biome's giant spikes from placing blocks in Sempiternal Sanctum's Heavy Air or other structure's Windy Air areas.
+
 ##### Mod Compat:
 Fixed Bumblezone breaking Productive Bees's Honey Treat behaviour by removing all Honey Treat compat from Bumblezone.
  You won't get Protection of the Bees now when feeding Honey Treat to bees. Better this way to prevent issues with Productive Bees.
