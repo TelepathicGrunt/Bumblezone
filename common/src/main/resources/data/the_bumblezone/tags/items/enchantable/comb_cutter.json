@@ -10,6 +10,10 @@
     {
       "id": "#forge:tools/swords",
       "required": false
+    },
+    {
+      "id": "#farmersdelight:tools/knives",
+      "required": false
     }
   ]
 }

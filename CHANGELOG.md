@@ -1,3 +1,9 @@
+### **(V.7.4.17 Changes) (1.20.1 Minecraft)**
+
+##### Mod Compat:
+Allow Farmer's Delight Knives to be enchanted with Comb Cutter enchantment.
+
+
 ### **(V.7.4.16 Changes) (1.20.1 Minecraft)**
 
 ##### Entities:
