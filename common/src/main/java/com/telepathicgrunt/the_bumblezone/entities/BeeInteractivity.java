@@ -35,8 +35,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class BeeInteractivity {
 
-    private static final ResourceLocation PRODUCTIVE_BEES_HONEY_TREAT = new ResourceLocation("productivebees", "honey_treat");
-
     @Nullable
     public static InteractionResult onEntityInteractEvent(@Nullable InteractionResult result, PlayerEntityInteractEvent event) {
         Entity entity = event.entity();
@@ -95,7 +93,7 @@ public class BeeInteractivity {
             ItemStack itemstackOriginal = itemstack.copy();
 
             // Special cased items so the ActionResultType continues and make the item's behavior not lost.
-            if (itemstackOriginal.getItem() == BzItems.BEE_BREAD.get() || (BzModCompatibilityConfigs.allowHoneyTreatCompat && itemRL.equals(PRODUCTIVE_BEES_HONEY_TREAT))) {
+            if (itemstackOriginal.getItem() == BzItems.BEE_BREAD.get()) {
                 removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
 
                 if(removedWrath && playerEntity instanceof ServerPlayer serverPlayer) {

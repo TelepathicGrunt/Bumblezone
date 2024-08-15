@@ -84,10 +84,6 @@
       "required": false
     },
     {
-      "id": "productivebees:honey_treat",
-      "required": false
-    },
-    {
       "id": "productivebees:sugarbag_honeycomb",
       "required": false
     },

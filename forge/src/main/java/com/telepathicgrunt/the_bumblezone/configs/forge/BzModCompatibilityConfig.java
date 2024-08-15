@@ -31,7 +31,6 @@ public class BzModCompatibilityConfig {
 
 	public static ForgeConfigSpec.BooleanValue spawnProductiveBeesBeesMob;
 	public static ForgeConfigSpec.DoubleValue spawnrateOfProductiveBeesMobs;
-	public static ForgeConfigSpec.BooleanValue allowHoneyTreatCompat;
 	public static ForgeConfigSpec.BooleanValue allowProductiveBeesBeeCageRevivingEmptyBroodBlock;
 	public static ForgeConfigSpec.BooleanValue allowProductiveBeesSpawnFromDispenserFedBroodBlock;
 	public static ForgeConfigSpec.BooleanValue spawnProductiveBeesHoneycombVariants;
@@ -300,12 +299,6 @@ public class BzModCompatibilityConfig {
 				.translation("the_bumblezone.config.allowproductivebeesspawnfromdispenserfedbroodblock")
 				.define("allowProductiveBeesSpawnFromDispenserFedBroodBlock", true);
 
-			allowHoneyTreatCompat = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Allow Honey Treat to be able to feed bees and Honeycomb Brood Blocks.\n")
-					.translation("the_bumblezone.config.allowhoneytreatcompat")
-					.define("allowHoneyTreatCompat", true);
-
 			PBOreHoneycombSpawnRateBeeDungeon = builder
 					.comment(" \n-----------------------------------------------------\n",
 							" How much of Bee Dungeons is made of ore-based honeycombs.",
@@ -434,7 +427,6 @@ public class BzModCompatibilityConfig {
 		BzModCompatibilityConfigs.allowedBees = allowedBees.get().stream().map(String::toString).collect(Collectors.toList());
 		BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock = allowProductiveBeesBeeCageRevivingEmptyBroodBlock.get();
 		BzModCompatibilityConfigs.allowProductiveBeesSpawnFromDispenserFedBroodBlock = allowProductiveBeesSpawnFromDispenserFedBroodBlock.get();
-		BzModCompatibilityConfigs.allowHoneyTreatCompat = allowHoneyTreatCompat.get();
 		BzModCompatibilityConfigs.PBOreHoneycombSpawnRateBeeDungeon = PBOreHoneycombSpawnRateBeeDungeon.get();
 		BzModCompatibilityConfigs.PBOreHoneycombSpawnRateSpiderBeeDungeon = PBOreHoneycombSpawnRateSpiderBeeDungeon.get();
 

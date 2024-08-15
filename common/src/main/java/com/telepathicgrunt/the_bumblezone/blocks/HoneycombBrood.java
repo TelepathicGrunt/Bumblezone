@@ -63,7 +63,6 @@ import java.util.List;
 
 
 public class HoneycombBrood extends ProperFacingBlock {
-    private static final ResourceLocation HONEY_TREAT = new ResourceLocation("productivebees:honey_treat");
     public static final IntegerProperty STAGE = BlockStateProperties.AGE_3;
 
     public HoneycombBrood() {
@@ -130,38 +129,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
             return InteractionResult.SUCCESS;
         }
-        else if (BzModCompatibilityConfigs.allowHoneyTreatCompat && BuiltInRegistries.ITEM.getKey(itemstack.getItem()).equals(HONEY_TREAT)) {
-            if (!world.isClientSide()) {
-                // spawn bee if at final stage and front isn't blocked off
-                int stage = thisBlockState.getValue(STAGE);
-                if (stage == 3) {
-                    spawnBroodMob(world, random, thisBlockState, position, stage);
-                }
-                else {
-                    int stageIncrease = random.nextFloat() < 0.2f ? 2 : 1;
-                    world.setBlockAndUpdate(position, thisBlockState.setValue(STAGE, Math.min(3, stage + stageIncrease)));
-                }
 
-                if (random.nextFloat() < 0.30F || stage == 3) {
-                    applyProtection(playerEntity, itemstack);
-                }
-            }
-
-            // block grew one stage or bee was spawned
-            world.playSound(
-                    playerEntity,
-                    playerEntity.getX(),
-                    playerEntity.getY(),
-                    playerEntity.getZ(),
-                    SoundEvents.BOTTLE_EMPTY,
-                    SoundSource.BLOCKS,
-                    1.0F,
-                    1.0F);
-
-            // removes used item
-            GeneralUtils.givePlayerItem(playerEntity, playerHand, ItemStack.EMPTY, true, true);
-            return InteractionResult.SUCCESS;
-        }
         /*
          * Player is feeding larva
          */

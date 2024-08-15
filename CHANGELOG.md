@@ -1,6 +1,9 @@
 ### **(V.7.4.16 Changes) (1.20.1 Minecraft)**
 
 ##### Mod Compat:
+Fixed Bumblezone breaking Productive Bees's Honey Treat behaviour by removing all Honey Treat compat from Bumblezone.
+ You won't get Protection of the Bees now when feeding Honey Treat to bees. Better this way to prevent issues with Productive Bees.
+
 Allow Mutant Monster's Endersoul Hands to allow teleporting to Bumblezone when crouch right clicking beehives!
 
 Allow Bosses of Mass Destruction's Earthdiver Spear to allow teleporting to Bumblezone when right clicking beehives!
