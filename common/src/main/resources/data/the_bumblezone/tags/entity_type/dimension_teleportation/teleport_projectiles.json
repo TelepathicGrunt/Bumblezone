@@ -19,6 +19,10 @@
       "required": false
     },
     {
+      "id": "bosses_of_mass_destruction:charged_ender_pearl",
+      "required": false
+    },
+    {
       "id": "endermanoverhaul:icy_pearl",
       "required": false
     },
