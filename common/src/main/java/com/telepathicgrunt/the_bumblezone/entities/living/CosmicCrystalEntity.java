@@ -848,7 +848,9 @@ public class CosmicCrystalEntity extends LivingEntity {
             if (hitResult instanceof BlockHitResult blockHitResult) {
                BlockState state = this.level().getBlockState(blockHitResult.getBlockPos());
                if (state.getBlock().getExplosionResistance() < 1500 && !state.is(BlockTags.WITHER_IMMUNE)) {
-                   this.level().destroyBlock(blockHitResult.getBlockPos(), true);
+                   if (this.getRemovalReason() == null) {
+                       this.level().destroyBlock(blockHitResult.getBlockPos(), true);
+                   }
                }
             }
             else if (hitResult instanceof EntityHitResult entityHitResult) {
@@ -1275,7 +1277,9 @@ public class CosmicCrystalEntity extends LivingEntity {
                             blockState.getBlock().getExplosionResistance() < 1500 &&
                             !blockState.is(BlockTags.WITHER_IMMUNE))
                         {
-                            this.level().destroyBlock(mutableBlockPos, true);
+                            if (this.getRemovalReason() == null) {
+                                this.level().destroyBlock(mutableBlockPos, true);
+                            }
                         }
                         else {
                             try {
@@ -1315,7 +1319,9 @@ public class CosmicCrystalEntity extends LivingEntity {
                             blockState.getBlock().getExplosionResistance() < 1500 &&
                             !blockState.is(BlockTags.WITHER_IMMUNE))
                         {
-                            this.level().destroyBlock(mutableBlockPos, true);
+                            if (this.getRemovalReason() == null) {
+                                this.level().destroyBlock(mutableBlockPos, true);
+                            }
                         }
                     }
                 }
