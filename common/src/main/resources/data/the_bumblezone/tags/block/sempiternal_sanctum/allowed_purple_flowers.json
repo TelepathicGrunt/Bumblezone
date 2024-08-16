@@ -288,6 +288,34 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:flowering_jacaranda_bush",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:flowering_indigo_jacaranda_bush",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:allium_flower_bush",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:purple_tulip",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:purple_amaranth",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:alpine_bellflower",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:iris",
+      "required": false
+    },
+    {
       "id": "cavesanddepths:azaleaflower",
       "required": false
     },

@@ -18,6 +18,18 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:flowering_baobab_leaves",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:flowering_orchard_leaves",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:flowering_ironwood_leaves",
+      "required": false
+    },
+    {
       "id": "fruittrees:apple_leaves",
       "required": false
     },

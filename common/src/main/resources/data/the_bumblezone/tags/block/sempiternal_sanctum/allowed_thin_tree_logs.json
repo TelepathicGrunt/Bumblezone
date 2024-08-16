@@ -12,6 +12,14 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:rainbow_eucalyptus_log",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:aspen_log",
+      "required": false
+    },
+    {
       "id": "densetrees:dense_oak_log",
       "required": false
     },

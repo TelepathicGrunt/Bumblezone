@@ -8,6 +8,14 @@
     "minecraft:cocoa",
     "minecraft:dead_bush",
     "minecraft:nether_wart",
-    "minecraft:sugar_cane"
+    "minecraft:sugar_cane",
+    {
+      "id": "byg:white_puffball",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:white_puffball",
+      "required": false
+    }
   ]
 }

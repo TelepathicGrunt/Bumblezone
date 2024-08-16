@@ -188,6 +188,22 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:black_rose",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:horseweed",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:winter_succulent",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:rainbow_eucalyptus_log",
+      "required": false
+    },
+    {
       "id": "cinderscapes:scorched_tendrils",
       "required": false
     },

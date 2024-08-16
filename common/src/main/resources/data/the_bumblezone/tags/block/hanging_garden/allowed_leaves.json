@@ -41,6 +41,34 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:flowering_orchard_leaves",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:flowering_baobab_leaves",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:flowering_skyrus_leaves",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:flowering_yucca_leaves",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:flowering_ironwood_leaves",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:white_sakura_leaves",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:yellow_ironwood_leaves",
+      "required": false
+    },
+    {
       "id": "cherryblossomgrotto:cherry_blossom_leaves",
       "required": false
     },
