@@ -6,6 +6,8 @@ Fixed typo preventing `the_bumblezone:crystalline_flower/xp_2_when_consumed` fro
 ##### Items:
 Fixed Essence of Life defaulting crop block's non-age properties.
 
+(Fabric): Fixed Essence of the Bees being lost on death.
+
 ##### Mod Compat:
 Allow Farmer's Delight Knives to be enchanted with Comb Cutter enchantment.
 
