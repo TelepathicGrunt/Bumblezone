@@ -9,6 +9,8 @@ Fixed Essence of Life defaulting crop block's non-age properties.
 ##### Mod Compat:
 Allow Farmer's Delight Knives to be enchanted with Comb Cutter enchantment.
 
+String Curtain, Dirt Pellet, Hanging Gardens compat setup for Estrogen's Moth.
+
 
 ### **(V.7.6.24 Changes) (1.21.1 Minecraft)**
 
