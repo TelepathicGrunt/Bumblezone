@@ -28,11 +28,13 @@ import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.StemBlock;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -224,6 +226,7 @@ public class LifeEssence extends AbilityEssenceItem {
             else if (block instanceof CropBlock cropBlock) {
                 if (!cropBlock.isMaxAge(state)) {
                     BlockState newState = cropBlock.getStateForAge(cropBlock.getAge(state) + 1);
+                    newState = copyNonAgeProperties(state, newState);
                     level.setBlock(blockPos, newState, 3);
                     grewBlock = true;
                 }
@@ -232,6 +235,7 @@ public class LifeEssence extends AbilityEssenceItem {
                 int age = state.getValue(StemBlock.AGE);
                 if (age < 7) {
                     BlockState newState = state.setValue(StemBlock.AGE, age + 1);
+                    newState = copyNonAgeProperties(state, newState);
                     level.setBlock(blockPos, newState, 3);
                     grewBlock = true;
                 }
@@ -244,6 +248,7 @@ public class LifeEssence extends AbilityEssenceItem {
                 int age = state.getValue(NetherWartBlock.AGE);
                 if (age < NetherWartBlock.MAX_AGE) {
                     BlockState newState = state.setValue(NetherWartBlock.AGE, age + 1);
+                    newState = copyNonAgeProperties(state, newState);
                     level.setBlock(blockPos, newState, 3);
                     grewBlock = true;
                 }
@@ -252,6 +257,7 @@ public class LifeEssence extends AbilityEssenceItem {
                 int age = state.getValue(SweetBerryBushBlock.AGE);
                 if (age < 3) {
                     BlockState newState = state.setValue(SweetBerryBushBlock.AGE, age + 1);
+                    newState = copyNonAgeProperties(state, newState);
                     level.setBlock(blockPos, newState, 3);
                     grewBlock = true;
                 }
@@ -270,6 +276,7 @@ public class LifeEssence extends AbilityEssenceItem {
                             property.getPossibleValues().stream().max(Comparable::compareTo).orElse(null) != state.getValue(property))
                     {
                         BlockState newState = state.setValue((Property<Integer>)property, ((Integer)state.getValue(property)) + 1);
+                        newState = copyNonAgeProperties(state, newState);
                         level.setBlock(blockPos, newState, 3);
                         grewBlock = true;
                     }
@@ -290,6 +297,23 @@ public class LifeEssence extends AbilityEssenceItem {
             }
         }
     }
+
+    private static @NotNull BlockState copyNonAgeProperties(BlockState oldState, BlockState newState) {
+        for (Property<?> property : newState.getProperties()) {
+            if (!property.getName().equalsIgnoreCase("age")) {
+                newState = copyProperty(oldState, newState, property);
+            }
+        }
+        return newState;
+    }
+
+    private static <T extends Comparable<T>> @NotNull BlockState copyProperty(BlockState state, BlockState newState, Property<T> propertyToCopy) {
+        if (newState.hasProperty(propertyToCopy) && state.hasProperty(propertyToCopy)) {
+            newState = newState.setValue(propertyToCopy, state.getValue(propertyToCopy));
+        }
+        return newState;
+    }
+
 
     private static boolean growUpOneToThreeHighLimit(ServerLevel level, BlockPos blockPos, BlockState state) {
         int currentHeight = 1;

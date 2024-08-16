@@ -1,5 +1,8 @@
 ### **(V.7.4.17 Changes) (1.20.1 Minecraft)**
 
+##### Items:
+Fixed Essence of Life defaulting crop block's non-age properties.
+
 ##### Mod Compat:
 Allow Farmer's Delight Knives to be enchanted with Comb Cutter enchantment.
 
