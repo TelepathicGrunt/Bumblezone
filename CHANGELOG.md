@@ -1,5 +1,8 @@
 ### **(V.7.6.25 Changes) (1.21.1 Minecraft)**
 
+##### Blocks:
+Fixed typo preventing `the_bumblezone:crystalline_flower/xp_2_when_consumed` from being parsed.
+
 ##### Mod Compat:
 Allow Farmer's Delight Knives to be enchanted with Comb Cutter enchantment.
 
