@@ -122,6 +122,10 @@
       "required": false
     },
     {
+      "id": "estrogen:moth",
+      "required": false
+    },
+    {
       "id": "etcetera:snail",
       "required": false
     },
