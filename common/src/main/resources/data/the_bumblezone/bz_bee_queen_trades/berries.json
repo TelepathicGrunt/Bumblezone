@@ -73,6 +73,10 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:blueberries",
+      "required": false
+    },
+    {
       "id": "nature_expansion:sloeberries",
       "required": false
     },

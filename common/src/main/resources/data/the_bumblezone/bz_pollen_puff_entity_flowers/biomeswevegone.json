@@ -1,0 +1,69 @@
+{
+  "biomeswevegone:pumpkin_warden": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:pumpkin_stem" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "biomeswevegone:oddion": [
+    {
+      "nbt_match": {
+        "variant": 0
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:allium" },
+            "weight": 2
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "variant": 1
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "biomeswevegone:pink_allium" },
+            "weight": 2
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "variant": 2
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "biomeswevegone:white_allium" },
+            "weight": 2
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ]
+}

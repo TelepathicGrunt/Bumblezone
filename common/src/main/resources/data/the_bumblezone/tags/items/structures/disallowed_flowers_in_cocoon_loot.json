@@ -34,6 +34,14 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:horseweed",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:winter_succulent",
+      "required": false
+    },
+    {
       "id": "expandeddelight:wild_asparagus",
       "required": false
     },

@@ -92,6 +92,30 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:blue_enchanted_sapling",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:green_enchanted_sapling",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:brown_birch_sapling",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:brown_oak_sapling",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:brown_zelkova_sapling",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:palo_verde_sapling",
+      "required": false
+    },
+    {
       "id": "deep_aether:sunroot_sapling",
       "required": false
     },

@@ -109,6 +109,22 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:green_tulip",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:shrub",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:winter_succulent",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:aloe_vera",
+      "required": false
+    },
+    {
       "id": "cavesanddepths:cave_bush",
       "required": false
     },

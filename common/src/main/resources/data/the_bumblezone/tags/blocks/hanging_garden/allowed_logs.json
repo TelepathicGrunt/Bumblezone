@@ -40,6 +40,26 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:rainbow_eucalyptus_log",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:aspen_log",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:white_mangrove_log",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:mahogany_log",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:sakura_log",
+      "required": false
+    },
+    {
       "id": "deep_aether:roseroot_log",
       "required": false
     },

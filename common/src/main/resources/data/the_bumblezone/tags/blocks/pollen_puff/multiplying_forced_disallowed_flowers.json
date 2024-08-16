@@ -38,6 +38,14 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:horseweed",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:winter_succulent",
+      "required": false
+    },
+    {
       "id": "ecotones:rosemary",
       "required": false
     },

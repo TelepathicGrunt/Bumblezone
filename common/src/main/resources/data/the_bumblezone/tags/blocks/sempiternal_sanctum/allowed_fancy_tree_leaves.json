@@ -28,6 +28,14 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:skyris_leaves",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:white_sakura_leaves",
+      "required": false
+    },
+    {
       "id": "cherryblossomgrotto:cherry_blossom_leaves",
       "required": false
     },

@@ -25,6 +25,42 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:firecracker_flower_bush",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:hydrangea_bush",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:flowering_indigo_jacaranda_bush",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:flowering_jacaranda_bush",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:hydrangea_hedge",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:white_sakura_petals",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:yellow_sakura_petals",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:flower_patch",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:white_sakura_sapling",
+      "required": false
+    },
+    {
       "id": "born_in_chaos_v1:marigolds",
       "required": false
     },

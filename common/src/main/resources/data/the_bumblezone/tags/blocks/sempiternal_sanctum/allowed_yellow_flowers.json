@@ -104,6 +104,26 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:lollipop_flower",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:yellow_sakura_petals",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:yellow_tulip",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:firecracker_flower_bush",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:orange_amaranth",
+      "required": false
+    },
+    {
       "id": "colorfulazaleas:yellow_azalea_sapling",
       "required": false
     },

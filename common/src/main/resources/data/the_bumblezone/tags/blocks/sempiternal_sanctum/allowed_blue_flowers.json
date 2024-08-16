@@ -332,6 +332,26 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:cyan_tulip",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:cyan_amaranth",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:cyan_rose",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:winter_scilla",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:winter_cyclamen",
+      "required": false
+    },
+    {
       "id": "colorfulazaleas:blue_azalea_sapling",
       "required": false
     },

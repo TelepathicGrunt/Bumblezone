@@ -80,7 +80,7 @@
         "type": "minecraft:weighted_state_provider",
         "entries": [
           {
-            "data": { "Name": "byg:black_puff" },
+            "data": { "Name": "infernalexp:black_puff" },
             "weight": 1
           },
           {
@@ -134,7 +134,7 @@
         "type": "minecraft:weighted_state_provider",
         "entries": [
           {
-            "data": { "Name": "byg:blue_glowshroom" },
+            "data": { "Name": "infernalexp:blue_glowshroom" },
             "weight": 1
           },
           {
@@ -152,7 +152,7 @@
         "type": "minecraft:weighted_state_provider",
         "entries": [
           {
-            "data": { "Name": "byg:bulbis_anomaly" },
+            "data": { "Name": "infernalexp:bulbis_anomaly" },
             "weight": 1
           },
           {
@@ -170,7 +170,7 @@
         "type": "minecraft:weighted_state_provider",
         "entries": [
           {
-            "data": { "Name": "byg:death_cap" },
+            "data": { "Name": "infernalexp:death_cap" },
             "weight": 1
           },
           {
@@ -188,7 +188,7 @@
         "type": "minecraft:weighted_state_provider",
         "entries": [
           {
-            "data": { "Name": "byg:embur_wart" },
+            "data": { "Name": "infernalexp:embur_wart" },
             "weight": 1
           },
           {
@@ -224,7 +224,7 @@
         "type": "minecraft:weighted_state_provider",
         "entries": [
           {
-            "data": { "Name": "byg:fungal_imparius" },
+            "data": { "Name": "infernalexp:fungal_imparius" },
             "weight": 1
           },
           {
@@ -296,7 +296,7 @@
         "type": "minecraft:weighted_state_provider",
         "entries": [
           {
-            "data": { "Name": "byg:green_mushroom" },
+            "data": { "Name": "infernalexp:green_mushroom" },
             "weight": 1
           },
           {
@@ -314,7 +314,7 @@
         "type": "minecraft:weighted_state_provider",
         "entries": [
           {
-            "data": { "Name": "byg:imparius_mushroom" },
+            "data": { "Name": "infernalexp:imparius_mushroom" },
             "weight": 1
           },
           {
@@ -440,7 +440,7 @@
         "type": "minecraft:weighted_state_provider",
         "entries": [
           {
-            "data": { "Name": "byg:purple_glowshroom" },
+            "data": { "Name": "infernalexp:purple_glowshroom" },
             "weight": 1
           },
           {
@@ -458,7 +458,7 @@
         "type": "minecraft:weighted_state_provider",
         "entries": [
           {
-            "data": { "Name": "byg:shulkren_fungus" },
+            "data": { "Name": "infernalexp:shulkren_fungus" },
             "weight": 1
           },
           {
@@ -476,7 +476,7 @@
         "type": "minecraft:weighted_state_provider",
         "entries": [
           {
-            "data": { "Name": "byg:soul_shroom" },
+            "data": { "Name": "infernalexp:soul_shroom" },
             "weight": 1
           },
           {
@@ -494,7 +494,7 @@
         "type": "minecraft:weighted_state_provider",
         "entries": [
           {
-            "data": { "Name": "byg:sythian_fungus" },
+            "data": { "Name": "infernalexp:sythian_fungus" },
             "weight": 1
           },
           {
@@ -548,7 +548,7 @@
         "type": "minecraft:weighted_state_provider",
         "entries": [
           {
-            "data": { "Name": "byg:weeping_milkcap" },
+            "data": { "Name": "infernalexp:weeping_milkcap" },
             "weight": 1
           },
           {
@@ -566,7 +566,7 @@
         "type": "minecraft:weighted_state_provider",
         "entries": [
           {
-            "data": { "Name": "byg:wood_blewit" },
+            "data": { "Name": "infernalexp:wood_blewit" },
             "weight": 1
           },
           {

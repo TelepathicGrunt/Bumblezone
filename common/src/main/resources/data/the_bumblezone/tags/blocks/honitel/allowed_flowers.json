@@ -60,6 +60,42 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:rose",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:magenta_tulip",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:amaranth",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:lazarus_bellflower",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:begonia",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:pink_daffodil",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:kovan_flower",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:protea_flower",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:fairy_slipper",
+      "required": false
+    },
+    {
       "id": "environmental:red_lotus_flower",
       "required": false
     },

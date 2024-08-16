@@ -33,6 +33,10 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:white_mangrove_log",
+      "required": false
+    },
+    {
       "id": "deep_aether:roseroot_log",
       "required": false
     },

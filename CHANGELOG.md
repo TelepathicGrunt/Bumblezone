@@ -8,6 +8,10 @@ Allow Farmer's Delight Knives to be enchanted with Comb Cutter enchantment.
 
 String Curtain, Dirt Pellet, Hanging Gardens compat setup for Estrogen's Moth.
 
+Fixed Pollen Puff compat with Infernal Expansion's mobs.
+
+Added compat with Biomes We've Gone so flowers are handled better. Also added Pollen Puff compat to their Pumpkin Warden and Oddions.
+
 
 ### **(V.7.4.16 Changes) (1.20.1 Minecraft)**
 

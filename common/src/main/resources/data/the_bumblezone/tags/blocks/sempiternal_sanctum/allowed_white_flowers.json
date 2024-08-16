@@ -122,6 +122,42 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:white_allium",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:white_allium_flower_bush",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:white_sage",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:white_anemone",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:bistort",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:snowdrops",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:winter_rose",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:white_sakura_petals",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:white_sakura_sapling",
+      "required": false
+    },
+    {
       "id": "colorfulazaleas:white_azalea_sapling",
       "required": false
     },
