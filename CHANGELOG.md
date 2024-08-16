@@ -3,6 +3,9 @@
 ##### Blocks:
 Fixed typo preventing `the_bumblezone:crystalline_flower/xp_2_when_consumed` from being parsed.
 
+##### Items:
+Fixed Essence of Life defaulting crop block's non-age properties.
+
 ##### Mod Compat:
 Allow Farmer's Delight Knives to be enchanted with Comb Cutter enchantment.
 
