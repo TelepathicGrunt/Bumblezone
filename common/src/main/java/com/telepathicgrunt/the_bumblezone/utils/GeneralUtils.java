@@ -334,9 +334,8 @@ public class GeneralUtils {
             joint = prop1.front().getAxis().isHorizontal() ? "aligned" : "rollable";
         }
 
-        boolean isRollable = joint.equals("rollable");
         return prop1.front() == prop2.front().getOpposite() &&
-                (isRollable || prop1.top() == prop2.top()) &&
+                (joint.equals("rollable") || prop1.top() == prop2.top()) &&
                 jigsaw1.nbt().getString("target").equals(jigsaw2.nbt().getString("name"));
     }
 
