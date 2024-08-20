@@ -21,6 +21,7 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.TagKey;
@@ -333,17 +334,21 @@ public class GeneralUtils {
 
         return prop1.front() == prop2.front().getOpposite() &&
                 (prop1.top() == prop2.top() || isRollableJoint(jigsaw1, prop1)) &&
-                jigsaw1.nbt().getString("target").equals(jigsaw2.nbt().getString("name"));
+                getStringMicroOptimised(jigsaw1.nbt(), "target").equals(getStringMicroOptimised(jigsaw2.nbt(), "name"));
     }
 
     private static boolean isRollableJoint(StructureTemplate.StructureBlockInfo jigsaw1, FrontAndTop prop1) {
-        String joint = jigsaw1.nbt().getString("joint");
+        String joint = getStringMicroOptimised(jigsaw1.nbt(), "joint");
         if(!joint.equals("rollable") && !joint.equals("aligned")) {
             return !prop1.front().getAxis().isHorizontal();
         }
         else {
             return joint.equals("rollable");
         }
+    }
+
+    public static String getStringMicroOptimised(CompoundTag tag, String key) {
+        return tag.get(key) instanceof StringTag stringTag ? stringTag.getAsString() : "";
     }
 
     //////////////////////////////////////////////
