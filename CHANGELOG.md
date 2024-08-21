@@ -1,3 +1,9 @@
+### **(V.7.6.26 Changes) (1.21.1 Minecraft)**
+
+##### Structures:
+Slightly optimize Jigsaw Block match up for Bumblezone structures.
+
+
 ### **(V.7.6.25 Changes) (1.21.1 Minecraft)**
 
 ##### Blocks:
