@@ -434,7 +434,7 @@ public class OptimizedJigsawManager {
                             boolean validBounds = false;
 
                             // Make sure new piece fits within the chosen octree without intersecting any other piece.
-                            if (!ignoreBounds && boxOctreeMutableObject.getValue().boundaryContains(axisAlignedBBDeflated) && !boxOctreeMutableObject.getValue().intersectsAnyBox(axisAlignedBBDeflated)) {
+                            if (!ignoreBounds && boxOctreeMutableObject.getValue().withinBoundsButNotIntersectingChildren(axisAlignedBBDeflated)) {
                                 boxOctreeMutableObject.getValue().addBox(axisAlignedBB);
                                 validBounds = true;
                             }

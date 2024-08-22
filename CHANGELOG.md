@@ -1,7 +1,14 @@
 ### **(V.7.6.26 Changes) (1.21.1 Minecraft)**
 
 ##### Structures:
-Slightly optimize Jigsaw Block match up for Bumblezone structures.
+Slightly optimize Jigsaw Block match up and piece intersection checking for Bumblezone structures.
+
+##### Blocks:
+Made Honey Block, Amethyst Block, Quartz Block, Diamond Block, and Emerald Block now give more xp to Crystalline Flower 
+ to match the amount of XP you would've gotten if feeding the raw base ingredients of these blocks.
+
+##### Mod Compat:
+Made Ars Nouveau's Experience Gems now give their full experience when fed to Crystalline Flower.
 
 
 ### **(V.7.6.25 Changes) (1.21.1 Minecraft)**
