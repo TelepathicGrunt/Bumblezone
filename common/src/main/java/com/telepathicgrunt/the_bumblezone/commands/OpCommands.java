@@ -7,6 +7,8 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.modcompat.BumblezoneAPI;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
@@ -22,6 +24,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.Arrays;
@@ -35,9 +39,11 @@ import java.util.stream.Collectors;
 public class OpCommands {
     private static MinecraftServer currentMinecraftServer = null;
     private static Set<String> cachedSuggestion = new HashSet<>();
+
     enum DATA_BOOLEAN_WRITE_ARG {
         IS_BEE_ESSENCED
     }
+
     enum DATA_READ_ARG {
         IS_BEE_ESSENCED,
         QUEENS_DESIRED_CRAFTED_BEEHIVE,
@@ -57,6 +63,7 @@ public class OpCommands {
         CommandDispatcher<CommandSourceStack> commandDispatcher = commandEvent.dispatcher();
         CommandBuildContext buildContext = commandEvent.context();
 
+        String commandTeleportString = "bumblezone_teleport";
         String commandWriteString = "bumblezone_modify_data";
         String commandReadString = "bumblezone_read_data";
         String dataArg = "data_to_modify";
@@ -64,50 +71,61 @@ public class OpCommands {
         String entityArg = "entity_to_check";
 
         LiteralCommandNode<CommandSourceStack> source = commandDispatcher.register(Commands.literal(commandWriteString)
-                .requires((permission) -> permission.hasPermission(2))
-                .then(Commands.argument(dataArg, StringArgumentType.string())
-                .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(methodBooleanWriteSuggestions(ctx), sb))
-                .then(Commands.argument("targets", EntityArgument.players())
-                .then(Commands.argument(newDataArg, BoolArgumentType.bool())
-                .executes(cs -> {
-                    runBooleanSetMethod(cs.getSource(), cs.getArgument(dataArg, String.class), EntityArgument.getPlayers(cs, "targets"), cs.getArgument(newDataArg, boolean.class), cs);
-                    return 1;
-                })
+            .requires((permission) -> permission.hasPermission(2))
+            .then(Commands.argument(dataArg, StringArgumentType.string())
+            .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(methodBooleanWriteSuggestions(ctx), sb))
+            .then(Commands.argument("targets", EntityArgument.players())
+            .then(Commands.argument(newDataArg, BoolArgumentType.bool())
+            .executes(cs -> {
+                runBooleanSetMethod(cs.getSource(), cs.getArgument(dataArg, String.class), EntityArgument.getPlayers(cs, "targets"), cs.getArgument(newDataArg, boolean.class), cs);
+                return 1;
+            })
         ))));
 
         commandDispatcher.register(Commands.literal(commandWriteString).redirect(source));
 
         LiteralCommandNode<CommandSourceStack> source2 = commandDispatcher.register(Commands.literal(commandReadString)
-                .requires((permission) -> permission.hasPermission(2))
-                .then(Commands.argument(dataArg, StringArgumentType.string())
-                .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(methodReadSuggestions(ctx), sb))
-                .then(Commands.argument("targets", EntityArgument.players())
-                .executes(cs -> {
-                    runReadMethod(cs.getSource(), cs.getArgument(dataArg, String.class), null, EntityArgument.getPlayers(cs, "targets"), cs);
-                    return 1;
-                })
+            .requires((permission) -> permission.hasPermission(2))
+            .then(Commands.argument(dataArg, StringArgumentType.string())
+            .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(methodReadSuggestions(ctx), sb))
+            .then(Commands.argument("targets", EntityArgument.players())
+            .executes(cs -> {
+                runReadMethod(cs.getSource(), cs.getArgument(dataArg, String.class), null, EntityArgument.getPlayers(cs, "targets"), cs);
+                return 1;
+            })
         )));
 
         commandDispatcher.register(Commands.literal(commandReadString).redirect(source2));
 
 
         LiteralCommandNode<CommandSourceStack> source3 = commandDispatcher.register(Commands.literal(commandReadString)
-                .requires((permission) -> permission.hasPermission(2))
-                .then(Commands.literal(DATA_READ_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name().toLowerCase(Locale.ROOT))
-                .then(Commands.argument("targets", EntityArgument.players())
-                .then(Commands.argument(entityArg, StringArgumentType.string())
-                .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(killedSuggestions(EntityArgument.getPlayers(ctx, "targets")), sb))
-                .executes(cs -> {
-                    runReadMethod(cs.getSource(), DATA_READ_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name(), cs.getArgument(entityArg, String.class), EntityArgument.getPlayers(cs, "targets"), cs);
-                    return 1;
-                })
+            .requires((permission) -> permission.hasPermission(2))
+            .then(Commands.literal(DATA_READ_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name().toLowerCase(Locale.ROOT))
+            .then(Commands.argument("targets", EntityArgument.players())
+            .then(Commands.argument(entityArg, StringArgumentType.string())
+            .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(killedSuggestions(EntityArgument.getPlayers(ctx, "targets")), sb))
+            .executes(cs -> {
+                runReadMethod(cs.getSource(), DATA_READ_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name(), cs.getArgument(entityArg, String.class), EntityArgument.getPlayers(cs, "targets"), cs);
+                return 1;
+            })
         ))));
 
         commandDispatcher.register(Commands.literal(commandReadString).redirect(source3));
+
+        LiteralCommandNode<CommandSourceStack> source4 = commandDispatcher.register(Commands.literal(commandTeleportString)
+            .requires((permission) -> permission.hasPermission(2))
+            .then(Commands.argument("targets", EntityArgument.entities())
+            .executes(cs -> {
+                runTeleportMethod(cs.getSource(), EntityArgument.getEntities(cs, "targets"), cs);
+                return 1;
+            })
+        ));
+
+        commandDispatcher.register(Commands.literal(commandTeleportString).redirect(source4));
     }
 
     private static Set<String> methodBooleanWriteSuggestions(CommandContext<CommandSourceStack> cs) {
-        if(currentMinecraftServer == cs.getSource().getServer()) {
+        if (currentMinecraftServer == cs.getSource().getServer()) {
             return cachedSuggestion;
         }
 
@@ -120,7 +138,7 @@ public class OpCommands {
     }
 
     private static Set<String> methodReadSuggestions(CommandContext<CommandSourceStack> cs) {
-        if(currentMinecraftServer == cs.getSource().getServer()) {
+        if (currentMinecraftServer == cs.getSource().getServer()) {
             return cachedSuggestion;
         }
 
@@ -137,8 +155,7 @@ public class OpCommands {
         DATA_READ_ARG dataArg;
         try {
             dataArg = DATA_READ_ARG.valueOf(dataString.toUpperCase(Locale.ROOT));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             MutableComponent mutableComponent = Component.translatable("command.the_bumblezone.invalid_data_arg");
             commandSourceStack.sendFailure(mutableComponent);
             return;
@@ -177,8 +194,7 @@ public class OpCommands {
         NonOpCommands.DATA_ARG dataArg;
         try {
             dataArg = NonOpCommands.DATA_ARG.valueOf(dataString.toUpperCase(Locale.ROOT));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             MutableComponent mutableComponent = Component.translatable("command.the_bumblezone.invalid_data_arg");
             commandSourceStack.sendFailure(mutableComponent);
             return;
@@ -241,38 +257,48 @@ public class OpCommands {
                             String translationKey;
                             if (rl.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "ender_dragon"))) {
                                 translationKey = "command.the_bumblezone.queens_desired_killed_entity_counter_ender_dragon";
-                            }
-                            else if (rl.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "wither"))) {
+                            } else if (rl.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "wither"))) {
                                 translationKey = "command.the_bumblezone.queens_desired_killed_entity_counter_wither";
-                            }
-                            else {
+                            } else {
                                 translationKey = "command.the_bumblezone.queens_desired_killed_entity_counter";
                             }
 
                             if (BuiltInRegistries.ENTITY_TYPE.containsKey(rl)) {
                                 commandSourceStack.sendSuccess(() ->
-                                        Component.translatable(translationKey,
-                                                targetPlayer.getDisplayName(),
-                                                killed,
-                                                Component.translatable(Util.makeDescriptionId("entity", rl))),
+                                                Component.translatable(translationKey,
+                                                        targetPlayer.getDisplayName(),
+                                                        killed,
+                                                        Component.translatable(Util.makeDescriptionId("entity", rl))),
                                         false);
-                            }
-                            else {
+                            } else {
                                 commandSourceStack.sendSuccess(() ->
-                                        Component.translatable(translationKey,
-                                                targetPlayer.getDisplayName(),
-                                                killed,
-                                                Component.translatable("tag.entity_type." + killedString.replaceAll("[\\\\:/-]", "."))),
+                                                Component.translatable(translationKey,
+                                                        targetPlayer.getDisplayName(),
+                                                        killed,
+                                                        Component.translatable("tag.entity_type." + killedString.replaceAll("[\\\\:/-]", "."))),
                                         false);
                             }
                         });
-                    }
-                    else {
+                    } else {
                         commandSourceStack.sendSuccess(() -> Component.translatable("command.the_bumblezone.invalid_entity_arg"), false);
                         return;
                     }
                 }
-                default -> {}
+                default -> {
+                }
+            }
+        }
+    }
+
+    public static void runTeleportMethod(CommandSourceStack commandSourceStack, Collection<? extends Entity> targets, CommandContext<CommandSourceStack> cs) {
+        for (Entity target : targets) {
+            if (target instanceof LivingEntity livingEntity) {
+                if (target.level().dimension().equals(BzDimension.BZ_WORLD_KEY)) {
+                    BumblezoneAPI.teleportOutOfBz(livingEntity);
+                }
+                else {
+                    BumblezoneAPI.queueEntityForTeleportingToBumblezone(livingEntity);
+                }
             }
         }
     }
