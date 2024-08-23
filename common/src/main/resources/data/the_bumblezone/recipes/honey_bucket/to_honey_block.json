@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "the_bumblezone:honey_bottle",
+  "ingredients": [
+    {
+      "item": "the_bumblezone:honey_bucket"
+    }
+  ],
+  "result": {
+    "item": "minecraft:honey_block"
+  }
+}

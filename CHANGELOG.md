@@ -3,6 +3,8 @@
 ##### Blocks:
 Fixed named Honey Cocoon losing name when mined without Silk Touch.
 
+Honey Bucket can be crafted from Honey Block and Bucket now.
+
 ##### Commands:
 Added `/bumblezone_teleport <entity>` command where if used on any living entity, it'll teleport them to Bumblezone.
  If used on entities already in Bumblezone, it'll teleport them out.
