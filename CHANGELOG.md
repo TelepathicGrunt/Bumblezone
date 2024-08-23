@@ -3,6 +3,8 @@
 ##### Items:
 Fixed Stinger Spear unable to get Smite enchantment. `the_bumblezone:enchantables/stinger_spear_extra_allow` enchantment tag is now added.
 
+Honey Bucket can be crafted from Honey Block and Bucket now.
+
 ##### Blocks:
 Fixed named Honey Cocoon losing name when mined without Silk Touch.
 
