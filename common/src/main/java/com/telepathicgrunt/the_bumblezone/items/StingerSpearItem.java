@@ -147,6 +147,10 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
 
     @Override
     public TriState bz$canEnchant(ItemStack itemstack, Holder<Enchantment> enchantment) {
-        return enchantment.is(BzTags.ENCHANTABLES_STINGER_SPEAR_FORCED_DISALLOWED) ? TriState.DENY : TriState.PASS;
+        if (enchantment.is(BzTags.ENCHANTABLES_STINGER_SPEAR_FORCED_DISALLOWED)) {
+            return TriState.DENY;
+        }
+
+        return enchantment.is(BzTags.ENCHANTABLES_STINGER_SPEAR_EXTRA_ALLOWED) ? TriState.ALLOW : TriState.PASS;
     }
 }

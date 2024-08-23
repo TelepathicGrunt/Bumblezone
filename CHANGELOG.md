@@ -1,3 +1,9 @@
+### **(V.7.6.27 Changes) (1.21.1 Minecraft)**
+
+##### Items:
+Fixed Stinger Spear unable to get Smite enchantment. `the_bumblezone:enchantables/stinger_spear_extra_allow` enchantment tag is now added.
+
+
 ### **(V.7.6.26 Changes) (1.21.1 Minecraft)**
 
 ##### Structures:

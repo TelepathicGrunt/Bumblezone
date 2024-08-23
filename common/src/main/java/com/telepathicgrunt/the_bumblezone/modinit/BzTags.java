@@ -205,6 +205,7 @@ public class BzTags {
     public static final TagKey<Enchantment> ENCHANTABLES_CRYSTAL_CANNON_FORCED_ALLOWED = TagKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "enchantables/crystal_cannon_forced_allowed"));
     public static final TagKey<Enchantment> ENCHANTABLES_HONEY_CRYSTAL_SHIELD_FORCED_DISALLOWED = TagKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "enchantables/honey_crystal_shield_forced_disallowed"));
     public static final TagKey<Enchantment> ENCHANTABLES_STINGER_SPEAR_FORCED_DISALLOWED = TagKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "enchantables/stinger_spear_forced_disallowed"));
+    public static final TagKey<Enchantment> ENCHANTABLES_STINGER_SPEAR_EXTRA_ALLOWED = TagKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "enchantables/stinger_spear_extra_allowed"));
 
     public static final TagKey<DamageType> COSMIC_CRYSTAL_RESISTANT_TO = TagKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "cosmic_crystal_resistant_to"));
 
