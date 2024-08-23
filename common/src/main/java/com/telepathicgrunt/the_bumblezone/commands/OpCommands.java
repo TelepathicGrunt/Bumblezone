@@ -7,6 +7,8 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.modcompat.BumblezoneAPI;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
@@ -22,6 +24,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.Arrays;
@@ -57,6 +61,7 @@ public class OpCommands {
         CommandDispatcher<CommandSourceStack> commandDispatcher = commandEvent.dispatcher();
         CommandBuildContext buildContext = commandEvent.context();
 
+        String commandTeleportString = "bumblezone_teleport";
         String commandWriteString = "bumblezone_modify_data";
         String commandReadString = "bumblezone_read_data";
         String dataArg = "data_to_modify";
@@ -104,6 +109,17 @@ public class OpCommands {
         ))));
 
         commandDispatcher.register(Commands.literal(commandReadString).redirect(source3));
+
+        LiteralCommandNode<CommandSourceStack> source4 = commandDispatcher.register(Commands.literal(commandTeleportString)
+                .requires((permission) -> permission.hasPermission(2))
+                .then(Commands.argument("targets", EntityArgument.entities())
+                .executes(cs -> {
+                    runTeleportMethod(cs.getSource(), EntityArgument.getEntities(cs, "targets"), cs);
+                    return 1;
+                })
+        ));
+
+        commandDispatcher.register(Commands.literal(commandTeleportString).redirect(source4));
     }
 
     private static Set<String> methodBooleanWriteSuggestions(CommandContext<CommandSourceStack> cs) {
@@ -273,6 +289,19 @@ public class OpCommands {
                     }
                 }
                 default -> {}
+            }
+        }
+    }
+
+    public static void runTeleportMethod(CommandSourceStack commandSourceStack, Collection<? extends Entity> targets, CommandContext<CommandSourceStack> cs) {
+        for (Entity target : targets) {
+            if (target instanceof LivingEntity livingEntity) {
+                if (target.level().dimension().equals(BzDimension.BZ_WORLD_KEY)) {
+                    BumblezoneAPI.teleportOutOfBz(livingEntity);
+                }
+                else {
+                    BumblezoneAPI.queueEntityForTeleportingToBumblezone(livingEntity);
+                }
             }
         }
     }
