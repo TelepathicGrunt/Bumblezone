@@ -3,6 +3,9 @@
 ##### Items:
 Fixed Stinger Spear unable to get Smite enchantment. `the_bumblezone:enchantables/stinger_spear_extra_allow` enchantment tag is now added.
 
+##### Blocks:
+Fixed named Honey Cocoon losing name when mined without Silk Touch.
+
 
 ### **(V.7.6.26 Changes) (1.21.1 Minecraft)**
 
