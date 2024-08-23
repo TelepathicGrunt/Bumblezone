@@ -1,3 +1,9 @@
+### **(V.7.4.18 Changes) (1.20.1 Minecraft)**
+
+##### Blocks:
+Fixed named Honey Cocoon losing name when mined without Silk Touch.
+
+
 ### **(V.7.4.17 Changes) (1.20.1 Minecraft)**
 
 ##### Items:

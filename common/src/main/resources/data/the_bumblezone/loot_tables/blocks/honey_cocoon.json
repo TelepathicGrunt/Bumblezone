@@ -51,6 +51,10 @@
               "functions": [
                 {
                   "function": "the_bumblezone:drop_container_loot"
+                },
+                {
+                  "function": "minecraft:copy_name",
+                  "source": "block_entity"
                 }
               ]
             }
