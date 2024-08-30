@@ -1,3 +1,9 @@
+### **(V.7.6.28 Changes) (1.21.1 Minecraft)**
+
+##### Advancements:
+Fixed issue where completing Honey Drunk advancement with 1 Honey Bottle in hand will replace the Royal Jelly Bottle reward with the Honey Bottle's Glass Bottle remainder.
+
+
 ### **(V.7.6.27 Changes) (1.21.1 Minecraft)**
 
 ##### Items:

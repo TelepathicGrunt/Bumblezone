@@ -149,7 +149,6 @@ public class NeoForgeEventManager {
         eventBus.addListener(NeoForgeEventManager::onEntityTick);
         eventBus.addListener(NeoForgeEventManager::onEntityDimensionTravel);
         eventBus.addListener(NeoForgeEventManager::onEntityVisibility);
-        eventBus.addListener(NeoForgeEventManager::onFinishUseItem);
         eventBus.addListener(EventPriority.LOWEST, NeoForgeEventManager::onEntityHurtLowest);
     }
 
@@ -373,13 +372,6 @@ public class NeoForgeEventManager {
             else {
                 event.getPlayerList().getPlayers().forEach(player -> BzDatapackSyncEvent.EVENT.invoke(new BzDatapackSyncEvent(player)));
             }
-        }
-    }
-
-    private static void onFinishUseItem(LivingEntityUseItemEvent.Finish event) {
-        ItemStack stack = BzFinishUseItemEvent.EVENT.invoke(new BzFinishUseItemEvent(event.getEntity(), event.getItem(), event.getDuration()));
-        if (stack != null) {
-            event.setResultStack(stack);
         }
     }
 
