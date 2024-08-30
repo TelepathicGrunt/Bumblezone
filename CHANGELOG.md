@@ -3,6 +3,9 @@
 ##### Advancements:
 Fixed issue where completing Honey Drunk advancement with 1 Honey Bottle in hand will replace the Royal Jelly Bottle reward with the Honey Bottle's Glass Bottle remainder.
 
+##### Blocks:
+Fixed Luminescence Wax Channel block's top and bottom texture not rotated when sword/shear right clicked while horizontal.
+
 
 ### **(V.7.4.18 Changes) (1.20.1 Minecraft)**
 

@@ -1,8 +1,8 @@
 {
   "variants": {
     "axis=y,rotation=0": {"model":"the_bumblezone:block/luminescent_wax/channel_purple"},
-    "axis=y,rotation=1": {"model":"the_bumblezone:block/luminescent_wax/channel_purple", "x": 180},
-    "axis=y,rotation=2": {"model":"the_bumblezone:block/luminescent_wax/channel_purple", "y": 90},
+    "axis=y,rotation=1": {"model":"the_bumblezone:block/luminescent_wax/channel_purple", "y": 90},
+    "axis=y,rotation=2": {"model":"the_bumblezone:block/luminescent_wax/channel_purple", "x": 180},
     "axis=y,rotation=3": {"model":"the_bumblezone:block/luminescent_wax/channel_purple", "x": 180, "y": 90},
 
     "axis=x,rotation=0": {"model":"the_bumblezone:block/luminescent_wax/channel_purple", "x": 90, "y": 90},
