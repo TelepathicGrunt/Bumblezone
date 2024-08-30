@@ -173,7 +173,6 @@ public class BumblezoneForge {
         eventBus.addListener(BumblezoneForge::onEntityTick);
         eventBus.addListener(BumblezoneForge::onEntityDimensionTravel);
         eventBus.addListener(BumblezoneForge::onEntityVisibility);
-        eventBus.addListener(BumblezoneForge::onFinishUseItem);
         eventBus.addListener(EventPriority.LOWEST, BumblezoneForge::onEntityHurtLowest);
     }
 
@@ -395,13 +394,6 @@ public class BumblezoneForge {
             else {
                 event.getPlayerList().getPlayers().forEach(player -> DatapackSyncEvent.EVENT.invoke(new DatapackSyncEvent(player)));
             }
-        }
-    }
-
-    private static void onFinishUseItem(LivingEntityUseItemEvent.Finish event) {
-        ItemStack stack = FinishUseItemEvent.EVENT.invoke(new FinishUseItemEvent(event.getEntity(), event.getItem(), event.getDuration()));
-        if (stack != null) {
-            event.setResultStack(stack);
         }
     }
 

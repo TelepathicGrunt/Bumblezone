@@ -1,8 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.telepathicgrunt.the_bumblezone.client.LocalPlayerParalyzedHandFix;
 import com.telepathicgrunt.the_bumblezone.effects.ParalyzedEffect;
+import com.telepathicgrunt.the_bumblezone.events.entity.FinishUseItemEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.Entity;
@@ -11,6 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,6 +29,9 @@ public abstract class LivingEntityMixin extends Entity {
     public LivingEntityMixin(EntityType<?> type, Level world) {
         super(type, world);
     }
+
+    @Shadow
+    public abstract int getUseItemRemainingTicks();
 
     @Shadow
     public abstract boolean hasEffect(MobEffect mobEffect);
@@ -68,5 +75,18 @@ public abstract class LivingEntityMixin extends Entity {
                 LocalPlayerParalyzedHandFix.handleArms((LivingEntity) (Object) this);
             }
         }
+    }
+
+    @WrapOperation(
+            method = "completeUsingItem",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/item/ItemStack;finishUsingItem(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"
+            )
+    )
+    private ItemStack bumblezone$onCompleteUsingItem(ItemStack instance, Level level, LivingEntity livingEntity, Operation<ItemStack> operation) {
+        ItemStack copy = instance.copy();
+        FinishUseItemEvent.EVENT.invoke(new FinishUseItemEvent((LivingEntity) ((Object) this), copy, getUseItemRemainingTicks()));
+        return operation.call(instance, level, livingEntity);
     }
 }

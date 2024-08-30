@@ -60,7 +60,7 @@ public class PlayerDataHandler {
         }
     }
 
-    public static void onHoneyBottleDrank(ItemStack result, FinishUseItemEvent event) {
+    public static void onHoneyBottleDrank(FinishUseItemEvent event) {
         if (!event.item().is(BzTags.HONEY_DRUNK_TRIGGER_ITEMS)) return;
 
         if (event.user() instanceof ServerPlayer player && rootAdvancementDone(player)) {

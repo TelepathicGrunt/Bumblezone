@@ -38,9 +38,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = LivingEntity.class, priority = 1200)
 public abstract class LivingEntityMixin {
 
-    @Shadow
-    public abstract int getUseItemRemainingTicks();
-
     @ModifyReturnValue(
             method = "getVisibilityPercent",
             at = @At(value = "RETURN")
@@ -75,19 +72,6 @@ public abstract class LivingEntityMixin {
         if (EntityHurtEvent.EVENT_LOWEST.invoke(new EntityHurtEvent((LivingEntity) ((Object) this), source, amount))) {
             cir.cancel();
         }
-    }
-
-    @WrapOperation(
-            method = "completeUsingItem",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/item/ItemStack;finishUsingItem(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"
-            )
-    )
-    private ItemStack bumblezone$onCompleteUsingItem(ItemStack instance, Level level, LivingEntity livingEntity, Operation<ItemStack> operation) {
-        ItemStack copy = instance.copy();
-        ItemStack stack = operation.call(instance, level, livingEntity);
-        return FinishUseItemEvent.EVENT.invoke(new FinishUseItemEvent((LivingEntity) ((Object) this), copy, getUseItemRemainingTicks()), stack);
     }
 
     @Inject(method = "baseTick()V", at = @At(value = "TAIL"))
