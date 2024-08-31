@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:luphie_cat_counter_a",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_sweetheart_counter_a",
+    "required": false
+  }]
+}

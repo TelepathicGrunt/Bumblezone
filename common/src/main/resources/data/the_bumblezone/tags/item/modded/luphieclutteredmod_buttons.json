@@ -1,0 +1,36 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:luphie_green_button",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_pink_button",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_purple_button",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_yellow_button",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_glow_button",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_flowering_pink_button",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_flowering_purple_button",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_flowering_yellow_button",
+    "required": false
+  }]
+}

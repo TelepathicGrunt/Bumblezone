@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:rubiks_cube",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:scrambled_rubiks_cube",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:pastel_rubiks_cube",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:scrambled_pastel_rubiks_cube",
+    "required": false
+  }]
+}

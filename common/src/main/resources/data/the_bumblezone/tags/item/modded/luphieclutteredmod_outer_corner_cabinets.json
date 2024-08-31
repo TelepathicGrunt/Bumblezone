@@ -1,0 +1,24 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:luphie_black_outer_corner_cabinet",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_green_outer_corner_cabinet",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_pink_outer_corner_cabinet",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_white_outer_corner_cabinet",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_yellow_outer_corner_cabinet",
+    "required": false
+  }]
+}

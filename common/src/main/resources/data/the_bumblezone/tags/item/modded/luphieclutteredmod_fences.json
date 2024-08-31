@@ -1,0 +1,36 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:luphie_green_fence",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_pink_fence",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_purple_fence",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_yellow_fence",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_glow_fence",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_flowering_pink_fence",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_flowering_purple_fence",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_flowering_yellow_fence",
+    "required": false
+  }]
+}

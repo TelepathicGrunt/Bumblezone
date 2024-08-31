@@ -1,0 +1,36 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:luphie_green_planks",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_pink_planks",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_purple_planks",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_yellow_planks",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_glow_planks",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_flowering_pink_planks",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_flowering_purple_planks",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_flowering_yellow_planks",
+    "required": false
+  }]
+}

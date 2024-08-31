@@ -1,0 +1,44 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:luphie_green_door",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_pink_door",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_purple_door",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_yellow_door",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_glow_door",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_flowering_pink_door",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_flowering_purple_door",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_flowering_yellow_door",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:mushroom_door",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:glowshroom_door",
+    "required": false
+  }]
+}

@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:luphie_hanging_plant_a",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_hanging_plant_b",
+    "required": false
+  }]
+}

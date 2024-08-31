@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:luphie_briefcase",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_rovers_briefcase",
+    "required": false
+  }]
+}

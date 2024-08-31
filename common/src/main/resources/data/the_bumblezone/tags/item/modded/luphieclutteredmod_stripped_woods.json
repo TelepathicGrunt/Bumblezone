@@ -1,0 +1,36 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:stripped_luphie_green_wood",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:stripped_luphie_pink_wood",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:stripped_luphie_purple_wood",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:stripped_luphie_yellow_wood",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:stripped_luphie_glow_wood",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:stripped_luphie_flowering_pink_wood",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:stripped_luphie_flowering_purple_wood",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:stripped_luphie_flowering_yellow_wood",
+    "required": false
+  }]
+}

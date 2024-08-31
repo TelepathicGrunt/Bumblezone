@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:unpainted_birdhouse",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:red_birdhouse",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:blue_birdhouse",
+    "required": false
+  }]
+}

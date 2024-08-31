@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:luphie_darkwood_southern_flair_sofa",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_darkwood_geometric_sofa",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_darkwood_quilted_sofa",
+    "required": false
+  }]
+}

@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:luphie_pink_window",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_flowering_pink_window",
+    "required": false
+  }]
+}

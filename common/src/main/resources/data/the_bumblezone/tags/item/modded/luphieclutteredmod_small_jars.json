@@ -1,0 +1,28 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:luphie_empty_small_jars",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_small_jars_of_tea_leaves",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_small_filled_jars_a",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_small_filled_jars_b",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_small_filled_jars_c",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_small_filled_jars_d",
+    "required": false
+  }]
+}

@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:luphie_picnic_basket",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_filled_picnic_basket",
+    "required": false
+  }]
+}
