@@ -101,6 +101,34 @@
       "required": false
     },
     {
+      "id": "hybrid-aquatic:lobster",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:shrimp",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:crayfish",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:starfish",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:seahorse",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:sea_cucumber",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:giant_isopod",
+      "required": false
+    },
+    {
       "id": "infernalexp:glowsilk_moth",
       "required": false
     },
