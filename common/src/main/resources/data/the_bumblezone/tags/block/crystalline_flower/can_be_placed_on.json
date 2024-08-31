@@ -381,6 +381,10 @@
       "required": false
     },
     {
+      "id": "malum:block_of_blazing_quartz",
+      "required": false
+    },
+    {
       "id": "nature_arise:topaz_block",
       "required": false
     },
