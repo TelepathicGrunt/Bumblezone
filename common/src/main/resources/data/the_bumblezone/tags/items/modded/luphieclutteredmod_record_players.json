@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:luphie_pink_record_player",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_blue_record_player",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_yellow_record_player",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_brown_record_player",
+    "required": false
+  }]
+}

@@ -5,11 +5,23 @@
     "minecraft:snow_golem",
     "the_bumblezone:cosmic_crystal_entity",
     {
-      "id": "c:golems",
+      "id": "#c:golems",
       "required": false
     },
     {
-      "id": "forge:golems",
+      "id": "#forge:golems",
+      "required": false
+    },
+    {
+      "id": "adventurez:blackstone_golem",
+      "required": false
+    },
+    {
+      "id": "adventurez:mini_blackstone_golem",
+      "required": false
+    },
+    {
+      "id": "adventurez:amethyst_golem",
       "required": false
     }
   ]
