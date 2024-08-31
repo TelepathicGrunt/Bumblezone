@@ -9,6 +9,18 @@
     "minecraft:wither",
     "minecraft:warden",
     {
+      "id": "adventurez:blaze_guardian",
+      "required": false
+    },
+    {
+      "id": "adventurez:blackstone_golem",
+      "required": false
+    },
+    {
+      "id": "adventurez:amethyst_golem",
+      "required": false
+    },
+    {
       "id": "more_babies:blaze",
       "required": false
     },
