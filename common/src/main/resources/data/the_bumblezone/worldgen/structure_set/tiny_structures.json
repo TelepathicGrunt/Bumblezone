@@ -44,8 +44,8 @@
   "placement": {
     "type": "the_bumblezone:advanced_random_spread",
     "salt": 34793346,
-    "spacing": 9,
-    "separation": 4,
+    "spacing": 15,
+    "separation": 8,
     "super_exclusion_zone": {
       "list_of_avoids": [
         {
