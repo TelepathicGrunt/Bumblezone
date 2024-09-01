@@ -17,7 +17,7 @@
           "chunk_count": 4
         },
         {
-          "other_set": ["the_bumblezone:main_structures"],
+          "other_set": ["the_bumblezone:main_structures", "the_bumblezone:tiny_structures"],
           "chunk_count": 2
         }
       ]

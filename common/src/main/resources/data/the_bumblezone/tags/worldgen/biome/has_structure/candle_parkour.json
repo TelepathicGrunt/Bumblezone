@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     "#the_bumblezone:sugar_water",
-    "the_bumblezone:floral_meadow",
-    "the_bumblezone:howling_constructs"
+    "#the_bumblezone:crystal_canyon",
+    "#the_bumblezone:rare_blob_biomes"
   ]
 }
