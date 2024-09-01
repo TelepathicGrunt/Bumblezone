@@ -22,5 +22,5 @@ Made Bee House and Stinger Spear Shrine not spawn in Hive Wall, Hive Pillar, or 
 
 Spawn Candle Parkour structure in Crystal Canyon biome now.
 
-Split Stinger Spear Shrine into multiple pieces, so it terraform terrain around itself in a circular look instead of square look.
+Split Stinger Spear Shrine, Bee House, Honey Fountain, and Candle Parkour into multiple pieces, so it terraform terrain around itself in a circular look instead of square look.
  Meshes better with terrain as a result.
