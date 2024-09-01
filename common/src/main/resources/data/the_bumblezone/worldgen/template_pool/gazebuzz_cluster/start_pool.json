@@ -1,0 +1,14 @@
+{
+  "fallback": "the_bumblezone:hanging_garden/start_pool",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/crystalline_flower",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

@@ -3,6 +3,10 @@
     {
       "structure": "the_bumblezone:hanging_garden",
       "weight": 1
+    },
+    {
+      "structure": "the_bumblezone:gazebuzz_cluster",
+      "weight": 1
     }
   ],
   "placement": {
