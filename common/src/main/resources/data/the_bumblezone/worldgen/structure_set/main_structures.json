@@ -1,34 +1,34 @@
 {
   "structures": [
     {
-      "structure": "the_bumblezone:ancient_hoops",
-      "weight": 1
-    },
-    {
-      "structure": "the_bumblezone:battle_cubes",
-      "weight": 10
-    },
-    {
-      "structure": "the_bumblezone:honitel",
-      "weight": 10
-    },
-    {
-      "structure": "the_bumblezone:subway",
-      "weight": 10
+      "structure": "the_bumblezone:overgrown_flower",
+      "weight": 30
     },
     {
       "structure": "the_bumblezone:ancient_shrine",
-      "weight": 15
+      "weight": 5
     },
     {
-      "structure": "the_bumblezone:overgrown_flower",
-      "weight": 100
+      "structure": "the_bumblezone:battle_cubes",
+      "weight": 3
+    },
+    {
+      "structure": "the_bumblezone:honitel",
+      "weight": 3
+    },
+    {
+      "structure": "the_bumblezone:subway",
+      "weight": 3
+    },
+    {
+      "structure": "the_bumblezone:ancient_hoops",
+      "weight": 1
     }
   ],
   "placement": {
     "type": "the_bumblezone:advanced_random_spread",
     "salt": 578754875,
-    "spacing": 23,
+    "spacing": 22,
     "separation": 11,
     "super_exclusion_zone": {
       "list_of_avoids": [
