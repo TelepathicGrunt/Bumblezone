@@ -1,35 +1,35 @@
 {
   "structures": [
     {
+      "structure": "the_bumblezone:ancient_hoops",
+      "weight": 1
+    },
+    {
       "structure": "the_bumblezone:battle_cubes",
-      "weight": 2
+      "weight": 10
     },
     {
       "structure": "the_bumblezone:honitel",
-      "weight": 2
+      "weight": 10
     },
     {
       "structure": "the_bumblezone:subway",
-      "weight": 2
+      "weight": 10
     },
     {
       "structure": "the_bumblezone:ancient_shrine",
-      "weight": 3
-    },
-    {
-      "structure": "the_bumblezone:ancient_hoops",
-      "weight": 3
+      "weight": 15
     },
     {
       "structure": "the_bumblezone:overgrown_flower",
-      "weight": 20
+      "weight": 100
     }
   ],
   "placement": {
     "type": "the_bumblezone:advanced_random_spread",
     "salt": 578754875,
-    "spacing": 19,
-    "separation": 7,
+    "spacing": 23,
+    "separation": 11,
     "super_exclusion_zone": {
       "list_of_avoids": [
         {

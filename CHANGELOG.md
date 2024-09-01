@@ -21,3 +21,6 @@ Split the tiny structures out of the main structure set into their own set of sm
 Made Bee House and Stinger Spear Shrine not spawn in Hive Wall, Hive Pillar, or Pollinated Pillar biomes.
 
 Spawn Candle Parkour structure in Crystal Canyon biome now.
+
+Split Stinger Spear Shrine into multiple pieces, so it terraform terrain around itself in a circular look instead of square look.
+ Meshes better with terrain as a result.

@@ -4,8 +4,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:stinger_spear_shrine",
-        "processors": "minecraft:empty",
+        "location": "the_bumblezone:stinger_spear_shrine/offside",
+        "processors": "the_bumblezone:stinger_spear_shrine",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
