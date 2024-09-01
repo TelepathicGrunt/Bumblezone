@@ -83,9 +83,9 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 6,
       "element": {
-        "location": "the_bumblezone:gazebuzz_cluster/bees",
+        "location": "the_bumblezone:gazebuzz_cluster/flower_pots",
         "processors": "the_bumblezone:gazebuzz_cluster_generic",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -95,15 +95,6 @@
       "weight": 4,
       "element": {
         "location": "the_bumblezone:gazebuzz_cluster/crystalline_flower",
-        "processors": "the_bumblezone:gazebuzz_cluster_generic",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 4,
-      "element": {
-        "location": "the_bumblezone:gazebuzz_cluster/flower_pots",
         "processors": "the_bumblezone:gazebuzz_cluster_generic",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -139,6 +130,24 @@
     {
       "weight": 2,
       "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/beehemoth",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/bees",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
         "location": "the_bumblezone:gazebuzz_cluster/anvil",
         "processors": "the_bumblezone:gazebuzz_cluster_generic",
         "projection": "rigid",
@@ -158,15 +167,6 @@
       "weight": 2,
       "element": {
         "location": "the_bumblezone:gazebuzz_cluster/tnt",
-        "processors": "the_bumblezone:gazebuzz_cluster_generic",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 1,
-      "element": {
-        "location": "the_bumblezone:gazebuzz_cluster/beehemoth",
         "processors": "the_bumblezone:gazebuzz_cluster_generic",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
