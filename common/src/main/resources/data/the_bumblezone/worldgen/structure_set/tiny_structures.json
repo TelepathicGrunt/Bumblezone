@@ -1,6 +1,10 @@
 {
   "structures": [
     {
+      "structure": "the_bumblezone:pirate_ship",
+      "weight": 8
+    },
+    {
       "structure": "the_bumblezone:bee_house",
       "weight": 4
     },
@@ -33,10 +37,6 @@
       "weight": 4
     },
     {
-      "structure": "the_bumblezone:pirate_ship",
-      "weight": 4
-    },
-    {
       "structure": "the_bumblezone:stinger_spear_shrine",
       "weight": 4
     }
@@ -45,7 +45,7 @@
     "type": "the_bumblezone:advanced_random_spread",
     "salt": 34793346,
     "spacing": 15,
-    "separation": 8,
+    "separation": 7,
     "super_exclusion_zone": {
       "list_of_avoids": [
         {
