@@ -1,0 +1,14 @@
+{
+  "fallback": "the_bumblezone:gazebuzz_cluster/endermites",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/endermites_mob",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

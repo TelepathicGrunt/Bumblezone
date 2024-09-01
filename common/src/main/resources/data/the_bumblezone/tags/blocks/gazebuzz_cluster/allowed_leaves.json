@@ -1,0 +1,351 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:flowering_azalea_leaves",
+    "minecraft:cherry_leaves",
+    {
+      "id": "atmospheric:flowering_morado_leaves",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:flowering_jacaranda_leaves",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:budding_jacaranda_leaves",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:pink_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:white_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:flowering_oak_leaves",
+      "required": false
+    },
+    {
+      "id": "blossom:flowering_oak_leaves",
+      "required": false
+    },
+    {
+      "id": "byg:flowering_orchard_leaves",
+      "required": false
+    },
+    {
+      "id": "byg:skyris_leaves",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:flowering_orchard_leaves",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:flowering_baobab_leaves",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:flowering_skyrus_leaves",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:flowering_yucca_leaves",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:flowering_ironwood_leaves",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:white_sakura_leaves",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:yellow_ironwood_leaves",
+      "required": false
+    },
+    {
+      "id": "cherryblossomgrotto:cherry_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "colorfulazaleas:red_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "colorfulazaleas:orange_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "colorfulazaleas:yellow_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "colorfulazaleas:pink_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "colorfulazaleas:purple_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "colorfulazaleas:white_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "deep_aether:flowering_roseroot_leaves",
+      "required": false
+    },
+    {
+      "id": "deep_aether:flowering_blue_roseroot_leaves",
+      "required": false
+    },
+    {
+      "id": "deep_aether:yagroot_leaves",
+      "required": false
+    },
+    {
+      "id": "duneons:towerleavesflowers",
+      "required": false
+    },
+    {
+      "id": "environmental:cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "environmental:pink_wisteria_leaves",
+      "required": false
+    },
+    {
+      "id": "environmental:purple_wisteria_leaves",
+      "required": false
+    },
+    {
+      "id": "forbidden_arcanus:cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "fruittrees:redlove_leaves",
+      "required": false
+    },
+    {
+      "id": "fruittrees:cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "fruittrees:apple_leaves",
+      "required": false
+    },
+    {
+      "id": "good_nights_sleep:diamond_leaves",
+      "required": false
+    },
+    {
+      "id": "good_nights_sleep:candy_leaves",
+      "required": false
+    },
+    {
+      "id": "minestuck:frost_leaves",
+      "required": false
+    },
+    {
+      "id": "mineria:sakura_leaves",
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:jacaranda_leaves",
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:jacaranda_blossoms",
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:strawberry_blossoms",
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:white_cherry_blossom_blossoms",
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:pink_cherry_blossom_blossoms",
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:peony_leaves",
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:budding_peony_leaves",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:purple_wisteria_leaves",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:white_wisteria_leaves",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:blue_wisteria_leaves",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:pink_wisteria_leaves",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:yellow_maple_leaves",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:orange_maple_leaves",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:red_maple_leaves",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:lavender_wisteria_leaves",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:rose_wisteria_leaves",
+      "required": false
+    },
+    {
+      "id": "premium_wood:silverbell_leaves",
+      "required": false
+    },
+    {
+      "id": "pearfection:flowering_callery_leaves",
+      "required": false
+    },
+    {
+      "id": "promenade:blush_sakura_blossoms",
+      "required": false
+    },
+    {
+      "id": "promenade:cottom_sakura_blossoms",
+      "required": false
+    },
+    {
+      "id": "quark:lavender_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "quark:pink_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "quark:yellow_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "quark:orange_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "quark:red_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:flowering_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:red_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:pink_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:white_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:mauve_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:red_maple_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:white_magnolia_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:pink_magnolia_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:blue_magnolia_leaves",
+      "required": false
+    },
+    {
+      "id": "sakurabiome:sakura_white_oak_leave",
+      "required": false
+    },
+    {
+      "id": "sakurarosea:sakura_leaves",
+      "required": false
+    },
+    {
+      "id": "sakurarosea:dark_sakura_leaves",
+      "required": false
+    },
+    {
+      "id": "sakurarosea:sakura_shrub_leaves",
+      "required": false
+    },
+    {
+      "id": "spoornpink:dark_pink_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "spoornpink:pink_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "terrestria:sakura_leaves",
+      "required": false
+    },
+    {
+      "id": "trailsandtalesplus:white_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "tropicraft:purple_flowering_leaves",
+      "required": false
+    },
+    {
+      "id": "tropicraft:yellow_flowering_leaves",
+      "required": false
+    },
+    {
+      "id": "tropicraft:blue_flowering_leaves",
+      "required": false
+    },
+    {
+      "id": "tropicraft:red_flowering_leaves",
+      "required": false
+    },
+    {
+      "id": "tropicraft:white_flowering_leaves",
+      "required": false
+    },
+    {
+      "id": "various_update:cherry_leaves",
+      "required": false
+    }
+  ]
+}

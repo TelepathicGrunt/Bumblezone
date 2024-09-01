@@ -1,0 +1,266 @@
+{
+  "fallback": "the_bumblezone:hanging_garden/start_pool",
+  "elements": [
+    {
+      "weight": 20,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/default",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/seats_1",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/seats_2",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/arbor_1",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/arbor_2",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/arbor_3",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/arbor_4",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/arbor_5",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/bees",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/crystalline_flower",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/flower_pots",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/fountain",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/banners",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/crafting_table",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/anvil",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/targets",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/tnt",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/beehemoth",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/emerald",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/endermites",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/gold_plates_1",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/gold_plates_2",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/gold_plates_3",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/knight_1",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/knight_2",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/knight_3",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/music_disc",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/potions",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/silverfish",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

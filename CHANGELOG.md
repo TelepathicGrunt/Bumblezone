@@ -1,4 +1,4 @@
-### **(V.7.4.19 Changes) (1.20.1 Minecraft)**
+### **(V.7.5.0 Changes) (1.20.1 Minecraft)**
 
 ##### Advancements:
 Fixed issue where completing Honey Drunk advancement with 1 Honey Bottle in hand will replace the Royal Jelly Bottle reward with the Honey Bottle's Glass Bottle remainder.
@@ -6,31 +6,11 @@ Fixed issue where completing Honey Drunk advancement with 1 Honey Bottle in hand
 ##### Blocks:
 Fixed Luminescence Wax Channel block's top and bottom texture not rotated when sword/shear right clicked while horizontal.
 
+##### Structures:
+Added Gazebuzz Cluster structure to replace half of Hanging Gardens structure! 
+ This large structure made of many hanging gazebos will test your parkour skills and have a variety of stuff to grab! 
+ Including Crystalline Flower and Bee Armor!
 
-### **(V.7.4.18 Changes) (1.20.1 Minecraft)**
+Removed Cell Maze as a possible structure to locate from Pirate Ship's Honey Compass.
 
-##### Blocks:
-Fixed named Honey Cocoon losing name when mined without Silk Touch.
-
-Honey Bucket can be crafted from Honey Block and Bucket now.
-
-##### Commands:
-Added `/bumblezone_teleport <entity>` command where if used on any living entity, it'll teleport them to Bumblezone.
- If used on entities already in Bumblezone, it'll teleport them out.
- This is using the beehive teleporting mechanics behind the scenes.
- Requires op permission to use. 
-
-
-### **(V.7.4.17 Changes) (1.20.1 Minecraft)**
-
-##### Items:
-Fixed Essence of Life defaulting crop block's non-age properties.
-
-##### Mod Compat:
-Allow Farmer's Delight Knives to be enchanted with Comb Cutter enchantment.
-
-String Curtain, Dirt Pellet, Hanging Gardens compat setup for Estrogen's Moth.
-
-Fixed Pollen Puff compat with Infernal Expansion's mobs.
-
-Added compat with Biomes We've Gone so flowers are handled better. Also added Pollen Puff compat to their Pumpkin Warden and Oddions.
+Made Pyro The Burning Bee now have infinite Fire Resistance.
