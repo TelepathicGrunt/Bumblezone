@@ -18,47 +18,7 @@
     },
     {
       "structure": "the_bumblezone:ancient_hoops",
-      "weight": 4
-    },
-    {
-      "structure": "the_bumblezone:bee_house",
-      "weight": 4
-    },
-    {
-      "structure": "the_bumblezone:candle_parkour",
-      "weight": 4
-    },
-    {
-      "structure": "the_bumblezone:cannon_range",
-      "weight": 4
-    },
-    {
-      "structure": "the_bumblezone:dance_floor",
-      "weight": 4
-    },
-    {
-      "structure": "the_bumblezone:hive_temple",
-      "weight": 4
-    },
-    {
-      "structure": "the_bumblezone:honey_fountain",
-      "weight": 4
-    },
-    {
-      "structure": "the_bumblezone:honey_slime_ranch",
-      "weight": 4
-    },
-    {
-      "structure": "the_bumblezone:ice_monolith",
-      "weight": 4
-    },
-    {
-      "structure": "the_bumblezone:pirate_ship",
-      "weight": 4
-    },
-    {
-      "structure": "the_bumblezone:stinger_spear_shrine",
-      "weight": 4
+      "weight": 3
     },
     {
       "structure": "the_bumblezone:overgrown_flower",
@@ -68,8 +28,8 @@
   "placement": {
     "type": "the_bumblezone:advanced_random_spread",
     "salt": 578754875,
-    "spacing": 14,
-    "separation": 5,
+    "spacing": 19,
+    "separation": 7,
     "super_exclusion_zone": {
       "list_of_avoids": [
         {

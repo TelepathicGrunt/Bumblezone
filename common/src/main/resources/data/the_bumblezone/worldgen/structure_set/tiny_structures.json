@@ -1,0 +1,58 @@
+{
+  "structures": [
+    {
+      "structure": "the_bumblezone:bee_house",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:candle_parkour",
+      "weight": 3
+    },
+    {
+      "structure": "the_bumblezone:cannon_range",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:dance_floor",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:hive_temple",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:honey_fountain",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:honey_slime_ranch",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:ice_monolith",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:pirate_ship",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:stinger_spear_shrine",
+      "weight": 4
+    }
+  ],
+  "placement": {
+    "type": "the_bumblezone:advanced_random_spread",
+    "salt": 34793346,
+    "spacing": 9,
+    "separation": 4,
+    "super_exclusion_zone": {
+      "list_of_avoids": [
+        {
+          "other_set": ["the_bumblezone:cell_maze", "the_bumblezone:pollinated_stream", "the_bumblezone:main_structures"],
+          "chunk_count": 4
+        }
+      ]
+    }
+  }
+}

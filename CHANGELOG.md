@@ -14,3 +14,10 @@ Added Gazebuzz Cluster structure to replace half of Hanging Gardens structure!
 Removed Cell Maze as a possible structure to locate from Pirate Ship's Honey Compass.
 
 Made Pyro The Burning Bee now have infinite Fire Resistance.
+
+Split the tiny structures out of the main structure set into their own set of small structures.
+ Will make exploration structures much more common in Bumblezone, so it is less barren.
+
+Made Bee House and Stinger Spear Shrine not spawn in Hive Wall, Hive Pillar, or Pollinated Pillar biomes.
+
+Spawn Candle Parkour structure in Crystal Canyon biome now.

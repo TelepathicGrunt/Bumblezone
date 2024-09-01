@@ -179,6 +179,22 @@
         ]
       }
     },
+    "in_gazebuzz_cluster": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structures": "the_bumblezone:gazebuzz_cluster"
+              }
+            }
+          }
+        ]
+      }
+    },
     "in_hive_temple": {
       "trigger": "minecraft:location",
       "conditions": {
@@ -495,6 +511,9 @@
     ],
     [
       "in_dance_floor"
+    ],
+    [
+      "in_gazebuzz_cluster"
     ],
     [
       "in_hanging_garden"
