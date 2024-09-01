@@ -279,6 +279,15 @@
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/windy",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
     }
   ]
 }
