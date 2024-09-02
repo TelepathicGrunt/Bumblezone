@@ -23,12 +23,7 @@ public class CrystallineFlowerEnchantmentPacketHandleBody {
                 crystallineFlowerMenu.selectedEnchantment = null;
                 CrystallineFlowerScreen.enchantmentsAvailable = map;
 
-                Language language = Language.getInstance();
-                CrystallineFlowerScreen.enchantmentsAvailableSortedList = map.keySet().stream().sorted((r1, r2) -> {
-                    String s1 = language.getOrDefault("enchantment."+r1.getNamespace()+"."+r1.getPath(), r1.getPath().replace("_", " "));
-                    String s2 = language.getOrDefault("enchantment."+r2.getNamespace()+"."+r2.getPath(), r2.getPath().replace("_", " "));
-                    return s1.compareToIgnoreCase(s2);
-                }).collect(Collectors.toList());
+                CrystallineFlowerScreen.SortAndAssignAvailableEnchants();
 
                 crystallineFlowerMenu.selectedEnchantment = message.selectedResourceLocation().equals(ResourceLocation.fromNamespaceAndPath("minecraft", "empty")) ? null : message.selectedResourceLocation();
                 if (!CrystallineFlowerScreen.enchantmentsAvailable.containsKey(crystallineFlowerMenu.selectedEnchantment)) {

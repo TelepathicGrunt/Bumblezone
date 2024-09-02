@@ -10,6 +10,8 @@ Fixed issue where untranslated enchantments are put at bottom of Crystalline Flo
 
 Exclude Wind Burst enchantment from Crystalline Flower. It is supposed to only be obtainable from Ominous Vaults.
 
+Added a sorting button to Crystalline Flower's screen.
+
 # Structures:
 Added Gazebuzz Cluster structure to replace half of Hanging Gardens structure!
  This large structure made of many hanging gazebos will test your parkour skills and have a variety of stuff to grab!

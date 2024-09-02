@@ -13,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -30,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -61,6 +63,11 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private static final int ENCHANTMENT_SCROLLBAR_Y_RANGE = 50;
     private static final float ENCHANTMENT_SCROLLBAR_U_TEXTURE = 230.0F;
     private static final float ENCHANTMENT_SCROLLBAR_V_TEXTURE = 182.0F;
+
+    private static final int ENCHANTMENT_SORT_X_OFFSET = 163;
+    private static final int ENCHANTMENT_SORT_Y_OFFSET = 41;
+    private static final float ENCHANTMENT_SORT_U_OFFSET = 92.0F;
+    private static final float ENCHANTMENT_SORT_V_OFFSET = 197.0F;
 
     private static final float ENCHANTMENT_SELECTED_U_TEXTURE = 0F;
     private static final float ENCHANTMENT_SELECTED_V_TEXTURE = 197.0F;
@@ -115,6 +122,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private int pressedXp2Timer = 0;
     private int pressedXp3Timer = 0;
     private int pressedConsumeTimer = 0;
+    private int pressedSortTimer = 0;
 
     private List<Boolean> cachedObstructions = new ArrayList<>();
     private int cachedObstructionsTimer = 0;
@@ -123,6 +131,29 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
     public static Map<ResourceLocation, EnchantmentSkeleton> enchantmentsAvailable = new HashMap<>();
     public static List<ResourceLocation> enchantmentsAvailableSortedList = new ArrayList<>();
+    public static SORT_STATE sortState = SORT_STATE.ALPHABETICAL;
+
+    public enum SORT_STATE {
+        ALPHABETICAL(0, 0, "sort_alphabetically"),
+        MODID(8, 0, "sort_namespace"),
+        TREASURE_AND_CURSE(0, 24, "sort_treasure_curse"),
+        LEVEL(8, 24, "sort_level");
+
+        private static final SORT_STATE[] vals = values();
+        private final int offsetU;
+        private final int offsetV;
+        private final String langKey;
+
+        SORT_STATE(int offsetU, int offsetV, String langKey) {
+            this.offsetU = offsetU;
+            this.offsetV = offsetV;
+            this.langKey = langKey;
+        }
+
+        public SORT_STATE next() {
+            return vals[(this.ordinal() + 1) % vals.length];
+        }
+    }
 
     public CrystallineFlowerScreen(CrystallineFlowerMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -281,6 +312,25 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     }
 
     private void drawPushableButtons(GuiGraphics guiGraphics, int startX, int startY, int mouseX, int mouseY) {
+
+        if (pressedSortTimer > 0) {
+            pressedSortTimer--;
+            RenderSystem.enableDepthTest();
+            guiGraphics.blit(CONTAINER_BACKGROUND, startX + ENCHANTMENT_SORT_X_OFFSET, startY + ENCHANTMENT_SORT_Y_OFFSET, ENCHANTMENT_SORT_U_OFFSET + sortState.offsetU, ENCHANTMENT_SORT_V_OFFSET + sortState.offsetV + 8, 8, 8, 256, 256);
+        }
+        else {
+            int xOffset = startX + ENCHANTMENT_SORT_X_OFFSET;
+            int yOffset = startY + ENCHANTMENT_SORT_Y_OFFSET;
+            if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 8.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 8.0D) {
+                RenderSystem.enableDepthTest();
+                guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, ENCHANTMENT_SORT_U_OFFSET + sortState.offsetU, ENCHANTMENT_SORT_V_OFFSET + sortState.offsetV + 16, 8, 8, 256, 256);
+            }
+            else {
+                RenderSystem.enableDepthTest();
+                guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, ENCHANTMENT_SORT_U_OFFSET + sortState.offsetU, ENCHANTMENT_SORT_V_OFFSET + sortState.offsetV, 8, 8, 256, 256);
+            }
+        }
+
         if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI) {
             if (pressedXp1Timer > 0 ||
                     this.menu.xpTier.get() == 7 ||
@@ -526,6 +576,21 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     @Override
     protected void renderTooltip(GuiGraphics guiGraphics, int x, int y) {
         super.renderTooltip(guiGraphics, x, y);
+
+        // Sort button
+        int xOffset = this.leftPos + ENCHANTMENT_SORT_X_OFFSET;
+        int yOffset = this.topPos + ENCHANTMENT_SORT_Y_OFFSET;
+        if (x - xOffset >= 0.0D && x - xOffset < 8.0D && y - yOffset >= 0.0D && y - yOffset < 8.0D) {
+            guiGraphics.renderTooltip(
+                    this.font,
+                    List.of(Component.translatable("container.the_bumblezone.crystalline_flower." + sortState.langKey)),
+                    Optional.empty(),
+                    x,
+                    y);
+            return;
+        }
+
+        // Enchantment rows:
         int startX = this.leftPos + ENCHANTMENT_AREA_X_OFFSET - 2;
         int startY = this.topPos + ENCHANTMENT_AREA_Y_OFFSET - 2;
         int selectableSections = this.startIndex + Math.min(enchantmentsAvailableSortedList.size(), 3);
@@ -622,6 +687,18 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             mouseY < startY + ENCHANTMENT_SCROLLBAR_Y_RANGE)
         {
             this.scrolling = true;
+        }
+
+        if (mouseX >= this.leftPos + ENCHANTMENT_SORT_X_OFFSET &&
+            mouseX < this.leftPos + ENCHANTMENT_SORT_X_OFFSET + 8 &&
+            mouseY >= this.topPos + ENCHANTMENT_SORT_Y_OFFSET &&
+            mouseY < this.topPos + ENCHANTMENT_SORT_Y_OFFSET + 8)
+        {
+            pressedSortTimer = BUTTON_PRESSED_TIMER_VISUAL;
+            sortState = sortState.next();
+            SortAndAssignAvailableEnchants();
+            startIndex = 0;
+            scrollOff = 0;
         }
 
         if (this.menu.xpTier.get() != 7)
@@ -741,5 +818,37 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         CrystallineFlowerScreen.enchantmentsAvailable.clear();
         CrystallineFlowerScreen.enchantmentsAvailableSortedList.clear();
         super.onClose();
+    }
+
+    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByNamespace = Comparator.comparing(e -> e.getKey().getNamespace());
+    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByLang = Comparator.comparing(e ->
+        Language.getInstance().getOrDefault(Util.makeDescriptionId("enchantment", e.getKey()), e.getKey().getPath().replace("_", " ")),
+        String.CASE_INSENSITIVE_ORDER);
+    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByLevel = Comparator.comparingInt(e -> e.getValue().level);
+    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByTreasure = Comparator.comparing(e -> !(e.getValue().isTreasure && !e.getValue().isCurse)); // reverse it so treasures are first
+    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByCurse = Comparator.comparing(e -> !e.getValue().isCurse); // reverse it so curses are first
+    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByNamespaceAndLang = compareByNamespace.thenComparing(compareByLang);
+    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByLevelAndLang = compareByLevel.reversed().thenComparing(compareByLang);
+    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByTreasureCurseAndLang = compareByTreasure.thenComparing(compareByCurse).thenComparing(compareByLang);
+
+    public static void SortAndAssignAvailableEnchants() {
+        enchantmentsAvailableSortedList = enchantmentsAvailable.entrySet().stream().sorted((e1, e2) -> {
+            switch (sortState){
+                case MODID -> {
+                    return compareByNamespaceAndLang.compare(e1, e2);
+                }
+                case TREASURE_AND_CURSE -> {
+                    return compareByTreasureCurseAndLang.compare(e1, e2);
+                }
+                case LEVEL -> {
+                    return compareByLevelAndLang.compare(e1, e2);
+                }
+                default -> {
+                    return compareByLang.compare(e1, e2);
+                }
+            }
+        })
+        .map(Map.Entry::getKey)
+        .collect(Collectors.toList());
     }
 }

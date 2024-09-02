@@ -679,6 +679,10 @@
   "container.the_bumblezone.crystalline_flower.tier_cost": "Tier cost: %s",
   "container.the_bumblezone.crystalline_flower.tier_cost_arrow": "↓%s",
   "container.the_bumblezone.crystalline_flower.too_many_enchants": "Enchant Limit 3",
+  "container.the_bumblezone.crystalline_flower.sort_alphabetically": "Sort by display name",
+  "container.the_bumblezone.crystalline_flower.sort_namespace": "Sort by namespace (mod ID)",
+  "container.the_bumblezone.crystalline_flower.sort_treasure_curse": "Sort by treasure/curses",
+  "container.the_bumblezone.crystalline_flower.sort_level": "Sort by level",
 
   "buzzing_briefcase.the_bumblezone.bee_typing.normal": "Normal",
   "buzzing_briefcase.the_bumblezone.bee_typing.unknown": "Unknown",
