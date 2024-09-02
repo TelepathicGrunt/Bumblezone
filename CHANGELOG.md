@@ -8,6 +8,8 @@ Fixed Luminescence Wax Channel block's top and bottom texture not rotated when s
 
 Fixed issue where untranslated enchantments are put at bottom of Crystalline Flower's list of enchantments.
 
+Added a sorting button to Crystalline Flower's screen.
+
 ##### Structures:
 Added Gazebuzz Cluster structure to replace half of Hanging Gardens structure! 
  This large structure made of many hanging gazebos will test your parkour skills and have a variety of stuff to grab! 
