@@ -4,7 +4,9 @@
 Fixed issue where completing Honey Drunk advancement with 1 Honey Bottle in hand will replace the Royal Jelly Bottle reward with the Honey Bottle's Glass Bottle remainder.
 
 ##### Blocks:
-Fixed Luminescence Wax Channel block's top and bottom texture not rotated when sword/shear right clicked while horizontal.
+Fixed Luminescence Wax Channel block's top and bottom texture not rotated when sword/shear right-clicked while horizontal.
+
+Fixed issue where untranslated enchantments are put at bottom of Crystalline Flower's list of enchantments.
 
 # Structures:
 Added Gazebuzz Cluster structure to replace half of Hanging Gardens structure!
