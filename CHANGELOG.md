@@ -8,6 +8,8 @@ Fixed Luminescence Wax Channel block's top and bottom texture not rotated when s
 
 Fixed issue where untranslated enchantments are put at bottom of Crystalline Flower's list of enchantments.
 
+Exclude Wind Burst enchantment from Crystalline Flower. It is supposed to only be obtainable from Ominous Vaults.
+
 # Structures:
 Added Gazebuzz Cluster structure to replace half of Hanging Gardens structure!
  This large structure made of many hanging gazebos will test your parkour skills and have a variety of stuff to grab!

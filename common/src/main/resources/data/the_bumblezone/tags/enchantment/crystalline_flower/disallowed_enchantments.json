@@ -3,22 +3,7 @@
   "values": [
     "minecraft:soul_speed",
     "minecraft:swift_sneak",
-    {
-      "id": "veinmining:vein_mining",
-      "required": false
-    },
-    {
-      "id": "ars_elemental:mirror_shield",
-      "required": false
-    },
-    {
-      "id": "ars_nouveau:reactive",
-      "required": false
-    },
-    {
-      "id": "supplementaries:stasis",
-      "required": false
-    },
+    "minecraft:wind_burst",
     {
       "id": "apotheosis:infusion",
       "required": false
@@ -56,39 +41,27 @@
       "required": false
     },
     {
-      "id": "zenith:infusion",
+      "id": "ars_elemental:mirror_shield",
       "required": false
     },
     {
-      "id": "zenith:chainsaw",
+      "id": "ars_nouveau:reactive",
       "required": false
     },
     {
-      "id": "zenith:crescendo",
+      "id": "enchantmentencore:bedrocker",
       "required": false
     },
     {
-      "id": "zenith:scavenger",
+      "id": "kattersstructures:raj_ambient",
       "required": false
     },
     {
-      "id": "zenith:life_mending",
+      "id": "kattersstructures:raj_lightning",
       "required": false
     },
     {
-      "id": "zenith:berserkers_fury",
-      "required": false
-    },
-    {
-      "id": "zenith:knowledge",
-      "required": false
-    },
-    {
-      "id": "zenith:earths_boon",
-      "required": false
-    },
-    {
-      "id": "zenith:endless_quiver",
+      "id": "kattersstructures:raj_minion",
       "required": false
     },
     {
@@ -129,6 +102,50 @@
     },
     {
       "id": "mcdw:shared_pain",
+      "required": false
+    },
+    {
+      "id": "supplementaries:stasis",
+      "required": false
+    },
+    {
+      "id": "veinmining:vein_mining",
+      "required": false
+    },
+    {
+      "id": "zenith:infusion",
+      "required": false
+    },
+    {
+      "id": "zenith:chainsaw",
+      "required": false
+    },
+    {
+      "id": "zenith:crescendo",
+      "required": false
+    },
+    {
+      "id": "zenith:scavenger",
+      "required": false
+    },
+    {
+      "id": "zenith:life_mending",
+      "required": false
+    },
+    {
+      "id": "zenith:berserkers_fury",
+      "required": false
+    },
+    {
+      "id": "zenith:knowledge",
+      "required": false
+    },
+    {
+      "id": "zenith:earths_boon",
+      "required": false
+    },
+    {
+      "id": "zenith:endless_quiver",
       "required": false
     }
   ]
