@@ -6,7 +6,7 @@
       "rolls": 1,
       "entries": [
         {
-          "name": "minecraft:netherite_scrap",
+          "name": "minecraft:diamond",
           "type": "minecraft:item",
           "weight": 1
         }
