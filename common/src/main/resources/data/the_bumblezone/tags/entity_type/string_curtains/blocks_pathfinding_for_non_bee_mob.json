@@ -36,10 +36,6 @@
       "required": false
     },
     {
-      "id": "betternether:firefly",
-      "required": false
-    },
-    {
       "id": "biomemakeover:moth",
       "required": false
     },
