@@ -26,6 +26,10 @@
       "required": false
     },
     {
+      "id": "betterend:silk_moth",
+      "required": false
+    },
+    {
       "id": "blue_skies:firefly",
       "required": false
     },
@@ -235,6 +239,10 @@
     },
     {
       "id": "naturalist:lizard",
+      "required": false
+    },
+    {
+      "id": "naturalist:firefly",
       "required": false
     },
     {
