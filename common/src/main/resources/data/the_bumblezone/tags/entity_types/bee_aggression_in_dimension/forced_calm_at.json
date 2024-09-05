@@ -33,6 +33,10 @@
       "required": false
     },
     {
+      "id": "aquamirae:golden_moth",
+      "required": false
+    },
+    {
       "id": "autumnity:snail",
       "required": false
     },
@@ -122,6 +126,10 @@
     },
     {
       "id": "naturalist:snail",
+      "required": false
+    },
+    {
+      "id": "naturalist:firefly",
       "required": false
     },
     {
