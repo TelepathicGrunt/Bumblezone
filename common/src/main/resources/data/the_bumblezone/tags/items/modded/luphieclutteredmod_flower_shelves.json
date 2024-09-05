@@ -1,0 +1,28 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:purple_flower_shelf",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:green_flower_shelf",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:pink_flower_shelf",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:yellow_flower_shelf",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:blue_flower_shelf",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:pastel_yellow_flowershelf",
+    "required": false
+  }]
+}

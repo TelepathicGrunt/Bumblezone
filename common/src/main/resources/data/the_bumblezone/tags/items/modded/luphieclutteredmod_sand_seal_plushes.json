@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:blue_sand_seal_plush",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:red_sand_seal_plush",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:green_sand_seal_plush",
+    "required": false
+  }]
+}
