@@ -195,6 +195,22 @@
         ]
       }
     },
+    "in_goliath_honey_fountain": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:goliath_honey_fountain"
+              }
+            }
+          }
+        ]
+      }
+    },
     "in_hive_temple": {
       "trigger": "minecraft:location",
       "conditions": {
@@ -514,6 +530,9 @@
     ],
     [
       "in_gazebuzz_cluster"
+    ],
+    [
+      "in_goliath_honey_fountain"
     ],
     [
       "in_hanging_garden"
