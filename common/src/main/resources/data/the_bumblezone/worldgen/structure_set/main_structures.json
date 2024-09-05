@@ -9,16 +9,20 @@
       "weight": 5
     },
     {
-      "structure": "the_bumblezone:battle_cubes",
-      "weight": 3
-    },
-    {
       "structure": "the_bumblezone:honitel",
       "weight": 3
     },
     {
       "structure": "the_bumblezone:subway",
       "weight": 3
+    },
+    {
+      "structure": "the_bumblezone:battle_cubes",
+      "weight": 2
+    },
+    {
+      "structure": "the_bumblezone:goliath_honey_fountain",
+      "weight": 2
     },
     {
       "structure": "the_bumblezone:ancient_hoops",

@@ -17,6 +17,9 @@ Added Gazebuzz Cluster structure to replace half of Hanging Gardens structure!
  This large structure made of many hanging gazebos will test your parkour skills and have a variety of stuff to grab!
  Including Crystalline Flower and Bee Armor!
 
+Added Goliath Honey Fountain that can spawn in any Bumblezone biome! 
+ This a massive fountain of honey with secret entrance to the insides! Explore!
+
 Removed Cell Maze as a possible structure to locate from Pirate Ship's Honey Compass.
 
 Made Pyro The Burning Bee now have infinite Fire Resistance.
