@@ -12,6 +12,13 @@ Fixed issue where untranslated enchantments are put at bottom of Crystalline Flo
 
 Added a sorting button to Crystalline Flower's screen.
 
+Fixed bug where tier 1 Crystalline Flower only showed enchantments whose level 2 min cost is within tier 1 range.
+ Kept the bug for vanilla enchantments so some enchantments only begin to show up in tier 2 flower for a little bit of balance.
+
+##### Enchantments:
+Allow Comb Cutter to now go up to Level 2 for faster mining. By default, Level 2 won't show in vanilla Enchanting Table.
+ But you can get it from max tier Crystalline Flower or by combining two level 1 Comb Cutters together.
+
 ##### Structures:
 Added Gazebuzz Cluster structure to replace half of Hanging Gardens structure! 
  This large structure made of many hanging gazebos will test your parkour skills and have a variety of stuff to grab! 

@@ -60,7 +60,7 @@ public class EnchantmentUtils {
 		boolean bookFlag = stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK);
 		boolean allowTreasure = xpTier == 7;
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(stack);
-		for(Enchantment enchantment : BuiltInRegistries.ENCHANTMENT) {
+		for (Enchantment enchantment : BuiltInRegistries.ENCHANTMENT) {
 
 			boolean forceAllowed = GeneralUtils.isInTag(BuiltInRegistries.ENCHANTMENT, BzTags.FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS, enchantment);
 			boolean disallowed = GeneralUtils.isInTag(BuiltInRegistries.ENCHANTMENT, BzTags.DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS, enchantment);
@@ -121,7 +121,9 @@ public class EnchantmentUtils {
 	public static int getEnchantmentTierCost(EnchantmentInstance enchantmentInstance) {
 		return getEnchantmentTierCost(
 				enchantmentInstance.level,
-				enchantmentInstance.enchantment.getMinCost(2),
+				enchantmentInstance.enchantment.getMinCost(
+						BuiltInRegistries.ENCHANTMENT.getKey(enchantmentInstance.enchantment).getNamespace().equals("minecraft") ?
+						Math.max(enchantmentInstance.level, 2) : enchantmentInstance.level),
 				enchantmentInstance.enchantment.isTreasureOnly(),
 				enchantmentInstance.enchantment.isCurse());
 	}

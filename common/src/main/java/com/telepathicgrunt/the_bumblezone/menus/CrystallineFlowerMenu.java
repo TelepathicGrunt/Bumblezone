@@ -29,7 +29,6 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.EntityBlock;
@@ -162,7 +161,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
                 // get enchantments previously available
                 ItemStack oldConsumeStack = bookSlot.getItem().copy();
-                Map<ResourceLocation, EnchantmentInstance> oldAvailableEnchantments = getAvaliableEnchantments(oldConsumeStack);
+                Map<ResourceLocation, EnchantmentInstance> oldAvailableEnchantments = getAvailableEnchantments(oldConsumeStack);
 
                 // drain book and xp
                 bookSlot.remove(1);
@@ -571,7 +570,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             ItemStack tempCopy = toEnchant.copy();
             tempCopy.setCount(1);
 
-            Map<ResourceLocation, EnchantmentInstance> availableEnchantments = getAvaliableEnchantments(tempCopy);
+            Map<ResourceLocation, EnchantmentInstance> availableEnchantments = getAvailableEnchantments(tempCopy);
 
             if (availableEnchantments.isEmpty()) {
                 if (enchantedSlot.hasItem()) {
@@ -623,7 +622,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                                     resourceLocation.getPath(),
                                     resourceLocation.getNamespace(),
                                     e.level,
-                                    e.enchantment.getMinCost(2),
+                                    e.enchantment.getMinCost(resourceLocation.getNamespace().equals("minecraft") ? Math.max(e.level, 2) : e.level),
                                     e.level == e.enchantment.getMaxLevel(),
                                     e.enchantment.isCurse(),
                                     e.enchantment.isTreasureOnly()
@@ -637,7 +636,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     }
 
     @NotNull
-    private Map<ResourceLocation, EnchantmentInstance> getAvaliableEnchantments(ItemStack tempCopy) {
+    private Map<ResourceLocation, EnchantmentInstance> getAvailableEnchantments(ItemStack tempCopy) {
         int level = xpTier.get() * BzGeneralConfigs.crystallineFlowerEnchantingPowerAllowedPerTier;
         return EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempCopy, xpTier.get());
     }

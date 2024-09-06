@@ -78,8 +78,8 @@ public class CombCutterEnchantment extends BzEnchantment {
         ItemStack itemStack = playerEntity.getMainHandItem();
         int equipmentLevel = EnchantmentHelper.getEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), playerEntity);
         if (equipmentLevel > 0 && !itemStack.isEmpty()) {
-            double newSpeed = (equipmentLevel * equipmentLevel) + (lesserTarget ? 3 : 13);
-
+            int destroyModifier = (int) Math.max(Math.ceil(event.state().getBlock().defaultDestroyTime()), 0);
+            double newSpeed = Math.min(Math.pow(equipmentLevel, 2 + destroyModifier) + (lesserTarget ? 3 : 13), 50);
             if (playerEntity.hasEffect(MobEffects.DIG_SLOWDOWN)) {
                 int amplifier = playerEntity.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier();
                 if (amplifier < 0) {
@@ -105,17 +105,17 @@ public class CombCutterEnchantment extends BzEnchantment {
 
     @Override
     public int getMinCost(int level) {
-        return 10 * (level - 1);
+        return 1 + (55 * (level - 1));
     }
 
     @Override
     public int getMaxCost(int level) {
-        return super.getMinCost(level) + 13;
+        return super.getMinCost(level) + 23;
     }
 
     @Override
     public int getMaxLevel() {
-        return 1;
+        return 2;
     }
 
     @Override
