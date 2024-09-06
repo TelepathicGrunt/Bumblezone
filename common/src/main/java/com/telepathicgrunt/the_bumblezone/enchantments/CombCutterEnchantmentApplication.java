@@ -72,8 +72,9 @@ public class CombCutterEnchantmentApplication {
         ItemStack itemStack = playerEntity.getMainHandItem();
         Pair<CombCutterMarker, Integer> enchantAndLevel = getCombCutterEnchantLevel(itemStack);
         if (enchantAndLevel != null && enchantAndLevel.getSecond() > 0 && !itemStack.isEmpty()) {
-            double newSpeed = (enchantAndLevel.getSecond() * enchantAndLevel.getSecond()) +
-                    (lesserTarget ? enchantAndLevel.getFirst().lesserTargetBlockBaseSpeedAddition() : enchantAndLevel.getFirst().mainTargetBlockBaseSpeedAddition());
+            int destroyModifier = (int) Math.max(Math.ceil(event.state().getBlock().defaultDestroyTime()), 0);
+            double newSpeed = Math.min(Math.pow(enchantAndLevel.getSecond(), 2 + destroyModifier) +
+                    (lesserTarget ? enchantAndLevel.getFirst().lesserTargetBlockBaseSpeedAddition() : enchantAndLevel.getFirst().mainTargetBlockBaseSpeedAddition()), 50);
 
             if (playerEntity.hasEffect(MobEffects.DIG_SLOWDOWN)) {
                 int amplifier = playerEntity.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier();

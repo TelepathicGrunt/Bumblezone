@@ -161,7 +161,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
                 // get enchantments previously available
                 ItemStack oldConsumeStack = bookSlot.getItem().copy();
-                Map<ResourceLocation, EnchantmentInstance> oldAvailableEnchantments = getAvaliableEnchantments(player.level(), oldConsumeStack);
+                Map<ResourceLocation, EnchantmentInstance> oldAvailableEnchantments = getAvailableEnchantments(player.level(), oldConsumeStack);
 
                 // drain book and xp
                 bookSlot.remove(1);
@@ -570,7 +570,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             ItemStack tempCopy = toEnchant.copy();
             tempCopy.setCount(1);
 
-            Map<ResourceLocation, EnchantmentInstance> availableEnchantments = getAvaliableEnchantments(this.crystallineFlowerBlockEntity.getLevel(), tempCopy);
+            Map<ResourceLocation, EnchantmentInstance> availableEnchantments = getAvailableEnchantments(this.crystallineFlowerBlockEntity.getLevel(), tempCopy);
 
             if (availableEnchantments.isEmpty()) {
                 if (enchantedSlot.hasItem()) {
@@ -619,7 +619,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                                     resourceLocation.getPath(),
                                     resourceLocation.getNamespace(),
                                     e.level,
-                                    e.enchantment.value().getMinCost(2),
+                                    e.enchantment.value().getMinCost(resourceLocation.getNamespace().equals("minecraft") ? Math.max(e.level, 2) : e.level),
                                     e.level == e.enchantment.value().getMaxLevel(),
                                     e.enchantment.is(EnchantmentTags.CURSE),
                                     e.enchantment.is(EnchantmentTags.TREASURE)
@@ -632,7 +632,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         }
     }
 
-    private Map<ResourceLocation, EnchantmentInstance> getAvaliableEnchantments(Level level, ItemStack tempCopy) {
+    private Map<ResourceLocation, EnchantmentInstance> getAvailableEnchantments(Level level, ItemStack tempCopy) {
         int enchantmentLevel = xpTier.get() * BzGeneralConfigs.crystallineFlowerEnchantingPowerAllowedPerTier;
         return EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, enchantmentLevel, tempCopy, xpTier.get());
     }

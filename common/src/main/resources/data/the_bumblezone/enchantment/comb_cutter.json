@@ -7,15 +7,15 @@
     "mainhand"
   ],
   "weight": 1,
-  "max_level": 1,
+  "max_level": 2,
   "anvil_cost": 5,
   "max_cost": {
     "base": 24,
-    "per_level_above_first": 0
+    "per_level_above_first": 55
   },
   "min_cost": {
     "base": 1,
-    "per_level_above_first": 0
+    "per_level_above_first": 55
   },
   "effects": {
     "the_bumblezone:comb_cutter": {
