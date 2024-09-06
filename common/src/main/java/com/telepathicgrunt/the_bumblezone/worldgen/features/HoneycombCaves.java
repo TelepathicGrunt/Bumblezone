@@ -202,15 +202,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                             mutableBlockPos.getY() * 0.038D);
 
                     if (noise1 >= 0.0360555127546399D) {
-                        if (noise1 >= 0.6) {
-                            z += 6;
-                        }
-                        else if (noise1 >= 0.4) {
-                            z += 4;
-                        }
-                        else if (noise1 >= 0.2) {
-                            z += 2;
-                        }
+                        z = zSkipping(z, noise1);
                         continue;
                     }
 
@@ -224,19 +216,36 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                     if (finalNoise < 0.0013f) {
                         hexagon(level, bulkSectionAccess, context.chunkGenerator(), mutableBlockPos, context.random(), noise1);
                     }
-                    else if (finalNoise >= 0.6) {
-                        z += 6;
-                    }
-                    else if (finalNoise >= 0.4) {
-                        z += 4;
-                    }
-                    else if (finalNoise >= 0.2) {
-                        z += 2;
-                    }
+                    else z = zSkipping(z, finalNoise);
                 }
             }
         }
         return true;
+    }
+
+    private int zSkipping(int z, double noise1) {
+        if (noise1 >= 0.8) {
+            z += 7;
+        }
+        else if (noise1 >= 0.7) {
+            z += 6;
+        }
+        else if (noise1 >= 0.6) {
+            z += 5;
+        }
+        else if (noise1 >= 0.5) {
+            z += 4;
+        }
+        else if (noise1 >= 0.4) {
+            z += 3;
+        }
+        else if (noise1 >= 0.3) {
+            z += 2;
+        }
+        else if (noise1 >= 0.2) {
+            z += 1;
+        }
+        return z;
     }
 
     private static void hexagon(WorldGenLevel world, UnsafeBulkSectionAccess bulkSectionAccess, ChunkGenerator generator, BlockPos position, RandomSource random, double noise) {
