@@ -157,6 +157,15 @@
     {
       "weight": 2,
       "element": {
+        "location": "the_bumblezone:gazebuzz_cluster/silverfish",
+        "processors": "the_bumblezone:gazebuzz_cluster_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
         "location": "the_bumblezone:gazebuzz_cluster/targets",
         "processors": "the_bumblezone:gazebuzz_cluster_generic",
         "projection": "rigid",
@@ -257,15 +266,6 @@
       "weight": 1,
       "element": {
         "location": "the_bumblezone:gazebuzz_cluster/potions",
-        "processors": "the_bumblezone:gazebuzz_cluster_generic",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 1,
-      "element": {
-        "location": "the_bumblezone:gazebuzz_cluster/silverfish",
         "processors": "the_bumblezone:gazebuzz_cluster_generic",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

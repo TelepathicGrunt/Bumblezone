@@ -2,19 +2,19 @@
   "structures": [
     {
       "structure": "the_bumblezone:overgrown_flower",
-      "weight": 30
+      "weight": 50
     },
     {
       "structure": "the_bumblezone:ancient_shrine",
-      "weight": 5
+      "weight": 8
     },
     {
       "structure": "the_bumblezone:honitel",
-      "weight": 3
+      "weight": 5
     },
     {
       "structure": "the_bumblezone:subway",
-      "weight": 3
+      "weight": 5
     },
     {
       "structure": "the_bumblezone:battle_cubes",
@@ -32,8 +32,8 @@
   "placement": {
     "type": "the_bumblezone:advanced_random_spread",
     "salt": 578754875,
-    "spacing": 22,
-    "separation": 11,
+    "spacing": 31,
+    "separation": 15,
     "super_exclusion_zone": {
       "list_of_avoids": [
         {
