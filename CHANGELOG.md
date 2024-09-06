@@ -37,3 +37,5 @@ Split Stinger Spear Shrine, Bee House, Honey Fountain, and Candle Parkour into m
  Meshes better with terrain as a result.
 
 Fixed Luminescence Wax facing wrong way in several rooms in Sempiternal Sanctums.
+
+Fixed Carvable Wax Pillars not reaching low ceilings in Sempiternal Sanctums.
