@@ -6,6 +6,8 @@ Fixed issue where completing Honey Drunk advancement with 1 Honey Bottle in hand
 ##### Blocks:
 Fixed Luminescence Wax Channel block's top and bottom texture not rotated when sword/shear right-clicked while horizontal.
 
+Fixed Bee pattern Carvable Wax facing the wrong way when facing north, south, east, or west.
+
 Fixed issue where untranslated enchantments are put at bottom of Crystalline Flower's list of enchantments.
 
 Added a sorting button to Crystalline Flower's screen.
@@ -31,3 +33,5 @@ Spawn Candle Parkour structure in Crystal Canyon biome now.
 
 Split Stinger Spear Shrine, Bee House, Honey Fountain, and Candle Parkour into multiple pieces, so it terraform terrain around itself in a circular look instead of square look.
  Meshes better with terrain as a result.
+
+Fixed Luminescence Wax facing wrong way in several rooms in Sempiternal Sanctums.
