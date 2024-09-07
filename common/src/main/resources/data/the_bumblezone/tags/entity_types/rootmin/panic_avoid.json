@@ -7,18 +7,6 @@
     "minecraft:iron_golem",
     "minecraft:blaze",
     "minecraft:wither",
-    "minecraft:warden",
-    {
-      "id": "adventurez:blaze_guardian",
-      "required": false
-    },
-    {
-      "id": "adventurez:blackstone_golem",
-      "required": false
-    },
-    {
-      "id": "adventurez:amethyst_golem",
-      "required": false
-    }
+    "minecraft:warden"
   ]
 }

@@ -1,9 +1,0 @@
-{
-  "is_color_randomizer_trade": true,
-  "randomizes": [
-    {
-      "id": "#railways:palettes/dye_groups/copper_wrapped_slashed",
-      "required": false
-    }
-  ]
-}
