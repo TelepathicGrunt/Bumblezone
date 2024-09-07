@@ -7,6 +7,18 @@
     "the_bumblezone:bee_queen",
     "the_bumblezone:sentry_watcher",
     "the_bumblezone:purple_spike_entity",
-    "the_bumblezone:cosmic_crystal_entity"
+    "the_bumblezone:cosmic_crystal_entity",
+    {
+      "id": "adventurez:blackstone_golem",
+      "required": false
+    },
+    {
+      "id": "adventurez:mini_blackstone_golem",
+      "required": false
+    },
+    {
+      "id": "adventurez:amethyst_golem",
+      "required": false
+    }
   ]
 }
