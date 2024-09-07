@@ -6,7 +6,15 @@
       "required": false
     },
     {
+      "id": "c:brush",
+      "required": false
+    },
+    {
       "id": "forge:tools/brushes",
+      "required": false
+    },
+    {
+      "id": "forge:tools/brush",
       "required": false
     }
   ]

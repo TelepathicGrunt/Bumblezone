@@ -50,3 +50,6 @@ Split Stinger Spear Shrine, Bee House, Honey Fountain, and Candle Parkour into m
 Fixed Luminescence Wax facing wrong way in several rooms in Sempiternal Sanctums.
 
 Fixed Carvable Wax Pillars not reaching low ceilings in Sempiternal Sanctums.
+
+##### Mod Compat:
+Add more mod compat Bee Queen Trades and tagging! Special thanks to Cicopath for the work here!
