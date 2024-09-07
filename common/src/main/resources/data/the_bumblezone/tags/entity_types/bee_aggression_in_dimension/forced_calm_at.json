@@ -33,6 +33,10 @@
       "required": false
     },
     {
+      "id": "aquamirae:golden_moth",
+      "required": false
+    },
+    {
       "id": "autumnity:snail",
       "required": false
     },
@@ -93,6 +97,34 @@
       "required": false
     },
     {
+      "id": "hybrid-aquatic:lobster",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:shrimp",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:crayfish",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:starfish",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:seahorse",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:sea_cucumber",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:giant_isopod",
+      "required": false
+    },
+    {
       "id": "infernalexp:glowsilk_moth",
       "required": false
     },
@@ -122,6 +154,10 @@
     },
     {
       "id": "naturalist:snail",
+      "required": false
+    },
+    {
+      "id": "naturalist:firefly",
       "required": false
     },
     {

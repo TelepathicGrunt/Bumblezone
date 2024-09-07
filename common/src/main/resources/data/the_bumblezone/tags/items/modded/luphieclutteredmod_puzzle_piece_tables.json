@@ -1,0 +1,32 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:blue_puzzle_piece_table",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:pastel_blue_puzzle_piece_table",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:green_puzzle_piece_table",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:pink_puzzle_piece_table",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:yellow_puzzle_piece_table",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:pastel_purple_puzzle_piece_table",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:red_puzzle_piece_table",
+    "required": false
+  }]
+}
