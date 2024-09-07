@@ -1,0 +1,36 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:red_tarrey_town_planter",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:green_tarrey_town_planter",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:pink_tarrey_town_planter",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:purple_tarrey_town_planter",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:yellow_tarrey_town_planter",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:blue_tarrey_town_planter",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:glow_tarrey_town_planter",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:blue_mushroom_tarrey_town_planter",
+    "required": false
+  }]
+}

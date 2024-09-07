@@ -32,6 +32,10 @@
       "required": false
     },
     {
+      "id": "betterend:silk_moth",
+      "required": false
+    },
+    {
       "id": "biomemakeover:moth",
       "required": false
     },
@@ -189,6 +193,10 @@
     },
     {
       "id": "naturalist:dragonfly",
+      "required": false
+    },
+    {
+      "id": "naturalist:firefly",
       "required": false
     },
     {

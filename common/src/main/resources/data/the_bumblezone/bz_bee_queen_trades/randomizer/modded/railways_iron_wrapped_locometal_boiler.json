@@ -1,0 +1,9 @@
+{
+  "is_color_randomizer_trade": true,
+  "randomizes": [
+    {
+      "id": "#railways:palettes/dye_groups/iron_wrapped_boiler",
+      "required": false
+    }
+  ]
+}

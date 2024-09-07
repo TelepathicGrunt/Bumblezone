@@ -1,0 +1,17 @@
+{
+  "wants" : [
+    {
+      "id": "regions_unexplored:dead_pine_leaves",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "regions_unexplored:pine_leaves",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}

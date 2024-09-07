@@ -9,6 +9,18 @@
       "required": false
     },
     {
+      "id": "adventurez:blackstone_golem",
+      "required": false
+    },
+    {
+      "id": "adventurez:mini_blackstone_golem",
+      "required": false
+    },
+    {
+      "id": "adventurez:amethyst_golem",
+      "required": false
+    },
+    {
       "id": "more_babies:iron_golem",
       "required": false
     },
