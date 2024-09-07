@@ -19,6 +19,12 @@ Fixed bug where tier 1 Crystalline Flower only showed enchantments whose level 2
 Allow Comb Cutter to now go up to Level 2 for faster mining. By default, Level 2 won't show in vanilla Enchanting Table.
  But you can get it from max tier Crystalline Flower or by combining two level 1 Comb Cutters together.
 
+##### Entities:
+Made beehemothSpeed config be synced from server to client, so it takes full effect without needing client to change value to match server.
+ (Still need a restart for config value to take effect)
+
+Changed the vehicle move speed check on server to now allow even higher Beehemoth speeds without getting speed checked by the server.
+
 ##### Structures:
 Added Gazebuzz Cluster structure to replace half of Hanging Gardens structure! 
  This large structure made of many hanging gazebos will test your parkour skills and have a variety of stuff to grab! 

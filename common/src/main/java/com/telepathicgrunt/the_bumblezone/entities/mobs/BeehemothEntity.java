@@ -16,6 +16,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.packets.SyncBeehemothSpeedConfigFromServer;
+import com.telepathicgrunt.the_bumblezone.packets.SyncHorseOwnerUUIDPacketFromServer;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -79,6 +81,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
 public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Saddleable, PlayerRideable {
+
+    public static boolean beehemothSpeedConfigChanged = false;
+    public static double beehemothSpeedConfigValue = BzGeneralConfigs.beehemothSpeed;
 
     private static final EntityDataAccessor<Boolean> SADDLED = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> QUEEN = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
@@ -591,6 +596,12 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     @Override
     public void tick() {
+        if (BeehemothEntity.beehemothSpeedConfigChanged && !this.level().isClientSide()) {
+            BeehemothEntity.beehemothSpeedConfigValue = BzGeneralConfigs.beehemothSpeed;
+            SyncBeehemothSpeedConfigFromServer.sendToClient(this, BeehemothEntity.beehemothSpeedConfigValue);
+            BeehemothEntity.beehemothSpeedConfigChanged = false;
+        }
+
         super.tick();
         stopWandering = isLeashed();
 
@@ -712,7 +723,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 double strafeSpeed = 0;
 
                 if (livingEntity.zza != 0 || this.movingStraightUp || this.movingStraightDown) {
-                    currentSpeed = Math.min(BzGeneralConfigs.beehemothSpeed * speedModifier, currentSpeed + 0.003D);
+                    currentSpeed = Math.min(beehemothSpeedConfigValue * speedModifier, currentSpeed + 0.003D);
                 }
                 else {
                     currentSpeed = Math.max(0, currentSpeed - 0.2D);
