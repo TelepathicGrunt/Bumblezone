@@ -13,11 +13,23 @@
       "required": false
     },
     {
-      "id": "adventurez:blackstone_golem",
+      "id": "friendsandfoes:wildfire",
       "required": false
     },
     {
-      "id": "adventurez:amethyst_golem",
+      "id": "more_babies:blaze",
+      "required": false
+    },
+    {
+      "id": "more_babies:iron_golem",
+      "required": false
+    },
+    {
+      "id": "more_babies:wither",
+      "required": false
+    },
+    {
+      "id": "more_babies:warden",
       "required": false
     }
   ]
