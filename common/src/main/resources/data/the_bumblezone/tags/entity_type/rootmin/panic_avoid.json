@@ -13,11 +13,7 @@
       "required": false
     },
     {
-      "id": "adventurez:blackstone_golem",
-      "required": false
-    },
-    {
-      "id": "adventurez:amethyst_golem",
+      "id": "friendsandfoes:wildfire",
       "required": false
     },
     {

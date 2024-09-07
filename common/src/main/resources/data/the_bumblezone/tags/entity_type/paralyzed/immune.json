@@ -21,6 +21,18 @@
       "required": false
     },
     {
+      "id": "friendsandfoes:copper_golem",
+      "required": false
+    },
+    {
+      "id": "friendsandfoes:tuff_golem",
+      "required": false
+    },
+    {
+      "id": "friendsandfoes:player_illusion",
+      "required": false
+    },
+    {
       "id": "more_babies:iron_golem",
       "required": false
     },

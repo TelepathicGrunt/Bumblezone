@@ -4,6 +4,10 @@
     "the_bumblezone:sentry_watcher",
     "the_bumblezone:cosmic_crystal_entity",
     "#the_bumblezone:bees",
-    "#the_bumblezone:bee_like"
+    "#the_bumblezone:bee_like",
+    {
+      "id": "friendsandfoes:player_illusion",
+      "required": false
+    }
   ]
 }

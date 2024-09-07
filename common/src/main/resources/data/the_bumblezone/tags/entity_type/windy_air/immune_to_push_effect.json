@@ -10,6 +10,10 @@
     "the_bumblezone:purple_spike_entity",
     "the_bumblezone:cosmic_crystal_entity",
     {
+      "id": "#c:golems",
+      "required": false
+    },
+    {
       "id": "more_babies:breeze",
       "required": false
     },
@@ -27,6 +31,18 @@
     },
     {
       "id": "adventurez:amethyst_golem",
+      "required": false
+    },
+    {
+      "id": "friendsandfoes:copper_golem",
+      "required": false
+    },
+    {
+      "id": "friendsandfoes:tuff_golem",
+      "required": false
+    },
+    {
+      "id": "friendsandfoes:player_illusion",
       "required": false
     }
   ]
