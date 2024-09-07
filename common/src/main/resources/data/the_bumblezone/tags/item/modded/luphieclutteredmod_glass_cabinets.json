@@ -1,0 +1,24 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:luphie_black_glass_cabinet",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_green_glass_cabinet",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_pink_glass_cabinet",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_white_glass_cabinet",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:luphie_yellow_glass_cabinet",
+    "required": false
+  }]
+}

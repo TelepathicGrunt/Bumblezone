@@ -120,6 +120,24 @@
       "xp_reward": 0,
       "weight": 1,
       "required": false
+    },
+    {
+      "item": {
+        "id": "promenade:blueberries",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "regions_unexplored:salmonberry",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
     }
   ]
 }

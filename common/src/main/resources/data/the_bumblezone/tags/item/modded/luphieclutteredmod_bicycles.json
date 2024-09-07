@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "luphieclutteredmod:purple_bicycle",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:pink_bicycle",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:yellow_bicycle",
+    "required": false
+  },
+  {
+    "id": "luphieclutteredmod:blue_bicycle",
+    "required": false
+  }]
+}
