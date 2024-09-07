@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import eu.midnightdust.lib.config.MidnightConfig;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -438,8 +439,12 @@ public class BzConfig extends MidnightConfig {
         BzWorldgenConfigs.spawnerRateSpiderBeeDungeon = spawnerRateSpiderBeeDungeon;
 
         //General
+        if (BzGeneralConfigs.beehemothSpeed != beehemothSpeed) {
+            BzGeneralConfigs.beehemothSpeed = beehemothSpeed;
+            BeehemothEntity.beehemothSpeedConfigChanged = true;
+        }
+
         BzGeneralConfigs.variantBeeTypes = variantBeeTypes;
-        BzGeneralConfigs.beehemothSpeed = beehemothSpeed;
         BzGeneralConfigs.beehemothFriendlyFire = beehemothFriendlyFire;
         BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier = beeQueenBonusTradeRewardMultiplier;
         BzGeneralConfigs.beeQueenBonusTradeDurationInTicks = beeQueenBonusTradeDurationInTicks;

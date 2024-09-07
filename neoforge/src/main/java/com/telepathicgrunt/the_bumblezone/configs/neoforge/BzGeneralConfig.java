@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.configs.neoforge;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.ArrayList;
@@ -444,8 +445,12 @@ public class BzGeneralConfig {
     }
 
     public static void copyToCommon() {
+        if (BzGeneralConfigs.beehemothSpeed != beehemothSpeed.get()) {
+            BzGeneralConfigs.beehemothSpeed = beehemothSpeed.get();
+            BeehemothEntity.beehemothSpeedConfigChanged = true;
+        }
+
         BzGeneralConfigs.variantBeeTypes = new ArrayList<>(variantBeeTypes.get());
-        BzGeneralConfigs.beehemothSpeed = beehemothSpeed.get();
         BzGeneralConfigs.beehemothFriendlyFire = beehemothFriendlyFire.get();
         BzGeneralConfigs.specialBeeSpawning = specialBeeSpawning.get();
         BzGeneralConfigs.beeLootInjection = beeLootInjection.get();
