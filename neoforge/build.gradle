@@ -85,10 +85,10 @@ dependencies {
     //modRuntimeOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}")
     modCompileOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}:api")
 
-    // modRuntimeOnly("curse.maven:huge-structure-blocks-474114:4977107")
-    // modRuntimeOnly("curse.maven:worldedit-225608:4586218")
-    // modRuntimeOnly("com.telepathicgrunt:CommandStructures-Neoforge:${project.commandstructures_neoforge}")
-    // modRuntimeOnly("com.telepathicgrunt:StructureVoidToggle-Neoforge:${project.structurevoidtoggle_neoforge}")
+//    modRuntimeOnly("curse.maven:worldedit-225608:4586218")
+//    modRuntimeOnly("curse.maven:huge-structure-blocks-474114:5628956")
+//    modRuntimeOnly("com.telepathicgrunt:CommandStructures-Neoforge:${project.commandstructures_neoforge}")
+//    modRuntimeOnly("com.telepathicgrunt:StructureVoidToggle-Neoforge:${project.structurevoidtoggle_neoforge}")
 
     modCompileOnly("curse.maven:framedblocks-441647:${project.framedblocks_file_id}")
 }
