@@ -307,6 +307,22 @@
         ]
       }
     },
+    "in_mite_fortress": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:mite_fortress"
+              }
+            }
+          }
+        ]
+      }
+    },
     "in_overgrown_flower": {
       "trigger": "minecraft:location",
       "conditions": {
@@ -554,6 +570,9 @@
     ],
     [
       "in_ice_monolith"
+    ],
+    [
+      "in_mite_fortress"
     ],
     [
       "in_overgrown_flower"

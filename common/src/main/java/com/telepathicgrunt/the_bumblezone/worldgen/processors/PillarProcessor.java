@@ -119,15 +119,16 @@ public class PillarProcessor extends StructureProcessor {
                 }
 
                 if(newPillarState2 != null) {
+                    BlockState newState = newPillarState2.state().rotate(structurePlacementData.getRotation());
                     if (isNotInWorldgen) {
-                        ((ServerLevel)levelReader).setBlock(currentPos, newPillarState2.state(), 3);
+                        ((ServerLevel)levelReader).setBlock(currentPos, newState, 3);
                     }
                     else {
                         if (isVertical) {
-                            currentChunk.setBlockState(currentPos, newPillarState2.state(), false);
+                            currentChunk.setBlockState(currentPos, newState, false);
                         }
                         else {
-                            levelReader.getChunk(currentPos).setBlockState(currentPos, newPillarState2.state(), false);
+                            levelReader.getChunk(currentPos).setBlockState(currentPos, newState, false);
                         }
                     }
                 }

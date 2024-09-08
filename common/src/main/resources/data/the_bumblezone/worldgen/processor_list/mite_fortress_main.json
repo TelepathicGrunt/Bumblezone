@@ -1,0 +1,350 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:tag_ignore_processor",
+      "ignore_blocks_tag": "the_bumblezone:structures/dont_replace_blocks"
+    },
+    {
+      "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:gray_candle",
+            "Properties": {
+              "candles": "3",
+              "lit": "true",
+              "waterlogged": "false"
+            }
+          },
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:gray_candle",
+              "Properties": {
+                "candles": "4",
+                "lit": "true",
+                "waterlogged": "false"
+              }
+            },
+            "probability": 0.35,
+            "predicate_type": "minecraft:random_blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:gray_candle",
+            "Properties": {
+              "candles": "2",
+              "lit": "true",
+              "waterlogged": "false"
+            }
+          },
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:gray_candle",
+              "Properties": {
+                "candles": "4",
+                "lit": "true",
+                "waterlogged": "false"
+              }
+            },
+            "probability": 0.35,
+            "predicate_type": "minecraft:random_blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:gray_candle",
+            "Properties": {
+              "candles": "1",
+              "lit": "true",
+              "waterlogged": "false"
+            }
+          },
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:gray_candle",
+              "Properties": {
+                "candles": "4",
+                "lit": "true",
+                "waterlogged": "false"
+              }
+            },
+            "probability": 0.35,
+            "predicate_type": "minecraft:random_blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:light_gray_candle",
+            "Properties": {
+              "candles": "3",
+              "lit": "true",
+              "waterlogged": "false"
+            }
+          },
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:light_gray_candle",
+              "Properties": {
+                "candles": "4",
+                "lit": "true",
+                "waterlogged": "false"
+              }
+            },
+            "probability": 0.35,
+            "predicate_type": "minecraft:random_blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:light_gray_candle",
+            "Properties": {
+              "candles": "2",
+              "lit": "true",
+              "waterlogged": "false"
+            }
+          },
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:light_gray_candle",
+              "Properties": {
+                "candles": "4",
+                "lit": "true",
+                "waterlogged": "false"
+              }
+            },
+            "probability": 0.35,
+            "predicate_type": "minecraft:random_blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:light_gray_candle",
+            "Properties": {
+              "candles": "1",
+              "lit": "true",
+              "waterlogged": "false"
+            }
+          },
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:light_gray_candle",
+              "Properties": {
+                "candles": "4",
+                "lit": "true",
+                "waterlogged": "false"
+              }
+            },
+            "probability": 0.35,
+            "predicate_type": "minecraft:random_blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:magenta_candle",
+            "Properties": {
+              "candles": "3",
+              "lit": "true",
+              "waterlogged": "false"
+            }
+          },
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:magenta_candle",
+              "Properties": {
+                "candles": "4",
+                "lit": "true",
+                "waterlogged": "false"
+              }
+            },
+            "probability": 0.35,
+            "predicate_type": "minecraft:random_blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:magenta_candle",
+            "Properties": {
+              "candles": "2",
+              "lit": "true",
+              "waterlogged": "false"
+            }
+          },
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:magenta_candle",
+              "Properties": {
+                "candles": "4",
+                "lit": "true",
+                "waterlogged": "false"
+              }
+            },
+            "probability": 0.35,
+            "predicate_type": "minecraft:random_blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:magenta_candle",
+            "Properties": {
+              "candles": "1",
+              "lit": "true",
+              "waterlogged": "false"
+            }
+          },
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:magenta_candle",
+              "Properties": {
+                "candles": "4",
+                "lit": "true",
+                "waterlogged": "false"
+              }
+            },
+            "probability": 0.35,
+            "predicate_type": "minecraft:random_blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:diamond_block"
+          },
+          "input_predicate": {
+            "block": "minecraft:emerald_block",
+            "probability": 0.35,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:infested_stone"
+          },
+          "input_predicate": {
+            "block": "minecraft:stone",
+            "probability": 0.04,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:infested_cobblestone"
+          },
+          "input_predicate": {
+            "block": "minecraft:cobblestone",
+            "probability": 0.04,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_length": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 5,
+          "min_inclusive": 1
+        }
+      },
+      "pillar_processor_list": "the_bumblezone:mite_fortress_honey_web",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:red_stained_glass"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:honey_web",
+            "Properties": {
+              "northsouth": "false",
+              "eastwest": "true",
+              "updown": "false"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_length": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 5,
+          "min_inclusive": 1
+        }
+      },
+      "pillar_processor_list": "the_bumblezone:mite_fortress_honey_web",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:orange_stained_glass"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:honey_web",
+            "Properties": {
+              "northsouth": "true",
+              "eastwest": "false",
+              "updown": "false"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "spawner_mob_entries": [
+        {
+          "resourcelocation": "minecraft:endermite",
+          "weight": 100
+        }
+      ],
+      "chance_to_override_with_tagged_mobs":  0.222,
+      "override_mobs_to_pick_from": "#the_bumblezone:structure_spawner_mobs/mite_fortress_rift_rare_spawner_type",
+      "processor_type": "the_bumblezone:spawner_randomizing_processor"
+    },
+    {
+      "processor_type": "minecraft:block_ignore",
+      "blocks": [
+        {
+          "Name": "minecraft:structure_void"
+        }
+      ]
+    }
+  ]
+}

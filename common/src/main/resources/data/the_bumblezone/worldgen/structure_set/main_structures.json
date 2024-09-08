@@ -27,6 +27,10 @@
     {
       "structure": "the_bumblezone:ancient_hoops",
       "weight": 1
+    },
+    {
+      "structure": "the_bumblezone:mite_fortress",
+      "weight": 1
     }
   ],
   "placement": {

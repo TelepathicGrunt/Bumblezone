@@ -1,0 +1,14 @@
+{
+  "type": "the_bumblezone:generic_optimized_structure",
+  "start_pool": "the_bumblezone:mite_fortress/ender_rift_center",
+  "size": 8,
+  "max_distance_from_center": 112,
+  "biomes": "#the_bumblezone:has_structure/mite_fortress",
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_box",
+  "start_height": {
+    "absolute": 39
+  },
+  "use_expansion_hack": false,
+  "spawn_overrides": {}
+}
