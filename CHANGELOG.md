@@ -37,6 +37,10 @@ Added Gazebuzz Cluster structure to replace half of Hanging Gardens structure!
 Added Goliath Honey Fountain that can spawn in any Bumblezone biome! 
  This a massive fountain of honey with secret entrance to the insides! Explore!
 
+Added Mite Fortress as a very difficult and deadly structure with good loot!
+ It is the battleground where Bees are struggling to fend off the endless waves of Endermites invading the dimension!
+ Fight your way through Silverfish and Endermites for resources!
+
 Removed Cell Maze as a possible structure to locate from Pirate Ship's Honey Compass.
 
 Made Pyro The Burning Bee now have infinite Fire Resistance.
