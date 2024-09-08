@@ -42,6 +42,8 @@ Removed Cell Maze as a possible structure to locate from Pirate Ship's Honey Com
 Removed End Rods and replace Purpur Block with Purpur Slabs in Cell Maze's End Bleed Room.
  Better balancing in packs by removing these two blocks that are used in some mod's endgame recipes.
 
+Replaced the End Rods with Magenta Candles in Subway's Endermite End Piece.
+
 Made Pyro The Burning Bee now have infinite Fire Resistance.
 
 Split the tiny structures out of the main structure set into their own set of small structures.
