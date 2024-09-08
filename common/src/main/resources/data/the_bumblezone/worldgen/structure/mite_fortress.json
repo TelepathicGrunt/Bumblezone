@@ -10,5 +10,17 @@
     "absolute": 39
   },
   "use_expansion_hack": false,
-  "spawn_overrides": {}
+  "spawn_overrides": {
+    "monster": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "minecraft:enderman",
+          "weight": 100,
+          "minCount": 1,
+          "maxCount": 2
+        }
+      ]
+    }
+  }
 }
