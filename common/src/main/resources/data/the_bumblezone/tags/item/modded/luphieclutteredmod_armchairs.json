@@ -64,41 +64,5 @@
   {
     "id": "luphieclutteredmod:luphie_yellow_armchair",
     "required": false
-  },
-  {
-    "id": "luphieclutteredmod:luphie_fuschia_armchair",
-    "required": false
-  },
-  {
-    "id": "luphieclutteredmod:luphie_gold_armchair",
-    "required": false
-  },
-  {
-    "id": "luphieclutteredmod:luphie_pastel_armchair",
-    "required": false
-  },
-  {
-    "id": "luphieclutteredmod:luphie_lemon_armchair",
-    "required": false
-  },
-  {
-    "id": "luphieclutteredmod:luphie_mango_armchair",
-    "required": false
-  },
-  {
-    "id": "luphieclutteredmod:luphie_strawberry_armchair",
-    "required": false
-  },
-  {
-    "id": "luphieclutteredmod:luphie_watermelon_armchair",
-    "required": false
-  },
-  {
-    "id": "luphieclutteredmod:luphie_black_cat_armchair",
-    "required": false
-  },
-  {
-    "id": "luphieclutteredmod:luphie_heart_armchair",
-    "required": false
   }]
 }
