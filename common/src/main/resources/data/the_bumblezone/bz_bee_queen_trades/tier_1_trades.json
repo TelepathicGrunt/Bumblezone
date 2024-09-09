@@ -33,10 +33,6 @@
       "required": true
     },
     {
-      "id": "#minecraft:leaves",
-      "required": true
-    },
-    {
       "id": "minecraft:redstone",
       "required": true
     },

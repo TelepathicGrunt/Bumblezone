@@ -1,0 +1,17 @@
+{
+  "wants" : [
+    {
+      "id": "regions_unexplored:dead_shrub",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:oak_shrub",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

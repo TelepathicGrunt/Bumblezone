@@ -29,6 +29,8 @@ Made beehemothSpeed config be synced from server to client, so it takes full eff
 
 Changed the vehicle move speed check on server to now allow even higher Beehemoth speeds without getting speed checked by the server.
 
+Removed Leaves tag from tier 1 Bee Queen trades.
+
 ##### Structures:
 Added Gazebuzz Cluster structure to replace half of Hanging Gardens structure!
  This large structure made of many hanging gazebos will test your parkour skills and have a variety of stuff to grab!

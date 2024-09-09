@@ -36,15 +36,47 @@
     "#the_bumblezone:string_curtains",
     "#the_bumblezone:super_candles",
     {
+      "id": "#forge:concrete_powder",
+      "required": false
+    },
+    {
+      "id": "#forge:concrete",
+      "required": false
+    },
+    {
+      "id": "#forge:dyes",
+      "required": false
+    },
+    {
+      "id": "#forge:glazed_terracotta",
+      "required": false
+    },
+    {
+      "id": "#forge:shulker_boxes",
+      "required": false
+    },
+    {
+      "id": "#forge:stained_glass_panes",
+      "required": false
+    },
+    {
+      "id": "#forge:stained_glass",
+      "required": false
+    },
+    {
+      "id": "#forge:fence_gates/wooden",
+      "required": false
+    },
+    {
       "id": "#c:fence_gates/wooden",
       "required": false
     },
     {
-      "id": "#c:concrete_powders",
+      "id": "#c:concrete_powder",
       "required": false
     },
     {
-      "id": "#c:concretes",
+      "id": "#c:concrete",
       "required": false
     },
     {
@@ -52,7 +84,7 @@
       "required": false
     },
     {
-      "id": "#c:glazed_terracottas",
+      "id": "#c:glazed_terracotta",
       "required": false
     },
     {
@@ -64,7 +96,7 @@
       "required": false
     },
     {
-      "id": "#c:stained_glasses",
+      "id": "#c:stained_glass",
       "required": false
     },
     {
@@ -323,15 +355,15 @@
       "required": false
     },
     {
-      "id": "#convenientdecor:raincoats",
-      "required": false
-    },
-    {
       "id": "#the_bumblezone:modded/convenientdecor_rain_boots",
       "required": false
     },
     {
       "id": "#convenientdecor:rain_hats",
+      "required": false
+    },
+    {
+      "id": "#convenientdecor:raincoats",
       "required": false
     },
     {
@@ -376,10 +408,6 @@
     },
     {
       "id": "#the_bumblezone:modded/dustrial_decor_neon_light",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/dustrial_decor_neon_lights",
       "required": false
     },
     {
@@ -603,6 +631,14 @@
       "required": false
     },
     {
+      "id": "#the_bumblezone:modded/luphieclutteredmod_armchairs",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:modded/mcda_fabric_bolts",
+      "required": false
+    },
+    {
       "id": "#mekanismadditions:balloons",
       "required": false
     },
@@ -635,6 +671,14 @@
       "required": false
     },
     {
+      "id": "#mo_glass:stained_glass_slabs",
+      "required": false
+    },
+    {
+      "id": "#mo_glass:stained_glass_stairs",
+      "required": false
+    },
+    {
       "id": "#modern_industrialization:fluid_pipes",
       "required": false
     },
@@ -644,14 +688,6 @@
     },
     {
       "id": "#modern_industrialization:me_wires",
-      "required": false
-    },
-    {
-      "id": "#mo_glass:stained_glass_slabs",
-      "required": false
-    },
-    {
-      "id": "#mo_glass:stained_glass_stairs",
       "required": false
     },
     {
@@ -727,7 +763,63 @@
       "required": false
     },
     {
+      "id": "#railways:palettes/dye_groups/brass_wrapped_slashed",
+      "required": false
+    },
+    {
+      "id": "#railways:palettes/dye_groups/brass_wrapped_boiler",
+      "required": false
+    },
+    {
       "id": "#railways:conductor_caps",
+      "required": false
+    },
+    {
+      "id": "#railways:palettes/dye_groups/copper_wrapped_slashed",
+      "required": false
+    },
+    {
+      "id": "#railways:palettes/dye_groups/copper_wrapped_boiler",
+      "required": false
+    },
+    {
+      "id": "#railways:palettes/dye_groups/flat_riveted",
+      "required": false
+    },
+    {
+      "id": "#railways:palettes/dye_groups/flat_slashed",
+      "required": false
+    },
+    {
+      "id": "#railways:palettes/dye_groups/iron_wrapped_slashed",
+      "required": false
+    },
+    {
+      "id": "#railways:palettes/dye_groups/iron_wrapped_boiler",
+      "required": false
+    },
+    {
+      "id": "#railways:palettes/dye_groups/boiler",
+      "required": false
+    },
+    {
+      "id": "#railways:palettes/dye_groups/smokebox",
+      "required": false
+    },
+    {
+      "id": "#railways:palettes/dye_groups/slashed",
+      "required": false
+    },
+    {
+      "id": "#railways:palettes/dye_groups/plated",
+      "required": false
+    },
+    {
+      "id": "#railways:palettes/dye_groups/riveted",
+      "required": false
+    },
+    {
+      "id": "#railways:palettes/dye_groups/slashed",
       "required": false
     },
     {
@@ -819,6 +911,10 @@
       "required": false
     },
     {
+      "id": "#the_bumblezone:modded/swampier_swamps_froglights",
+      "required": false
+    },
+    {
       "id": "#the_bumblezone:modded/thermal_rockwools",
       "required": false
     },
@@ -868,6 +964,68 @@
     },
     {
       "id": "#the_bumblezone:modded/utilitarian_trapped_soliciting_carpets",
+      "required": false
+    },
+
+
+    {
+      "id": "betterend:end_lily_leaf_dried",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:dead_lophelia_coral",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:dead_lophelia_coral_block",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:dead_lophelia_coral_fan",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:dead_thorn_coral",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:dead_thorn_coral_block",
+      "required": false
+    },
+    {
+      "id": "hybrid-aquatic:dead_thorn_coral_fan",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:dead_branch",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:dead_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:dead_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:dead_shrub",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:dead_pine_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:dead_pine_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:dead_pine_shrub",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:dead_steppe_shrub",
       "required": false
     }
   ]
