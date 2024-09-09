@@ -1,0 +1,17 @@
+{
+  "wants" : [
+    {
+      "id": "hybrid-aquatic:dead_thorn_coral",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "hybrid-aquatic:thorn_coral",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}
