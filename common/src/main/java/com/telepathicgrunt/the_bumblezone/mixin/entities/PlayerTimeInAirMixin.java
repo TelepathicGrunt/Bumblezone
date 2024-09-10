@@ -23,6 +23,9 @@ public abstract class PlayerTimeInAirMixin extends LivingEntity implements Tempo
     @Unique
     private int bumblezone$ticksOffGroundInHeavyAir = 0;
 
+    @Unique
+    private boolean bumblezone$InHeavyAir = false;
+
     protected PlayerTimeInAirMixin(EntityType<? extends LivingEntity> entityType, Level level) {
         super(entityType, level);
     }
@@ -31,14 +34,25 @@ public abstract class PlayerTimeInAirMixin extends LivingEntity implements Tempo
     private void bumblezone$recordTicksOffGround(CallbackInfo ci) {
         if (this.onGround() || (this.getControlledVehicle() != null && this.getControlledVehicle().onGround())) {
             this.bumblezone$ticksOffGroundInHeavyAir = 0;
+            bumblezone$InHeavyAir = HeavyAir.isInHeavyAir(this.level(), this.getBoundingBox());
         }
         else if (!this.isCreative() && !this.isSpectator()) {
             if (HeavyAir.isInHeavyAir(this.level(), this.getBoundingBox())) {
                 this.bumblezone$ticksOffGroundInHeavyAir++;
+                bumblezone$InHeavyAir = true;
             }
+            else {
+                bumblezone$InHeavyAir = false;
+            }
+        }
+        else {
+            bumblezone$InHeavyAir = false;
         }
     }
 
     @Override
     public int bumblezonePlayerTickOffGroundInHeavyAir() { return bumblezone$ticksOffGroundInHeavyAir; }
+
+    @Override
+    public boolean bumblezonePlayerInHeavyAir() { return bumblezone$InHeavyAir; }
 }
