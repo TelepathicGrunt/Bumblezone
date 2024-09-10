@@ -601,11 +601,11 @@ public class CosmicCrystalEntity extends LivingEntity {
                 orbitPosition = this.getEssenceControllerBlockPos().getCenter().add(0, -1, 0);
 
                 if (this.getCosmicCrystalState() == CosmicCrystalState.HORIZONTAL_LASER && this.targetEntity != null) {
-                    Vec3 targetPos = this.targetEntity.position().add(0, 0.25, 0);
-                    Vec3 diffFromNow = this.prevTargetPosition.subtract(targetPos).scale(0.97);
+                    Vec3 targetPos = this.targetEntity.position().add(0, this.targetEntity.getBbHeight() / 2, 0);
+                    Vec3 diffFromNow = this.prevTargetPosition.subtract(targetPos).scale(0.97D);
                     this.prevTargetPosition = diffFromNow.add(targetPos);
 
-                    orbitPosition = new Vec3(orbitPosition.x(), this.prevTargetPosition.y(), orbitPosition.z());
+                    orbitPosition = new Vec3(orbitPosition.x(), this.prevTargetPosition.y() - 1, orbitPosition.z());
                 }
             }
             else {
@@ -995,7 +995,7 @@ public class CosmicCrystalEntity extends LivingEntity {
 
                 double speedAdj = Math.min(1, (float)this.currentStateTimeTick / moveTime) * progress;
 
-                Vec3 targetPos = this.targetEntity.position().add(0, 0.25, 0);
+                Vec3 targetPos = this.targetEntity.position().add(0, this.targetEntity.getBbHeight() / 4, 0);
                 Vec3 diffFromNow = targetPos.subtract(this.position());
                 Vec3 diffFromPast = this.prevTargetPosition.subtract(this.position());
 
