@@ -50,6 +50,7 @@
     "entities.FoxAccessor",
     "entities.ItemEntityAccessor",
     "entities.ItemFrameMixin",
+    "entities.LaterLivingEntityMixin",
     "entities.LightningBoltMixin",
     "entities.LivingEntityAccessor",
     "entities.LivingEntityMixin",
