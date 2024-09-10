@@ -34,6 +34,8 @@ Changed the vehicle move speed check on server to now allow even higher Beehemot
 
 Removed Leaves tag from tier 1 Bee Queen trades.
 
+Made Cosmic Crystal Entity in White Sempiternal Sanctum now target tiny players better for horizontal laser attack.
+
 ##### Structures:
 Added Gazebuzz Cluster structure to replace half of Hanging Gardens structure!
  This large structure made of many hanging gazebos will test your parkour skills and have a variety of stuff to grab!
