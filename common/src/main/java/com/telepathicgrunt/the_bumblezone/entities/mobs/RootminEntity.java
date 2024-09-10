@@ -558,7 +558,8 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          pelletEntity.setHomingTargetUUID(livingEntity.getUUID());
 
          double x = livingEntity.getX() - this.getX();
-         double y = livingEntity.getY(1.333333 - speedMultipiler) - pelletEntity.getY();
+         double heightBasedOffset = 1.6 + (0.2 * (livingEntity.getBbHeight() / 1.8));
+         double y = (livingEntity.getY() + (heightBasedOffset * (1.333333 - speedMultipiler))) - pelletEntity.getY();
          double z = livingEntity.getZ() - this.getZ();
          double archOffset = Math.sqrt(x * x + z * z);
          Vec3 lookAngle = this.getLookAngle();
@@ -590,7 +591,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
             Vec3 shootAngle;
             if (livingEntity != null) {
                double x = livingEntity.getX() - this.getX();
-               double y = livingEntity.getY(1.3 - speedMultipiler * 1.3) - pelletEntity.getY();
+               double y = livingEntity.getY(1.3 - speedMultipiler * 1.3) - pelletEntity.getY() - (1.5 - livingEntity.getBbHeight());
                double z = livingEntity.getZ() - this.getZ();
                shootAngle = new Vec3(x, y, z);
             } else {
