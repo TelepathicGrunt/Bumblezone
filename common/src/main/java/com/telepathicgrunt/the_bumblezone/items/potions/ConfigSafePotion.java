@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.items.potions;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.alchemy.Potion;
 import org.jetbrains.annotations.Nullable;

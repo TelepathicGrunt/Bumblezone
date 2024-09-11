@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
-import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
