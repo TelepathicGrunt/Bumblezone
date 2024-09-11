@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -66,7 +67,8 @@ public class RootminHideGoal extends Goal {
                 randomSource.nextInt(5) - 2,
                 randomSource.nextInt(11) - 5);
 
-        if (!level.isEmptyBlock(chosenPos)) {
+        BlockState state = level.getBlockState(chosenPos);
+        if (!state.isAir() && !state.is(BzTags.AIR_LIKE)) {
             return false;
         }
 

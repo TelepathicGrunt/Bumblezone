@@ -94,6 +94,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    private static final EntityDataAccessor<Optional<BlockState>> FLOWER_BLOCK_STATE = SynchedEntityData.defineId(RootminEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_STATE);
    public static final EntityDataSerializer<RootminPose> ROOTMIN_POSE_SERIALIZER = EntityDataSerializer.simpleEnum(RootminPose.class);
    private static final EntityDataAccessor<RootminPose> ROOTMIN_POSE = SynchedEntityData.defineId(RootminEntity.class, ROOTMIN_POSE_SERIALIZER);
+   private static final EntityDataAccessor<Boolean> ROOTMIN_SHIELD = SynchedEntityData.defineId(RootminEntity.class, EntityDataSerializers.BOOLEAN);
 
    public final AnimationState idleAnimationState = new AnimationState();
    public final AnimationState angryAnimationState = new AnimationState();
@@ -218,6 +219,14 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    public RootminPose getRootminPose() {
       return this.entityData.get(ROOTMIN_POSE);
+   }
+
+   public void setRootminShield(boolean hasShield) {
+      this.entityData.set(ROOTMIN_SHIELD, hasShield);
+   }
+
+   public boolean getRootminShield() {
+      return this.entityData.get(ROOTMIN_SHIELD);
    }
 
    public void runAngry() {
@@ -408,6 +417,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       super.defineSynchedData();
       this.entityData.define(FLOWER_BLOCK_STATE, Optional.empty());
       this.entityData.define(ROOTMIN_POSE, RootminPose.NONE);
+      this.entityData.define(ROOTMIN_SHIELD, false);
    }
 
    @Override
@@ -624,6 +634,10 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    @Override
    public boolean isInvulnerableTo(DamageSource damageSource) {
+      if (this.getRootminShield()) {
+         return true;
+      }
+
       if (this.getEssenceController() != null) {
          if (damageSource.getDirectEntity() instanceof DirtPelletEntity dirtPelletEntity) {
             if (dirtPelletEntity.isEventBased()) {

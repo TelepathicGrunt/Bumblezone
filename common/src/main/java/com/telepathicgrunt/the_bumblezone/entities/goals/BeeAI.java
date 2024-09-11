@@ -1,8 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.Path;
 
 public class BeeAI {
@@ -25,7 +27,8 @@ public class BeeAI {
                         beeEntity.getRandom().nextInt(21) - 10
                 );
 
-                if(world.getBlockState(mutable).isAir()) {
+                BlockState state = world.getBlockState(mutable);
+                if (state.isAir() || state.is(BzTags.AIR_LIKE)) {
                     break; // Valid spot to go towards.
                 }
             }

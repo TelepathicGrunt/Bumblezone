@@ -18,6 +18,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.CreeperPowerLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
@@ -37,111 +38,20 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 
 public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
     private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/rootmin.png");
-    private static final ResourceLocation GRASS = new ResourceLocation(Bumblezone.MODID, "textures/entity/rootmin_grass.png");
 
     public RootminRenderer(EntityRendererProvider.Context context) {
         super(context, new RootminModel(context.bakeLayer(RootminModel.LAYER_LOCATION)), 0.7F);
         this.addLayer(new FlowerBlockLayer(this, context.getBlockRenderDispatcher()));
+        this.addLayer(new RootminGrassRenderer(this, context.getModelSet()));
+        this.addLayer(new RootminShieldRenderer(this, context.getModelSet()));
     }
 
     @Override
     public void render(RootminEntity rootminEntity, float entityYaw, float partialTicks, PoseStack stack, MultiBufferSource buffer, int packedLight) {
         stack.pushPose();
         super.render(rootminEntity, entityYaw, partialTicks, stack, buffer, packedLight);
-        stack.popPose();
-
-        stack.pushPose();
-        renderGrassBodyTop(rootminEntity, partialTicks, stack, buffer, packedLight);
-        stack.popPose();
-    }
-
-    private void renderGrassBodyTop(RootminEntity rootminEntity, float partialTicks, PoseStack stack, MultiBufferSource buffer, int packedLight) {
-
         adjustShadow(rootminEntity, partialTicks);
-
-        float belowEyeHeight;
-        this.model.attackTime = this.getAttackAnim(rootminEntity, partialTicks);
-        this.model.riding = rootminEntity.isPassenger();
-        this.model.young = rootminEntity.isBaby();
-        float h = Mth.rotLerp(partialTicks, rootminEntity.yBodyRotO, rootminEntity.yBodyRot);
-        float j = Mth.rotLerp(partialTicks, rootminEntity.yHeadRotO, rootminEntity.yHeadRot);
-        float k = j - h;
-        if (rootminEntity.isPassenger() && rootminEntity.getVehicle() instanceof LivingEntity rootminEntity2) {
-            h = Mth.rotLerp(partialTicks, rootminEntity2.yBodyRotO, rootminEntity2.yBodyRot);
-            k = j - h;
-            float l = Mth.wrapDegrees(k);
-            if (l < -85.0f) {
-                l = -85.0f;
-            }
-            if (l >= 85.0f) {
-                l = 85.0f;
-            }
-            h = j - l;
-            if (l * l > 2500.0f) {
-                h += l * 0.2f;
-            }
-            k = j - h;
-        }
-        float m = Mth.lerp(partialTicks, rootminEntity.xRotO, rootminEntity.getXRot());
-        if (LivingEntityRenderer.isEntityUpsideDown(rootminEntity)) {
-            m *= -1.0f;
-            k *= -1.0f;
-        }
-        float l = this.getBob(rootminEntity, partialTicks);
-        this.setupRotations(rootminEntity, stack, l, h, partialTicks);
-        stack.scale(-1.0f, -1.0f, 1.0f);
-        this.scale(rootminEntity, stack, partialTicks);
-        stack.translate(0.0f, -1.501f, 0.0f);
-        belowEyeHeight = 0.0f;
-        float o = 0.0f;
-        if (!rootminEntity.isPassenger() && rootminEntity.isAlive()) {
-            belowEyeHeight = rootminEntity.walkAnimation.speed(partialTicks);
-            o = rootminEntity.walkAnimation.position(partialTicks);
-            if (rootminEntity.isBaby()) {
-                o *= 3.0f;
-            }
-            if (belowEyeHeight > 1.0f) {
-                belowEyeHeight = 1.0f;
-            }
-        }
-        this.model.prepareMobModel(rootminEntity, o, belowEyeHeight, partialTicks);
-        this.model.setupAnim(rootminEntity, o, belowEyeHeight, l, k, m);
-        Minecraft minecraft = Minecraft.getInstance();
-        boolean bl = this.isBodyVisible(rootminEntity);
-        boolean bl2 = !bl && !rootminEntity.isInvisibleTo(minecraft.player);
-        boolean bl3 = minecraft.shouldEntityAppearGlowing(rootminEntity);
-        RenderType renderType = this.getRenderTypeGrass(bl, bl2, bl3);
-        if (renderType != null) {
-            VertexConsumer vertexConsumer = buffer.getBuffer(renderType);
-            int p = LivingEntityRenderer.getOverlayCoords(rootminEntity, this.getWhiteOverlayProgress(rootminEntity, partialTicks));
-            if (rootminEntity.hasCustomName() && "jeb_".equals(rootminEntity.getName().getString())) {
-                int speed = 25;
-                int offset = rootminEntity.tickCount / speed + rootminEntity.getId();
-                int dyeColors = DyeColor.values().length;
-                int firstDye = offset % dyeColors;
-                int secondDye = (offset + 1) % dyeColors;
-                float theColorThingy = ((float)(rootminEntity.tickCount % speed) + partialTicks) / 25.0f;
-                float[] fs = Sheep.getColorArray(DyeColor.byId(firstDye));
-                float[] gs = Sheep.getColorArray(DyeColor.byId(secondDye));
-                float red = fs[0] * (1.0f - theColorThingy) + gs[0] * theColorThingy;
-                float green = fs[1] * (1.0f - theColorThingy) + gs[1] * theColorThingy;
-                float blue = fs[2] * (1.0f - theColorThingy) + gs[2] * theColorThingy;
-                ((Model) this.model).renderToBuffer(stack, vertexConsumer, packedLight, p, red, green, blue, bl2 ? 0.15f : 1.0f);
-            }
-            else {
-                int biomeColor = rootminEntity.level().getBlockTint(rootminEntity.blockPosition(), BiomeColors.GRASS_COLOR_RESOLVER);
-
-                ((Model) this.model).renderToBuffer(
-                        stack,
-                        vertexConsumer,
-                        packedLight,
-                        p,
-                        GeneralUtils.getRed(biomeColor) / 255f,
-                        GeneralUtils.getGreen(biomeColor) / 255f,
-                        GeneralUtils.getBlue(biomeColor) / 255f,
-                        bl2 ? 0.15f : 1.0f);
-            }
-        }
+        stack.popPose();
     }
 
     private void adjustShadow(RootminEntity rootminEntity, float partialTicks) {
@@ -157,24 +67,10 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
         this.shadowStrength = Mth.lerp(percentage, from, target);
     }
 
-    protected RenderType getRenderTypeGrass(boolean bl, boolean bl2, boolean bl3) {
-        if (bl2) {
-            return RenderType.itemEntityTranslucentCull(GRASS);
-        }
-        if (bl) {
-            return this.model.renderType(GRASS);
-        }
-        if (bl3) {
-            return RenderType.outline(GRASS);
-        }
-        return null;
-    }
-
     @Override
     public ResourceLocation getTextureLocation(RootminEntity rootminEntity) {
         return SKIN;
     }
-
 
     public static class FlowerBlockLayer extends RenderLayer<RootminEntity, RootminModel> {
         private final BlockRenderDispatcher blockRenderer;
@@ -225,5 +121,21 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
                     ((BlockRenderDispatcherAccessor) this.blockRenderer).getBlockEntityRenderer().renderByItem(new ItemStack(blockState.getBlock()), ItemDisplayContext.NONE, poseStack, multiBufferSource, i, j);
             }
         }
+    }
+
+    protected float getBob(RootminEntity livingEntity, float f) {
+        return super.getBob(livingEntity, f);
+    }
+
+    protected float getAttackAnim(RootminEntity livingEntity, float f) {
+        return super.getAttackAnim(livingEntity, f);
+    }
+
+    protected boolean isBodyVisible(RootminEntity livingEntity) {
+        return super.isBodyVisible(livingEntity);
+    }
+
+    protected float getWhiteOverlayProgress(RootminEntity livingEntity, float f) {
+        return super.getWhiteOverlayProgress(livingEntity, f);
     }
 }

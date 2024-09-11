@@ -1,12 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
@@ -86,8 +88,10 @@ public class BeehemothRandomFlyGoal extends Goal {
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
         mutableBlockPos.set(radialPos);
 
-        while (level.isInWorldBounds(mutableBlockPos) && level.isEmptyBlock(mutableBlockPos)) {
+        BlockState state = level.getBlockState(mutableBlockPos);
+        while (level.isInWorldBounds(mutableBlockPos) && (state.isAir() || state.is(BzTags.AIR_LIKE))) {
             mutableBlockPos.move(Direction.DOWN);
+            state = level.getBlockState(mutableBlockPos);
         }
 
         if (!level.isInWorldBounds(mutableBlockPos)) {
