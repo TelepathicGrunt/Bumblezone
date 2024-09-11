@@ -1,10 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
-import com.mojang.datafixers.util.Function5;
 import com.mojang.datafixers.util.Function6;
-import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
-import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
-import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DefaultDispenseItemBehaviorInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
@@ -14,13 +10,8 @@ import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraft.world.level.block.entity.DispenserBlockEntity;
-import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.function.Function;
 
 
 public class BroodBlockModdedCompatDispenseBehavior extends DefaultDispenseItemBehavior {

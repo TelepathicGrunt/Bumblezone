@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.mixin.world;
 import net.minecraft.world.level.biome.BiomeManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
-import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(BiomeManager.class)
 public interface BiomeManagerAccessor {

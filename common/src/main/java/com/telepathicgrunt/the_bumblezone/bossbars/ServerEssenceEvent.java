@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.bossbars;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
-import net.minecraft.util.StringUtil;
 
 public class ServerEssenceEvent extends ServerBossEvent {
     protected final String translation;
