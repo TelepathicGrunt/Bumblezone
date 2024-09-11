@@ -23,7 +23,9 @@ Allow Comb Cutter to now go up to Level 2 for faster mining. By default, Level 2
  But you can get it from max tier Crystalline Flower or by combining two level 1 Comb Cutters together.
 
 #### Effects:
-Increased the duration of Protection of the Hive to 5 minutes when obtained by feeding Bees or feeding Honeycomb Brood blocks.
+Increased the default config value for the duration of Protection of the Hive. 
+ Now protection lasts 5 minutes when obtained by feeding Bees or feeding Honeycomb Brood blocks.
+ Anyone with pre-existing config files would need to edit `howLongProtectionOfTheHiveLasts` to 6000 to match the new default value.
 
 #### Entities:
 Made beehemothSpeed config be synced from server to client, so it takes full effect without needing client to change value to match server.
