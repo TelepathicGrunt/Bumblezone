@@ -39,7 +39,7 @@ public class BzConfig extends MidnightConfig {
     public static int howLongWrathOfTheHiveLasts = 1680;
 
     @Entry(min=1, max=10000)
-    public static int howLongProtectionOfTheHiveLasts = 1680;
+    public static int howLongProtectionOfTheHiveLasts = 6000;
 
     @Entry(min=1, max=100)
     public static int speedBoostLevel = 2;

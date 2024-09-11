@@ -9,7 +9,7 @@ public class BzBeeAggressionConfigs {
     public static boolean aggressiveBees = true;
     public static int aggressionTriggerRadius = 64;
     public static int howLongWrathOfTheHiveLasts = 1680;
-    public static int howLongProtectionOfTheHiveLasts = 1680;
+    public static int howLongProtectionOfTheHiveLasts = 6000;
     public static int speedBoostLevel = 2;
     public static int absorptionBoostLevel = 1;
     public static int strengthBoostLevel = 1;
