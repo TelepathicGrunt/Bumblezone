@@ -38,6 +38,9 @@ Made Cosmic Crystal Entity in White Sempiternal Sanctum now target tiny players 
 
 Rootmins will target smaller players better now when shooting Dirt Pellets.
 
+Green Sempiternal Sanctum's event Rootmin will now have a shield showing when no player is on the other platform.
+ Once a player is on platform, then the shield disappears and Rootmin can be damaged by any Dirt Pellet.
+
 ##### Structures:
 Added Gazebuzz Cluster structure to replace half of Hanging Gardens structure!
  This large structure made of many hanging gazebos will test your parkour skills and have a variety of stuff to grab!

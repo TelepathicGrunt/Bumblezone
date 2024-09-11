@@ -225,6 +225,8 @@ public class EssenceBlockGreen extends EssenceBlock {
                     );
 
                     if (essenceBlockEntity.getEventTimer() < getEventTimeFrame() - 100 && !players.isEmpty()) {
+                        rootminEntity.setRootminShield(false);
+
                         // Do behavior of shooting and stuff
                         boolean isHoming = rootminHealthPercent > STAGE_4_THRESHOLD && rootminHealthPercent <= STAGE_3_THRESHOLD;
 
@@ -259,6 +261,7 @@ public class EssenceBlockGreen extends EssenceBlock {
                     }
                     else {
                         rootminEntity.lookAt(EntityAnchorArgument.Anchor.FEET, Vec3.atLowerCornerOf(Direction.WEST.getNormal()).add(rootminEntity.position()));
+                        rootminEntity.setRootminShield(true);
                     }
                 }
             }
@@ -272,6 +275,7 @@ public class EssenceBlockGreen extends EssenceBlock {
     private static Entity spawnRootmin(ServerLevel serverLevel, EssenceBlockEntity essenceBlockEntity, BlockPos rootminPos, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
         Entity entity = BzEntities.ROOTMIN.get().spawn(serverLevel, rootminPos, MobSpawnType.TRIGGERED);
         if (entity instanceof RootminEntity rootminEntity) {
+            rootminEntity.setRootminShield(true);
             rootminEntity.setEssenceController(essenceBlockEntity.getUUID());
             rootminEntity.setEssenceControllerBlockPos(essenceBlockEntity.getBlockPos());
             rootminEntity.setEssenceControllerDimension(serverLevel.dimension());
