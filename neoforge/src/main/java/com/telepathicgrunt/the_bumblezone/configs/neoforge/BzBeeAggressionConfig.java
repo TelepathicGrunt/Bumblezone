@@ -130,7 +130,7 @@ public class BzBeeAggressionConfig {
                             " How long entities will keep Protection of the Hive effect after feeding bees",
                             " or Brood Blocks. Bees will attack anyone that damages someone with the effect.\n")
                     .translation("the_bumblezone.configuration.howlongprotectionofthehivelasts")
-                    .defineInRange("howLongProtectionOfTheHiveLasts", 1680, 1, Integer.MAX_VALUE);
+                    .defineInRange("howLongProtectionOfTheHiveLasts", 6000, 1, Integer.MAX_VALUE);
 
         builder.pop();
     }

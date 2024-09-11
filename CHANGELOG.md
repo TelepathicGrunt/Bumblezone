@@ -26,6 +26,9 @@ Heavy Air block now disables the ability to climb blocks.
 Allow Comb Cutter to now go up to Level 2 for faster mining. By default, Level 2 won't show in vanilla Enchanting Table.
  But you can get it from max tier Crystalline Flower or by combining two level 1 Comb Cutters together.
 
+#### Effects:
+Increased the duration of Protection of the Hive to 5 minutes when obtained by feeding Bees or feeding Honeycomb Brood blocks.
+
 #### Entities:
 Made beehemothSpeed config be synced from server to client, so it takes full effect without needing client to change value to match server.
  (Fabric still need a restart for config value to take effect)
