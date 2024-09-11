@@ -11,7 +11,6 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenc
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceStructureMessage;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.RadianceEssenceArmorMessage;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
-import com.telepathicgrunt.the_bumblezone.effects.BzEffect;
 import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientTickEvent;
@@ -48,7 +47,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;

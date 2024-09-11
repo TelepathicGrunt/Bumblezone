@@ -5,12 +5,10 @@ import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.menus.CrystallineFlowerMenu;
 import com.telepathicgrunt.the_bumblezone.menus.EnchantmentSkeleton;
 import com.telepathicgrunt.the_bumblezone.packets.CrystallineFlowerEnchantmentPacket;
-import net.minecraft.locale.Language;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class CrystallineFlowerEnchantmentPacketHandleBody {
     public static void handle(CrystallineFlowerEnchantmentPacket message) {

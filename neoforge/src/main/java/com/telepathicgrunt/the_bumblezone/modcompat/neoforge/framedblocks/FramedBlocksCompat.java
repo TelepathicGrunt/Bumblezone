@@ -1,7 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.neoforge.framedblocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.blocks.*;
+import com.telepathicgrunt.the_bumblezone.blocks.AncientWax;
+import com.telepathicgrunt.the_bumblezone.blocks.CarvableWax;
+import com.telepathicgrunt.the_bumblezone.blocks.LuminescentWaxBase;
 import com.telepathicgrunt.the_bumblezone.mixin.neoforge.block.UseOnContextAccessor;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;

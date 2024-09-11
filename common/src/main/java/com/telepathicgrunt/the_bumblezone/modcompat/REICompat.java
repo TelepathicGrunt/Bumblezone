@@ -16,8 +16,6 @@ import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei.REIQuee
 import com.telepathicgrunt.the_bumblezone.modinit.BzCreativeTabs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import dev.emi.emi.api.stack.EmiIngredient;
-import dev.emi.emi.api.stack.EmiStack;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
@@ -46,7 +44,6 @@ import net.minecraft.world.level.material.Fluid;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class REICompat implements REIClientPlugin {
 

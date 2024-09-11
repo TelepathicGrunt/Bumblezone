@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
-import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerEntityInteractEvent;
 import com.telepathicgrunt.the_bumblezone.items.PollenPuff;

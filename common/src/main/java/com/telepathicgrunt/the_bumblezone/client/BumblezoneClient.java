@@ -54,9 +54,6 @@ import com.telepathicgrunt.the_bumblezone.client.screens.CrystallineFlowerScreen
 import com.telepathicgrunt.the_bumblezone.client.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
-import com.telepathicgrunt.the_bumblezone.entities.datamanagers.queentrades.QueensTradeManager;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzTagsUpdatedEvent;
-import com.telepathicgrunt.the_bumblezone.items.datacomponents.AbilityEssenceActivityData;
 import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientTickEvent;
@@ -75,11 +72,13 @@ import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterMenuScreenEven
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterParticleEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterRenderTypeEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterShaderEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzTagsUpdatedEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.AbilityEssenceActivityData;
 import com.telepathicgrunt.the_bumblezone.items.essence.AbilityEssenceItem;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.BlockEntityRenderersAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.client.ClientLevelAccessor;

@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.packets.handlers;
 
-import com.telepathicgrunt.the_bumblezone.items.datacomponents.BumbleBeeChestplateData;
 import com.telepathicgrunt.the_bumblezone.items.BumbleBeeChestplate;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.BumbleBeeChestplateData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.packets.BumbleBeeChestplateFlyingPacket;
 import net.minecraft.world.entity.player.Player;

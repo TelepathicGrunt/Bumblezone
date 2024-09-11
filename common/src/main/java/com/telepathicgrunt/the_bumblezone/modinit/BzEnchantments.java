@@ -11,7 +11,6 @@ import com.telepathicgrunt.the_bumblezone.enchantments.datacomponents.PoisonMark
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Unit;
 
 public class BzEnchantments {
     public static final ResourceLocation COMB_CUTTER = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "comb_cutter");
