@@ -1,9 +1,9 @@
 ### **(V.7.5.0 Changes) (1.20.1 Minecraft)**
 
-##### Advancements:
+#### Advancements:
 Fixed issue where completing Honey Drunk advancement with 1 Honey Bottle in hand will replace the Royal Jelly Bottle reward with the Honey Bottle's Glass Bottle remainder.
 
-##### Blocks:
+#### Blocks:
 Fixed Luminescence Wax Channel block's top and bottom texture not rotated when sword/shear right-clicked while horizontal.
 
 Fixed Bee pattern Carvable Wax facing the wrong way when facing north, south, east, or west.
@@ -18,11 +18,11 @@ Fixed bug where tier 1 Crystalline Flower only showed enchantments whose level 2
 Heavy Air block now disables the ability to climb blocks.
  Mostly to stop Origins and other mods allowing people to climb walls easily to cheese Essence Events in Sempiternal Sanctums.
 
-##### Enchantments:
+#### Enchantments:
 Allow Comb Cutter to now go up to Level 2 for faster mining. By default, Level 2 won't show in vanilla Enchanting Table.
  But you can get it from max tier Crystalline Flower or by combining two level 1 Comb Cutters together.
 
-##### Entities:
+#### Entities:
 Made beehemothSpeed config be synced from server to client, so it takes full effect without needing client to change value to match server.
  (Still need a restart for config value to take effect)
 
@@ -41,7 +41,7 @@ Fixed Rootmins not hiding when in Heavy Air.
 
 Fixed wild/wandering Beehemoths not wandering in Heavy Air.
 
-##### Structures:
+#### Structures:
 Added Gazebuzz Cluster structure to replace half of Hanging Gardens structure! 
  This large structure made of many hanging gazebos will test your parkour skills and have a variety of stuff to grab! 
  Including Crystalline Flower and Bee Armor!
@@ -76,5 +76,5 @@ Fixed Luminescence Wax facing wrong way in several rooms in Sempiternal Sanctums
 
 Fixed Carvable Wax Pillars not reaching low ceilings in Sempiternal Sanctums.
 
-##### Mod Compat:
+#### Mod Compat:
 Add more mod compat Bee Queen Trades and tagging! Special thanks to Cicopath for the work here!
