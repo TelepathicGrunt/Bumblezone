@@ -51,6 +51,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -1230,7 +1231,7 @@ public class CosmicCrystalEntity extends LivingEntity {
     protected AABB makeBoundingBox() {
         EntityDimensions entityDimensions = ((EntityAccessor)this).getDimensions();
         float radius = entityDimensions.width() / 2.0F;
-        float heightRadius = entityDimensions.height() / 2.0F;
+        float heightRadius = entityDimensions.height() / 2;
         float yOffset = 1f;
 
         float progress = 1 - Mth.abs(((90 - this.getXRot()) / 90) - 1);
@@ -1260,6 +1261,19 @@ public class CosmicCrystalEntity extends LivingEntity {
             Vec3 vec32 = new Vec3(this.getX() + (double)radius, this.getY() + yOffset + heightRadius, this.getZ() + (double)radius);
             return new AABB(vec3, vec32);
         }
+    }
+
+    @Override
+    protected EntityDimensions getDefaultDimensions(Pose pose) {
+        EntityDimensions dimensions = this.getType().getDimensions().scale(this.getAgeScale());
+        float eyeHeight = dimensions.height() / 2;
+        if (isOrFromHorizontalState(this.getCosmicCrystalState()) ||
+            (this.pastStates != null && !this.pastStates.isEmpty() && isOrFromHorizontalState(this.pastStates.getFirst())))
+        {
+            float progress = 1 + (((90 - this.getXRot()) / 90) - 1);
+            eyeHeight *= (progress);
+        }
+        return dimensions.withEyeHeight(eyeHeight);
     }
 
     @Override

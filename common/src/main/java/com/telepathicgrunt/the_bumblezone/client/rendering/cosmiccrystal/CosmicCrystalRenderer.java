@@ -6,6 +6,7 @@ import com.mojang.math.Axis;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
+import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalState;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -202,6 +203,9 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
             int blue2 = baseBrightness + (int) (blueSin2 * colorStrength);
 
             float eyeY = cosmicCrystalEntity.getEyeHeight();
+            if (cosmicCrystalEntity.getCosmicCrystalState() == CosmicCrystalState.SWEEP_LASER || cosmicCrystalEntity.getCosmicCrystalState() == CosmicCrystalState.TRACKING_LASER) {
+                eyeY = 1;
+            }
             poseStack.pushPose();
 
             Vec3 startPos = cosmicCrystalEntity.getEyePosition();

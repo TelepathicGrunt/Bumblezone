@@ -41,6 +41,8 @@ Removed Leaves tag from tier 1 Bee Queen trades.
 
 Made Cosmic Crystal Entity in White Sempiternal Sanctum now target tiny players better for horizontal laser attack.
 
+Made Cosmic Crystal Entity in White Sempiternal Sanctum no longer reset their attack phase when a crystal is destroyed/enough damage is done.
+
 Rootmins will target smaller players better now when shooting Dirt Pellets.
 
 Green Sempiternal Sanctum's event Rootmin will now have a shield showing when no player is on the other platform.

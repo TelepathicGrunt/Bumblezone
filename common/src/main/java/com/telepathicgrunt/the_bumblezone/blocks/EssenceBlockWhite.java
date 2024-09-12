@@ -182,19 +182,15 @@ public class EssenceBlockWhite extends EssenceBlock {
 
                 CosmicCrystalState finalChosenAttack = chosenAttack;
                 crystals.forEach(c -> c.setCosmicCrystalState(finalChosenAttack));
-                //crystals.forEach(c -> c.setCosmicCrystalState(CosmicCrystalState.TRACKING_SPINNING_ATTACK)); // for debugging
-            }
+                //crystals.forEach(c -> c.setCosmicCrystalState(CosmicCrystalState.SWEEP_LASER)); // for debugging
 
-            if (!crystals.isEmpty()) {
                 boolean missingCrystal = respawnedACrystal;
-
                 for (int i = 0; i < crystals.size(); i++) {
                     CosmicCrystalEntity crystalEntity = crystals.get(i);
                     int orbitOffset = crystalEntity.getOrbitOffsetDegrees();
 
                     if (orbitOffset % (360 / crystals.size()) != 0) {
                         missingCrystal = true;
-                        break;
                     }
 
                     float healthPercent = Math.round((totalhealth / totalMaxHealth) * 10f) / 10f;
@@ -215,7 +211,6 @@ public class EssenceBlockWhite extends EssenceBlock {
                     float newDifficulty = (1 + (0.025f * (6 - totalCrystals))) * difficultyBuff;
                     if (newDifficulty != crystalEntity.getDifficultyBoost()) {
                         crystalEntity.setDifficultyBoost(newDifficulty);
-                        crystalEntity.setCosmicCrystalState(CosmicCrystalState.NORMAL);
                     }
                 }
 
@@ -223,7 +218,6 @@ public class EssenceBlockWhite extends EssenceBlock {
                     for (int i = 0; i < crystals.size(); i++) {
                         CosmicCrystalEntity crystalEntity = crystals.get(i);
                         crystalEntity.setOrbitOffsetDegrees(i * (360 / crystals.size()));
-                        crystalEntity.setCosmicCrystalState(CosmicCrystalState.NORMAL);
                         crystalEntity.currentTickCount = 0;
                     }
                 }
