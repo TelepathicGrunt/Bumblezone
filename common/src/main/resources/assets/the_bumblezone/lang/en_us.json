@@ -664,12 +664,12 @@
   "system.the_bumblezone.royal_jelly_bottle.cannot_take_from_source_block": "Don't waste the fluid! Use a bucket instead!",
 
   "essence.the_bumblezone.missing_essence_effect": "You need to consume Essence of the Bees first...",
-  "essence.the_bumblezone.red_essence_event": "§cEssence of Raging§f - §cLose§f in %s",
+  "essence.the_bumblezone.red_essence_event": "§cEssence of Raging§f - §cFail§f in %s",
   "essence.the_bumblezone.purple_essence_event": "§dEssence of Knowing§f - §6Win§f in %s",
-  "essence.the_bumblezone.blue_essence_event": "§bEssence of Calming§f - §cLose§f in %s",
-  "essence.the_bumblezone.green_essence_event": "§aEssence of Life§f - §cLose§f in %s",
-  "essence.the_bumblezone.yellow_essence_event": "§eEssence of Radiance§f - §cLose§f in %s",
-  "essence.the_bumblezone.white_essence_event": "Essence of Continuity - §cLose§f in %s",
+  "essence.the_bumblezone.blue_essence_event": "§bEssence of Calming§f - §cFail§f in %s",
+  "essence.the_bumblezone.green_essence_event": "§aEssence of Life§f - §cFail§f in %s",
+  "essence.the_bumblezone.yellow_essence_event": "§eEssence of Radiance§f - §cFail§f in %s",
+  "essence.the_bumblezone.white_essence_event": "Essence of Continuity - §cFail§f in %s",
 
   "container.the_bumblezone.honey_cocoon": "Honey Cocoon",
   "container.the_bumblezone.honey_cocoon.item_count": "%s x%s",
