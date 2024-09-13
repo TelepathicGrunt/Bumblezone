@@ -43,6 +43,9 @@ Made Cosmic Crystal Entity in White Sempiternal Sanctum now target tiny players 
 
 Made Cosmic Crystal Entity in White Sempiternal Sanctum no longer reset their attack phase when a crystal is destroyed/enough damage is done.
 
+If the White Sempiternal Sanctum event is being beaten far too quickly, the Cosmic Crystals will get a shield and be impervious to all damage for a limited time.
+ Wait for the shield to disappear and resume your attacks!
+
 Rootmins will target smaller players better now when shooting Dirt Pellets.
 
 Green Sempiternal Sanctum's event Rootmin will now have a shield showing when no player is on the other platform.

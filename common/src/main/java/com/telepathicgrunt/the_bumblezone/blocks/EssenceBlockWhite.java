@@ -171,6 +171,12 @@ public class EssenceBlockWhite extends EssenceBlock {
                 }
             }
 
+            float healthPercent = Math.round((totalhealth / totalMaxHealth) * 10f) / 10f;
+            int shieldThreshold = (int) Math.ceil(healthPercent / 0.166D);
+            int reductionInTicks = 30 * 20 * (6 - shieldThreshold);
+            boolean shield = shieldThreshold > 0 && essenceBlockEntity.getEventTimer() + reductionInTicks > this.getEventTimeFrame();
+            crystals.forEach(c -> c.setShield(shield));
+
             // Set commands here
             if (crystalsAreIdleLongEnough && !crystals.isEmpty()) {
                 CosmicCrystalState chosenAttack;
@@ -179,6 +185,20 @@ public class EssenceBlockWhite extends EssenceBlock {
                     chosenAttack = CosmicCrystalState.values()[serverLevel.getRandom().nextInt(CosmicCrystalState.values().length)];
                 }
                 while (crystals.get(0).pastStates.contains(chosenAttack) || chosenAttack == CosmicCrystalState.NORMAL);
+
+                float threshold;
+                if (healthPercent > 0.75f) {
+                    threshold = 0;
+                }
+                else if (healthPercent > 0.5f) {
+                    threshold = 0.333f;
+                }
+                else if (healthPercent > 0.25f) {
+                    threshold = 0.666f;
+                }
+                else {
+                    threshold = 1;
+                }
 
                 CosmicCrystalState finalChosenAttack = chosenAttack;
                 crystals.forEach(c -> c.setCosmicCrystalState(finalChosenAttack));
@@ -193,20 +213,6 @@ public class EssenceBlockWhite extends EssenceBlock {
                         missingCrystal = true;
                     }
 
-                    float healthPercent = Math.round((totalhealth / totalMaxHealth) * 10f) / 10f;
-                    float threshold;
-                    if (healthPercent > 0.75f) {
-                        threshold = 0;
-                    }
-                    else if (healthPercent > 0.5f) {
-                        threshold = 0.333f;
-                    }
-                    else if (healthPercent > 0.25f) {
-                        threshold = 0.666f;
-                    }
-                    else {
-                        threshold = 1;
-                    }
                     float difficultyBuff = (float) (1 + (Math.pow(threshold, 2) * 0.35f));
                     float newDifficulty = (1 + (0.025f * (6 - totalCrystals))) * difficultyBuff;
                     if (newDifficulty != crystalEntity.getDifficultyBoost()) {

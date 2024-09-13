@@ -39,6 +39,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -98,6 +99,7 @@ public class CosmicCrystalEntity extends LivingEntity {
     private static final EntityDataAccessor<Optional<UUID>> ESSENCE_CONTROLLER_UUID = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.OPTIONAL_UUID);
     private static final EntityDataAccessor<Optional<BlockPos>> ESSENCE_CONTROLLER_BLOCK_POS = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
     private static final EntityDataAccessor<String> ESSENCE_CONTROLLER_DIMENSION = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<Boolean> SHIELD = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.BOOLEAN);
     private static final Vec3 UP_VECT = new Vec3(0, 1, 0);
     private static final Vec3 POSITIVE_X_VECT = new Vec3(1, 0, 0);
     public static final int MAX_RANGE = 30;
@@ -323,6 +325,14 @@ public class CosmicCrystalEntity extends LivingEntity {
         return this.targetEntityUUID;
     }
 
+    public void setShield(boolean shield) {
+        this.entityData.set(SHIELD, shield);
+    }
+
+    public boolean getShield() {
+        return this.entityData.get(SHIELD);
+    }
+
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
@@ -339,6 +349,7 @@ public class CosmicCrystalEntity extends LivingEntity {
         builder.define(ESSENCE_CONTROLLER_UUID, Optional.empty());
         builder.define(ESSENCE_CONTROLLER_BLOCK_POS, Optional.empty());
         builder.define(ESSENCE_CONTROLLER_DIMENSION, "");
+        builder.define(SHIELD, false);
     }
 
     @Override
@@ -1706,6 +1717,16 @@ public class CosmicCrystalEntity extends LivingEntity {
     // Try to stop healing
     @Override
     public void heal(float f) {}
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource damageSource) {
+        DamageSources sources = this.level().damageSources();
+        if (this.getShield() && damageSource != sources.fellOutOfWorld() && damageSource != sources.outOfBorder()) {
+            return true;
+        }
+
+        return super.isInvulnerableTo(damageSource);
+    }
 
     private void spawnLargeParticleCloud(int radius) {
         int radiusSquared = radius * radius;

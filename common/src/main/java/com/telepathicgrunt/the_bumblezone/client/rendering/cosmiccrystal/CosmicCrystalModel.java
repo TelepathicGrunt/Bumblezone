@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class CosmicCrystalModel<T extends CosmicCrystalEntity> extends HierarchicalModel<T> {
+public class CosmicCrystalModel extends HierarchicalModel<CosmicCrystalEntity> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "cosmic_crystal"), "main");
 
     private final ModelPart root;
@@ -89,7 +89,7 @@ public class CosmicCrystalModel<T extends CosmicCrystalEntity> extends Hierarchi
 
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(CosmicCrystalEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.body.visible = true;
         this.body.getAllParts().forEach(ModelPart::resetPose);
 

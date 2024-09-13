@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
+import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminShieldRenderer;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalState;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -33,12 +34,13 @@ import org.joml.Matrix4f;
 
 import java.util.HashSet;
 
-public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEntity, CosmicCrystalModel<CosmicCrystalEntity>> {
+public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEntity, CosmicCrystalModel> {
     private static final ResourceLocation SKIN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/cosmic_crystal.png");
     private static final ResourceLocation LASER_LOCATION = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/cosmic_crystal_laser.png");
 
     public CosmicCrystalRenderer(EntityRendererProvider.Context context) {
-        super(context, new CosmicCrystalModel<>(context.bakeLayer(CosmicCrystalModel.LAYER_LOCATION)), 0.7F);
+        super(context, new CosmicCrystalModel(context.bakeLayer(CosmicCrystalModel.LAYER_LOCATION)), 0.7F);
+        this.addLayer(new CosmicCrystalShieldRenderer(this, context.getModelSet()));
     }
 
     @Override
