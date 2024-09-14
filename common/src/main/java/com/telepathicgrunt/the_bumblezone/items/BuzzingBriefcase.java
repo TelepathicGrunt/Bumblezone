@@ -365,7 +365,6 @@ public class BuzzingBriefcase extends Item {
 
             CustomData customData1 = CustomData.of(briefcaseTag);
             briefcaseItem.set(BzDataComponents.BUZZING_BRIEFCASE_DATA.get(), customData1);
-            CustomData customData2 = briefcaseItem.get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get());
             return true;
         }
         return false;
@@ -383,10 +382,5 @@ public class BuzzingBriefcase extends Item {
             briefcaseItem.set(BzDataComponents.BUZZING_BRIEFCASE_DATA.get(), CustomData.of(briefcaseTag));
         }
         return 0;
-    }
-
-    // Overrides the NeoForge burn time method added to items.
-    public int getBurnTime(ItemStack briefcaseItem, RecipeType recipeType) {
-        return 150 + (getNumberOfBees(briefcaseItem) * 1500);
     }
 }
