@@ -3,6 +3,8 @@
 #### Advancements:
 Fixed issue where completing Honey Drunk advancement with 1 Honey Bottle in hand will replace the Royal Jelly Bottle reward with the Honey Bottle's Glass Bottle remainder.
 
+Added a new advancement to show that you can sleep in beds within Bumblezone to set respawn point and beds won't explode!
+
 #### Blocks:
 Fixed Luminescence Wax Channel block's top and bottom texture not rotated when sword/shear right-clicked while horizontal.
 

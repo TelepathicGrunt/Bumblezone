@@ -1,0 +1,38 @@
+{
+  "parent": "the_bumblezone:teleportation/teleport_out_of_bumblezone",
+  "display": {
+    "icon": {
+      "id": "minecraft:orange_bed"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.sleep_in_bed.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.sleep_in_bed.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "sleep_in_bed": {
+      "trigger": "minecraft:slept_in_bed",
+      "conditions": {
+        "player": {
+          "location": {
+            "dimension": "the_bumblezone:the_bumblezone"
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "sleep_in_bed"
+    ]
+  ]
+}
