@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:teleportation/teleport_out_of_bumblezone",
   "display": {
     "icon": {
-      "id": "minecraft:orange_bed"
+      "item": "minecraft:orange_bed"
     },
     "title": {
       "translate": "advancements.the_bumblezone.sleep_in_bed.title"
