@@ -86,5 +86,9 @@ Fixed Luminescence Wax facing wrong way in several rooms in Sempiternal Sanctums
 
 Fixed Carvable Wax Pillars not reaching low ceilings in Sempiternal Sanctums.
 
+Fixed int overflow with my `min_distance_from_world_origin` option in structure sets.
+ Was preventing structures from spawning at certain areas of the world beyond world center area.
+ You should no longer see Sempiternal Sanctums like 9k away anymore. This means more Sanctums (and more Throne Pillars) are now spawning.
+
 #### Mod Compat:
 Add more mod compat Bee Queen Trades and tagging! Special thanks to Cicopath for the work here!
