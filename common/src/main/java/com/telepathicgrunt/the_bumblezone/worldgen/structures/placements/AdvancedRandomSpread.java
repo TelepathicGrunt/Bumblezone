@@ -119,10 +119,10 @@ public class AdvancedRandomSpread extends RandomSpreadStructurePlacement {
     @Override
     protected boolean isPlacementChunk(ChunkGeneratorStructureState chunkGeneratorStructureState, int x, int z) {
         if (minDistanceFromWorldOrigin.isPresent()) {
-            int xBlockPos = x * 16;
-            int zBlockPos = z * 16;
-            if((xBlockPos * xBlockPos) + (zBlockPos * zBlockPos) <
-                    (minDistanceFromWorldOrigin.get() * minDistanceFromWorldOrigin.get()))
+            long xBlockPos = x * 16L;
+            long zBlockPos = z * 16L;
+            if ((xBlockPos * xBlockPos) + (zBlockPos * zBlockPos) <
+                (((long) minDistanceFromWorldOrigin.get()) * minDistanceFromWorldOrigin.get()))
             {
                 return false;
             }
