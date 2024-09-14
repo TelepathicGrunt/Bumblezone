@@ -19,6 +19,8 @@ Added a sorting button to Crystalline Flower's screen.
 Fixed bug where tier 1 Crystalline Flower only showed enchantments whose level 2 min cost is within tier 1 range.
  Kept the bug for vanilla enchantments so some enchantments only begin to show up in tier 2 flower for a little bit of balance.
 
+Fixed issue where Crystalline Flower would show treasure Enchantments that are not random loot table or enchanting table drops.
+
 Fixed Suspicious Pile of Pollen not possibly working with modded brushes tagged under `c:tools/brush`
 
 Heavy Air block now disables the ability to climb blocks.

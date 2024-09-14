@@ -69,8 +69,8 @@ public class EnchantmentUtils {
 
 			if (((enchantment.is(EnchantmentTags.IN_ENCHANTING_TABLE) ||
 				enchantment.is(EnchantmentTags.ON_RANDOM_LOOT) ||
-				enchantment.is(EnchantmentTags.NON_TREASURE) ||
-				(enchantment.is(EnchantmentTags.TREASURE) && allowTreasure)) &&
+				enchantment.is(EnchantmentTags.NON_TREASURE)) &&
+				!(enchantment.is(EnchantmentTags.TREASURE) && !allowTreasure) &&
 				(bookFlag || (enchantment.value().canEnchant(itemStack) && enchantment.value().isPrimaryItem(itemStack)))) ||
 				forceAllowed)
 			{
