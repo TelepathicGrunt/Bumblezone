@@ -352,9 +352,4 @@ public class BuzzingBriefcase extends Item {
         }
         return 0;
     }
-
-    // Overrides the Forge burn time method added to items.
-    public int getBurnTime(ItemStack briefcaseItem, RecipeType recipeType) {
-        return 150 + (getNumberOfBees(briefcaseItem) * 1500);
-    }
 }

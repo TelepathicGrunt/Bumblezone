@@ -51,6 +51,9 @@ Fixed Rootmins not hiding when in Heavy Air.
 
 Fixed wild/wandering Beehemoths not wandering in Heavy Air.
 
+#### Items:
+Made Buzzing Briefcase no longer burnable in Furnace so that Modern Industrial no longer shows an EU energy tooltip on the item. Reduces confusion.
+
 #### Structures:
 Added Gazebuzz Cluster structure to replace half of Hanging Gardens structure! 
  This large structure made of many hanging gazebos will test your parkour skills and have a variety of stuff to grab! 
