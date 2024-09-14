@@ -2,7 +2,7 @@
   "is_color_randomizer_trade": true,
   "randomizes": [
   {
-    "id": "#the_bumblezone:modded/nightlights_fairy_lights",
+    "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/nightlights_fairy_lights",
     "required": false
   }]
 }

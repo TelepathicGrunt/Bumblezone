@@ -2,7 +2,7 @@
   "is_color_randomizer_trade": true,
   "randomizes": [
   {
-    "id": "#the_bumblezone:modded/beautify_lamp_candelabras",
+    "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/beautify_lamp_candelabras",
     "required": false
   }]
 }

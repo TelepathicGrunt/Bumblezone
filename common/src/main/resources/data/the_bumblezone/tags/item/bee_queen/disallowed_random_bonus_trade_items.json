@@ -133,17 +133,12 @@
     },
 
 
-
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded",
+      "required": false
+    },
     {
       "id": "#ad_astra:flags",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/ad_astra_industrial_lamps",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/ad_astra_small_industrial_lamps",
       "required": false
     },
     {
@@ -156,10 +151,6 @@
     },
     {
       "id": "#ae2:glass_cable",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/ae2_lumen_paint_balls",
       "required": false
     },
     {
@@ -211,114 +202,6 @@
       "required": false
     },
     {
-      "id": "#the_bumblezone:modded/beautify_lamp_candelabras",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/betterend_iron_bulb_lanterns",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/betterend_terminite_bulb_lanterns",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/betterend_thallasium_bulb_lanterns",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/betternether_quartz_glass",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/betternether_quartz_glass_framed",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/betternether_quartz_glass_framed_panes",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/betternether_quartz_glass_panes",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/bewitchment_coffins",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_creative_concrete_hopper_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_creative_concrete_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_creative_glazed_terracotta_hopper_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_creative_glazed_terracotta_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_creative_terracotta_hopper_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_creative_terracotta_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_elite_concrete_botany_hopper_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_elite_concrete_botany_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_elite_glazed_terracotta_botany_hopper_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_elite_glazed_terracotta_botany_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_elite_terracotta_botany_hopper_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_elite_terracotta_botany_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_ultra_concrete_botany_hopper_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_ultra_concrete_botany_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_ultra_glazed_terracotta_botany_hopper_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_ultra_glazed_terracotta_botany_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_ultra_terracotta_botany_hopper_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/botanypotstiers_ultra_terracotta_botany_pots",
-      "required": false
-    },
-    {
       "id": "#botanypots:basic_botany_pots",
       "required": false
     },
@@ -348,14 +231,6 @@
     },
     {
       "id": "#convenientdecor:functional_umbrellas",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/convenientdecor_plastic_shovels",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/convenientdecor_rain_boots",
       "required": false
     },
     {
@@ -395,19 +270,11 @@
       "required": false
     },
     {
-      "id": "#the_bumblezone:modded/cookingforblockheads_kitchen_floors",
-      "required": false
-    },
-    {
       "id": "#create:seats",
       "required": false
     },
     {
       "id": "#create:valve_handles",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/dustrial_decor_neon_light",
       "required": false
     },
     {
@@ -591,18 +458,6 @@
       "required": false
     },
     {
-      "id": "#the_bumblezone:modded/floralis_dye_blocks",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/graveyard_small_urns",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/graveyard_urns",
-      "required": false
-    },
-    {
       "id": "#handcrafted:crockery",
       "required": false
     },
@@ -615,27 +470,11 @@
       "required": false
     },
     {
-      "id": "#the_bumblezone:modded/indrev_module_colors",
-      "required": false
-    },
-    {
       "id": "#kibe:elevators",
       "required": false
     },
     {
-      "id": "#the_bumblezone:modded/kibe_gliders",
-      "required": false
-    },
-    {
       "id": "#kibe:sleeping_bags",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/luphieclutteredmod_armchairs",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/mcda_fabric_bolts",
       "required": false
     },
     {
@@ -688,26 +527,6 @@
     },
     {
       "id": "#modern_industrialization:me_wires",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/nightlights_fairy_lights",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/nightlights_frogs",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/nightlights_hanging_lights",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/nightlights_mushrooms",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/nightlights_octopi",
       "required": false
     },
     {
@@ -871,22 +690,6 @@
       "required": false
     },
     {
-      "id": "#the_bumblezone:modded/skinnedlanterns_ornament_lantern_blocks",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/skinnedlanterns_ornament_soul_lantern_blocks",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/skinnedlanterns_paper_lantern_blocks",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/skinnedlanterns_paper_soul_lantern_blocks",
-      "required": false
-    },
-    {
       "id": "#snowyspirit:glow_lights",
       "required": false
     },
@@ -911,59 +714,11 @@
       "required": false
     },
     {
-      "id": "#the_bumblezone:modded/swampier_swamps_froglights",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/thermal_rockwools",
-      "required": false
-    },
-    {
       "id": "#travelersbackpack:sleeping_bags",
       "required": false
     },
     {
-      "id": "#the_bumblezone:modded/tropicraft_beach_floats",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/tropicraft_chairs",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/tropicraft_umbrellas",
-      "required": false
-    },
-    {
       "id": "#twigs:packed_silt",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/twigs_silt_pots",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/twigs_silt_shingles",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/twigs_silt_shingle_slabs",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/twigs_silt_shingle_stairs",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/twigs_silt_shingle_walls",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/utilitarian_soliciting_carpets",
-      "required": false
-    },
-    {
-      "id": "#the_bumblezone:modded/utilitarian_trapped_soliciting_carpets",
       "required": false
     },
 

@@ -2,7 +2,7 @@
   "is_color_randomizer_trade": true,
   "randomizes": [
   {
-    "id": "#the_bumblezone:modded/twigs_silt_shingles",
+    "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/twigs_silt_shingles",
     "required": false
   }]
 }

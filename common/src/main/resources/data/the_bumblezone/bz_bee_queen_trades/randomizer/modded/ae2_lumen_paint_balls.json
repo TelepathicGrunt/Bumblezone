@@ -2,7 +2,7 @@
   "is_color_randomizer_trade": true,
   "randomizes": [
   {
-    "id": "#the_bumblezone:modded/ae2_lumen_paint_balls",
+    "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/ae2_lumen_paint_balls",
     "required": false
   }]
 }

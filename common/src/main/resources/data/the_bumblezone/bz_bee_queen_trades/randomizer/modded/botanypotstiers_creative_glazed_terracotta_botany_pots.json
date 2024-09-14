@@ -2,7 +2,7 @@
   "is_color_randomizer_trade": true,
   "randomizes": [
   {
-    "id": "#the_bumblezone:modded/botanypotstiers_creative_glazed_terracotta_botany_pots",
+    "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_creative_glazed_terracotta_botany_pots",
     "required": false
   }]
 }

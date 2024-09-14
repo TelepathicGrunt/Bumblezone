@@ -2,7 +2,7 @@
   "is_color_randomizer_trade": true,
   "randomizes": [
   {
-    "id": "#the_bumblezone:modded/indrev_module_colors",
+    "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/indrev_module_colors",
     "required": false
   }]
 }

@@ -46,7 +46,7 @@ blacklistFileJsonData = {
 }
 
 for entry in entriesToBlacklist:
-    if (not entry.startswith("#minecraft") and not entry.startswith("#c:") and not (entry.startswith("#the_bumblezone:") and not entry.startswith("#the_bumblezone:modded"))):
+    if (not entry.startswith("#minecraft") and not entry.startswith("#c:") and not (entry.startswith("#the_bumblezone:") and not entry.startswith("#the_bumblezone:bee_queen/dedicated_trade_tags/modded"))):
         blacklistFileJsonData["values"].append({
             "id": entry,
             "required": False

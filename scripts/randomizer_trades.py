@@ -93,7 +93,7 @@ else :
             "is_color_randomizer_trade": True,
             "randomizes": [
                 {
-                    "id": f"#the_bumblezone:modded/{modid}_{group}",
+                    "id": f"#the_bumblezone:bee_queen/dedicated_trade_tags/modded/{modid}_{group}",
                     "required": False
                 }
             ]

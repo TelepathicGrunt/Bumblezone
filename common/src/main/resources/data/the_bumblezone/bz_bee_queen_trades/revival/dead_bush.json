@@ -16,7 +16,7 @@
       "required": true
     },
     {
-      "tag": "minecraft:saplings",
+      "tag": "the_bumblezone:bee_queen/dedicated_trade_tags/saplings_from_dead_bush",
       "count_output_for_tags": 1,
       "xp_reward": 0,
       "weight": 2,
