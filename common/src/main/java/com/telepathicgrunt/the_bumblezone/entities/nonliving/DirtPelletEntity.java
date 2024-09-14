@@ -311,6 +311,7 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
         }
         double d = livingEntity.getEyeY() - (double)0.3f;
         ItemEntity itemEntity = new ItemEntity(livingEntity.level(), livingEntity.getX(), d, livingEntity.getZ(), itemStack);
+        itemEntity.setUnlimitedLifetime();
         itemEntity.setPickUpDelay(40);
         if (setOwner) {
             itemEntity.setThrower(livingEntity);

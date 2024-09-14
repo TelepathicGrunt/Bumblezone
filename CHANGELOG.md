@@ -51,6 +51,8 @@ Rootmins will target smaller players better now when shooting Dirt Pellets.
 Green Sempiternal Sanctum's event Rootmin will now have a shield showing when no player is on the other platform.
  Once a player is on platform, then the shield disappears and Rootmin can be damaged by any Dirt Pellet.
 
+Green Sempiternal Sanctum's event Rootmin that knocks off armor with its Dirt Pellet will now make the dropped item never despawn.
+
 #### Items:
 Made Buzzing Briefcase no longer burnable in Furnace so that Modern Industrial no longer shows an EU energy tooltip on the item. Reduces confusion.
 
