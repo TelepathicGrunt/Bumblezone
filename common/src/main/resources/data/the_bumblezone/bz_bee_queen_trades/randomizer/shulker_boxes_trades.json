@@ -2,7 +2,7 @@
   "is_color_randomizer_trade": true,
   "randomizes": [
     {
-      "id": "#the_bumblezone:bee_queen_randomize_trades/shulker_boxes_trades",
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/randomize/shulker_boxes_trades",
       "required": true
     }
   ]

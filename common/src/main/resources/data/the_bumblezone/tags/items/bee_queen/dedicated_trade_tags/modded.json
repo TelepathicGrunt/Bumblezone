@@ -1,0 +1,253 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/ad_astra_industrial_lamps",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/ad_astra_small_industrial_lamps",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/ae2_lumen_paint_balls",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/beautify_lamp_candelabras",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/betterend_iron_bulb_lanterns",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/betterend_terminite_bulb_lanterns",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/betterend_thallasium_bulb_lanterns",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/betternether_quartz_glass",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/betternether_quartz_glass_framed",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/betternether_quartz_glass_framed_panes",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/betternether_quartz_glass_panes",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/bewitchment_coffins",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_creative_concrete_hopper_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_creative_concrete_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_creative_glazed_terracotta_hopper_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_creative_glazed_terracotta_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_creative_terracotta_hopper_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_creative_terracotta_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_elite_concrete_botany_hopper_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_elite_concrete_botany_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_elite_glazed_terracotta_botany_hopper_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_elite_glazed_terracotta_botany_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_elite_terracotta_botany_hopper_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_elite_terracotta_botany_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_ultra_concrete_botany_hopper_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_ultra_concrete_botany_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_ultra_glazed_terracotta_botany_hopper_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_ultra_glazed_terracotta_botany_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_ultra_terracotta_botany_hopper_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/botanypotstiers_ultra_terracotta_botany_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/convenientdecor_plastic_shovels",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/convenientdecor_rain_boots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/cookingforblockheads_kitchen_floors",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/dustrial_decor_neon_light",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/floralis_dye_blocks",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/graveyard_small_urns",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/graveyard_urns",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/indrev_module_colors",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/kibe_gliders",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/luphieclutteredmod_armchairs",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/mcda_fabric_bolts",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/nightlights_fairy_lights",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/nightlights_frogs",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/nightlights_hanging_lights",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/nightlights_mushrooms",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/nightlights_octopi",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/skinnedlanterns_ornament_lantern_blocks",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/skinnedlanterns_ornament_soul_lantern_blocks",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/skinnedlanterns_paper_lantern_blocks",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/skinnedlanterns_paper_soul_lantern_blocks",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/swampier_swamps_froglights",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/thermal_rockwools",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/tropicraft_beach_floats",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/tropicraft_chairs",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/tropicraft_umbrellas",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/twigs_silt_pots",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/twigs_silt_shingles",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/twigs_silt_shingle_slabs",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/twigs_silt_shingle_stairs",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/twigs_silt_shingle_walls",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/utilitarian_soliciting_carpets",
+      "required": false
+    },
+    {
+      "id": "#the_bumblezone:bee_queen/dedicated_trade_tags/modded/utilitarian_trapped_soliciting_carpets",
+      "required": false
+    }
+  ]
+}

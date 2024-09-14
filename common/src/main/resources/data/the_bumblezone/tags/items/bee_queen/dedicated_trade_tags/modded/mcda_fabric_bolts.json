@@ -1,0 +1,68 @@
+{
+  "replace": false,
+  "values": [
+  {
+    "id": "mcda:fabric_bolt_black",
+    "required": false
+  },
+  {
+    "id": "mcda:fabric_bolt_blue",
+    "required": false
+  },
+  {
+    "id": "mcda:fabric_bolt_brown",
+    "required": false
+  },
+  {
+    "id": "mcda:fabric_bolt_cyan",
+    "required": false
+  },
+  {
+    "id": "mcda:fabric_bolt_gray",
+    "required": false
+  },
+  {
+    "id": "mcda:fabric_bolt_green",
+    "required": false
+  },
+  {
+    "id": "mcda:fabric_bolt_light_blue",
+    "required": false
+  },
+  {
+    "id": "mcda:fabric_bolt_light_gray",
+    "required": false
+  },
+  {
+    "id": "mcda:fabric_bolt_lime",
+    "required": false
+  },
+  {
+    "id": "mcda:fabric_bolt_magenta",
+    "required": false
+  },
+  {
+    "id": "mcda:fabric_bolt_orange",
+    "required": false
+  },
+  {
+    "id": "mcda:fabric_bolt_pink",
+    "required": false
+  },
+  {
+    "id": "mcda:fabric_bolt_purple",
+    "required": false
+  },
+  {
+    "id": "mcda:fabric_bolt_red",
+    "required": false
+  },
+  {
+    "id": "mcda:fabric_bolt_white",
+    "required": false
+  },
+  {
+    "id": "mcda:fabric_bolt_yellow",
+    "required": false
+  }]
+}
