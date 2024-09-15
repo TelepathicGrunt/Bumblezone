@@ -71,7 +71,7 @@ public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
         }
 
         poseStack.scale(-scale, -scale, scale);
-        poseStack.translate(0.0f, -1.0f - (1.5f - (scale * 1.5f)), 0.0f);
+        poseStack.translate(0.0f, -1.5f - (1.5f - (scale * 1.5f)), 0.0f);
         poseStack.mulPose(Axis.YN.rotationDegrees(180.0f - ringEntity.getYRot()));
         poseStack.mulPose(Axis.XN.rotationDegrees(180.0f - ringEntity.getXRot()));
         poseStack.mulPose(Axis.ZN.rotationDegrees(angle % 360));

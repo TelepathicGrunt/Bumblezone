@@ -38,6 +38,7 @@ public class ElectricRingEntity extends Entity {
 
     public ElectricRingEntity(EntityType<? extends ElectricRingEntity> entityType, Level level) {
         super(entityType, level);
+        this.refreshDimensions();
     }
 
     @Override
