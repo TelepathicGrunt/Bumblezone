@@ -96,7 +96,7 @@ public class HoneyCaveRoomStructure extends Structure {
 
     public Optional<Structure.GenerationStub> findGenerationPoint(Structure.GenerationContext context) {
         WorldgenRandom positionedRandom = new WorldgenRandom(new LegacyRandomSource(context.seed() + (context.chunkPos().x * (context.chunkPos().z * 17L))));
-        int height = context.chunkGenerator().getSeaLevel() + positionedRandom.nextInt(Math.max(context.chunkGenerator().getGenDepth() - (context.chunkGenerator().getSeaLevel() + 50), 1));
+        int height = context.chunkGenerator().getSeaLevel() + 42 + positionedRandom.nextInt(Math.max(context.chunkGenerator().getGenDepth() - (context.chunkGenerator().getSeaLevel() + 92), 1));
         BlockPos centerPos = new BlockPos(context.chunkPos().getMinBlockX(), height, context.chunkPos().getMinBlockZ());
 
         if(!validSpot(context.chunkGenerator(), centerPos, context.heightAccessor(), context.randomState())) {
