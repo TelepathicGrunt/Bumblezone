@@ -8,10 +8,18 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.FollowParentGoal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,6 +36,21 @@ public class VariantBeeEntity extends Bee {
    public VariantBeeEntity(EntityType<? extends VariantBeeEntity> type, Level worldIn) {
       super(type, worldIn);
       getVariant();
+   }
+
+   @Override
+   protected void registerGoals() {
+      super.registerGoals();
+      this.getGoalSelector().addGoal(2, new BreedGoal(this, 1.0, Bee.class));
+   }
+
+   @Override
+   public boolean canMate(Animal animal) {
+      if (animal.getClass().equals(Bee.class)) {
+         return this.isInLove() && animal.isInLove();
+      } else {
+         return super.canMate(animal);
+      }
    }
 
    public String getVariant() {
@@ -70,12 +93,20 @@ public class VariantBeeEntity extends Bee {
          VariantBeeEntity babyBee = BzEntities.VARIANT_BEE.get().create(serverLevel);
 
          if (babyBee != null) {
-            babyBee.setVariant(variantBeeEntity.getVariant());
+            babyBee.setVariant(this.random.nextBoolean() ? variantBeeEntity.getVariant() : this.getVariant());
          }
 
          return babyBee;
       }
       else if (ageableMob instanceof Bee) {
+         if (this.random.nextBoolean()) {
+            VariantBeeEntity babyBee = BzEntities.VARIANT_BEE.get().create(serverLevel);
+            if (babyBee != null) {
+               babyBee.setVariant(this.getVariant());
+            }
+            return babyBee;
+         }
+
          return EntityType.BEE.create(serverLevel);
       }
       else {

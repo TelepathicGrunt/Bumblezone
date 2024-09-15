@@ -61,6 +61,8 @@ Fixed Rootmins not hiding when in Heavy Air.
 
 Fixed wild/wandering Beehemoths not wandering in Heavy Air.
 
+Variant Bees can breed with normal Bees now but 1/4th chance of having a Variant Bee baby.
+
 #### Items:
 Made Buzzing Briefcase no longer burnable in Furnace so that Modern Industrial no longer shows an EU energy tooltip on the item. Reduces confusion.
 
