@@ -33,6 +33,7 @@
     "entities.AbstractHorseMixin",
     "entities.AgeableMobAccessor",
     "entities.AmphibiousNodeEvaluatorMixin",
+    "entities.AnimalMixin",
     "entities.BeeEntityInvoker",
     "entities.BeeEntityMixin",
     "entities.BeeGoToKnownFlowerGoalMixin",

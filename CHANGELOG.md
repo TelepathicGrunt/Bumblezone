@@ -63,6 +63,8 @@ Green Sempiternal Sanctum's event Rootmin's second phase will stagger the Dirt P
 
 Made Yellow Sempiternal Sanctum's Electric Ring have a slightly bigger hitbox and spawns at a more fair heights in last 50% of the event.
 
+Variant Bees can breed with normal Bees now but 1/4th chance of having a Variant Bee baby.
+
 #### Items:
 Made Buzzing Briefcase no longer burnable in Furnace so that Modern Industrial no longer shows an EU energy tooltip on the item. Reduces confusion.
 
