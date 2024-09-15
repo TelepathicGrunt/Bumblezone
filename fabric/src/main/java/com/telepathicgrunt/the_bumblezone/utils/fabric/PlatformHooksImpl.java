@@ -59,36 +59,31 @@ import java.util.List;
 
 public class PlatformHooksImpl {
 
-    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, boolean scalable, int clientTrackingRange, int updateInterval, String buildName) {
-        return FabricEntityTypeBuilder
-                .<T>createMob()
-                .spawnGroup(category)
-                .entityFactory(entityFactory)
-                .dimensions(scalable ? EntityDimensions.scalable(size, size) : EntityDimensions.fixed(size, size))
-                .trackRangeChunks(clientTrackingRange)
-                .trackedUpdateRate(updateInterval)
+    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, int clientTrackingRange, int updateInterval, String buildName) {
+        return EntityType.Builder
+                .of(entityFactory, category)
+                .sized(size, size)
+                .clientTrackingRange(clientTrackingRange)
+                .updateInterval(updateInterval)
                 .build();
     }
 
-    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, boolean scalable, int clientTrackingRange, int updateInterval, String buildName) {
-        return FabricEntityTypeBuilder
-                .<T>createMob()
-                .spawnGroup(category)
-                .entityFactory(entityFactory)
-                .dimensions(scalable ? EntityDimensions.scalable(xzSize, ySize) : EntityDimensions.fixed(xzSize, ySize))
-                .trackRangeChunks(clientTrackingRange)
-                .trackedUpdateRate(updateInterval)
+    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, int clientTrackingRange, int updateInterval, String buildName) {
+        return EntityType.Builder
+                .of(entityFactory, category)
+                .sized(xzSize, ySize)
+                .clientTrackingRange(clientTrackingRange)
+                .updateInterval(updateInterval)
                 .build();
     }
 
-    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, float eyeHeight, boolean scalable, int clientTrackingRange, int updateInterval, String buildName) {
-        return FabricEntityTypeBuilder
-                .<T>createMob()
-                .spawnGroup(category)
-                .entityFactory(entityFactory)
-                .dimensions(scalable ? EntityDimensions.scalable(xzSize, ySize).withEyeHeight(eyeHeight) : EntityDimensions.fixed(xzSize, ySize).withEyeHeight(eyeHeight))
-                .trackRangeChunks(clientTrackingRange)
-                .trackedUpdateRate(updateInterval)
+    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, float eyeHeight, int clientTrackingRange, int updateInterval, String buildName) {
+        return EntityType.Builder
+                .of(entityFactory, category)
+                .sized(xzSize, ySize)
+                .eyeHeight(eyeHeight)
+                .clientTrackingRange(clientTrackingRange)
+                .updateInterval(updateInterval)
                 .build();
     }
 

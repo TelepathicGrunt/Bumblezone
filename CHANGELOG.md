@@ -61,6 +61,8 @@ Green Sempiternal Sanctum's event Rootmin that knocks off armor with its Dirt Pe
 
 Green Sempiternal Sanctum's event Rootmin's second phase will stagger the Dirt Pellets to make hitting back a bit better.
 
+Made Yellow Sempiternal Sanctum's Electric Ring have a slightly bigger hitbox and spawns at a more fair heights in last 50% of the event.
+
 #### Items:
 Made Buzzing Briefcase no longer burnable in Furnace so that Modern Industrial no longer shows an EU energy tooltip on the item. Reduces confusion.
 

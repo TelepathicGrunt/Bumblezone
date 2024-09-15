@@ -50,7 +50,7 @@ import java.util.List;
 
 public class PlatformHooksImpl {
 
-    public static <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, boolean scalable, int clientTrackingRange, int updateInterval, String buildName) {
+    public static <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, int clientTrackingRange, int updateInterval, String buildName) {
         return EntityType.Builder
                 .of(entityFactory, category)
                 .sized(size, size)
@@ -59,7 +59,7 @@ public class PlatformHooksImpl {
                 .build(buildName);
     }
 
-    public static <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, boolean scalable, int clientTrackingRange, int updateInterval, String buildName) {
+    public static <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, int clientTrackingRange, int updateInterval, String buildName) {
         return EntityType.Builder
                 .of(entityFactory, category)
                 .sized(xzSize, ySize)
@@ -68,7 +68,7 @@ public class PlatformHooksImpl {
                 .build(buildName);
     }
 
-    public static <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, float eyeHeight, boolean scalable, int clientTrackingRange, int updateInterval, String buildName) {
+    public static <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, float eyeHeight, int clientTrackingRange, int updateInterval, String buildName) {
         return EntityType.Builder
                 .of(entityFactory, category)
                 .sized(xzSize, ySize)

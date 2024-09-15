@@ -189,7 +189,19 @@ public class EssenceBlockYellow extends EssenceBlock {
         int y = (-(arenaSize.getY() / 2) + 1);
         int z = (arenaSize.getZ() / 2) - 5;
 
-        y = (int) Math.min(y + (random.nextFloat() * ((currentRingsPassed * 12) / RINGS_TO_PASS)), (arenaSize.getY() / 2f) - 3);
+        if (currentRingsPassed / RINGS_TO_PASS >= 0.5) {
+            float randomChosen = random.nextFloat();
+            if (randomChosen < 0.3) {
+                randomChosen = 0;
+            }
+            else {
+                randomChosen = (((randomChosen * 0.4F) + 0.55F) * ((currentRingsPassed * 12) / RINGS_TO_PASS));
+            }
+            y = (int) Math.min(y + randomChosen, (arenaSize.getY() / 2f) - 3);
+        }
+        else {
+            y = (int) Math.min(y + (random.nextFloat() * ((currentRingsPassed * 12) / RINGS_TO_PASS)), (arenaSize.getY() / 2f) - 3);
+        }
 
         switch (currentRingsPassed % 4) {
             case 0 -> {
