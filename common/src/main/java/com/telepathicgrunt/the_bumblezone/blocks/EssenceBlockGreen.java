@@ -234,26 +234,26 @@ public class EssenceBlockGreen extends EssenceBlock {
                             RandomSource randomSource = rootminEntity.getRandom();
                             rootminEntity.lookAt(
                                 EntityAnchorArgument.Anchor.FEET,
-                                players.get(0).position().add(
+                                players.getFirst().position().add(
                                     randomSource.nextDouble() * 21 - 10,
                                     randomSource.nextDouble() * 21 - 10,
                                     randomSource.nextDouble() * 21 - 10
                                 ));
                         }
                         else {
-                            rootminEntity.lookAt(EntityAnchorArgument.Anchor.FEET, players.get(0).position());
+                            rootminEntity.lookAt(EntityAnchorArgument.Anchor.FEET, players.getFirst().position());
                         }
 
                         if (rootminHealthPercent > STAGE_3_THRESHOLD && rootminHealthPercent <= STAGE_2_THRESHOLD) {
                             rootminEntity.runMultiShoot(
-                                players.get(0),
+                                players.getFirst(),
                                 (float)Mth.lerp(rootminHealthPercent, 1.1D, 0.8D),
                                 3
                             );
                         }
                         else {
                             rootminEntity.runShoot(
-                                players.get(0),
+                                players.getFirst(),
                                 isHoming ? 0.8F : (float)Mth.lerp(rootminHealthPercent, 1.7D, 0.85D),
                                 isHoming
                             );

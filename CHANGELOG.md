@@ -50,12 +50,16 @@ Made Cosmic Crystal Entity in White Sempiternal Sanctum no longer reset their at
 If the White Sempiternal Sanctum event is being beaten far too quickly, the Cosmic Crystals will get a shield and be impervious to all damage for a limited time.
  Wait for the shield to disappear and resume your attacks!
 
+Fixed Rootmin eye level being too high. Was causing Green Sempiternal Sanctum's Rootmin to shoot too low in third phase.
+
 Rootmins will target smaller players better now when shooting Dirt Pellets.
 
 Green Sempiternal Sanctum's event Rootmin will now have a shield showing when no player is on the other platform.
  Once a player is on platform, then the shield disappears and Rootmin can be damaged by any Dirt Pellet.
 
 Green Sempiternal Sanctum's event Rootmin that knocks off armor with its Dirt Pellet will now make the dropped item never despawn.
+
+Green Sempiternal Sanctum's event Rootmin's second phase will stagger the Dirt Pellets to make hitting back a bit better.
 
 #### Items:
 Made Buzzing Briefcase no longer burnable in Furnace so that Modern Industrial no longer shows an EU energy tooltip on the item. Reduces confusion.
