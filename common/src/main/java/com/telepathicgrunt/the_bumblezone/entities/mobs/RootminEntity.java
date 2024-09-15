@@ -274,19 +274,19 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       setRootminPose(RootminPose.SHOCK);
    }
 
-   public void runShoot(@Nullable LivingEntity target, float speedMultipiler, boolean isHoming) {
+   public void runShoot(@Nullable LivingEntity target, float speedMultiplier, boolean isHoming) {
       if (isHoming && target != null) {
-         this.shootHomingDirt(target, speedMultipiler);
+         this.shootHomingDirt(target, speedMultiplier);
       }
       else {
-         this.shootDirt(target, speedMultipiler);
+         this.shootDirt(target, speedMultiplier);
       }
       this.delayTillIdle = 8;
       setRootminPose(RootminPose.SHOOT);
    }
 
-   public void runMultiShoot(@Nullable LivingEntity target, float speedMultipiler, int projectiles) {
-      this.shootDirt(target, speedMultipiler, projectiles);
+   public void runMultiShoot(@Nullable LivingEntity target, float speedMultiplier, int projectiles) {
+      this.shootDirt(target, speedMultiplier, projectiles);
       this.delayTillIdle = 8;
       setRootminPose(RootminPose.SHOOT);
    }
@@ -555,7 +555,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    }
 
    // Add homing missile dirt
-   public void shootHomingDirt(LivingEntity livingEntity, float speedMultipiler) {
+   public void shootHomingDirt(LivingEntity livingEntity, float speedMultiplier) {
       if (!this.level().isClientSide()) {
          DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this);
          pelletEntity.setPos(pelletEntity.position().add(this.getLookAngle().x(), 0, this.getLookAngle().z()));
@@ -568,12 +568,12 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          pelletEntity.setHomingTargetUUID(livingEntity.getUUID());
 
          double x = livingEntity.getX() - this.getX();
-         double heightBasedOffset = 1.6 + (0.2 * (livingEntity.getBbHeight() / 1.8));
-         double y = (livingEntity.getY() + (heightBasedOffset * (1.333333 - speedMultipiler))) - pelletEntity.getY();
+         double heightBasedOffset = 1.6D + (0.2D * (livingEntity.getBbHeight() / 1.8D));
+         double y = (livingEntity.getY() + (heightBasedOffset * (1.333333D - speedMultiplier))) - pelletEntity.getY();
          double z = livingEntity.getZ() - this.getZ();
-         double archOffset = Math.sqrt(x * x + z * z);
+         double archOffset = Math.sqrt((x * x) + (z * z));
          Vec3 lookAngle = this.getLookAngle();
-         pelletEntity.shoot(lookAngle.x(), y + archOffset * (double) 0.01f, lookAngle.z(), 1.5f * speedMultipiler, 1);
+         pelletEntity.shoot(lookAngle.x(), y + archOffset * 0.01D, lookAngle.z(), 1.5F * speedMultiplier, 1);
 
          this.playSound(BzSounds.ROOTMIN_SHOOT.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
          this.level().addFreshEntity(pelletEntity);
@@ -584,11 +584,11 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       this.shootDirt(livingEntity, 1);
    }
 
-   public void shootDirt(@Nullable LivingEntity livingEntity, float speedMultipiler) {
+   public void shootDirt(@Nullable LivingEntity livingEntity, float speedMultiplier) {
       this.shootDirt(livingEntity, 1, 1);
    }
 
-   public void shootDirt(@Nullable LivingEntity livingEntity, float speedMultipiler, int totalProjectiles) {
+   public void shootDirt(@Nullable LivingEntity livingEntity, float speedMultiplier, int totalProjectiles) {
       if (!this.level().isClientSide()) {
          for (int currentProjectile = 0; currentProjectile < totalProjectiles; currentProjectile++) {
             DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this);
@@ -601,7 +601,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
             Vec3 shootAngle;
             if (livingEntity != null) {
                double x = livingEntity.getX() - this.getX();
-               double y = livingEntity.getY(1.3 - speedMultipiler * 1.3) - pelletEntity.getY() - (1.5 - livingEntity.getBbHeight());
+               double y = livingEntity.getY(1.3 - speedMultiplier * 1.3) - pelletEntity.getY() - (1.5 - livingEntity.getBbHeight());
                double z = livingEntity.getZ() - this.getZ();
                shootAngle = new Vec3(x, y, z);
             } else {
@@ -621,9 +621,9 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
             pelletEntity.shoot(
                     rotatedShootAngle.x(),
-                    rotatedShootAngle.y() + archOffset * (double) 0.2f,
+                    rotatedShootAngle.y() + archOffset * (double) 0.2f * (currentProjectile != 1 ? 1.4F : 1),
                     rotatedShootAngle.z(),
-                    1.5f * speedMultipiler,
+                    1.5f * speedMultiplier * (currentProjectile != 1 ? 0.75F : 1),
                     1);
 
             this.playSound(BzSounds.ROOTMIN_SHOOT.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);

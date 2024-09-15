@@ -53,6 +53,8 @@ Green Sempiternal Sanctum's event Rootmin will now have a shield showing when no
 
 Green Sempiternal Sanctum's event Rootmin that knocks off armor with its Dirt Pellet will now make the dropped item never despawn.
 
+Green Sempiternal Sanctum's event Rootmin's second phase will stagger the Dirt Pellets to make hitting back a bit better.
+
 Fixed Rootmins not hiding when in Heavy Air.
 
 Fixed wild/wandering Beehemoths not wandering in Heavy Air.
