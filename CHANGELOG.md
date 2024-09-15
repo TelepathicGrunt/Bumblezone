@@ -88,14 +88,14 @@ Made Pyro The Burning Bee now have infinite Fire Resistance.
 Split the tiny structures out of the main structure set into their own set of small structures.
  Will make exploration structures much more common in Bumblezone, so it is less barren.
 
-Split Battle Cube structure into multiple pieces for faster generation during worldgen.
-
 Made Bee House and Stinger Spear Shrine not spawn in Hive Wall, Hive Pillar, or Pollinated Pillar biomes.
 
 Spawn Candle Parkour structure in Crystal Canyon biome now.
 
 Split Stinger Spear Shrine, Bee House, Honey Fountain, and Candle Parkour into multiple pieces, so it terraform terrain around itself in a circular look instead of square look.
  Meshes better with terrain as a result.
+
+Split Battle Cube and Sempiternal Sanctum structures into multiple pieces for much faster generation during worldgen.
 
 Fixed Luminescence Wax facing wrong way in several rooms in Sempiternal Sanctums.
 

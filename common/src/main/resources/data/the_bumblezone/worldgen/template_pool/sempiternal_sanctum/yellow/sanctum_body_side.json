@@ -4,8 +4,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/red/bottom_exit_vent_2",
-        "processors": "the_bumblezone:sempiternal_sanctum/red/inside",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/sanctum_body_side",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/body",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
