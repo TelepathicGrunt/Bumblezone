@@ -97,6 +97,8 @@ Spawn Candle Parkour structure in Crystal Canyon biome now.
 Split Stinger Spear Shrine, Bee House, Honey Fountain, and Candle Parkour into multiple pieces, so it terraform terrain around itself in a circular look instead of square look.
  Meshes better with terrain as a result.
 
+Split Battle Cube structure into multiple pieces for faster generation during worldgen.
+
 Fixed Luminescence Wax facing wrong way in several rooms in Sempiternal Sanctums.
 
 Fixed Carvable Wax Pillars not reaching low ceilings in Sempiternal Sanctums.
