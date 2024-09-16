@@ -44,14 +44,6 @@ public class RadianceEssence extends AbilityEssenceItem {
         components.add(Component.translatable("item.the_bumblezone.essence_radiance_description_2").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));
     }
 
-    public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int decreaseAmount) {
-        int getRemainingUse = Math.max(getAbilityUseRemaining(stack) - decreaseAmount, 0);
-        setAbilityUseRemaining(stack, getRemainingUse);
-        if (getRemainingUse == 0) {
-            setDepleted(stack, serverPlayer, false);
-        }
-    }
-
     @Override
     public void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
         if (getIsActive(stack) && level.getBrightness(LightLayer.SKY, serverPlayer.blockPosition()) >= 13 && level.isDay()) {

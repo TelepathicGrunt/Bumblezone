@@ -237,6 +237,21 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
         }
     }
 
+    public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int decreaseAmount) {
+        decrementAbilityUseRemaining(stack, serverPlayer, decreaseAmount, false);
+    }
+
+    public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int decreaseAmount, boolean vanillaCooldown) {
+        if (serverPlayer.isCreative() || serverPlayer.isSpectator()) {
+            return;
+        }
+        int getRemainingUse = Math.max(getAbilityUseRemaining(stack) - decreaseAmount, 0);
+        setAbilityUseRemaining(stack, getRemainingUse);
+        if (getRemainingUse == 0) {
+            setDepleted(stack, serverPlayer, vanillaCooldown);
+        }
+    }
+
     @Override
     public EquipmentSlot bz$getEquipmentSlot(ItemStack stack) {
         return EquipmentSlot.OFFHAND;

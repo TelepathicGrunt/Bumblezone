@@ -75,14 +75,6 @@ public class ContinuityEssence extends AbilityEssenceItem {
         components.add(Component.translatable("item.the_bumblezone.essence_continuity_description_2").withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
     }
 
-    public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int decreaseAmount) {
-        int getRemainingUse = Math.max(getAbilityUseRemaining(stack) - decreaseAmount, 0);
-        setAbilityUseRemaining(stack, getRemainingUse);
-        if (getRemainingUse == 0) {
-            setDepleted(stack, serverPlayer, true);
-        }
-    }
-
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean bl) {
         TickCapsule tickCapsule = NEXT_TICK_BEHAVIORS.poll();
@@ -190,7 +182,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
 
             ItemStack respawnedPlayerStack = serverPlayer.getOffhandItem();
             if (respawnedPlayerStack.getItem() instanceof ContinuityEssence continuityEssenceRespawnedPlayer) {
-                continuityEssenceRespawnedPlayer.decrementAbilityUseRemaining(respawnedPlayerStack, serverPlayer, 1);
+                continuityEssenceRespawnedPlayer.decrementAbilityUseRemaining(respawnedPlayerStack, serverPlayer, 1, true);
             }
 
             NEXT_TICK_BEHAVIORS.add(new TickCapsule(() -> {

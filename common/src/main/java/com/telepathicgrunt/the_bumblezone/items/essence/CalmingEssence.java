@@ -35,14 +35,6 @@ public class CalmingEssence extends AbilityEssenceItem {
         super(properties, cooldownLengthInTicks, abilityUseAmount);
     }
 
-    public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int decreaseAmount) {
-        int getRemainingUse = Math.max(getAbilityUseRemaining(stack) - decreaseAmount, 0);
-        setAbilityUseRemaining(stack, getRemainingUse);
-        if (getRemainingUse == 0) {
-            setDepleted(stack, serverPlayer, false);
-        }
-    }
-
     @Override
     public int getColor() {
         return 0x00ADED;

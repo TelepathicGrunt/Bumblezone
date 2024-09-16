@@ -57,14 +57,6 @@ public class KnowingEssence extends AbilityEssenceItem {
         components.add(Component.translatable("item.the_bumblezone.essence_knowing_description_2").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
     }
 
-    public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer) {
-        int getRemainingUse = Math.max(getAbilityUseRemaining(stack) - 1, 0);
-        setAbilityUseRemaining(stack, getRemainingUse);
-        if (getRemainingUse == 0) {
-            setDepleted(stack, serverPlayer, false);
-        }
-    }
-
     @Override
     public void rechargeAbilitySlowly(ItemStack stack, Level level, ServerPlayer serverPlayer) {
         int abilityUseRemaining = getAbilityUseRemaining(stack);
@@ -97,7 +89,7 @@ public class KnowingEssence extends AbilityEssenceItem {
             }
 
             if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 20L == 0) {
-                decrementAbilityUseRemaining(stack, serverPlayer);
+                decrementAbilityUseRemaining(stack, serverPlayer, 1);
 
                 if (BzGeneralConfigs.knowingEssenceStructureNameServer) {
                     StructureManager structureManager = ((ServerLevel)level).structureManager();
