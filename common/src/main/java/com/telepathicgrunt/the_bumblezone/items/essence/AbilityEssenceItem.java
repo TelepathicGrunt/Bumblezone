@@ -210,6 +210,9 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
      * @return Whether the ability usage has been depleted
      */
     public boolean decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int decreaseAmount) {
+        if (serverPlayer.isCreative() || serverPlayer.isSpectator()) {
+            return false;
+        }
         int getRemainingUse = Math.max(getAbilityUseRemaining(stack) - decreaseAmount, 0);
         setAbilityUseRemaining(stack, getRemainingUse);
         if (getRemainingUse == 0) {

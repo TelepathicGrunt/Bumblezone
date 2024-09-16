@@ -65,8 +65,12 @@ Made Yellow Sempiternal Sanctum's Electric Ring have a slightly bigger hitbox an
 
 Variant Bees can breed with normal Bees now but 1/4th chance of having a Variant Bee baby.
 
+Fixed Honey Slime spawning stuck in blocks and suffocating.
+
 #### Items:
 Made Buzzing Briefcase no longer burnable in Furnace so that Modern Industrial no longer shows an EU energy tooltip on the item. Reduces confusion.
+
+All endgame essence items now won't decrement their ability use counter if user is in Creative or Spectator mode.
 
 #### Structures:
 Added Gazebuzz Cluster structure to replace half of Hanging Gardens structure!
