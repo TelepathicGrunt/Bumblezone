@@ -26,6 +26,8 @@ Fixed Suspicious Pile of Pollen not possibly working with modded brushes tagged 
 Heavy Air block now disables the ability to climb blocks.
  Mostly to stop Origins and other mods allowing people to climb walls easily to cheese Essence Events in Sempiternal Sanctums.
 
+Fixed Honey Fluid rendering bottom of top Honey Fluid incorrectly when inside the bottom fluid.
+
 #### Enchantments:
 Allow Comb Cutter to now go up to Level 2 for faster mining. By default, Level 2 won't show in vanilla Enchanting Table.
  But you can get it from max tier Crystalline Flower or by combining two level 1 Comb Cutters together.

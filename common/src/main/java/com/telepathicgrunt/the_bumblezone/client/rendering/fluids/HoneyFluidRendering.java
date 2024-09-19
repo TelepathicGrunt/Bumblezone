@@ -14,6 +14,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
@@ -297,7 +298,7 @@ public class HoneyFluidRendering {
             return Shapes.blockOccudes(voxelShape, voxelShape2, direction);
         }
         else {
-            return false;
+            return blockState.getBlock() instanceof HoneyFluidBlock honeyFluidBlock && honeyFluidBlock.getFluidState(blockState).is(BzTags.SPECIAL_HONEY_LIKE);
         }
     }
 
