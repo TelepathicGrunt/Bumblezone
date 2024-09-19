@@ -14,6 +14,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
@@ -98,8 +99,8 @@ public class HoneyFluidRendering {
             float ag;
 
             if (sameFluidAbove &&
-                    (!isFaceOccludedByNeighbor(level, blockPos, Direction.UP, Math.min(Math.min(p, r), Math.min(q, o)), blockState3) ||
-                            HoneyFluid.shouldRenderSide(level, blockPos, Direction.UP, fluidState)))
+                (!isFaceOccludedByNeighbor(level, blockPos, Direction.UP, Math.min(Math.min(p, r), Math.min(q, o)), blockState3) ||
+                HoneyFluid.shouldRenderSide(level, blockPos, Direction.UP, fluidState)))
             {
                 p -= 0.001F;
                 r -= 0.001F;
@@ -298,7 +299,7 @@ public class HoneyFluidRendering {
             return Shapes.blockOccudes(voxelShape, voxelShape2, direction);
         }
         else {
-            return false;
+            return blockState.getBlock() instanceof LiquidBlock liquidBlock && liquidBlock.getFluidState(blockState).is(BzTags.SPECIAL_HONEY_LIKE);
         }
     }
 
