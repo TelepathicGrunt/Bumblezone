@@ -2,10 +2,14 @@
   "structures": [
     {
       "structure": "the_bumblezone:hanging_garden",
-      "weight": 1
+      "weight": 2
     },
     {
       "structure": "the_bumblezone:gazebuzz_cluster",
+      "weight": 2
+    },
+    {
+      "structure": "the_bumblezone:phantasm_aviary",
       "weight": 1
     }
   ],

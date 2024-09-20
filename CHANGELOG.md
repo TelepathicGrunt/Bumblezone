@@ -84,6 +84,9 @@ Added Mite Fortress as a very difficult and deadly structure with good loot!
  It is the battleground where Bees are struggling to fend off the endless waves of Endermites invading the dimension!
  Fight your way through Silverfish and Endermites for resources!
 
+Added Phantasm Aviary as a hanging structure full of Phantoms along with Crystalline Flower and some loot! Has some Rootmins as well usually.
+ This structure was originally made by Biban_Auriu with vanilla blocks so special thanks to them for donating this structure to this mod and letting us re-theme it!
+
 Removed Cell Maze as a possible structure to locate from Pirate Ship's Honey Compass.
 
 Removed End Rods and replace Purpur Block with Purpur Slabs in Cell Maze's End Bleed Room.

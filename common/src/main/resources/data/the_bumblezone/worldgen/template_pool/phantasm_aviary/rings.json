@@ -1,0 +1,77 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:phantasm_aviary/tiny_ring",
+        "processors": "the_bumblezone:phantasm_aviary_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:phantasm_aviary/tiny_fountain_ring",
+        "processors": "the_bumblezone:phantasm_aviary_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:phantasm_aviary/tiny_rootmin_ring",
+        "processors": "the_bumblezone:phantasm_aviary_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "location": "the_bumblezone:phantasm_aviary/small_ring",
+        "processors": "the_bumblezone:phantasm_aviary_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "location": "the_bumblezone:phantasm_aviary/small_rootmin_ring",
+        "processors": "the_bumblezone:phantasm_aviary_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "location": "the_bumblezone:phantasm_aviary/small_crystal_ring",
+        "processors": "the_bumblezone:phantasm_aviary_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "location": "the_bumblezone:phantasm_aviary/medium_ring",
+        "processors": "the_bumblezone:phantasm_aviary_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "location": "the_bumblezone:phantasm_aviary/medium_rootmin_ring",
+        "processors": "the_bumblezone:phantasm_aviary_processors",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}
