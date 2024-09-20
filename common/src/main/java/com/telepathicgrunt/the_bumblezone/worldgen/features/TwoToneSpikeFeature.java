@@ -53,30 +53,7 @@ public class TwoToneSpikeFeature extends Feature<TwoToneSpikeFeatureConfig> {
             return false;
         }
 
-        Registry<Structure> structureRegistry = context.level().registryAccess().registry(Registries.STRUCTURE).get();
-        if (context.level() instanceof WorldGenRegion) {
-            StructureManager structureManager = context.level().getLevel().structureManager();
-
-            if (origin.getY() > 130 && origin.getY() < 148) {
-                Structure thronePillar = structureRegistry.get(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "throne_pillar"));
-                if (thronePillar != null && GeneralUtils.getStructureAt(context.level(), structureManager, context.origin(), thronePillar).isValid()) {
-                    return false;
-                }
-            }
-
-            Optional<HolderSet.Named<Structure>> optionalHolders = structureRegistry.getTag(BzTags.NO_GIANT_SPIKES);
-            if (optionalHolders.isPresent()) {
-                for (Holder<Structure> structure : optionalHolders.get()) {
-                    if (GeneralUtils.getStructureAt(context.level(), structureManager, context.origin(), structure.value()).isValid()) {
-                        return false;
-                    }
-                }
-            }
-        }
-
         boolean validSpot = false;
-        boolean superSlant = false;
-        Direction wallDirection = null;
         BlockState attachedState = null;
         for (Direction direction : Direction.Plane.VERTICAL) {
             blockpos$Mutable.set(origin).move(direction, 5);

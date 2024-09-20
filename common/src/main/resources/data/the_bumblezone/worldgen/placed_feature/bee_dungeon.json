@@ -21,6 +21,11 @@
       }
     },
     {
+      "type": "the_bumblezone:structure_disallow_by_tag",
+      "disallow_tag": "the_bumblezone:no_dungeons",
+      "piecewise_check": true
+    },
+    {
       "type": "minecraft:biome"
     }
   ]

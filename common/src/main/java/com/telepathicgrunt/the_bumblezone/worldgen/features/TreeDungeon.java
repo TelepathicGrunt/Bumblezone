@@ -59,18 +59,6 @@ public class TreeDungeon extends NbtFeature<TreeDungeonFeatureConfig> {
     }
 
     protected static boolean isValidDungeonSpot(FeaturePlaceContext<?> context) {
-        Registry<Structure> configuredStructureFeatureRegistry = context.level().registryAccess().registry(Registries.STRUCTURE).get();
-        if (context.level() instanceof WorldGenRegion) {
-            StructureManager structureManager = context.level().getLevel().structureManager();
-
-            for (Holder<Structure> structure : configuredStructureFeatureRegistry.getTagOrEmpty(BzTags.NO_DUNGEONS)) {
-                StructureStart startForFeature = GeneralUtils.getStructureAt(context.level(), structureManager, context.origin(), structure.value());
-                if (startForFeature.isValid()) {
-                    return false;
-                }
-            }
-        }
-
         if (!context.level().getBlockState(context.origin()).canOcclude()) {
             return false;
         }

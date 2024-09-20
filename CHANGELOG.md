@@ -120,5 +120,7 @@ Fixed int overflow with my `min_distance_from_world_origin` option in structure 
 
 Spawn Honey Cave Room structure farther from sea level.
 
+Fixed Giant Honey Crystal, Bee Dungeons, and a few other features to stop spawning inside certain structures.
+
 #### Mod Compat:
 Add more mod compat Bee Queen Trades and tagging! Special thanks to Cicopath for the work here!

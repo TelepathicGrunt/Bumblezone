@@ -26,15 +26,24 @@ import java.util.stream.Stream;
 public class StructureDisallowByTag extends PlacementModifier {
     private final Optional<TagKey<Structure>> disallowTag;
     private final boolean piecewiseCheck;
+    private final Optional<Integer> minY;
+    private final Optional<Integer> maxY;
 
     public static final MapCodec<StructureDisallowByTag> CODEC = RecordCodecBuilder.mapCodec((configInstance) -> configInstance.group(
             TagKey.codec(Registries.STRUCTURE).optionalFieldOf("disallow_tag").forGetter(structureDisallowByTag -> structureDisallowByTag.disallowTag),
-            Codec.BOOL.fieldOf("piecewise_check").forGetter(structureDisallowByTag -> structureDisallowByTag.piecewiseCheck)
+            Codec.BOOL.fieldOf("piecewise_check").forGetter(structureDisallowByTag -> structureDisallowByTag.piecewiseCheck),
+            Codec.INT.optionalFieldOf("min_y").forGetter(structureDisallowByTag -> structureDisallowByTag.minY),
+            Codec.INT.optionalFieldOf("max_y").forGetter(structureDisallowByTag -> structureDisallowByTag.maxY)
     ).apply(configInstance, StructureDisallowByTag::new));
 
-    private StructureDisallowByTag(Optional<TagKey<Structure>> disallowTag, boolean piecewiseCheck) {
+    private StructureDisallowByTag(Optional<TagKey<Structure>> disallowTag,
+                                   boolean piecewiseCheck,
+                                   Optional<Integer> minY,
+                                   Optional<Integer> maxY) {
         this.disallowTag = disallowTag;
         this.piecewiseCheck = piecewiseCheck;
+        this.minY = minY;
+        this.maxY = maxY;
     }
 
     @Override
@@ -50,7 +59,8 @@ public class StructureDisallowByTag extends PlacementModifier {
             StructureManager structureManager = placementContext.getLevel().getLevel().structureManager();
             ChunkPos chunkPos = new ChunkPos(blockPos);
 
-            if (this.disallowTag.isPresent()) {
+            boolean doTagCheck = isDoTagCheck(blockPos);
+            if (this.disallowTag.isPresent() && doTagCheck) {
                 List<StructureStart> structureStarts = structureManager.startsForStructure(chunkPos,
                         struct -> structureRegistry.getHolderOrThrow(structureRegistry.getResourceKey(struct).get()).is(this.disallowTag.get()));
 
@@ -85,5 +95,30 @@ public class StructureDisallowByTag extends PlacementModifier {
         }
 
         return Stream.of(blockPos);
+    }
+
+    private boolean isDoTagCheck(BlockPos blockPos) {
+        boolean doTagCheck = false;
+
+        if (this.minY.isPresent() && this.maxY.isPresent()) {
+            if (blockPos.getY() >= minY.get() && blockPos.getY() <= maxY.get()) {
+                doTagCheck = true;
+            }
+        }
+        else if (this.minY.isPresent()) {
+            if (blockPos.getY() >= minY.get()) {
+                doTagCheck = true;
+            }
+        }
+        else if (this.maxY.isPresent()) {
+            if (blockPos.getY() <= maxY.get()) {
+                doTagCheck = true;
+            }
+        }
+        else {
+            doTagCheck = true;
+        }
+
+        return doTagCheck;
     }
 }
