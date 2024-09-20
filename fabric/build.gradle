@@ -54,9 +54,9 @@ dependencies {
 
     //modLocalRuntime("dev.emi:emi-fabric:${rootProject.emi}")
 
-    modLocalRuntime("curse.maven:huge-structure-blocks-474114:4803539")
-    modLocalRuntime("com.telepathicgrunt:CommandStructures:${project.commandstructures_fabric}")
-    modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_fabric}")
+//    modLocalRuntime("curse.maven:huge-structure-blocks-474114:4803539")
+//    modLocalRuntime("com.telepathicgrunt:CommandStructures:${project.commandstructures_fabric}")
+//    modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_fabric}")
 }
 
 processResources {
