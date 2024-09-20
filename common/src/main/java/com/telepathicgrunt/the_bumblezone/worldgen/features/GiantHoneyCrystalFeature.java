@@ -54,7 +54,7 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
 
             if (origin.getY() > 130 && origin.getY() < 148) {
                 Structure thronePillar = structureRegistry.get(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "throne_pillar"));
-                if (thronePillar != null && GeneralUtils.getStructureAt(context.level(), structureManager, context.origin(), thronePillar).isValid()) {
+                if (thronePillar != null && GeneralUtils.getStructureAt(level, structureManager, origin, thronePillar).isValid()) {
                     return false;
                 }
             }
@@ -62,7 +62,7 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
             Optional<HolderSet.Named<Structure>> optionalHolders = structureRegistry.getTag(BzTags.NO_GIANT_SPIKES);
             if (optionalHolders.isPresent()) {
                 for (Holder<Structure> structure : optionalHolders.get()) {
-                    if (GeneralUtils.getStructureAt(context.level(), structureManager, context.origin(), structure.value()).isValid()) {
+                    if (GeneralUtils.getStructureAt(level, structureManager, origin, structure.value()).isValid()) {
                         return false;
                     }
                 }

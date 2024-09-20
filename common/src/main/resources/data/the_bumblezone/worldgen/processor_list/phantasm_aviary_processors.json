@@ -1,0 +1,122 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:tag_ignore_processor",
+      "ignore_blocks_tag": "the_bumblezone:structures/dont_replace_blocks"
+    },
+    {
+      "processor_type": "the_bumblezone:tag_replace_processor",
+      "input_block": "minecraft:cornflower",
+      "output_block_tag": "the_bumblezone:phantasm_aviary/allowed_flowers",
+      "blacklisted_output_block_tag": "the_bumblezone:phantasm_aviary/forced_disallowed_flowers"
+    },
+    {
+      "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:deepslate_lapis_ore"
+          },
+          "input_predicate": {
+            "block": "minecraft:deepslate",
+            "probability": 0.04,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:deepslate_redstone_ore"
+          },
+          "input_predicate": {
+            "block": "minecraft:deepslate",
+            "probability": 0.04,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:deepslate_iron_ore"
+          },
+          "input_predicate": {
+            "block": "minecraft:deepslate",
+            "probability": 0.03,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:deepslate_copper_ore"
+          },
+          "input_predicate": {
+            "block": "minecraft:deepslate",
+            "probability": 0.03,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:deepslate_emerald_ore"
+          },
+          "input_predicate": {
+            "block": "minecraft:deepslate",
+            "probability": 0.01,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:deepslate_diamond_ore"
+          },
+          "input_predicate": {
+            "block": "minecraft:deepslate",
+            "probability": 0.01,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "up",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:red_stained_glass"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:carvable_wax",
+            "Properties": {
+              "carving": "chains"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "minecraft:block_ignore",
+      "blocks": [
+        {
+          "Name": "minecraft:structure_void"
+        }
+      ]
+    }
+  ]
+}

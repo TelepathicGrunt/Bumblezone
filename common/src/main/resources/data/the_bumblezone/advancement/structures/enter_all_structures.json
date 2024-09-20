@@ -339,6 +339,22 @@
         ]
       }
     },
+    "in_phantasm_aviary": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structures": "the_bumblezone:phantasm_aviary"
+              }
+            }
+          }
+        ]
+      }
+    },
     "in_pirate_ship": {
       "trigger": "minecraft:location",
       "conditions": {
@@ -576,6 +592,9 @@
     ],
     [
       "in_overgrown_flower"
+    ],
+    [
+      "in_phantasm_aviary"
     ],
     [
       "in_pirate_ship"
