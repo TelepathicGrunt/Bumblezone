@@ -12,6 +12,10 @@
   "spawn_overrides": {
     "creature": {
       "bounding_box": "full",
+      "spawns": []
+    },
+    "monster": {
+      "bounding_box": "full",
       "spawns": [
         {
           "type": "minecraft:phantom",
@@ -20,10 +24,6 @@
           "maxCount": 2
         }
       ]
-    },
-    "monster": {
-      "bounding_box": "full",
-      "spawns": []
     }
   }
 }
