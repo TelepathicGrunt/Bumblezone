@@ -16,6 +16,7 @@ public class BzSounds {
     public static final RegistryEntry<SoundEvent> GENERAL_MUSIC = registerSoundEvent("biomes.general_music");
     public static final RegistryEntry<SoundEvent> ANGERED_BEES = registerSoundEvent("music.angered_bees");
     public static final RegistryEntry<SoundEvent> SEMPITERNAL_SANCTUM = registerSoundEvent("music.sempiternal_sanctum");
+    public static final RegistryEntry<SoundEvent> RAGING_EVENT = registerSoundEvent("music.raging_event");
     public static final RegistryEntry<SoundEvent> KNOWING_EVENT = registerSoundEvent("music.knowing_event");
     public static final RegistryEntry<SoundEvent> RADIANCE_EVENT = registerSoundEvent("music.radiance_event");
     public static final RegistryEntry<SoundEvent> LIFE_EVENT = registerSoundEvent("music.life_event");
@@ -29,6 +30,7 @@ public class BzSounds {
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_KNOWING_RENREN = registerSoundEvent("music_disc.knowing_renren");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_RADIANCE_RENREN = registerSoundEvent("music_disc.radiance_renren");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_LIFE_RENREN = registerSoundEvent("music_disc.life_renren");
+    public static final RegistryEntry<SoundEvent> MUSIC_DISC_BEENNA_BOX_MONO = registerSoundEvent("music_disc.beenna_box_mono");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_A_LAST_FIRST_LAST_MONO = registerSoundEvent("music_disc.a_last_first_last_mono");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_DROWNING_IN_DESPAIR_MONO = registerSoundEvent("music_disc.drowning_in_despair_mono");
     public static final RegistryEntry<SoundEvent> BEEHEMOTH_HURT = registerSoundEvent("entity.the_bumblezone.beehemoth.hurt");

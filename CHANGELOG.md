@@ -5,6 +5,8 @@ Fixed issue where completing Honey Drunk advancement with 1 Honey Bottle in hand
 
 Added a new advancement to show that you can sleep in beds within Bumblezone to set respawn point and beds won't explode!
 
+Fixed Music Disc Collection advancement not requiring all Bumblezone Music Discs
+
 #### Blocks:
 Fixed Luminescence Wax Channel block's top and bottom texture not rotated when sword/shear right-clicked while horizontal.
 
@@ -88,6 +90,8 @@ Added Mite Fortress as a very difficult and deadly structure with good loot!
 
 Added Phantasm Aviary as a hanging structure full of Phantoms along with Crystalline Flower and some loot! Has some Rootmins as well usually.
  This structure was originally made by Biban_Auriu with vanilla blocks so special thanks to them for donating this structure to this mod and letting us re-theme it!
+
+Red Sempiternal Sanctum's arena event now has it own music! Beenna Box by Punpudle! Also a Music Disc was made for it!
 
 Removed Cell Maze as a possible structure to locate from Pirate Ship's Honey Compass.
 

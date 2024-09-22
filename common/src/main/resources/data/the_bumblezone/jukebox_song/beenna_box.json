@@ -1,0 +1,8 @@
+{
+  "comparator_output": 5,
+  "description": {
+    "translate": "jukebox_song.the_bumblezone.beenna_box"
+  },
+  "length_in_seconds": 251.0,
+  "sound_event": "the_bumblezone:music_disc.beenna_box_mono"
+}

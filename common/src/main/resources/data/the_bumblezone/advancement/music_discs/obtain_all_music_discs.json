@@ -24,9 +24,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "the_bumblezone:music_disc_honey_bee_rat_faced_boy"
-            ]
+            "items": ["the_bumblezone:music_disc_honey_bee_rat_faced_boy"]
           }
         ]
       }
@@ -36,9 +34,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "the_bumblezone:music_disc_flight_of_the_bumblebee_rimsky_korsakov"
-            ]
+            "items": ["the_bumblezone:music_disc_flight_of_the_bumblebee_rimsky_korsakov"]
           }
         ]
       }
@@ -48,9 +44,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "the_bumblezone:music_disc_la_bee_da_loca"
-            ]
+            "items": ["the_bumblezone:music_disc_la_bee_da_loca"]
           }
         ]
       }
@@ -60,9 +54,77 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "the_bumblezone:music_disc_bee_laxing_with_the_hom_bees"
-            ]
+            "items": ["the_bumblezone:music_disc_bee_laxing_with_the_hom_bees"]
+          }
+        ]
+      }
+    },
+    "obtain_music_disc_bee_ware_of_the_temple": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:music_disc_bee_ware_of_the_temple"]
+          }
+        ]
+      }
+    },
+    "obtain_music_disc_knowing_renren": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:music_disc_knowing_renren"]
+          }
+        ]
+      }
+    },
+    "obtain_music_disc_radiance_renren": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:music_disc_radiance_renren"]
+          }
+        ]
+      }
+    },
+    "obtain_music_disc_life_renren": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:music_disc_life_renren"]
+          }
+        ]
+      }
+    },
+    "obtain_music_disc_a_last_first_last": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:music_disc_a_last_first_last"]
+          }
+        ]
+      }
+    },
+    "obtain_music_disc_drowning_in_despair": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:music_disc_drowning_in_despair"]
+          }
+        ]
+      }
+    },
+    "obtain_music_disc_beenna_box": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:music_disc_beenna_box"]
           }
         ]
       }
@@ -80,6 +142,27 @@
     ],
     [
       "obtain_music_disc_bee_laxing_with_the_hom_bees"
+    ],
+    [
+      "obtain_music_disc_bee_ware_of_the_temple"
+    ],
+    [
+      "obtain_music_disc_knowing_renren"
+    ],
+    [
+      "obtain_music_disc_radiance_renren"
+    ],
+    [
+      "obtain_music_disc_life_renren"
+    ],
+    [
+      "obtain_music_disc_a_last_first_last"
+    ],
+    [
+      "obtain_music_disc_drowning_in_despair"
+    ],
+    [
+      "obtain_music_disc_beenna_box"
     ]
   ]
 }

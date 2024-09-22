@@ -18,6 +18,7 @@ public class BzJukeboxSongs {
     public static ResourceKey<JukeboxSong> LIFE_RENREN = create("life_renren");
     public static ResourceKey<JukeboxSong> A_LAST_FIRST_LAST = create("a_last_first_last");
     public static ResourceKey<JukeboxSong> DROWNING_IN_DESPAIR = create("drowning_in_despair");
+    public static ResourceKey<JukeboxSong> BEENNA_BOX = create("beenna_box");
 
     private static ResourceKey<JukeboxSong> create(String string) {
         return ResourceKey.create(Registries.JUKEBOX_SONG, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, string));
