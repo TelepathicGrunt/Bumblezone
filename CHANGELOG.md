@@ -1,3 +1,10 @@
+### **(V.7.5.1 Changes) (1.20.1 Minecraft)**
+
+#### Structures:
+Fixed it so Gazebuzz Cluster structure pulls random music discs to spawn from `the_bumblezone:structures/gazebuzz_cluster_music_discs` item tag 
+ instead of the `the_bumblezone:structures/dance_floor_music_discs` item tag
+
+
 ### **(V.7.5.0 Changes) (1.20.1 Minecraft)**
 
 #### Advancements:
