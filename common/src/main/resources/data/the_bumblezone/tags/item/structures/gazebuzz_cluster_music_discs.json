@@ -1,0 +1,25 @@
+{
+  "values": [
+    "#the_bumblezone:music_discs",
+    {
+      "id": "biomemakeover:red_rose_music_disk",
+      "required": false
+    },
+    {
+      "id": "blue_skies:venomous_encounter",
+      "required": false
+    },
+    {
+      "id": "llamarama:flight_of_the_bumble_llama",
+      "required": false
+    },
+    {
+      "id": "truedarkness:music_misc_turquoise_flower",
+      "required": false
+    },
+    {
+      "id": "windswept:music_disc_bumblebee",
+      "required": false
+    }
+  ]
+}
