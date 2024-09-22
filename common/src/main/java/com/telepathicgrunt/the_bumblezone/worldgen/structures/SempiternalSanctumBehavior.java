@@ -36,15 +36,9 @@ public class SempiternalSanctumBehavior {
             if (EssenceOfTheBees.hasEssence(serverPlayer)) {
                 if (!PLAYERS_IN_SANCTUMS.contains(serverPlayer.getUUID())) {
                     BlockPos structureCenter = detectedStructure.getBoundingBox().getCenter().below(20);
-                    PoiManager poiManager = serverPlayer.serverLevel().getPoiManager();
-                    List<PoiRecord> poiInRange = poiManager.getInSquare(
-                            (pointOfInterestType) -> pointOfInterestType.value() == BzPOI.ESSENCE_BLOCK_POI.get(),
-                            structureCenter,
-                            6,
-                            PoiManager.Occupancy.ANY).toList();
 
                     // Only display message if sanctum is active with essence block
-                    if (poiInRange.isEmpty()) {
+                    if (!serverPlayer.level().getBlockState(structureCenter).is(BzTags.ESSENCE_BLOCKS)) {
                         return;
                     }
 
@@ -104,14 +98,15 @@ public class SempiternalSanctumBehavior {
                 }
             }
 
-            if (serverPlayer.tickCount % 60 == 0) {
+            if (serverPlayer.tickCount % 60 == 20) {
                 MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.SEMPITERNAL_SANCTUM.get().getLocation(), true);
             }
 
         }
         else {
-            if (serverPlayer.tickCount % 60 == 0 && PLAYERS_IN_SANCTUMS.contains(serverPlayer.getUUID())) {
+            if (serverPlayer.tickCount % 60 == 20 && PLAYERS_IN_SANCTUMS.contains(serverPlayer.getUUID())) {
                 MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.SEMPITERNAL_SANCTUM.get().getLocation(), false);
+                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RAGING_EVENT.get().getLocation(), false);
                 MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RADIANCE_EVENT.get().getLocation(), false);
                 MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.LIFE_EVENT.get().getLocation(), false);
                 MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.CALMING_EVENT.get().getLocation(), false);

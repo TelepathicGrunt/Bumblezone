@@ -53,6 +53,7 @@ public class BzGeneralConfigs {
     public static int musicDiscTimeLengthLife = 86;
     public static int musicDiscTimeAFirstALast = 652;
     public static int musicDiscDrowningInDespair = 570;
+    public static int musicDiscBeennaBox = 251;
     public static boolean crystallineFlowerConsumeItemEntities = true;
     public static boolean crystallineFlowerConsumeExperienceOrbEntities = true;
     public static boolean crystallineFlowerConsumeItemUI = true;

@@ -36,6 +36,15 @@
       }
     ]
   },
+  "music.raging_event": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:music/beenna_box_stereo",
+        "stream": true,
+        "volume": 1
+      }
+    ]
+  },
   "music.knowing_event": {
     "sounds": [
       {
@@ -134,6 +143,14 @@
     "sounds": [
       {
         "name": "the_bumblezone:music/knowing_renren_mono",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.beenna_box_mono": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:music/beenna_box_mono",
         "stream": true
       }
     ]
