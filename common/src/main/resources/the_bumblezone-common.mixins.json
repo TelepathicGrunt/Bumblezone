@@ -67,6 +67,7 @@
     "items.HoneyShieldMobMixin",
     "items.HoneyShieldPlayerMixin",
     "items.MapItemMixin",
+    "items.NameTagItemMixin",
     "items.PlayerDamageShieldInvoker",
     "items.SpawnEggItemAccessor",
     "loot.LootContextAccessor",

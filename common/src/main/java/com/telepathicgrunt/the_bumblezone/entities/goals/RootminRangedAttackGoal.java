@@ -39,6 +39,10 @@ public class RootminRangedAttackGoal extends Goal {
             return false;
         }
 
+        if (rootminEntity.isOwnedBy(livingEntity)) {
+            return false;
+        }
+
         if (!rootminEntity.canTarget(livingEntity)) {
             rootminEntity.setTarget(null);
             rootminEntity.setAggressive(false);

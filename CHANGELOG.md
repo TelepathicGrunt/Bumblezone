@@ -4,6 +4,11 @@
 Fixed it so Gazebuzz Cluster structure pulls random music discs to spawn from `the_bumblezone:structures/gazebuzz_cluster_music_discs` item tag 
  instead of the `the_bumblezone:structures/dance_floor_music_discs` item tag
 
+#### Entities:
+Rootmins can be "tamed" by using a Name Tag on them. 
+ Once they are owned by a player, the Rootmin will not shoot that player but will shoot at other players without bee armor.
+ Owned Rootmins will also now shoot at any monster not owned by the Rootmin's owner and the monster is not tagged `the_bumblezone:rootmin/forced_do_not_target`
+
 
 ### **(V.7.5.0 Changes) (1.20.1 Minecraft)**
 

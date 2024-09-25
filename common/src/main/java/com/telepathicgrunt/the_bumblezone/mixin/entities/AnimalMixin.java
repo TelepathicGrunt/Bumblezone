@@ -1,17 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.telepathicgrunt.the_bumblezone.entities.mobs.VariantBeeEntity;
-import com.telepathicgrunt.the_bumblezone.packets.SyncHorseOwnerUUIDPacketFromServer;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bee;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.UUID;
 
 @Mixin(Animal.class)
 public class AnimalMixin {
