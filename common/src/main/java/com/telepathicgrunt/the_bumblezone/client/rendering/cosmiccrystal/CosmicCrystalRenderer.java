@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
-import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminShieldRenderer;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalState;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;

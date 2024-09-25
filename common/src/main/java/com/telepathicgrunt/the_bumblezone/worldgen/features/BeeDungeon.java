@@ -3,21 +3,12 @@ package com.telepathicgrunt.the_bumblezone.worldgen.features;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.NbtFeatureConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.server.level.WorldGenRegion;
-import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.structure.Structure;
-import net.minecraft.world.level.levelgen.structure.StructureStart;
 
 
 public class BeeDungeon extends NbtFeature<NbtFeatureConfig> {

@@ -37,6 +37,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -52,7 +53,9 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
@@ -79,6 +82,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.scores.PlayerTeam;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
@@ -89,12 +93,13 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-public class RootminEntity extends PathfinderMob implements Enemy {
+public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity {
 
    private static final EntityDataAccessor<Optional<BlockState>> FLOWER_BLOCK_STATE = SynchedEntityData.defineId(RootminEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_STATE);
    public static final EntityDataSerializer<RootminState> ROOTMIN_POSE_SERIALIZER = EntityDataSerializer.forValueType(RootminState.STREAM_CODEC);
    private static final EntityDataAccessor<RootminState> ROOTMIN_POSE = SynchedEntityData.defineId(RootminEntity.class, ROOTMIN_POSE_SERIALIZER);
    private static final EntityDataAccessor<Boolean> ROOTMIN_SHIELD = SynchedEntityData.defineId(RootminEntity.class, EntityDataSerializers.BOOLEAN);
+   protected static final EntityDataAccessor<Optional<UUID>> OWNER_UUID = SynchedEntityData.defineId(RootminEntity.class, EntityDataSerializers.OPTIONAL_UUID);
 
    public final AnimationState idleAnimationState = new AnimationState();
    public final AnimationState angryAnimationState = new AnimationState();
@@ -232,6 +237,16 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       return this.entityData.get(ROOTMIN_SHIELD);
    }
 
+   @Nullable
+   @Override
+   public UUID getOwnerUUID() {
+      return this.entityData.get(OWNER_UUID).orElse(null);
+   }
+
+   public void setOwnerUUID(@Nullable UUID uUID) {
+      this.entityData.set(OWNER_UUID, Optional.ofNullable(uUID));
+   }
+
    public void runAngry() {
       if (this.getRootminPose() != RootminState.ANGRY) {
          this.playSound(BzSounds.ROOTMIN_ANGRY.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
@@ -363,6 +378,9 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       if (this.getEssenceControllerDimension() != null) {
          compoundTag.putString("essenceControllerDimension", this.getEssenceControllerDimension().location().toString());
       }
+      if (this.getOwnerUUID() != null) {
+         compoundTag.putUUID("Owner", this.getOwnerUUID());
+      }
    }
 
    @Override
@@ -403,6 +421,19 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       if (compoundTag.contains("essenceControllerDimension")) {
          this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(compoundTag.getString("essenceControllerDimension"))));
       }
+
+      UUID uUID;
+      if (compoundTag.hasUUID("Owner")) {
+         uUID = compoundTag.getUUID("Owner");
+      }
+      else {
+         String string = compoundTag.getString("Owner");
+         uUID = OldUsersConverter.convertMobOwnerIfNecessary(this.getServer(), string);
+      }
+
+      if (uUID != null) {
+         this.setOwnerUUID(uUID);
+      }
    }
 
    @Override
@@ -421,6 +452,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       builder.define(FLOWER_BLOCK_STATE, Optional.empty());
       builder.define(ROOTMIN_POSE, RootminState.NONE);
       builder.define(ROOTMIN_SHIELD, false);
+      builder.define(OWNER_UUID, Optional.empty());
    }
 
    @Override
@@ -561,7 +593,6 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    public void shootHomingDirt(LivingEntity livingEntity, float speedMultiplier) {
       if (!this.level().isClientSide()) {
          DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this);
-         pelletEntity.setPos(pelletEntity.position().add(this.getLookAngle().x(), 0, this.getLookAngle().z()));
 
          if (this.getEssenceController() != null) {
             pelletEntity.setEventBased(true);
@@ -887,10 +918,23 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    }
 
    public boolean canTarget(LivingEntity livingEntity) {
-      boolean canTarget = (BeeAggression.doesBeesHateEntity(livingEntity) || livingEntity.getType().is(BzTags.ROOTMIN_TARGETS)) &&
-              !livingEntity.getType().is(BzTags.ROOTMIN_FORCED_DO_NOT_TARGET);
+      if (livingEntity.getType().is(BzTags.ROOTMIN_FORCED_DO_NOT_TARGET)) {
+         return false;
+      }
+
+      if (this.getOwnerUUID() != null) {
+         if (livingEntity.getType().getCategory() == MobCategory.MONSTER && !(livingEntity instanceof OwnableEntity ownableEntity && this.getOwnerUUID().equals(ownableEntity.getOwnerUUID()))) {
+            return true;
+         }
+      }
+
+      boolean canTarget = BeeAggression.doesBeesHateEntity(livingEntity) || livingEntity.getType().is(BzTags.ROOTMIN_TARGETS);
 
       if (canTarget && livingEntity instanceof Player player) {
+         if (this.isOwnedBy(player)) {
+            return false;
+         }
+
          if (player.isCreative() || player.isSpectator() || player.isDeadOrDying()) {
             if (player.getUUID().equals(this.superHatedPlayer)) {
                this.superHatedPlayer = null;
@@ -908,6 +952,38 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          }
       }
       return canTarget;
+   }
+
+   public boolean isOwnedBy(LivingEntity livingEntity) {
+      return livingEntity == this.getOwner();
+   }
+
+   @Override
+   public PlayerTeam getTeam() {
+      if (this.getOwner() != null) {
+         LivingEntity livingEntity = this.getOwner();
+         if (livingEntity != null) {
+            return livingEntity.getTeam();
+         }
+      }
+
+      return super.getTeam();
+   }
+
+   @Override
+   public boolean isAlliedTo(Entity entity) {
+      if (this.getOwner() != null) {
+         LivingEntity livingEntity = this.getOwner();
+         if (entity == livingEntity) {
+            return true;
+         }
+
+         if (livingEntity != null) {
+            return livingEntity.isAlliedTo(entity);
+         }
+      }
+
+      return super.isAlliedTo(entity);
    }
 
    public static void considerHiddenRootminsInPath(Path path, RootminEntity mob) {

@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.worldgen.structures;
 
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.MusicPacketFromServer;
@@ -15,13 +14,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.ai.village.poi.PoiManager;
-import net.minecraft.world.entity.ai.village.poi.PoiRecord;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.UUID;
 
 public class SempiternalSanctumBehavior {

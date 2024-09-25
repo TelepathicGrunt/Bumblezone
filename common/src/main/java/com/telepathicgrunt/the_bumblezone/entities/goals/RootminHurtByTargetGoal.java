@@ -22,10 +22,14 @@ public class RootminHurtByTargetGoal extends TargetGoal {
         this.setFlags(EnumSet.of(Goal.Flag.TARGET));
     }
 
-    public boolean canUse () {
+    public boolean canUse() {
         int lastHurtByMobTimestamp = this.mob.getLastHurtByMobTimestamp();
         LivingEntity livingEntity = this.mob.getLastHurtByMob();
         if (lastHurtByMobTimestamp != this.timestamp && livingEntity != null) {
+            if (this.mob instanceof RootminEntity rootminEntity && rootminEntity.isOwnedBy(livingEntity)) {
+                return false;
+            }
+
             if (livingEntity.getType() == EntityType.PLAYER && this.mob.level().getGameRules().getBoolean(GameRules.RULE_UNIVERSAL_ANGER)) {
                 return false;
             }
@@ -66,15 +70,15 @@ public class RootminHurtByTargetGoal extends TargetGoal {
         this.unseenMemoryTicks = 300;
         super.start();
 
-        if (this.targetMob != null) {
+        if (this.targetMob != null && this.mob instanceof RootminEntity rootminEntity && !rootminEntity.isOwnedBy(this.targetMob)) {
             List<RootminEntity> rootminEntities = this.mob.level().getEntitiesOfClass(RootminEntity.class, this.mob.getBoundingBox().inflate(30));
-            for(RootminEntity rootminEntity : rootminEntities) {
-                if (rootminEntity != this.mob && rootminEntity.getTarget() != this.targetMob && !RootminEntity.POSES_THAT_CANT_BE_MOTION_INTERRUPTED.contains(rootminEntity.getRootminPose())) {
-                    rootminEntity.runAngry();
+            for(RootminEntity rootminEntityNear : rootminEntities) {
+                if (rootminEntityNear != this.mob && rootminEntityNear.getTarget() != this.targetMob && !RootminEntity.POSES_THAT_CANT_BE_MOTION_INTERRUPTED.contains(rootminEntityNear.getRootminPose())) {
+                    rootminEntityNear.runAngry();
                 }
 
-                rootminEntity.setTarget(this.targetMob);
-                rootminEntity.superHatedPlayer = this.targetMob.getUUID();
+                rootminEntityNear.setTarget(this.targetMob);
+                rootminEntityNear.superHatedPlayer = this.targetMob.getUUID();
             }
         }
     }
