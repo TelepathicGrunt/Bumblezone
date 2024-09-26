@@ -286,7 +286,7 @@ public abstract class HoneyFluid extends BzFluid {
             }
         }
         else {
-            FluidState sideFluidState = world.getBlockState(blockPos.relative(direction)).getFluidState();
+            FluidState sideFluidState = world.getFluidState(blockPos.relative(direction));
             if(sideFluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
                 int bottomLayerCurrent = currentFluidState.isSource() ? 0 : currentFluidState.getValue(BOTTOM_LEVEL);
                 int bottomLayerSide = sideFluidState.isSource() ? 0 : sideFluidState.getValue(BOTTOM_LEVEL);

@@ -238,21 +238,21 @@ public class HoneyFluidRendering {
                     }
                 }
 
-                if (renderside &&
-                    !isFaceOccludedByNeighbor(level, blockPos, direction, Math.max(u4, v1), level.getBlockState(blockPos.relative(direction))))
-                {
+                if (renderside) {
                     BlockPos blockPos2 = blockPos.relative(direction);
                     TextureAtlasSprite textureAtlasSprite2 = sprites[1];
                     Block block = level.getBlockState(blockPos2).getBlock();
+                    boolean stillSide = false;
                     if (block instanceof HalfTransparentBlock || block instanceof LeavesBlock) {
                         textureAtlasSprite2 = sprites[0];
+                        stillSide = true;
                     }
 
                     float av = textureAtlasSprite2.getU(0.0F);
-                    float aw = textureAtlasSprite2.getU(0.5f);
+                    float aw = textureAtlasSprite2.getU(stillSide ? 1f : 0.5f);
                     float ax = textureAtlasSprite2.getV((1.0F - u4) * 0.5F);
                     float ay = textureAtlasSprite2.getV((1.0F - v1) * 0.5F);
-                    float az = textureAtlasSprite2.getV(y == 0 ? 0.5F : 0.5F * (1 - y));
+                    float az = textureAtlasSprite2.getV((y == 0 ? 0.5F : 0.5F * (1 - y)) * (stillSide ? 2f : 1f));
                     float ba = direction.getAxis() == Direction.Axis.Z ? northShade : westShade;
                     float bb = upShade * ba;
                     float bc = upShade * ba;
