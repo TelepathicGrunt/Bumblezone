@@ -4,6 +4,8 @@
 Fixed it so Gazebuzz Cluster structure pulls random music discs to spawn from `the_bumblezone:structures/gazebuzz_cluster_music_discs` item tag 
  instead of the `the_bumblezone:structures/dance_floor_music_discs` item tag
 
+Removed the floating honey inside Goliath Honey Fountain. No idea how the heck that snuck in while saving pieces of the fountain.
+
 #### Entities:
 Rootmins can be "tamed" by using a Name Tag on them. 
  Once they are owned by a player, the Rootmin will not shoot that player but will shoot at other players without bee armor.
