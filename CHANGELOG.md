@@ -11,6 +11,11 @@ Rootmins can be "tamed" by using a Name Tag on them.
  Once they are owned by a player, the Rootmin will not shoot that player but will shoot at other players without bee armor.
  Owned Rootmins will also now shoot at any monster not owned by the Rootmin's owner and the monster is not tagged `the_bumblezone:rootmin/forced_do_not_target`
 
+#### Fluids:
+Fixed a case where Honey Fluids didn't render a side while falling. Also fixed still textures being too large when viewed through glass.
+
+Falling Honey Fluid does not get squished textures now.
+
 
 ### **(V.7.5.0 Changes) (1.20.1 Minecraft)**
 
