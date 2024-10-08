@@ -1,3 +1,9 @@
+### **(V.7.7.2 Changes) (1.21.1 Minecraft)**
+
+#### Misc:
+Hard require v3.0.11 Resourceful Lib now as that version fixes a crash between the custom fluids in Bumblezone and rendering of the fluid in other mods.
+
+
 ### **(V.7.7.1 Changes) (1.21.1 Minecraft)**
 
 #### Structures:

@@ -46,6 +46,7 @@
         "fabricloader": "*",
         "minecraft": ">=1.21.1",
         "fabric": ">=0.100.6",
+        "resourcefullib": ">=3.0.11",
         "midnightlib": "*"
     }
 }
