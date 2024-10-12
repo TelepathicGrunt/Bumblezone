@@ -3,6 +3,10 @@
 #### Advancements:
 Halved the requirements of many Queen Desire advancements to be less grindy.
 
+#### Entities:
+The Bee Queen will now give you Bottle O' Enchanting for Music Discs, Trim Templates, Banners, and Sherds!
+ Good way to get rid of duplicates of these items.
+
 
 ### **(V.7.5.1 Changes) (1.20.1 Minecraft)**
 

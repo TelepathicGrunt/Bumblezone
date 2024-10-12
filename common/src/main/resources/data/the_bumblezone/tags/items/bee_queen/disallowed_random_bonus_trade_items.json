@@ -26,6 +26,9 @@
     "#minecraft:banners",
     "#minecraft:beds",
     "#minecraft:candles",
+    "#minecraft:music_discs",
+    "#minecraft:trim_templates",
+    "#minecraft:decorated_pot_sherds",
     "the_bumblezone:empty_honeycomb_brood_block",
     "the_bumblezone:royal_jelly_bottle",
     "the_bumblezone:royal_jelly_bucket",
@@ -65,6 +68,10 @@
     },
     {
       "id": "#forge:fence_gates/wooden",
+      "required": false
+    },
+    {
+      "id": "#c:music_discs",
       "required": false
     },
     {
