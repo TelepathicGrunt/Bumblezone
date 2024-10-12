@@ -1,3 +1,10 @@
+### **(V.7.7.3 Changes) (1.21.1 Minecraft)**
+
+#### Entities:
+The Bee Queen will now give you Bottle O' Enchanting for Music Discs, Trim Templates, Banners, and Sherds!
+Good way to get rid of duplicates of these items.
+
+
 ### **(V.7.7.2 Changes) (1.21.1 Minecraft)**
 
 #### Misc:

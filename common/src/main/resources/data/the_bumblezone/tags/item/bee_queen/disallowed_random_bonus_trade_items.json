@@ -26,6 +26,8 @@
     "#minecraft:banners",
     "#minecraft:beds",
     "#minecraft:candles",
+    "#minecraft:trim_templates",
+    "#minecraft:decorated_pot_sherds",
     "the_bumblezone:empty_honeycomb_brood_block",
     "the_bumblezone:royal_jelly_bottle",
     "the_bumblezone:royal_jelly_bucket",
@@ -36,35 +38,7 @@
     "#the_bumblezone:string_curtains",
     "#the_bumblezone:super_candles",
     {
-      "id": "#forge:concrete_powder",
-      "required": false
-    },
-    {
-      "id": "#forge:concrete",
-      "required": false
-    },
-    {
-      "id": "#forge:dyes",
-      "required": false
-    },
-    {
-      "id": "#forge:glazed_terracotta",
-      "required": false
-    },
-    {
-      "id": "#forge:shulker_boxes",
-      "required": false
-    },
-    {
-      "id": "#forge:stained_glass_panes",
-      "required": false
-    },
-    {
-      "id": "#forge:stained_glass",
-      "required": false
-    },
-    {
-      "id": "#forge:fence_gates/wooden",
+      "id": "#c:music_discs",
       "required": false
     },
     {
