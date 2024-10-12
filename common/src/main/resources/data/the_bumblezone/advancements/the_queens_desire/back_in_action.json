@@ -25,7 +25,7 @@
     "bee_saved_by_stinger": {
       "trigger": "the_bumblezone:bee_saved_by_stinger",
       "conditions": {
-        "target_count": 24
+        "target_count": 12
       }
     }
   },

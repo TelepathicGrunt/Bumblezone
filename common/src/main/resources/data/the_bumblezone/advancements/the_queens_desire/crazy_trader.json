@@ -25,7 +25,7 @@
     "bee_queen_trading": {
       "trigger": "the_bumblezone:bee_queen_trading",
       "conditions": {
-        "target_count": 256
+        "target_count": 128
       }
     }
   },

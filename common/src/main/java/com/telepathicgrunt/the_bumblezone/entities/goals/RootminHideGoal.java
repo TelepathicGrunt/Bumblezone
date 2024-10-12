@@ -73,7 +73,7 @@ public class RootminHideGoal extends Goal {
         }
 
         BlockState belowState = level.getBlockState(chosenPos.below());
-        if (!belowState.isCollisionShapeFullBlock(level, chosenPos.below())) {
+        if (!belowState.isCollisionShapeFullBlock(level, chosenPos.below()) || belowState.isAir() || belowState.is(BzTags.AIR_LIKE)) {
             return false;
         }
 

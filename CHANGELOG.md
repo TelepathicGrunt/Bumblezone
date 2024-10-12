@@ -1,3 +1,9 @@
+### **(V.7.5.2 Changes) (1.20.1 Minecraft)**
+
+#### Advancements:
+Halved the requirements of many Queen Desire advancements to be less grindy.
+
+
 ### **(V.7.5.1 Changes) (1.20.1 Minecraft)**
 
 #### Structures:
