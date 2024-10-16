@@ -872,10 +872,6 @@
       "required": false
     },
     {
-      "id": "twilightforest:hollow_oak_sapling",
-      "required": false
-    },
-    {
       "id": "twilightforest:mangrove_sapling",
       "required": false
     },
