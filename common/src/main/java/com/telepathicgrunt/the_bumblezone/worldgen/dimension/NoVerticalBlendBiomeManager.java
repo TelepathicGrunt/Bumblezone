@@ -25,7 +25,7 @@ public class NoVerticalBlendBiomeManager extends BiomeManager{
         int zShifted = zMinus2 >> 2;
 
         //Caching
-        long key = packXZ(xShifted, zShifted);
+        long key = packXZ(xMinus2, zMinus2);
         Holder<Biome> result = cachedResult.get(key);
         if (result != null) {
             return result;
