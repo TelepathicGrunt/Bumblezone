@@ -4,8 +4,10 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.tags.TagKey;
@@ -57,11 +59,11 @@ public class StructureDisallowByTag extends PlacementModifier {
         if (placementContext.getLevel() instanceof WorldGenRegion worldGenRegion) {
             Registry<Structure> structureRegistry = worldGenRegion.registryAccess().registry(Registries.STRUCTURE).get();
             StructureManager structureManager = placementContext.getLevel().getLevel().structureManager();
-            ChunkPos chunkPos = new ChunkPos(blockPos);
+            SectionPos sectionPos = SectionPos.of(blockPos);
 
             boolean doTagCheck = isDoTagCheck(blockPos);
             if (this.disallowTag.isPresent() && doTagCheck) {
-                List<StructureStart> structureStarts = structureManager.startsForStructure(chunkPos,
+                List<StructureStart> structureStarts = GeneralUtils.startsForAllStructure(worldGenRegion, structureManager, sectionPos,
                         struct -> structureRegistry.getHolderOrThrow(structureRegistry.getResourceKey(struct).get()).is(this.disallowTag.get()));
 
                 if (!structureStarts.isEmpty()) {

@@ -82,6 +82,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -862,6 +863,18 @@ public class GeneralUtils {
         }
 
         return StructureStart.INVALID_START;
+    }
+
+    public static List<StructureStart> startsForAllStructure(LevelReader level, StructureManager structureManager, SectionPos sectionPos, Predicate<Structure> structureMatch) {
+        ChunkAccess chunkAccess = level.getChunk(sectionPos.x(), sectionPos.z(), ChunkStatus.STRUCTURE_REFERENCES);
+        Map<Structure, LongSet> references = chunkAccess.getAllReferences();
+        ImmutableList.Builder<StructureStart> builder = ImmutableList.builder();
+        for(Map.Entry<Structure, LongSet> entry : references.entrySet()) {
+            if (structureMatch.test(entry.getKey())) {
+                fillStartsForStructure(level, structureManager, chunkAccess, entry.getKey(), entry.getValue(), builder::add);
+            }
+        }
+        return builder.build();
     }
 
     public static List<StructureStart> startsForStructure(LevelReader level, StructureManager structureManager, SectionPos sectionPos, Structure structure) {

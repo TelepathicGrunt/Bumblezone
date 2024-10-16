@@ -4,11 +4,13 @@ import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
 import com.telepathicgrunt.the_bumblezone.utils.UnsafeBulkSectionAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
@@ -166,8 +168,8 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
         if (context.level() instanceof WorldGenRegion worldGenRegion) {
             Registry<Structure> structureRegistry = worldGenRegion.registryAccess().registry(Registries.STRUCTURE).get();
             StructureManager structureManager = context.level().getLevel().structureManager();
-            ChunkPos chunkPos = new ChunkPos(mutableBlockPos);
-            List<StructureStart> structureStarts = structureManager.startsForStructure(chunkPos,
+            SectionPos sectionPos = SectionPos.of(mutableBlockPos);
+            List<StructureStart> structureStarts = GeneralUtils.startsForAllStructure(worldGenRegion, structureManager, sectionPos,
                     struct -> structureRegistry.getHolderOrThrow(structureRegistry.getResourceKey(struct).get()).is(BzTags.NO_CAVES));
 
             for (StructureStart structureStart : structureStarts) {

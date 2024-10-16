@@ -3,8 +3,10 @@ package com.telepathicgrunt.the_bumblezone.worldgen.features.decorators;
 import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
@@ -51,10 +53,11 @@ public class HoneycombHolePlacer extends PlacementModifier {
             Registry<Structure> structureRegistry = worldGenRegion.registryAccess().registry(Registries.STRUCTURE).get();
             structureManager = placementContext.getLevel().getLevel().structureManager();
 
-            ChunkPos chunkPos = new ChunkPos(blockPos);
-            structureStarts = structureManager.startsForStructure(chunkPos,
+            SectionPos sectionPos = SectionPos.of(blockPos);
+
+            structureStarts = GeneralUtils.startsForAllStructure(worldGenRegion, structureManager, sectionPos,
                     struct -> structureRegistry.getHolderOrThrow(structureRegistry.getResourceKey(struct).get()).is(BzTags.NO_HONEYCOMB_HOLES));
-            structureStartsPiecewiseCheck = structureManager.startsForStructure(chunkPos,
+            structureStartsPiecewiseCheck = GeneralUtils.startsForAllStructure(worldGenRegion, structureManager, sectionPos,
                     struct -> structureRegistry.getHolderOrThrow(structureRegistry.getResourceKey(struct).get()).is(BzTags.NO_HONEYCOMB_HOLES_PIECEWISE));
         }
 

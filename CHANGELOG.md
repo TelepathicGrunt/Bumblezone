@@ -5,11 +5,16 @@ The Bee Queen will now give you Bottle O' Enchanting for Music Discs, Trim Templ
 Good way to get rid of duplicates of these items.
 
 When trading in Dead Bush, the Bee Queen will not give Spectrum's saplings, Productive Tree's saplings, Twilight Forest's magic saplings,
- Regions Unexplored's cactus and brimwood saplings, Bewitchment's Dragon Blood sapling, Dynamic Tree's seeds,
- Phantasm's pream sapling, and several mod's dead saplings.
+ Regions Unexplored's cactus and brimwood saplings, Bewitchment's dragon blood sapling, Dynamic Tree's seeds,
+ Phantasm's pream sapling, Tinker's ender slime sapling, and several mod's dead saplings.
  Some smaller mod's saplings may not be available from Dead Bush trades not too since it is now explicitly listing out 
  the possible sapling rewards in the `the_bumblezone:bee_queen/dedicated_trade_tags/saplings_from_dead_bush` item tag.
  Add more saplings to this tag if you wish for them to be a possible reward for trading in Dead Bushes to the Bee Queen.
+
+#### Dimension:
+Fixed bug that caused biome borders to be blocky/jarring rather than a more wavy smooth border.
+
+Fixed a possible deadlock issue with structure checking.
 
 
 ### **(V.7.7.2 Changes) (1.21.1 Minecraft)**
