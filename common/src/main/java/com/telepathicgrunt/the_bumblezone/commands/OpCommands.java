@@ -4,7 +4,11 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
+import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.mojang.serialization.JsonOps;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modcompat.BumblezoneAPI;
@@ -18,12 +22,20 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.commands.arguments.ResourceKeyArgument;
+import net.minecraft.commands.arguments.ResourceLocationArgument;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -32,11 +44,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class OpCommands {
+    private static final ResourceKey<Registry<Registry<?>>> ROOT_REGISTRY_KEY = ResourceKey.createRegistryKey(new ResourceLocation("minecraft", "root"));
     private static MinecraftServer currentMinecraftServer = null;
     private static Set<String> cachedSuggestion = new HashSet<>();
     enum DATA_BOOLEAN_WRITE_ARG {
@@ -64,6 +79,7 @@ public class OpCommands {
         String commandTeleportString = "bumblezone_teleport";
         String commandWriteString = "bumblezone_modify_data";
         String commandReadString = "bumblezone_read_data";
+        String commandTagLogOutputString = "bumblezone_tag_log_output";
         String dataArg = "data_to_modify";
         String newDataArg = "new_value";
         String entityArg = "entity_to_check";
@@ -120,6 +136,35 @@ public class OpCommands {
         ));
 
         commandDispatcher.register(Commands.literal(commandTeleportString).redirect(source4));
+
+        LiteralCommandNode<CommandSourceStack> source5 = commandDispatcher.register(Commands.literal(commandTagLogOutputString)
+                .requires((permission) -> permission.hasPermission(2))
+                .then(Commands.argument("registry", ResourceKeyArgument.key(ROOT_REGISTRY_KEY))
+                        .suggests((ctx, builder) -> SharedSuggestionProvider.suggestResource(ctx.getSource().registryAccess().registries().map(RegistryAccess.RegistryEntry::key).map(ResourceKey::location), builder))
+                .then(Commands.argument("tag", ResourceLocationArgument.id())
+                        .suggests(suggestFromRegistry(r -> r.getTagNames().map(TagKey::location)::iterator, "registry", ROOT_REGISTRY_KEY))
+                .executes(cs -> {
+                    final ResourceKey<? extends Registry<?>> registryKey = getResourceKey(cs, "registry", ROOT_REGISTRY_KEY).orElseThrow();
+                    final Registry<?> registry = cs.getSource().getServer().registryAccess().registry(registryKey).get();
+                    final ResourceLocation tagLocation = ResourceLocationArgument.getId(cs, "tag");
+                    final TagKey<?> tagKey = TagKey.create(cast(registryKey), tagLocation);
+                    final Iterable<? extends Holder<?>> tag = registry.getTagOrEmpty(cast(tagKey));
+
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append("\nTAGSTART");
+                    stringBuilder.append("\n{");
+                    for (final Holder<?> holder : tag) {
+                        stringBuilder.append("\n\t\"");
+                        stringBuilder.append(holder.unwrapKey().get().location());
+                        stringBuilder.append("\",");
+                    }
+                    stringBuilder.append("\n}\n");
+                    Bumblezone.LOGGER.info(stringBuilder.toString());
+                    return 1;
+                })
+        )));
+
+        commandDispatcher.register(Commands.literal(commandTagLogOutputString).redirect(source5));
     }
 
     private static Set<String> methodBooleanWriteSuggestions(CommandContext<CommandSourceStack> cs) {
@@ -304,5 +349,32 @@ public class OpCommands {
                 }
             }
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <O> O cast(final Object input) {
+        return (O) input;
+    }
+
+    private static <T extends Registry<?>> SuggestionProvider<CommandSourceStack> suggestFromRegistry(
+            final Function<Registry<?>, Iterable<ResourceLocation>> namesFunction,
+            final String argumentString,
+            final ResourceKey<Registry<T>> registryKey) {
+        return (ctx, builder) -> getResourceKey(ctx, argumentString, registryKey)
+                .flatMap(key -> ctx.getSource().registryAccess().registry(key).map(registry -> {
+                    SharedSuggestionProvider.suggestResource(namesFunction.apply(registry), builder);
+                    return builder.buildFuture();
+                }))
+                .orElseGet(builder::buildFuture);
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private static <T> Optional<ResourceKey<T>> getResourceKey(
+            final CommandContext<CommandSourceStack> ctx,
+            final String name,
+            final ResourceKey<Registry<T>> registryKey) {
+        // Don't inline to avoid an unchecked cast warning due to raw types
+        final ResourceKey<?> key = ctx.getArgument(name, ResourceKey.class);
+        return key.cast(registryKey);
     }
 }
