@@ -1,3 +1,9 @@
+### **(V.7.7.4 Changes) (1.21.1 Minecraft)**
+
+#### Entities:
+Fixed Bee Queen trade sync packets having too low a limit compared to 1.20.1 Bumblezone.
+
+
 ### **(V.7.7.3 Changes) (1.21.1 Minecraft)**
 
 #### Entities:

@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.RandomizeTr
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -44,7 +45,7 @@ public record QueenRandomizerTradesSyncPacket(List<RandomizeTradeRowInput> recip
         public QueenRandomizerTradesSyncPacket decode(final RegistryFriendlyByteBuf buf) {
             List<RandomizeTradeRowInput> parsedData = new ArrayList<>();
 
-            CompoundTag data = buf.readNbt();
+            CompoundTag data = (CompoundTag) buf.readNbt(NbtAccounter.create(104857600L));
             if (data == null) {
                 Bumblezone.LOGGER.error("Queen Randomizer Trade packet is empty??? Wtf???");
                 return new QueenRandomizerTradesSyncPacket(parsedData);
