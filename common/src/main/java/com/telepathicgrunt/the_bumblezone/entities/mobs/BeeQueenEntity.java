@@ -964,16 +964,6 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         return bee;
     }
 
-    @Override
-    public int getHeadRotSpeed() {
-        return 1;
-    }
-
-    @Override
-    public int getMaxHeadXRot() {
-        return 90;
-    }
-
     public int getThrowCooldown() {
         return this.entityData.get(THROWCOOLDOWN);
     }

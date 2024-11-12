@@ -7,6 +7,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
@@ -17,6 +18,8 @@ public class BeeQueenAlwaysLookAtPlayerGoal extends Goal {
     private final boolean onlyHorizontal;
     protected final Class<? extends LivingEntity> lookAtType;
     protected final TargetingConditions lookAtContext;
+    private int lookCooldown;
+    private Vec3 lookPos;
 
     public BeeQueenAlwaysLookAtPlayerGoal(Mob mob, Class<? extends LivingEntity> lookAtType, float lookDistance) {
         this(mob, lookAtType, lookDistance, false);
@@ -27,6 +30,8 @@ public class BeeQueenAlwaysLookAtPlayerGoal extends Goal {
         this.lookAtType = lookAtType;
         this.lookDistance = lookDistance;
         this.onlyHorizontal = onlyHorizontal;
+        this.lookCooldown = 0;
+        this.lookPos = new Vec3(0, 0, 0);
         this.setFlags(EnumSet.of(Flag.LOOK));
         if (lookAtType == Player.class) {
             this.lookAtContext = TargetingConditions.forNonCombat().range(lookDistance).selector((livingEntity) -> EntitySelector.notRiding(mob).test(livingEntity));
@@ -66,9 +71,25 @@ public class BeeQueenAlwaysLookAtPlayerGoal extends Goal {
     }
 
     public void tick() {
-        if (this.lookAt != null && this.lookAt.isAlive()) {
-            double y = this.onlyHorizontal ? this.mob.getEyeY() : this.lookAt.getEyeY();
-            this.mob.getLookControl().setLookAt(this.lookAt.getX(), y, this.lookAt.getZ(), 0.05f, 0.05f);
+        if (this.lookCooldown >= 0 && this.lookAt != null && this.lookAt.isAlive()) {
+            if (this.lookCooldown == 19) {
+                this.updateLookCoordinates();
+            }
+            this.mob.getLookControl().setLookAt(this.lookPos.x, this.lookPos.y, this.lookPos.z, 360, 40);
+        }
+        if (this.lookCooldown <= 0) {
+            this.lookCooldown = 20;
+        }
+        this.lookCooldown--;
+    }
+
+    private void updateLookCoordinates() {
+        double newX = this.lookAt.getX();
+        double newY = this.onlyHorizontal ? this.mob.getEyeY() : this.lookAt.getEyeY();
+        double newZ = this.lookAt.getZ();
+        Vec3 newPos = new Vec3(newX, newY, newZ);
+        if (this.lookPos.distanceToSqr(newPos) > 2) {
+            this.lookPos = newPos;
         }
     }
 }
