@@ -144,15 +144,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         return CODEC;
     }
 
-    @Override
-    public CompletableFuture<ChunkAccess> createBiomes(Executor executor, RandomState randomState, Blender blender, StructureManager structureManager, ChunkAccess chunkAccess) {
-        return CompletableFuture.supplyAsync(Util.wrapThreadWithTaskName("init_biomes", () -> {
-            this.doCreateBiomes(blender, randomState, structureManager, chunkAccess);
-            return chunkAccess;
-        }), Util.backgroundExecutor());
-    }
-
-    private void doCreateBiomes(Blender blender, RandomState randomState, StructureManager structureManager, ChunkAccess chunkAccess) {
+    protected void doCreateBiomes(Blender blender, RandomState randomState, StructureManager structureManager, ChunkAccess chunkAccess) {
         BiomeResolver biomeresolver = getBiomeResolver(this.biomeSource);
         NoiseChunk noisechunk = chunkAccess.getOrCreateNoiseChunk((noiseChunk) -> this.createNoiseChunk(noiseChunk, structureManager, blender, randomState));
         Climate.Sampler sampler = ((NoiseChunkAccessor)noisechunk).callCachedClimateSampler(randomState.router(), this.settings.value().spawnTarget());
