@@ -158,8 +158,8 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         chunkAccess.fillBiomesFromNoise(biomeresolver, sampler);
     }
 
-    private BiomeResolver getBiomeResolver(BiomeResolver noiseBiome) {
-        return (x, y, z, biomeHolder) -> noiseBiome.getNoiseBiome(x, 0, z, biomeHolder);
+    private BiomeResolver getBiomeResolver(BiomeResolver biomeResolver) {
+        return (x, y, z, biomeHolder) -> biomeResolver.getNoiseBiome(x, 0, z, biomeHolder);
     }
 
     private NoiseChunk createNoiseChunk(ChunkAccess chunkAccess, StructureManager structureManager, Blender blender, RandomState randomState) {
