@@ -657,9 +657,9 @@ public class GeneralUtils {
             if (structureBlockInfo.nbt() != null) {
                 blockEntity = serverLevelAccessor.getBlockEntity(blockPos3);
                 Clearable.tryClear(blockEntity);
-                bulkSectionAccess.setBlockState(blockPos3, Blocks.BARRIER.defaultBlockState(), false);
+                SetBlockWithChangeNotified(serverLevelAccessor, bulkSectionAccess, blockPos3, Blocks.BARRIER.defaultBlockState());
             }
-            if (!bulkSectionAccess.setBlockState(blockPos3, blockState, false)) continue;
+            if (!SetBlockWithChangeNotified(serverLevelAccessor, bulkSectionAccess, blockPos3, blockState)) continue;
             j = Math.min(j, blockPos3.getX());
             k = Math.min(k, blockPos3.getY());
             l = Math.min(l, blockPos3.getZ());
@@ -721,7 +721,7 @@ public class GeneralUtils {
                     BlockState blockState3;
                     BlockState blockState2 = bulkSectionAccess.getBlockState(blockPos7);
                     if (blockState2 != (blockState3 = Block.updateFromNeighbourShapes(blockState2, serverLevelAccessor, blockPos7))) {
-                        bulkSectionAccess.setBlockState(blockPos7, blockState3, false);
+                        SetBlockWithChangeNotified(serverLevelAccessor, bulkSectionAccess, blockPos7, blockState3);
                     }
                     serverLevelAccessor.blockUpdated(blockPos7, blockState3.getBlock());
                 }
@@ -733,6 +733,15 @@ public class GeneralUtils {
         if (!structurePlaceSettings.isIgnoreEntities()) {
             placeEntities(serverLevelAccessor, structureTemplate, blockPos, structurePlaceSettings.getMirror(), structurePlaceSettings.getRotation(), structurePlaceSettings.getRotationPivot(), boundingBox, structurePlaceSettings.shouldFinalizeEntities());
         }
+    }
+
+    private static boolean SetBlockWithChangeNotified(ServerLevelAccessor serverLevelAccessor, UnsafeBulkSectionAccess bulkSectionAccess, BlockPos blockPos3, BlockState newState) {
+        BlockState oldState = bulkSectionAccess.setBlockStateAndGetOldState(blockPos3, newState, false);
+        if (oldState != null) {
+            serverLevelAccessor.getLevel().onBlockStateChange(blockPos3, oldState, newState);
+            return true;
+        }
+        return false;
     }
 
     private static void placeEntities(ServerLevelAccessor serverLevelAccessor, StructureTemplate structureTemplate, BlockPos blockPos, Mirror mirror, Rotation rotation, BlockPos blockPos2, @Nullable BoundingBox boundingBox, boolean bl) {

@@ -80,5 +80,20 @@ public class UnsafeBulkSectionAccess {
 
         return true;
     }
+
+    public BlockState setBlockStateAndGetOldState(BlockPos blockPos, BlockState state, boolean lockSection) {
+        LevelChunkSection chunkSection = this.getSection(blockPos);
+        if (chunkSection == null) {
+            return null;
+        }
+
+        int x = SectionPos.sectionRelative(blockPos.getX());
+        int y = SectionPos.sectionRelative(blockPos.getY());
+        int z = SectionPos.sectionRelative(blockPos.getZ());
+
+        BlockState oldState = chunkSection.getBlockState(x, y, z);
+        chunkSection.setBlockState(x, y, z, state, lockSection);
+        return oldState;
+    }
 }
 
