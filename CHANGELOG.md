@@ -4,7 +4,7 @@
 Fixed logspam due to not setting POI correctly on Honeycomb Brood Blocks in large Honeycomb Hole features.
 
 #### Mod Compat:
-Changed a bit of code to work better with C2ME.
+Changed a bit of code to work better with C2ME (Concurrent Chunk Management Engine).
 
 
 ### **(V.7.5.8 Changes) (1.20.1 Minecraft)**

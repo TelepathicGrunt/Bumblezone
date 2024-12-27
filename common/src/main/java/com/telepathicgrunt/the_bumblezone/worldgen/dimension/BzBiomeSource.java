@@ -66,6 +66,14 @@ public class BzBiomeSource extends BiomeSource implements BiomeManager.NoiseBiom
         this.biomeSampler = buildWorldProcedure(seed, this.blobBiomes, this.rareBlobBiomes);
     }
 
+    public BzBiomeSource(BzBiomeSource originalBiomeSource) {
+        this.seed = originalBiomeSource.seed;
+        this.blobBiomes = originalBiomeSource.blobBiomes;
+        this.rareBlobBiomes = originalBiomeSource.rareBlobBiomes;
+        this.mainBiomes = originalBiomeSource.mainBiomes;
+        this.biomeSampler = buildWorldProcedure(seed, this.blobBiomes, this.rareBlobBiomes);
+    }
+
     @Override
     protected Codec<? extends BiomeSource> codec() {
         return CODEC;
