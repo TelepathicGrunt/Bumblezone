@@ -5,6 +5,8 @@ Fixed logspam due to not setting POI correctly on Honeycomb Brood Blocks in larg
 
 Improved generation speed of the Pile of Pollen surface feature. Pollinated Fields and Pollinated Pillar biomes should spawn faster.
 
+Pollinated Fields and Pollinated Pillar biome's caves are now slightly taller to allow easier exploring.
+
 #### Structures:
 Honey Cave Room structures can spawn exposed in walls now. Slightly reduced spawnrate to compensate.
 

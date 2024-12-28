@@ -90,12 +90,12 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
                 for (int z = 0; z < 16; z++) {
                     mutableBlockPos.set(orgX, orgY, orgZ).move(x, y, z);
 
-                    noise1 = noiseGen.noise3_Classic(
+                    noise1 = Math.abs(noiseGen.noise3_Classic(
                             mutableBlockPos.getX() * 0.019D,
                             mutableBlockPos.getZ() * 0.019D,
-                            mutableBlockPos.getY() * 0.038D);
+                            mutableBlockPos.getY() * 0.038D));
 
-                    if (noise1 >= 0.0360555127546399D || noise1 <= -0.0360555127546399D) {
+                    if (noise1 >= 0.037D) {
                         if (noise1 >= 0.6) {
                             z += 6;
                         }
@@ -116,7 +116,7 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
                     double heightPressure = Math.max((30f - y) / 90f, 0);
                     finalNoise = (noise1 * noise1) + (noise2 * noise2) + heightPressure;
 
-                    if (finalNoise < 0.01305f) {
+                    if (finalNoise < 0.014f) {
                         carve(level, bulkSectionAccess, mutableBlockPos, finalNoise, noise1);
                     }
                     else if (finalNoise >= 0.6) {
@@ -173,7 +173,7 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
                 bulkSectionAccess.setBlockState(position, BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int)Math.max(Math.min((noise + 1D) * 3D, 8), 1)), false);
                 world.scheduleTick(position, BzBlocks.PILE_OF_POLLEN.get(), 0);
 
-                int carveHeight = Math.abs((int) ((noise * 1000) % 0.8D)) * 2 + 1;
+                int carveHeight = Math.abs((int) ((noise * 1000) % 0.8D)) * 4 + 2;
                 for (int i = 0; i < carveHeight; i++) {
                     position.move(Direction.UP);
 
