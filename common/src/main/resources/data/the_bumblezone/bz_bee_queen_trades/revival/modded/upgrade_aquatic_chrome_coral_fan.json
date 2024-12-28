@@ -1,0 +1,17 @@
+{
+    "wants" : [
+      {
+        "id": "upgrade_aquatic:dead_chrome_coral_fan",
+        "required": false
+      }
+    ],
+    "possible_rewards": [
+      {
+        "id": "upgrade_aquatic:chrome_coral_fan",
+        "count": 1,
+        "xp_reward": 0,
+        "weight": 1,
+        "required": false
+      }
+    ]
+  }

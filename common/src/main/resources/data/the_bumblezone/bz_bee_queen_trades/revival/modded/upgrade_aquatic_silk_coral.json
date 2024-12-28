@@ -1,0 +1,17 @@
+{
+    "wants" : [
+      {
+        "id": "upgrade_aquatic:dead_silk_coral",
+        "required": false
+      }
+    ],
+    "possible_rewards": [
+      {
+        "id": "upgrade_aquatic:silk_coral",
+        "count": 1,
+        "xp_reward": 0,
+        "weight": 1,
+        "required": false
+      }
+    ]
+  }

@@ -1005,6 +1005,94 @@
       "required": false
     },
     {
+      "id": "upgrade_aquatic:dead_acan_coral_block",
+      "required": false
+    },
+    {
+      "id": "upgrade_aquatic:dead_finger_coral_block",
+      "required": false
+    },
+    {
+      "id": "upgrade_aquatic:dead_star_coral_block",
+      "required": false
+    },
+    {
+      "id": "upgrade_aquatic:dead_moss_coral_block",
+      "required": false
+    },
+    {
+      "id": "upgrade_aquatic:dead_petal_coral_block",
+      "required": false
+    },
+    {
+      "id": "upgrade_aquatic:dead_branch_coral_block",
+      "required": false
+    },
+    {
+      "id": "upgrade_aquatic:dead_rock_coral_block",
+      "required": false
+    },
+    {
+      "id": "upgrade_aquatic:dead_pillow_coral_block",
+      "required": false
+    },
+    {
+      "id": "upgrade_aquatic:dead_silk_coral_block",
+      "required": false
+    },
+    {
+      "id": "upgrade_aquatic:dead_chrome_coral_block",
+      "required": false
+    },
+    {
+      "id": "upgrade_aquatic:elder_prismarine_coral_block",
+      "required": false
+    },
+    {
+      "id": "#upgrade_aquatic:dead_acan_corals",
+      "required": false
+    },
+    {
+      "id": "#upgrade_aquatic:dead_finger_corals",
+      "required": false
+    },
+    {
+      "id": "#upgrade_aquatic:dead_star_corals",
+      "required": false
+    },
+    {
+      "id": "#upgrade_aquatic:dead_moss_corals",
+      "required": false
+    },
+    {
+      "id": "#upgrade_aquatic:dead_petal_corals",
+      "required": false
+    },
+    {
+      "id": "#upgrade_aquatic:dead_branch_corals",
+      "required": false
+    },
+    {
+      "id": "#upgrade_aquatic:dead_rock_corals",
+      "required": false
+    },
+    {
+      "id": "#upgrade_aquatic:dead_pillow_corals",
+      "required": false
+    },
+    {
+      "id": "#upgrade_aquatic:dead_silk_corals",
+      "required": false
+    },
+    {
+      "id": "#upgrade_aquatic:dead_chrome_corals",
+      "required": false
+    },
+    {
+      "id": "#upgrade_aquatic:elder_prismarine_corals",
+      "required": false
+    },
+    {
       "id": "regions_unexplored:dead_branch",
       "required": false
     },

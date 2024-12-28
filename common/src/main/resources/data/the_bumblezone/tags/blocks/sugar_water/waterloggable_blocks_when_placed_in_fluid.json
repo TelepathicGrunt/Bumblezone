@@ -97,6 +97,18 @@
     {
       "id": "#forge:scaffoldings",
       "required": false
+    },
+    {
+      "id": "upgrade_aquatic:prismarine_coral",
+      "required": false
+    },
+    {
+      "id": "upgrade_aquatic:prismarine_coral_fan",
+      "required": false
+    },
+    {
+      "id": "upgrade_aquatic:prismarine_coral_shower",
+      "required": false
     }
   ]
 }
