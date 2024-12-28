@@ -78,6 +78,8 @@
     "world.BiomeManagerAccessor",
     "world.LevelMixin",
     "world.NoiseChunkAccessor",
+    "world.NoiseChunkMixin",
+    "world.NoiseGeneratorSettingsAccessor",
     "world.ServerWorldMixin",
     "world.SinglePoolElementAccessor",
     "world.StructurePoolAccessor",

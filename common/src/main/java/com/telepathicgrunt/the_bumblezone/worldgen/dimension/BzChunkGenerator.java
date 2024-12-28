@@ -6,6 +6,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseChunkAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseGeneratorSettingsAccessor;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -42,7 +43,6 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.levelgen.Aquifer;
-import net.minecraft.world.level.levelgen.Beardifier;
 import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.DensityFunctions;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -69,6 +69,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
@@ -89,17 +90,28 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         NoiseGeneratorSettings noiseGeneratorSettings = supplier.value();
         this.defaultBlock = noiseGeneratorSettings.defaultBlock();
         this.defaultFluid = noiseGeneratorSettings.defaultFluid();
-        NoiseRouter noiseRouter = noiseGeneratorSettings.noiseRouter();
 
-        BiomeNoise.biomeSource = this.getBiomeSource();
-        BiomeNoise.sampler = new Climate.Sampler(
-                noiseRouter.temperature(),
-                noiseRouter.vegetation(),
-                noiseRouter.continents(),
-                noiseRouter.erosion(),
-                noiseRouter.depth(),
-                noiseRouter.ridges(),
-                noiseGeneratorSettings.spawnTarget());
+        NoiseRouter noiseRouter = noiseGeneratorSettings.noiseRouter();
+        ((NoiseGeneratorSettingsAccessor) (Object) noiseGeneratorSettings).setNoiseRouter(
+                noiseRouter.mapAll(densityFunction -> {
+                    if (densityFunction instanceof BiomeNoise) {
+                        return new BiomeNoise(
+                                this::getBiomeSource,
+                                () -> new Climate.Sampler(
+                                        noiseRouter.temperature(),
+                                        noiseRouter.vegetation(),
+                                        noiseRouter.continents(),
+                                        noiseRouter.erosion(),
+                                        noiseRouter.depth(),
+                                        noiseRouter.ridges(),
+                                        noiseGeneratorSettings.spawnTarget()
+                                )
+                        );
+                    } else {
+                        return densityFunction;
+                    }
+                })
+        );
 
         this.settings = supplier;
 
@@ -108,18 +120,19 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         this.globalFluidPicker = (x, y, z) -> sea;
     }
 
-    public record BiomeNoise() implements DensityFunction.SimpleFunction {
-        public static final KeyDispatchDataCodec<BiomeNoise> CODEC = KeyDispatchDataCodec.of(MapCodec.unit(new BiomeNoise()));
-        public static Climate.Sampler sampler;
-        public static BiomeSource biomeSource;
+    public record BiomeNoise(Supplier<BiomeSource> biomeSource, Supplier<Climate.Sampler> sampler) implements DensityFunction.SimpleFunction {
+        public static final KeyDispatchDataCodec<BiomeNoise> CODEC = KeyDispatchDataCodec.of(MapCodec.unit(new BiomeNoise(null, null)));
 
         @Override
         public double compute(FunctionContext functionContext) {
+            if (this.biomeSource == null || this.sampler == null) {
+                throw new IllegalStateException("Attempting to sample uninitialized BzChunkGenerator$BiomeNoise");
+            }
             return BiomeInfluencedNoiseSampler.calculateBaseNoise(
                     functionContext.blockX(),
                     functionContext.blockZ(),
-                    sampler,
-                    biomeSource,
+                    this.sampler.get(),
+                    this.biomeSource.get(),
                     BiomeRegistryHolder.BIOME_REGISTRY);
         }
 
@@ -146,15 +159,9 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
     @Override
     protected void doCreateBiomes(Blender blender, RandomState randomState, StructureManager structureManager, ChunkAccess chunkAccess) {
-        BiomeResolver biomeresolver;
-        if (this.biomeSource instanceof BzBiomeSource bzBiomeSource) {
-            biomeresolver = getBiomeResolver(new BzBiomeSource(bzBiomeSource));
-        }
-        else {
-            biomeresolver = getBiomeResolver(this.biomeSource);
-        }
-        NoiseChunk noisechunk = chunkAccess.getOrCreateNoiseChunk((noiseChunk) -> this.createNoiseChunk(noiseChunk, structureManager, blender, randomState));
-        Climate.Sampler sampler = ((NoiseChunkAccessor)noisechunk).callCachedClimateSampler(randomState.router(), this.settings.value().spawnTarget());
+        NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk((chunkAccess1) -> this.createNoiseChunk(chunkAccess1, structureManager, blender, randomState));
+        Climate.Sampler sampler = ((NoiseChunkExtension) noiseChunk).the_bumblezone$getCachedClimateSampler();
+        BiomeResolver biomeresolver = getBiomeResolver(((NoiseChunkExtension) noiseChunk).the_bumblezone$getBiomeSource());
         chunkAccess.fillBiomesFromNoise(biomeresolver, sampler);
     }
 
@@ -162,8 +169,20 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         return (x, y, z, biomeHolder) -> biomeResolver.getNoiseBiome(x, 0, z, biomeHolder);
     }
 
-    private NoiseChunk createNoiseChunk(ChunkAccess chunkAccess, StructureManager structureManager, Blender blender, RandomState randomState) {
-        return NoiseChunk.forChunk(chunkAccess, randomState, Beardifier.forStructuresInChunk(structureManager, chunkAccess.getPos()), this.settings.value(), this.globalFluidPicker, blender);
+    @Override
+    protected NoiseChunk createNoiseChunk(ChunkAccess chunkAccess, StructureManager structureManager, Blender blender, RandomState randomState) {
+        NoiseChunk noiseChunk = super.createNoiseChunk(chunkAccess, structureManager, blender, randomState);
+        postInitNoiseChunk(randomState, noiseChunk);
+        return noiseChunk;
+    }
+
+    private void postInitNoiseChunk(RandomState randomState, NoiseChunk noiseChunk) {
+        if (this.biomeSource instanceof BzBiomeSource bzBiomeSource) {
+            ((NoiseChunkExtension) noiseChunk).the_bumblezone$setBiomeSource(new BzBiomeSource(bzBiomeSource));
+        } else {
+            ((NoiseChunkExtension) noiseChunk).the_bumblezone$setBiomeSource(this.biomeSource);
+        }
+        ((NoiseChunkExtension) noiseChunk).the_bumblezone$setCachedClimateSampler(((NoiseChunkAccessor) noiseChunk).callCachedClimateSampler(randomState.router(), this.settings.value().spawnTarget()));
     }
 
     @Override
@@ -214,6 +233,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
             double d0 = (double) l1 / (double) i1;
             double d1 = (double) i2 / (double) i1;
             NoiseChunk noiseChunk = new NoiseChunk(1, randomState, j2, k2, noisesettings, DensityFunctions.BeardifierMarker.INSTANCE, this.settings.value(), this.globalFluidPicker, Blender.empty());
+            postInitNoiseChunk(randomState, noiseChunk);
             noiseChunk.initializeForFirstCellX();
             noiseChunk.advanceCellX(0);
 
@@ -255,9 +275,11 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         else {
             biomeManager = worldGenRegion.getBiomeManager();
         }
-
-        biomeManager = new NoVerticalBlendBiomeManager(biomeManager);
-        this.buildSurface(chunkAccess, worldgenerationcontext, randomState, structureManager, biomeManager, worldGenRegion.registryAccess().registry(Registries.BIOME).get(), Blender.of(worldGenRegion));
+        Blender blender = Blender.of(worldGenRegion);
+        NoiseChunk noisechunk = chunkAccess.getOrCreateNoiseChunk((noiseChunk) -> this.createNoiseChunk(noiseChunk, structureManager, blender, randomState));
+        biomeManager = new NoVerticalBlendBiomeManager(biomeManager, ((NoiseChunkExtension) noisechunk).the_bumblezone$getBiomeSource() instanceof BiomeManager.NoiseBiomeSource noiseBiomeSource ? noiseBiomeSource : null);
+        NoiseGeneratorSettings noisegeneratorsettings = this.settings.value();
+        randomState.surfaceSystem().buildSurface(randomState, biomeManager, worldGenRegion.registryAccess().registry(Registries.BIOME).get(), noisegeneratorsettings.useLegacyRandomSource(), worldgenerationcontext, chunkAccess, noisechunk, noisegeneratorsettings.surfaceRule());
     }
 
     public void buildSurface(ChunkAccess chunkAccess, WorldGenerationContext worldGenerationContext, RandomState randomState, StructureManager structureManager, BiomeManager biomeManager, Registry<Biome> biomeRegistry, Blender blender) {
