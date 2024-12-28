@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -8,6 +9,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
@@ -18,7 +20,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
  */
 public class ReplaceExistingBlockEntitySafelyProcessor extends StructureProcessor {
 
-    public static final MapCodec<ReplaceExistingBlockEntitySafelyProcessor> CODEC = MapCodec.unit(ReplaceExistingBlockEntitySafelyProcessor::new);
+    public static final Codec<ReplaceExistingBlockEntitySafelyProcessor> CODEC = Codec.unit(ReplaceExistingBlockEntitySafelyProcessor::new);
 
     public ReplaceExistingBlockEntitySafelyProcessor() { }
 
@@ -33,7 +35,9 @@ public class ReplaceExistingBlockEntitySafelyProcessor extends StructureProcesso
             BlockEntity blockEntity = levelReader.getBlockEntity(position);
 
             if (blockEntity != null) {
-                levelReader.getChunk(position).removeBlockEntity(position);
+                ChunkAccess chunkAccess = levelReader.getChunk(position);
+                chunkAccess.setBlockState(position, structureBlockInfoWorld.state(), false);
+                chunkAccess.removeBlockEntity(position);
             }
         }
 

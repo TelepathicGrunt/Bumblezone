@@ -25,11 +25,7 @@ public class WaterloggingFixProcessor extends StructureProcessor {
                 return structureBlockInfoWorld;
             }
 
-            ChunkAccess chunk = levelReader.getChunk(structureBlockInfoWorld.pos());
-            int minY = chunk.getMinBuildHeight();
-            int maxY = chunk.getMaxBuildHeight();
-            int currentY = structureBlockInfoWorld.pos().getY();
-            if (currentY >= minY && currentY <= maxY) {
+            if (structureBlockInfoWorld.pos().getY() > levelReader.getMinBuildHeight() && structureBlockInfoWorld.pos().getY() < levelReader.getMaxBuildHeight()) {
                 ((LevelAccessor) levelReader).scheduleTick(structureBlockInfoWorld.pos(), structureBlockInfoWorld.state().getBlock(), 0);
             }
         }
