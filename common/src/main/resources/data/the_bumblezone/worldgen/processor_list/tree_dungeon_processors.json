@@ -485,6 +485,9 @@
           }
         ]
       }
+    },
+    {
+      "processor_type": "the_bumblezone:replace_existing_blockentity_safely_processor"
     }
   ]
 }

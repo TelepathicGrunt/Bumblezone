@@ -1,8 +1,14 @@
 {
   "processors": [
     {
+      "processor_type": "the_bumblezone:replace_not_air_processor"
+    },
+    {
       "processor_type": "the_bumblezone:tag_ignore_processor",
       "ignore_blocks_tag": "the_bumblezone:structures/dont_replace_blocks"
+    },
+    {
+      "processor_type": "the_bumblezone:remove_floating_blocks_processor"
     },
     {
       "processor_type": "the_bumblezone:pollen_piling_processor",
@@ -11,10 +17,34 @@
       "pollen_replace_solids": true
     },
     {
+      "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:cave_air"
+          },
+          "input_predicate": {
+            "block": "minecraft:air",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    },
+    {
+      "processor_type": "the_bumblezone:block_tick_processor",
+      "blocks_to_schedule_tick": ["the_bumblezone:pile_of_pollen"]
+    },
+    {
       "processor_type": "the_bumblezone:replace_honey_processor"
     },
     {
       "processor_type": "the_bumblezone:fluid_tick_processor"
+    },
+    {
+      "processor_type": "the_bumblezone:replace_existing_blockentity_safely_processor"
     }
   ]
 }

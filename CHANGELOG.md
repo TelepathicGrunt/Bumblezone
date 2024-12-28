@@ -3,6 +3,9 @@
 #### Features:
 Fixed logspam due to not setting POI correctly on Honeycomb Brood Blocks in large Honeycomb Hole features.
 
+#### Structures:
+Honey Cave Room structures can spawn exposed in walls now. Slightly reduced spawnrate to compensate.
+
 #### Mod Compat:
 Changed a bit of code to work better with C2ME (Concurrent Chunk Management Engine).
 

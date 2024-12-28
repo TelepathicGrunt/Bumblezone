@@ -28,6 +28,9 @@
     },
     {
       "processor_type": "the_bumblezone:replace_honey_processor"
+    },
+    {
+      "processor_type": "the_bumblezone:replace_existing_blockentity_safely_processor"
     }
   ]
 }

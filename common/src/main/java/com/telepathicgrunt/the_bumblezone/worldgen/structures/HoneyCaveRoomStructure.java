@@ -67,29 +67,8 @@ public class HoneyCaveRoomStructure extends Structure {
         NoiseColumn columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView, randomState);
         BlockState state = columnOfBlocks.getBlock(mutable.getY() + 2);
         BlockState aboveState = columnOfBlocks.getBlock(mutable.getY() + 17);
-        if(state.isAir() || !state.getFluidState().isEmpty() ||
-            aboveState.isAir() || !aboveState.getFluidState().isEmpty())
-        {
-            return false;
-        }
-
-        //corner check
-        int radius = 20;
-        for (int x = -radius; x <= radius; x += radius * 2) {
-            for (int z = -radius; z <= radius; z += radius * 2) {
-                mutable.set(centerPos).move(x, 0, z);
-                columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView, randomState);
-                state = columnOfBlocks.getBlock(mutable.getY() + 2);
-                aboveState = columnOfBlocks.getBlock(mutable.getY() + 17);
-                if(state.isAir() || !state.getFluidState().isEmpty() ||
-                    aboveState.isAir() || !aboveState.getFluidState().isEmpty())
-                {
-                    return false;
-                }
-            }
-        }
-
-        return true;
+        return !state.isAir() && state.getFluidState().isEmpty() &&
+                !aboveState.isAir() && aboveState.getFluidState().isEmpty();
     }
 
     public Optional<Structure.GenerationStub> findGenerationPoint(Structure.GenerationContext context) {

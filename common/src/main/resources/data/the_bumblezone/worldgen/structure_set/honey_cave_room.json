@@ -8,7 +8,7 @@
   "placement": {
     "type": "the_bumblezone:advanced_random_spread",
     "salt": 722299384,
-    "spacing": 3,
-    "separation": 1
+    "spacing": 4,
+    "separation": 2
   }
 }
