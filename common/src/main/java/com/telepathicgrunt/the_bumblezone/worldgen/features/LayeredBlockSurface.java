@@ -53,6 +53,11 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
                 ChunkPos currentChunkPos = new ChunkPos(chunkPos.x + xOffset, chunkPos.z + zOffset);
                 mutableBlockPosForChunk.set(currentChunkPos.getWorldPosition());
                 ChunkAccess cachedChunk = context.level().getChunk(currentChunkPos.getWorldPosition());
+
+                if (xOffset != 0 && zOffset != 0 && cachedChunk.getSection(0).getBiomes().maybeHas((biome) -> biome.value() == targetBiome)) {
+                    continue;
+                }
+
                 fillChunkWithPollen(context, bulkSectionAccess, cachedChunk, currentChunkPos.getWorldPosition(), targetBiome);
             }
         }
@@ -76,7 +81,7 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
                     continue;
                 }
 
-                while (mutable.getY() >= context.chunkGenerator().getMinY()) {
+                while (mutable.getY() >= context.chunkGenerator().getSeaLevel() - 1) {
                     currentBlockState = bulkSectionAccess.getBlockState(mutable);
 
                     if (!currentBlockState.isAir() && currentBlockState.getFluidState().isEmpty() &&
