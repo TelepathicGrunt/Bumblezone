@@ -92,20 +92,21 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         this.defaultFluid = noiseGeneratorSettings.defaultFluid();
 
         NoiseRouter noiseRouter = noiseGeneratorSettings.noiseRouter();
+        Climate.Sampler sampler = new Climate.Sampler(
+                noiseRouter.temperature(),
+                noiseRouter.vegetation(),
+                noiseRouter.continents(),
+                noiseRouter.erosion(),
+                noiseRouter.depth(),
+                noiseRouter.ridges(),
+                noiseGeneratorSettings.spawnTarget()
+        );
         ((NoiseGeneratorSettingsAccessor) (Object) noiseGeneratorSettings).setNoiseRouter(
                 noiseRouter.mapAll(densityFunction -> {
                     if (densityFunction instanceof BiomeNoise) {
                         return new BiomeNoise(
                                 this::getBiomeSource,
-                                () -> new Climate.Sampler(
-                                        noiseRouter.temperature(),
-                                        noiseRouter.vegetation(),
-                                        noiseRouter.continents(),
-                                        noiseRouter.erosion(),
-                                        noiseRouter.depth(),
-                                        noiseRouter.ridges(),
-                                        noiseGeneratorSettings.spawnTarget()
-                                )
+                                () -> sampler
                         );
                     } else {
                         return densityFunction;
