@@ -57,6 +57,6 @@ public class StrongerWaterloggingProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return BzProcessors.WATERLOGGING_FIX_PROCESSOR.get();
+        return BzProcessors.STRONGER_WATERLOGGING_PROCESSOR.get();
     }
 }
