@@ -185,6 +185,11 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
                         }
                     }
 
+                    BlockState stateToReplace = bulkSectionAccess.getBlockState(position);
+                    if (stateToReplace.hasBlockEntity()) {
+                        world.getChunk(position).removeBlockEntity(position);
+                    }
+
                     bulkSectionAccess.setBlockState(position, Blocks.CAVE_AIR.defaultBlockState(), false);
                 }
                 position.move(Direction.DOWN, carveHeight);

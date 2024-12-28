@@ -30,15 +30,13 @@ public class ReplaceExistingBlockEntitySafelyProcessor extends StructureProcesso
             return structureBlockInfoWorld;
         }
 
-        if (!structureBlockInfoWorld.state().is(Blocks.STRUCTURE_VOID)) {
-            BlockPos position = structureBlockInfoWorld.pos();
-            BlockEntity blockEntity = levelReader.getBlockEntity(position);
+        BlockPos position = structureBlockInfoWorld.pos();
+        BlockState blockState = levelReader.getBlockState(position);
 
-            if (blockEntity != null) {
-                ChunkAccess chunkAccess = levelReader.getChunk(position);
-                chunkAccess.setBlockState(position, structureBlockInfoWorld.state(), false);
-                chunkAccess.removeBlockEntity(position);
-            }
+        if (blockState.hasBlockEntity() && !blockState.is(structureBlockInfoWorld.state().getBlock())) {
+            ChunkAccess chunkAccess = levelReader.getChunk(position);
+            chunkAccess.setBlockState(position, structureBlockInfoWorld.state(), false);
+            chunkAccess.removeBlockEntity(position);
         }
 
         return structureBlockInfoWorld;
