@@ -270,39 +270,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     public void applyCarvers(WorldGenRegion worldGenRegion, long seed, RandomState randomState, BiomeManager biomeManager, StructureManager structureManager, ChunkAccess chunkAccess, GenerationStep.Carving carving) {}
 
     @Override
-    public CompletableFuture<ChunkAccess> fillFromNoise(Executor executor, Blender blender, RandomState randomState, StructureManager structureManager, ChunkAccess chunkAccess) {
-        NoiseSettings noisesettings = this.settings.value().noiseSettings().clampToHeightAccessor(chunkAccess.getHeightAccessorForGeneration());
-        int i = noisesettings.minY();
-        int j = Mth.floorDiv(i, noisesettings.getCellHeight());
-        int k = Mth.floorDiv(noisesettings.height(), noisesettings.getCellHeight());
-        if (k <= 0) {
-            return CompletableFuture.completedFuture(chunkAccess);
-        }
-        else {
-            int l = chunkAccess.getSectionIndex(k * noisesettings.getCellHeight() - 1 + i);
-            int i1 = chunkAccess.getSectionIndex(i);
-            Set<LevelChunkSection> set = Sets.newHashSet();
-
-            for(int j1 = l; j1 >= i1; --j1) {
-                LevelChunkSection levelchunksection = chunkAccess.getSection(j1);
-                levelchunksection.acquire();
-                set.add(levelchunksection);
-            }
-
-            return CompletableFuture.supplyAsync(Util.wrapThreadWithTaskName(
-                    "wgen_fill_noise",
-                    () -> this.doFill(blender, structureManager, randomState, chunkAccess, j, k)),
-                    Util.backgroundExecutor())
-            .whenCompleteAsync((p_224309_, p_224310_) -> {
-                for(LevelChunkSection levelchunksection1 : set) {
-                    levelchunksection1.release();
-                }
-
-            }, executor);
-        }
-    }
-
-    private ChunkAccess doFill(Blender blender, StructureManager structureManager, RandomState randomState, ChunkAccess chunkAccess, int x, int z) {
+    protected ChunkAccess doFill(Blender blender, StructureManager structureManager, RandomState randomState, ChunkAccess chunkAccess, int x, int z) {
         NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk((chunkAccess1) -> this.createNoiseChunk(chunkAccess1, structureManager, blender, randomState));
         Heightmap heightmap = chunkAccess.getOrCreateHeightmapUnprimed(Heightmap.Types.OCEAN_FLOOR_WG);
         Heightmap heightmap1 = chunkAccess.getOrCreateHeightmapUnprimed(Heightmap.Types.WORLD_SURFACE_WG);
