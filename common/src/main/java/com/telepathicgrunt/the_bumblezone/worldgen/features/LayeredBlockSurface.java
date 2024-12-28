@@ -54,7 +54,7 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
                 mutableBlockPosForChunk.set(currentChunkPos.getWorldPosition());
                 ChunkAccess cachedChunk = context.level().getChunk(currentChunkPos.getWorldPosition());
 
-                if (xOffset != 0 && zOffset != 0 && cachedChunk.getSection(0).getBiomes().maybeHas((biome) -> biome.value() == targetBiome)) {
+                if (xOffset != 0 && zOffset != 0 && cachedChunk.getSection(0).getNoiseBiome(0, 0, 0).value() == targetBiome) {
                     continue;
                 }
 
@@ -85,11 +85,11 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
                     currentBlockState = bulkSectionAccess.getBlockState(mutable);
 
                     if (!currentBlockState.isAir() && currentBlockState.getFluidState().isEmpty() &&
-                        !currentBlockState.is(configBlockState.getBlock()) && previousBlockState.getBlock() == Blocks.AIR &&
+                        previousBlockState.getBlock() == Blocks.AIR &&
+                        !currentBlockState.is(configBlockState.getBlock()) &&
                         !(configRareBlockState.isPresent() && currentBlockState.is(configRareBlockState.get().getBlock())))
                     {
-                        BlockState belowBlockState = bulkSectionAccess.getBlockState(mutable);
-                        if (!belowBlockState.isFaceSturdy(context.level(), mutable, Direction.UP)) {
+                        if (!currentBlockState.isFaceSturdy(context.level(), mutable, Direction.UP)) {
                             previousBlockState = currentBlockState;
                             mutable.move(Direction.DOWN);
                             continue;
@@ -97,9 +97,12 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
 
                         for (int height = 1; height <= configHeight && mutable.getY() + height < maxY; height++) {
                             BlockPos finalPosition = mutable.above(height);
-                            BlockState finalBlockState = bulkSectionAccess.getBlockState(finalPosition);
-                            if (!finalBlockState.isAir()) {
-                                break;
+
+                            if (height > 1) {
+                                BlockState finalBlockState = bulkSectionAccess.getBlockState(finalPosition);
+                                if (!finalBlockState.isAir()) {
+                                    break;
+                                }
                             }
 
                             int layerHeight = 8;
