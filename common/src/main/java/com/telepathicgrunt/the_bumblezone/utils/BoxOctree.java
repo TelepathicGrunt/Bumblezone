@@ -2,7 +2,9 @@ package com.telepathicgrunt.the_bumblezone.utils;
 
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
@@ -149,6 +151,29 @@ public class BoxOctree {
         else {
             for (AABB innerBox : innerBoxes) {
                 if (innerBox.intersects(axisAlignedBB)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean boundaryContains(BlockPos position) {
+        return boundary.contains(position.getX(), position.getY(), position.getZ());
+    }
+
+    public boolean withinAnyBox(BlockPos position) {
+        if (!childrenOctants.isEmpty()) {
+            for (BoxOctree octree : childrenOctants) {
+                if (octree.boundaryContains(position) && octree.withinAnyBox(position)) {
+                    return true;
+                }
+            }
+        }
+        else {
+            for (AABB innerBox : innerBoxes) {
+                if (innerBox.contains(position.getX(), position.getY(), position.getZ())) {
                     return true;
                 }
             }

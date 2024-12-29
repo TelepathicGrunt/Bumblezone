@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.utils.BoxOctree;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.FrontAndTop;
 import net.minecraft.core.Holder;
 import net.minecraft.core.QuartPos;
 import net.minecraft.core.Registry;
@@ -357,6 +358,20 @@ public class OptimizedJigsawManager {
                     return null;
                 }
 
+                // If rigid and target position is already an invalid spot, do not run rest of logic.
+                StructureTemplatePool.Projection candidatePlacementBehavior = candidatePiece.getProjection();
+                boolean isCandidateRigid = candidatePlacementBehavior == StructureTemplatePool.Projection.RIGID;
+                if (!ignoreBounds && isCandidateRigid) {
+                    FrontAndTop prop = jigsawBlock.state().getValue(JigsawBlock.ORIENTATION);
+                    BlockPos targetPosition = jigsawBlockTargetPos.relative(prop.front());
+
+                    if (!boxOctreeMutableObject.getValue().boundaryContains(targetPosition) || boxOctreeMutableObject.getValue().withinAnyBox(targetPosition)) {
+                        totalCount -= chosenPiecePair.getSecond();
+                        candidatePieces.remove(chosenPiecePair);
+                        continue;
+                    }
+                }
+
                 // Try different rotations to see which sides of the piece are fit to be the receiving end
                 for (Rotation rotation : Rotation.getShuffled(this.random)) {
                     List<StructureTemplate.StructureBlockInfo> candidateJigsawBlocks;
@@ -391,21 +406,16 @@ public class OptimizedJigsawManager {
                     }
 
                     // Check for each of the candidate's jigsaw blocks for a match
-                    GeneralUtils.JigsawParentCachedState jigsawParentCachedState = new GeneralUtils.JigsawParentCachedState();
-                    jigsawParentCachedState.joint = GeneralUtils.getStringMicroOptimised(jigsawBlock.nbt(), "joint");
-                    jigsawParentCachedState.target = GeneralUtils.getStringMicroOptimised(jigsawBlock.nbt(), "target");
+                    String parentJoint = GeneralUtils.getStringMicroOptimised(jigsawBlock.nbt(), "joint");
+                    String parentTarget = GeneralUtils.getStringMicroOptimised(jigsawBlock.nbt(), "target");
 
                     for (StructureTemplate.StructureBlockInfo candidateJigsawBlock : candidateJigsawBlocks) {
-                        if (GeneralUtils.canJigsawsAttach(jigsawBlock, candidateJigsawBlock, jigsawParentCachedState)) {
+                        if (GeneralUtils.canJigsawsAttach(jigsawBlock, candidateJigsawBlock, parentJoint, parentTarget)) {
                             BlockPos candidateJigsawBlockPos = candidateJigsawBlock.pos();
                             BlockPos candidateJigsawBlockRelativePos = new BlockPos(jigsawBlockTargetPos.getX() - candidateJigsawBlockPos.getX(), jigsawBlockTargetPos.getY() - candidateJigsawBlockPos.getY(), jigsawBlockTargetPos.getZ() - candidateJigsawBlockPos.getZ());
 
                             // Get the bounding box for the piece, offset by the relative position difference
                             BoundingBox candidateBoundingBox = candidatePiece.getBoundingBox(this.structureTemplateManager, candidateJigsawBlockRelativePos, rotation);
-
-                            // Determine if candidate is rigid
-                            StructureTemplatePool.Projection candidatePlacementBehavior = candidatePiece.getProjection();
-                            boolean isCandidateRigid = candidatePlacementBehavior == StructureTemplatePool.Projection.RIGID;
 
                             // Determine how much the candidate jigsaw block is off in the y direction.
                             // This will be needed to offset the candidate piece so that the jigsaw blocks line up properly.

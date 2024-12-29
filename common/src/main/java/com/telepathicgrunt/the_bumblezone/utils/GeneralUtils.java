@@ -218,24 +218,18 @@ public class GeneralUtils {
 
     //////////////////////////////////////////////
 
-    public static class JigsawParentCachedState {
-        public String joint;
-        public String target;
-    }
-
     // More optimized with checking if the jigsaw blocks can connect
-    public static boolean canJigsawsAttach(StructureTemplate.StructureBlockInfo jigsaw1, StructureTemplate.StructureBlockInfo jigsaw2, JigsawParentCachedState jigsawParentCachedState) {
+    public static boolean canJigsawsAttach(StructureTemplate.StructureBlockInfo jigsaw1, StructureTemplate.StructureBlockInfo jigsaw2, String parentJoint, String parentTarget) {
         FrontAndTop prop1 = jigsaw1.state().getValue(JigsawBlock.ORIENTATION);
         FrontAndTop prop2 = jigsaw2.state().getValue(JigsawBlock.ORIENTATION);
 
         return prop1.front() == prop2.front().getOpposite() &&
-                (prop1.top() == prop2.top() || isRollableJoint(jigsawParentCachedState, prop1)) &&
-                jigsawParentCachedState.target.equals(getStringMicroOptimised(jigsaw2.nbt(), "name"));
+                (prop1.top() == prop2.top() || isRollableJoint(parentJoint, prop1)) &&
+                parentTarget.equals(getStringMicroOptimised(jigsaw2.nbt(), "name"));
     }
 
-    private static boolean isRollableJoint(JigsawParentCachedState jigsawParentCachedState, FrontAndTop prop1) {
-        String joint = jigsawParentCachedState.joint;
-        if(!joint.equals("rollable") && !joint.equals("aligned")) {
+    private static boolean isRollableJoint(String joint, FrontAndTop prop1) {
+        if (!joint.equals("rollable") && !joint.equals("aligned")) {
             return !prop1.front().getAxis().isHorizontal();
         }
         else {
