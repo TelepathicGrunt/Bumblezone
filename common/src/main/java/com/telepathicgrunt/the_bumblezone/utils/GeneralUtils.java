@@ -23,6 +23,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.stats.Stats;
@@ -326,19 +327,33 @@ public class GeneralUtils {
 
     //////////////////////////////////////////////
 
+    public static class JigsawParentCachedState {
+        public String joint;
+        public String target;
+    }
+
     // More optimized with checking if the jigsaw blocks can connect
-    public static boolean canJigsawsAttach(StructureTemplate.StructureBlockInfo jigsaw1, StructureTemplate.StructureBlockInfo jigsaw2) {
+    public static boolean canJigsawsAttach(StructureTemplate.StructureBlockInfo jigsaw1, StructureTemplate.StructureBlockInfo jigsaw2, JigsawParentCachedState jigsawParentCachedState) {
         FrontAndTop prop1 = jigsaw1.state().getValue(JigsawBlock.ORIENTATION);
         FrontAndTop prop2 = jigsaw2.state().getValue(JigsawBlock.ORIENTATION);
-        String joint = jigsaw1.nbt().getString("joint");
-        if(joint.isEmpty()) {
-            joint = prop1.front().getAxis().isHorizontal() ? "aligned" : "rollable";
-        }
 
-        boolean isRollable = joint.equals("rollable");
         return prop1.front() == prop2.front().getOpposite() &&
-                (isRollable || prop1.top() == prop2.top()) &&
-                jigsaw1.nbt().getString("target").equals(jigsaw2.nbt().getString("name"));
+                (prop1.top() == prop2.top() || isRollableJoint(jigsawParentCachedState, prop1)) &&
+                jigsawParentCachedState.target.equals(getStringMicroOptimised(jigsaw2.nbt(), "name"));
+    }
+
+    private static boolean isRollableJoint(JigsawParentCachedState jigsawParentCachedState, FrontAndTop prop1) {
+        String joint = jigsawParentCachedState.joint;
+        if(!joint.equals("rollable") && !joint.equals("aligned")) {
+            return !prop1.front().getAxis().isHorizontal();
+        }
+        else {
+            return joint.equals("rollable");
+        }
+    }
+
+    public static String getStringMicroOptimised(CompoundTag tag, String key) {
+        return tag.get(key) instanceof StringTag stringTag ? stringTag.getAsString() : "";
     }
 
     //////////////////////////////////////////////
@@ -414,13 +429,15 @@ public class GeneralUtils {
     //////////////////////////////////////////////
 
     public static void centerAllPieces(BlockPos targetPos, List<? extends StructurePiece> pieces) {
-        if(pieces.isEmpty()) return;
+        if (pieces.isEmpty()) {
+            return;
+        }
 
         Vec3i structureCenter = pieces.get(0).getBoundingBox().getCenter();
         int xOffset = targetPos.getX() - structureCenter.getX();
         int zOffset = targetPos.getZ() - structureCenter.getZ();
 
-        for(StructurePiece structurePiece : pieces) {
+        for (StructurePiece structurePiece : pieces) {
             structurePiece.move(xOffset, 0, zOffset);
         }
     }

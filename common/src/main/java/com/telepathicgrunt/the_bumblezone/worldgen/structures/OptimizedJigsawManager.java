@@ -195,17 +195,7 @@ public class OptimizedJigsawManager {
                 return;
             }
 
-            if(components.isEmpty()) {
-                return;
-            }
-
-            Vec3i structureCenter = components.get(0).getBoundingBox().getCenter();
-            int xOffset = startPos.getX() - structureCenter.getX();
-            int zOffset = startPos.getZ() - structureCenter.getZ();
-
-            for(StructurePiece structurePiece : components) {
-                structurePiece.move(xOffset, 0, zOffset);
-            }
+            GeneralUtils.centerAllPieces(startPos, components);
         }));
     }
     
@@ -386,8 +376,12 @@ public class OptimizedJigsawManager {
                     }
 
                     // Check for each of the candidate's jigsaw blocks for a match
+                    GeneralUtils.JigsawParentCachedState jigsawParentCachedState = new GeneralUtils.JigsawParentCachedState();
+                    jigsawParentCachedState.joint = GeneralUtils.getStringMicroOptimised(jigsawBlock.nbt(), "joint");
+                    jigsawParentCachedState.target = GeneralUtils.getStringMicroOptimised(jigsawBlock.nbt(), "target");
+
                     for (StructureTemplate.StructureBlockInfo candidateJigsawBlock : candidateJigsawBlocks) {
-                        if (GeneralUtils.canJigsawsAttach(jigsawBlock, candidateJigsawBlock)) {
+                        if (GeneralUtils.canJigsawsAttach(jigsawBlock, candidateJigsawBlock, jigsawParentCachedState)) {
                             BlockPos candidateJigsawBlockPos = candidateJigsawBlock.pos();
                             BlockPos candidateJigsawBlockRelativePos = new BlockPos(jigsawBlockTargetPos.getX() - candidateJigsawBlockPos.getX(), jigsawBlockTargetPos.getY() - candidateJigsawBlockPos.getY(), jigsawBlockTargetPos.getZ() - candidateJigsawBlockPos.getZ());
 
