@@ -21,6 +21,9 @@ public class LevelChunkMixin {
         if (!PlatformHooks.isDevEnvironment()) {
             instance.debug(s, objects);
         }
+        else {
+            instance.warn(s, objects);
+        }
     }
 
     // Silence logspam that isn't an issue by lowering it from error to debug: https://bugs.mojang.com/browse/MC-278282
@@ -30,6 +33,9 @@ public class LevelChunkMixin {
     private void bumblezone$lowerLoggingLevel2(Logger instance, String s, Object o1, Object o2, Operation<Void> original) {
         if (!PlatformHooks.isDevEnvironment()) {
             instance.debug(s, o1, o2);
+        }
+        else {
+            instance.warn(s, o1, o2);
         }
     }
 }

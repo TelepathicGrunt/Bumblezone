@@ -20,5 +20,8 @@ public class BlockAttachedEntityMixin {
         if (!PlatformHooks.isDevEnvironment()) {
             instance.debug(s, o);
         }
+        else {
+            instance.warn(s, o);
+        }
     }
 }
