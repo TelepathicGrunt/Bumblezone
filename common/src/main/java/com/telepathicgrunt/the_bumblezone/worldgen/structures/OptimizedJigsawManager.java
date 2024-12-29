@@ -171,6 +171,8 @@ public class OptimizedJigsawManager {
         Registry<StructureTemplatePool> jigsawPoolRegistry = context.registryAccess().registryOrThrow(Registries.TEMPLATE_POOL);
 
         return Optional.of(new Structure.GenerationStub(new BlockPos(pieceCenterX, pieceCenterY, pieceCenterZ), (structurePiecesBuilder) -> {
+//            var timer1 = System.currentTimeMillis();
+
             List<PoolElementStructurePiece> components = new ArrayList<>();
             components.add(startPiece);
             components.clear();
@@ -200,17 +202,13 @@ public class OptimizedJigsawManager {
                 return;
             }
 
-            if(components.isEmpty()) {
-                return;
-            }
+            GeneralUtils.centerAllPieces(startPos, components);
 
-            Vec3i structureCenter = components.get(0).getBoundingBox().getCenter();
-            int xOffset = startPos.getX() - structureCenter.getX();
-            int zOffset = startPos.getZ() - structureCenter.getZ();
-
-            for(StructurePiece structurePiece : components) {
-                structurePiece.move(xOffset, 0, zOffset);
-            }
+//            var timer2 = System.currentTimeMillis();
+//            var diff = timer2 - timer1;
+//            if (diff > 0) {
+//                Bumblezone.LOGGER.warn("STRUCTURE {} TOOK {}ms", structureID, diff);
+//            }
         }));
     }
     
@@ -393,8 +391,12 @@ public class OptimizedJigsawManager {
                     }
 
                     // Check for each of the candidate's jigsaw blocks for a match
+                    GeneralUtils.JigsawParentCachedState jigsawParentCachedState = new GeneralUtils.JigsawParentCachedState();
+                    jigsawParentCachedState.joint = GeneralUtils.getStringMicroOptimised(jigsawBlock.nbt(), "joint");
+                    jigsawParentCachedState.target = GeneralUtils.getStringMicroOptimised(jigsawBlock.nbt(), "target");
+
                     for (StructureTemplate.StructureBlockInfo candidateJigsawBlock : candidateJigsawBlocks) {
-                        if (GeneralUtils.canJigsawsAttach(jigsawBlock, candidateJigsawBlock)) {
+                        if (GeneralUtils.canJigsawsAttach(jigsawBlock, candidateJigsawBlock, jigsawParentCachedState)) {
                             BlockPos candidateJigsawBlockPos = candidateJigsawBlock.pos();
                             BlockPos candidateJigsawBlockRelativePos = new BlockPos(jigsawBlockTargetPos.getX() - candidateJigsawBlockPos.getX(), jigsawBlockTargetPos.getY() - candidateJigsawBlockPos.getY(), jigsawBlockTargetPos.getZ() - candidateJigsawBlockPos.getZ());
 
