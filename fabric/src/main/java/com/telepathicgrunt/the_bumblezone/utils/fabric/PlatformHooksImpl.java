@@ -238,4 +238,8 @@ public class PlatformHooksImpl {
     public static Fluid getBucketItemFluid(BucketItem stack) {
         return ((BucketItemAccessor)stack).bz$getContents();
     }
+
+    public static boolean isDevEnvironment() {
+        return FabricLoader.getInstance().isDevelopmentEnvironment();
+    }
 }

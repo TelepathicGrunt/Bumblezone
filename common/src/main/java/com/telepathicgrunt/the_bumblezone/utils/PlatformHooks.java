@@ -151,4 +151,10 @@ public class PlatformHooks {
     public static Fluid getBucketItemFluid(BucketItem stack) {
         throw new NotImplementedException("PlatformHooks getBucketItemFluid is not implemented!");
     }
+
+    @ExpectPlatform
+    @Contract(pure=true)
+    public static boolean isDevEnvironment() {
+        throw new NotImplementedException("PlatformHooks isDevEnvironment is not implemented!");
+    }
 }

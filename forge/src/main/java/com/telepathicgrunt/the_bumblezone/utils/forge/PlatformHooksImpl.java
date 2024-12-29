@@ -37,6 +37,7 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.loading.FMLLoader;
 import org.jetbrains.annotations.Contract;
 
 import java.util.Arrays;
@@ -163,5 +164,9 @@ public class PlatformHooksImpl {
 
     public static Fluid getBucketItemFluid(BucketItem stack) {
         return stack.getFluid();
+    }
+
+    public static boolean isDevEnvironment() {
+        return !FMLLoader.isProduction();
     }
 }
