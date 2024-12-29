@@ -12,6 +12,8 @@ Honey Cave Room structures can spawn exposed in walls now. Slightly reduced spaw
 
 Reduced number of Jigsaw Blocks and slightly reduce amount of pieces in Gazebuzz Cluster structure so its layout can generate twice as fast (about 3 seconds previously)
 
+Fixed some outdated Crystalline Flower logspam related to spawning certain structures nbt.
+
 #### Mod Compat:
 Changed a bit of code to work better with C2ME (Concurrent Chunk Management Engine).
 
