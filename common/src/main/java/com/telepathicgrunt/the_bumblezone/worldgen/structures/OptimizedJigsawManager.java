@@ -362,10 +362,7 @@ public class OptimizedJigsawManager {
                 StructureTemplatePool.Projection candidatePlacementBehavior = candidatePiece.getProjection();
                 boolean isCandidateRigid = candidatePlacementBehavior == StructureTemplatePool.Projection.RIGID;
                 if (!ignoreBounds && isCandidateRigid) {
-                    FrontAndTop prop = jigsawBlock.state().getValue(JigsawBlock.ORIENTATION);
-                    BlockPos targetPosition = jigsawBlockTargetPos.relative(prop.front());
-
-                    if (!boxOctreeMutableObject.getValue().boundaryContains(targetPosition) || boxOctreeMutableObject.getValue().withinAnyBox(targetPosition)) {
+                    if (!boxOctreeMutableObject.getValue().boundaryContains(jigsawBlockTargetPos) || boxOctreeMutableObject.getValue().withinAnyBox(jigsawBlockTargetPos)) {
                         totalCount -= chosenPiecePair.getSecond();
                         candidatePieces.remove(chosenPiecePair);
                         continue;
