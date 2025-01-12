@@ -1,3 +1,11 @@
+### **(V.7.5.10 Changes) (1.20.1 Minecraft)**
+
+#### Blocks:
+Fixes Crystalline Flower consume button showing when clicking despite no consume item.
+
+Fixed int overflow when trying to consume a stack of max-tier granting items in Crystalline Flower.
+
+
 ### **(V.7.5.9 Changes) (1.20.1 Minecraft)**
 
 #### Features:
