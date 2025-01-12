@@ -86,13 +86,12 @@ public class CrystallineFlowerDataManager extends SimpleJsonResourceReloadListen
                     for (Holder<Item> itemHolder : tagItems) {
                         if (itemConsumeData.maxXp) {
                             itemToXp.put(itemHolder.value(), Pair.of(itemConsumeData.xp, true));
-                            break;
+                            continue;
                         }
 
                         Pair<Integer, Boolean> pair = itemToXp.get(itemHolder.value());
                         if (pair == null || (pair.getFirst() < itemConsumeData.xp && !pair.getSecond())) {
                             itemToXp.put(itemHolder.value(), Pair.of(itemConsumeData.xp, false));
-                            break;
                         }
                     }
                 });

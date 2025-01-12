@@ -1,3 +1,9 @@
+### **(V.7.7.15 Changes) (1.21.1 Minecraft)**
+
+#### Blocks:
+Fixed some Crystalline FLower items not giving correct XP.
+
+
 ### **(V.7.7.14 Changes) (1.21.1 Minecraft)**
 
 #### Features:
