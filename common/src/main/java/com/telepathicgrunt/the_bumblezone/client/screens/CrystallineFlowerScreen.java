@@ -412,24 +412,26 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             pressedConsumeTimer--;
         }
         if (this.menu.consumeSlotFullyObstructed.get() != 1 && BzGeneralConfigs.crystallineFlowerConsumeItemUI) {
-            if (pressedConsumeTimer > 0) {
-                RenderSystem.enableDepthTest();
-                guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 18, 18, 18, 256, 256);
-                guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET + 18, 15, 11, 256, 256);
-            }
-            else if (this.menu.consumeSlot.hasItem() && this.menu.xpTier.get() < 7) {
-                int xOffset = startX + CONSUME_CONFIRMATION_X_OFFSET;
-                int yOffset = startY + CONSUME_CONFIRMATION_Y_OFFSET;
-                if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
+            if (this.menu.consumeSlot.hasItem() && this.menu.xpTier.get() < 7) {
+                if (pressedConsumeTimer > 0) {
                     RenderSystem.enableDepthTest();
-                    guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 36, 18, 18, 256, 256);
+                    guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 18, 18, 18, 256, 256);
+                    guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET + 18, 15, 11, 256, 256);
                 }
                 else {
+                    int xOffset = startX + CONSUME_CONFIRMATION_X_OFFSET;
+                    int yOffset = startY + CONSUME_CONFIRMATION_Y_OFFSET;
+                    if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
+                        RenderSystem.enableDepthTest();
+                        guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 36, 18, 18, 256, 256);
+                    }
+                    else {
+                        RenderSystem.enableDepthTest();
+                        guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET, 18, 18, 256, 256);
+                    }
                     RenderSystem.enableDepthTest();
-                    guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET, 18, 18, 256, 256);
+                    guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET, 15, 11, 256, 256);
                 }
-                RenderSystem.enableDepthTest();
-                guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET, 15, 11, 256, 256);
             }
         }
 

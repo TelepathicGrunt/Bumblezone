@@ -1,7 +1,11 @@
 ### **(V.7.7.15 Changes) (1.21.1 Minecraft)**
 
 #### Blocks:
-Fixed some Crystalline FLower items not giving correct XP.
+Fixed some Crystalline Flower items not giving correct XP.
+
+Fixes Crystalline Flower consume button showing when clicking despite no consume item.
+
+Fixed int overflow when trying to consume a stack of max-tier granting items in Crystalline Flower.
 
 
 ### **(V.7.7.14 Changes) (1.21.1 Minecraft)**
