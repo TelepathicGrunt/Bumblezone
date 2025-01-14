@@ -7,6 +7,8 @@ Fixes Crystalline Flower consume button showing when clicking despite no consume
 
 Fixed int overflow when trying to consume a stack of max-tier granting items in Crystalline Flower.
 
+Made the inside planes for Glistering Honey Crystal be cutout render type.
+
 
 ### **(V.7.7.14 Changes) (1.21.1 Minecraft)**
 
