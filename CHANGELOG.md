@@ -1,3 +1,7 @@
+forestry:block_bee_comb_dripping
+forestry:block_bee_comb_honey
+
+
 ### **(V.7.7.15 Changes) (1.21.1 Minecraft)**
 
 #### Blocks:

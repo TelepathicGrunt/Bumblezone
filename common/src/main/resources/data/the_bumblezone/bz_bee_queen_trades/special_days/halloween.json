@@ -78,6 +78,15 @@
     },
     {
       "item": {
+        "id": "pamhc2foodextended:candycornitem",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
         "id": "spectrum:rock_candy",
         "count": 1
       },
@@ -188,6 +197,15 @@
       "item": {
         "id": "supplementaries:candy",
         "count": 4
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "simplefarming:candy",
+        "count": 1
       },
       "xp_reward": 0,
       "weight": 1,

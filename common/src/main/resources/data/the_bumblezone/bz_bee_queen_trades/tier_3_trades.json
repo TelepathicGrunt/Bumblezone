@@ -73,6 +73,22 @@
       "required": false
     },
     {
+      "id": "forestry:honey_pot",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodcore:honeypieitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodcore:honeyglazeddonutitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:honeybunitem",
+      "required": false
+    },
+    {
       "id": "bk:honey_extractor",
       "required": false
     },

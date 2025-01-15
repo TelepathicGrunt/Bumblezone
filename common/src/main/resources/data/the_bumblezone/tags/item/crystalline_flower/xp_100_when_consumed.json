@@ -1,6 +1,10 @@
 {
   "replace": false,
   "values": [
-    "minecraft:enchanted_book"
+    "minecraft:enchanted_book",
+    {
+      "id": "forestry:royal_jelly",
+      "required": false
+    }
   ]
 }

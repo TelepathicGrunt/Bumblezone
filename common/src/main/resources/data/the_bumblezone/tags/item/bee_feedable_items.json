@@ -80,7 +80,55 @@
       "required": false
     },
     {
+      "id": "forestry:ambrosia",
+      "required": false
+    },
+    {
+      "id": "forestry:honey_pot",
+      "required": false
+    },
+    {
+      "id": "forestry:honeyed_slice",
+      "required": false
+    },
+    {
       "id": "oceandelight:honey_fried_kelp",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodcore:honeypieitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodcore:honeyglazeddonutitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:honeybunitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:honeycombchocolatebaritem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:honeyglazedcarrotsitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:honeyglazedhamitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:honeyglazedlemonlambitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:honeysandwichitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:honeysoyribsitem",
       "required": false
     },
     {

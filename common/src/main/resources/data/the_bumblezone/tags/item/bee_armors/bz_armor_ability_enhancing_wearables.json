@@ -45,6 +45,10 @@
       "required": false
     },
     {
+      "id": "special_drops:bee_helmet",
+      "required": false
+    },
+    {
       "id": "mcda:beehive_armor_helmet",
       "required": false
     },

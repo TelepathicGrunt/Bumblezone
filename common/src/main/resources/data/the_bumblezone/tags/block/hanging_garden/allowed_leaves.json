@@ -141,6 +141,18 @@
       "required": false
     },
     {
+      "id": "feur_builder:pink_leaves_flowering",
+      "required": false
+    },
+    {
+      "id": "feur_builder:red_leaves_flowering",
+      "required": false
+    },
+    {
+      "id": "feur_builder:purple_leaves_flowering",
+      "required": false
+    },
+    {
       "id": "good_nights_sleep:diamond_leaves",
       "required": false
     },
