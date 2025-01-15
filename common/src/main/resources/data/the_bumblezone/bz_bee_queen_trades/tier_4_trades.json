@@ -77,6 +77,34 @@
       "required": false
     },
     {
+      "id": "forestry:ambrosia",
+      "required": false
+    },
+    {
+      "id": "forestry:royal_jelly",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:honeyglazedcarrotsitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:honeyglazedhamitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:honeyglazedlemonlambitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:honeysandwichitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:honeysoyribsitem",
+      "required": false
+    },
+    {
       "id": "twilightdelight:honey_113",
       "required": false
     },
@@ -350,6 +378,13 @@
       "required": false
     },
     {
+      "id": "special_drops:bee_helmet",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 1,
+      "required": false
+    },
+    {
       "id": "travelersbackpack:bee",
       "count": 1,
       "xp_reward": 8,
@@ -520,6 +555,33 @@
     {
       "id": "feywild:summoning_scroll_bee_knight",
       "count": 1,
+      "xp_reward": 8,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "plushies:bee_plushie",
+        "count": 1
+      },
+      "xp_reward": 8,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "skinnedlanterns:bee_lantern_block",
+        "count": 1
+      },
+      "xp_reward": 8,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "skinnedlanterns:bee_soul_lantern_block",
+        "count": 1
+      },
       "xp_reward": 8,
       "weight": 1,
       "required": false

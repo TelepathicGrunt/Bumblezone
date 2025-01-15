@@ -41,6 +41,20 @@
       "required": false
     },
     {
+      "id": "autumnity:cooked_turkey",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "autumnity:cooked_turkey_piece",
+      "count": 5,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
       "id": "farmersdelight:stuffed_potato",
       "count": 1,
       "xp_reward": 0,
@@ -80,6 +94,55 @@
       "count": 2,
       "xp_reward": 0,
       "weight": 2,
+      "required": false
+    },
+    {
+      "id": "pamhc2crops:bakedsweetpotatoitem",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "pamhc2crops:butteredbakedpotatoitem",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:garlicmashedpotatoesitem",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:mashedsweetpotatoesitem",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:mashedpotatoeschickenbiscuititem",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:loadedmashedpotatoesitem",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:potatosaladitem",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
       "required": false
     },
     {

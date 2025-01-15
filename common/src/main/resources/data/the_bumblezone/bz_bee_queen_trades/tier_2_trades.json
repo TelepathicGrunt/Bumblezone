@@ -93,15 +93,15 @@
       "required": false
     },
     {
+      "id": "#forestry:combs",
+      "required": false
+    },
+    {
+      "id": "forestry:honeyed_slice",
+      "required": false
+    },
+    {
       "id": "adorn:honeycomb_crate",
-      "required": false
-    },
-    {
-      "id": "skinnedlanterns:bee_lantern_block",
-      "required": false
-    },
-    {
-      "id": "skinnedlanterns:bee_soul_lantern_block",
       "required": false
     },
     {
@@ -158,6 +158,10 @@
     },
     {
       "id": "windswept:sweet_berry_bowl",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodextended:honeycombchocolatebaritem",
       "required": false
     },
     {

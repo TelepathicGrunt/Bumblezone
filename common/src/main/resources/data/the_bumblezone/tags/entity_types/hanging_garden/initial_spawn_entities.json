@@ -14,6 +14,42 @@
       "required": false
     },
     {
+      "id": "alexs_herps_:aft_banded",
+      "required": false
+    },
+    {
+      "id": "alexs_herps_:argentine_tegu",
+      "required": false
+    },
+    {
+      "id": "alexs_herps_:blue_tongue_skink_1",
+      "required": false
+    },
+    {
+      "id": "alexs_herps_:blue_chameleon",
+      "required": false
+    },
+    {
+      "id": "alexs_herps_:lush_mantis",
+      "required": false
+    },
+    {
+      "id": "alexs_herps_:snail",
+      "required": false
+    },
+    {
+      "id": "alexs_herps_:snail",
+      "required": false
+    },
+    {
+      "id": "alexs_herps_:snail",
+      "required": false
+    },
+    {
+      "id": "alexs_herps_:snail",
+      "required": false
+    },
+    {
       "id": "aquamirae:golden_moth",
       "required": false
     },

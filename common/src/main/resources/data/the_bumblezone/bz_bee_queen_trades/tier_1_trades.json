@@ -223,6 +223,10 @@
     {
       "id": "feywild:honeycomb",
       "required": false
+    },
+    {
+      "id": "pyrite:honey_dye",
+      "required": false
     }
   ],
   "possible_rewards": [

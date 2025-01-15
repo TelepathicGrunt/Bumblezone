@@ -33,6 +33,18 @@
       "required": false
     },
     {
+      "id": "reliquary:chelicerae",
+      "required": false
+    },
+    {
+      "id": "special_drops:spider_fang",
+      "required": false
+    },
+    {
+      "id": "special_drops:cave_spider_fang",
+      "required": false
+    },
+    {
       "id": "twilightdelight:raw_insect",
       "required": false
     }
