@@ -40,6 +40,6 @@ public record GlisteringHoneyCrystalUnbakedModel(BlockModel mainModel, ResourceL
         }
 
         Bumblezone.LOGGER.error("unable to bake model! expected SimpleBakedModel, got {}", bakedMainModel.getClass());
-        return bakedMainModel;
+        return outsideModel;
     }
 }
