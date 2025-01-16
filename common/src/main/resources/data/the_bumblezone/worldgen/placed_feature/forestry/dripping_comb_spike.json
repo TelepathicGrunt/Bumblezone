@@ -8,7 +8,7 @@
         "distribution": [
           {
             "data": 0,
-            "weight": 9
+            "weight": 29
           },
           {
             "data": 1,
@@ -28,25 +28,9 @@
       "type": "minecraft:block_predicate_filter",
       "predicate": {
         "type": "minecraft:matching_block_tag",
-        "offset": [
-          0,
-          -1,
-          0
-        ],
-        "tag": "the_bumblezone:two_tone_spikes/wax_tipped_allowed_base"
+        "offset": [ 0, 1, 0 ],
+        "tag": "the_bumblezone:two_tone_spikes/honey_tipped_allowed_base"
       }
-    },
-    {
-      "type": "the_bumblezone:structure_disallow_by_tag",
-      "disallow_tag": "the_bumblezone:no_giant_spikes",
-      "piecewise_check": true
-    },
-    {
-      "type": "the_bumblezone:structure_disallow_by_tag",
-      "disallow_tag": "the_bumblezone:throne_pillar",
-      "piecewise_check": true,
-      "min_y": 126,
-      "max_y": 150
     },
     {
       "type": "minecraft:biome"
