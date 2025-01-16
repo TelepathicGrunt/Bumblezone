@@ -1,3 +1,9 @@
+### **(V.7.5.11 Changes) (1.20.1 Minecraft)**
+
+#### Blocks:
+(Fabric): Fixed Glistering Honey Crystal model error that broke resources.
+
+
 ### **(V.7.5.10 Changes) (1.20.1 Minecraft)**
 
 #### Blocks:
