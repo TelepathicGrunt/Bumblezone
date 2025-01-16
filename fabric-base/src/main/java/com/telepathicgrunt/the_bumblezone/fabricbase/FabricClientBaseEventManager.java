@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.fabricbase;
 
 import com.telepathicgrunt.the_bumblezone.client.fabric.FabricArmorRenderer;
+import com.telepathicgrunt.the_bumblezone.client.fabric.GlisteringHoneyCrystalModels;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockColorEvent;
@@ -63,6 +64,7 @@ public class FabricClientBaseEventManager {
                     }
                 }));
 
+        GlisteringHoneyCrystalModels.setupModels();
         FabricArmorRenderer.setupArmor();
         RegisterEntityRenderersEvent.EVENT.invoke(new RegisterEntityRenderersEvent(EntityRendererRegistry::register));
         RegisterEntityLayersEvent.EVENT.invoke(new RegisterEntityLayersEvent((type, supplier) -> EntityModelLayerRegistry.registerModelLayer(type, supplier::get)));
