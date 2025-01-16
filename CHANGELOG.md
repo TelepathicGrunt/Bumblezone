@@ -5,7 +5,7 @@ Fixes Crystalline Flower consume button showing when clicking despite no consume
 
 Fixed int overflow when trying to consume a stack of max-tier granting items in Crystalline Flower.
 
-Made the inside planes for Glistering Honey Crystal be cutout render type.
+Made the inside planes for Glistering Honey Crystal be cutout render type. (Special thanks to Upcraft for getting Fabric side working!)
 
 #### Mod Compat:
 Added more mod compat. Such as spawning spikes of two Forestry's combs in the dimension. Or spawning a few more modded creatures in Hanging Gardens.
