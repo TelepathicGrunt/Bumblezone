@@ -20,6 +20,14 @@
     {
       "id": "bosses_of_mass_destruction:earthdive_spear",
       "required": false
+    },
+    {
+      "id": "cyclic:teleport_wand",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:chorus_blade",
+      "required": false
     }
   ]
 }
