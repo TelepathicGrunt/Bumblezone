@@ -21,7 +21,7 @@ Honey Cave Room structures can spawn exposed in walls now. Slightly reduced spaw
 Reduced number of Jigsaw Blocks and slightly reduce amount of pieces in Gazebuzz Cluster structure so its layout can generate twice as fast (about 3 seconds previously)
 
 #### Mod Compat:
-Changed a bit of code to work better with C2ME (Concurrent Chunk Management Engine).
+Added more mod compat. Such as spawning spikes of two Forestry's combs in the dimension. Or spawning a few more modded creatures in Hanging Gardens.
 
 
 ### **(V.7.5.8 Changes) (1.20.1 Minecraft)**

@@ -1,0 +1,44 @@
+{
+  "legendarycreatures:forest_mojo": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:oxeye_daisy" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "legendarycreatures:desert_mojo": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:flowering_azalea" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:fern" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }]
+}

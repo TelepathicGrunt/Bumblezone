@@ -42,6 +42,20 @@
       "required": false
     },
     {
+      "id": "supplementaries:confetti_popper",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 2,
+      "required": false
+    },
+    {
+      "id": "endergetic:bolloom_balloon",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 2,
+      "required": false
+    },
+    {
       "id": "immersiveengineering:firework",
       "count": 1,
       "xp_reward": 0,

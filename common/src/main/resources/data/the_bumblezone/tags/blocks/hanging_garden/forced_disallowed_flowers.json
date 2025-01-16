@@ -316,6 +316,14 @@
       "required": false
     },
     {
+      "id": "hexalia:ghost_fern",
+      "required": false
+    },
+    {
+      "id": "hexalia:witchweed",
+      "required": false
+    },
+    {
       "id": "hibernalherbs:tarragon",
       "required": false
     },
@@ -365,6 +373,10 @@
     },
     {
       "id": "kniro_flower:white_clover",
+      "required": false
+    },
+    {
+      "id": "landsoficaria:voidlily",
       "required": false
     },
     {

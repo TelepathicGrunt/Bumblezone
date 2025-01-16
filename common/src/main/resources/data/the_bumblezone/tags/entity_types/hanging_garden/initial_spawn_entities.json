@@ -182,6 +182,10 @@
       "required": false
     },
     {
+      "id": "hexalia:silk_moth_entity",
+      "required": false
+    },
+    {
       "id": "honey_bucket:glow_snail",
       "required": false
     },
@@ -195,6 +199,14 @@
     },
     {
       "id": "infernalexp:glowsilk_moth",
+      "required": false
+    },
+    {
+      "id": "landsoficaria:crystal_slug",
+      "required": false
+    },
+    {
+      "id": "legendarycreatures:wisp",
       "required": false
     },
     {

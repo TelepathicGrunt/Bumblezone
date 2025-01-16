@@ -58,6 +58,7 @@ public class ModChecker {
 	public static boolean reliquaryPresent = false;
 	public static boolean createJetpackPresent = false;
 	public static boolean tropicraftPresent = false;
+	public static boolean forestryPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -99,6 +100,9 @@ public class ModChecker {
 
 			modid = "lootr";
 			loadupModCompat(modid, () -> new LootrCompat());
+			
+			modid = "forestry";
+			loadupModCompat(modid, () -> new ForestryCompat());
 		}
 		catch (Throwable e) {
 			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");
