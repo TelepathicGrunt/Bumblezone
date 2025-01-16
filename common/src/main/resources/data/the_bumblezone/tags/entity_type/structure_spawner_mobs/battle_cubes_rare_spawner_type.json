@@ -38,6 +38,14 @@
       "required": false
     },
     {
+      "id": "goety:bone_spider",
+      "required": false
+    },
+    {
+      "id": "legendarycreatures:peacock_spider",
+      "required": false
+    },
+    {
       "id": "minecraft_earth_mod:bone_spider",
       "required": false
     },

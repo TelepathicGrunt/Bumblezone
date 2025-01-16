@@ -1,0 +1,97 @@
+{
+  "goety:leapleaf": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:azalea" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:flowering_azalea" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:spore_blossom" },
+          "weight": 3
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 3
+        }
+      ]
+    }
+  }],
+  "goety:whisperer": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:azalea" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:spore_blossom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "goety:wavewhisperer": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:azalea" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "goety:jungle_zombie_servent": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "goety:mossy_skeleton_servent": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }]
+}

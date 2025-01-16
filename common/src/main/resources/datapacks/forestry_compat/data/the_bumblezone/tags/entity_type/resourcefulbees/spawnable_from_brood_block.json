@@ -1,0 +1,49 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resourcefulbees:coal_bee",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:iron_bee",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:zombee_bee",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:skeleton_bee",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:beeper_bee",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:red_mushroom_bee",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:brown_mushroom_bee",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:redstone_bee",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:slimy_bee",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:warped_fungus_bee",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:crimson_fungus_bee",
+      "required": false
+    }
+  ]
+}

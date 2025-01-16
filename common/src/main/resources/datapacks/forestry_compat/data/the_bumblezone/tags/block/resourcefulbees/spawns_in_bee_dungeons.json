@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resourcefulbees:gold_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:redstone_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:lapis_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:ender_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:diamond_honeycomb_block",
+      "required": false
+    }
+  ]
+}

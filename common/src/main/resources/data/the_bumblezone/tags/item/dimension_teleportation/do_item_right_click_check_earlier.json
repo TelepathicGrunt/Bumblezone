@@ -2,6 +2,14 @@
   "replace": false,
   "values": [
     {
+      "id": "cyclic:teleport_wand",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:chorus_blade",
+      "required": false
+    },
+    {
       "id": "travelanchors:travel_staff",
       "required": false
     },

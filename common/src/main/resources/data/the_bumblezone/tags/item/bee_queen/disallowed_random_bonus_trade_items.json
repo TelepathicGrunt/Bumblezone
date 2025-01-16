@@ -177,6 +177,10 @@
       "required": false
     },
     {
+      "id": "#blahahplus:dyed",
+      "required": false
+    },
+    {
       "id": "#botanypots:basic_botany_pots",
       "required": false
     },
