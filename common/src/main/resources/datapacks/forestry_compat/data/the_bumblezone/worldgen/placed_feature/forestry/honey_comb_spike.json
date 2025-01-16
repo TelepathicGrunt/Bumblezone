@@ -8,7 +8,7 @@
         "distribution": [
           {
             "data": 0,
-            "weight": 9
+            "weight": 29
           },
           {
             "data": 1,
@@ -34,7 +34,7 @@
           -1,
           0
         ],
-        "tag": "the_bumblezone:two_tone_spikes/wax_tipped_allowed_base"
+        "tag": "the_bumblezone:two_tone_spikes/honey_tipped_allowed_base"
       }
     },
     {
