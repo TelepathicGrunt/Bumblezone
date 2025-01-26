@@ -32,6 +32,7 @@ public class BzGeneralConfig {
     public static ForgeConfigSpec.IntValue beeQueenBonusTradeAmountTillSatified;
     public static ForgeConfigSpec.BooleanValue beeQueenSpecialDayTrades;
     public static ForgeConfigSpec.BooleanValue beeQueenRespawning;
+    public static ForgeConfigSpec.BooleanValue beeQueenGroundPickup;
     public static ForgeConfigSpec.BooleanValue allowWanderingTraderMusicDiscsTrades;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthFlightOfTheBumblebee;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthHoneyBee;
@@ -266,6 +267,12 @@ public class BzGeneralConfig {
                         " Allow Bee Queen to respawn in Throne Pillar when located with fresh Throne Honey Compass.\n")
                 .translation("the_bumblezone.config.beequeenrespawning")
                 .define("beeQueenRespawning", true);
+
+        beeQueenGroundPickup = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Allow Bee Queen to pick up items off ground to do trading.\n")
+                .translation("the_bumblezone.config.beequeengroundpickup")
+                .define("beeQueenGroundPickup", true);
 
         crystallineFlowerConsumeItemEntities = builder
                 .comment(" \n-----------------------------------------------------\n",
@@ -546,6 +553,7 @@ public class BzGeneralConfig {
         BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified = beeQueenBonusTradeAmountTillSatified.get();
         BzGeneralConfigs.beeQueenSpecialDayTrades = beeQueenSpecialDayTrades.get();
         BzGeneralConfigs.beeQueenRespawning = beeQueenRespawning.get();
+        BzGeneralConfigs.beeQueenGroundPickup = beeQueenGroundPickup.get();
         BzGeneralConfigs.allowWanderingTraderMusicDiscsTrades = allowWanderingTraderMusicDiscsTrades.get();
         BzGeneralConfigs.musicDiscTimeLengthFlightOfTheBumblebee = musicDiscTimeLengthFlightOfTheBumblebee.get();
         BzGeneralConfigs.musicDiscTimeLengthHoneyBee = musicDiscTimeLengthHoneyBee.get();

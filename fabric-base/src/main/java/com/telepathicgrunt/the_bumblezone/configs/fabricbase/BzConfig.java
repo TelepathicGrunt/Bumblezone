@@ -265,6 +265,9 @@ public class BzConfig extends MidnightConfig {
     public static boolean beeQueenRespawning = true;
 
     @Entry
+    public static boolean beeQueenGroundPickup = true;
+
+    @Entry
     public static boolean specialBeeSpawning = true;
 
     @Entry
@@ -487,6 +490,7 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified = beeQueenBonusTradeAmountTillSatified;
         BzGeneralConfigs.beeQueenSpecialDayTrades = beeQueenSpecialDayTrades;
         BzGeneralConfigs.beeQueenRespawning = beeQueenRespawning;
+        BzGeneralConfigs.beeQueenGroundPickup = beeQueenGroundPickup;
         BzGeneralConfigs.specialBeeSpawning = specialBeeSpawning;
         BzGeneralConfigs.beeLootInjection = beeLootInjection;
         BzGeneralConfigs.moddedBeeLootInjection = moddedBeeLootInjection;
