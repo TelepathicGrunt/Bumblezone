@@ -1,3 +1,9 @@
+### **(V.7.7.16 Changes) (1.21.1 Minecraft)**
+
+#### Entities:
+Added `beeQueenGroundPickup` config option to allow disabling Bee Queen from picking items off ground for trading.
+
+
 ### **(V.7.7.15 Changes) (1.21.1 Minecraft)**
 
 #### Blocks:

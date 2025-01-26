@@ -1515,6 +1515,8 @@
   "the_bumblezone.configuration.beequeenspecialdaytrades.tooltip": "Whether to allow special trades to activate during certain days of the year.",
   "the_bumblezone.configuration.beequeenrespawning": "Queen Respawning",
   "the_bumblezone.configuration.beequeenrespawning.tooltip": "Allow Bee Queen to respawn in Throne Pillar when located with fresh Throne Honey Compass.",
+  "the_bumblezone.configuration.beequeengroundpickup": "Queen Ground Item Pickup",
+  "the_bumblezone.configuration.beequeengroundpickup.tooltip": "Allow Bee Queen to pick up items off ground to do trading.",
   "the_bumblezone.configuration.crystallinefloweroptions": "Crystalline Flower",
   "the_bumblezone.configuration.crystallineflowerconsumeitementities": "Consume Item Entities",
   "the_bumblezone.configuration.crystallineflowerconsumeitementities.tooltip": "Whether the Crystalline Flower block will eat any item entity that touches the block's collision box in the world.",

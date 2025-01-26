@@ -40,6 +40,7 @@ public class BzGeneralConfigs {
     public static int beeQueenBonusTradeAmountTillSatified = 24;
     public static boolean beeQueenSpecialDayTrades = true;
     public static boolean beeQueenRespawning = true;
+    public static boolean beeQueenGroundPickup = true;
     public static boolean superCandlesBurnsMobs = true;
     public static boolean allowWanderingTraderMusicDiscsTrades = true;
     public static boolean crystallineFlowerConsumeItemEntities = true;

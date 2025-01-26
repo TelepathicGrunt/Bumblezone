@@ -33,6 +33,7 @@ public class BzGeneralConfig {
     public static ModConfigSpec.IntValue beeQueenBonusTradeAmountTillSatified;
     public static ModConfigSpec.BooleanValue beeQueenSpecialDayTrades;
     public static ModConfigSpec.BooleanValue beeQueenRespawning;
+    public static ModConfigSpec.BooleanValue beeQueenGroundPickup;
     public static ModConfigSpec.BooleanValue allowWanderingTraderMusicDiscsTrades;
     public static ModConfigSpec.BooleanValue crystallineFlowerConsumeItemEntities;
     public static ModConfigSpec.BooleanValue crystallineFlowerConsumeExperienceOrbEntities;
@@ -236,6 +237,12 @@ public class BzGeneralConfig {
                         " Allow Bee Queen to respawn in Throne Pillar when located with fresh Throne Honey Compass.\n")
                 .translation("the_bumblezone.configuration.beequeenrespawning")
                 .define("beeQueenRespawning", true);
+
+        beeQueenGroundPickup = builder
+                .comment("----------------------------\n",
+                        " Allow Bee Queen to pick up items off ground to do trading.\n")
+                .translation("the_bumblezone.configuration.beequeengroundpickup")
+                .define("beeQueenGroundPickup", true);
 
         builder.pop();
 
@@ -469,6 +476,7 @@ public class BzGeneralConfig {
         BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified = beeQueenBonusTradeAmountTillSatified.get();
         BzGeneralConfigs.beeQueenSpecialDayTrades = beeQueenSpecialDayTrades.get();
         BzGeneralConfigs.beeQueenRespawning = beeQueenRespawning.get();
+        BzGeneralConfigs.beeQueenGroundPickup = beeQueenGroundPickup.get();
         BzGeneralConfigs.allowWanderingTraderMusicDiscsTrades = allowWanderingTraderMusicDiscsTrades.get();
         BzGeneralConfigs.crystallineFlowerConsumeItemEntities = crystallineFlowerConsumeItemEntities.get();
         BzGeneralConfigs.crystallineFlowerConsumeExperienceOrbEntities = crystallineFlowerConsumeExperienceOrbEntities.get();

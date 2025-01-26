@@ -603,6 +603,10 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     private void performGroundTrades() {
+        if (!BzGeneralConfigs.beeQueenGroundPickup) {
+            return;
+        }
+
         int throwCooldown = getThrowCooldown();
         if (throwCooldown > 0) {
             setThrowCooldown(throwCooldown - 1);
