@@ -3,6 +3,8 @@
 #### Entities:
 Added `beeQueenGroundPickup` config option to allow disabling Bee Queen from picking items off ground for trading.
 
+Queen Beehemoths now will show friendship stat when looking at them if friendship is below maximum.
+
 
 ### **(V.7.7.15 Changes) (1.21.1 Minecraft)**
 
