@@ -27,7 +27,7 @@ public class BeehemothRenderer extends MobRenderer<BeehemothEntity, BeehemothMod
         stack.popPose();
 
         if (beehemothEntity == this.entityRenderDispatcher.crosshairPickEntity) {
-            if (!beehemothEntity.isQueen() && beehemothEntity.isTame() && beehemothEntity.isOwnedBy(GeneralUtilsClient.getClientPlayer())) {
+            if (!beehemothEntity.isMaxFriendship() && beehemothEntity.isTame() && beehemothEntity.isOwnedBy(GeneralUtilsClient.getClientPlayer())) {
                 renderFriendshipProgress(
                         beehemothEntity,
                         Component.translatable("entity.the_bumblezone.beehemoth_friendship_progress", beehemothEntity.getFriendship()),

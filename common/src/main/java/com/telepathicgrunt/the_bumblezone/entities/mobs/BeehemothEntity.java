@@ -202,6 +202,14 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         return this.entityData.get(SADDLED);
     }
 
+    public int getMaxFriendshipThreshold() {
+        return 1000;
+    }
+
+    public boolean isMaxFriendship() {
+        return getFriendship() >= getMaxFriendshipThreshold();
+    }
+
     public void setQueen(boolean queen) {
         this.entityData.set(QUEEN, queen);
     }
@@ -211,12 +219,12 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     public void setFriendship(Integer newFriendship) {
-        this.entityData.set(FRIENDSHIP, Math.min(Math.max(newFriendship, -100), 1000));
+        this.entityData.set(FRIENDSHIP, Math.min(Math.max(newFriendship, -100), getMaxFriendshipThreshold()));
         setMaxHealth();
     }
 
     public void addFriendship(Integer deltaFriendship) {
-        this.entityData.set(FRIENDSHIP, Math.min(Math.max(getFriendship() + deltaFriendship, -100), 1000));
+        this.entityData.set(FRIENDSHIP, Math.min(Math.max(getFriendship() + deltaFriendship, -100), getMaxFriendshipThreshold()));
         setMaxHealth();
     }
 
@@ -227,7 +235,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
             healthBoost = MAX_FRIENDSHIP_HEALTH_BOOST_AMOUNT;
         }
         else {
-            healthBoost = (int) (Math.max(getFriendship() / 1000D, 0D) * MAX_FRIENDSHIP_HEALTH_BOOST_AMOUNT);
+            healthBoost = (int) (Math.max(getFriendship() / (double)getMaxFriendshipThreshold(), 0D) * MAX_FRIENDSHIP_HEALTH_BOOST_AMOUNT);
         }
 
         int oldHealthBoost = 0;
@@ -372,7 +380,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                         if(stack.is(BzTags.ROYAL_JELLY_BUCKETS)) {
                             heal(40);
                             BeeInteractivity.calmAndSpawnHearts(this.level(), player, this, 1f, 30);
-                            addFriendship(1000);
+                            addFriendship(getMaxFriendshipThreshold());
                             this.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 90000, 3, true, true, true));
                             for (int i = 0; i < 75; i++) {
                                 spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
@@ -451,7 +459,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 float tameChance;
                 int friendshipAmount = 6;
                 if (stack.is(BzTags.ROYAL_JELLY_BUCKETS)) {
-                    friendshipAmount = 1000;
+                    friendshipAmount = getMaxFriendshipThreshold();
                     tameChance = 1f;
                     for (int i = 0; i < 75; i++) {
                         spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
@@ -604,7 +612,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         stopWandering = isLeashed();
 
         // Become queen if friendship is maxed out.
-        if(!isQueen() && getFriendship() >= 1000) {
+        if(!isQueen() && getFriendship() >= getMaxFriendshipThreshold()) {
             setQueen(true);
             if(getOwner() instanceof ServerPlayer serverPlayer) {
                 BzCriterias.QUEEN_BEEHEMOTH_TRIGGER.trigger(serverPlayer);
