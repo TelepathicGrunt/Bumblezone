@@ -5,6 +5,9 @@ Added `beeQueenGroundPickup` config option to allow disabling Bee Queen from pic
 
 Queen Beehemoths now will show friendship stat when looking at them if friendship is below maximum.
 
+#### Structures:
+Fixed Goliath Honey Fountain and Phantasm Aviary not respecting the honey fluid replacement config.
+
 
 ### **(V.7.5.11 Changes) (1.20.1 Minecraft)**
 

@@ -111,6 +111,9 @@
       ]
     },
     {
+      "processor_type": "the_bumblezone:replace_honey_processor"
+    },
+    {
       "processor_type": "minecraft:block_ignore",
       "blocks": [
         {
