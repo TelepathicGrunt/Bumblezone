@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.fluids;
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzFluid;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FlowingFluidAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
@@ -294,7 +295,12 @@ public abstract class HoneyFluid extends BzFluid {
             }
         }
 
-        return true;
+        BlockPos sidePos = blockPos.relative(direction);
+        BlockState sideState = world.getBlockState(sidePos);
+        if (sideState.is(BzBlocks.GLISTERING_HONEY_CRYSTAL.get())) {
+            return false;
+        }
+        return !isFaceOccludedByState(world, direction, 1, sidePos, sideState);
     }
 
     private static boolean isFaceOccludedByNeighbor(BlockGetter blockGetter, BlockPos blockPos, Direction direction, float f, BlockState blockState) {
