@@ -8,6 +8,9 @@ Queen Beehemoths now will show friendship stat when looking at them if friendshi
 #### Structures:
 Fixed Goliath Honey Fountain and Phantasm Aviary not respecting the honey fluid replacement config.
 
+#### Fluids:
+Fixed Honey Fluid rendering flowing texture on solid neighbor blocks
+
 
 ### **(V.7.5.11 Changes) (1.20.1 Minecraft)**
 

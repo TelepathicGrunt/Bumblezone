@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.fluids;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzFlowingFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FlowingFluidAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
@@ -26,6 +27,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.ABOVE_FLUID;
 import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.BOTTOM_LEVEL;
@@ -288,7 +291,23 @@ public abstract class HoneyFluid extends BzFlowingFluid {
             }
         }
 
-        return true;
+        BlockPos sidePos = blockPos.relative(direction);
+        BlockState sideState = world.getBlockState(sidePos);
+        if (sideState.is(BzBlocks.GLISTERING_HONEY_CRYSTAL.get())) {
+            return false;
+        }
+        return !isFaceOccludedByState(world, direction, 1, sidePos, sideState);
+    }
+
+    private static boolean isFaceOccludedByState(BlockGetter blockGetter, Direction direction, float f, BlockPos blockPos, BlockState blockState) {
+        if (blockState.canOcclude()) {
+            VoxelShape voxelShape = Shapes.box(0.0, 0.0, 0.0, 1.0, f, 1.0);
+            VoxelShape voxelShape2 = blockState.getOcclusionShape(blockGetter, blockPos);
+            return Shapes.blockOccudes(voxelShape, voxelShape2, direction);
+        }
+        else {
+            return false;
+        }
     }
 
     public static int adjustedFlowSpeed(int originalSpeed, LevelAccessor level, BlockPos blockPos) {
