@@ -1,3 +1,9 @@
+### **(V.7.7.17 Changes) (1.21.1 Minecraft)**
+
+#### Structures:
+Added `blueArenaBubblesMechanic` config to allow people to disable the hardcoded moving bubble blocks that spawn in that arena.
+
+
 ### **(V.7.7.16 Changes) (1.21.1 Minecraft)**
 
 #### Entities:

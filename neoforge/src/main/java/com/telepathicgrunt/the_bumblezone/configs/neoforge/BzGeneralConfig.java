@@ -43,6 +43,7 @@ public class BzGeneralConfig {
     public static ModConfigSpec.IntValue crystallineFlowerExtraXpNeededForTiers;
     public static ModConfigSpec.IntValue crystallineFlowerExtraTierCost;
     public static ModConfigSpec.BooleanValue repeatableEssenceEvents;
+    public static ModConfigSpec.BooleanValue blueArenaBubblesMechanic;
     public static ModConfigSpec.IntValue cosmicCrystalHealth;
     public static ModConfigSpec.IntValue ragingEssenceAbilityUse;
     public static ModConfigSpec.IntValue ragingEssenceCooldown;
@@ -350,6 +351,11 @@ public class BzGeneralConfig {
                 .translation("the_bumblezone.configuration.repeatableessenceevents")
                 .define("repeatableEssenceEvents", true);
 
+        blueArenaBubblesMechanic = builder
+                .comment("----------------------------\n",
+                        " Whether the Blue Arena in Sempiternal Sanctum has the moving bubble block mechanic.\n")
+                .translation("the_bumblezone.configuration.bluearenabubblesmechanic")
+                .define("blueArenaBubblesMechanic", true);
 
         cosmicCrystalHealth = builder
                 .comment("----------------------------\n",
@@ -486,6 +492,7 @@ public class BzGeneralConfig {
         BzGeneralConfigs.crystallineFlowerExtraXpNeededForTiers = crystallineFlowerExtraXpNeededForTiers.get();
         BzGeneralConfigs.crystallineFlowerExtraTierCost = crystallineFlowerExtraTierCost.get();
         BzGeneralConfigs.repeatableEssenceEvents = repeatableEssenceEvents.get();
+        BzGeneralConfigs.blueArenaBubblesMechanic = blueArenaBubblesMechanic.get();
         BzGeneralConfigs.cosmicCrystalHealth = cosmicCrystalHealth.get();
         BzGeneralConfigs.ragingEssenceAbilityUse = ragingEssenceAbilityUse.get();
         BzGeneralConfigs.ragingEssenceCooldown = ragingEssenceCooldown.get();

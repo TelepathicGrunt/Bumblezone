@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.bossbars.ServerEssenceEvent;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -367,6 +368,10 @@ public class EssenceBlockBlue extends EssenceBlock {
     }
 
     public void handleGiantBubbles(ServerLevel serverLevel, BlockPos blockPos) {
+        if (!BzGeneralConfigs.blueArenaBubblesMechanic) {
+            return;
+        }
+
         long gameTime = serverLevel.getGameTime();
 
         int bubbleMoveTime = 23;
