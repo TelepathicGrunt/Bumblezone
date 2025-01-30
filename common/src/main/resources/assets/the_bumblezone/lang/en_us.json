@@ -1269,6 +1269,7 @@
   "the_bumblezone.midnightconfig.essenceComment": "§o§6    Essence Configs",
   "the_bumblezone.midnightconfig.keepEssenceOfTheBeesOnRespawning": "Keep Bee Essence On Respawning",
   "the_bumblezone.midnightconfig.repeatableEssenceEvents": "Can Repeat Essence Event After Winning",
+  "the_bumblezone.midnightconfig.bluearenabubblesmechanic": "Blue Arena Bubbles Mechanic",
   "the_bumblezone.midnightconfig.cosmicCrystalHealth": "Cosmic Crystal Max Health",
   "the_bumblezone.midnightconfig.ragingEssenceAbilityUse": "Raging Essence Ability Use (per second)",
   "the_bumblezone.midnightconfig.ragingEssenceCooldown": "Raging Essence Cooldown",

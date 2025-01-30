@@ -112,6 +112,9 @@ public class BzConfig extends MidnightConfig {
     public static boolean repeatableEssenceEvents = true;
 
     @Entry
+    public static boolean blueArenaBubblesMechanic = true;
+
+    @Entry
     public static int cosmicCrystalHealth = 60;
 
     @Entry
@@ -512,6 +515,7 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.musicDiscBeennaBox = musicDiscBeennaBox;
         BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning;
         BzGeneralConfigs.repeatableEssenceEvents = repeatableEssenceEvents;
+        BzGeneralConfigs.blueArenaBubblesMechanic = blueArenaBubblesMechanic;
         BzGeneralConfigs.cosmicCrystalHealth = cosmicCrystalHealth;
         BzGeneralConfigs.ragingEssenceAbilityUse = ragingEssenceAbilityUse;
         BzGeneralConfigs.ragingEssenceCooldown = ragingEssenceCooldown;

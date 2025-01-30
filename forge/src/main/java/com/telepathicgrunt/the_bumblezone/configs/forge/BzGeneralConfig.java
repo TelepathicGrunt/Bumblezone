@@ -54,6 +54,7 @@ public class BzGeneralConfig {
     public static ForgeConfigSpec.IntValue crystallineFlowerExtraTierCost;
     public static ForgeConfigSpec.BooleanValue keepEssenceOfTheBeesOnRespawning;
     public static ForgeConfigSpec.BooleanValue repeatableEssenceEvents;
+    public static ForgeConfigSpec.BooleanValue blueArenaBubblesMechanic;
     public static ForgeConfigSpec.IntValue cosmicCrystalHealth;
     public static ForgeConfigSpec.IntValue ragingEssenceAbilityUse;
     public static ForgeConfigSpec.IntValue ragingEssenceCooldown;
@@ -427,6 +428,11 @@ public class BzGeneralConfig {
                 .translation("the_bumblezone.config.repeatableessenceevents")
                 .define("repeatableEssenceEvents", true);
 
+        blueArenaBubblesMechanic = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether the Blue Arena in Sempiternal Sanctum has the moving bubble block mechanic.\n")
+                .translation("the_bumblezone.config.bluearenabubblesmechanic")
+                .define("blueArenaBubblesMechanic", true);
 
         cosmicCrystalHealth = builder
                 .comment(" \n-----------------------------------------------------\n",
@@ -575,6 +581,7 @@ public class BzGeneralConfig {
         BzGeneralConfigs.crystallineFlowerExtraTierCost = crystallineFlowerExtraTierCost.get();
         BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning.get();
         BzGeneralConfigs.repeatableEssenceEvents = repeatableEssenceEvents.get();
+        BzGeneralConfigs.blueArenaBubblesMechanic = blueArenaBubblesMechanic.get();
         BzGeneralConfigs.cosmicCrystalHealth = cosmicCrystalHealth.get();
         BzGeneralConfigs.ragingEssenceAbilityUse = ragingEssenceAbilityUse.get();
         BzGeneralConfigs.ragingEssenceCooldown = ragingEssenceCooldown.get();
