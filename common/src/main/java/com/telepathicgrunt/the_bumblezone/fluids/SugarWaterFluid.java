@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.fluids.base.BzFluid;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
@@ -29,9 +30,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+
+import java.util.Optional;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.LEVEL_FLOWING;
 
@@ -57,45 +61,75 @@ public abstract class SugarWaterFluid extends BzFluid {
     }
 
     @Override
-    public void randomTick(Level world, BlockPos position, FluidState state, RandomSource random) {
+    public void randomTick(Level level, BlockPos position, FluidState state, RandomSource random) {
         //only attempts to grow sugar cane 50% of the time.
-        if (random.nextBoolean() || !world.hasChunksAt(position, position))
-            return; // Forge: prevent loading unloaded chunks when checking neighbor's light
+        if (random.nextBoolean() || !level.hasChunksAt(position, position)) {
+            return; // NeoForge: prevent loading unloaded chunks when checking neighbor's light
+        }
 
-        BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos();
+        BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
         int startIndex = random.nextInt(4);
         for (int currentIndex = startIndex; currentIndex < startIndex + 4; currentIndex++) {
             Direction direction = Direction.from2DDataValue(currentIndex);
 
             //check one of the spot next to sugar water for sugar cane to grow
-            blockPos.set(position.above());
-            blockPos.move(direction);
-            BlockState blockstate = world.getBlockState(blockPos);
+            mutablePos.set(position).move(direction).move(Direction.UP);
+            BlockState sideCropState = level.getBlockState(mutablePos);
 
-            if (blockstate.getBlock() == Blocks.SUGAR_CANE) {
-                int height = 1;
-                blockstate = world.getBlockState(blockPos.move(Direction.UP));
+            if (sideCropState.is(BzTags.SUGAR_WATER_GROWS_PLANT_FASTER)) {
+                if (sideCropState.getBlock() instanceof SugarCaneBlock) {
+                    // Only grow if we are next to ground that holds the sugar cane-like block
+                    if (level.getBlockState(mutablePos.below()).getBlock() instanceof SugarCaneBlock) {
+                        continue;
+                    }
 
-                //find top of sugar cane
-                while (blockstate.getBlock() == Blocks.SUGAR_CANE && height < 5) {
-                    blockstate = world.getBlockState(blockPos.move(Direction.UP));
-                    height++;
+                    int height = 1;
+
+                    //find top of sugar cane
+                    while (sideCropState.getBlock() == Blocks.SUGAR_CANE && height <= 5) {
+                        sideCropState = level.getBlockState(mutablePos.move(Direction.UP));
+                        height++;
+                    }
+
+                    if (height >= 6) {
+                        continue;
+                    }
+
+                    mutablePos.move(Direction.DOWN);
+                    BlockState topSugarCaneLikeBlock = level.getBlockState(mutablePos);
+
+                    Optional<Property<Integer>> blockCurrentAge = GeneralUtils.getBlockCurrentAge(topSugarCaneLikeBlock);
+                    if (blockCurrentAge.isPresent()) {
+                        Optional<Integer> agePropertyMaxAge = GeneralUtils.getAgePropertyMaxAge(blockCurrentAge.get());
+                        if (agePropertyMaxAge.isPresent()) {
+                            // New top block due to max age below
+                            if (agePropertyMaxAge.get().equals(topSugarCaneLikeBlock.getValue(blockCurrentAge.get()))) {
+                                mutablePos.move(Direction.UP);
+                                BlockState newTopSugarCaneLikeBlock = topSugarCaneLikeBlock.setValue(blockCurrentAge.get(), 0);
+                                newTopSugarCaneLikeBlock = GeneralUtils.copyNonAgeProperties(topSugarCaneLikeBlock, newTopSugarCaneLikeBlock);
+                                level.setBlock(mutablePos, newTopSugarCaneLikeBlock, 3);
+                            }
+                            // Age up the block instead of growing
+                            else {
+                                BlockState newTopSugarCaneLikeBlock = topSugarCaneLikeBlock.setValue(blockCurrentAge.get(), (topSugarCaneLikeBlock.getValue(blockCurrentAge.get())) + 1);
+                                newTopSugarCaneLikeBlock = GeneralUtils.copyNonAgeProperties(topSugarCaneLikeBlock, newTopSugarCaneLikeBlock);
+                                level.setBlock(mutablePos, newTopSugarCaneLikeBlock, 3);
+                            }
+                        }
+                    }
                 }
-
-                if (height >= 5) {
-                    continue;
-                }
-
-                BlockState topSugarCane = world.getBlockState(blockPos.below());
-                int sugarCaneAge = topSugarCane.hasProperty(SugarCaneBlock.AGE) ? topSugarCane.getValue(SugarCaneBlock.AGE) : 0;
-                // Age up Sugar Cane
-                if (sugarCaneAge < 15) {
-                    world.setBlock(blockPos.below(), Blocks.SUGAR_CANE.defaultBlockState().setValue(SugarCaneBlock.AGE, sugarCaneAge + 1), 3);
-                }
-                //at top of sugar cane. Time to see if it can grow more
-                else if (blockstate.isAir()) {
-                    world.setBlock(blockPos, Blocks.SUGAR_CANE.defaultBlockState(), 3);
+                // Normal-ish crops
+                else {
+                    Optional<Property<Integer>> blockCurrentAge = GeneralUtils.getBlockCurrentAge(sideCropState);
+                    if (blockCurrentAge.isPresent()) {
+                        Optional<Integer> agePropertyMaxAge = GeneralUtils.getAgePropertyMaxAge(blockCurrentAge.get());
+                        if (agePropertyMaxAge.isPresent() && !agePropertyMaxAge.get().equals(sideCropState.getValue(blockCurrentAge.get()))) {
+                            BlockState newSideCropState = sideCropState.setValue(blockCurrentAge.get(), (sideCropState.getValue(blockCurrentAge.get())) + 1);
+                            newSideCropState = GeneralUtils.copyNonAgeProperties(sideCropState, newSideCropState);
+                            level.setBlock(mutablePos, newSideCropState, 3);
+                        }
+                    }
                 }
             }
         }

@@ -218,7 +218,7 @@ public class LifeEssence extends AbilityEssenceItem {
             else if (block instanceof CropBlock cropBlock) {
                 if (!cropBlock.isMaxAge(state)) {
                     BlockState newState = cropBlock.getStateForAge(cropBlock.getAge(state) + 1);
-                    newState = copyNonAgeProperties(state, newState);
+                    newState = GeneralUtils.copyNonAgeProperties(state, newState);
                     level.setBlock(blockPos, newState, 3);
                     grewBlock = true;
                 }
@@ -227,7 +227,7 @@ public class LifeEssence extends AbilityEssenceItem {
                 int age = state.getValue(StemBlock.AGE);
                 if (age < 7) {
                     BlockState newState = state.setValue(StemBlock.AGE, age + 1);
-                    newState = copyNonAgeProperties(state, newState);
+                    newState = GeneralUtils.copyNonAgeProperties(state, newState);
                     level.setBlock(blockPos, newState, 3);
                     grewBlock = true;
                 }
@@ -240,7 +240,7 @@ public class LifeEssence extends AbilityEssenceItem {
                 int age = state.getValue(NetherWartBlock.AGE);
                 if (age < NetherWartBlock.MAX_AGE) {
                     BlockState newState = state.setValue(NetherWartBlock.AGE, age + 1);
-                    newState = copyNonAgeProperties(state, newState);
+                    newState = GeneralUtils.copyNonAgeProperties(state, newState);
                     level.setBlock(blockPos, newState, 3);
                     grewBlock = true;
                 }
@@ -249,7 +249,7 @@ public class LifeEssence extends AbilityEssenceItem {
                 int age = state.getValue(SweetBerryBushBlock.AGE);
                 if (age < 3) {
                     BlockState newState = state.setValue(SweetBerryBushBlock.AGE, age + 1);
-                    newState = copyNonAgeProperties(state, newState);
+                    newState = GeneralUtils.copyNonAgeProperties(state, newState);
                     level.setBlock(blockPos, newState, 3);
                     grewBlock = true;
                 }
@@ -261,14 +261,12 @@ public class LifeEssence extends AbilityEssenceItem {
                 grewBlock = true;
             }
             else if (!(state.is(BzTags.LIFE_THREE_HIGH_PILLAR_PLANT) && level.getBlockState(blockPos.above()).is(state.getBlock()))) {
-                Optional<Property<?>> optionalProperty = state.getProperties().stream().filter(p -> p.getName().equalsIgnoreCase("age")).findAny();
-                if (optionalProperty.isPresent()) {
-                    Property<?> property = optionalProperty.get();
-                    if (property.getValueClass() == Integer.class &&
-                        property.getPossibleValues().stream().max(Comparable::compareTo).orElse(null) != state.getValue(property))
-                    {
-                        BlockState newState = state.setValue((Property<Integer>)property, ((Integer)state.getValue(property)) + 1);
-                        newState = copyNonAgeProperties(state, newState);
+                Optional<Property<Integer>> blockCurrentAge = GeneralUtils.getBlockCurrentAge(state);
+                if (blockCurrentAge.isPresent()) {
+                    Optional<Integer> agePropertyMaxAge = GeneralUtils.getAgePropertyMaxAge(blockCurrentAge.get());
+                    if (agePropertyMaxAge.isPresent() && !agePropertyMaxAge.get().equals(state.getValue(blockCurrentAge.get()))) {
+                        BlockState newState = state.setValue(blockCurrentAge.get(), (state.getValue(blockCurrentAge.get())) + 1);
+                        newState = GeneralUtils.copyNonAgeProperties(state, newState);
                         level.setBlock(blockPos, newState, 3);
                         grewBlock = true;
                     }
@@ -288,22 +286,6 @@ public class LifeEssence extends AbilityEssenceItem {
                 }
             }
         }
-    }
-
-    private static @NotNull BlockState copyNonAgeProperties(BlockState oldState, BlockState newState) {
-        for (Property<?> property : newState.getProperties()) {
-            if (!property.getName().equalsIgnoreCase("age")) {
-                newState = copyProperty(oldState, newState, property);
-            }
-        }
-        return newState;
-    }
-
-    private static <T extends Comparable<T>> @NotNull BlockState copyProperty(BlockState state, BlockState newState, Property<T> propertyToCopy) {
-        if (newState.hasProperty(propertyToCopy) && state.hasProperty(propertyToCopy)) {
-            newState = newState.setValue(propertyToCopy, state.getValue(propertyToCopy));
-        }
-        return newState;
     }
 
     private static boolean growUpOneToThreeHighLimit(ServerLevel level, BlockPos blockPos, BlockState state) {

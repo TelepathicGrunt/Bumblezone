@@ -51,6 +51,7 @@ public class BzTags {
     public static final TagKey<Block> FORCED_DISALLOW_WATERLOGGING_BLOCKS_WHEN_PLACED_IN_FLUID = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "sugar_water/forced_disallow_waterlogging_blocks_when_placed_in_fluid"));
     public static final TagKey<Block> DOWNWARD_BUBBLE_COLUMN_CAUSING = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "sugar_water/downward_bubble_column_causing"));
     public static final TagKey<Block> UPWARD_BUBBLE_COLUMN_CAUSING = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "sugar_water/upward_bubble_column_causing"));
+    public static final TagKey<Block> SUGAR_WATER_GROWS_PLANT_FASTER = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "sugar_water/grows_plant_faster"));
     public static final TagKey<Block> ANCIENT_WAX_FULL_BLOCKS = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "ancient_wax/full_blocks"));
     public static final TagKey<Block> ANCIENT_WAX_SLABS = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "ancient_wax/slabs"));
     public static final TagKey<Block> ANCIENT_WAX_STAIRS = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "ancient_wax/stairs"));
