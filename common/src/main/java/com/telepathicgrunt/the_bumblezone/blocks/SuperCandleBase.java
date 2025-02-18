@@ -121,14 +121,7 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
     public boolean placeLiquid(LevelAccessor level, BlockPos pos, BlockState state, FluidState fluidState) {
         if (!state.getValue(WATERLOGGED) && fluidState.is(FluidTags.WATER) && fluidState.isSource()) {
             BlockState blockstate = state.setValue(WATERLOGGED, Boolean.TRUE);
-            if (state.getValue(LIT)) {
-                SuperCandleWick.extinguish(null, level.getBlockState(pos.above()), level, pos.above());
-                level.setBlock(pos, blockstate.setValue(LIT, false), 3);
-            }
-            else {
-                level.setBlock(pos, blockstate, 3);
-            }
-
+            level.setBlock(pos, blockstate, 3);
             level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
             return true;
         }

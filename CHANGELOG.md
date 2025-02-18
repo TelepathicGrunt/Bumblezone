@@ -3,6 +3,8 @@
 #### Blocks:
 Adjusted how Heavy Air disables flight to reduce problematic conflict with other mod's creative flight.
 
+Allow Super Candles and Potion Candles to stay lit if player waterlogs the bottom part of candle.
+
 #### Fluids:
 Fixed bug where Sugar Water flowing down as a waterfall next to Sugar Cane can grow Sugar Cane beyond a height of 5.
 
