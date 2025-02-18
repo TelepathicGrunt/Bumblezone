@@ -78,6 +78,7 @@ import net.minecraft.world.phys.shapes.BitSetDiscreteVoxelShape;
 import net.minecraft.world.phys.shapes.DiscreteVoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -1032,6 +1033,39 @@ public class GeneralUtils {
         }
 
         return Block.isFaceFull(overallShape, direction);
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    public static Optional<Property<Integer>> getBlockCurrentAge(BlockState blockState) {
+        Optional<Property<?>> propertyOptional = blockState.getProperties().stream().filter(p -> p.getName().equalsIgnoreCase("age")).findAny();
+        if (propertyOptional.isPresent()) {
+            Property<?> property = propertyOptional.get();
+            if (property.getValueClass() == Integer.class) {
+                return (Optional<Property<Integer>>)(Object)propertyOptional;
+            }
+        }
+        return Optional.empty();
+    }
+
+    public static Optional<Integer> getAgePropertyMaxAge(Property<Integer> ageProperty) {
+        return ageProperty.getPossibleValues().stream().max(Comparable::compareTo);
+    }
+
+    public static @NotNull BlockState copyNonAgeProperties(BlockState oldState, BlockState newState) {
+        for (Property<?> property : newState.getProperties()) {
+            if (!property.getName().equalsIgnoreCase("age")) {
+                newState = copyProperty(oldState, newState, property);
+            }
+        }
+        return newState;
+    }
+
+    private static <T extends Comparable<T>> @NotNull BlockState copyProperty(BlockState state, BlockState newState, Property<T> propertyToCopy) {
+        if (newState.hasProperty(propertyToCopy) && state.hasProperty(propertyToCopy)) {
+            newState = newState.setValue(propertyToCopy, state.getValue(propertyToCopy));
+        }
+        return newState;
     }
 
     /////////////////////////////////////////////////////////////////////////////////

@@ -259,14 +259,12 @@ public class LifeEssence extends AbilityEssenceItem {
                 grewBlock = true;
             }
             else if (!(state.is(BzTags.LIFE_THREE_HIGH_PILLAR_PLANT) && level.getBlockState(blockPos.above()).is(state.getBlock()))) {
-                Optional<Property<?>> optionalProperty = state.getProperties().stream().filter(p -> p.getName().equalsIgnoreCase("age")).findAny();
-                if (optionalProperty.isPresent()) {
-                    Property<?> property = optionalProperty.get();
-                    if (property.getValueClass() == Integer.class &&
-                            property.getPossibleValues().stream().max(Comparable::compareTo).orElse(null) != state.getValue(property))
-                    {
-                        BlockState newState = state.setValue((Property<Integer>)property, ((Integer)state.getValue(property)) + 1);
-                        newState = copyNonAgeProperties(state, newState);
+                Optional<Property<Integer>> blockCurrentAge = GeneralUtils.getBlockCurrentAge(state);
+                if (blockCurrentAge.isPresent()) {
+                    Optional<Integer> agePropertyMaxAge = GeneralUtils.getAgePropertyMaxAge(blockCurrentAge.get());
+                    if (agePropertyMaxAge.isPresent() && !agePropertyMaxAge.get().equals(state.getValue(blockCurrentAge.get()))) {
+                        BlockState newState = state.setValue(blockCurrentAge.get(), (state.getValue(blockCurrentAge.get())) + 1);
+                        newState = GeneralUtils.copyNonAgeProperties(state, newState);
                         level.setBlock(blockPos, newState, 3);
                         grewBlock = true;
                     }
