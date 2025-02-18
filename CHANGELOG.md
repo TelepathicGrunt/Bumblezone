@@ -2,3 +2,6 @@
 
 #### Blocks:
 Adjusted how Heavy Air disables flight to reduce problematic conflict with other mod's creative flight.
+
+#### Configs:
+(Fabric): Fixed missing translations for some configs
