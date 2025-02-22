@@ -41,9 +41,6 @@ public class NeoForgeModChecker {
         String modid = "";
         try {
 
-//            modid = "pokecube_mobs";
-//            loadupModCompat(modid, () -> new PokecubeCompat());
-
             modid = "productivebees";
             loadupModCompat(modid, () -> new ProductiveBeesCompat());
 

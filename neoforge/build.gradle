@@ -42,33 +42,26 @@ dependencies {
     shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
 
     // COMPAT
-    modCompileOnly("curse.maven:iron_jetpack-284497:${project.iron_jetpack_file_id}")
-    modCompileOnly("curse.maven:pneumaticcraft-281849:${project.pneumaticcraft_file_id}")
+    modCompileOnly("curse.maven:iron_jetpack-284497:${project.iron_jetpack_file_id}") { transitive = false }
+    modCompileOnly("curse.maven:pneumaticcraft-281849:${project.pneumaticcraft_file_id}") { transitive = false }
 
-    modCompileOnly("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
-
-    modCompileOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
+    modCompileOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}") { transitive = false }
 
     modCompileOnly("curse.maven:lootr-361276:${project.lootr_file_id}")
-    //modRuntimeOnly("curse.maven:lootr-361276:${project.lootr_file_id}")
+    modRuntimeOnly("curse.maven:lootr-361276:${project.lootr_file_id}")
 
-    modCompileOnly("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
+    modCompileOnly("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}") { transitive = false }
 
-    modCompileOnly("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}")
+    modCompileOnly("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}") { transitive = false }
 
-    modCompileOnly("com.hollingsworth.ars_nouveau:ars_nouveau-${project.ars_nouveau}")
-    modCompileOnly("curse.maven:ars_elemental-561470:${project.ars_elemental_file_id}")
-    modCompileOnly("software.bernie.geckolib:geckolib-neoforge-1.21:${geckolib_version}")
-    modCompileOnly("com.illusivesoulworks.caelus:caelus-neoforge:${caelus_version}:api")
-    // modRuntimeOnly("com.hollingsworth.ars_nouveau:ars_nouveau-${project.ars_nouveau}")
-    // modRuntimeOnly("software.bernie.geckolib:geckolib-neoforge-1.21:${geckolib_version}")
-    // modRuntimeOnly("com.illusivesoulworks.caelus:caelus-neoforge:${caelus_version}")
+    modCompileOnly("com.hollingsworth.ars_nouveau:ars_nouveau-${project.ars_nouveau}") { transitive = false }
+    modCompileOnly("curse.maven:ars_elemental-561470:${project.ars_elemental_file_id}") { transitive = false }
 
     // modRuntimeOnly("curse.maven:better-advancements-272515:4631253")
     // modRuntimeOnly("curse.maven:spit-it-out-857141:4614678")
     // modRuntimeOnly("curse.maven:atlasviewer-633577:4597419")
 
-    modCompileOnly("curse.maven:mekanism-268560:${project.mekanism_file_id}")
+    modCompileOnly("curse.maven:mekanism-268560:${project.mekanism_file_id}") { transitive = false }
     //modCompileOnly("mekanism:Mekanism:${project.mekanism}:api")
 //    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}")// core
 //    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}:additions")// Mekanism: Additions
@@ -83,14 +76,14 @@ dependencies {
     //modRuntimeOnly("me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config}")
     //modRuntimeOnly("dev.architectury:architectury-neoforge:${project.architectury}")
     //modRuntimeOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}")
-    modCompileOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}:api")
+    modCompileOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}:api") { transitive = false }
 
 //    modRuntimeOnly("curse.maven:worldedit-225608:4586218")
 //    modRuntimeOnly("curse.maven:huge-structure-blocks-474114:5628956")
 //    modRuntimeOnly("com.telepathicgrunt:CommandStructures-Neoforge:${project.commandstructures_neoforge}")
 //    modRuntimeOnly("com.telepathicgrunt:StructureVoidToggle-Neoforge:${project.structurevoidtoggle_neoforge}")
 
-    modCompileOnly("curse.maven:framedblocks-441647:${project.framedblocks_file_id}")
+    modCompileOnly("curse.maven:framedblocks-441647:${project.framedblocks_file_id}") { transitive = false }
 }
 
 processResources {
