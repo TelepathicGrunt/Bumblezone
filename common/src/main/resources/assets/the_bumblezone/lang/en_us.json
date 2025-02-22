@@ -667,6 +667,7 @@
   "system.the_bumblezone.denied_mek_jetpack_module": "Anti-tech Magic Activated - Jetpack Module",
   "system.the_bumblezone.denied_mek_grav_module": "Anti-tech Magic Activated - Grav Module",
   "system.the_bumblezone.royal_jelly_bottle.cannot_take_from_source_block": "Don't waste the fluid! Use a bucket instead!",
+  "system.the_bumblezone.corail_tombstone_drop_compat": "No graves created as too close to Essence Block. Inventory is dropped with no despawn timer.",
 
   "essence.the_bumblezone.missing_essence_effect": "You need to consume Essence of the Bees first...",
   "essence.the_bumblezone.red_essence_event": "§cEssence of Raging§f - §cFail§f in %s",

@@ -35,3 +35,9 @@ license="https://github.com/TelepathicGrunt/Bumblezone/blob/latest-released/LICE
     modId="resourcefullib"
     type="required"
     versionRange="[3.0.11,)"
+
+[[dependencies.the_bumblezone]]
+    modId="tombstone"
+    type="optional"
+    versionRange="*"
+    ordering="BEFORE"
