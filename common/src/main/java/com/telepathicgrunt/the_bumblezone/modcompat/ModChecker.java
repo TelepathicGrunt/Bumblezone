@@ -47,6 +47,7 @@ public class ModChecker {
 	public static boolean lootrPresent = false;
 	public static boolean mekanismPresent = false;
 	public static boolean curiosPresent = false;
+	public static boolean corailTombstonePresent = false;
 	public static boolean trinketsPresent = false;
 	public static boolean restrictedPortalsPresent = false;
 	public static boolean ironJetpacksPresent = false;

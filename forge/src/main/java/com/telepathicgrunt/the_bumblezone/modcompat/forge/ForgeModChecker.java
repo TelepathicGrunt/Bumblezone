@@ -84,6 +84,9 @@ public class ForgeModChecker {
 
             modid = "tropicraft";
             loadupModCompat(modid, () -> new TropicraftCompat());
+
+            modid = "tombstone";
+            loadupModCompat(modid, () -> new CorailTombstoneCompat());
         }
         catch (Throwable e) {
             printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");
