@@ -6,6 +6,8 @@
 
 Re-enabled Lootr compat
 
+Fixed log error about Pollen Puff's compat with Ars Elemental (Credit to Satherov for PR fix)
+
 
 ### **(V.7.7.18 Changes) (1.21.1 Minecraft)**
 
