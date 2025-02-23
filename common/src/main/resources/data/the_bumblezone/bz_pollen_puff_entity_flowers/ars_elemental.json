@@ -4,7 +4,7 @@
       "type": "minecraft:weighted_state_provider",
       "entries": [
         {
-          "data": { "Name": "ars_nouveau:yellow_archwood_sapling" },
+          "data": { "Name": "ars_elemental:yellow_archwood_sapling" },
           "weight": 1
         },
         {
