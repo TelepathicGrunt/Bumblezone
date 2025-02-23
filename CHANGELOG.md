@@ -4,6 +4,8 @@
 (Forge): Added compat with Corail Tombstone to make players drop no-despawn items when dying near Sempiternal Sanctum's Essence Block.
  No tombstone will spawn to prevent item duplication or exploits for both mods.
 
+Fixed log error about Pollen Puff's compat with Ars Elemental (Credit to Satherov for PR fix)
+
 
 ### **(V.7.5.14 Changes) (1.20.1 Minecraft)
 
