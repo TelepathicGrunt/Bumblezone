@@ -49,7 +49,7 @@ dependencies {
 
     // modCompileOnly("curse.maven:corail_tombstone-243707:6171577")
     modCompileOnly("curse.maven:lootr-361276:${project.lootr_file_id}")
-    // modRuntimeOnly("curse.maven:lootr-361276:${project.lootr_file_id}")
+    modRuntimeOnly("curse.maven:lootr-361276:${project.lootr_file_id}")
 
     modCompileOnly("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}") { transitive = false }
 

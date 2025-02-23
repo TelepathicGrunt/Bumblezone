@@ -4,6 +4,8 @@
 (NeoForge): Added compat with Corail Tombstone to make players drop no-despawn items when dying near Sempiternal Sanctum's Essence Block.
  No tombstone will spawn to prevent item duplication or exploits for both mods.
 
+Re-enabled Lootr compat
+
 
 ### **(V.7.7.18 Changes) (1.21.1 Minecraft)**
 
