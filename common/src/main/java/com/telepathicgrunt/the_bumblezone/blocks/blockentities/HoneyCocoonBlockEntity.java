@@ -33,7 +33,6 @@ import java.util.stream.IntStream;
 public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
     private NonNullList<ItemStack> itemStacks = NonNullList.withSize(18, ItemStack.EMPTY);
     private UUID blockEntityUuid = null;
-    private boolean lootrInitialInventorySetting = false;
 
     protected HoneyCocoonBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
@@ -150,10 +149,6 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
             return false;
         }
 
-        if (this.lootrInitialInventorySetting) {
-            return false;
-        }
-
         BlockState state = this.getBlockState();
         return state.is(BzBlocks.HONEY_COCOON.get()) && state.getValue(HoneyCocoon.IS_LOOT_CONTAINER);
     }
@@ -234,13 +229,5 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
 
     public long getLootSeed () {
         return this.lootTableSeed;
-    }
-
-    public boolean isLootrInitialInventorySetting() {
-        return lootrInitialInventorySetting;
-    }
-
-    public void setLootrInitialInventorySetting(boolean lootrInitialInventorySetting) {
-        this.lootrInitialInventorySetting = lootrInitialInventorySetting;
     }
 }

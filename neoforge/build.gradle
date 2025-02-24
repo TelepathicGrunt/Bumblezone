@@ -50,7 +50,7 @@ dependencies {
     // modCompileOnly("curse.maven:corail_tombstone-243707:6171577")
 
     modCompileOnly "noobanidus.mods.lootr:lootr-neoforge:${rootProject.lootr_version}"
-    //modRuntimeOnly("noobanidus.mods.lootr:lootr-neoforge:${rootProject.lootr_version}")
+    // modRuntimeOnly("noobanidus.mods.lootr:lootr-neoforge:${rootProject.lootr_version}")
 
     modCompileOnly("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}") { transitive = false }
 
