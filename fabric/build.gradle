@@ -32,8 +32,8 @@ dependencies {
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 
     // COMPAT
-    modCompileOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}")
-    //modRuntimeOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}")
+    modCompileOnly("noobanidus.mods.lootr:lootr-fabric:${rootProject.lootr_version}")
+    //modRuntimeOnly("noobanidus.mods.lootr:lootr-fabric:${rootProject.lootr_version}")
 
     modCompileOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
     modRuntimeOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
