@@ -1,3 +1,9 @@
+### **(V.7.7.20 Changes) (1.21.1 Minecraft)**
+
+#### Blocks:
+Fixed Empty Porous Honeycomb Block and Empty Honeycomb Brood Blocks not having textures when Turkish language is on.
+
+
 ### **(V.7.7.19 Changes) (1.21.1 Minecraft)**
 
 #### Mod Compat:

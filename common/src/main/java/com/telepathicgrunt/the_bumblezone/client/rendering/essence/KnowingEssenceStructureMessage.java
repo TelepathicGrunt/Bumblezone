@@ -10,6 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class KnowingEssenceStructureMessage {
@@ -78,7 +79,7 @@ public class KnowingEssenceStructureMessage {
 
                             langKey = FIRST_LETTER_PATTERN
                                     .matcher(langKey)
-                                    .replaceAll(matchResult -> matchResult.group(1).toUpperCase() + matchResult.group(2));
+                                    .replaceAll(matchResult -> matchResult.group(1).toUpperCase(Locale.ROOT) + matchResult.group(2));
                         }
 
                         if (currentLine == 0) {
