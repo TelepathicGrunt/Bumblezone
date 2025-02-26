@@ -7,6 +7,7 @@ import net.minecraft.util.GsonHelper;
 
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Locale;
 
 public enum ConnectedTexture {
     NONE(true, "base"),
@@ -24,7 +25,7 @@ public enum ConnectedTexture {
 
     ConnectedTexture() {
         this.required = true;
-        this.id = this.name().toLowerCase();
+        this.id = this.name().toLowerCase(Locale.ROOT);
     }
 
     ConnectedTexture(boolean required, String id) {
