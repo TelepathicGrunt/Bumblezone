@@ -489,6 +489,38 @@
       "required": false
     },
     {
+      "id": "#mekanismadditions:plastic_slabs/glow",
+      "required": false
+    },
+    {
+      "id": "#mekanismadditions:plastic_slabs/normal",
+      "required": false
+    },
+    {
+      "id": "#mekanismadditions:plastic_slabs/transparent",
+      "required": false
+    },
+    {
+      "id": "#mekanismadditions:plastic_stairs/glow",
+      "required": false
+    },
+    {
+      "id": "#mekanismadditions:plastic_stairs/normal",
+      "required": false
+    },
+    {
+      "id": "#mekanismadditions:plastic_stairs/transparent",
+      "required": false
+    },
+    {
+      "id": "#mekanismadditions:plastic_fences/normal",
+      "required": false
+    },
+    {
+      "id": "#mekanismadditions:plastic_fence_gates/normal",
+      "required": false
+    },
+    {
       "id": "#mo_glass:stained_glass_slabs",
       "required": false
     },
