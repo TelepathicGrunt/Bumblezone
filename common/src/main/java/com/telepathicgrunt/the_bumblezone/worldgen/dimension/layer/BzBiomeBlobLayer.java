@@ -15,7 +15,7 @@ public record BzBiomeBlobLayer(HolderSet<Biome> blobBiomes, HolderSet<Biome> rar
                     blobBiomes.get(noise.nextRandom(blobBiomes.size())).value()
             );
         }
-        else if (rareBlobBiomes.size() != 0 && noise.nextRandom(48) == 0) {
+        else if (rareBlobBiomes.size() != 0 && noise.nextRandom(46) == 0) {
             return BiomeRegistryHolder.BIOME_REGISTRY.getId(
                     rareBlobBiomes.get(noise.nextRandom(rareBlobBiomes.size())).value()
             );

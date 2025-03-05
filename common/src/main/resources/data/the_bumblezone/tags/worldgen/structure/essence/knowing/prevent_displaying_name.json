@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "the_bumblezone:bumbling_beepartments",
     {
       "id": "alexscaves:acid_pit",
       "required": false

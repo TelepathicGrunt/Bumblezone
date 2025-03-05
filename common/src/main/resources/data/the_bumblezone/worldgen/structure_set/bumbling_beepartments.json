@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "the_bumblezone:bumbling_beepartments",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "the_bumblezone:advanced_random_spread",
+    "salt": 237331673,
+    "spacing": 3,
+    "separation": 2
+  }
+}

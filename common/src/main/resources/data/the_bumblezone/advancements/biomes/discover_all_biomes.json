@@ -130,6 +130,22 @@
           }
         ]
       }
+    },
+    "bumbling_beepartments": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biomes": "the_bumblezone:bumbling_beepartments"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "requirements": [
@@ -153,6 +169,9 @@
     ],
     [
       "floral_meadow"
+    ],
+    [
+      "bumbling_beepartments"
     ]
   ]
 }

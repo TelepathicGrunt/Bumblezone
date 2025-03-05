@@ -1,0 +1,113 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bumbling_beepartments/alley_decor/arch_1",
+        "processors": "the_bumblezone:bumbling_beepartments/alley_decor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bumbling_beepartments/alley_decor/arch_2",
+        "processors": "the_bumblezone:bumbling_beepartments/alley_decor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:bumbling_beepartments/alley_decor/bench_1",
+        "processors": "the_bumblezone:bumbling_beepartments/alley_decor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:bumbling_beepartments/alley_decor/bench_2",
+        "processors": "the_bumblezone:bumbling_beepartments/alley_decor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:bumbling_beepartments/alley_decor/bench_3",
+        "processors": "the_bumblezone:bumbling_beepartments/alley_decor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "location": "the_bumblezone:bumbling_beepartments/alley_decor/brickway_1",
+        "processors": "the_bumblezone:bumbling_beepartments/alley_decor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "location": "the_bumblezone:bumbling_beepartments/alley_decor/brickway_2",
+        "processors": "the_bumblezone:bumbling_beepartments/alley_decor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bumbling_beepartments/alley_decor/candle_path",
+        "processors": "the_bumblezone:bumbling_beepartments/alley_decor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:bumbling_beepartments/alley_decor/flower_bed_1",
+        "processors": "the_bumblezone:bumbling_beepartments/alley_decor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:bumbling_beepartments/alley_decor/flower_bed_2",
+        "processors": "the_bumblezone:bumbling_beepartments/alley_decor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bumbling_beepartments/alley_decor/tree_1",
+        "processors": "the_bumblezone:bumbling_beepartments/alley_decor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bumbling_beepartments/alley_decor/well",
+        "processors": "the_bumblezone:bumbling_beepartments/alley_decor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

@@ -110,7 +110,8 @@ public class GenericOptimizedStructure extends Structure {
                 this.maxDistanceFromCenter,
                 minYLimit,
                 (structurePiecesBuilder, pieces) -> GeneralUtils.centerAllPieces(centerPos, pieces),
-                this.disableBoundChecks);
+                this.disableBoundChecks,
+                this.startJigsawName);
     }
 
     @Override

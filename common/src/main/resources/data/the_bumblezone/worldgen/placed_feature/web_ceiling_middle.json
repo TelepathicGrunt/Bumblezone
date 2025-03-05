@@ -1,0 +1,50 @@
+{
+  "feature": "the_bumblezone:web_ceiling",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 90
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "min_inclusive": {
+          "absolute": 100
+        },
+        "max_inclusive": {
+          "absolute": 136
+        }
+      }
+    },
+    {
+      "type": "minecraft:environment_scan",
+      "direction_of_search": "up",
+      "max_steps": 32,
+      "target_condition": {
+        "type": "minecraft:matching_blocks",
+        "offset": [
+          0,
+          1,
+          0
+        ],
+        "blocks": [
+          "the_bumblezone:glistering_honey_crystal",
+          "the_bumblezone:filled_porous_honeycomb_block"
+        ]
+      },
+      "allowed_search_condition": {
+        "type": "minecraft:matching_blocks",
+        "offset": [
+          0,
+          0,
+          0
+        ],
+        "blocks": "minecraft:air"
+      }
+    }
+  ]
+}
