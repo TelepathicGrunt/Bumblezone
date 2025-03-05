@@ -1,0 +1,14 @@
+{
+  "fallback": "the_bumblezone:bumbling_beepartments/16x16_roof",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bumbling_beepartments/16x16_2nd_floor",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

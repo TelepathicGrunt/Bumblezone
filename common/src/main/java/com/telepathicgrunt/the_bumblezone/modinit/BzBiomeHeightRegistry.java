@@ -34,6 +34,7 @@ public final class BzBiomeHeightRegistry {
     public static final Supplier<BiomeTerrain> CRYSTAL_CANYON = BIOME_HEIGHT.register("crystal_canyon", () -> new BiomeTerrain(0f, 0.75f));
     public static final Supplier<BiomeTerrain> FLORAL_MEADOW = BIOME_HEIGHT.register("floral_meadow", () -> new BiomeTerrain(0.2f, 0.75f));
     public static final Supplier<BiomeTerrain> HOWLING_CONSTRUCTS = BIOME_HEIGHT.register("howling_constructs", () -> new BiomeTerrain(0.18f, 0.78f));
+    public static final Supplier<BiomeTerrain> BUMBLING_BEEPARTMENTS = BIOME_HEIGHT.register("bumbling_beepartments", () -> new BiomeTerrain(18.5f, 0.225f));
 
     public static class TemporaryFakeBiomeRegistry {
         private Map<ResourceLocation, BiomeTerrain> map = new HashMap<>();

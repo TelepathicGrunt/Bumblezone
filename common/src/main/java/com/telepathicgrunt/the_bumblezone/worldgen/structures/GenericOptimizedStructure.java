@@ -118,7 +118,8 @@ public class GenericOptimizedStructure extends Structure {
                 minYLimit,
                 (structurePiecesBuilder, pieces) -> GeneralUtils.centerAllPieces(centerPos, pieces),
                 this.disableBoundChecks,
-                this.liquidSettings);
+                this.liquidSettings,
+                this.startJigsawName);
     }
 
     @Override

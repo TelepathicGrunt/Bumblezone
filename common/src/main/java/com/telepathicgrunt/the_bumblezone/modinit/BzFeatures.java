@@ -22,6 +22,7 @@ import com.telepathicgrunt.the_bumblezone.worldgen.features.SpiderInfestedBeeDun
 import com.telepathicgrunt.the_bumblezone.worldgen.features.StickyHoneyResidueFeature;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.TreeDungeon;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.TwoToneSpikeFeature;
+import com.telepathicgrunt.the_bumblezone.worldgen.features.WebCeiling;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.WebWall;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.BiomeBasedLayerConfig;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.FloralFillWithRootminConfig;
@@ -56,6 +57,7 @@ public class BzFeatures {
     public static final RegistryEntry<Feature<FloralFillWithRootminConfig>> FLORAL_FILL_WITH_ROOTMIN = FEATURES.register("floral_fill_with_rootmin", () -> new FloralFillWithRootmin(FloralFillWithRootminConfig.CODEC));
     public static final RegistryEntry<Feature<TwoToneSpikeFeatureConfig>> TWO_TONE_SPIKE_FEATURE = FEATURES.register("two_tone_spike_feature", () -> new TwoToneSpikeFeature(TwoToneSpikeFeatureConfig.CODEC));
     public static final RegistryEntry<Feature<NoneFeatureConfiguration>> BEEHIVE_BEESWAX_BOUNDARIES = FEATURES.register("beehive_beeswax_boundaries", () -> new BeehiveBeewaxBoundaries(NoneFeatureConfiguration.CODEC));
+    public static final RegistryEntry<Feature<NoneFeatureConfiguration>> WEB_CEILING = FEATURES.register("web_ceiling", () -> new WebCeiling(NoneFeatureConfiguration.CODEC));
 
     public static final RegistryEntry<Feature<NbtOreConfiguration>> BLOCKENTITY_COMBS_FEATURE = FEATURES.register("blockentity_combs", () -> new BlockEntityCombOre(NbtOreConfiguration.CODEC));
 }

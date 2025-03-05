@@ -10,5 +10,17 @@
     "absolute": 41
   },
   "use_expansion_hack": false,
-  "spawn_overrides": {}
+  "spawn_overrides": {
+    "creature": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "the_bumblezone:honey_slime",
+          "maxCount": 1,
+          "minCount": 1,
+          "weight": 1
+        }
+      ]
+    }
+  }
 }

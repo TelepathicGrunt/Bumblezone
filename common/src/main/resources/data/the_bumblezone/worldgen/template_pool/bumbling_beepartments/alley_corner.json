@@ -1,0 +1,14 @@
+{
+  "fallback": "the_bumblezone:bumbling_beepartments/alley_corner",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bumbling_beepartments/alley_corner",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

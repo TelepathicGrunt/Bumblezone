@@ -16,6 +16,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.Pools;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelHeightAccessor;
@@ -86,7 +87,8 @@ public class OptimizedJigsawManager {
                 Optional.empty(),
                 structureBoundsAdjuster,
                 ignoreBounds,
-                liquidSettings
+                liquidSettings,
+                Optional.empty()
         );
     }
 
@@ -102,7 +104,8 @@ public class OptimizedJigsawManager {
             Optional<Integer> minYLimit,
             BiConsumer<StructurePiecesBuilder, List<PoolElementStructurePiece>> structureBoundsAdjuster,
             boolean ignoreBounds,
-            LiquidSettings liquidSettings
+            LiquidSettings liquidSettings,
+            Optional<ResourceLocation> startJigsaw
     ) {
         // Get a random orientation for the starting piece
         WorldgenRandom random = new WorldgenRandom(new LegacyRandomSource(0L));
@@ -126,15 +129,30 @@ public class OptimizedJigsawManager {
             return Optional.empty();
         }
 
-        // Instantiate a piece using the "blueprint" we just got.
         Rotation rotation = Rotation.getRandom(random);
+        BlockPos trueStartPos = startPos;
+        if (startJigsaw.isPresent()) {
+            ResourceLocation resourceLocation = startJigsaw.get();
+            Optional<BlockPos> optionalStartOffset = getRandomNamedJigsaw(startPieceBlueprint, resourceLocation, BlockPos.ZERO, rotation, context.structureTemplateManager(), random);
+            if (optionalStartOffset.isEmpty()) {
+                Bumblezone.LOGGER.error(
+                    "No starting jigsaw {} found in start pool {}",
+                    resourceLocation,
+                    startPoolHolder.unwrapKey().map(resourceKey -> resourceKey.location().toString()).orElse("<unregistered>")
+                );
+                return Optional.empty();
+            }
+            trueStartPos = trueStartPos.subtract(optionalStartOffset.get());
+        }
+
+        // Instantiate a piece using the "blueprint" we just got.
         PoolElementStructurePiece startPiece = new PoolElementStructurePiece(
                 context.structureTemplateManager(),
                 startPieceBlueprint,
-                startPos,
+                trueStartPos,
                 startPieceBlueprint.getGroundLevelDelta(),
                 rotation,
-                startPieceBlueprint.getBoundingBox(context.structureTemplateManager(), startPos, rotation),
+                startPieceBlueprint.getBoundingBox(context.structureTemplateManager(), trueStartPos, rotation),
                 liquidSettings
         );
 
@@ -142,13 +160,13 @@ public class OptimizedJigsawManager {
         BoundingBox pieceBoundingBox = startPiece.getBoundingBox();
         int pieceCenterX = (pieceBoundingBox.maxX() + pieceBoundingBox.minX()) / 2;
         int pieceCenterZ = (pieceBoundingBox.maxZ() + pieceBoundingBox.minZ()) / 2;
-        int pieceCenterY = startPos.getY();
+        int pieceCenterY = trueStartPos.getY();
 
         if (heightmapType.isPresent()) {
             pieceCenterY += GeneralUtils.getLowestLand(
                 context.chunkGenerator(),
                 context.randomState(),
-                startPos,
+                trueStartPos,
                 context.heightAccessor(),
                 true,
                 heightmapType.get() == Heightmap.Types.OCEAN_FLOOR_WG
@@ -212,7 +230,31 @@ public class OptimizedJigsawManager {
 //            }
         }));
     }
-    
+
+    private static Optional<BlockPos> getRandomNamedJigsaw(
+            StructurePoolElement structurePoolElement,
+            ResourceLocation resourceLocation,
+            BlockPos blockPos,
+            Rotation rotation,
+            StructureTemplateManager structureTemplateManager,
+            WorldgenRandom worldgenRandom
+    ) {
+        List<StructureTemplate.StructureBlockInfo> list = structurePoolElement.getShuffledJigsawBlocks(structureTemplateManager, blockPos, rotation, worldgenRandom);
+        Optional<BlockPos> optional = Optional.empty();
+
+        for (StructureTemplate.StructureBlockInfo structureBlockInfo : list) {
+            ResourceLocation resourceLocation2 = ResourceLocation.tryParse(
+                    Objects.requireNonNull(structureBlockInfo.nbt(), () -> structureBlockInfo + " nbt was null").getString("name")
+            );
+            if (resourceLocation.equals(resourceLocation2)) {
+                optional = Optional.of(structureBlockInfo.pos());
+                break;
+            }
+        }
+
+        return optional;
+    }
+
     public static final class Assembler {
         private final Registry<StructureTemplatePool> poolRegistry;
         private final int maxDepth;

@@ -1,0 +1,87 @@
+{
+  "player_spawn_friendly": false,
+  "has_precipitation": false,
+  "temperature": 1.85,
+  "downfall": 0.5,
+  "effects": {
+    "ambient_sound": "the_bumblezone:biomes.beehive_ambience",
+    "music": {
+      "sound": "the_bumblezone:biomes.general_music",
+      "min_delay": 6000,
+      "max_delay": 8000,
+      "replace_current_music": false
+    },
+    "particle": {
+      "options": {
+        "type": "the_bumblezone:pollen_puff_particle"
+      },
+      "probability": 0.001
+    },
+    "sky_color": 16759808,
+    "foliage_color": 7593531,
+    "grass_color": 7600187,
+    "fog_color": 12638463,
+    "water_color": 13429759,
+    "water_fog_color": 12351267
+  },
+  "carvers": {},
+  "features": [
+    [
+      "the_bumblezone:beehive_beeswax_boundaries"
+    ],
+    [],
+    [
+      "the_bumblezone:floaters_rare",
+      "the_bumblezone:floaters_crashed_rare"
+    ],
+    [
+      "the_bumblezone:bee_dungeon",
+      "the_bumblezone:spider_infested_bee_dungeon"
+    ],
+    [],
+    [
+      "the_bumblezone:web_wall",
+      "the_bumblezone:web_ceiling_middle"
+    ],
+    [
+      "the_bumblezone:giant_honey_crystals_cave",
+      "the_bumblezone:sticky_honey_residue_feature"
+    ],
+    [],
+    [
+      "the_bumblezone:cave_sugar_waterfall"
+    ],
+    []
+  ],
+  "creature_spawn_probability": 0.2,
+  "spawners": {
+    "monster": [],
+    "creature": [
+      {
+        "type": "minecraft:bee",
+        "weight": 40,
+        "minCount": 4,
+        "maxCount": 8
+      },
+      {
+        "type": "the_bumblezone:beehemoth",
+        "weight": 15,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "the_bumblezone:variant_bee",
+        "weight": 5,
+        "minCount": 1,
+        "maxCount": 2
+      }
+    ],
+    "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {}
+}
