@@ -1,0 +1,7 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:honeycomb_brood_randomize_processor"
+    }
+  ]
+}
