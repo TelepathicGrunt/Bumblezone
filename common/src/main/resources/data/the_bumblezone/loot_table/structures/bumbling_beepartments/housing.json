@@ -41,7 +41,7 @@
         },
         {
           "type": "minecraft:loot_table",
-          "name": "the_bumblezone:structures/flowers",
+          "value": "the_bumblezone:structures/flowers",
           "weight": 2,
           "functions": [
             {
@@ -83,16 +83,16 @@
           "quality": 1,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_lesser_mystery_structure\"}"
-            },
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_lesser_mystery_structure_description\"}"
-            },
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"Locked\": 1b}"
+              "function": "minecraft:set_components",
+              "components": {
+                "the_bumblezone:honey_compass_base_data": {
+                  "customName": "item.the_bumblezone.honey_compass_lesser_mystery_structure",
+                  "customDescription": "item.the_bumblezone.honey_compass_lesser_mystery_structure_description"
+                },
+                "the_bumblezone:honey_compass_state_data": {
+                  "locked": true
+                }
+              }
             },
             {
               "function": "the_bumblezone:honey_compass_locate_structure",
@@ -117,7 +117,7 @@
       "rolls": 1,
       "entries": [
         {
-          "name": "the_bumblezone:structures/sempiternal_sanctum/compasses",
+          "value": "the_bumblezone:structures/sempiternal_sanctum/compasses",
           "type": "minecraft:loot_table",
           "weight": 1
         }
