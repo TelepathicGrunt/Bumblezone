@@ -1,0 +1,50 @@
+{
+  "type": "minecraft:chest",
+  "random_sequence": "the_bumblezone:structures",
+  "pools": [
+    {
+      "rolls": {
+        "min": 2.0,
+        "max": 6.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "name": "minecraft:honeycomb",
+          "type": "minecraft:item",
+          "weight": 4,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:honey_bottle",
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "the_bumblezone:bee_soup",
+          "type": "minecraft:item",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}
