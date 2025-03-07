@@ -1,0 +1,14 @@
+{
+  "type": "the_bumblezone:nbt_feature",
+  "config": {
+    "processors": "minecraft:empty",
+    "post_processors": "minecraft:empty",
+    "structure_y_offset": 0,
+    "nbt_entries": [
+      {
+        "resourcelocation": "the_bumblezone:hive_voyager",
+        "weight": 1
+      }
+    ]
+  }
+}

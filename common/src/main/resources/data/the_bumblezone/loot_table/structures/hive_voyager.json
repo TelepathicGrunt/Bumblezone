@@ -1,0 +1,106 @@
+{
+  "type": "minecraft:chest",
+  "random_sequence": "the_bumblezone:structures",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "name": "the_bumblezone:bee_bread",
+          "type": "minecraft:item",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 4.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "weight": 1,
+          "name": "the_bumblezone:honey_compass",
+          "type": "minecraft:item"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "weight": 1,
+          "name": "the_bumblezone:honey_compass",
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "the_bumblezone:honey_compass_base_data": {
+                  "customName": "item.the_bumblezone.honey_compass_mystery_structure",
+                  "customDescription": "item.the_bumblezone.honey_compass_mystery_structure_description"
+                },
+                "the_bumblezone:honey_compass_state_data": {
+                  "locked": true
+                }
+              }
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass/misc_locating",
+              "skip_existing_chunks": false,
+              "search_radius": 50
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "weight": 1,
+          "type": "minecraft:item",
+          "name": "the_bumblezone:honey_compass",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "the_bumblezone:honey_compass_base_data": {
+                  "customName": "item.the_bumblezone.honey_compass_lesser_mystery_structure",
+                  "customDescription": "item.the_bumblezone.honey_compass_lesser_mystery_structure_description"
+                },
+                "the_bumblezone:honey_compass_state_data": {
+                  "locked": true
+                }
+              }
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass/lesser_misc_locating",
+              "skip_existing_chunks": false,
+              "search_radius": 50
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "weight": 1,
+          "value": "the_bumblezone:structures/sempiternal_sanctum/guarantee_compasses"
+        }
+      ]
+    }
+  ]
+}
