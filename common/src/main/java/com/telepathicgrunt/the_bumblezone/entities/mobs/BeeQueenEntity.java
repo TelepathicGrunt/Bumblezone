@@ -396,44 +396,46 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 }
             }
 
-            // Check for if holiday trades are available every hour
-            if (BzGeneralConfigs.beeQueenSpecialDayTrades &&
+            if (!this.level().isClientSide()) {
+                // Check for if holiday trades are available every hour
+                if (BzGeneralConfigs.beeQueenSpecialDayTrades &&
                     (this.tickCount == 1 || (this.tickCount + this.getUUID().getLeastSignificantBits()) % 72000L == 0))
-            {
-                Optional<List<Item>> specialDayItem = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItem();
-                List<Item> allowedBonusTradeItems = specialDayItem.orElse(new ArrayList<>()).stream()
-                        .filter(i -> i.isEnabled(level().enabledFeatures()))
-                        .toList();
-                setIsSpecialDay(!allowedBonusTradeItems.isEmpty());
-            }
+                {
+                    Optional<List<Item>> specialDayItem = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItem();
+                    List<Item> allowedBonusTradeItems = specialDayItem.orElse(new ArrayList<>()).stream()
+                            .filter(i -> i.isEnabled(level().enabledFeatures()))
+                            .toList();
+                    setIsSpecialDay(!allowedBonusTradeItems.isEmpty());
+                }
 
-            // Check if player is looking at queen every 2 seconds
-            if (this.tradeHintCooldown == 0 && (this.tickCount + this.getUUID().getLeastSignificantBits()) % 40L == 0) {
-                List<Player> nearbyPlayers = this.level().getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(10));
+                // Check if player is looking at queen every 2 seconds
+                if (this.tradeHintCooldown == 0 && (this.tickCount + this.getUUID().getLeastSignificantBits()) % 40L == 0) {
+                    List<Player> nearbyPlayers = this.level().getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(10));
 
-                for (Player player : nearbyPlayers) {
-                    if (isLookingAtMeClose(player)) {
-                        ObjectSet<Item> keySet = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.keySet();
-                        Item wantItem = keySet.stream().skip(this.random.nextInt(keySet.size())).findFirst().orElse(null);
-                        List<WeightedTradeResult> tradeResults = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.get(wantItem).unwrap();
+                    for (Player player : nearbyPlayers) {
+                        if (isLookingAtMeClose(player)) {
+                            ObjectSet<Item> keySet = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.keySet();
+                            Item wantItem = keySet.stream().skip(this.random.nextInt(keySet.size())).findFirst().orElse(null);
+                            List<WeightedTradeResult> tradeResults = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.get(wantItem).unwrap();
 
-                        int maximumRewardsToShowAtATime = 5;
-                        List<ItemStack> allRewardItems = new ArrayList<>();
-                        List<ItemStack> slicedRewardItems;
-                        for (WeightedTradeResult weightedTradeResult : tradeResults) {
-                            allRewardItems.addAll(weightedTradeResult.getItems());
+                            int maximumRewardsToShowAtATime = 5;
+                            List<ItemStack> allRewardItems = new ArrayList<>();
+                            List<ItemStack> slicedRewardItems;
+                            for (WeightedTradeResult weightedTradeResult : tradeResults) {
+                                allRewardItems.addAll(weightedTradeResult.getItems());
+                            }
+                            Collections.shuffle(allRewardItems);
+                            slicedRewardItems = allRewardItems.subList(0, Math.min(maximumRewardsToShowAtATime, allRewardItems.size()));
+                            TradeHintParticleSpawnPacket.sendToClient(this, wantItem, slicedRewardItems);
+                            this.tradeHintCooldown = TRADE_HINT_PARTICLE_LIFETIME + 20;
+                            break;
                         }
-                        Collections.shuffle(allRewardItems);
-                        slicedRewardItems = allRewardItems.subList(0, Math.min(maximumRewardsToShowAtATime, allRewardItems.size()));
-                        TradeHintParticleSpawnPacket.sendToClient(this, wantItem, slicedRewardItems);
-                        this.tradeHintCooldown = TRADE_HINT_PARTICLE_LIFETIME + 20;
-                        break;
                     }
                 }
-            }
 
-            if (this.tradeHintCooldown > 0) {
-                this.tradeHintCooldown--;
+                if (this.tradeHintCooldown > 0) {
+                    this.tradeHintCooldown--;
+                }
             }
         }
     }
