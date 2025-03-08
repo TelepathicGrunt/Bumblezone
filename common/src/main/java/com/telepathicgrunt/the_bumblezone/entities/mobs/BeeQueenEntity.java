@@ -799,7 +799,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         double d = diff.length();
         diff = diff.normalize();
         double dotProduct = normalizedPlayerView.dot(diff);
-        return dotProduct > 0.8 - (0.025 / d) && player.hasLineOfSight(this);
+        return dotProduct > 0.9 - (0.025 / d) && player.hasLineOfSight(this);
     }
 
     public void spawnAngryParticles(int particles) {

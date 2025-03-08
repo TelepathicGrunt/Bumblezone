@@ -36,11 +36,12 @@ public class TradeHintParticle extends Particle {
     public final static double PARTICLE_Y_OFFSET = 4.5D;
 
     private final RenderBuffers renderBuffers;
+    private final ItemRenderer itemRenderer;
     private final Item tradeWantItem;
     private final List<Item> tradeRewardItems;
-    private int life;
-    private final ItemRenderer itemRenderer;
     protected TextureAtlasSprite sprite;
+    private int life;
+    private float pastSize;
 
     public TradeHintParticle(ItemRenderer itemRenderer, RenderBuffers arg2, ClientLevel arg3, Entity queen, Item tradeWantItem, List<Item> tradeRewardItems) {
         super(arg3, queen.getX(), queen.getY() + PARTICLE_Y_OFFSET, queen.getZ(), 0, 0, 0);
@@ -63,6 +64,9 @@ public class TradeHintParticle extends Particle {
         float y = (float)(Mth.lerp(partialTick, this.yo, this.y) - vec3.y());
         float z = (float)(Mth.lerp(partialTick, this.zo, this.z) - vec3.z());
 
+        float size = getSizeForCurrentLife(partialTick);
+        this.pastSize = size;
+
         Quaternionf quaternionf;
         if (this.roll == 0.0F) {
             quaternionf = camera.rotation();
@@ -81,7 +85,7 @@ public class TradeHintParticle extends Particle {
         for(int k = 0; k < 4; ++k) {
             Vector3f vector3f = vector3fs[k];
             vector3f.rotate(quaternionf);
-            vector3f.mul(1);
+            vector3f.mul(size);
             vector3f.add(x, y, z);
         }
 
@@ -101,37 +105,64 @@ public class TradeHintParticle extends Particle {
 
         Quaternionf reverseQuad = new Quaternionf(0, 0, 0, 1);
         reverseQuad.rotateAxis(Mth.PI, 0 , 1, 0); // flip around y-axis because block items were facing backwards
-        Quaternionf normalToUse = new Quaternionf(-0.6F, 0F, 0F, 1); // Controls the lighting on the items
-        //normalToUse.mul(camera.rotation().mul(-1));
+        Quaternionf normalToUse = new Quaternionf(-1F, 0F, 0F, 1F); // Controls the lighting on the items
 
         // Want item rendering
         PoseStack wantPoseStack = new PoseStack();
-        wantPoseStack.pushPose();
-        wantPoseStack.last().pose().translate(x, y, z);
-        wantPoseStack.last().pose().scale(0.5F, 0.5F, 0.5F);
-        wantPoseStack.last().pose().rotateAround(quaternionf, 0,0,0);
-        wantPoseStack.last().pose().translate(0.68F, 0.85F, -0.03F);
-        wantPoseStack.last().pose().scale(1F, 1F, 0.01F);
-        wantPoseStack.last().pose().rotateAround(reverseQuad, 0,0,0);
-        wantPoseStack.last().normal().set(normalToUse);
+        setupPoseStack(wantPoseStack, x, y, z, 0.68F, 0.85F, -0.03F, size, quaternionf, reverseQuad, normalToUse);
         ItemStack wantItemStack = this.tradeWantItem.getDefaultInstance();
         renderItem(wantItemStack, wantPoseStack, bufferSource);
 
         // Reward item rendering
         PoseStack rewardPoseStack = new PoseStack();
-        rewardPoseStack.pushPose();
-        rewardPoseStack.last().pose().translate(x, y, z);
-        rewardPoseStack.last().pose().scale(0.5F, 0.5F, 0.5F);
-        rewardPoseStack.last().pose().rotateAround(quaternionf, 0,0,0);
-        rewardPoseStack.last().pose().translate(-0.68F, -0.3F, -0.03F);
-        rewardPoseStack.last().pose().scale(1F, 1F, 0.01F);
-        rewardPoseStack.last().pose().rotateAround(reverseQuad, 0,0,0);
-        rewardPoseStack.last().normal().set(normalToUse);
+        setupPoseStack(rewardPoseStack, x, y, z, -0.68F, -0.3F, -0.03F, size, quaternionf, reverseQuad, normalToUse);
         ItemStack rewardItemStack = this.tradeRewardItems.get((this.life / TRADE_REWARD_CYCLE_TIME) % this.tradeRewardItems.size()).getDefaultInstance();
         renderItem(rewardItemStack, rewardPoseStack, bufferSource);
 
         rewardPoseStack.popPose();
         bufferSource.endBatch();
+    }
+
+    private static void setupPoseStack(PoseStack wantPoseStack,
+                                       float x,
+                                       float y,
+                                       float z,
+                                       float xOffset,
+                                       float yOffset,
+                                       float zOffset,
+                                       float size,
+                                       Quaternionf quaternionf,
+                                       Quaternionf reverseQuad,
+                                       Quaternionf normalToUse)
+    {
+        wantPoseStack.pushPose();
+        wantPoseStack.last().pose().translate(x, y, z);
+        wantPoseStack.last().pose().scale(0.5F * size, 0.5F * size, 0.5F * size);
+        wantPoseStack.last().pose().rotateAround(quaternionf, 0,0,0);
+        wantPoseStack.last().pose().translate(xOffset, yOffset, zOffset);
+        wantPoseStack.last().pose().scale(1F, 1F, 0.01F);
+        wantPoseStack.last().pose().rotateAround(reverseQuad, 0,0,0);
+        wantPoseStack.last().normal().set(normalToUse);
+    }
+
+    private float getSizeForCurrentLife(float partialTick) {
+        float size = 1;
+        float sizeChangeTime = 20F;
+
+        if (this.life <= sizeChangeTime) {
+            float currentProgress = this.life / sizeChangeTime;
+            float c1 = 1.70158F;
+            float c3 = c1 + 1;
+            float calcSize = (float) (1 + c3 * Math.pow(currentProgress - 1, 3) + c1 * Math.pow(currentProgress - 1, 2));
+            size = Mth.lerp(partialTick, this.pastSize, calcSize);
+        }
+        else if (BeeQueenEntity.TRADE_HINT_PARTICLE_LIFETIME - this.life <= (sizeChangeTime / 2)) {
+            float currentProgress = (BeeQueenEntity.TRADE_HINT_PARTICLE_LIFETIME - this.life) / (sizeChangeTime / 2);
+            float calcSize = (float) (1 - Math.cos((currentProgress * Math.PI) / 2));
+            size = Mth.lerp(partialTick, this.pastSize, calcSize);
+        }
+
+        return size;
     }
 
     private void renderItem(ItemStack itemStack, PoseStack poseStack, MultiBufferSource.BufferSource bufferSource) {
