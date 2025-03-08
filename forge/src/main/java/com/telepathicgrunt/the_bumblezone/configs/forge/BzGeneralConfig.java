@@ -237,26 +237,6 @@ public class BzGeneralConfig {
                 .translation("the_bumblezone.config.supercandlesburnsmobs")
                 .define("superCandlesBurnsMobs", true);
 
-        beeQueenBonusTradeRewardMultiplier = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " Multiplies the trade reward by this much for bonus Trades! 0 or 1 set here disables bonus Trades.\n")
-                .translation("the_bumblezone.config.beequeenbonusTraderewardmultiplier")
-                .defineInRange("beeQueenBonusTradeRewardMultiplier", 3, 0, 256);
-
-        beeQueenBonusTradeDurationInTicks = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " How long in ticks that bonus Trades will last for before the Bee Queen asks for a new item.",
-                        " Setting this to 0 disables bonus Trades. Anything less than a minute (1200) will not broadcast request message to players\n")
-                .translation("the_bumblezone.config.beequeenbonusTradedurationinticks")
-                .defineInRange("beeQueenBonusTradeDurationInTicks", 24000, 0, 2000000);
-
-        beeQueenBonusTradeAmountTillSatified = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " How many boosted trades are allowed until the bonus Trade is depleted until the queen requests a new item",
-                        " Setting this to 0 disables bonus Trades.\n")
-                .translation("the_bumblezone.config.beequeenbonusTradeamounttillsatified")
-                .defineInRange("beeQueenBonusTradeAmountTillSatified", 24, 0, 1000000);
-
         beeQueenSpecialDayTrades = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " Whether to allow special trades to activate during certain days of the year.\n")
@@ -554,9 +534,6 @@ public class BzGeneralConfig {
         BzGeneralConfigs.superCandlesBurnsMobs = superCandlesBurnsMobs.get();
         BzGeneralConfigs.neurotoxinMaxLevel = neurotoxinMaxLevel.get();
         BzGeneralConfigs.paralyzedMaxTickDuration = paralyzedMaxTickDuration.get();
-        BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier = beeQueenBonusTradeRewardMultiplier.get();
-        BzGeneralConfigs.beeQueenBonusTradeDurationInTicks = beeQueenBonusTradeDurationInTicks.get();
-        BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified = beeQueenBonusTradeAmountTillSatified.get();
         BzGeneralConfigs.beeQueenSpecialDayTrades = beeQueenSpecialDayTrades.get();
         BzGeneralConfigs.beeQueenRespawning = beeQueenRespawning.get();
         BzGeneralConfigs.beeQueenGroundPickup = beeQueenGroundPickup.get();

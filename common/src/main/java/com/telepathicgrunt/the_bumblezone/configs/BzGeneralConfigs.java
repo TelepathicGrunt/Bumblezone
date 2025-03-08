@@ -35,9 +35,6 @@ public class BzGeneralConfigs {
     public static boolean pileOfPollenHyperFireSpread = false;
     public static int neurotoxinMaxLevel = 2;
     public static int paralyzedMaxTickDuration = 600;
-    public static int beeQueenBonusTradeRewardMultiplier = 3;
-    public static int beeQueenBonusTradeDurationInTicks = 24000;
-    public static int beeQueenBonusTradeAmountTillSatified = 24;
     public static boolean beeQueenSpecialDayTrades = true;
     public static boolean beeQueenRespawning = true;
     public static boolean beeQueenGroundPickup = true;

@@ -252,15 +252,6 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean beehemothFriendlyFire = true;
 
-    @Entry(min=0, max=256)
-    public static int beeQueenBonusTradeRewardMultiplier = 3;
-
-    @Entry(min=0, max=2000000)
-    public static int beeQueenBonusTradeDurationInTicks = 24000;
-
-    @Entry(min=0, max=1000000)
-    public static int beeQueenBonusTradeAmountTillSatified = 24;
-
     @Entry
     public static boolean beeQueenSpecialDayTrades = true;
 
@@ -344,9 +335,6 @@ public class BzConfig extends MidnightConfig {
 
     @Entry
     public static boolean useBackupModelForVariantBee = false;
-
-    @Entry
-    public static boolean renderBeeQueenBonusTradeItem = true;
 
     @Entry
     public static boolean playWrathOfHiveEffectMusic = true;
@@ -488,9 +476,6 @@ public class BzConfig extends MidnightConfig {
 
         BzGeneralConfigs.variantBeeTypes = variantBeeTypes;
         BzGeneralConfigs.beehemothFriendlyFire = beehemothFriendlyFire;
-        BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier = beeQueenBonusTradeRewardMultiplier;
-        BzGeneralConfigs.beeQueenBonusTradeDurationInTicks = beeQueenBonusTradeDurationInTicks;
-        BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified = beeQueenBonusTradeAmountTillSatified;
         BzGeneralConfigs.beeQueenSpecialDayTrades = beeQueenSpecialDayTrades;
         BzGeneralConfigs.beeQueenRespawning = beeQueenRespawning;
         BzGeneralConfigs.beeQueenGroundPickup = beeQueenGroundPickup;
@@ -541,7 +526,6 @@ public class BzConfig extends MidnightConfig {
         BzClientConfigs.useBackupModelForVariantBee = useBackupModelForVariantBee;
         BzClientConfigs.playWrathOfHiveEffectMusic = playWrathOfHiveEffectMusic;
         BzClientConfigs.playSempiternalSanctumMusic = playSempiternalSanctumMusic;
-        BzClientConfigs.renderBeeQueenBonusTradeItem = renderBeeQueenBonusTradeItem;
         BzClientConfigs.disableEssenceBlockShaders = disableEssenceBlockShaders;
         BzClientConfigs.knowingEssenceHighlightBosses = knowingEssenceHighlightBosses;
         BzClientConfigs.knowingEssenceHighlightMonsters = knowingEssenceHighlightMonsters;

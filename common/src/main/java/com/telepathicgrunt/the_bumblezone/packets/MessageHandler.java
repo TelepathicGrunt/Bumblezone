@@ -27,5 +27,6 @@ public class MessageHandler {
         DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, SyncBeehemothSpeedConfigFromServer.ID, SyncBeehemothSpeedConfigFromServer.HANDLER, SyncBeehemothSpeedConfigFromServer.class);
         DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, SyncHorseOwnerUUIDPacketFromServer.ID, SyncHorseOwnerUUIDPacketFromServer.HANDLER, SyncHorseOwnerUUIDPacketFromServer.class);
         DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, MusicPacketFromServer.ID, MusicPacketFromServer.HANDLER, MusicPacketFromServer.class);
+        DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, TradeHintParticleSpawnPacket.ID, TradeHintParticleSpawnPacket.HANDLER, TradeHintParticleSpawnPacket.class);
     }
 }
