@@ -34,11 +34,10 @@ public record TradeHintParticleSpawnPacketHandler() {
         }
 
         Minecraft.getInstance().particleEngine.add(new TradeHintParticle(
-                Minecraft.getInstance().getEntityRenderDispatcher(),
+                Minecraft.getInstance().getItemRenderer(),
                 Minecraft.getInstance().renderBuffers(),
                 (ClientLevel) level,
                 queen,
-                player,
                 wantItem,
                 rewardItems));
     }

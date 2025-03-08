@@ -97,6 +97,7 @@ import java.util.UUID;
 
 public class BeeQueenEntity extends Animal implements NeutralMob {
     private final static TargetingConditions PLAYER_ACKNOWLEDGE_SIGHT = TargetingConditions.forNonCombat().range(10);
+    public final static int TRADE_HINT_PARTICLE_LIFETIME = 200;
 
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState attackAnimationState = new AnimationState();
@@ -111,6 +112,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     private UUID persistentAngerTarget;
     private int underWaterTicks;
     private int poseTicks;
+    private int tradeHintCooldown = 0;
     private boolean isSpecialDay = false;
     private static final WeightedTradeResult ESSENCE_DROP = new WeightedTradeResult(null, Optional.of(List.of(BzItems.ESSENCE_OF_THE_BEES.get())), 1, 1000, 1);
 
@@ -396,8 +398,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             setIsSpecialDay(!allowedBonusTradeItems.isEmpty());
         }
 
-        // Check if player is looking at queen every 10 seconds
-        if ((this.tickCount + this.getUUID().getLeastSignificantBits()) % 200L == 0) {
+        // Check if player is looking at queen every 2 seconds
+        if (this.tradeHintCooldown == 0 && (this.tickCount + this.getUUID().getLeastSignificantBits()) % 40L == 0) {
             List<Player> nearbyPlayers = this.level().getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(10));
 
             for (Player player : nearbyPlayers) {
@@ -415,9 +417,14 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     Collections.shuffle(allRewardItems);
                     slicedRewardItems = allRewardItems.subList(0, Math.min(maximumRewardsToShowAtATime, allRewardItems.size()));
                     TradeHintParticleSpawnPacket.sendToClient(this, wantItem, slicedRewardItems);
+                    this.tradeHintCooldown = TRADE_HINT_PARTICLE_LIFETIME + 20;
                     break;
                 }
             }
+        }
+
+        if (this.tradeHintCooldown > 0) {
+            this.tradeHintCooldown--;
         }
     }
 
