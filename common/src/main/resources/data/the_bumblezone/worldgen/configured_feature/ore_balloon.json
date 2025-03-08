@@ -1,0 +1,14 @@
+{
+  "type": "the_bumblezone:nbt_feature",
+  "config": {
+    "processors": "the_bumblezone:ore_balloon",
+    "post_processors": "minecraft:empty",
+    "structure_y_offset": -8,
+    "nbt_entries": [
+      {
+        "resourcelocation": "the_bumblezone:ore_balloon",
+        "weight": 1
+      }
+    ]
+  }
+}

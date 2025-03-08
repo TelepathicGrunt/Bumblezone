@@ -1,5 +1,5 @@
 {
-  "feature": "the_bumblezone:hive_voyager",
+  "feature": "the_bumblezone:ore_balloon",
   "placement": [
     {
       "type": "minecraft:count",
@@ -51,8 +51,16 @@
       }
     },
     {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:matching_blocks",
+        "offset": [0, -8, 0],
+        "blocks": "minecraft:air"
+      }
+    },
+    {
       "type": "the_bumblezone:structure_disallow_by_tag",
-      "disallow_tag": "the_bumblezone:no_hive_voyager_piecewise",
+      "disallow_tag": "the_bumblezone:no_ore_balloon_piecewise",
       "piecewise_check": true
     },
     {
