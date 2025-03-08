@@ -43,7 +43,7 @@ public class TradeHintParticle extends Particle {
     private final List<Item> tradeRewardItems;
     protected TextureAtlasSprite sprite;
     private int life;
-    private float pastSize;
+    private float pastAnimationProgress;
 
     public TradeHintParticle(ItemRenderer itemRenderer, RenderBuffers arg2, ClientLevel arg3, Entity queen, Item tradeWantItem, List<Item> tradeRewardItems) {
         super(arg3, queen.getX(), queen.getY() + PARTICLE_Y_OFFSET, queen.getZ(), 0, 0, 0);
@@ -65,13 +65,8 @@ public class TradeHintParticle extends Particle {
             return;
         }
 
-        Vec3 vec3 = camera.getPosition();
-        float x = (float)(Mth.lerp(partialTick, this.xo, this.x) - vec3.x());
-        float y = (float)(Mth.lerp(partialTick, this.yo, this.y) - vec3.y());
-        float z = (float)(Mth.lerp(partialTick, this.zo, this.z) - vec3.z());
-
-        float size = getSizeForCurrentLife(partialTick);
-        this.pastSize = size;
+        float animationProgress = getAnimationProgressForCurrentLife(partialTick);
+        this.pastAnimationProgress = animationProgress;
 
         Quaternionf cameraRotationQuat;
         if (this.roll == 0.0F) {
@@ -82,6 +77,15 @@ public class TradeHintParticle extends Particle {
             cameraRotationQuat.rotateZ(Mth.lerp(partialTick, this.oRoll, this.roll));
         }
 
+        float offset = 1 - animationProgress;
+        Vector3f offsetVec = new Vector3f(-offset, -offset, 0.0F);
+        offsetVec.rotate(cameraRotationQuat);
+
+        Vec3 vec3 = camera.getPosition();
+        float x = (float)(Mth.lerp(partialTick, this.xo, this.x) - vec3.x()) + offsetVec.x();
+        float y = (float)(Mth.lerp(partialTick, this.yo, this.y) - vec3.y()) + offsetVec.y();
+        float z = (float)(Mth.lerp(partialTick, this.zo, this.z) - vec3.z()) + offsetVec.z();
+
         Vector3f[] vector3fs = new Vector3f[]{
                 new Vector3f(-1.0F, -1.0F, 0.0F),
                 new Vector3f(-1.0F, 1.0F, 0.0F),
@@ -91,7 +95,7 @@ public class TradeHintParticle extends Particle {
         for(int k = 0; k < 4; ++k) {
             Vector3f vector3f = vector3fs[k];
             vector3f.rotate(cameraRotationQuat);
-            vector3f.mul(size);
+            vector3f.mul(animationProgress);
             vector3f.add(x, y, z);
         }
 
@@ -115,13 +119,13 @@ public class TradeHintParticle extends Particle {
 
         // Want item rendering
         PoseStack wantPoseStack = new PoseStack();
-        setupPoseStack(wantPoseStack, x, y, z, 0.35F, 0.425F, -0.001F, size, cameraRotationQuat, reverseQuad, normalToUse);
+        setupPoseStack(wantPoseStack, x, y, z, 0.35F, 0.437F, -0.001F, animationProgress, cameraRotationQuat, reverseQuad, normalToUse);
         ItemStack wantItemStack = this.tradeWantItem.getDefaultInstance();
         renderItem(wantItemStack, wantPoseStack, bufferSource);
 
         // Reward item rendering
         PoseStack rewardPoseStack = new PoseStack();
-        setupPoseStack(rewardPoseStack, x, y, z, -0.32F, -0.15F, -0.001F, size, cameraRotationQuat, reverseQuad, normalToUse);
+        setupPoseStack(rewardPoseStack, x, y, z, -0.32F, -0.15F, -0.001F, animationProgress, cameraRotationQuat, reverseQuad, normalToUse);
         ItemStack rewardItemStack = this.tradeRewardItems.get((this.life / TRADE_REWARD_CYCLE_TIME) % this.tradeRewardItems.size()).getDefaultInstance();
         renderItem(rewardItemStack, rewardPoseStack, bufferSource);
 
@@ -151,24 +155,24 @@ public class TradeHintParticle extends Particle {
         poseStack.last().normal().set(normalToUse); // set normal for lighting
     }
 
-    private float getSizeForCurrentLife(float partialTick) {
-        float size = 1;
-        float sizeChangeTime = 20F;
+    private float getAnimationProgressForCurrentLife(float partialTick) {
+        float animationProgress = 1;
+        float animationChangeTime = 20F;
 
-        if (this.life <= sizeChangeTime) {
-            float currentProgress = this.life / sizeChangeTime;
+        if (this.life <= animationChangeTime) {
+            float currentProgress = this.life / animationChangeTime;
             float c1 = 1.70158F;
             float c3 = c1 + 1;
             float calcSize = (float) (1 + c3 * Math.pow(currentProgress - 1, 3) + c1 * Math.pow(currentProgress - 1, 2));
-            size = Mth.lerp(partialTick, this.pastSize, calcSize);
+            animationProgress = Mth.lerp(partialTick, this.pastAnimationProgress, calcSize);
         }
-        else if (BeeQueenEntity.TRADE_HINT_PARTICLE_LIFETIME - this.life <= (sizeChangeTime / 2)) {
-            float currentProgress = (BeeQueenEntity.TRADE_HINT_PARTICLE_LIFETIME - this.life) / (sizeChangeTime / 2);
+        else if (BeeQueenEntity.TRADE_HINT_PARTICLE_LIFETIME - this.life <= (animationChangeTime / 2)) {
+            float currentProgress = (BeeQueenEntity.TRADE_HINT_PARTICLE_LIFETIME - this.life) / (animationChangeTime / 2);
             float calcSize = (float) (1 - Math.cos((currentProgress * Math.PI) / 2));
-            size = Mth.lerp(partialTick, this.pastSize, calcSize);
+            animationProgress = Mth.lerp(partialTick, this.pastAnimationProgress, calcSize);
         }
 
-        return size;
+        return animationProgress;
     }
 
     private void renderItem(ItemStack itemStack, PoseStack poseStack, MultiBufferSource.BufferSource bufferSource) {
