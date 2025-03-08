@@ -29,32 +29,6 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenModel>
         stack.pushPose();
         super.render(beeQueenEntity, entityYaw, partialTicks, stack, buffer, packedLight);
         stack.popPose();
-
-        if (!beeQueenEntity.isAngry() && BzClientConfigs.renderBeeQueenBonusTradeItem && !beeQueenEntity.getBonusTradeItem().isEmpty()) {
-            stack.pushPose();
-            float scale = 2.6f;
-            stack.scale(scale, scale, scale);
-            float rotYaw = Mth.rotLerp(partialTicks, beeQueenEntity.yBodyRotO, beeQueenEntity.yBodyRot);
-            stack.mulPose(Axis.YP.rotationDegrees(180.0F - rotYaw + 180.0f));
-            this.getModel().root().translateAndRotate(stack);
-            this.getModel().root().getChild("segment3").translateAndRotate(stack);
-            stack.translate(-0.15f, -1.25f, -0.22f);
-            stack.mulPose(Axis.YP.rotationDegrees(-75F));
-            stack.mulPose(Axis.XP.rotationDegrees(-20F));
-            stack.scale(0.6f, 0.6f, 0.6f);
-
-            int alpha = 180;
-            MultiBufferSource bufferToUse = new TranslucentItemRenderTypeBuffer(buffer, alpha);
-            this.itemRenderer.renderItem(
-                    beeQueenEntity,
-                    beeQueenEntity.getBonusTradeItem(),
-                    ItemDisplayContext.GROUND,
-                    false,
-                    stack,
-                    bufferToUse,
-                    packedLight);
-            stack.popPose();
-        }
     }
 
     @Override

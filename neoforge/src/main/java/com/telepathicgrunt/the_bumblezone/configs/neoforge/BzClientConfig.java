@@ -12,6 +12,7 @@ public class BzClientConfig {
     public static ModConfigSpec.BooleanValue enableDimensionFog;
     public static ModConfigSpec.BooleanValue useBackupModelForVariantBee;
     public static ModConfigSpec.BooleanValue playWrathOfHiveEffectMusic;
+    public static ModConfigSpec.BooleanValue showBeeQueenSpeechBubble;
     public static ModConfigSpec.BooleanValue playSempiternalSanctumMusic;
     public static ModConfigSpec.BooleanValue renderBeeQueenBonusTradeItem;
     public static ModConfigSpec.BooleanValue disableEssenceBlockShaders;
@@ -203,6 +204,12 @@ public class BzClientConfig {
                 .translation("the_bumblezone.configuration.playwrathofhiveeffectmusic")
                 .define("playWrathOfHiveEffectMusic", true);
 
+        showBeeQueenSpeechBubble = builder
+                .comment("----------------------------\n",
+                        " Display Bee Queen's speech bubble that shows possible trades you can do.\n")
+                .translation("the_bumblezone.configuration.showbeequeenspeechbubble")
+                .define("showBeeQueenSpeechBubble", true);
+
         playSempiternalSanctumMusic = builder
                 .comment("----------------------------\n",
                         " If on, Bee-ware of the Temple by LudoCrypt will play when you are in Sempiternal Sanctum.\n")
@@ -229,6 +236,7 @@ public class BzClientConfig {
         BzDimensionConfigs.enableDimensionFog = enableDimensionFog.get();
         BzClientConfigs.useBackupModelForVariantBee = useBackupModelForVariantBee.get();
         BzClientConfigs.playWrathOfHiveEffectMusic = playWrathOfHiveEffectMusic.get();
+        BzClientConfigs.showBeeQueenSpeechBubble = showBeeQueenSpeechBubble.get();
         BzClientConfigs.playSempiternalSanctumMusic = playSempiternalSanctumMusic.get();
         BzClientConfigs.renderBeeQueenBonusTradeItem = renderBeeQueenBonusTradeItem.get();
         BzClientConfigs.disableEssenceBlockShaders = disableEssenceBlockShaders.get();

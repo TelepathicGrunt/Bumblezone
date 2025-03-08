@@ -102,6 +102,7 @@
     "client.MinecraftMixin",
     "client.MultiPlayerGameModeMixin",
     "client.MusicManagerMixin",
+    "client.ParticleEngineAccessor",
     "client.RenderStateShardAccessor",
     "client.SoundEngineAccessor",
     "client.SoundManagerAccessor",

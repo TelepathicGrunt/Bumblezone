@@ -316,6 +316,9 @@ public class BzConfig extends MidnightConfig {
     public static boolean playWrathOfHiveEffectMusic = true;
 
     @Entry
+    public static boolean showBeeQueenSpeechBubble = true;
+
+    @Entry
     public static boolean playSempiternalSanctumMusic = true;
 
     @Entry
@@ -492,6 +495,7 @@ public class BzConfig extends MidnightConfig {
         //Client
         BzClientConfigs.useBackupModelForVariantBee = useBackupModelForVariantBee;
         BzClientConfigs.playWrathOfHiveEffectMusic = playWrathOfHiveEffectMusic;
+        BzClientConfigs.showBeeQueenSpeechBubble = showBeeQueenSpeechBubble;
         BzClientConfigs.playSempiternalSanctumMusic = playSempiternalSanctumMusic;
         BzClientConfigs.renderBeeQueenBonusTradeItem = renderBeeQueenBonusTradeItem;
         BzClientConfigs.disableEssenceBlockShaders = disableEssenceBlockShaders;
