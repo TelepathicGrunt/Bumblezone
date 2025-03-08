@@ -34,11 +34,6 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenModel>
         stack.pushPose();
         super.render(beeQueenEntity, entityYaw, partialTicks, stack, buffer, packedLight);
         stack.popPose();
-
-        if (!beeQueenEntity.isAngry()) {
-            stack.pushPose();
-            stack.popPose();
-        }
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
-import com.telepathicgrunt.the_bumblezone.mixin.ParticleEngineAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.client.ParticleEngineAccessor;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -35,6 +35,7 @@ import java.util.List;
 public class TradeHintParticle extends Particle {
     public final static int TRADE_REWARD_CYCLE_TIME = 40;
     public final static double PARTICLE_Y_OFFSET = 4.5D;
+    public final static ResourceLocation SPEECH_BUBBLE_TEXTURE = new ResourceLocation(Bumblezone.MODID, "trade_hint/1");
 
     private final RenderBuffers renderBuffers;
     private final ItemRenderer itemRenderer;
@@ -50,7 +51,7 @@ public class TradeHintParticle extends Particle {
         this.tradeWantItem = tradeWantItem;
         this.tradeRewardItems = tradeRewardItems;
         this.itemRenderer = itemRenderer;
-        this.sprite = ((ParticleEngineAccessor)Minecraft.getInstance().particleEngine).getTextureAtlas().getSprite(new ResourceLocation(Bumblezone.MODID, "trade_hint/1"));
+        this.sprite = ((ParticleEngineAccessor)Minecraft.getInstance().particleEngine).getTextureAtlas().getSprite(SPEECH_BUBBLE_TEXTURE);
     }
 
     @Override
@@ -110,7 +111,7 @@ public class TradeHintParticle extends Particle {
 
         Quaternionf reverseQuad = new Quaternionf(0, 0, 0, 1);
         reverseQuad.rotateAxis(Mth.PI, 0 , 1, 0); // flip around y-axis because block items were facing backwards
-        Quaternionf normalToUse = new Quaternionf(-0.8F, 0F, 0F, 1F); // Controls the lighting on the items...
+        Quaternionf normalToUse = new Quaternionf(-0.8F, 0F, 0F, 1F); // Controls the lighting on the items... (Vanilla bugged in 1.20.1. Fixed by vanilla in 1.21.1)
 
         // Want item rendering
         PoseStack wantPoseStack = new PoseStack();
