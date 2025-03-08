@@ -393,10 +393,10 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     (this.tickCount == 1 || (this.tickCount + this.getUUID().getLeastSignificantBits()) % 72000L == 0))
                 {
                     Optional<List<Item>> specialDayItem = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItem();
-                    List<Item> allowedBonusTradeItems = specialDayItem.orElse(new ArrayList<>()).stream()
+                    List<Item> allowedSpecialDayTradeItems = specialDayItem.orElse(new ArrayList<>()).stream()
                             .filter(i -> i.isEnabled(level().enabledFeatures()))
                             .toList();
-                    setIsSpecialDay(!allowedBonusTradeItems.isEmpty());
+                    setIsSpecialDay(!allowedSpecialDayTradeItems.isEmpty());
                 }
 
                 // Check if player is looking at queen every 2 seconds
