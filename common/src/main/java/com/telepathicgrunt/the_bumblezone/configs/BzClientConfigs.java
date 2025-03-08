@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.configs;
 public class BzClientConfigs {
     public static boolean useBackupModelForVariantBee = false;
     public static boolean playWrathOfHiveEffectMusic = true;
+    public static boolean showBeeQueenSpeechBubble = true;
     public static boolean playSempiternalSanctumMusic = true;
     public static boolean disableEssenceBlockShaders = false;
     public static boolean knowingEssenceHighlightBosses = true;

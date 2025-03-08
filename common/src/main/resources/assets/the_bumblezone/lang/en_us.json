@@ -1231,6 +1231,7 @@
   "the_bumblezone.midnightconfig.clientComment": "§o§6    Client Section",
   "the_bumblezone.midnightconfig.useBackupModelForVariantBee": "Use Backup Model For Variant Bee",
   "the_bumblezone.midnightconfig.playWrathOfHiveEffectMusic": "Play Wrath Of Hive Effect Music",
+  "the_bumblezone.midnightconfig.showBeeQueenSpeechBubble": "Display Bee Queen's Speech Bubble",
   "the_bumblezone.midnightconfig.playSempiternalSanctumMusic": "Play Sempiternal Sanctum Music",
   "the_bumblezone.midnightconfig.fogThickness": "Fog Thickness",
   "the_bumblezone.midnightconfig.disableEssenceBlockShaders": "Disable Essence Block Shaders",

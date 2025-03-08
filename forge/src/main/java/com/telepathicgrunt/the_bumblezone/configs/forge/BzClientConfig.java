@@ -12,6 +12,7 @@ public class BzClientConfig {
     public static ForgeConfigSpec.BooleanValue enableDimensionFog;
     public static ForgeConfigSpec.BooleanValue useBackupModelForVariantBee;
     public static ForgeConfigSpec.BooleanValue playWrathOfHiveEffectMusic;
+    public static ForgeConfigSpec.BooleanValue showBeeQueenSpeechBubble;
     public static ForgeConfigSpec.BooleanValue playSempiternalSanctumMusic;
     public static ForgeConfigSpec.BooleanValue disableEssenceBlockShaders;
     public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightBosses;
@@ -193,6 +194,11 @@ public class BzClientConfig {
                 .translation("the_bumblezone.config.playwrathofhiveeffectmusic")
                 .define("playWrathOfHiveEffectMusic", true);
 
+        showBeeQueenSpeechBubble = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Display Bee Queen's speech bubble that shows possible trades you can do.\n")
+                .translation("the_bumblezone.config.showbeequeenspeechbubble")
+                .define("showBeeQueenSpeechBubble", true);
 
         playSempiternalSanctumMusic = builder
                 .comment(" \n-----------------------------------------------------\n",
@@ -216,6 +222,7 @@ public class BzClientConfig {
         BzDimensionConfigs.enableDimensionFog = enableDimensionFog.get();
         BzClientConfigs.useBackupModelForVariantBee = useBackupModelForVariantBee.get();
         BzClientConfigs.playWrathOfHiveEffectMusic = playWrathOfHiveEffectMusic.get();
+        BzClientConfigs.showBeeQueenSpeechBubble = showBeeQueenSpeechBubble.get();
         BzClientConfigs.playSempiternalSanctumMusic = playSempiternalSanctumMusic.get();
         BzClientConfigs.disableEssenceBlockShaders = disableEssenceBlockShaders.get();
         BzClientConfigs.knowingEssenceHighlightBosses = knowingEssenceHighlightBosses.get();

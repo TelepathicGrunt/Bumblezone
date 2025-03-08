@@ -408,7 +408,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     Item wantItem = keySet.stream().skip(this.random.nextInt(keySet.size())).findFirst().orElse(null);
                     List<WeightedTradeResult> tradeResults = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.get(wantItem).unwrap();
 
-                    int maximumRewardsToShowAtATime = 10;
+                    int maximumRewardsToShowAtATime = 5;
                     List<Item> allRewardItems = new ArrayList<>();
                     List<Item> slicedRewardItems;
                     for (WeightedTradeResult weightedTradeResult : tradeResults) {

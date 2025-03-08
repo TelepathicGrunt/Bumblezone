@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.client.particles;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.ParticleEngineAccessor;
 import net.minecraft.client.Camera;
@@ -59,6 +60,10 @@ public class TradeHintParticle extends Particle {
 
     @Override
     public void render(VertexConsumer doNotUse, Camera camera, float partialTick) {
+        if (!BzClientConfigs.showBeeQueenSpeechBubble) {
+            return;
+        }
+
         Vec3 vec3 = camera.getPosition();
         float x = (float)(Mth.lerp(partialTick, this.xo, this.x) - vec3.x());
         float y = (float)(Mth.lerp(partialTick, this.yo, this.y) - vec3.y());
@@ -67,13 +72,13 @@ public class TradeHintParticle extends Particle {
         float size = getSizeForCurrentLife(partialTick);
         this.pastSize = size;
 
-        Quaternionf quaternionf;
+        Quaternionf cameraRotationQuat;
         if (this.roll == 0.0F) {
-            quaternionf = camera.rotation();
+            cameraRotationQuat = camera.rotation();
         }
         else {
-            quaternionf = new Quaternionf(camera.rotation());
-            quaternionf.rotateZ(Mth.lerp(partialTick, this.oRoll, this.roll));
+            cameraRotationQuat = new Quaternionf(camera.rotation());
+            cameraRotationQuat.rotateZ(Mth.lerp(partialTick, this.oRoll, this.roll));
         }
 
         Vector3f[] vector3fs = new Vector3f[]{
@@ -84,7 +89,7 @@ public class TradeHintParticle extends Particle {
 
         for(int k = 0; k < 4; ++k) {
             Vector3f vector3f = vector3fs[k];
-            vector3f.rotate(quaternionf);
+            vector3f.rotate(cameraRotationQuat);
             vector3f.mul(size);
             vector3f.add(x, y, z);
         }
@@ -105,17 +110,17 @@ public class TradeHintParticle extends Particle {
 
         Quaternionf reverseQuad = new Quaternionf(0, 0, 0, 1);
         reverseQuad.rotateAxis(Mth.PI, 0 , 1, 0); // flip around y-axis because block items were facing backwards
-        Quaternionf normalToUse = new Quaternionf(-1F, 0F, 0F, 1F); // Controls the lighting on the items
+        Quaternionf normalToUse = new Quaternionf(-0.8F, 0F, 0F, 1F); // Controls the lighting on the items...
 
         // Want item rendering
         PoseStack wantPoseStack = new PoseStack();
-        setupPoseStack(wantPoseStack, x, y, z, 0.68F, 0.85F, -0.03F, size, quaternionf, reverseQuad, normalToUse);
+        setupPoseStack(wantPoseStack, x, y, z, 0.35F, 0.425F, -0.001F, size, cameraRotationQuat, reverseQuad, normalToUse);
         ItemStack wantItemStack = this.tradeWantItem.getDefaultInstance();
         renderItem(wantItemStack, wantPoseStack, bufferSource);
 
         // Reward item rendering
         PoseStack rewardPoseStack = new PoseStack();
-        setupPoseStack(rewardPoseStack, x, y, z, -0.68F, -0.3F, -0.03F, size, quaternionf, reverseQuad, normalToUse);
+        setupPoseStack(rewardPoseStack, x, y, z, -0.32F, -0.15F, -0.001F, size, cameraRotationQuat, reverseQuad, normalToUse);
         ItemStack rewardItemStack = this.tradeRewardItems.get((this.life / TRADE_REWARD_CYCLE_TIME) % this.tradeRewardItems.size()).getDefaultInstance();
         renderItem(rewardItemStack, rewardPoseStack, bufferSource);
 
@@ -123,7 +128,7 @@ public class TradeHintParticle extends Particle {
         bufferSource.endBatch();
     }
 
-    private static void setupPoseStack(PoseStack wantPoseStack,
+    private static void setupPoseStack(PoseStack poseStack,
                                        float x,
                                        float y,
                                        float z,
@@ -135,14 +140,14 @@ public class TradeHintParticle extends Particle {
                                        Quaternionf reverseQuad,
                                        Quaternionf normalToUse)
     {
-        wantPoseStack.pushPose();
-        wantPoseStack.last().pose().translate(x, y, z);
-        wantPoseStack.last().pose().scale(0.5F * size, 0.5F * size, 0.5F * size);
-        wantPoseStack.last().pose().rotateAround(quaternionf, 0,0,0);
-        wantPoseStack.last().pose().translate(xOffset, yOffset, zOffset);
-        wantPoseStack.last().pose().scale(1F, 1F, 0.01F);
-        wantPoseStack.last().pose().rotateAround(reverseQuad, 0,0,0);
-        wantPoseStack.last().normal().set(normalToUse);
+        poseStack.pushPose();
+        poseStack.last().pose().translate(x, y, z); // move to particle location
+        poseStack.last().pose().scale(size, size, size); // resize to match particle sprite size
+        poseStack.last().pose().rotateAround(quaternionf, 0,0,0); // face player
+        poseStack.last().pose().translate(xOffset, yOffset, zOffset); // move to correct spot on sprite
+        poseStack.last().pose().scale(0.5F, 0.5F, 0.001F); // scale to correct size on the sprite at location
+        poseStack.last().pose().rotateAround(reverseQuad, 0,0,0); // reverse around y-axis as block-entities were backwards
+        poseStack.last().normal().set(normalToUse); // set normal for lighting
     }
 
     private float getSizeForCurrentLife(float partialTick) {
@@ -166,8 +171,7 @@ public class TradeHintParticle extends Particle {
     }
 
     private void renderItem(ItemStack itemStack, PoseStack poseStack, MultiBufferSource.BufferSource bufferSource) {
-        BakedModel bakedmodel = itemRenderer.getModel(itemStack, Minecraft.getInstance().level, null,
-                Item.getId(itemStack.getItem()) + itemStack.getDamageValue());
+        BakedModel bakedmodel = itemRenderer.getModel(itemStack, Minecraft.getInstance().level, null, 0);
         this.itemRenderer.render(
                 itemStack,
                 ItemDisplayContext.GUI,

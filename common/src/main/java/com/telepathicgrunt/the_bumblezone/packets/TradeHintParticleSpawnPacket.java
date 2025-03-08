@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.packets;
 
-import com.mojang.brigadier.Message;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
@@ -9,13 +8,10 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public record TradeHintParticleSpawnPacket(int queenId, ResourceLocation wantItem, List<ResourceLocation> rewardItems) implements Packet<TradeHintParticleSpawnPacket> {
 
@@ -73,7 +69,7 @@ public record TradeHintParticleSpawnPacket(int queenId, ResourceLocation wantIte
             return (player, level) -> {
                 Entity queen = level.getEntity(message.queenId());
                 if (queen != null) {
-                    TradeHintParticleSpawnPacketHandler.handle(message, player, queen, level);
+                    TradeHintParticleSpawnPacketHandler.handle(message, queen, level);
                 }
             };
         }
