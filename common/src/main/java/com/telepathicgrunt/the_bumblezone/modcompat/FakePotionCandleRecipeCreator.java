@@ -123,13 +123,13 @@ public class FakePotionCandleRecipeCreator {
     private static ItemStack createResultStack(PotionCandleRecipe recipe, ItemStack potionStack) {
         List<MobEffect> effects = new ArrayList<>();
         AtomicInteger maxDuration = new AtomicInteger();
-        AtomicInteger amplifier = new AtomicInteger();
+        AtomicInteger effectLevel = new AtomicInteger();
         AtomicInteger potionEffectsFound = new AtomicInteger();
 
         PotionUtils.getMobEffects(potionStack).forEach(me -> {
             effects.add(me.getEffect());
             maxDuration.addAndGet(me.getEffect().isInstantenous() ? 200 : me.getDuration());
-            amplifier.addAndGet(me.getAmplifier() + 1);
+            effectLevel.addAndGet(me.getAmplifier() + 1);
             potionEffectsFound.getAndIncrement();
         });
 
@@ -143,13 +143,13 @@ public class FakePotionCandleRecipeCreator {
             return ItemStack.EMPTY;
         }
 
-        PotionCandleRecipe.balanceBaseStats(chosenEffect, maxDuration, amplifier, potionEffectsFound);
-        amplifier.set(Math.min(amplifier.get(), recipe.getMaxLevelCap()));
+        PotionCandleRecipe.balanceBaseStats(chosenEffect, maxDuration, effectLevel, potionEffectsFound);
+        effectLevel.set(Math.min(effectLevel.get(), recipe.getMaxLevelCap()));
 
         return PotionCandleRecipe.createTaggedPotionCandle(
                 chosenEffect,
                 maxDuration,
-                amplifier,
+                effectLevel,
                 potionStack.getItem() instanceof SplashPotionItem ? 1 : 0,
                 potionStack.getItem() instanceof LingeringPotionItem ? 1 : 0,
                 recipe.getResultItem(RegistryAccess.EMPTY).getCount());

@@ -7,6 +7,11 @@ Allow Holiday Trades to be shown in the speech bubble for Bee Queen.
 #### Features:
 Slightly reduce spawnrate of Hive Voyager and Ore Balloon features.
 
+#### Blocks:
+Added code to Potion Candles to now dynamically increase their linger times and delaying refreshing of the effect's duration for effects that apply on an interval.
+ For example, Regeneration only apply the heal when the effect reaches certain duration numbers. Now the Potion Candle should automatically find those thresholds and allow effects to actually work when standing near the lit candle.
+ This fix should apply retroactively to existing placed Potion Candles.
+
 
 ### **(V.7.6.0 Changes) (1.20.1 Minecraft)**
 

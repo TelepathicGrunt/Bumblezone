@@ -12,6 +12,7 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.chars.Char2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2CharOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -115,7 +116,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         MobEffect chosenEffect;
         List<MobEffect> effects = new ArrayList<>();
         AtomicInteger maxDuration = new AtomicInteger();
-        AtomicInteger amplifier = new AtomicInteger();
+        AtomicInteger effectLevel = new AtomicInteger();
         AtomicInteger potionEffectsFound = new AtomicInteger();
         int splashCount = 0;
         int lingerCount = 0;
@@ -126,7 +127,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
                 PotionUtils.getMobEffects(itemStack).forEach(me -> {
                    effects.add(me.getEffect());
                    maxDuration.addAndGet(me.getEffect().isInstantenous() ? 200 : me.getDuration());
-                   amplifier.addAndGet(me.getAmplifier() + 1);
+                   effectLevel.addAndGet(me.getAmplifier() + 1);
                    potionEffectsFound.getAndIncrement();
                 });
 
@@ -151,10 +152,10 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             return getResultStack(this.outputCount);
         }
 
-        balanceBaseStats(chosenEffect, maxDuration, amplifier, potionEffectsFound);
-        amplifier.set(Math.min(amplifier.get(), this.maxLevelCap));
+        balanceBaseStats(chosenEffect, maxDuration, effectLevel, potionEffectsFound);
+        effectLevel.set(Math.min(effectLevel.get(), this.maxLevelCap));
 
-        return createTaggedPotionCandle(chosenEffect, maxDuration, amplifier, splashCount, lingerCount, this.outputCount);
+        return createTaggedPotionCandle(chosenEffect, maxDuration, effectLevel, splashCount, lingerCount, this.outputCount);
     }
 
     public static void balanceBaseStats(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger amplifier, AtomicInteger potionEffectsFound) {
@@ -183,14 +184,14 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         }
     }
 
-    public static ItemStack createTaggedPotionCandle(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger amplifier, int splashCount, int lingerCount, int outputCount) {
+    public static ItemStack createTaggedPotionCandle(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger effectLevel, int splashCount, int lingerCount, int outputCount) {
         ItemStack resultStack = getResultStack(outputCount);
 
         CompoundTag tag = resultStack.getOrCreateTag();
         CompoundTag blockEntityTag = new CompoundTag();
         tag.put("BlockEntityTag", blockEntityTag);
         blockEntityTag.putInt(PotionCandleBlockEntity.COLOR_TAG, chosenEffect.getColor());
-        blockEntityTag.putInt(PotionCandleBlockEntity.AMPLIFIER_TAG, amplifier.intValue());
+        blockEntityTag.putInt(PotionCandleBlockEntity.EFFECT_LEVEL_TAG, effectLevel.intValue());
         blockEntityTag.putInt(PotionCandleBlockEntity.MAX_DURATION_TAG, maxDuration.intValue());
         blockEntityTag.putString(PotionCandleBlockEntity.STATUS_EFFECT_TAG, BuiltInRegistries.MOB_EFFECT.getKey(chosenEffect).toString());
         blockEntityTag.putBoolean(PotionCandleBlockEntity.INFINITE_TAG, false);
@@ -199,15 +200,15 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             blockEntityTag.putInt(PotionCandleBlockEntity.LINGER_TIME_TAG, 1);
         }
         else if (chosenEffect == MobEffects.NIGHT_VISION) {
-            setLingerTime(chosenEffect, lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_NIGHT_VISION_LINGER_TIME);
+            setLingerTime(chosenEffect, lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_NIGHT_VISION_LINGER_TIME, effectLevel);
         }
         else {
-            setLingerTime(chosenEffect, lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_LINGER_TIME);
+            setLingerTime(chosenEffect, lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_LINGER_TIME, effectLevel);
         }
         return resultStack;
     }
 
-    private static void setLingerTime(MobEffect chosenEffect, int lingerCount, CompoundTag blockEntityTag, int baseLingerTime) {
+    private static void setLingerTime(MobEffect chosenEffect, int lingerCount, CompoundTag blockEntityTag, int baseLingerTime, AtomicInteger effectLevel) {
         int lingerTime = baseLingerTime + (lingerCount * baseLingerTime * 2);
 
         if (GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.TEN_SECONDS_POTION_CANDLE_EFFECTS, chosenEffect)) {
@@ -215,6 +216,12 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         }
         else if (GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.ONE_MINUTE_POTION_CANDLE_EFFECTS, chosenEffect)) {
             lingerTime = Math.min(1200, lingerTime);
+        }
+
+        if (!chosenEffect.isInstantenous()) {
+            int intervalCalced = PotionCandleBlockEntity.createIntervalTimeForEffectApply(chosenEffect, effectLevel.get(), lingerTime);
+            lingerTime += intervalCalced;
+            blockEntityTag.putInt(PotionCandleBlockEntity.CALCULATED_EFFECT_APPLY_INTERVAL_TAG, intervalCalced);
         }
 
         blockEntityTag.putInt(PotionCandleBlockEntity.LINGER_TIME_TAG, lingerTime);

@@ -55,7 +55,7 @@ public class PotionCandleBlockItem extends BlockItem {
                 Optional<MobEffect> mobEffect = BuiltInRegistries.MOB_EFFECT.getOptional(rl);
                 if (mobEffect.isPresent()) {
                     components.add(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.status_effect", mobEffect.get().getDisplayName())));
-                    components.add(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.amplifier", blockEntityTag.getInt(PotionCandleBlockEntity.AMPLIFIER_TAG))));
+                    components.add(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.amplifier", blockEntityTag.getInt(PotionCandleBlockEntity.EFFECT_LEVEL_TAG))));
                     components.add(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.range", blockEntityTag.getInt(PotionCandleBlockEntity.RANGE_TAG))));
 
                     if (blockEntityTag.contains(PotionCandleBlockEntity.INFINITE_TAG) && blockEntityTag.getBoolean(PotionCandleBlockEntity.INFINITE_TAG)) {
@@ -69,7 +69,7 @@ public class PotionCandleBlockItem extends BlockItem {
                     }
 
                     if (mobEffect.get().isInstantenous()) {
-                        components.add(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.apply_interval", formatTime(PotionCandleBlockEntity.getInstantEffectThresholdTime(blockEntityTag.getInt(PotionCandleBlockEntity.AMPLIFIER_TAG))))));
+                        components.add(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.apply_interval", formatTime(PotionCandleBlockEntity.getInstantEffectThresholdTime(blockEntityTag.getInt(PotionCandleBlockEntity.EFFECT_LEVEL_TAG))))));
                     }
 
                     int lingerTime = blockEntityTag.getInt(PotionCandleBlockEntity.LINGER_TIME_TAG);
