@@ -23,11 +23,11 @@ public class BeeStinger extends BzArrowItem {
     }
 
     @Override
-    public AbstractArrow createArrow(@NotNull Level level, ItemStack stack, LivingEntity livingEntity, @Nullable ItemStack itemStack2) {
-        if (itemStack2 != null && !itemStack2.is(BzItems.CRYSTAL_CANNON.get()) && livingEntity instanceof ServerPlayer serverPlayer) {
+    public AbstractArrow createArrow(@NotNull Level level, ItemStack ammo, LivingEntity livingEntity, @Nullable ItemStack weapon) {
+        if (weapon != null && !weapon.is(BzItems.CRYSTAL_CANNON.get()) && livingEntity instanceof ServerPlayer serverPlayer) {
             PlayerDataHandler.onBeeStingerFired(serverPlayer);
         }
-        return new BeeStingerEntity(level, livingEntity, stack, itemStack2);
+        return new BeeStingerEntity(level, livingEntity, ammo.copyWithCount(1), weapon);
     }
 
     @Override

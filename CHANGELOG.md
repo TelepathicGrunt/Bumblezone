@@ -7,6 +7,9 @@ Allow Holiday Trades to be shown in the speech bubble for Bee Queen.
 #### Features:
 Slightly reduce spawnrate of Hive Voyager and Ore Balloon features.
 
+#### Items:
+Added a change to Bee Stinger to avoid cases where other mods make shooting Bee Stinger and then picking it up again returns a stack of 64 Bee Stingers instead of 1.
+
 
 ### **(V.7.8.0 Changes) (1.21.1 Minecraft)**
 
