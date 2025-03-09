@@ -10,6 +10,11 @@ Slightly reduce spawnrate of Hive Voyager and Ore Balloon features.
 #### Items:
 Added a change to Bee Stinger to avoid cases where Supplementaries's Quiver make shooting Bee Stinger and then picking it up again returns a stack of Bee Stingers greater than 1.
 
+#### Blocks:
+Added code to Potion Candles to now dynamically increase their linger times and delaying refreshing of the effect's duration for effects that apply on an interval.
+ For example, Regeneration only apply the heal when the effect reaches certain duration numbers. Now the Potion Candle should automatically find those thresholds and allow effects to actually work when standing near the lit candle.
+ This fix should apply retroactively to existing placed Potion Candles.
+
 
 ### **(V.7.8.0 Changes) (1.21.1 Minecraft)**
 

@@ -34,7 +34,6 @@ public class FakePotionCandleRecipeCreator {
 
     public static List<CraftingRecipe> constructFakeRecipes(PotionCandleRecipe potionCandleRecipe, boolean oneRecipeOnly) {
         List<CraftingRecipe> extraRecipes = new ArrayList<>();
-        int currentRecipe = 0;
         Set<MobEffect> effects = new HashSet<>();
         List<Holder<Potion>> potions = new ArrayList<>();
         for (ResourceLocation potionKey : BuiltInRegistries.POTION.keySet()) {
@@ -59,11 +58,8 @@ public class FakePotionCandleRecipeCreator {
             }
 
             addRecipeIfValid(extraRecipes, FakePotionCandleRecipeCreator.getFakeShapedRecipe(potionCandleRecipe, potion, Items.POTION.getDefaultInstance()));
-            currentRecipe++;
             addRecipeIfValid(extraRecipes, FakePotionCandleRecipeCreator.getFakeShapedRecipe(potionCandleRecipe, potion, Items.SPLASH_POTION.getDefaultInstance()));
-            currentRecipe++;
             addRecipeIfValid(extraRecipes, FakePotionCandleRecipeCreator.getFakeShapedRecipe(potionCandleRecipe, potion, Items.LINGERING_POTION.getDefaultInstance()));
-            currentRecipe++;
         }
         return extraRecipes;
     }
@@ -125,13 +121,13 @@ public class FakePotionCandleRecipeCreator {
     private static ItemStack createResultStack(PotionCandleRecipe recipe, ItemStack potionStack) {
         List<MobEffect> effects = new ArrayList<>();
         AtomicInteger maxDuration = new AtomicInteger();
-        AtomicInteger amplifier = new AtomicInteger();
+        AtomicInteger effectLevel = new AtomicInteger();
         AtomicInteger potionEffectsFound = new AtomicInteger();
 
         potionStack.get(DataComponents.POTION_CONTENTS).getAllEffects().forEach(me -> {
             effects.add(me.getEffect().value());
             maxDuration.addAndGet(me.getEffect().value().isInstantenous() ? 200 : me.getDuration());
-            amplifier.addAndGet(me.getAmplifier() + 1);
+            effectLevel.addAndGet(me.getAmplifier() + 1);
             potionEffectsFound.getAndIncrement();
         });
 
@@ -145,13 +141,13 @@ public class FakePotionCandleRecipeCreator {
             return ItemStack.EMPTY;
         }
 
-        PotionCandleRecipe.balanceMainStats(chosenEffect, maxDuration, amplifier, potionEffectsFound);
-        amplifier.set(Math.min(amplifier.get(), recipe.getMaxLevelCap()));
+        PotionCandleRecipe.balanceMainStats(chosenEffect, maxDuration, null, effectLevel, potionEffectsFound);
+        effectLevel.set(Math.min(effectLevel.get(), recipe.getMaxLevelCap()));
 
         return PotionCandleRecipe.createTaggedPotionCandle(
                 chosenEffect,
                 maxDuration,
-                amplifier,
+                effectLevel,
                 potionStack.getItem() instanceof SplashPotionItem ? 1 : 0,
                 potionStack.getItem() instanceof LingeringPotionItem ? 1 : 0,
                 recipe.getResultItem(RegistryAccess.EMPTY).getCount());

@@ -14,6 +14,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
@@ -131,6 +132,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         MobEffect chosenEffect;
         List<MobEffect> effects = new ArrayList<>();
         AtomicInteger maxDuration = new AtomicInteger();
+        AtomicInteger calculatedEffectApplyInterval = new AtomicInteger();
         AtomicInteger amplifier = new AtomicInteger();
         AtomicInteger potionEffectsFound = new AtomicInteger();
         int splashCount = 0;
@@ -167,13 +169,13 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             return getResultStack(this.outputCount);
         }
 
-        balanceMainStats(chosenEffect, maxDuration, amplifier, potionEffectsFound);
+        balanceMainStats(chosenEffect, maxDuration, calculatedEffectApplyInterval, amplifier, potionEffectsFound);
         amplifier.set(Math.min(amplifier.get(), this.maxLevelCap));
 
         return createTaggedPotionCandle(chosenEffect, maxDuration, amplifier, splashCount, lingerCount, this.outputCount);
     }
 
-    public static void balanceMainStats(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger amplifier, AtomicInteger potionEffectsFound) {
+    public static void balanceMainStats(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger calculatedEffectApplyInterval, AtomicInteger amplifier, AtomicInteger potionEffectsFound) {
         amplifier.set(amplifier.get() / potionEffectsFound.get());
 
         if (PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER.effectToOverrideStats.containsKey(chosenEffect)) {
@@ -198,7 +200,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
 
     public static ItemStack createTaggedPotionCandle(MobEffect chosenEffect,
                                                      AtomicInteger maxDuration,
-                                                     AtomicInteger amplifier,
+                                                     AtomicInteger effectLevel,
                                                      int splashCount,
                                                      int lingerCount,
                                                      int outputCount)
@@ -209,7 +211,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         CompoundTag blockEntityTag = customData.copyTag();
         blockEntityTag.putString("id", BzBlockEntities.POTION_CANDLE.getId().toString());
         blockEntityTag.putInt(PotionCandleBlockEntity.COLOR_TAG, chosenEffect.getColor());
-        blockEntityTag.putInt(PotionCandleBlockEntity.AMPLIFIER_TAG, amplifier.intValue());
+        blockEntityTag.putInt(PotionCandleBlockEntity.EFFECT_LEVEL_TAG, effectLevel.intValue());
         blockEntityTag.putInt(PotionCandleBlockEntity.MAX_DURATION_TAG, maxDuration.intValue());
         blockEntityTag.putString(PotionCandleBlockEntity.STATUS_EFFECT_TAG, BuiltInRegistries.MOB_EFFECT.getKey(chosenEffect).toString());
         blockEntityTag.putBoolean(PotionCandleBlockEntity.INFINITE_TAG, false);
@@ -218,25 +220,31 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             blockEntityTag.putInt(PotionCandleBlockEntity.LINGER_TIME_TAG, 1);
         }
         else {
-            setLingerTime(chosenEffect, lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_LINGER_TIME);
+            setLingerTime(chosenEffect, lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_LINGER_TIME, effectLevel.get());
         }
 
         if (PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER.effectToOverrideStats.containsKey(chosenEffect)) {
             PotionCandleDataManager.OverrideData overrideData = PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER.effectToOverrideStats.get(chosenEffect);
             overrideData.baseLingerTime().ifPresent(baseLingerTime ->
-                    setLingerTime(chosenEffect, lingerCount, blockEntityTag, baseLingerTime * 20));
+                    setLingerTime(chosenEffect, lingerCount, blockEntityTag, baseLingerTime * 20, effectLevel.get()));
         }
 
         resultStack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(blockEntityTag));
         return resultStack;
     }
 
-    private static void setLingerTime(MobEffect chosenEffect, int lingerCount, CompoundTag blockEntityTag, int baseLingerTime) {
+    private static void setLingerTime(MobEffect chosenEffect, int lingerCount, CompoundTag blockEntityTag, int baseLingerTime, int effectLevel) {
         int lingerTime = baseLingerTime + (lingerCount * baseLingerTime * 2);
 
         if (PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER.effectToOverrideStats.containsKey(chosenEffect)) {
             PotionCandleDataManager.OverrideData overrideData = PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER.effectToOverrideStats.get(chosenEffect);
             lingerTime = Math.min(lingerTime, overrideData.maxBurnDurationCap() * 20);
+        }
+
+        if (!chosenEffect.isInstantenous()) {
+            int intervalCalced = PotionCandleBlockEntity.createIntervalTimeForEffectApply(Holder.direct(chosenEffect), effectLevel, lingerTime);
+            lingerTime += intervalCalced;
+            blockEntityTag.putInt(PotionCandleBlockEntity.CALCULATED_EFFECT_APPLY_INTERVAL_TAG, intervalCalced);
         }
 
         blockEntityTag.putInt(PotionCandleBlockEntity.LINGER_TIME_TAG, lingerTime);
