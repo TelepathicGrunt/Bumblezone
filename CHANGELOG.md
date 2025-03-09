@@ -1,4 +1,4 @@
-### **(V.7.6.0 Changes) (1.20.1 Minecraft)**
+### **(V.7.6.1 Changes) (1.20.1 Minecraft)**
 
 #### Entities:
 Allow Holiday Trades to be shown in the speech bubble for Bee Queen.
