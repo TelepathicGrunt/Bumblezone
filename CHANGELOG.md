@@ -4,6 +4,9 @@
 Allow Holiday Trades to be shown in the speech bubble for Bee Queen.
  Also fixed eggs being thrown when right click trading with Bee Queen on Easter.
 
+#### Features:
+Slightly reduce spawnrate of Hive Voyager and Ore Balloon features.
+
 
 ### **(V.7.6.0 Changes) (1.20.1 Minecraft)**
 
