@@ -132,8 +132,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         MobEffect chosenEffect;
         List<MobEffect> effects = new ArrayList<>();
         AtomicInteger maxDuration = new AtomicInteger();
-        AtomicInteger calculatedEffectApplyInterval = new AtomicInteger();
-        AtomicInteger amplifier = new AtomicInteger();
+        AtomicInteger effectLevel = new AtomicInteger();
         AtomicInteger potionEffectsFound = new AtomicInteger();
         int splashCount = 0;
         int lingerCount = 0;
@@ -144,7 +143,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
                 itemStack.get(DataComponents.POTION_CONTENTS).getAllEffects().forEach(me -> {
                    effects.add(me.getEffect().value());
                    maxDuration.addAndGet(me.getEffect().value().isInstantenous() ? 200 : me.getDuration());
-                   amplifier.addAndGet(me.getAmplifier() + 1);
+                   effectLevel.addAndGet(me.getAmplifier() + 1);
                    potionEffectsFound.getAndIncrement();
                 });
 
@@ -169,25 +168,25 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             return getResultStack(this.outputCount);
         }
 
-        balanceMainStats(chosenEffect, maxDuration, calculatedEffectApplyInterval, amplifier, potionEffectsFound);
-        amplifier.set(Math.min(amplifier.get(), this.maxLevelCap));
+        balanceMainStats(chosenEffect, maxDuration, effectLevel, potionEffectsFound);
+        effectLevel.set(Math.min(effectLevel.get(), this.maxLevelCap));
 
-        return createTaggedPotionCandle(chosenEffect, maxDuration, amplifier, splashCount, lingerCount, this.outputCount);
+        return createTaggedPotionCandle(chosenEffect, maxDuration, effectLevel, splashCount, lingerCount, this.outputCount);
     }
 
-    public static void balanceMainStats(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger calculatedEffectApplyInterval, AtomicInteger amplifier, AtomicInteger potionEffectsFound) {
-        amplifier.set(amplifier.get() / potionEffectsFound.get());
+    public static void balanceMainStats(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger effectLevel, AtomicInteger potionEffectsFound) {
+        effectLevel.set(effectLevel.get() / potionEffectsFound.get());
 
         if (PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER.effectToOverrideStats.containsKey(chosenEffect)) {
             PotionCandleDataManager.OverrideData overrideData = PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER.effectToOverrideStats.get(chosenEffect);
-            amplifier.set(GeneralUtils.constrainToRange(amplifier.get(), overrideData.minLevelCap(), overrideData.maxLevelCap()));
+            effectLevel.set(GeneralUtils.constrainToRange(effectLevel.get(), overrideData.minLevelCap(), overrideData.maxLevelCap()));
         }
 
-        float durationBaseMultiplier = ((0.4f / (0.9f * potionEffectsFound.get())) + (amplifier.get() * 0.22f));
+        float durationBaseMultiplier = ((0.4f / (0.9f * potionEffectsFound.get())) + (effectLevel.get() * 0.22f));
         float durationAdjustment = (potionEffectsFound.get() * durationBaseMultiplier);
         maxDuration.set((int)(maxDuration.get() / durationAdjustment));
         if (chosenEffect.isInstantenous()) {
-            long thresholdTime = PotionCandleBlockEntity.getInstantEffectThresholdTime(amplifier.intValue());
+            long thresholdTime = PotionCandleBlockEntity.getInstantEffectThresholdTime(effectLevel.intValue());
             int activationAmounts = (int)Math.ceil((double) maxDuration.intValue() / thresholdTime);
             maxDuration.set((int) (activationAmounts * thresholdTime));
         }
