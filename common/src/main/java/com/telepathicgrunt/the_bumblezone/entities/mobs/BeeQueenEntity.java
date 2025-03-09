@@ -405,9 +405,29 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
                     for (Player player : nearbyPlayers) {
                         if (isLookingAtMeClose(player)) {
-                            ObjectSet<Item> keySet = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.keySet();
-                            Item wantItem = keySet.stream().skip(this.random.nextInt(keySet.size())).findFirst().orElse(null);
-                            List<WeightedTradeResult> tradeResults = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.get(wantItem).unwrap();
+                            Item wantItem = null;
+                            List<WeightedTradeResult> tradeResults = null;
+
+                            if (getIsSpecialDay()) {
+                                Optional<List<Item>> specialDayItem = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItem();
+                                if (specialDayItem.isEmpty()) {
+                                    setIsSpecialDay(false);
+                                }
+                                wantItem = specialDayItem.get().get(this.random.nextInt(specialDayItem.get().size()));
+                                Optional<Pair<QueensTradeManager.SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> specialDayRewards = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItems(wantItem);
+                                if (specialDayRewards.isEmpty()) {
+                                    setIsSpecialDay(false);
+                                }
+                                else {
+                                    tradeResults = specialDayRewards.get().getSecond().unwrap();
+                                }
+                            }
+
+                            if (wantItem == null || tradeResults == null) {
+                                ObjectSet<Item> keySet = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.keySet();
+                                wantItem = keySet.stream().skip(this.random.nextInt(keySet.size())).findFirst().orElse(null);
+                                tradeResults = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.get(wantItem).unwrap();
+                            }
 
                             int maximumRewardsToShowAtATime = 5;
                             List<Item> allRewardItems = new ArrayList<>();
@@ -620,7 +640,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
         boolean traded = false;
 
-        if (getIsSpecialDay() && QueensTradeManager.QUEENS_TRADE_MANAGER.specialDayQueenTrades.containsKey(item)) {
+        if (QueensTradeManager.QUEENS_TRADE_MANAGER.specialDayQueenTrades.containsKey(item)) {
             Optional<Pair<QueensTradeManager.SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> specialDayItems = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItems(item);
             if (specialDayItems.isPresent()) {
                 if (this.level().isClientSide()) {

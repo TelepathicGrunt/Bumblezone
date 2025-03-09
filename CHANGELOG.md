@@ -1,4 +1,11 @@
-### **(V.7.6.0 Changes) (1.20.1 Minecraft)
+### **(V.7.6.0 Changes) (1.20.1 Minecraft)**
+
+#### Entities:
+Allow Holiday Trades to be shown in the speech bubble for Bee Queen.
+ Also fixed eggs being thrown when right click trading with Bee Queen on Easter.
+
+
+### **(V.7.6.0 Changes) (1.20.1 Minecraft)**
 
 #### Structures:
 Added a rare Bumbling Beepartments biome filled with Bumbling Beepartments structure!
