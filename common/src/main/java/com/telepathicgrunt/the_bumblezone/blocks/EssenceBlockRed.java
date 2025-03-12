@@ -27,6 +27,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Rabbit;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -114,7 +115,7 @@ public class EssenceBlockRed extends EssenceBlock {
         if (entitiesKilled != ENTITIES_TO_KILL && eventEntitiesInArena.size() < Math.min(3 + (essenceBlockEntity.getPlayerInArena().size() * 1.5), ENTITIES_TO_KILL - entitiesKilled)) {
             // spawn a mob this tick.
             int currentEntityCount = eventEntitiesInArena.size() + entitiesKilled;
-            SpawnNewEnemy(serverLevel, blockPos, essenceBlockEntity, currentEntityCount, eventEntitiesInArena);
+            SpawnNewEnemy(serverLevel, blockPos, blockState, essenceBlockEntity, currentEntityCount, eventEntitiesInArena);
         }
         else {
             // update how many entities are alive
@@ -161,7 +162,7 @@ public class EssenceBlockRed extends EssenceBlock {
         }
     }
 
-    private static void SpawnNewEnemy(ServerLevel serverLevel, BlockPos blockPos, EssenceBlockEntity essenceBlockEntity, int currentEntityCount, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
+    private static void SpawnNewEnemy(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity, int currentEntityCount, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
         TagKey<EntityType<?>> enemyTagToUse = BzTags.ESSENCE_RAGING_ARENA_NORMAL_ENEMY;
         int entityToSpawnIndex = currentEntityCount + 1;
         if ((entityToSpawnIndex % 25) == 0 ||
@@ -193,6 +194,10 @@ public class EssenceBlockRed extends EssenceBlock {
         int yOffset = (-(essenceBlockEntity.getArenaSize().getY()) / 2) + 2;
         Entity entity = entityTypeToSpawn.spawn(serverLevel, blockPos.offset(0, yOffset, 0), MobSpawnType.TRIGGERED);
         if (entity != null) {
+            if (entity instanceof Slime slime) {
+                slime.setSize(4, true);
+            }
+
             eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
 
             UUID playerUUID = essenceBlockEntity.getPlayerInArena().get(serverLevel.getRandom().nextInt(essenceBlockEntity.getPlayerInArena().size()));
@@ -207,6 +212,15 @@ public class EssenceBlockRed extends EssenceBlock {
                 if (!isEssenced) {
                     mobHealthBoost *= 1.5f;
                     mobAttackBoost *= 1.5f;
+                }
+
+                float timeProgress = 1 - (essenceBlockEntity.getEventTimer() / (float) ((EssenceBlock)blockState.getBlock()).getEventTimeFrame());
+                float enemyProgress = essenceBlockEntity.getExtraEventTrackingProgress() / ENTITIES_TO_KILL;
+                float progressDiff = (float) (Math.pow(enemyProgress - timeProgress + 1, 2) - 1);
+                if (progressDiff > 0.06) {
+                    progressDiff = (float) (Math.pow((enemyProgress - timeProgress) * 2 + 0.5, 5));
+                    mobHealthBoost += (int)(progressDiff / 0.025f);
+                    mobAttackBoost += (int)(progressDiff / 0.1f);
                 }
 
                 if (entity instanceof LivingEntity livingEntity) {

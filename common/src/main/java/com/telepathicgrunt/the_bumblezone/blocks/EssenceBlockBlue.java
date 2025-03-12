@@ -127,7 +127,7 @@ public class EssenceBlockBlue extends EssenceBlock {
         if (entitiesKilled != ENTITIES_TO_KILL && eventEntitiesInArena.size() < Math.min(3 + (essenceBlockEntity.getPlayerInArena().size() * 1.5), ENTITIES_TO_KILL - entitiesKilled)) {
             // spawn a mob this tick.
             int currentEntityCount = eventEntitiesInArena.size() + entitiesKilled;
-            SpawnNewEnemy(serverLevel, blockPos, essenceBlockEntity, currentEntityCount, eventEntitiesInArena);
+            SpawnNewEnemy(serverLevel, blockPos, blockState, essenceBlockEntity, currentEntityCount, eventEntitiesInArena);
         }
         else {
             // update how many entities are alive
@@ -167,7 +167,7 @@ public class EssenceBlockBlue extends EssenceBlock {
         }
     }
 
-    private static void SpawnNewEnemy(ServerLevel serverLevel, BlockPos blockPos, EssenceBlockEntity essenceBlockEntity, int currentEntityCount, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
+    private static void SpawnNewEnemy(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity, int currentEntityCount, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
         TagKey<EntityType<?>> enemyTagToUse = BzTags.ESSENCE_CALMING_ARENA_NORMAL_ENEMY;
         boolean isStrong = false;
         int entityToSpawnIndex = currentEntityCount + 1;
@@ -228,6 +228,15 @@ public class EssenceBlockBlue extends EssenceBlock {
             if (!isEssenced) {
                 mobHealthBoost *= 1.5f;
                 mobAttackBoost *= 1.5f;
+            }
+
+            float timeProgress = 1 - (essenceBlockEntity.getEventTimer() / (float) ((EssenceBlock)blockState.getBlock()).getEventTimeFrame());
+            float enemyProgress = essenceBlockEntity.getExtraEventTrackingProgress() / ENTITIES_TO_KILL;
+            float progressDiff = (float) (Math.pow(enemyProgress - timeProgress + 1, 2) - 1);
+            if (progressDiff > 0.1) {
+                progressDiff = (float) (Math.pow(enemyProgress - timeProgress + 0.95, 5) - 0.95);
+                mobHealthBoost += (int)(progressDiff / 0.025f);
+                mobAttackBoost += (int)(progressDiff / 0.1f);
             }
 
             if (entity instanceof LivingEntity livingEntity) {
