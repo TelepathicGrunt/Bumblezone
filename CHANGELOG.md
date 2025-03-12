@@ -7,6 +7,8 @@ Fixed bug that prevented many structures from spawning as frequently as they sho
 
 Added 40 extra seconds to complete the Blue Sempiternal Sanctum's arena.
 
+Added 20 extra seconds to complete the Red Sempiternal Sanctum's arena.
+
 Added difficulty scaling to Blue and Red Sempiternal Sanctum arenas where if the player kills the enemies too fast, the enemies will get increasingly more health and attack damage!
  This should make it harder to cheese these arenas with overpowered modded armor and weapons. Not perfect but should slow down the player's fast progress.
  Player using vanilla-balanced gear should see mostly no change to the difficulty as it is already difficult enough as is for vanilla gear.
