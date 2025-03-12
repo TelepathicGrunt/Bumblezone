@@ -1,3 +1,9 @@
+### **(V.7.8.2 Changes) (1.21.1 Minecraft)**
+
+#### Structures:
+Allow Sempiternal Sanctum arenas to have blocks that require support to safely added without it popping off when arena is removed.
+
+
 ### **(V.7.8.1 Changes) (1.21.1 Minecraft)**
 
 #### Entities:

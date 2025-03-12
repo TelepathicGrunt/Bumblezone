@@ -366,7 +366,7 @@ public class EssenceBlockEntity extends BlockEntity {
                     blockPos.offset(negativeHalfLengths),
                     EssenceBlock.PLACEMENT_SETTINGS.getOrFillFromInternal(),
                     serverLevel.getRandom(),
-                    Block.UPDATE_CLIENTS
+                    Block.UPDATE_CLIENTS + Block.UPDATE_KNOWN_SHAPE
             );
 
             for (UUID playerUUID : essenceBlockEntity.getPlayerInArena()) {
