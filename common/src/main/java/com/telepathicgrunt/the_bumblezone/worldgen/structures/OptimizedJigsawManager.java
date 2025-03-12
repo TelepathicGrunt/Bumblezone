@@ -125,10 +125,6 @@ public class OptimizedJigsawManager {
             return Optional.empty();
         }
 
-        if (!context.validBiome().test(context.chunkGenerator().getBiomeSource().getNoiseBiome(QuartPos.fromBlock(startPos.getX()), QuartPos.fromBlock(startPos.getY()), QuartPos.fromBlock(startPos.getZ()), context.randomState().sampler()))) {
-            return Optional.empty();
-        }
-
         Rotation rotation = Rotation.getRandom(random);
         BlockPos trueStartPos = startPos;
         if (startJigsaw.isPresent()) {
@@ -161,6 +157,10 @@ public class OptimizedJigsawManager {
         int pieceCenterX = (pieceBoundingBox.maxX() + pieceBoundingBox.minX()) / 2;
         int pieceCenterZ = (pieceBoundingBox.maxZ() + pieceBoundingBox.minZ()) / 2;
         int pieceCenterY = trueStartPos.getY();
+
+        if (!context.validBiome().test(context.chunkGenerator().getBiomeSource().getNoiseBiome(QuartPos.fromBlock(pieceCenterX), QuartPos.fromBlock(pieceCenterY), QuartPos.fromBlock(pieceCenterZ), context.randomState().sampler()))) {
+            return Optional.empty();
+        }
 
         if (heightmapType.isPresent()) {
             pieceCenterY += GeneralUtils.getLowestLand(
