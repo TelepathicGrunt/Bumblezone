@@ -3,6 +3,8 @@ package com.telepathicgrunt.the_bumblezone.fluids;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzLiquidBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -123,13 +125,29 @@ public class HoneyFluidBlock extends BzLiquidBlock {
         if (lavaflag) {
             FluidState currentFluid = world.getFluidState(pos);
             if (currentFluid.isSource()) {
-                world.setBlockAndUpdate(pos, BzBlocks.SUGAR_INFUSED_STONE.get().defaultBlockState());
+                BlockState resultBlockState = BzBlocks.SUGAR_INFUSED_STONE.get().defaultBlockState();
+                for (ModCompat compat : ModChecker.HONEY_FLUID_LAVA_INTERACTION_COMPATS) {
+                    BlockState moddedResultBlockState = compat.honeyLavaResultBlock(currentFluid);
+                    if (moddedResultBlockState != null) {
+                        resultBlockState = moddedResultBlockState;
+                    }
+                }
+
+                world.setBlockAndUpdate(pos, resultBlockState);
                 this.triggerMixEffects(world, pos);
                 return false;
             }
 
             if (!lavadownflag || currentFluid.hasProperty(BOTTOM_LEVEL) && currentFluid.getValue(BOTTOM_LEVEL) == 0) {
-                world.setBlockAndUpdate(pos, BzBlocks.SUGAR_INFUSED_COBBLESTONE.get().defaultBlockState());
+                BlockState resultBlockState = BzBlocks.SUGAR_INFUSED_COBBLESTONE.get().defaultBlockState();
+                for (ModCompat compat : ModChecker.HONEY_FLUID_LAVA_INTERACTION_COMPATS) {
+                    BlockState moddedResultBlockState = compat.honeyLavaResultBlock(currentFluid);
+                    if (moddedResultBlockState != null) {
+                        resultBlockState = moddedResultBlockState;
+                    }
+                }
+
+                world.setBlockAndUpdate(pos, resultBlockState);
                 this.triggerMixEffects(world, pos);
                 return false;
             }

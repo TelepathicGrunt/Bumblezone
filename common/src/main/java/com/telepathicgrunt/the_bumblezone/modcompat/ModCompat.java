@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -16,6 +17,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.HitResult;
 
 import java.util.EnumSet;
@@ -108,6 +110,10 @@ public interface ModCompat {
         return 0;
     }
 
+    default BlockState honeyLavaResultBlock(FluidState honeyFluid) {
+        return BzBlocks.SUGAR_INFUSED_STONE.get().defaultBlockState();
+    }
+
     enum Type {
         SPAWNS,
         EMPTY_BROOD,
@@ -122,6 +128,7 @@ public interface ModCompat {
         BEE_WEARABLES_BOOSTING,
         BEE_COLOR,
         HEAVY_AIR_RESTRICTED,
-        ENCHANTMENT_MAX_LEVEL
+        ENCHANTMENT_MAX_LEVEL,
+        HONEY_FLUID_LAVA_INTERACTION
     }
 }

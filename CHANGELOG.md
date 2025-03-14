@@ -1,5 +1,8 @@
 ### **(V.7.6.3 Changes) (1.20.1 Minecraft)**
 
+#### Mod Compat:
+Honey Fluid and Royal Jelly Fluid, when they touch Lava, will now spawn Create's Limestone block! This automatic compat can be disabled in config by turning off `allowCreateLimestoneForHoneyLavaCompat`
+
 #### Misc:
 (Fabric): Switched to using UseBlockCallback.EVENT to determine if certain Bumblezone player actions are permitted at a spot (respecting chunk claims for example)
 

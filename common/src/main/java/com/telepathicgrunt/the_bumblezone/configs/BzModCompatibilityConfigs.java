@@ -97,4 +97,6 @@ public class BzModCompatibilityConfigs {
 	public static boolean allowBeekeeperTradesCompat = true;
 
 	public static boolean allowLootrCompat = true;
+
+	public static boolean allowCreateLimestoneForHoneyLavaCompat = true;
 }
