@@ -7,6 +7,9 @@ Feeding Royal Jelly Bottle to Beehemoths will give them an infinite duration of 
 Feeding Royal Jelly Bucket to Beehemoths will give them an infinite duration of level 5 Beenergized effect!
  Super speed but now lasts forever unless you somehow wipe the effect off the mob.
 
+#### Advancements:
+Made the two advancements that require paralyzing enemies with Stinger Spear to say that the spear needs Neurotoxin enchantment.
+
 #### Mod Compat:
 Honey Fluid and Royal Jelly Fluid, when they touch Lava, will now spawn Create's Limestone block! This automatic compat can be disabled in config by turning off `allowCreateLimestoneForHoneyLavaCompat`
 
