@@ -1,5 +1,12 @@
 ### **(V.7.6.3 Changes) (1.20.1 Minecraft)**
 
+#### Entities:
+Feeding Royal Jelly Bottle to Beehemoths will give them an infinite duration of level 4 Beenergized effect!
+ Extra speed but now lasts forever unless you somehow wipe the effect off the mob.
+
+Feeding Royal Jelly Bucket to Beehemoths will give them an infinite duration of level 5 Beenergized effect!
+ Super speed but now lasts forever unless you somehow wipe the effect off the mob.
+
 #### Mod Compat:
 Honey Fluid and Royal Jelly Fluid, when they touch Lava, will now spawn Create's Limestone block! This automatic compat can be disabled in config by turning off `allowCreateLimestoneForHoneyLavaCompat`
 

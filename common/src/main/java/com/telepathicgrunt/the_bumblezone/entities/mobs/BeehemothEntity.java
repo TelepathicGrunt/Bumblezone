@@ -381,7 +381,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                             heal(40);
                             BeeInteractivity.calmAndSpawnHearts(this.level(), player, this, 1f, 30);
                             addFriendship(getMaxFriendshipThreshold());
-                            this.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 90000, 3, true, true, true));
+                            this.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), -1, 4, true, true, true));
                             for (int i = 0; i < 75; i++) {
                                 spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
                             }
@@ -390,7 +390,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                             heal(10);
                             BeeInteractivity.calmAndSpawnHearts(this.level(), player, this, 1f, 10);
                             addFriendship(250);
-                            this.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 20000, 3, true, true, true));
+                            this.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), -1, 3, true, true, true));
                             for (int i = 0; i < 30; i++) {
                                 spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
                             }
