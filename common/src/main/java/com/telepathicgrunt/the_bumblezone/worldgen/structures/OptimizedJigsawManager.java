@@ -221,7 +221,9 @@ public class OptimizedJigsawManager {
                 return;
             }
 
-            GeneralUtils.centerAllPieces(startPos, components);
+            if (startJigsaw.isEmpty()) {
+                GeneralUtils.centerAllPieces(startPos, components);
+            }
 
 //            var timer2 = System.currentTimeMillis();
 //            var diff = timer2 - timer1;
