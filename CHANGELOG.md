@@ -1,5 +1,8 @@
 ### **(V.7.8.3 Changes) (1.21.1 Minecraft)**
 
+#### Structures:
+Fixed Bumbling Beepartment's Recreational Center room not properly randomizing the flowers in it.
+
 #### Mod Compat:
 Honey Fluid and Royal Jelly Fluid, when they touch Lava, will now spawn Create's Limestone block! This automatic compat can be disabled in config by turning off `allowCreateLimestoneForHoneyLavaCompat`
 
