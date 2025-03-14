@@ -214,7 +214,9 @@ public class OptimizedJigsawManager {
                 return;
             }
 
-            GeneralUtils.centerAllPieces(startPos, components);
+            if (startJigsaw.isEmpty()) {
+                GeneralUtils.centerAllPieces(startPos, components);
+            }
         }));
     }
 
