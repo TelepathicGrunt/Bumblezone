@@ -30,6 +30,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlockContainer;
@@ -113,85 +114,87 @@ public class BzCustomBucketItem extends BzBucketItem {
     }
 
     @Override
-    public boolean emptyContents(@Nullable Player player, Level world, BlockPos pos, @Nullable BlockHitResult hitResult) {
-        if (!(this.fluid instanceof FlowingFluid) || !GeneralUtils.isPermissionAllowedAtSpot(world, player, pos, true)) {
+    public boolean emptyContents(@Nullable Player player, Level level, BlockPos pos, @Nullable BlockHitResult hitResult) {
+        if (!(this.fluid instanceof FlowingFluid) || !GeneralUtils.isPermissionAllowedAtSpot(level, player, pos, true)) {
             return false;
         }
         else {
-            BlockState blockState = world.getBlockState(pos);
+            BlockState blockState = level.getBlockState(pos);
             Block block = blockState.getBlock();
             boolean canBucketPlace = blockState.canBeReplaced(this.fluid);
             boolean canPlaceFluid = blockState.isAir() || canBucketPlace;
             boolean feedVanillaWaterOverride = false;
             if (block instanceof LiquidBlockContainer) {
-                if (((LiquidBlockContainer)block).canPlaceLiquid(player, world, pos, blockState, this.fluid)) {
+                if (((LiquidBlockContainer)block).canPlaceLiquid(player, level, pos, blockState, this.fluid)) {
                     canPlaceFluid = true;
                 }
-                if (this.fluid.is(FluidTags.WATER) && ((LiquidBlockContainer)block).canPlaceLiquid(player, world, pos, blockState, Fluids.WATER)) {
+                if (this.fluid.is(FluidTags.WATER) && ((LiquidBlockContainer)block).canPlaceLiquid(player, level, pos, blockState, Fluids.WATER)) {
                     canPlaceFluid = true;
                     feedVanillaWaterOverride = true;
                 }
             }
 
             if (!canPlaceFluid) {
-                return hitResult != null && this.emptyContents(player, world, hitResult.getBlockPos().relative(hitResult.getDirection()), null);
+                return hitResult != null && this.emptyContents(player, level, hitResult.getBlockPos().relative(hitResult.getDirection()), null);
             }
-            else if (world.dimensionType().ultraWarm() && this.info.properties().canExtinguish()) {
+            else if (level.dimensionType().ultraWarm() && this.info.properties().canExtinguish()) {
                 double x = pos.getX();
                 double y = pos.getY();
                 double z = pos.getZ();
-                world.playSound(player, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (world.random.nextFloat() - world.random.nextFloat()) * 0.8F);
+                level.playSound(player, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (level.random.nextFloat() - level.random.nextFloat()) * 0.8F);
 
                 for(int l = 0; l < 8; ++l) {
-                    world.addParticle(ParticleTypes.LARGE_SMOKE, x + Math.random(), y + Math.random(), z + Math.random(), 0.0D, 0.0D, 0.0D);
+                    level.addParticle(ParticleTypes.LARGE_SMOKE, x + Math.random(), y + Math.random(), z + Math.random(), 0.0D, 0.0D, 0.0D);
                 }
 
-                if (this.fluid.is(BzTags.SUGAR_WATER_FLUID) && world instanceof ServerLevel serverLevel) {
-                    Vec3 targetPos = hitResult != null ? hitResult.getLocation() : new Vec3(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
+                if (!level.isClientSide()) {
+                    if (this.fluid.is(BzTags.SUGAR_WATER_FLUID) && level instanceof ServerLevelAccessor serverLevelAccessor) {
+                        Vec3 targetPos = hitResult != null ? hitResult.getLocation() : new Vec3(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
 
-                    LootTable sugarWaterEvaporateLootTable = world.getServer().reloadableRegistries()
-                            .getLootTable(ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "fluids/sugar_water_evaporates")));
+                        LootTable sugarWaterEvaporateLootTable = serverLevelAccessor.getLevel().getServer().reloadableRegistries()
+                                .getLootTable(ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "fluids/sugar_water_evaporates")));
 
-                    if (sugarWaterEvaporateLootTable != null) {
-                        LootParams lootParams = new LootParams.Builder(serverLevel)
-                                .withParameter(LootContextParams.ORIGIN, targetPos)
-                                .withOptionalParameter(LootContextParams.THIS_ENTITY, player)
-                                .create(LootContextParamSets.COMMAND);
-                        ObjectArrayList<ItemStack> evaporateItems = sugarWaterEvaporateLootTable.getRandomItems(lootParams);
+                        if (sugarWaterEvaporateLootTable != null) {
+                            LootParams lootParams = new LootParams.Builder(serverLevelAccessor.getLevel())
+                                    .withParameter(LootContextParams.ORIGIN, targetPos)
+                                    .withOptionalParameter(LootContextParams.THIS_ENTITY, player)
+                                    .create(LootContextParamSets.COMMAND);
+                            ObjectArrayList<ItemStack> evaporateItems = sugarWaterEvaporateLootTable.getRandomItems(lootParams);
 
-                        for (ItemStack itemStackToSpawn : evaporateItems) {
-                            ItemEntity itementity = new ItemEntity(world, targetPos.x(), targetPos.y(), targetPos.z(), itemStackToSpawn);
-                            itementity.setDefaultPickUpDelay();
-                            world.addFreshEntity(itementity);
+                            for (ItemStack itemStackToSpawn : evaporateItems) {
+                                ItemEntity itementity = new ItemEntity(level, targetPos.x(), targetPos.y(), targetPos.z(), itemStackToSpawn);
+                                itementity.setDefaultPickUpDelay();
+                                level.addFreshEntity(itementity);
+                            }
                         }
                     }
-                }
-                else if (this.fluid.is(BzTags.HONEY_FLUID) && world instanceof ServerLevel serverLevel) {
-                    serverLevel.setBlock(pos, BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState(), 3);
+                    else if (this.fluid.is(BzTags.HONEY_FLUID)) {
+                        level.setBlock(pos, BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState(), 3);
+                    }
                 }
 
                 return true;
             }
             else if (block instanceof LiquidBlockContainer && this.fluid.is(FluidTags.WATER)) {
                 if (feedVanillaWaterOverride) {
-                    ((LiquidBlockContainer)block).placeLiquid(world, pos, blockState, Fluids.WATER.getSource(false));
+                    ((LiquidBlockContainer)block).placeLiquid(level, pos, blockState, Fluids.WATER.getSource(false));
                 }
                 else {
-                    ((LiquidBlockContainer)block).placeLiquid(world, pos, blockState, ((FlowingFluid)this.fluid).getSource(false));
+                    ((LiquidBlockContainer)block).placeLiquid(level, pos, blockState, ((FlowingFluid)this.fluid).getSource(false));
                 }
-                this.playEmptySound(player, world, pos);
+                this.playEmptySound(player, level, pos);
                 return true;
             }
             else {
-                if (!world.isClientSide && canBucketPlace && blockState.getFluidState().isEmpty()) {
-                    world.destroyBlock(pos, true);
+                if (!level.isClientSide && canBucketPlace && blockState.getFluidState().isEmpty()) {
+                    level.destroyBlock(pos, true);
                 }
 
-                if (!world.setBlock(pos, this.fluid.defaultFluidState().createLegacyBlock(), Block.UPDATE_ALL | Block.UPDATE_IMMEDIATE) && !blockState.getFluidState().isSource()) {
+                if (!level.setBlock(pos, this.fluid.defaultFluidState().createLegacyBlock(), Block.UPDATE_ALL | Block.UPDATE_IMMEDIATE) && !blockState.getFluidState().isSource()) {
                     return false;
                 }
                 else {
-                    this.playEmptySound(player, world, pos);
+                    this.playEmptySound(player, level, pos);
                     return true;
                 }
             }
