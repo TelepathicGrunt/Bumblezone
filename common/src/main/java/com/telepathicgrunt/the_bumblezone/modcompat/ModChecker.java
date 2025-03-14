@@ -24,6 +24,7 @@ public class ModChecker {
 	public static final List<ModCompat> BEE_WEARABLES_BOOSTING_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> BEE_COLOR_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> HEAVY_AIR_RESTRICTED_COMPATS = new ArrayList<>();
+	public static final List<ModCompat> HONEY_FLUID_LAVA_INTERACTION_COMPATS = new ArrayList<>();
 
 	public static boolean productiveBeesPresent = false;
 	public static boolean resourcefulBeesPresent = false;
@@ -54,6 +55,7 @@ public class ModChecker {
 	public static boolean bloodMagicPresent = false;
 	public static boolean reliquaryPresent = false;
 	public static boolean createJetpackPresent = false;
+	public static boolean createPresent = false;
 	public static boolean tropicraftPresent = false;
 	public static boolean jeedPresent = false;
 	public static boolean tokenEnchanterPresent = false;
@@ -98,6 +100,9 @@ public class ModChecker {
 			modid = "create_jetpack";
 			loadupModCompat(modid, () -> new CreateJetpackCompat());
 
+			modid = "create";
+			loadupModCompat(modid, () -> new CreateCompat());
+
 			modid = "lootr";
 			loadupModCompat(modid, () -> new LootrCompat());
 
@@ -131,6 +136,7 @@ public class ModChecker {
 				if (compat.compatTypes().contains(ModCompat.Type.BEE_WEARABLES_BOOSTING)) BEE_WEARABLES_BOOSTING_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.BEE_COLOR)) BEE_COLOR_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.HEAVY_AIR_RESTRICTED)) HEAVY_AIR_RESTRICTED_COMPATS.add(compat);
+				if (compat.compatTypes().contains(ModCompat.Type.HONEY_FLUID_LAVA_INTERACTION)) HONEY_FLUID_LAVA_INTERACTION_COMPATS.add(compat);
 			}
 		}
 		catch (Throwable e) {

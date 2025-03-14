@@ -302,6 +302,9 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean allowLootrCompat = true;
 
+    @Entry
+    public static boolean allowCreateLimestoneForHoneyLavaCompat = true;
+
 
     @Comment
     public static Comment clientComment;
@@ -491,6 +494,7 @@ public class BzConfig extends MidnightConfig {
         BzModCompatibilityConfigs.allowFriendsAndFoesBeekeeperTradesCompat = allowFriendsAndFoesBeekeeperTradesCompat;
         BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock = allowGoodallBottledBeesRevivingEmptyBroodBlock;
         BzModCompatibilityConfigs.allowLootrCompat = allowLootrCompat;
+        BzModCompatibilityConfigs.allowCreateLimestoneForHoneyLavaCompat = allowCreateLimestoneForHoneyLavaCompat;
 
         //Client
         BzClientConfigs.useBackupModelForVariantBee = useBackupModelForVariantBee;

@@ -1228,6 +1228,7 @@
   "the_bumblezone.midnightconfig.allowFriendsAndFoesBeekeeperTradesCompat": "Allow Friends And Foes Bee keeper Trades Compat",
   "the_bumblezone.midnightconfig.allowGoodallBottledBeesRevivingEmptyBroodBlock": "Allow Goodall's Bottled Bee Revive Brood Blocks Compat",
   "the_bumblezone.midnightconfig.allowLootrCompat": "Allow loot Cocoons to have compat with Lootr",
+  "the_bumblezone.midnightconfig.allowCreateLimestoneForHoneyLavaCompat": "Allow Honey/Lava interaction to spawn Create's Limestone",
   "the_bumblezone.midnightconfig.clientComment": "§o§6    Client Section",
   "the_bumblezone.midnightconfig.useBackupModelForVariantBee": "Use Backup Model For Variant Bee",
   "the_bumblezone.midnightconfig.playWrathOfHiveEffectMusic": "Play Wrath Of Hive Effect Music",
@@ -1479,6 +1480,9 @@
   "the_bumblezone.configuration.lootrcompat": "Lootr Compat",
   "the_bumblezone.configuration.allowlootrcompat": "Lootr Cocoons",
   "the_bumblezone.configuration.allowlootrcompat.tooltip": "Allow loot Cocoons to have compat with Lootr",
+  "the_bumblezone.configuration.createcompat": "Create Compat",
+  "the_bumblezone.configuration.allowcreatelimestoneforhoneylavacompat": "Limestone From Honey",
+  "the_bumblezone.configuration.allowcreatelimestoneforhoneylavacompat.tooltip": "Allow Honey/Lava interaction to spawn Create's Limestone",
 
   "the_bumblezone.configuration.bumblezonefluidoptions": "Fluids",
   "the_bumblezone.configuration.bzhoneyfluidfromhoneybottles": "Honey Bottle Extraction",

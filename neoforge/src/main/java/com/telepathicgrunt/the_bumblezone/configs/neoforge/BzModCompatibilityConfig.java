@@ -53,6 +53,8 @@ public class BzModCompatibilityConfig {
 
 	public static ModConfigSpec.BooleanValue allowLootrCompat;
 
+	public static ModConfigSpec.BooleanValue allowCreateLimestoneForHoneyLavaCompat;
+
 	static {
 		ModConfigSpec.Builder configBuilder = new ModConfigSpec.Builder();
 		setupConfig(configBuilder);
@@ -392,6 +394,17 @@ public class BzModCompatibilityConfig {
 				.define("allowLootrCompat", true);
 
 		builder.pop();
+
+
+		builder.translation("the_bumblezone.configuration.createcompat").push("Create Compat");
+
+		allowCreateLimestoneForHoneyLavaCompat = builder
+				.comment("----------------------------\n",
+						" Allow Honey and Royal Jelly fluids to spawn Create's Limestone when they touch Lava.\n")
+				.translation("the_bumblezone.configuration.allowcreatelimestoneforhoneylavacompat")
+				.define("allowCreateLimestoneForHoneyLavaCompat", true);
+
+		builder.pop();
 	}
 
 	public static void copyToCommon() {
@@ -439,5 +452,6 @@ public class BzModCompatibilityConfig {
 		BzModCompatibilityConfigs.allowResourcefulBeesSpawnFromDispenserFedBroodBlock = allowResourcefulBeesSpawnFromDispenserFedBroodBlock.get();
 
 		BzModCompatibilityConfigs.allowLootrCompat = allowLootrCompat.get();
+		BzModCompatibilityConfigs.allowCreateLimestoneForHoneyLavaCompat = allowCreateLimestoneForHoneyLavaCompat.get();
 	}
 }
