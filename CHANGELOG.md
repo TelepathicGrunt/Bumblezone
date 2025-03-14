@@ -13,6 +13,8 @@ Made the two advancements that require paralyzing enemies with Stinger Spear to 
 #### Mod Compat:
 Honey Fluid and Royal Jelly Fluid, when they touch Lava, will now spawn Create's Limestone block! This automatic compat can be disabled in config by turning off `allowCreateLimestoneForHoneyLavaCompat`
 
+Royal Jelly Bucket and Honey Buckets now work with Create's Deployers to spawn Glistering Honey Crystal when attempting to use the buckets in Nether. Sugar Water Bucket won't spawn Sugar with the Deployers right now due to an oversight in Create: https://github.com/Creators-of-Create/Create/issues/7956
+
 #### Misc:
 (Fabric): Switched to using UseBlockCallback.EVENT to determine if certain Bumblezone player actions are permitted at a spot (respecting chunk claims for example)
 
