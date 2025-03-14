@@ -1,3 +1,9 @@
+### **(V.7.8.3 Changes) (1.21.1 Minecraft)**
+
+#### Misc:
+(Fabric): Switched to using UseBlockCallback.EVENT to determine if certain Bumblezone player actions are permitted at a spot (respecting chunk claims for example)
+
+
 ### **(V.7.8.2 Changes) (1.21.1 Minecraft)**
 
 #### Structures:

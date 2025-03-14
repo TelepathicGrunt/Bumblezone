@@ -13,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -27,6 +28,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
@@ -53,6 +55,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Contract;
 
 import java.util.List;
@@ -226,14 +229,17 @@ public class PlatformHooksImpl {
             }
         }
     }
+
     public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
-        if (placingBlock) {
-            if (entity instanceof Player player) {
-                return player.mayInteract(level, pos) && PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(level, player, pos, level.getBlockState(pos), null);
+        if (entity instanceof Player player) {
+            if (!player.mayInteract(level, pos)) {
+                return false;
             }
-        }
-        else if (entity instanceof Player player) {
-            return player.mayInteract(level, pos) && PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(level, player, pos, level.getBlockState(pos), null);
+
+            Vec3 centerOfPos = Vec3.atCenterOf(pos);
+            BlockHitResult blockHitResult = new BlockHitResult(centerOfPos, Direction.getNearest(centerOfPos.subtract(player.position())), pos, true);
+            InteractionResult interact = UseBlockCallback.EVENT.invoker().interact(player, level, player.swingingArm, blockHitResult);
+            return interact != InteractionResult.FAIL;
         }
         return true;
     }
