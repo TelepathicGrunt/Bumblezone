@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
+import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -114,6 +115,10 @@ public class BuzzingBriefcaseMenu extends AbstractContainerMenu {
 
                     BuzzingBriefcase.overrwriteBees(briefcase, beesStored);
                     container.setChanged();
+
+                    if (player instanceof ServerPlayer serverPlayer) {
+                        PlayerDataHandler.onBeesSaved(serverPlayer);
+                    }
                     return true;
                 }
             }
