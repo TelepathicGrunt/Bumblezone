@@ -1,3 +1,9 @@
+### **(V.7.8.4 Changes) (1.21.1 Minecraft)**
+
+#### Advancements:
+Putting Bee Stingers back onto bees using Buzzing Briefcase's UI will now count towards the Back in Action advancement.
+
+
 ### **(V.7.8.3 Changes) (1.21.1 Minecraft)**
 
 #### Structures:
