@@ -3,6 +3,9 @@
 #### Advancements:
 Putting Bee Stingers back onto bees using Buzzing Briefcase's UI will now count towards the Back in Action advancement.
 
+#### Items:
+Fixed thrown Pollen Puff not causing Ghast Fireballs it hits to reflect backwards and able to kill the Ghast itself.
+
 
 ### **(V.7.6.3 Changes) (1.20.1 Minecraft)**
 

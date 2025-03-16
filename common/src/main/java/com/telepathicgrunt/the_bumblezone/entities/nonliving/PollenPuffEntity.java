@@ -35,6 +35,7 @@ import net.minecraft.world.entity.animal.Panda;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.projectile.Fireball;
+import net.minecraft.world.entity.projectile.LargeFireball;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -152,8 +153,19 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 BzCriterias.POLLEN_PUFF_PANDA_TRIGGER.trigger(serverPlayer);
             }
         }
-        else if(entity instanceof Fireball fireball && fireball.getOwner() instanceof Ghast) {
-            if(this.getOwner() instanceof ServerPlayer serverPlayer) {
+        else if (entity instanceof LargeFireball fireball) {
+            Vec3 vec3 = this.getDeltaMovement();
+            this.setDeltaMovement(vec3);
+            fireball.xPower = vec3.x * 0.1;
+            fireball.yPower = vec3.y * 0.1;
+            fireball.zPower = vec3.z * 0.1;
+
+            Entity pollenPuffOwner = this.getOwner();
+            if (pollenPuffOwner != null) {
+                fireball.setOwner(pollenPuffOwner);
+            }
+
+            if (pollenPuffOwner instanceof ServerPlayer serverPlayer) {
                 BzCriterias.POLLEN_PUFF_FIREBALL_TRIGGER.trigger(serverPlayer);
             }
         }
