@@ -97,6 +97,7 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
         super.loadAdditional(compoundTag, provider);
         this.xpTier = compoundTag.getInt(TIER_TAG);
         this.currentXp = Math.min(compoundTag.getInt(XP_TAG), getMaxXpForTier(this.xpTier));
+
         if (compoundTag.contains(UUID_TAG)) {
             if (compoundTag.getTagType(UUID_TAG) == Tag.TAG_STRING) {
                 this.uuid = UUID.fromString(compoundTag.getString(UUID_TAG));
@@ -112,11 +113,19 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
         else {
             this.uuid = java.util.UUID.randomUUID();
         }
+
         if (compoundTag.contains(BOOK_SLOT_ITEMS)) {
             this.bookSlotItems = ItemStack.parse(provider, compoundTag.getCompound(BOOK_SLOT_ITEMS)).orElse(ItemStack.EMPTY);
         }
+        else {
+            this.bookSlotItems = ItemStack.EMPTY;
+        }
+
         if (compoundTag.contains(CONSUME_SLOT_ITEMS)) {
             this.consumeSlotItems = ItemStack.parse(provider, compoundTag.getCompound(CONSUME_SLOT_ITEMS)).orElse(ItemStack.EMPTY);
+        }
+        else {
+            this.consumeSlotItems = ItemStack.EMPTY;
         }
     }
 

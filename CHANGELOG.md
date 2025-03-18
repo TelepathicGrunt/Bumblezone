@@ -1,5 +1,9 @@
 ### **(V.7.8.4 Changes) (1.21.1 Minecraft)**
 
+#### Blocks:
+Fixed an item duplication bug with Crystalline Flower that was not reported for a long while until recently.
+ Seems it was around for a while in 1.21.1 Bumblezone...
+
 #### Advancements:
 Putting Bee Stingers back onto bees using Buzzing Briefcase's UI will now count towards the Back in Action advancement.
 
