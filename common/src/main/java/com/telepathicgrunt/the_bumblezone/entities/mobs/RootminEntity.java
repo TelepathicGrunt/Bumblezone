@@ -165,10 +165,10 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    }
 
    @Nullable
-   private BlockState getFlowerOrSetIfMissing(BlockState state) {
-      if (state == null && !this.level().isClientSide() && !this.checkedDefaultFlowerTag) {
+   private BlockState getFlowerOrSetIfMissing(LevelAccessor level, BlockState state) {
+      if (state == null && !level.isClientSide() && !this.checkedDefaultFlowerTag) {
          TagKey<Block> blockTag;
-         if (this.level().getBiomeManager().getNoiseBiomeAtPosition(this.blockPosition()).is(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "floral_meadow"))) {
+         if (level.getBiomeManager().getNoiseBiomeAtPosition(this.blockPosition()).is(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "floral_meadow"))) {
             blockTag = BzTags.ROOTMIN_FLORAL_MEADOW_FLOWERS;
          }
          else {
@@ -441,7 +441,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
       spawnData = super.finalizeSpawn(level, difficulty, reason, spawnData);
 
       BlockState state = getFlowerBlock();
-      getFlowerOrSetIfMissing(state);
+      getFlowerOrSetIfMissing(level, state);
 
       return spawnData;
    }
@@ -694,7 +694,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    @Override
    public void tick() {
       BlockState state = getFlowerBlock();
-      getFlowerOrSetIfMissing(state);
+      getFlowerOrSetIfMissing(this.level(), state);
 
       super.tick();
 
