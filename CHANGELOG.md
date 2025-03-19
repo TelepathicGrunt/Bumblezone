@@ -1,3 +1,9 @@
+### **(V.7.6.5 Changes) (1.20.1 Minecraft)**
+
+#### Entities:
+Fixed a possible deadlock issue with spawning Rootmins in Floral Meadow biome.
+
+
 ### **(V.7.6.4 Changes) (1.20.1 Minecraft)**
 
 #### Advancements:

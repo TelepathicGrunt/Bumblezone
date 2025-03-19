@@ -107,13 +107,6 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                             chosenRootminFlower = rootminBlockList.get(randomSource.nextInt(rootminBlockList.size())).defaultBlockState();
                         }
 
-                        rootmin.finalizeSpawn(
-                                level,
-                                level.getCurrentDifficultyAt(mutable),
-                                MobSpawnType.CHUNK_GENERATION,
-                                null,
-                                null);
-
                         rootmin.setPersistenceRequired();
                         rootmin.setFlowerBlock(chosenRootminFlower);
                         rootmin.moveTo(
@@ -130,6 +123,13 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                         rootmin.yHeadRotO = 0;
                         rootmin.yBodyRot = 0;
                         rootmin.yBodyRotO = 0;
+
+                        rootmin.finalizeSpawn(
+                                level,
+                                level.getCurrentDifficultyAt(mutable),
+                                MobSpawnType.CHUNK_GENERATION,
+                                null,
+                                null);
 
                         level.addFreshEntityWithPassengers(rootmin);
 
