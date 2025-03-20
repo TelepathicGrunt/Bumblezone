@@ -1,3 +1,13 @@
+### **(V.7.8.6 Changes) (1.21.1 Minecraft)**
+
+#### Structures:
+Fixed Bumbling Beepartment's not spawning Beehemoths. (Stops the logpsam about it too)
+
+Fixed Honey Cocoons in Bumbling Beepartments getting Ender Chest-like behavior if Lootr is on.
+ This was due to blockEntityUuid field accidentally saved into the Honey Cocoon for the structures.
+ The fix will apply to new ungenerated chunks. Will not apply to previously generated cocoons in this structure.
+
+
 ### **(V.7.8.5 Changes) (1.21.1 Minecraft)**
 
 #### Entities:

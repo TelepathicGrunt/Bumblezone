@@ -7,21 +7,14 @@ import os
 #--------------------------------------------------------------------------------------------
 
 blockPalette = {}
+changedFiles = set()
 
-originalBiome = "blue"
-newBiome = "yellow"
+originalBiome = ""
+newBiome = ""
 string_blacklist = []
 conversion_partial_dict = {
 }
 conversion_exact_dict = {
-    "minecraft:blue_orchid":                   "minecraft:dandelion",
-    "the_bumblezone:luminescent_wax_channel_blue":  "the_bumblezone:luminescent_wax_channel_yellow",
-    "the_bumblezone:luminescent_wax_corner_blue":  "the_bumblezone:luminescent_wax_corner_yellow",
-    "the_bumblezone:luminescent_wax_node_blue":  "the_bumblezone:luminescent_wax_node_yellow",
-    "the_bumblezone:sempiternal_sanctum/blue/exit_vent":  "the_bumblezone:sempiternal_sanctum/yellow/exit_vent",
-    "the_bumblezone:sempiternal_sanctum/blue/rootmin":  "the_bumblezone:sempiternal_sanctum/yellow/rootmin",
-    "the_bumblezone:sempiternal_sanctum/blue/sanctum_body_side":  "the_bumblezone:sempiternal_sanctum/yellow/sanctum_body_side",
-    "the_bumblezone:sempiternal_sanctum/blue/welcome_chamber":  "the_bumblezone:sempiternal_sanctum/yellow/welcome_chamber"
 }
 #-------------------------------------------------------------------------------------------
 
@@ -48,7 +41,7 @@ def property_replacer(nbt_key, nbt_string, property_name, value_to_replace, new_
 
 
 
-def traverse_dicts(nbt_list):
+def traverse_dicts(nbt_list, filepath):
     if isinstance(nbt_list, collections.abc.Mapping):
         '''
         if 'size' in nbt_list:
@@ -69,7 +62,9 @@ def traverse_dicts(nbt_list):
         nbt_list.pop('SleepingX', None)
         nbt_list.pop('SleepingY', None)
         nbt_list.pop('SleepingZ', None)
-        nbt_list.pop('blockEntityUuid', None)
+        if 'blockEntityUuid' in nbt_list:
+            nbt_list.pop('blockEntityUuid', None)
+            changedFiles.add(filepath)
         
         if 'Attributes' in nbt_list:
             attributes = nbt_list['Attributes']
@@ -82,7 +77,7 @@ def traverse_dicts(nbt_list):
         for key, entry in nbt_list.items():
 
             if isinstance(entry, nbt.List) or isinstance(entry, nbt.Compound):
-                traverse_dicts(entry)
+                traverse_dicts(entry, filepath)
             elif isinstance(entry, nbt.String):
                 nbt_list[key] = string_replacer(entry)
 
@@ -98,7 +93,7 @@ def traverse_dicts(nbt_list):
                 continue
 
             if isinstance(nbt_list, nbt.List) or isinstance(entry, nbt.Compound):
-                traverse_dicts(entry)
+                traverse_dicts(entry, filepath)
             elif isinstance(entry, nbt.String):
                 nbt_list[key] = string_replacer(entry)
 
@@ -109,7 +104,7 @@ for (subdir, dirs, files) in os.walk("toconvert", topdown=True):
 
         if filepath.endswith(".nbt"): 
             nbtfile = nbt.load(filepath)
-            traverse_dicts(nbtfile)
+            traverse_dicts(nbtfile, filepath)
 
             directory = directory.replace("toconvert", "converted").replace(originalBiome, newBiome)
             Path(directory).mkdir(parents=True, exist_ok=True)
@@ -126,6 +121,9 @@ for x in sorted(blockPalette.items()):
     printString = printString + " "
   printString = printString + "\""+x[1]+"\","
   print(printString)
+
+for x in sorted(changedFiles):
+  print(x)
 
 print("FINISHED!")
 input()
