@@ -1,3 +1,9 @@
+### **(V.7.8.7 Changes) (1.21.1 Minecraft)**
+
+#### Mod Compat:
+Heavily reduced logspam about `Trying to set block entity` when Productive Bees is on.
+
+
 ### **(V.7.8.6 Changes) (1.21.1 Minecraft)**
 
 #### Structures:
