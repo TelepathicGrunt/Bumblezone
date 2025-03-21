@@ -23,7 +23,7 @@ public class LootUtils {
             return CACHED_IS_ENTITY_LOOT_TABLES.getBoolean(lootTable);
         }
 
-        Map<LootDataId<?>, ?> map = ((LootDataManagerAccessor)minecraftServer.getLootData()).getElements();
+        Map<LootDataId<?>, ?> map = ((LootDataManagerAccessor)minecraftServer.getLootData()).bumblezone$getElements();
         String lootTablePath = "";
         for (Map.Entry<LootDataId<?>, ?> lootDataEntry : map.entrySet()) {
             if (lootDataEntry.getValue().equals(lootTable)) {

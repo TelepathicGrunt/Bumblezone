@@ -28,7 +28,7 @@ public class CustomResourcefulRegistry<T> implements ResourcefulRegistry<T> {
     public <I extends T> RegistryEntry<I> register(String id, Supplier<I> supplier) {
         I value = Registry.register(registry, new ResourceLocation(this.id, id), supplier.get());
         if (value instanceof PoiType poiType) {
-            PoiTypesAccessor.callRegisterBlockStates(
+            PoiTypesAccessor.bumblezone$callRegisterBlockStates(
                 (Holder<PoiType>) registry.getHolderOrThrow(registry.getResourceKey(value).orElseThrow()),
                 poiType.matchingStates()
             );

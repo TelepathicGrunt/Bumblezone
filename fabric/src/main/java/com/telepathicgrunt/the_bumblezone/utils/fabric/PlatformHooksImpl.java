@@ -52,7 +52,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
 
 public class PlatformHooksImpl {
@@ -88,7 +87,7 @@ public class PlatformHooksImpl {
 
     @Contract(pure = true)
     public static Fluid getBucketFluid(BucketItem bucket) {
-        Fluid fluid = ((BucketItemAccessor) bucket).bz$getContents();
+        Fluid fluid = ((BucketItemAccessor) bucket).bumblezone$getContents();
         return fluid == null ? Fluids.EMPTY : fluid;
     }
 
@@ -155,7 +154,7 @@ public class PlatformHooksImpl {
     }
 
     public static boolean isEyesInNoFluid(Entity entity) {
-        return ((EntityAccessor)entity).getFluidOnEyes().isEmpty();
+        return ((EntityAccessor)entity).bumblezone$getFluidOnEyes().isEmpty();
     }
 
     public static  InteractionResultHolder<ItemStack> performItemUse(Level world, Player user, InteractionHand hand, Fluid fluid, BzCustomBucketItem bzCustomBucketItem) {
@@ -243,7 +242,7 @@ public class PlatformHooksImpl {
     }
 
     public static Fluid getBucketItemFluid(BucketItem stack) {
-        return ((BucketItemAccessor)stack).bz$getContents();
+        return ((BucketItemAccessor)stack).bumblezone$getContents();
     }
 
     public static boolean isDevEnvironment() {

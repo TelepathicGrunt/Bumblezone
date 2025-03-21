@@ -12,7 +12,7 @@ import java.util.Set;
 @Mixin(PoiTypes.class)
 public interface PoiTypesAccessor {
     @Invoker("registerBlockStates")
-    static void callRegisterBlockStates(Holder<PoiType> holder, Set<BlockState> set) {
+    static void bumblezone$callRegisterBlockStates(Holder<PoiType> holder, Set<BlockState> set) {
         throw new UnsupportedOperationException();
     }
 }

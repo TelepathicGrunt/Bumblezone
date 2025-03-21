@@ -7,10 +7,10 @@ import net.minecraft.client.KeyMapping;
 
 public class BeehemothControlsImpl {
     public static KeyMapping createKey(String display, BeehemothControls.KeyConflict conflict, InputConstants.Key key, String category) {
-        KeyMapping oldMapping = KeyMappingAccessor.getMAP().get(key);
+        KeyMapping oldMapping = KeyMappingAccessor.bumblezone$getMAP().get(key);
         KeyMapping keyMapping = new KeyMapping(display, key.getValue(), category);
-        KeyMappingAccessor.getMAP().put(key, oldMapping);
-        KeyMappingAccessor.getALL().remove(display);
+        KeyMappingAccessor.bumblezone$getMAP().put(key, oldMapping);
+        KeyMappingAccessor.bumblezone$getALL().remove(display);
         return keyMapping;
     }
 }

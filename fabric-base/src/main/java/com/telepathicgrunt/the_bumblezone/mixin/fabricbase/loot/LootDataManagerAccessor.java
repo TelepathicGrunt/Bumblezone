@@ -9,6 +9,6 @@ import java.util.Map;
 
 @Mixin(LootDataManager.class)
 public interface LootDataManagerAccessor {
-    @Accessor
-    Map<LootDataId<?>, ?> getElements();
+    @Accessor("elements")
+    Map<LootDataId<?>, ?> bumblezone$getElements();
 }
