@@ -1,5 +1,11 @@
 ### **(V.7.6.7 Changes) (1.20.1 Minecraft)**
 
+#### Features/Structures:
+Reduced most logspam about `Trying to set block entity`. Finally found the feature and processor that was not properly removing block entity data when replacing the block during worldgen.
+
+Attempted to mitigate a bias in vanilla's random number generator so that spawner's chosen mob is more random.
+ Cave Spider spawners should show up properly in Spider Infested Bee Dungeons
+
 #### Mod Compat:
 When Alex's Caves is on, stop a logspam error line about FallingBlockEntityAccessor despite no actual issue happening in-game.
 

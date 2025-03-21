@@ -52,7 +52,8 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
             }
 
             BlockPos worldPos = structureBlockInfoWorld.pos();
-            RandomSource randomSource = settings.getRandom(worldPos);
+            BlockPos randomSeeding = BlockPos.of(worldPos.asLong() * worldPos.getY() + (long)worldPos.getX() * worldPos.getZ());
+            RandomSource randomSource = settings.getRandom(randomSeeding);
 
             CompoundTag newSpawnerData;
             if (overrideMobsToPickFrom.isPresent() && overrideMobsToPickFrom.get().size() > 0 && randomSource.nextFloat() < chanceToOverrideWithTaggedMobs) {

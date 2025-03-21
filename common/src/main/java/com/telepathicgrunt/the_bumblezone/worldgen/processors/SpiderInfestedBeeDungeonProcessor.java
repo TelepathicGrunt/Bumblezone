@@ -50,6 +50,10 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
             String metadata = compoundTag.getString("metadata");
             BlockState belowBlock = levelReader.getChunk(worldPos).getBlockState(worldPos);
 
+            if (!metadata.isEmpty()) {
+                nbt = null;
+            }
+
             //altar blocks cannot be placed on air
             if(belowBlock.isAir()) {
                 blockState = Blocks.CAVE_AIR.defaultBlockState();
