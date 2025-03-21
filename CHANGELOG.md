@@ -3,6 +3,8 @@
 #### Mod Compat:
 When Alex's Caves is on, stop a logspam error line about FallingBlockEntityAccessor despite no actual issue happening in-game.
 
+Heavily reduced logspam about `Trying to set block entity` when Productive Bees is on.
+
 
 ### **(V.7.6.6 Changes) (1.20.1 Minecraft)**
 
