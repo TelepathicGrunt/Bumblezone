@@ -12,7 +12,7 @@ public class UpdateFallingBlockPacketHandleBody {
     public static void handle(UpdateFallingBlockPacket message) {
         Entity entity = GeneralUtilsClient.getClientLevel().getEntity(message.fallingBlockId());
         if (entity instanceof FallingBlockEntity fallingBlockEntity && fallingBlockEntity.getBlockState().is(BzBlocks.PILE_OF_POLLEN.get())) {
-            ((FallingBlockEntityAccessor) fallingBlockEntity).setBlockState(BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int) message.layer()));
+            ((FallingBlockEntityAccessor) fallingBlockEntity).bumblezone$setBlockState(BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int) message.layer()));
         }
     }
 }

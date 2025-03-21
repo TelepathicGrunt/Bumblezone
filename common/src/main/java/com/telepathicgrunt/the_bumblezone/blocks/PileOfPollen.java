@@ -304,7 +304,7 @@ public class PileOfPollen extends FallingBlock {
 
                 // Prevents the FallingBlock's checkInsideBlocks from triggering this
                 // method again for the pollen block we just set above our collision block.
-                ((FallingBlockEntityAccessor) entity).setBlockState(Blocks.AIR.defaultBlockState());
+                ((FallingBlockEntityAccessor) entity).bumblezone$setBlockState(Blocks.AIR.defaultBlockState());
             }
             else {
                 world.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
