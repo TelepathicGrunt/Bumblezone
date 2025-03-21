@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface NoiseGeneratorSettingsAccessor {
 
     @Mutable
-    @Accessor
-    void setNoiseRouter(NoiseRouter noiseRouter);
+    @Accessor("noiseRouter")
+    void bumblezone$setNoiseRouter(NoiseRouter noiseRouter);
 
 
 

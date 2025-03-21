@@ -117,7 +117,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     if (entity instanceof Bee bee) {
                         bee.stopBeingAngry();
                         boolean pollinated = bee.hasNectar();
-                        ((BeeEntityInvoker)bee).callSetHasNectar(false);
+                        ((BeeEntityInvoker)bee).bumblezone$callSetHasNectar(false);
                         try {
                             addBeeWithColor(bee);
                         }
@@ -128,7 +128,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                             bee.saveWithoutId(tag);
                             Bumblezone.LOGGER.warn("Bee: {}", tag);
                         }
-                        ((BeeEntityInvoker)bee).callSetHasNectar(pollinated);
+                        ((BeeEntityInvoker)bee).bumblezone$callSetHasNectar(pollinated);
                     }
                 }
             }
@@ -186,7 +186,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
             }
         }
 
-        EntityRendererProvider<Bee> rendererProvider = (EntityRendererProvider<Bee>) EntityRenderersAccessor.getPROVIDERS().get(bee.getType());
+        EntityRendererProvider<Bee> rendererProvider = (EntityRendererProvider<Bee>) EntityRenderersAccessor.bumblezone$getPROVIDERS().get(bee.getType());
         if (rendererProvider != null) {
             EntityRenderer<Bee> entityRenderer = rendererProvider.create(new EntityRendererProvider.Context(
                     minecraft.getEntityRenderDispatcher(),
@@ -337,7 +337,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                 Component beeNormalAndCustomName = beeEntity.getName();
                 Component beeNoneCustomName = beeEntity.getName();
                 if (beeNoneCustomName != null && beeNoneCustomName.equals(beeEntity.getCustomName())) {
-                    beeNoneCustomName = ((EntityAccessor)beeEntity).callGetTypeName();
+                    beeNoneCustomName = ((EntityAccessor)beeEntity).bumblezone$callGetTypeName();
                 }
 
                 boolean isNameAndTypeEqual =
@@ -773,7 +773,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     if (stingerSlotIndex != -1) {
                         ItemStack playerStingerStack = inventory.getItem(stingerSlotIndex);
                         if (!playerStingerStack.isEmpty()) {
-                            ((BeeEntityInvoker) bee).callSetHasStung(false);
+                            ((BeeEntityInvoker) bee).bumblezone$callSetHasStung(false);
 
                             if (!menu.player.getAbilities().instabuild) {
                                 playerStingerStack.shrink(1);

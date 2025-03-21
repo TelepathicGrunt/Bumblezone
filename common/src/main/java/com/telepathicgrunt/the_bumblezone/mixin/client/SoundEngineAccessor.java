@@ -11,5 +11,5 @@ import java.util.Map;
 @Mixin(SoundEngine.class)
 public interface SoundEngineAccessor {
     @Accessor("instanceToChannel")
-    Map<SoundInstance, ChannelAccess.ChannelHandle> getInstanceToChannel();
+    Map<SoundInstance, ChannelAccess.ChannelHandle> bumblezone$getInstanceToChannel();
 }

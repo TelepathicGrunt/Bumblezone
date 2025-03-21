@@ -171,8 +171,8 @@ public class WindyAir extends ProperFacingBlock {
         }
 
         if (windDirection != Direction.DOWN && entity instanceof ServerPlayer serverPlayer) {
-            ((ServerGamePacketListenerImplAccessor)serverPlayer.connection).setAboveGroundTickCount(0);
-            ((ServerGamePacketListenerImplAccessor)serverPlayer.connection).setAboveGroundVehicleTickCount(0);
+            ((ServerGamePacketListenerImplAccessor)serverPlayer.connection).bumblezone$setAboveGroundTickCount(0);
+            ((ServerGamePacketListenerImplAccessor)serverPlayer.connection).bumblezone$setAboveGroundVehicleTickCount(0);
         }
     }
 

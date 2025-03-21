@@ -136,7 +136,7 @@ public class PlayerDataHandler {
             return false;
         }
 
-        var progress = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getProgress();
+        var progress = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).bumblezone$getProgress();
         return progress.containsKey(advancementHolder) && progress.get(advancementHolder).isDone();
     }
 }

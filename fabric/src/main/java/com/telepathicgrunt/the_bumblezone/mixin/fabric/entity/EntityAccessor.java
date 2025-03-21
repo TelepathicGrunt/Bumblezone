@@ -11,5 +11,5 @@ import java.util.Set;
 @Mixin(Entity.class)
 public interface EntityAccessor {
     @Accessor("fluidOnEyes")
-    Set<TagKey<Fluid>> getFluidOnEyes();
+    Set<TagKey<Fluid>> bumblezone$getFluidOnEyes();
 }

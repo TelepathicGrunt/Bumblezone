@@ -9,5 +9,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface UseOnContextAccessor {
 
     @Accessor("hitResult")
-    BlockHitResult bz$getHitResult();
+    BlockHitResult bumblezone$getHitResult();
 }

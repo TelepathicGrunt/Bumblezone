@@ -66,7 +66,7 @@ public class DispenserAddedSpawnEgg extends SpawnEggItem {
     }
 
     public static void onSetup(BzSetupEvent event) {
-        var spawnEggMap = SpawnEggItemAccessor.bz$getIdMap();
+        var spawnEggMap = SpawnEggItemAccessor.bumblezone$getIdMap();
         for (var entry : DispenserAddedSpawnEgg.SPAWN_EGGS) {
             spawnEggMap.put(entry.getFirst().get(), entry.getSecond());
         }

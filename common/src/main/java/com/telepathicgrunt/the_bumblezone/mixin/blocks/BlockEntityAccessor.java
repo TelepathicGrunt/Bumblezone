@@ -10,5 +10,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface BlockEntityAccessor {
     @Mutable
     @Accessor("type")
-    void setType(BlockEntityType<?> type);
+    void bumblezone$setType(BlockEntityType<?> type);
 }

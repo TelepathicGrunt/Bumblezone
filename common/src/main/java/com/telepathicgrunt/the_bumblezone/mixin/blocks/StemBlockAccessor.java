@@ -9,5 +9,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(StemBlock.class)
 public interface StemBlockAccessor {
     @Accessor("fruit")
-    ResourceKey<Block> getFruit();
+    ResourceKey<Block> bumblezone$getFruit();
 }

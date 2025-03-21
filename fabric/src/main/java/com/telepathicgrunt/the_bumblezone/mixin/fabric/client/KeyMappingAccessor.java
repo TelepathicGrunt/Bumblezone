@@ -9,12 +9,12 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface KeyMappingAccessor {
 
     @Accessor("MAP")
-    static java.util.Map<InputConstants.Key, KeyMapping> getMAP() {
+    static java.util.Map<InputConstants.Key, KeyMapping> bumblezone$getMAP() {
         throw new AssertionError("Mixin did not apply");
     }
 
     @Accessor("ALL")
-    static java.util.Map<String, KeyMapping> getALL() {
+    static java.util.Map<String, KeyMapping> bumblezone$getALL() {
         throw new AssertionError("Mixin did not apply");
     }
 }

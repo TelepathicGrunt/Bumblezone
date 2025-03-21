@@ -7,5 +7,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(WeightedRandomList.class)
 public interface WeightedRandomListAccessor {
     @Accessor("totalWeight")
-    int getTotalWeight();
+    int bumblezone$getTotalWeight();
 }

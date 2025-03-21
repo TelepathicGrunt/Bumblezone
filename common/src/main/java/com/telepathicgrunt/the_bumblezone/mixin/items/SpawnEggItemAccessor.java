@@ -12,7 +12,7 @@ import java.util.Map;
 public interface SpawnEggItemAccessor {
 
     @Accessor("BY_ID")
-    static Map<EntityType<? extends Mob>, SpawnEggItem> bz$getIdMap() {
+    static Map<EntityType<? extends Mob>, SpawnEggItem> bumblezone$getIdMap() {
         throw new AssertionError();
     }
 

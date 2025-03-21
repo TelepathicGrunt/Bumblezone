@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(SoundManager.class)
 public interface SoundManagerAccessor {
     @Accessor("soundEngine")
-    SoundEngine getSoundEngine();
+    SoundEngine bumblezone$getSoundEngine();
 }

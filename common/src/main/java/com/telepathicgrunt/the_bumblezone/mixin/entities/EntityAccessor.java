@@ -14,20 +14,20 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface EntityAccessor {
 
     @Accessor("nextStep")
-    void setNextStep(float nextStep);
+    void bumblezone$setNextStep(float nextStep);
 
     @Accessor("nextStep")
-    float getNextStep();
+    float bumblezone$getNextStep();
 
     @Invoker("vibrationAndSoundEffectsFromBlock")
-    boolean callVibrationAndSoundEffectsFromBlock(BlockPos blockPos, BlockState blockState, boolean bl, boolean bl2, Vec3 vec3);
+    boolean bumblezone$callVibrationAndSoundEffectsFromBlock(BlockPos blockPos, BlockState blockState, boolean bl, boolean bl2, Vec3 vec3);
 
     @Invoker("getTypeName")
-    Component callGetTypeName();
+    Component bumblezone$callGetTypeName();
 
     @Accessor("dimensions")
-    EntityDimensions getDimensions();
+    EntityDimensions bumblezone$getDimensions();
 
     @Invoker("collide")
-    Vec3 callCollide(Vec3 vec3);
+    Vec3 bumblezone$callCollide(Vec3 vec3);
 }

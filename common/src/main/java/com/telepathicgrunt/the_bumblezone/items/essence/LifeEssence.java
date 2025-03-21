@@ -34,7 +34,6 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -313,7 +312,7 @@ public class LifeEssence extends AbilityEssenceItem {
     private boolean doesNotHaveFruitNearby(ServerLevel level, StemBlock stemblock, BlockPos blockPos) {
         for (Direction direction : Direction.Plane.HORIZONTAL) {
             BlockState neighborState = level.getBlockState(blockPos.relative(direction));
-            if (neighborState.is(((StemBlockAccessor)stemblock).getFruit())) {
+            if (neighborState.is(((StemBlockAccessor)stemblock).bumblezone$getFruit())) {
                 return false;
             }
         }

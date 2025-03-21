@@ -72,7 +72,7 @@ public class BeeInteractivity {
 
             if (itemstack.is(BzItems.BEE_STINGER.get())) {
                 beeEntity.hasStung();
-                ((BeeEntityInvoker)beeEntity).callSetHasStung(false);
+                ((BeeEntityInvoker)beeEntity).bumblezone$callSetHasStung(false);
                 GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, false, true);
 
                 if (playerEntity instanceof ServerPlayer serverPlayer) {
@@ -184,7 +184,7 @@ public class BeeInteractivity {
 
                     PollenPuff.spawnItemstackEntity(world, beeEntity.getRandom(), beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
                     playerEntity.swing(hand, true);
-                    ((BeeEntityInvoker)beeEntity).callSetHasNectar(false);
+                    ((BeeEntityInvoker)beeEntity).bumblezone$callSetHasNectar(false);
 
                     if(playerEntity instanceof ServerPlayer serverPlayer) {
                         BzCriterias.BEE_DROP_POLLEN_PUFF_TRIGGER.get().trigger(serverPlayer);

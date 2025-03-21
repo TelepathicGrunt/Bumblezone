@@ -183,7 +183,7 @@ public class NeoForgeEventManager {
 
         event.enqueueWork(() ->
                 BzRegisterFlammabilityEvent.EVENT.invoke(new BzRegisterFlammabilityEvent((item, igniteOdds, burnOdds) ->
-                        ((FireBlockInvoker) Blocks.FIRE).callSetFlammable(item, igniteOdds, burnOdds)))
+                        ((FireBlockInvoker) Blocks.FIRE).bumblezone$callSetFlammable(item, igniteOdds, burnOdds)))
         );
     }
 

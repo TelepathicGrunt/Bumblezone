@@ -1031,7 +1031,7 @@ public class CosmicCrystalEntity extends LivingEntity {
                 float inflatedSpeed = 2f;
                 Vec3 originalVect = this.getDeltaMovement();
                 Vec3 inflatedVect = originalVect.scale(inflatedSpeed);
-                Vec3 collideVect = ((EntityAccessor)this).callCollide(inflatedVect);
+                Vec3 collideVect = ((EntityAccessor)this).bumblezone$callCollide(inflatedVect);
 
                 int xDirection = getDirection(inflatedVect.x(), collideVect.x());
                 int yDirection = getDirection(inflatedVect.y(), collideVect.y());
@@ -1240,7 +1240,7 @@ public class CosmicCrystalEntity extends LivingEntity {
 
     @Override
     protected AABB makeBoundingBox() {
-        EntityDimensions entityDimensions = ((EntityAccessor)this).getDimensions();
+        EntityDimensions entityDimensions = ((EntityAccessor)this).bumblezone$getDimensions();
         float radius = entityDimensions.width() / 2.0F;
         float heightRadius = entityDimensions.height() / 2;
         float yOffset = 1f;
@@ -1537,8 +1537,8 @@ public class CosmicCrystalEntity extends LivingEntity {
 
         boolean dealtDamage = damageAmount > 0;
         if (dealtDamage) {
-            ((LivingEntityAccessor)this).setLastDamageSource(damageSource);
-            ((LivingEntityAccessor)this).setLastDamageStamp(this.level().getGameTime());
+            ((LivingEntityAccessor)this).bumblezone$setLastDamageSource(damageSource);
+            ((LivingEntityAccessor)this).bumblezone$setLastDamageStamp(this.level().getGameTime());
         }
 
         if (entity2 instanceof ServerPlayer serverPlayer) {

@@ -10,8 +10,7 @@ import java.util.List;
 @Mixin(ShapedRecipePattern.class)
 public interface ShapedRecipePatternAccessor {
     @Invoker("shrink")
-    @Contract(pure = true)
-    static String[] callShrink(List<String> list) {
+    static String[] bumblezone$callShrink(List<String> list) {
         throw new UnsupportedOperationException();
     }
 }

@@ -11,5 +11,5 @@ import java.util.Map;
 @Mixin(PlayerAdvancements.class)
 public interface PlayerAdvancementsAccessor {
     @Accessor("progress")
-    Map<AdvancementHolder, AdvancementProgress> getProgress();
+    Map<AdvancementHolder, AdvancementProgress> bumblezone$getProgress();
 }

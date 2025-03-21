@@ -39,7 +39,7 @@ public class TargetAdvancementDoneTrigger extends SimpleCriterionTrigger<TargetA
 
         public boolean matches(ServerPlayer serverPlayer) {
             AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements().get(targetAdvancement);
-            Map<AdvancementHolder, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getProgress();
+            Map<AdvancementHolder, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).bumblezone$getProgress();
             return advancementHolder != null &&
                     advancementsProgressMap.containsKey(advancementHolder) &&
                     advancementsProgressMap.get(advancementHolder).isDone();

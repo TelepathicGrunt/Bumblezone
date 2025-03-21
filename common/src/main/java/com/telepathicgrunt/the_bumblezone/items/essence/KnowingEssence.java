@@ -194,7 +194,7 @@ public class KnowingEssence extends AbilityEssenceItem {
             }
         }
         else if (entity instanceof Fox fox &&
-                ((FoxAccessor)fox).callTrusts(player.getUUID()))
+                ((FoxAccessor)fox).bumblezone$callTrusts(player.getUUID()))
         {
             if (BzClientConfigs.knowingEssenceHighlightTamed) {
                 return GREEN;

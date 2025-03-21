@@ -9,5 +9,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface BiomeModificationContextImplMixin {
 
     @Accessor("registries")
-    RegistryAccess getRegistries();
+    RegistryAccess bumblezone$getRegistries();
 }

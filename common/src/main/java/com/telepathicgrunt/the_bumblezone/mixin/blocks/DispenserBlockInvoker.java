@@ -14,7 +14,7 @@ public interface DispenserBlockInvoker {
 
     @Accessor("DISPENSER_REGISTRY")
     @Contract(pure = true)
-    static Map<Item, DispenseItemBehavior> getDISPENSER_REGISTRY() {
+    static Map<Item, DispenseItemBehavior> bumblezone$getDISPENSER_REGISTRY() {
         throw new UnsupportedOperationException();
     }
 }

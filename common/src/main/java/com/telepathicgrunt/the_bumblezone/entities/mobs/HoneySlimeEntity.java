@@ -120,7 +120,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
 
    @Override
    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-      if (AgeableMobAccessor.getDATA_BABY_ID().equals(key)) {
+      if (AgeableMobAccessor.bumblezone$getDATA_BABY_ID().equals(key)) {
          this.refreshDimensions();
          if (!this.isPassenger()) {
             this.setYRot(this.yHeadRot);

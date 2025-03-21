@@ -309,7 +309,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
         player.getFoodData().eat(20, 20);
         player.clearFire();
         player.setAirSupply(player.getMaxAirSupply());
-        ((ServerPlayerAccessor)player).setStartingToFallPosition(null);
+        ((ServerPlayerAccessor)player).bumblezone$setStartingToFallPosition(null);
         player.invulnerableTime = 40;
         player.deathTime = 0;
         player.fallDistance = 0;

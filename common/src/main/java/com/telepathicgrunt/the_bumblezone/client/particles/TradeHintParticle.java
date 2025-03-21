@@ -51,7 +51,7 @@ public class TradeHintParticle extends Particle {
         this.tradeWantItem = tradeWantItem;
         this.tradeRewardItems = tradeRewardItems;
         this.itemRenderer = itemRenderer;
-        this.sprite = ((ParticleEngineAccessor)Minecraft.getInstance().particleEngine).getTextureAtlas().getSprite(SPEECH_BUBBLE_TEXTURE);
+        this.sprite = ((ParticleEngineAccessor)Minecraft.getInstance().particleEngine).bumblezone$getTextureAtlas().getSprite(SPEECH_BUBBLE_TEXTURE);
     }
 
     @Override

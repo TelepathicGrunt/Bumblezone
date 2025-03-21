@@ -77,7 +77,7 @@ public class StinglessBeeHelmet extends BeeArmor {
         if (nausea != null) {
             int decreaseSpeed = (int)((beeWearablesCount * 3d) - 2);
             for (int i = 0; i < decreaseSpeed; i++) {
-                ((MobEffectInstanceAccessor) nausea).callTickDownDuration();
+                ((MobEffectInstanceAccessor) nausea).bumblezone$callTickDownDuration();
                 if (!level.isClientSide() &&
                     player.getRandom().nextFloat() < 0.001f &&
                     itemStack.getMaxDamage() - itemStack.getDamageValue() > 1)
@@ -91,7 +91,7 @@ public class StinglessBeeHelmet extends BeeArmor {
         if (poison != null && (beeWearablesCount >= 4 || level.getGameTime() % (beeWearablesCount == 3 ? 2 : 3) == 0)) {
             for (int i = 0; i <= Math.max(beeWearablesCount - 3, 1); i++) {
                 if (poison.getDuration() > 0) {
-                    ((MobEffectInstanceAccessor) poison).callTickDownDuration();
+                    ((MobEffectInstanceAccessor) poison).bumblezone$callTickDownDuration();
                 }
             }
             if(!level.isClientSide() &&

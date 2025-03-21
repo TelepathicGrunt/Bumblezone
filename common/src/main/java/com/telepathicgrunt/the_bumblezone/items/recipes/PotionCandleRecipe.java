@@ -387,7 +387,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     public static class Serializer implements RecipeSerializer<PotionCandleRecipe> {
 
         private static final MapCodec<PotionCandleRecipe> CODEC = PotionCandleRecipe.Serializer.RawPotionRecipe.CODEC.flatXmap(rawShapedRecipe -> {
-            String[] strings = ShapedRecipePatternAccessor.callShrink(rawShapedRecipe.shapedPattern);
+            String[] strings = ShapedRecipePatternAccessor.bumblezone$callShrink(rawShapedRecipe.shapedPattern);
             int width = strings[0].length();
             int height = strings.length;
             NonNullList<Ingredient> shapedRecipeItems = NonNullList.withSize(width * height, Ingredient.EMPTY);

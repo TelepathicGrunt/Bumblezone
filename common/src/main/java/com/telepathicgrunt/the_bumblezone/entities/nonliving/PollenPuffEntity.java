@@ -137,7 +137,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
 
         // pollinates the bee
         if (entity instanceof Bee && entity.getType().is(BzTags.POLLEN_PUFF_CAN_POLLINATE)) {
-            ((BeeEntityInvoker)entity).callSetHasNectar(true);
+            ((BeeEntityInvoker)entity).bumblezone$callSetHasNectar(true);
             ((Bee)entity).resetTicksWithoutNectarSinceExitingHive();
 
             if (this.getOwner() instanceof ServerPlayer serverPlayer) {
@@ -252,7 +252,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             else if (blockstate.getBlock() instanceof VineBlock vineBlock) {
                 for (Direction direction : Direction.Plane.HORIZONTAL) {
                     BooleanProperty faceProperty = VineBlock.getPropertyForFace(direction);
-                    boolean flag = ((VineBlockAccessor)vineBlock).callCanSupportAtFace(level(), newPos, direction);
+                    boolean flag = ((VineBlockAccessor)vineBlock).bumblezone$callCanSupportAtFace(level(), newPos, direction);
                     blockstate = blockstate.setValue(faceProperty, flag);
                 }
             }

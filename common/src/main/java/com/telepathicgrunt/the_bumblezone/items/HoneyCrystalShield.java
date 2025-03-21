@@ -157,14 +157,14 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
             if (source.is(DamageTypeTags.IS_EXPLOSION)) {
                 // damage our shield greatly and do player screen shake
                 player.indicateDamage(0, 0);
-                ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 3, 18));
+                ((PlayerDamageShieldInvoker) player).bumblezone$callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 3, 18));
             }
             else if (source.is(DamageTypeTags.IS_FIRE) && !player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
                 if (source.is(DamageTypeTags.IS_PROJECTILE)) {
-                    ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 6, 3));
+                    ((PlayerDamageShieldInvoker) player).bumblezone$callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 6, 3));
                 }
                 else {
-                    ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 100, 3));
+                    ((PlayerDamageShieldInvoker) player).bumblezone$callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 100, 3));
                     return false; //continue the damaging
                 }
             }

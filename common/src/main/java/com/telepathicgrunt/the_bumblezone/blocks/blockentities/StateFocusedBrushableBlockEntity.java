@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class StateFocusedBrushableBlockEntity extends BrushableBlockEntity {
     protected StateFocusedBrushableBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockPos, blockState);
-        ((BlockEntityAccessor)this).setType(blockEntityType);
+        ((BlockEntityAccessor)this).bumblezone$setType(blockEntityType);
     }
 
     public StateFocusedBrushableBlockEntity(BlockPos blockPos, BlockState blockState) {

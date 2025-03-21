@@ -9,17 +9,17 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(LivingEntity.class)
 public interface LivingEntityAccessor {
     @Accessor("jumping")
-    boolean isJumping();
+    boolean bumblezone$isJumping();
 
     @Invoker("isAlwaysExperienceDropper")
-    boolean callIsAlwaysExperienceDropper();
+    boolean bumblezone$callIsAlwaysExperienceDropper();
 
     @Accessor("lastDamageSource")
-    void setLastDamageSource(DamageSource lastDamageSource);
+    void bumblezone$setLastDamageSource(DamageSource lastDamageSource);
 
     @Accessor("lastDamageStamp")
-    void setLastDamageStamp(long lastDamageStamp);
+    void bumblezone$setLastDamageStamp(long lastDamageStamp);
 
     @Invoker("hurtArmor")
-    void callHurtArmor(DamageSource damageSource, float f);
+    void bumblezone$callHurtArmor(DamageSource damageSource, float f);
 }

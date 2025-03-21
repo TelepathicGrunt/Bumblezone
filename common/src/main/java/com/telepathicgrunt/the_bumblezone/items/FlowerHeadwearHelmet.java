@@ -42,9 +42,9 @@ public class FlowerHeadwearHelmet extends BzArmor implements ItemExtension {
         MobEffectInstance wrath = player.getEffect(BzEffects.WRATH_OF_THE_HIVE.holder());
         if (wrath != null) {
             if (wrath.getDuration() > 0) {
-                ((MobEffectInstanceAccessor) wrath).callTickDownDuration();
+                ((MobEffectInstanceAccessor) wrath).bumblezone$callTickDownDuration();
                 if (beeWearablesCount > 3) {
-                    ((MobEffectInstanceAccessor) wrath).callTickDownDuration();
+                    ((MobEffectInstanceAccessor) wrath).bumblezone$callTickDownDuration();
                 }
             }
 

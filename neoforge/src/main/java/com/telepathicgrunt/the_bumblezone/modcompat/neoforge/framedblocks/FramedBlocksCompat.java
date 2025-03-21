@@ -54,7 +54,7 @@ public final class FramedBlocksCompat implements ModCompat {
             return;
         }
 
-        BlockHitResult hit = ((UseOnContextAccessor) event.getUseOnContext()).bz$getHitResult();
+        BlockHitResult hit = ((UseOnContextAccessor) event.getUseOnContext()).bumblezone$getHitResult();
         CamoContainer<?, ?> camo = be.getCamo(hit, player);
         if (camo instanceof CarvableWaxBlockCamoContainer waxCamo && waxCamo.getState().getBlock() instanceof CarvableWax wax) {
             BlockState carvedState = wax.tryCarve(event.getItemStack(), waxCamo.getState(), level, pos, player, event.getHand());

@@ -48,7 +48,7 @@ public class NeurotoxinsEnchantmentApplication {
         if (event.source().is(DamageTypeTags.IS_PROJECTILE)) {
            Entity projectile = event.source().getDirectEntity();
            if (projectile instanceof AbstractArrow abstractArrow) {
-               attackingItem = ((AbstractArrowAccessor)abstractArrow).callGetPickupItem();
+               attackingItem = ((AbstractArrowAccessor)abstractArrow).bumblezone$callGetPickupItem();
            }
         }
 
@@ -91,7 +91,7 @@ public class NeurotoxinsEnchantmentApplication {
 
                 if (attacker instanceof LivingEntity livingAttacker && victim instanceof Mob mob) {
                     mob.setLastHurtByMob(livingAttacker);
-                    ((MobAccessor)mob).getTargetSelector().tick();
+                    ((MobAccessor)mob).bumblezone$getTargetSelector().tick();
                 }
 
                 if (itemStack.is(BzItems.STINGER_SPEAR.get()) && attacker instanceof ServerPlayer serverPlayer) {

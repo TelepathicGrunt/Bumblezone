@@ -571,7 +571,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
                         if (livingEntity instanceof Player player) {
                            double armorDamage = Mth.clampedLerp(1, 8, pastSpeed - 0.2d);
-                           ((LivingEntityAccessor)player).callHurtArmor(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE, this), (float) armorDamage);
+                           ((LivingEntityAccessor)player).bumblezone$callHurtArmor(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE, this), (float) armorDamage);
                         }
                      }
                   }
@@ -1024,18 +1024,18 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
                this.walkDist += (float)collision.horizontalDistance() * 0.6F;
                this.moveDist += (float)Math.sqrt(e * e + f * f + g * g) * 0.6F;
-               if (this.moveDist > ((EntityAccessor) this).getNextStep() && !blockState2.isAir()) {
+               if (this.moveDist > ((EntityAccessor) this).bumblezone$getNextStep() && !blockState2.isAir()) {
                   boolean bl4 = blockPos2.equals(blockPos);
-                  boolean bl5 = ((EntityAccessor)this).callVibrationAndSoundEffectsFromBlock(blockPos, blockState, movementEmission.emitsSounds(), bl4, vec3);
+                  boolean bl5 = ((EntityAccessor)this).bumblezone$callVibrationAndSoundEffectsFromBlock(blockPos, blockState, movementEmission.emitsSounds(), bl4, vec3);
                   if (!bl4) {
-                     bl5 |= ((EntityAccessor)this).callVibrationAndSoundEffectsFromBlock(blockPos2, blockState2, false, movementEmission.emitsEvents(), vec3);
+                     bl5 |= ((EntityAccessor)this).bumblezone$callVibrationAndSoundEffectsFromBlock(blockPos2, blockState2, false, movementEmission.emitsEvents(), vec3);
                   }
 
                   if (bl5) {
-                     ((EntityAccessor) this).setNextStep(this.nextStep());
+                     ((EntityAccessor) this).bumblezone$setNextStep(this.nextStep());
                   }
                   else if (this.isInWater()) {
-                     ((EntityAccessor) this).setNextStep(this.nextStep());
+                     ((EntityAccessor) this).bumblezone$setNextStep(this.nextStep());
                      if (movementEmission.emitsSounds()) {
                         this.waterSwimSound();
                      }

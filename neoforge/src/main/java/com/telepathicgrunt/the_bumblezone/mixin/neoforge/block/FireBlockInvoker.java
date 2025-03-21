@@ -9,5 +9,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface FireBlockInvoker {
 
     @Invoker("setFlammable")
-    void callSetFlammable(Block block, int igniteOdds, int burnOdds);
+    void bumblezone$callSetFlammable(Block block, int igniteOdds, int burnOdds);
 }

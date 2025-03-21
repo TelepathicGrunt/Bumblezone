@@ -14,7 +14,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -31,7 +30,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -99,7 +97,7 @@ public class PlatformHooksImpl {
 
     @Contract(pure = true)
     public static Fluid getBucketFluid(BucketItem bucket) {
-        Fluid fluid = ((BucketItemAccessor) bucket).bz$getContents();
+        Fluid fluid = ((BucketItemAccessor) bucket).bumblezone$getContents();
         return fluid == null ? Fluids.EMPTY : fluid;
     }
 
@@ -170,7 +168,7 @@ public class PlatformHooksImpl {
     }
 
     public static boolean isEyesInNoFluid(Entity entity) {
-        return ((EntityAccessor)entity).getFluidOnEyes().isEmpty();
+        return ((EntityAccessor)entity).bumblezone$getFluidOnEyes().isEmpty();
     }
 
     public static  InteractionResultHolder<ItemStack> performItemUse(Level world, Player user, InteractionHand hand, Fluid fluid, BzCustomBucketItem bzCustomBucketItem) {
@@ -278,7 +276,7 @@ public class PlatformHooksImpl {
     public static boolean shouldMobSplit(Mob parent, List<Mob> children) { return true; }
 
     public static Fluid getBucketItemFluid(BucketItem stack) {
-        return ((BucketItemAccessor)stack).bz$getContents();
+        return ((BucketItemAccessor)stack).bumblezone$getContents();
     }
 
     public static MinecraftServer currentMinecraftServer = null;
