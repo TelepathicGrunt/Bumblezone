@@ -9,8 +9,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(BlockRenderDispatcher.class)
 public interface BlockRenderDispatcherAccessor {
     @Accessor("blockEntityRenderer")
-    BlockEntityWithoutLevelRenderer getBlockEntityRenderer();
+    BlockEntityWithoutLevelRenderer bumblezone$getBlockEntityRenderer();
 
     @Accessor("blockColors")
-    BlockColors getBlockColors();
+    BlockColors bumblezone$getBlockColors();
 }

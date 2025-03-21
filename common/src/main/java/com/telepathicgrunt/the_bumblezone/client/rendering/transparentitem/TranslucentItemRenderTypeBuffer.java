@@ -35,12 +35,12 @@ public class TranslucentItemRenderTypeBuffer implements MultiBufferSource {
 
     @Override
     public VertexConsumer getBuffer(@NotNull RenderType type) {
-        if (MAKE_TRANSPARENT.contains(((RenderStateShardAccessor)type).getName())) {
+        if (MAKE_TRANSPARENT.contains(((RenderStateShardAccessor)type).bumblezone$getName())) {
             //noinspection ConstantConditions For some reason intellij thinks this is not possible.
             RenderType.CompositeRenderType composite = type instanceof RenderType.CompositeRenderType comp ? comp : null;
             //noinspection ConstantConditions Same above.
             if (composite != null && composite.state().textureState instanceof RenderStateShard.TextureStateShard textureState) {
-                ResourceLocation texture = ((TextureStateShardAccessor)textureState).getTexture().orElse(InventoryMenu.BLOCK_ATLAS);
+                ResourceLocation texture = ((TextureStateShardAccessor)textureState).bumblezone$getTexture().orElse(InventoryMenu.BLOCK_ATLAS);
                 type = RenderType.entityTranslucentCull(texture);
             }
         }

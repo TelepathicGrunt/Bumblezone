@@ -17,7 +17,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.StructureManager;
-import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -50,7 +49,7 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
 
         Registry<Structure> structureRegistry = context.level().registryAccess().registry(Registries.STRUCTURE).get();
         if (context.level() instanceof WorldGenRegion) {
-            StructureManager structureManager = ((WorldGenRegionAccessor)context.level()).getStructureManager();
+            StructureManager structureManager = ((WorldGenRegionAccessor)context.level()).bumblezone$getStructureManager();
 
             if (origin.getY() > 130 && origin.getY() < 148) {
                 Structure thronePillar = structureRegistry.get(new ResourceLocation(Bumblezone.MODID, "throne_pillar"));

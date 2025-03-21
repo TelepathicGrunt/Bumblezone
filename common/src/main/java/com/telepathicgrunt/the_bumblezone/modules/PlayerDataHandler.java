@@ -132,7 +132,7 @@ public class PlayerDataHandler {
 
     public static boolean rootAdvancementDone(ServerPlayer serverPlayer) {
         Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT);
-        var progress = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getProgress();
+        var progress = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).bumblezone$getProgress();
         return advancement != null &&
                 progress.containsKey(advancement) &&
                 progress.get(advancement).isDone();

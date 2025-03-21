@@ -11,13 +11,13 @@ import java.util.Set;
 @Mixin(ClientLevel.class)
 public interface ClientLevelAccessor {
     @Accessor("MARKER_PARTICLE_ITEMS")
-    static Set<Item> getMARKER_PARTICLE_ITEMS() {
+    static Set<Item> bumblezone$getMARKER_PARTICLE_ITEMS() {
         throw new UnsupportedOperationException();
     }
 
     @Mutable
     @Accessor("MARKER_PARTICLE_ITEMS")
-    static void setMARKER_PARTICLE_ITEMS(Set<Item> MARKER_PARTICLE_ITEMS) {
+    static void bumblezone$setMARKER_PARTICLE_ITEMS(Set<Item> MARKER_PARTICLE_ITEMS) {
         throw new UnsupportedOperationException();
     }
 }

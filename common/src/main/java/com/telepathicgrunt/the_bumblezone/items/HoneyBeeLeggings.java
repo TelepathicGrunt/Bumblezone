@@ -124,7 +124,7 @@ public class HoneyBeeLeggings extends BeeArmor {
         if (slowness != null && (beeWearablesCount >= 3 || level.getGameTime() % 2 == 0)) {
             for (int i = 0; i <= Math.max(beeWearablesCount - 2, 1); i++) {
                 if (slowness.getDuration() > 0) {
-                    ((MobEffectInstanceAccessor) slowness).callTickDownDuration();
+                    ((MobEffectInstanceAccessor) slowness).bumblezone$callTickDownDuration();
                 }
             }
             if(!level.isClientSide() &&

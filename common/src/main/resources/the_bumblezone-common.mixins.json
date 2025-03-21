@@ -97,7 +97,6 @@
     "client.ClientLevelMixin",
     "client.ClientPacketListenerMixin",
     "client.EntityRenderersAccessor",
-    "client.LevelRendererAccessor",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
     "client.MusicManagerMixin",

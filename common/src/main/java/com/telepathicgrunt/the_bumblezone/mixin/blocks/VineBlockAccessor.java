@@ -10,5 +10,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(VineBlock.class)
 public interface VineBlockAccessor {
     @Invoker("canSupportAtFace")
-    boolean callCanSupportAtFace(BlockGetter level, BlockPos pos, Direction direction);
+    boolean bumblezone$callCanSupportAtFace(BlockGetter level, BlockPos pos, Direction direction);
 }

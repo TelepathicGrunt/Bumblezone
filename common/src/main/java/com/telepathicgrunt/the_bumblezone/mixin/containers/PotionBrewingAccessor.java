@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(PotionBrewing.class)
 public interface PotionBrewingAccessor {
     @Invoker("addMix")
-    static void callAddMix(Potion potion, Item item, Potion potion1) {
+    static void bumblezone$callAddMix(Potion potion, Item item, Potion potion1) {
         throw new UnsupportedOperationException();
     }
 }

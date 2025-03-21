@@ -62,7 +62,7 @@ public abstract class BeeEntityMixin extends Entity {
 
             //20% chance of being full of pollen
             if ((new Random()).nextFloat() < 0.2f) {
-                ((BeeEntityInvoker) beeEntity).callSetHasNectar(true);
+                ((BeeEntityInvoker) beeEntity).bumblezone$callSetHasNectar(true);
             }
         }
     }

@@ -41,7 +41,7 @@ public class BroodBlockModdedCompatDispenseBehavior extends DefaultDispenseItemB
             return behaviorToRun.apply(originalModdedDispenseItemBehavior, source, stack, world, dispenseBlockPos, blockstate);
         }
         else {
-            return ((DefaultDispenseItemBehaviorInvoker) originalModdedDispenseItemBehavior).invokeExecute(source, stack);
+            return ((DefaultDispenseItemBehaviorInvoker) originalModdedDispenseItemBehavior).bumblezone$invokeExecute(source, stack);
         }
     }
 

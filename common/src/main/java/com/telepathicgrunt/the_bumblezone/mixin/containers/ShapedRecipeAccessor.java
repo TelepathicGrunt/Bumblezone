@@ -12,23 +12,23 @@ import java.util.Map;
 
 @Mixin(ShapedRecipe.class)
 public interface ShapedRecipeAccessor {
-    @Invoker
-    static NonNullList<Ingredient> callDissolvePattern(String[] pattern, Map<String, Ingredient> keys, int patternWidth, int patternHeight) {
+    @Invoker("dissolvePattern")
+    static NonNullList<Ingredient> bumblezone$callDissolvePattern(String[] pattern, Map<String, Ingredient> keys, int patternWidth, int patternHeight) {
         throw new UnsupportedOperationException();
     }
 
-    @Invoker
-    static String[] callPatternFromJson(JsonArray patternArray) {
+    @Invoker("patternFromJson")
+    static String[] bumblezone$callPatternFromJson(JsonArray patternArray) {
         throw new UnsupportedOperationException();
     }
 
-    @Invoker
-    static Map<String, Ingredient> callKeyFromJson(JsonObject keyEntry) {
+    @Invoker("keyFromJson")
+    static Map<String, Ingredient> bumblezone$callKeyFromJson(JsonObject keyEntry) {
         throw new UnsupportedOperationException();
     }
 
-    @Invoker
-    static String[] callShrink(String... toShrink) {
+    @Invoker("shrink")
+    static String[] bumblezone$callShrink(String... toShrink) {
         throw new UnsupportedOperationException();
     }
 }

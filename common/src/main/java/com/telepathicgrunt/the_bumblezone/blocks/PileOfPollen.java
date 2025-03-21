@@ -288,7 +288,7 @@ public class PileOfPollen extends FallingBlock {
 
                 // Prevents the FallingBlock's checkInsideBlocks from triggering this
                 // method again for the pollen block we just set above our collision block.
-                ((FallingBlockEntityAccessor) entity).bumblezone$setBlockState(Blocks.AIR.defaultBlockState());
+                ((FallingBlockEntityAccessor) entity).bumblezone$bumblezone$setBlockState(Blocks.AIR.defaultBlockState());
             }
             else {
                 level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
@@ -369,7 +369,7 @@ public class PileOfPollen extends FallingBlock {
 
             // reduce pile of pollen to pollinate bee
             if(entity instanceof Bee && !((Bee)entity).hasNectar() && entity.getType().is(BzTags.POLLEN_PUFF_CAN_POLLINATE)) {
-                ((BeeEntityInvoker)entity).callSetHasNectar(true);
+                ((BeeEntityInvoker)entity).bumblezone$callSetHasNectar(true);
                 ((Bee)entity).resetTicksWithoutNectarSinceExitingHive();
                 if(layerValueMinusOne == 0) {
                     level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);

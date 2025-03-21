@@ -9,5 +9,5 @@ import java.util.UUID;
 @Mixin(Fox.class)
 public interface FoxAccessor {
     @Invoker("trusts")
-    boolean callTrusts(UUID uUID);
+    boolean bumblezone$callTrusts(UUID uUID);
 }

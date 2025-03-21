@@ -52,7 +52,7 @@ public class ParalyzedEffect extends MobEffect implements EffectExtension {
         }
 
         if (effect.getDuration() > BzGeneralConfigs.paralyzedMaxTickDuration) {
-            ((MobEffectInstanceAccessor)effect).setDuration(BzGeneralConfigs.paralyzedMaxTickDuration);
+            ((MobEffectInstanceAccessor)effect).bumblezone$setDuration(BzGeneralConfigs.paralyzedMaxTickDuration);
         }
 
         if(!entity.isRemoved() && entity.level() instanceof ServerLevel) {

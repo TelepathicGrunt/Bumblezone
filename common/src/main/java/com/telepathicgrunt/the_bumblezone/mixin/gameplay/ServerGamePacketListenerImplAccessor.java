@@ -6,9 +6,9 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(ServerGamePacketListenerImpl.class)
 public interface ServerGamePacketListenerImplAccessor {
-    @Accessor
-    void setAboveGroundTickCount(int aboveGroundTickCount);
+    @Accessor("aboveGroundTickCount")
+    void bumblezone$setAboveGroundTickCount(int aboveGroundTickCount);
 
-    @Accessor
-    void setAboveGroundVehicleTickCount(int aboveGroundVehicleTickCount);
+    @Accessor("aboveGroundVehicleTickCount")
+    void bumblezone$setAboveGroundVehicleTickCount(int aboveGroundVehicleTickCount);
 }

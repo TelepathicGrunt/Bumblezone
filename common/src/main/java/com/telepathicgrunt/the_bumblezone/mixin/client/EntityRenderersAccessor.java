@@ -11,7 +11,7 @@ import java.util.Map;
 @Mixin(EntityRenderers.class)
 public interface EntityRenderersAccessor {
     @Accessor("PROVIDERS")
-    static Map<EntityType<?>, EntityRendererProvider<?>> getPROVIDERS() {
+    static Map<EntityType<?>, EntityRendererProvider<?>> bumblezone$getPROVIDERS() {
         throw new UnsupportedOperationException();
     }
 }

@@ -166,7 +166,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
         int disallowedTopRange = Integer.MIN_VALUE;
         if (context.level() instanceof WorldGenRegion worldGenRegion) {
             Registry<Structure> structureRegistry = worldGenRegion.registryAccess().registry(Registries.STRUCTURE).get();
-            StructureManager structureManager = ((WorldGenRegionAccessor)worldGenRegion).getStructureManager();
+            StructureManager structureManager = ((WorldGenRegionAccessor)worldGenRegion).bumblezone$getStructureManager();
             ChunkPos chunkPos = new ChunkPos(mutableBlockPos);
             List<StructureStart> structureStarts = structureManager.startsForStructure(chunkPos,
                     struct -> structureRegistry.getHolderOrThrow(structureRegistry.getResourceKey(struct).get()).is(BzTags.NO_CAVES));

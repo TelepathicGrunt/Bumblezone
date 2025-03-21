@@ -100,14 +100,14 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
             switch (renderShape) {
                 case MODEL -> {
                     BakedModel bakedModel = this.blockRenderer.getBlockModel(blockState);
-                    int k = ((BlockRenderDispatcherAccessor) this.blockRenderer).getBlockColors().getColor(blockState, level, blockPos, 1);
+                    int k = ((BlockRenderDispatcherAccessor) this.blockRenderer).bumblezone$getBlockColors().getColor(blockState, level, blockPos, 1);
                     float f = (float) (k >> 16 & 0xFF) / 255.0f;
                     float g = (float) (k >> 8 & 0xFF) / 255.0f;
                     float h = (float) (k & 0xFF) / 255.0f;
                     this.blockRenderer.getModelRenderer().renderModel(poseStack.last(), multiBufferSource.getBuffer(ItemBlockRenderTypes.getRenderType(blockState, false)), blockState, bakedModel, f, g, h, i, j);
                 }
                 case ENTITYBLOCK_ANIMATED ->
-                    ((BlockRenderDispatcherAccessor) this.blockRenderer).getBlockEntityRenderer().renderByItem(new ItemStack(blockState.getBlock()), ItemDisplayContext.NONE, poseStack, multiBufferSource, i, j);
+                    ((BlockRenderDispatcherAccessor) this.blockRenderer).bumblezone$getBlockEntityRenderer().renderByItem(new ItemStack(blockState.getBlock()), ItemDisplayContext.NONE, poseStack, multiBufferSource, i, j);
             }
         }
     }

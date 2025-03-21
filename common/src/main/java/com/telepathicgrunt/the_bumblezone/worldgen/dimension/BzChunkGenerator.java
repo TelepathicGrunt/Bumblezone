@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.dimension;
 
-import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -8,7 +7,6 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseChunkAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseGeneratorSettingsAccessor;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -65,9 +63,6 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
-import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -101,7 +96,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                 noiseRouter.ridges(),
                 noiseGeneratorSettings.spawnTarget()
         );
-        ((NoiseGeneratorSettingsAccessor) (Object) noiseGeneratorSettings).setNoiseRouter(
+        ((NoiseGeneratorSettingsAccessor) (Object) noiseGeneratorSettings).bumblezone$setNoiseRouter(
                 noiseRouter.mapAll(densityFunction -> {
                     if (densityFunction instanceof BiomeNoise) {
                         return new BiomeNoise(
@@ -183,7 +178,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         } else {
             ((NoiseChunkExtension) noiseChunk).the_bumblezone$setBiomeSource(this.biomeSource);
         }
-        ((NoiseChunkExtension) noiseChunk).the_bumblezone$setCachedClimateSampler(((NoiseChunkAccessor) noiseChunk).callCachedClimateSampler(randomState.router(), this.settings.value().spawnTarget()));
+        ((NoiseChunkExtension) noiseChunk).the_bumblezone$setCachedClimateSampler(((NoiseChunkAccessor) noiseChunk).bumblezone$callCachedClimateSampler(randomState.router(), this.settings.value().spawnTarget()));
     }
 
     @Override
@@ -247,7 +242,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                     noiseChunk.updateForY(j3, d2);
                     noiseChunk.updateForX(x, d0);
                     noiseChunk.updateForZ(z, d1);
-                    BlockState blockstate = ((NoiseChunkAccessor) noiseChunk).callGetInterpolatedState();
+                    BlockState blockstate = ((NoiseChunkAccessor) noiseChunk).bumblezone$callGetInterpolatedState();
                     BlockState blockstate1 = blockstate == null ? this.defaultBlock : blockstate;
                     if (ablockstate != null) {
                         int k3 = l2 * i + i3;
@@ -340,7 +335,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                                 int k4 = j4 & 15;
                                 double d2 = (double)i4 / (double)k;
                                 noiseChunk.updateForZ(j4, d2);
-                                BlockState blockstate = ((NoiseChunkAccessor)noiseChunk).callGetInterpolatedState();
+                                BlockState blockstate = ((NoiseChunkAccessor)noiseChunk).bumblezone$callGetInterpolatedState();
                                 if (blockstate == null) {
                                     blockstate = this.defaultBlock;
                                 }

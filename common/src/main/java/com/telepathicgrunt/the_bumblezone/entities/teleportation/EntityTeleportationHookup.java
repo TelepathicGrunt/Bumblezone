@@ -68,7 +68,7 @@ public class EntityTeleportationHookup {
                 return;
             }
 
-            Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getProgress();
+            Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).bumblezone$getProgress();
             if (advancementsProgressMap.containsKey(advancement) && advancementsProgressMap.get(advancement).isDone()) {
                 return;
             }

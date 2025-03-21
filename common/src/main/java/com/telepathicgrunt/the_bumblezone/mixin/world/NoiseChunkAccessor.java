@@ -12,8 +12,8 @@ import java.util.List;
 @Mixin(NoiseChunk.class)
 public interface NoiseChunkAccessor {
     @Invoker("getInterpolatedState")
-    BlockState callGetInterpolatedState();
+    BlockState bumblezone$callGetInterpolatedState();
 
     @Invoker("cachedClimateSampler")
-    Climate.Sampler callCachedClimateSampler(NoiseRouter noiseRouter, List<Climate.ParameterPoint> points);
+    Climate.Sampler bumblezone$callCachedClimateSampler(NoiseRouter noiseRouter, List<Climate.ParameterPoint> points);
 }

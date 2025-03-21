@@ -12,7 +12,6 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.chars.Char2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2CharOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -386,11 +385,11 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             String category = GsonHelper.getAsString(json, "category", "");
 
             //shaped
-            Map<String, Ingredient> map = ShapedRecipeAccessor.callKeyFromJson(GsonHelper.getAsJsonObject(json, "key"));
-            String[] astring = ShapedRecipeAccessor.callShrink(ShapedRecipeAccessor.callPatternFromJson(GsonHelper.getAsJsonArray(json, "pattern")));
+            Map<String, Ingredient> map = ShapedRecipeAccessor.bumblezone$callKeyFromJson(GsonHelper.getAsJsonObject(json, "key"));
+            String[] astring = ShapedRecipeAccessor.bumblezone$callShrink(ShapedRecipeAccessor.bumblezone$callPatternFromJson(GsonHelper.getAsJsonArray(json, "pattern")));
             int width = astring[0].length();
             int height = astring.length;
-            NonNullList<Ingredient> shapedRecipeItems = ShapedRecipeAccessor.callDissolvePattern(astring, map, width, height);
+            NonNullList<Ingredient> shapedRecipeItems = ShapedRecipeAccessor.bumblezone$callDissolvePattern(astring, map, width, height);
 
             //shapeless
             NonNullList<Ingredient> shapelessRecipeItems = getIngredients(GsonHelper.getAsJsonArray(json, "shapelessExtraIngredients"));

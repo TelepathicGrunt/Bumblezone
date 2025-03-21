@@ -7,8 +7,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(BiomeManager.class)
 public interface BiomeManagerAccessor {
     @Accessor("noiseBiomeSource")
-    BiomeManager.NoiseBiomeSource getNoiseBiomeSource();
+    BiomeManager.NoiseBiomeSource bumblezone$getNoiseBiomeSource();
 
     @Accessor("biomeZoomSeed")
-    long getBiomeZoomSeed();
+    long bumblezone$getBiomeZoomSeed();
 }

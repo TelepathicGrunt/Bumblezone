@@ -14,7 +14,7 @@ public class NoVerticalBlendBiomeManager extends BiomeManager{
     private final Long2ObjectMap<Holder<Biome>> cachedResult = new Long2ObjectOpenHashMap<>();
 
     public NoVerticalBlendBiomeManager(BiomeManager biomeManager, NoiseBiomeSource localBiomeSource) {
-        super(((BiomeManagerAccessor)biomeManager).getNoiseBiomeSource(), ((BiomeManagerAccessor)biomeManager).getBiomeZoomSeed());
+        super(((BiomeManagerAccessor)biomeManager).bumblezone$getNoiseBiomeSource(), ((BiomeManagerAccessor)biomeManager).bumblezone$getBiomeZoomSeed());
         this.biomeManager = biomeManager;
         this.localBiomeSource = localBiomeSource;
     }
@@ -48,7 +48,7 @@ public class NoVerticalBlendBiomeManager extends BiomeManager{
             double zMagicFlagged = flag1 ? zMagic : zMagic - 1.0;
 
             double fiddledDistance = getFiddledDistance(
-                    ((BiomeManagerAccessor)biomeManager).getBiomeZoomSeed(),
+                    ((BiomeManagerAccessor)biomeManager).bumblezone$getBiomeZoomSeed(),
                     xShiftedFlagged,
                     zShiftedFlagged,
                     xMagicFlagged,
@@ -62,7 +62,7 @@ public class NoVerticalBlendBiomeManager extends BiomeManager{
 
         int finalX = (lastIteration & 4) == 0 ? xShifted : xShifted + 1;
         int finalZ = (lastIteration & 1) == 0 ? zShifted : zShifted + 1;
-        Holder<Biome> biomeHolder = this.localBiomeSource != null ? this.localBiomeSource.getNoiseBiome(finalX, 0, finalZ) : ((BiomeManagerAccessor)biomeManager).getNoiseBiomeSource().getNoiseBiome(finalX, 0, finalZ);
+        Holder<Biome> biomeHolder = this.localBiomeSource != null ? this.localBiomeSource.getNoiseBiome(finalX, 0, finalZ) : ((BiomeManagerAccessor)biomeManager).bumblezone$getNoiseBiomeSource().getNoiseBiome(finalX, 0, finalZ);
 
         //Caching
         if (cachedResult.size() > 512) {

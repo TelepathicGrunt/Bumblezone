@@ -46,9 +46,9 @@ public class FlowerHeadwearHelmet extends BzDyeableArmor implements DyeableLeath
         MobEffectInstance wrath = player.getEffect(BzEffects.WRATH_OF_THE_HIVE.get());
         if (wrath != null) {
             if (wrath.getDuration() > 0) {
-                ((MobEffectInstanceAccessor) wrath).callTickDownDuration();
+                ((MobEffectInstanceAccessor) wrath).bumblezone$callTickDownDuration();
                 if (beeWearablesCount > 3) {
-                    ((MobEffectInstanceAccessor) wrath).callTickDownDuration();
+                    ((MobEffectInstanceAccessor) wrath).bumblezone$callTickDownDuration();
                 }
             }
 

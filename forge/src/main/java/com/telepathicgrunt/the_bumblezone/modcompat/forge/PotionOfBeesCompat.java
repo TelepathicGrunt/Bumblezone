@@ -9,7 +9,6 @@ import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.BroodBlockModdedCompatDispenseBehavior;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
-import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -70,7 +69,7 @@ public class PotionOfBeesCompat implements ModCompat {
 
     private static void setupDispenserCompat(Item containerItem) {
         BroodBlockModdedCompatDispenseBehavior newDispenseBehavior = new BroodBlockModdedCompatDispenseBehavior(
-                ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(containerItem)),
+                ((DispenserBlockInvoker) Blocks.DISPENSER).bumblezone$invokeGetDispenseMethod(new ItemStack(containerItem)),
                 (originalModdedDispenseBehavior, blockSource, itemStack, serverLevel, blockPos, blockState) -> {
                     if (PotionOfBeesCompat.isLingeringPotionOfBeesItem(itemStack)) {
                         PotionOfBeesCompat.reviveBroodsInRange(serverLevel, blockPos, 3);

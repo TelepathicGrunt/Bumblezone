@@ -67,7 +67,7 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
             beeEntity.hasNectar() &&
             state.is(BzBlocks.EMPTY_HONEYCOMB_BROOD.get()))
         {
-            ((BeeEntityInvoker) entity).callSetHasNectar(false);
+            ((BeeEntityInvoker) entity).bumblezone$callSetHasNectar(false);
             level.setBlock(blockPos,
                     BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
                     .setValue(HoneycombBrood.STAGE, 0)

@@ -213,8 +213,8 @@ public class MusicHandler {
         float playerSetVolume = minecraftClient.options.getSoundSourceVolume(soundInstance.getSource());
 
         ChannelAccess.ChannelHandle channelHandle = ((SoundEngineAccessor)((SoundManagerAccessor) minecraftClient.getSoundManager())
-                .getSoundEngine())
-                .getInstanceToChannel()
+                .bumblezone$getSoundEngine())
+                .bumblezone$getInstanceToChannel()
                 .get(soundInstance);
 
         if (channelHandle != null) {

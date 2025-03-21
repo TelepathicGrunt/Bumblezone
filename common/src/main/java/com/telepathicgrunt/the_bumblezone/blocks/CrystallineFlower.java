@@ -130,7 +130,7 @@ public class CrystallineFlower extends BaseEntityBlock {
 
                     if (livingEntity.isDeadOrDying() &&
                         !livingEntity.wasExperienceConsumed() &&
-                        !((LivingEntityAccessor)livingEntity).callIsAlwaysExperienceDropper() &&
+                        !((LivingEntityAccessor)livingEntity).bumblezone$callIsAlwaysExperienceDropper() &&
                         livingEntity.shouldDropExperience() &&
                         level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT))
                     {
@@ -192,7 +192,7 @@ public class CrystallineFlower extends BaseEntityBlock {
                 int xpGranted = Math.min(xpToHighestAvailableTier, experienceOrb.getValue());
 
                 crystallineFlowerBlockEntity.addXpAndTier(xpGranted);
-                ((ExperienceOrbAccessor)experienceOrb).setValue(experienceOrb.getValue() - xpGranted);
+                ((ExperienceOrbAccessor)experienceOrb).bumblezone$setValue(experienceOrb.getValue() - xpGranted);
                 if (experienceOrb.getValue() <= 0) {
                     experienceOrb.discard();
                 }

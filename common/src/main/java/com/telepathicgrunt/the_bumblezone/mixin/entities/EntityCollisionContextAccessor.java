@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(EntityCollisionContext.class)
 public interface EntityCollisionContextAccessor {
     @Accessor("heldItem")
-    ItemStack getHeldItem();
+    ItemStack bumblezone$getHeldItem();
 }

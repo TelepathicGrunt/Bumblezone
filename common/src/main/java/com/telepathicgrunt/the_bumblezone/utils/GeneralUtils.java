@@ -25,7 +25,6 @@ import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
@@ -525,10 +524,10 @@ public class GeneralUtils {
                                                          RandomSource randomSource,
                                                          int i)
     {
-        if (((StructureTemplateAccessor)structureTemplate).getBlocks().isEmpty()) {
+        if (((StructureTemplateAccessor)structureTemplate).bumblezone$getBlocks().isEmpty()) {
             return;
         }
-        List<StructureTemplate.StructureBlockInfo> list = structurePlaceSettings.getRandomPalette(((StructureTemplateAccessor)structureTemplate).getBlocks(), blockPos).blocks();
+        List<StructureTemplate.StructureBlockInfo> list = structurePlaceSettings.getRandomPalette(((StructureTemplateAccessor)structureTemplate).bumblezone$getBlocks(), blockPos).blocks();
         if (list.isEmpty() && structurePlaceSettings.isIgnoreEntities() || structureTemplate.getSize().getX() < 1 || structureTemplate.getSize().getY() < 1 || structureTemplate.getSize().getZ() < 1) {
             return;
         }
@@ -640,10 +639,10 @@ public class GeneralUtils {
             RandomSource randomSource,
             int i)
     {
-        if (((StructureTemplateAccessor)structureTemplate).getBlocks().isEmpty()) {
+        if (((StructureTemplateAccessor)structureTemplate).bumblezone$getBlocks().isEmpty()) {
             return;
         }
-        List<StructureTemplate.StructureBlockInfo> list = structurePlaceSettings.getRandomPalette(((StructureTemplateAccessor)structureTemplate).getBlocks(), blockPos).blocks();
+        List<StructureTemplate.StructureBlockInfo> list = structurePlaceSettings.getRandomPalette(((StructureTemplateAccessor)structureTemplate).bumblezone$getBlocks(), blockPos).blocks();
         if (list.isEmpty() && structurePlaceSettings.isIgnoreEntities() || structureTemplate.getSize().getX() < 1 || structureTemplate.getSize().getY() < 1 || structureTemplate.getSize().getZ() < 1) {
             return;
         }
@@ -757,7 +756,7 @@ public class GeneralUtils {
     }
 
     private static void placeEntities(ServerLevelAccessor serverLevelAccessor, StructureTemplate structureTemplate, BlockPos blockPos, Mirror mirror, Rotation rotation, BlockPos blockPos2, @Nullable BoundingBox boundingBox, boolean bl) {
-        for (StructureTemplate.StructureEntityInfo structureEntityInfo : ((StructureTemplateAccessor)structureTemplate).getEntityInfoList()) {
+        for (StructureTemplate.StructureEntityInfo structureEntityInfo : ((StructureTemplateAccessor)structureTemplate).bumblezone$getEntityInfoList()) {
             BlockPos blockPos3 = StructureTemplate.transform(structureEntityInfo.blockPos, mirror, rotation, blockPos2).offset(blockPos);
             if (boundingBox != null && !boundingBox.isInside(blockPos3)) continue;
             CompoundTag compoundTag = structureEntityInfo.nbt.copy();
@@ -1002,7 +1001,7 @@ public class GeneralUtils {
      * Bumblezone structures do not use priority in Jigsaws, so we can skip the expensive priority sorting.
      */
     public static List<StructureTemplate.StructureBlockInfo> getShuffledJigsawBlocksWithoutPriority(SinglePoolElement singlePoolElement, StructureTemplateManager structureTemplateManager, BlockPos blockPos, Rotation rotation, RandomSource randomSource) {
-        StructureTemplate structureTemplate = ((SinglePoolElementAccessor)singlePoolElement).getTemplate().map(structureTemplateManager::getOrCreate, Function.identity());
+        StructureTemplate structureTemplate = ((SinglePoolElementAccessor)singlePoolElement).bumblezone$getTemplate().map(structureTemplateManager::getOrCreate, Function.identity());
         ObjectArrayList<StructureTemplate.StructureBlockInfo> objectArrayList = structureTemplate.filterBlocks(blockPos, new StructurePlaceSettings().setRotation(rotation), Blocks.JIGSAW, true);
         Util.shuffle(objectArrayList, randomSource);
         return objectArrayList;

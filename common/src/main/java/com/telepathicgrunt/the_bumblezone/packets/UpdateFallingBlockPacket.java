@@ -49,7 +49,7 @@ public record UpdateFallingBlockPacket(int fallingBlockId, short layer) implemen
             return (player, level) -> {
                 Entity entity = level.getEntity(message.fallingBlockId);
                 if (entity instanceof FallingBlockEntity fallingBlockEntity && fallingBlockEntity.getBlockState().is(BzBlocks.PILE_OF_POLLEN.get())) {
-                    ((FallingBlockEntityAccessor) fallingBlockEntity).bumblezone$setBlockState(BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int) message.layer));
+                    ((FallingBlockEntityAccessor) fallingBlockEntity).bumblezone$bumblezone$setBlockState(BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int) message.layer));
                 }
             };
         }

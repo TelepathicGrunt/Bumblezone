@@ -10,5 +10,5 @@ import java.util.Optional;
 @Mixin(RenderStateShard.TextureStateShard.class)
 public interface TextureStateShardAccessor {
     @Accessor("texture")
-    Optional<ResourceLocation> getTexture();
+    Optional<ResourceLocation> bumblezone$getTexture();
 }

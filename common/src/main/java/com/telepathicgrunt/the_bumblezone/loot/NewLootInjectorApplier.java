@@ -27,7 +27,7 @@ public final class NewLootInjectorApplier {
         if (BzGeneralConfigs.beeLootInjection || BzGeneralConfigs.moddedBeeLootInjection) {
             if(context.hasParam(LootContextParams.THIS_ENTITY)) {
                 if (context.getParam(LootContextParams.THIS_ENTITY) instanceof Bee bee) {
-                    if (!((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).getParams()).getVisitedBzVisitedLootRL().contains(STINGER_DROP_LOOT_TABLE_RL) &&
+                    if (!((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).bumblezone$getParams()).getVisitedBzVisitedLootRL().contains(STINGER_DROP_LOOT_TABLE_RL) &&
                         !((EntityLootDropInterface)bee).thebumblezone_hasPerformedEntityDrops())
                     {
                         ResourceLocation beeRL = BuiltInRegistries.ENTITY_TYPE.getKey(bee.getType());
@@ -42,7 +42,7 @@ public final class NewLootInjectorApplier {
     }
 
     public static boolean checkIfValidForDimensionFishingLoot(LootContext context) {
-        if (!((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).getParams()).getVisitedBzVisitedLootRL().contains(NewLootInjectorApplier.BZ_DIMENSION_FISHING_LOOT_TABLE_RL)) {
+        if (!((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).bumblezone$getParams()).getVisitedBzVisitedLootRL().contains(NewLootInjectorApplier.BZ_DIMENSION_FISHING_LOOT_TABLE_RL)) {
             return context.getLevel().dimension().equals(BzDimension.BZ_WORLD_KEY);
         }
 
@@ -51,9 +51,9 @@ public final class NewLootInjectorApplier {
 
     public static void injectLoot(LootContext context, List<ItemStack> originalLoot, ResourceLocation lootTableToPullFrom) {
         LootTable stingerLootTable = context.getLevel().getServer().getLootData().getLootTable(lootTableToPullFrom);
-        ((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).getParams()).addVisitedBzVisitedLootRL(lootTableToPullFrom);
+        ((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).bumblezone$getParams()).addVisitedBzVisitedLootRL(lootTableToPullFrom);
         ObjectArrayList<ItemStack> newItems = new ObjectArrayList<>();
-        stingerLootTable.getRandomItems(((LootContextAccessor)context).getParams(), newItems::add);
+        stingerLootTable.getRandomItems(((LootContextAccessor)context).bumblezone$getParams(), newItems::add);
         originalLoot.addAll(newItems);
 
         if(context.hasParam(LootContextParams.THIS_ENTITY)) {

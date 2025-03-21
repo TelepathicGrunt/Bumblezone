@@ -10,5 +10,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface DispenserBlockInvoker {
 
     @Invoker("getDispenseMethod")
-    DispenseItemBehavior invokeGetDispenseMethod(ItemStack stack);
+    DispenseItemBehavior bumblezone$invokeGetDispenseMethod(ItemStack stack);
 }

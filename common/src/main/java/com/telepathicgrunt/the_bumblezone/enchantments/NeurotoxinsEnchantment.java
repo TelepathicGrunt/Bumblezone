@@ -75,7 +75,7 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
         if(event.source().is(DamageTypeTags.IS_PROJECTILE)) {
            Entity projectile = event.source().getDirectEntity();
            if(projectile instanceof ThrownTrident thrownTrident) {
-               attackingItem = ((ThrownTridentAccessor)thrownTrident).getTridentItem();
+               attackingItem = ((ThrownTridentAccessor)thrownTrident).bumblezone$getTridentItem();
            }
            else if (projectile instanceof ThrownStingerSpearEntity thrownStingerSpearEntity) {
                attackingItem = thrownStingerSpearEntity.getSpearItemStack();
@@ -120,7 +120,7 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
 
                 if (attacker instanceof LivingEntity livingAttacker && livingEntity instanceof Mob mob) {
                     mob.setLastHurtByMob(livingAttacker);
-                    ((MobAccessor)mob).getTargetSelector().tick();
+                    ((MobAccessor)mob).bumblezone$getTargetSelector().tick();
                 }
 
                 if (itemStack.is(BzItems.STINGER_SPEAR.get()) && attacker instanceof ServerPlayer serverPlayer) {

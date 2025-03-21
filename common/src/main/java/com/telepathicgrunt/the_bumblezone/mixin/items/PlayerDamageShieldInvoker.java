@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface PlayerDamageShieldInvoker {
 
     @Invoker("hurtCurrentlyUsedShield")
-    void callHurtCurrentlyUsedShield(float amount);
+    void bumblezone$callHurtCurrentlyUsedShield(float amount);
 }

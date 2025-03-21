@@ -55,7 +55,7 @@ public class PorousHoneycomb extends Block {
             beeEntity.hasNectar() &&
             state.is(BzBlocks.POROUS_HONEYCOMB.get()))
         {
-            ((BeeEntityInvoker) entity).callSetHasNectar(false);
+            ((BeeEntityInvoker) entity).bumblezone$callSetHasNectar(false);
             level.setBlock(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3);
 
             Vec3 centerOfBee = beeEntity.getBoundingBox().getCenter();

@@ -158,13 +158,13 @@ public abstract class HoneyFluid extends BzFlowingFluid {
 
                     if(!justFilledBottom) {
                         this.spreadDown(world, belowBlockPos, belowBlockState, Direction.DOWN, belowFluidState);
-                        if (((FlowingFluidAccessor)this).callSourceNeighborCount(world, blockPos) >= 3) {
-                            ((FlowingFluidAccessor)this).callSpreadToSides(world, blockPos, fluidState, blockState);
+                        if (((FlowingFluidAccessor)this).bumblezone$callSourceNeighborCount(world, blockPos) >= 3) {
+                            ((FlowingFluidAccessor)this).bumblezone$callSpreadToSides(world, blockPos, fluidState, blockState);
                         }
                     }
                 }
                 else if (fluidState.isSource() || !belowBlockState.getFluidState().getType().isSame(this)) {
-                    ((FlowingFluidAccessor)this).callSpreadToSides(world, blockPos, fluidState, blockState);
+                    ((FlowingFluidAccessor)this).bumblezone$callSpreadToSides(world, blockPos, fluidState, blockState);
                 }
             }
         }
@@ -181,12 +181,12 @@ public abstract class HoneyFluid extends BzFlowingFluid {
                 FluidState belowFluidState = this.getNewLiquid(world, belowBlockPos, belowBlockState);
                 if (!belowBlockState.getFluidState().is(BzTags.HONEY_FLUID) && this.canSpreadTo(world, blockPos, blockState, Direction.DOWN, belowBlockPos, belowBlockState, world.getFluidState(belowBlockPos), belowFluidState.getType())) {
                     this.spreadDown(world, belowBlockPos, belowBlockState, Direction.DOWN, belowFluidState);
-                    if (((FlowingFluidAccessor)this).callSourceNeighborCount(world, blockPos) >= 3) {
-                        ((FlowingFluidAccessor)this).callSpreadToSides(world, blockPos, fluidState, blockState);
+                    if (((FlowingFluidAccessor)this).bumblezone$callSourceNeighborCount(world, blockPos) >= 3) {
+                        ((FlowingFluidAccessor)this).bumblezone$callSpreadToSides(world, blockPos, fluidState, blockState);
                     }
                 }
                 else if (fluidState.isSource() || !belowBlockState.getFluidState().getType().isSame(this)) {
-                    ((FlowingFluidAccessor)this).callSpreadToSides(world, blockPos, fluidState, blockState);
+                    ((FlowingFluidAccessor)this).bumblezone$callSpreadToSides(world, blockPos, fluidState, blockState);
                 }
             }
         }
@@ -211,13 +211,13 @@ public abstract class HoneyFluid extends BzFlowingFluid {
         BlockPos aboveBlockPos = blockPos.above();
         BlockState aboveBlockState = worldReader.getBlockState(aboveBlockPos);
         BlockState belowBlockState = worldReader.getBlockState(blockPos.below());
-        boolean canPassThroughBelow = ((FlowingFluidAccessor)this).callCanPassThroughWall(Direction.DOWN, worldReader, blockPos, blockState, blockPos.below(), belowBlockState);
+        boolean canPassThroughBelow = ((FlowingFluidAccessor)this).bumblezone$callCanPassThroughWall(Direction.DOWN, worldReader, blockPos, blockState, blockPos.below(), belowBlockState);
 
         for(Direction direction : Direction.Plane.HORIZONTAL) {
             BlockPos sideBlockPos = blockPos.relative(direction);
             BlockState sideBlockState = worldReader.getBlockState(sideBlockPos);
             FluidState sideFluidState = sideBlockState.getFluidState();
-            if (sideFluidState.getType().isSame(this) && ((FlowingFluidAccessor)this).callCanPassThroughWall(direction, worldReader, blockPos, blockState, sideBlockPos, sideBlockState)) {
+            if (sideFluidState.getType().isSame(this) && ((FlowingFluidAccessor)this).bumblezone$callCanPassThroughWall(direction, worldReader, blockPos, blockState, sideBlockPos, sideBlockState)) {
                 if (sideFluidState.isSource()) {
                     ++neighboringFluidSource;
                 }
@@ -239,7 +239,7 @@ public abstract class HoneyFluid extends BzFlowingFluid {
             dropOffValue = 0;
         }
 
-        if (aboveFluidIsThisFluid && ((FlowingFluidAccessor)this).callCanPassThroughWall(Direction.UP, worldReader, blockPos, blockState, aboveBlockPos, aboveBlockState)) {
+        if (aboveFluidIsThisFluid && ((FlowingFluidAccessor)this).bumblezone$callCanPassThroughWall(Direction.UP, worldReader, blockPos, blockState, aboveBlockPos, aboveBlockState)) {
             if(!aboveFluidState.isSource() && aboveFluidState.is(BzTags.SPECIAL_HONEY_LIKE) && aboveFluidState.getValue(BOTTOM_LEVEL) != 0) {
                 newFluidLevel = highestNeighboringFluidLevel - dropOffValue;
             }

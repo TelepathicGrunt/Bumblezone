@@ -233,7 +233,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
 
         Set<TagKey<Item>> collectedTag = new HashSet<>();
         for (Object2ObjectMap.Entry<Item, Pair<WeightedRandomList<WeightedTradeResult>, TagKey<Item>>> pairEntry : tempQueenTradesFirstPass.object2ObjectEntrySet()) {
-            pairEntry.getValue().getFirst().unwrap().forEach(e -> e.setTotalWeight(((WeightedRandomListAccessor)pairEntry.getValue().getFirst()).getTotalWeight()));
+            pairEntry.getValue().getFirst().unwrap().forEach(e -> e.setTotalWeight(((WeightedRandomListAccessor)pairEntry.getValue().getFirst()).bumblezone$getTotalWeight()));
 
             if (pairEntry.getValue().getSecond() == null || !collectedTag.contains(pairEntry.getValue().getSecond())) {
                 tempRecipeViewerMainTrades.add(Pair.of(

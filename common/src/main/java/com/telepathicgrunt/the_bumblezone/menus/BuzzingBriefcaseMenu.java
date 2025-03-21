@@ -107,7 +107,7 @@ public class BuzzingBriefcaseMenu extends AbstractContainerMenu {
                 ItemStack playerStingerStack = inventory.getItem(stingerSlotIndex);
 
                 if (!playerStingerStack.isEmpty()) {
-                    ((BeeEntityInvoker)bee).callSetHasStung(false);
+                    ((BeeEntityInvoker)bee).bumblezone$callSetHasStung(false);
 
                     if (!player.getAbilities().instabuild) {
                         playerStingerStack.shrink(1);
@@ -150,7 +150,7 @@ public class BuzzingBriefcaseMenu extends AbstractContainerMenu {
                 ItemStack playerPollenStack = inventory.getItem(pollenSlotIndex);
 
                 if (!playerPollenStack.isEmpty()) {
-                    ((BeeEntityInvoker)bee).callSetHasNectar(true);
+                    ((BeeEntityInvoker)bee).bumblezone$callSetHasNectar(true);
 
                     if (!player.getAbilities().instabuild) {
                         playerPollenStack.shrink(1);

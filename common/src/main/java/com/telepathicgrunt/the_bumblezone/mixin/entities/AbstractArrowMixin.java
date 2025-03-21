@@ -21,7 +21,7 @@ public class AbstractArrowMixin {
             at = @At(value = "HEAD"))
     private void bumblezone$enchantmentEffects(LivingEntity livingEntity, CallbackInfo ci) {
         if (((AbstractArrow)(Object)this) instanceof ThrownTrident thrownTrident) {
-            ItemStack tridentItem = ((ThrownTridentAccessor)thrownTrident).getTridentItem();
+            ItemStack tridentItem = ((ThrownTridentAccessor)thrownTrident).bumblezone$getTridentItem();
             Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(tridentItem);
             for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
                 if (entry.getKey() == BzEnchantments.POTENT_POISON.get() && entry.getValue() > 0) {

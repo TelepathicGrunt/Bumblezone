@@ -30,7 +30,7 @@ public class StructureTemplateMixin {
                                                               CallbackInfoReturnable<Boolean> cir) {
 
         if(structurePlaceSettings.getProcessors().stream().anyMatch(processor ->
-                ((StructureProcessorAccessor)processor).callGetType() == BzProcessors.WATERLOGGING_FIX_PROCESSOR.get()))
+                ((StructureProcessorAccessor)processor).bumblezone$callGetType() == BzProcessors.WATERLOGGING_FIX_PROCESSOR.get()))
         {
             structurePlaceSettings.setKeepLiquids(false);
         }

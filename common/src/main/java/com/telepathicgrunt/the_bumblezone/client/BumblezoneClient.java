@@ -184,9 +184,9 @@ public class BumblezoneClient {
     }
 
     public static void clientSetup(ClientSetupEnqueuedEvent event) {
-        Set<Item> particleMarkerBlocks = new HashSet<>(ClientLevelAccessor.getMARKER_PARTICLE_ITEMS());
+        Set<Item> particleMarkerBlocks = new HashSet<>(ClientLevelAccessor.bumblezone$getMARKER_PARTICLE_ITEMS());
         particleMarkerBlocks.add(BzItems.HEAVY_AIR.get());
-        ClientLevelAccessor.setMARKER_PARTICLE_ITEMS(particleMarkerBlocks);
+        ClientLevelAccessor.bumblezone$setMARKER_PARTICLE_ITEMS(particleMarkerBlocks);
     }
 
     public static void registerBlockEntityRenderers(RegisterBlockEntityRendererEvent<?> event) {

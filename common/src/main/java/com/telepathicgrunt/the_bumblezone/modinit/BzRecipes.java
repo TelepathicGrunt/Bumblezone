@@ -24,14 +24,14 @@ public class BzRecipes {
 
     public static void registerBrewingStandRecipes() {
         if (BzGeneralConfigs.glisteringHoneyBrewingRecipe) {
-            PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.GLISTERING_HONEY_CRYSTAL.get(), Potions.LUCK);
+            PotionBrewingAccessor.bumblezone$callAddMix(Potions.AWKWARD, BzItems.GLISTERING_HONEY_CRYSTAL.get(), Potions.LUCK);
         }
         if (BzGeneralConfigs.beeStingerBrewingRecipe) {
-            PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.BEE_STINGER.get(), Potions.LONG_POISON);
+            PotionBrewingAccessor.bumblezone$callAddMix(Potions.AWKWARD, BzItems.BEE_STINGER.get(), Potions.LONG_POISON);
         }
         if (BzGeneralConfigs.beeSoupBrewingRecipe) {
-            PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.BEE_SOUP.get(), BzPotions.NEUROTOXIN.get());
-            PotionBrewingAccessor.callAddMix(BzPotions.NEUROTOXIN.get(), Items.REDSTONE, BzPotions.LONG_NEUROTOXIN.get());
+            PotionBrewingAccessor.bumblezone$callAddMix(Potions.AWKWARD, BzItems.BEE_SOUP.get(), BzPotions.NEUROTOXIN.get());
+            PotionBrewingAccessor.bumblezone$callAddMix(BzPotions.NEUROTOXIN.get(), Items.REDSTONE, BzPotions.LONG_NEUROTOXIN.get());
         }
     }
 }

@@ -81,7 +81,6 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -538,7 +537,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             if (specialDayItems.isPresent()) {
                 Optional<WeightedTradeResult> reward = specialDayItems.get().getSecond().getRandom(this.random);
                 if (reward.isPresent()) {
-                    spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), ((ItemEntityAccessor) itemEntity).getThrower(), specialDayItems.get().getFirst());
+                    spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), ((ItemEntityAccessor) itemEntity).bumblezone$getThrower(), specialDayItems.get().getFirst());
                     tradedItems++;
                 }
             }
@@ -551,7 +550,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
                 Optional<WeightedTradeResult> reward = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.get(item).getRandom(this.random);
                 if (reward.isPresent()) {
-                    spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), ((ItemEntityAccessor) itemEntity).getThrower());
+                    spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), ((ItemEntityAccessor) itemEntity).bumblezone$getThrower());
                     tradedItems++;
                 }
             }
@@ -734,7 +733,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     private static boolean finalbeeQueenAdvancementDone(ServerPlayer serverPlayer) {
         Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.QUEENS_DESIRE_FINAL_ADVANCEMENT);
-        Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor) serverPlayer.getAdvancements()).getProgress();
+        Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor) serverPlayer.getAdvancements()).bumblezone$getProgress();
         return advancement != null &&
                 advancementsProgressMap.containsKey(advancement) &&
                 advancementsProgressMap.get(advancement).isDone();
