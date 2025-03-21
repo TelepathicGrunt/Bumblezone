@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.Clearable;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -34,7 +35,6 @@ public class ReplaceExistingBlockEntitySafelyProcessor extends StructureProcesso
 
         if (blockState.hasBlockEntity() && !blockState.is(structureBlockInfoWorld.state().getBlock())) {
             ChunkAccess chunkAccess = levelReader.getChunk(position);
-            chunkAccess.setBlockState(position, structureBlockInfoWorld.state(), false);
             chunkAccess.removeBlockEntity(position);
         }
 
