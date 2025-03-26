@@ -1,3 +1,10 @@
+### **(V.7.6.8 Changes) (1.20.1 Minecraft)**
+
+#### Structures:
+Fixed Sempiternal Sanctums not spawning again. This time due to a misunderstanding about how exclusion zones work.
+ Was trying to keep them from spawning too close to Bumbling Beepartments.
+
+
 ### **(V.7.6.7 Changes) (1.20.1 Minecraft)**
 
 #### Features/Structures:
