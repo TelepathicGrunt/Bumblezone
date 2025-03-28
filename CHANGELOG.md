@@ -1,4 +1,11 @@
-### **(V.7.8.8 Changes) (1.21.1 Minecraft)**
+### **(V.7.8.9 Changes) (1.21.1 Minecraft)**
+
+#### Mod Compat:
+Added an incompatibility clause for Structure Essentials v4.5 mod because that specific version of that mod breaks Bumblezone 
+ completely by making Bumbling Beepartments spawn in air over the ENTIRE dimension. Please downgrade that mod or upgrade it to 4.6 or newer one they fix the issue.
+
+
+### **(V.7.8.9 Changes) (1.21.1 Minecraft)**
 
 #### Structures:
 Fixed Sempiternal Sanctums not spawning again. This time due to a misunderstanding about how exclusion zones work.

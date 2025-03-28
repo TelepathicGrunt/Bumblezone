@@ -41,3 +41,9 @@ license="https://github.com/TelepathicGrunt/Bumblezone/blob/latest-released/LICE
     type="optional"
     versionRange="*"
     ordering="BEFORE"
+
+[[dependencies.the_bumblezone]]
+    modId="structureessentials"
+    type="incompatible"
+    versionRange="[4.5]"
+    reason="Structure Essentials v4.5 completely destroys Bumblezone's dimension. Downgrade or upgrade Structure Essentials off of v4.5."
