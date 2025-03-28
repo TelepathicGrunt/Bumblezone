@@ -52,6 +52,9 @@
         "fabric": ">=0.83.0",
         "midnightlib": ">=1.4.0"
     },
+    "breaks": {
+        "structureessentials": "=1.20.1-4.5"
+    },
     "custom": {
         "cardinal-components": [
             "the_bumblezone:entity_dim_component",
