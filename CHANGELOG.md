@@ -1,3 +1,9 @@
+### **(V.7.6.10 Changes) (1.20.1 Minecraft)**
+
+#### Lang:
+es_es.json translations updated by GGlangf!
+
+
 ### **(V.7.6.9 Changes) (1.20.1 Minecraft)**
 
 #### Mod Compat:
