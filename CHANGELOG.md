@@ -13,6 +13,9 @@ Fixed Music Disc for Bee-ware of the Temple by LudoCrypt not having Bandcamp lin
 #### Lang:
 es_es.json translations updated by GGlangf!
 
+#### Mod Compat:
+Force Bumblezone's mod compat to run after all mod's main intialization. Should be more stable with mod compat now.
+
 
 ### **(V.7.6.9 Changes) (1.20.1 Minecraft)**
 

@@ -25,6 +25,9 @@
         "client": [
             "com.telepathicgrunt.the_bumblezone.fabric.BumblezoneFabricClient"
         ],
+        "server": [
+            "com.telepathicgrunt.the_bumblezone.fabric.BumblezoneFabricServer"
+        ],
         "modmenu": [
             "com.telepathicgrunt.the_bumblezone.configs.fabricbase.ModMenuCompat"
         ],
