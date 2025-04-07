@@ -68,6 +68,7 @@
     "gameplay.ServerPlayerGameModeMixin",
     "items.GlassBottleUseMixin",
     "items.ItemAccessor",
+    "items.JukeboxPlayableMixin",
     "items.MapItemMixin",
     "items.NameTagItemMixin",
     "items.PlayerDamageShieldInvoker",

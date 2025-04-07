@@ -63,6 +63,7 @@ import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseOnBlockEv
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.BuzzingBriefcase;
+import com.telepathicgrunt.the_bumblezone.items.BzMusicDiscsDownloadLinkTooltip;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
@@ -234,6 +235,7 @@ public class Bumblezone {
             BzItems.setupDispenserBehaviors();
 		});
         MessageHandler.init();
+        BzMusicDiscsDownloadLinkTooltip.SetupTooltipData();
     }
 
     private static void registerDataSerializers(BzRegisterDataSerializersEvent event) {

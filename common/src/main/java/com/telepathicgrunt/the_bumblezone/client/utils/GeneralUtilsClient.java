@@ -33,12 +33,16 @@ public class GeneralUtilsClient {
 
     public static List<MutableComponent> autoWrappedTooltip(int lengthText, String wrappingText) {
         List<MutableComponent> list = new ArrayList<>();
+        recursiveWrap(lengthText, wrappingText, list);
+        return list;
+    }
 
+    private static void recursiveWrap(int lengthText, String wrappingText, List<MutableComponent> list) {
         if (lengthText > 10) {
             String translatedWrapString = Language.getInstance().getOrDefault(wrappingText);
             if (translatedWrapString.length() > lengthText) {
                 list.add(Component.literal(translatedWrapString.substring(0, lengthText)));
-                list.add(Component.literal(translatedWrapString.substring(lengthText)));
+                recursiveWrap(lengthText, translatedWrapString.substring(lengthText), list);
             }
             else {
                 list.add(Component.translatable(wrappingText));
@@ -47,8 +51,6 @@ public class GeneralUtilsClient {
         else {
             list.add(Component.translatable(wrappingText));
         }
-
-        return list;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
