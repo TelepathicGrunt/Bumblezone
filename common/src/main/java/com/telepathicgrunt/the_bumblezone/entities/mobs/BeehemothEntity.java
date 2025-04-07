@@ -686,8 +686,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     public LivingEntity getControllingPassenger() {
         if (this.isSaddled()) {
             Entity firstPassenger = this.getFirstPassenger();
-            if (firstPassenger instanceof LivingEntity livingEntity) {
-                return livingEntity;
+            if (firstPassenger instanceof Player player) {
+                return player;
             }
         }
 
