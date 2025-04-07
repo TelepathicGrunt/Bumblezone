@@ -14,7 +14,7 @@ Music Discs with download link in tooltip now has the link under the song name.
 es_es.json translations updated by GGlangf!
 
 #### Mod Compat:
-Force Bumblezone's mod compat to run after all mod's main intialization. Should be more stable with mod compat now.
+Force Bumblezone's mod compat to run after all mod's main initialization. Should be more stable with mod compat now.
 
 
 ### **(V.7.8.9 Changes) (1.21.1 Minecraft)**
