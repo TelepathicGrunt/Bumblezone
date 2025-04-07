@@ -4,6 +4,12 @@
 Make non-player riders on Beehemoth now be ignored by the Beehemoth. Stops the glitchy teleporting.
  Also means if you put a mob on Beehemoth and then hold Honey Bucket, you can lure your Beehemoth as a mob transportation system.
 
+#### Items:
+Drowning in Despair, A Last First Last, and Beenna Box songs by Punpudle now have Bandcamp links on the Music Discs for downloading the songs!
+ https://punpudle.bandcamp.com/album/neubolance-the-bumblezone
+
+Fixed Music Disc for Bee-ware of the Temple by LudoCrypt not having Bandcamp link in tooltip.
+
 #### Lang:
 es_es.json translations updated by GGlangf!
 
