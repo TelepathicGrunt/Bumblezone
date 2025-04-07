@@ -14,7 +14,6 @@ public class BumblezoneFabric implements ModInitializer {
         Bumblezone.init();
 
         FabricEventManager.init();
-        FabricModChecker.setupModCompat();
         FabricEventManager.lateInit();
         FabricModuleInitializer.init();
     }

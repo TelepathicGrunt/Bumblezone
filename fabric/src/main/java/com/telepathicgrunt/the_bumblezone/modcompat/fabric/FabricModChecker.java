@@ -7,6 +7,8 @@ import static com.telepathicgrunt.the_bumblezone.modcompat.ModChecker.printError
 
 public class FabricModChecker {
 
+    private static boolean MOD_COMPAT_ALREADY_SETUP = false;
+
     /**
      * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
      * <p>
@@ -20,6 +22,10 @@ public class FabricModChecker {
      * {@link ModChecker}
      */
     public static void setupModCompat() {
+        if (MOD_COMPAT_ALREADY_SETUP) {
+            return;
+        }
+
         String modid = "";
         try {
             modid = "trinkets";
@@ -36,5 +42,7 @@ public class FabricModChecker {
             e.printStackTrace();
         }
         ModChecker.setupModCompat();
+
+        MOD_COMPAT_ALREADY_SETUP = true;
     }
 }
