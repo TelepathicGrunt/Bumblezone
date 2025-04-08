@@ -312,6 +312,15 @@
       "xp_reward": 0,
       "weight": 1,
       "required": false
+    },
+    {
+      "item": {
+        "id": "tombstone:easter_egg",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
     }
   ]
 }
