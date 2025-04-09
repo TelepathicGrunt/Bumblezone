@@ -316,7 +316,70 @@
     {
       "item": {
         "id": "tombstone:easter_egg",
-        "count": 1
+        "count": 1,
+        "components": {
+          "tombstone:tb_model_color": 1
+        }
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "tombstone:easter_egg",
+        "count": 1,
+        "components": {
+          "tombstone:tb_model_color": 2
+        }
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "tombstone:easter_egg",
+        "count": 1,
+        "components": {
+          "tombstone:tb_model_color": 3
+        }
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "tombstone:easter_egg",
+        "count": 1,
+        "components": {
+          "tombstone:tb_model_color": 4
+        }
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "tombstone:easter_egg",
+        "count": 1,
+        "components": {
+          "tombstone:tb_model_color": 5
+        }
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "tombstone:easter_egg",
+        "count": 1,
+        "components": {
+          "tombstone:tb_model_color": 6
+        }
       },
       "xp_reward": 0,
       "weight": 1,
