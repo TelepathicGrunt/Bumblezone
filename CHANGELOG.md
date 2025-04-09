@@ -1,4 +1,4 @@
-### **(V.7.8.10 Changes) (1.21.1 Minecraft)**
+### **(V.7.8.11 Changes) (1.21.1 Minecraft)**
 
 #### Entities:
 Make non-player riders on Beehemoth now be ignored by the Beehemoth. Stops the glitchy teleporting.
