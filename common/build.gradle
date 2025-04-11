@@ -28,18 +28,18 @@ dependencies {
     compileOnly "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"
     annotationProcessor "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"
 
-    runtimeOnly(compileOnly("earth.terrarium.athena:athena-common-${rootProject.athena}"))
-    implementation("com.teamresourceful.resourcefullib:resourcefullib-common-${rootProject.resourcefullib}")
+    runtimeOnly(compileOnly("earth.terrarium.athena:athena-common-${rootProject.athena}")) { transitive = false  }
+    implementation("com.teamresourceful.resourcefullib:resourcefullib-common-${rootProject.resourcefullib}") { transitive = false  }
 
     // COMPAT
-    compileOnly("mezz.jei:jei-${rootProject.jei_mc}-forge-api:${rootProject.jei}")
-    compileOnly("mezz.jei:jei-${rootProject.jei_mc}-common-api:${rootProject.jei}")
-    compileOnly("dev.emi:emi-xplat-intermediary:${rootProject.emi}:api")
-    compileOnly("me.shedaniel:RoughlyEnoughItems-api:${rootProject.rei}")
-    compileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${rootProject.rei}")
-    compileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
-    compileOnly("noobanidus.mods.lootr:lootr-common:${rootProject.lootr_version}")
-    compileOnly("maven.modrinth:projectile-damage-attribute:${rootProject.projectile_damage_attribute}-forge")
+    compileOnly("mezz.jei:jei-${rootProject.jei_mc}-forge-api:${rootProject.jei}") { transitive = false  }
+    compileOnly("mezz.jei:jei-${rootProject.jei_mc}-common-api:${rootProject.jei}") { transitive = false  }
+    compileOnly("dev.emi:emi-xplat-intermediary:${rootProject.emi}:api") { transitive = false  }
+    compileOnly("me.shedaniel:RoughlyEnoughItems-api:${rootProject.rei}") { transitive = false  }
+    compileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${rootProject.rei}") { transitive = false  }
+    compileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}") { transitive = false  }
+    compileOnly("noobanidus.mods.lootr:lootr-common:${rootProject.lootr_version}") { transitive = false  }
+    compileOnly("maven.modrinth:projectile-damage-attribute:${rootProject.projectile_damage_attribute}-forge") { transitive = false  }
 
 }
 

@@ -32,7 +32,7 @@ dependencies {
         it.officialMojangMappings()
         it.parchment("org.parchmentmc.data:parchment-${project.parchment_minecraft_version}:${project.parchment_mappings_version}@zip")
     })
-    compileOnly(project(":common")) {
+    compileOnly(project.project(":common")) {
         transitive = false
     }
 
@@ -127,7 +127,7 @@ loom {
         "${mod_id}" {
             // Tell Loom about each source set used by your mod here. This ensures that your mod's classes are properly transformed by Loader.
             sourceSet sourceSets.main
-            sourceSet project(":common").sourceSets.main
+            sourceSet project.project(":common").sourceSets.main
         }
     }
 
@@ -172,17 +172,17 @@ loom {
 }
 
 tasks.named("compileJava", JavaCompile) {
-    source(project(":common").sourceSets.main.allJava)
+    source(project.project(":common").sourceSets.main.allJava)
 }
 
 tasks.named("javadoc", Javadoc).configure {
-    source(project(":common").sourceSets.main.allJava)
+    source(project.project(":common").sourceSets.main.allJava)
 }
 
 tasks.named("sourcesJar", Jar) {
-    from(project(":common").sourceSets.main.allSource)
+    from(project.project(":common").sourceSets.main.allSource)
 }
 
 processResources {
-    from project(":common").sourceSets.main.resources
+    from project.project(":common").sourceSets.main.resources
 }

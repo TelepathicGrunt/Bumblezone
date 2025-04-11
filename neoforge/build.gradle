@@ -166,7 +166,7 @@ neoForge {
         // but multi mod projects should define one per mod
         "${mod_id}" {
             sourceSet(sourceSets.main)
-            sourceSet(project(":common").sourceSets.main)
+            sourceSet(project.project(":common").sourceSets.main)
         }
     }
 
@@ -203,27 +203,27 @@ neoForge {
             programArguments.add('--nogui')
         }
 
-        data {
-            data()
+        serverData {
+            serverData()
             programArguments.add("--all --mod the_bumblezone")
-            programArguments.add("--existing ${project(":common").file("src/main/resources").absolutePath}")
-            programArguments.add("--output ${project(":common").file("src/main/generated/resources").absolutePath}")
+            programArguments.add("--existing ${project.project(":common").file("src/main/resources").absolutePath}")
+            programArguments.add("--output ${project.project(":common").file("src/main/generated/resources").absolutePath}")
         }
     }
 }
 
 tasks.named("compileJava", JavaCompile) {
-    source(project(":common").sourceSets.main.allJava)
+    source(project.project(":common").sourceSets.main.allJava)
 }
 
 tasks.named("javadoc", Javadoc) {
-    source(project(":common").sourceSets.main.allJava)
+    source(project.project(":common").sourceSets.main.allJava)
 }
 
 tasks.named("sourcesJar", Jar) {
-    from(project(":common").sourceSets.main.allSource)
+    from(project.project(":common").sourceSets.main.allSource)
 }
 
 processResources {
-    from project(":common").sourceSets.main.resources
+    from project.project(":common").sourceSets.main.resources
 }
