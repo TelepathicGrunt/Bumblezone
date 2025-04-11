@@ -184,11 +184,7 @@ public class BumblezoneClient {
         BzClientFluids.CLIENT_FLUIDS.init();
     }
 
-    public static void clientSetup(BzClientSetupEnqueuedEvent event) {
-        Set<Item> particleMarkerBlocks = new HashSet<>(ClientLevelAccessor.bumblezone$getMARKER_PARTICLE_ITEMS());
-        particleMarkerBlocks.add(BzItems.HEAVY_AIR.get());
-        ClientLevelAccessor.bumblezone$setMARKER_PARTICLE_ITEMS(particleMarkerBlocks);
-    }
+    public static void clientSetup(BzClientSetupEnqueuedEvent event) {}
 
     public static void registerBlockEntityRenderers(BzRegisterBlockEntityRendererEvent<?> event) {
         BlockEntityRenderersAccessor.bumblezone$callRegister(BzBlockEntities.ESSENCE_BLOCK.get(), EssenceBlockEntityRenderer::new);
