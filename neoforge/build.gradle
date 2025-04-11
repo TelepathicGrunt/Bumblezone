@@ -1,187 +1,229 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.1.2"
-}
-architectury {
-    platformSetupLoomIde()
-    neoForge()
-}
-
-loom {
-    accessWidenerPath = project(":common").loom.accessWidenerPath
-
-    neoForge {
-        runs {
-            all {}
-
-            data {
-                data()
-                programArgs("--all", "--mod", "the_bumblezone")
-                programArgs("--existing", project(":common").file("src/main/resources").absolutePath)
-                programArgs("--output", project(":common").file("src/main/generated/resources").absolutePath)
-            }
-        }
-    }
+    id 'net.neoforged.moddev'
 }
 
 configurations {
-    common
-    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
-    compileClasspath.extendsFrom common
-    runtimeClasspath.extendsFrom common
-    developmentNeoForge.extendsFrom common
+    runtimeClasspath.extendsFrom localRuntime
+}
+
+repositories {
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "ModMaven"
+                url = "https://modmaven.dev"
+            }
+        }
+        filter {
+            includeGroupAndSubgroups("com.hollingsworth.ars_nouveau")
+            includeGroupAndSubgroups("mekanism")
+        }
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "C4's Maven"
+                url = "https://maven.theillusivec4.top/"
+            }
+        }
+        filter {
+            includeGroupAndSubgroups("top.theillusivec4.curios")
+            includeGroupAndSubgroups("com.illusivesoulworks.caelus")
+        }
+    }
 }
 
 dependencies {
-    // REQUIRED
-    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
+    compileOnly(project(':common')) {
+        transitive = false
+    }
 
-    modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-neoforge-${rootProject.athena}")))
-    modRuntimeOnly(modCompileOnly(include("com.teamresourceful.resourcefullib:resourcefullib-neoforge-${rootProject.resourcefullib}")))
-
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
+    runtimeOnly(compileOnly(jarJar("earth.terrarium.athena:athena-neoforge-${rootProject.athena}")))
+    runtimeOnly(compileOnly(jarJar("com.teamresourceful.resourcefullib:resourcefullib-neoforge-${rootProject.resourcefullib}")))
 
     // COMPAT
-    modCompileOnly("curse.maven:iron_jetpack-284497:${project.iron_jetpack_file_id}") { transitive = false }
-    modCompileOnly("curse.maven:pneumaticcraft-281849:${project.pneumaticcraft_file_id}") { transitive = false }
+    compileOnly("curse.maven:iron_jetpack-284497:${project.iron_jetpack_file_id}") { transitive = false }
+    compileOnly("curse.maven:pneumaticcraft-281849:${project.pneumaticcraft_file_id}") { transitive = false }
 
-    modCompileOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}") { transitive = false }
+    compileOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}") { transitive = false }
 
-    // modCompileOnly("curse.maven:corail_tombstone-243707:6171577")
+    // compileOnly("curse.maven:corail_tombstone-243707:6171577")
 
-    modCompileOnly "noobanidus.mods.lootr:lootr-neoforge:${rootProject.lootr_version}"
-    // modRuntimeOnly("noobanidus.mods.lootr:lootr-neoforge:${rootProject.lootr_version}")
+    compileOnly "noobanidus.mods.lootr:lootr-neoforge:${rootProject.lootr_version}"
+    // runtimeOnly("noobanidus.mods.lootr:lootr-neoforge:${rootProject.lootr_version}")
 
-    modCompileOnly("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}") { transitive = false }
+    compileOnly("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}") { transitive = false }
 
-    modCompileOnly("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}") { transitive = false }
+    compileOnly("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}") { transitive = false }
 
-    modCompileOnly("com.hollingsworth.ars_nouveau:ars_nouveau-${project.ars_nouveau}") { transitive = false }
-    modCompileOnly("curse.maven:ars_elemental-561470:${project.ars_elemental_file_id}") { transitive = false }
+    compileOnly("com.hollingsworth.ars_nouveau:ars_nouveau-${project.ars_nouveau}") { transitive = false }
+    compileOnly("curse.maven:ars_elemental-561470:${project.ars_elemental_file_id}") { transitive = false }
 
-    // modRuntimeOnly("curse.maven:better-advancements-272515:4631253")
-    // modRuntimeOnly("curse.maven:spit-it-out-857141:4614678")
-    // modRuntimeOnly("curse.maven:atlasviewer-633577:4597419")
+    // runtimeOnly("curse.maven:better-advancements-272515:4631253")
+    // runtimeOnly("curse.maven:spit-it-out-857141:4614678")
+    // runtimeOnly("curse.maven:atlasviewer-633577:4597419")
 
-    modCompileOnly("curse.maven:mekanism-268560:${project.mekanism_file_id}") { transitive = false }
-    //modCompileOnly("mekanism:Mekanism:${project.mekanism}:api")
-//    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}")// core
-//    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}:additions")// Mekanism: Additions
-//    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}:generators")// Mekanism: Generators
-//    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}:tools")// Mekanism: Tools
+    compileOnly("curse.maven:mekanism-268560:${project.mekanism_file_id}") { transitive = false }
+    //compileOnly("mekanism:Mekanism:${project.mekanism}:api")
+//    runtimeOnly("mekanism:Mekanism:${project.mekanism}")// core
+//    runtimeOnly("mekanism:Mekanism:${project.mekanism}:additions")// Mekanism: Additions
+//    runtimeOnly("mekanism:Mekanism:${project.mekanism}:generators")// Mekanism: Generators
+//    runtimeOnly("mekanism:Mekanism:${project.mekanism}:tools")// Mekanism: Tools
 
-    //modRuntimeOnly("mezz.jei:jei-${project.jei_mc}-neoforge:${project.jei}")
-    //modRuntimeOnly("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
+    //runtimeOnly("mezz.jei:jei-${project.jei_mc}-neoforge:${project.jei}")
+    //runtimeOnly("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
 
-    //modRuntimeOnly("dev.emi:emi-neoforge:${emi}")
+    //runtimeOnly("dev.emi:emi-neoforge:${emi}")
 
-    //modRuntimeOnly("me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config}")
-    //modRuntimeOnly("dev.architectury:architectury-neoforge:${project.architectury}")
-    //modRuntimeOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}")
-    modCompileOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}:api") { transitive = false }
+    //runtimeOnly("me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config}")
+    //runtimeOnly("dev.architectury:architectury-neoforge:${project.architectury}")
+    //runtimeOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}")
+    compileOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}:api") { transitive = false }
 
-//    modRuntimeOnly("curse.maven:worldedit-225608:4586218")
-//    modRuntimeOnly("curse.maven:huge-structure-blocks-474114:5628956")
-//    modRuntimeOnly("com.telepathicgrunt:CommandStructures-Neoforge:${project.commandstructures_neoforge}")
-//    modRuntimeOnly("com.telepathicgrunt:StructureVoidToggle-Neoforge:${project.structurevoidtoggle_neoforge}")
+//    runtimeOnly("curse.maven:worldedit-225608:4586218")
+//    runtimeOnly("curse.maven:huge-structure-blocks-474114:5628956")
+//    runtimeOnly("com.telepathicgrunt:CommandStructures-Neoforge:${project.commandstructures_neoforge}")
+//    runtimeOnly("com.telepathicgrunt:StructureVoidToggle-Neoforge:${project.structurevoidtoggle_neoforge}")
 
-    modCompileOnly("curse.maven:framedblocks-441647:${project.framedblocks_file_id}") { transitive = false }
+    compileOnly("curse.maven:framedblocks-441647:${project.framedblocks_file_id}") { transitive = false }
+}
+
+publishMods {
+    file = tasks.jar.archiveFile
+    modLoaders.add("neoforge")
+
+    File changeLog = rootProject.file("CHANGELOG.md")
+    String changeLogText = changeLog.exists() ? changeLog.text : ""
+
+    def uploadDependenciesCf = [
+            "resourceful-lib": true,
+            "better-advancements": false
+    ]
+    def uploadDependenciesMr = [
+            "resourceful-lib": true,
+            "better-advancements": false
+    ]
+
+    if (project.hasProperty('curseforge_id_neoforge')) {
+        curseforge('CurseforgeNeo') {
+            accessToken = providers.environmentVariable('CURSEFORGEKEY')
+            projectId = project.findProperty('curseforge_id')
+            minecraftVersions.add(project.minecraft_version)
+            changelog = changeLogText
+
+            uploadDependenciesCf.each { dep, required ->
+                if (required) {
+                    requires(dep)
+                } else {
+                    optional(dep)
+                }
+            }
+        }
+    }
+
+    if (project.hasProperty('modrinth_id_neoforge')) {
+        modrinth('modrinthNeo') {
+            accessToken = accessToken = providers.environmentVariable('MODRINTH_TOKEN')
+            projectId = project.findProperty('modrinth_id')
+            minecraftVersions.add(project.minecraft_version)
+            changelog = changeLogText
+
+            dependencies {
+                uploadDependenciesMr.each { dep, required ->
+                    if (required) {
+                        requires(dep)
+                    } else {
+                        optional(dep)
+                    }
+                }
+            }
+        }
+    }
+}
+
+neoForge {
+    version = project.neoforge_version
+
+    parchment {
+        minecraftVersion = project.parchment_minecraft_version
+        mappingsVersion = project.parchment_mappings_version
+    }
+
+    def atFile = project.file("src/main/resources/META-INF/accesstransformer.cfg")
+    if (atFile.exists()) {
+        accessTransformers {
+            from atFile
+            publish atFile
+        }
+    }
+
+    validateAccessTransformers.set(true)
+
+    mods {
+        // define mod <-> source bindings
+        // these are used to tell the game which sources are for which mod
+        // mostly optional in a single mod project
+        // but multi mod projects should define one per mod
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+            sourceSet(project(":common").sourceSets.main)
+        }
+    }
+
+    runs {
+        configureEach {
+            logLevel = org.slf4j.event.Level.DEBUG
+
+            gameDirectory = project.file('run')
+
+            sourceSet = sourceSets.main
+            loadedMods.set([mods."${mod_id}"])
+        }
+
+        client {
+            client()
+            //systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+
+            if (project.hasProperty('mc_uuid')) {
+                programArguments.add("--uuid=${project.findProperty('mc_uuid')}")
+            }
+
+            if (project.hasProperty('mc_username')) {
+                programArguments.add("--username=${project.findProperty('mc_username')}")
+            }
+
+            if (project.hasProperty('mc_java_agent_path')) {
+                jvmArgument("-javaagent:${project.findProperty('mc_java_agent_path')}")
+            }
+        }
+
+        server {
+            server()
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            programArguments.add('--nogui')
+        }
+
+        data {
+            data()
+            programArguments.add("--all --mod the_bumblezone")
+            programArguments.add("--existing ${project(":common").file("src/main/resources").absolutePath}")
+            programArguments.add("--output ${project(":common").file("src/main/generated/resources").absolutePath}")
+        }
+    }
+}
+
+tasks.named("compileJava", JavaCompile) {
+    source(project(":common").sourceSets.main.allJava)
+}
+
+tasks.named("javadoc", Javadoc) {
+    source(project(":common").sourceSets.main.allJava)
+}
+
+tasks.named("sourcesJar", Jar) {
+    from(project(":common").sourceSets.main.allSource)
 }
 
 processResources {
-    from(project(":common").sourceSets["main"].resources)
-
-    inputs.property "version", project.version
-
-    filesMatching("META-INF/neoforge.mods.toml") {
-        expand "version": project.version
-    }
+    from project(":common").sourceSets.main.resources
 }
-
-shadowJar {
-    exclude "fabric.mod.json"
-    exclude "architectury.common.json"
-
-    configurations = [project.configurations.shadowCommon]
-    archiveClassifier.set("dev-shadow")
-}
-
-remapJar {
-    inputFile.set shadowJar.archiveFile
-    dependsOn shadowJar
-    archiveClassifier.set(null)
-    atAccessWideners.add("${rootProject.mod_id}.accesswidener") // this is a path inside the mod jar
-}
-
-jar {
-    archiveClassifier.set("dev")
-}
-
-sourcesJar {
-    def commonSources = project(":common").sourcesJar
-    dependsOn commonSources
-    from commonSources.archiveFile.map { zipTree(it) }
-}
-
-components.java {
-    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
-        skip()
-    }
-}
-
-def ENV = System.getenv()
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact remapJar
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
-            }
-
-            artifactId = "$rootProject.name"
-
-            pom {
-                name = 'TheBumblezone'
-                description = 'A wonderful bee dimension mod with lots of new exploration and adventuring to do!'
-                url = 'https://github.com/TelepathicGrunt/Bumblezone'
-
-                scm {
-                    connection = 'git:https://github.com/TelepathicGrunt/Bumblezone.git'
-                    developerConnection = 'git:https://github.com/TelepathicGrunt/Bumblezone.git'
-                    url = 'https://github.com/TelepathicGrunt/Bumblezone'
-                }
-
-                licenses {
-                    license {
-                        name = 'GNU Lesser General Public License v3.0'
-                        url = 'https://github.com/TelepathicGrunt/Bumblezone/LICENSE'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id = 'telepathic_grunt'
-                        name = 'TelepathicGrunt'
-                        email = 'asarnesespam@gmail.com'
-                    }
-                }
-            }
-        }
-    }
-    repositories {
-        maven {
-            url = "https://maven.resourcefulbees.com/repository/telepathicgrunt/"
-            credentials {
-                username ENV.MAVEN_USER
-                password ENV.MAVEN_PASS
-            }
-        }
-    }
-}
-
-task buildAndRelease{}
-tasks.build.mustRunAfter tasks.clean
-tasks.publish.mustRunAfter tasks.build
-tasks.publishMods.mustRunAfter tasks.publish
-tasks.buildAndRelease.dependsOn(tasks.clean, tasks.build, tasks.publish, tasks.publishMods)

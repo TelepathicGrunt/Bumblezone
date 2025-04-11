@@ -4,6 +4,10 @@
 
 ***
 
+The Bumblezone is LGPLv3 (LICENSE.txt) except for the assets under all resources/assets which is All Rights Reserved (LICENSE_ASSETS.txt)
+
+***
+
 ## COMPILEONLY MAVEN
 
 For developers that want to add Bumblezone to their mod's workspace:
@@ -27,10 +31,10 @@ dependencies {
      compileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-neoforge"
      
    FABRIC/QUILT: 
-     modCompileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-fabric"
+     compileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-fabric"
      
    ARCH COMMON MODULE: 
-     modCompileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-common"
+     compileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-common"
 }
 ```
 
@@ -78,12 +82,12 @@ dependencies {
      implementation "com.teamresourceful.resourcefullib:resourcefullib-forge-1.20.5:2.6.0-beta.7"
      
    FABRIC/QUILT: 
-     modImplementation "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-fabric"
-     modImplementation "earth.terrarium.athena:athena-fabric-1.20.5:3.4.0"
+     implementation "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-fabric"
+     implementation "earth.terrarium.athena:athena-fabric-1.20.5:3.4.0"
      implementation "com.teamresourceful.resourcefullib:resourcefullib-fabric-1.20.5:2.6.0-beta.7"
-     modImplementation "maven.modrinth:midnightlib:1.5.5-fabric" 
+     implementation "maven.modrinth:midnightlib:1.5.5-fabric" 
    
    ARCH COMMON MODULE: 
-     modCompileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-common"
+     compileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-common"
 }
 ```

@@ -1,17 +1,16 @@
 {
     "schemaVersion": 1,
-    "id": "the_bumblezone",
-    "version": "$version",
-
-    "name": "The Bumblezone - Fabric",
-    "description": "A wonderful bee dimension mod with lots of new exploration and adventuring to do! Check out the advancements for how to play the mod!",
+    "id": "${mod_id}",
+    "version": "${version}",
+    "name": "${mod_display_name}",
+    "description": "${mod_description}",
     "authors": [
         "TelepathicGrunt"
     ],
     "contact": {
-        "homepage": "https://www.curseforge.com/minecraft/mc-mods/the-bumblezone",
-        "sources": "https://github.com/TelepathicGrunt/Bumblezone",
-        "issues": "https://github.com/TelepathicGrunt/Bumblezone/issues"
+        "homepage": "${homepage_url}",
+        "sources": "${sources_url}",
+        "issues": "${issues_url}"
     },
 
     "license": "LGPLv3",
@@ -42,12 +41,14 @@
         ]
     },
     "mixins": [
-        "the_bumblezone-fabric.mixins.json",
-        "the_bumblezone-common.mixins.json"
+        "${mod_id}-fabric.mixins.json",
+        "${mod_id}-common.mixins.json"
     ],
+    "accessWidener": "${mod_id}.accesswidener",
     "depends": {
-        "fabricloader": "*",
-        "minecraft": ">=1.21.1",
+        "java": ">=${java_version}",
+        "fabricloader": ">=${fabric_loader_version}",
+        "minecraft": ">=1.21.5",
         "fabric": ">=0.100.6",
         "resourcefullib": ">=3.0.11",
         "midnightlib": "*"

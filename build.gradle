@@ -1,215 +1,237 @@
 plugins {
-    id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.7-SNAPSHOT" apply false
-    id 'io.github.juuxel.loom-vineflower' version '1.11.0' apply false
-    id "me.modmuss50.mod-publish-plugin" version "0.7.4"
+    id 'idea'
+    id 'maven-publish'
+    id 'me.modmuss50.mod-publish-plugin' version '0.8.4' apply false
+    id 'net.neoforged.moddev' version '2.0.80' apply false
 }
 
-architectury {
-    minecraft = rootProject.minecraft_version
+def javaVersion = 21
+
+def ENV = System.getenv()
+version = mod_version
+group = mod_group_id
+
+allprojects {
+    repositories {
+        exclusiveContent {
+            forRepository {
+                maven {
+                    url = "https://www.cursemaven.com"
+                }
+            }
+            filter {
+                includeGroupAndSubgroups("curse.maven")
+            }
+        }
+        exclusiveContent {
+            forRepository {
+                maven {
+                    url = "https://api.modrinth.com/maven/"
+                }
+            }
+            filter {
+                includeGroupAndSubgroups("maven.modrinth")
+            }
+        }
+        exclusiveContent {
+            forRepository {
+                maven {
+                    url = 'https://nexus.resourcefulbees.com/repository/maven-public/'
+                }
+            }
+            filter {
+                includeGroupAndSubgroups("com.telepathicgrunt")
+                includeGroupAndSubgroups("com.teamresourceful.resourcefullib")
+                includeGroupAndSubgroups("com.teamresourceful")
+                includeGroupAndSubgroups("earth.terrarium.athena")
+            }
+        }
+        exclusiveContent {
+            forRepository {
+                maven {
+                    url = "https://maven.blamejared.com"
+                }
+            }
+            filter {
+                includeGroupAndSubgroups("mezz.jei")
+                includeGroupAndSubgroups("noobanidus.mods.lootr")
+            }
+        }
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = "TerraformersMC"
+                    url = "https://maven.terraformersmc.com/"
+                }
+            }
+            filter {
+                includeGroupByRegex("dev\\.emi.*")
+            }
+        }
+        exclusiveContent {
+            forRepository {
+                maven {
+                    url = "https://maven.shedaniel.me"
+                }
+            }
+            filter {
+                includeGroupAndSubgroups("me.shedaniel.cloth")
+                includeGroupAndSubgroups("me.shedaniel")
+            }
+        }
+    }
+
+    tasks.register('buildAndRelease') {
+        dependsOn(tasks.build, tasks.publish)
+    }
 }
 
 subprojects {
-    apply plugin: "dev.architectury.loom"
-    apply plugin: "me.modmuss50.mod-publish-plugin"
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+    apply plugin: 'me.modmuss50.mod-publish-plugin'
+    project.group = rootProject.group
+    project.version = rootProject.version
+
+    base {
+        archivesName.set(mod_id)
+    }
 
     version = "${rootProject.mod_version}+${rootProject.minecraft_version}-${name}"
 
-    loom {
-        silentMojangMappingsLicense()
-    }
+    repositories {}
 
     dependencies {
-        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
-        mappings loom.officialMojangMappings()
+        compileOnly "org.jetbrains:annotations:${jetbrains_annotations_version}"
     }
 
-    Map<String, Map<String, String>> platformSettings = [
-            "fabric": [
-                    "curse-id": "363949",
-                    "modrinth-id": "eA8SXqWL"
-            ],
-            "neoforge": [
-                    "curse-id": "362479",
-                    "modrinth-id": "38tpSycf"
-            ]
-    ]
+    processResources {
+        filteringCharset "UTF-8"
 
-    Map<String, Map<String, Boolean>> platformDependencies = [
-            "fabric": [
-                    "fabric-api": true,
-                    "midnightlib": true,
-                    "resourceful-lib": true,
-                    "better-advancements": false
-            ],
-            "neoforge": [
-                    "resourceful-lib": true
-            ]
-    ]
+        def expandProps = [
+                "version"              : project.version,
+                "maven_group_id"       : project.mod_group_id,
+                "mod_id"               : project.mod_id,
+                "mod_display_name"     : project.mod_name,
+                "mod_description"      : project.mod_description,
+                "sources_url"          : project.sources_url,
+                "issues_url"           : project.issues_url,
+                "license_url"          : project.license_url,
+                "homepage_url"         : project.homepage_url,
 
-    var env = System.getenv()
-    def uploadSettings = platformSettings.get(name)
-    def uploadDependencies = platformDependencies.get(name)
+                "minecraft_version"    : project.minecraft_version,
+                "neoforge_version"     : project.neoforge_version,
+                "fabric_loader_version": project.fabric_loader_version,
+                "java_version"         : "${javaVersion}",
+        ]
 
-    if (uploadSettings != null && uploadDependencies != null) {
-
-        File changeLog = rootProject.file("CHANGELOG.md")
-        String changelogText = changeLog.exists() ? changeLog.text : ""
-
-        publishMods {
-            file = tasks.remapJar.archiveFile
-            type = STABLE
-            changelog = changelogText
-
-            displayName = "The Bumblezone v${rootProject.mod_version} (${rootProject.minecraft_version} MC ${name.capitalize()})"
-            version = "${project.version}"
-            modLoaders.add(name)
-
-            if (env.CURSEFORGEKEY) {
-                curseforge {
-                    accessToken = env.CURSEFORGEKEY
-                    projectId = uploadSettings["curse-id"]
-                    minecraftVersions.add(rootProject.minecraft_version)
-
-                    if (uploadDependencies.size() > 0) {
-                        uploadDependencies.each { dep, required ->
-                            if (required) {
-                                requires(dep)
-                            }
-                            else {
-                                optional(dep)
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (env.MODRINTH_TOKEN) {
-                modrinth {
-                    accessToken = env.MODRINTH_TOKEN
-                    projectId = uploadSettings["modrinth-id"]
-                    minecraftVersions.add(rootProject.minecraft_version)
-
-                    dependencies {
-                        uploadDependencies.each { dep, required ->
-                            if (required) {
-                                requires(dep)
-                            } else {
-                                optional(dep)
-                            }
-                        }
-                    }
-                }
-            }
+        filesMatching(['pack.mcmeta', '*.mod.json', 'META-INF/neoforge.mods.toml', '*.mixins.json']) {
+            expand expandProps
         }
-    }
-}
-
-allprojects {
-    apply plugin: "java"
-    apply plugin: "architectury-plugin"
-    apply plugin: "maven-publish"
-
-    archivesBaseName = rootProject.mod_id
-    version = "${rootProject.mod_version}+${rootProject.minecraft_version}-${name}"
-    group = rootProject.maven_group
-
-    repositories {
-        mavenLocal()
-        maven {
-            url "https://maven.neoforged.net/releases/"
-        }
-        maven {
-            url = 'https://nexus.resourcefulbees.com/repository/maven-public/'
-            content {
-                includeGroup 'com.telepathicgrunt'
-                includeGroup 'com.teamresourceful.resourcefullib'
-                includeGroup 'com.teamresourceful'
-                includeGroup 'earth.terrarium.athena'
-            }
-        }
-        maven {
-            url = 'https://api.modrinth.com/maven/'
-            content {
-                includeGroup 'maven.modrinth'
-            }
-        }
-        maven {
-            url = 'https://www.cursemaven.com'
-            content {
-                includeGroup 'curse.maven'
-            }
-        }
-        maven {
-            url = 'https://maven.shedaniel.me'
-            content {
-                includeGroup 'me.shedaniel.cloth'
-                includeGroup 'me.shedaniel'
-            }
-        }
-        maven {
-            name = "TerraformersMC"
-            url = "https://maven.terraformersmc.com/"
-            content {
-                includeGroupByRegex 'dev\\.emi.*'
-            }
-        }
-        maven {
-            url = 'https://maven.blamejared.com'
-            content {
-                includeGroup 'mezz.jei'
-                includeGroup 'noobanidus.mods.lootr'
-            }
-        }
-        maven {
-            url = "https://maven.octo-studios.com/releases"
-            content {
-                includeGroup 'top.theillusivec4.curios'
-            }
-        }
-        maven {
-            url "https://maven.jamieswhiteshirt.com/libs-release"
-            content {
-                includeGroup "com.jamieswhiteshirt"
-            }
-        }
-        maven {
-            name = "C4's Maven"
-            url = 'https://maven.theillusivec4.top/'
-            content {
-                includeGroup 'top.theillusivec4.curios'
-                includeGroup 'com.illusivesoulworks.caelus'
-            }
-        }
-        maven {
-            name = 'GeckoLib'
-            url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
-            content {
-                includeGroup("software.bernie.geckolib")
-            }
-        }
-        maven {
-            name = "ModMaven"
-            url = "https://modmaven.dev"
-            content {
-                includeGroup 'com.hollingsworth.ars_nouveau'
-            }
-        }
-        maven {
-            url 'https://modmaven.dev/'
-            content {
-                includeGroup 'mekanism'
-            }
-        }
-    }
-
-    tasks.withType(JavaCompile) {
-        options.encoding = "UTF-8"
-        options.release = 21
+        inputs.properties(expandProps)
     }
 
     java {
+        if (JavaVersion.current() < JavaVersion.toVersion(javaVersion)) {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(javaVersion)
+            }
+        } else {
+            sourceCompatibility = JavaVersion.toVersion(javaVersion)
+            targetCompatibility = JavaVersion.toVersion(javaVersion)
+        }
+
         withSourcesJar()
+//        withJavadocJar()
+    }
+
+    javadoc {
+        // make javadoc not throw on mixin's '@reason'
+        options.tags = ["reason"]
+    }
+
+    jar {
+        def licenseFile = rootProject.file("LICENSE.txt")
+        inputs.file(licenseFile)
+
+        from(licenseFile) {
+            rename { "LICENSE.txt" }
+        }
+    }
+
+    sourcesJar {
+        def licenseFile = rootProject.file("LICENSE.txt")
+        inputs.file(licenseFile)
+
+        from(licenseFile) {
+            rename { "LICENSE.txt" }
+        }
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.release.set(javaVersion)
+    }
+
+    tasks.publishMods.mustRunAfter tasks.publish
+    tasks.buildAndRelease.dependsOn(tasks.publish).dependsOn(tasks.publishMods)
+
+    publishing {
+        repositories {
+            if (ENV.MAVEN_USER) {
+                maven {
+                    url = uri("https://nexus.resourcefulbees.com/repository/telepathicgrunt/")
+                    credentials {
+                        username ENV.MAVEN_USER
+                        password ENV.MAVEN_PASS
+                    }
+                }
+            }
+        }
+
+        publications {
+            "mavenJava${project.name}"(MavenPublication) {
+                from components.java
+                artifactId "${project.mod_id}"
+
+                pom {
+                    name = project.mod_name
+                    description = project.mod_description
+                    url = project.sources_url
+
+                    scm {
+                        connection = "git:${project.sources_url}.git"
+                        developerConnection = "git:${project.sources_url}.git"
+                        url = project.sources_url
+                    }
+
+                    licenses {
+                        license {
+                            name = 'LGPLv3 License'
+                            url = project.license_url
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id = 'telepathic_grunt'
+                            name = 'TelepathicGrunt'
+                            email = 'asarnesespam@gmail.com'
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    publishMods {
+        type = STABLE
+
+        displayName = "${project.mod_name} v${project.mod_version} (${project.minecraft_version} ${project.name.capitalize()})"
+        version = project.version
+
+        def changeLogFile = project.file("CHANGELOG.md")
+        changelog = changeLogFile.exists() ? changeLogFile.text : ""
     }
 
     task optimizePng {
@@ -228,6 +250,10 @@ allprojects {
     }
 }
 
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
+
 //Minimize/optimize all png files, requires optipng on the PATH
 // Credits: BrainStone
 void minimizePNGFile(File file) {
@@ -237,6 +263,10 @@ void minimizePNGFile(File file) {
     }
 }
 
-task buildAndReleaseAll{
-    dependsOn(':common:buildAndRelease', ':neoforge:buildAndRelease', ':fabric:buildAndRelease')
+// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
 }

@@ -26,10 +26,6 @@ run
 /common/src/main/generated/
 /flatdir
 
-# Files from Forge MDK
-forge*changelog.txt
-.factorypath
-
 # songs
 *.ogg
 
