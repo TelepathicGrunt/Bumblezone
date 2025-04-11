@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
@@ -30,16 +30,13 @@ public class ModChecker {
 	public static boolean resourcefulBeesPresent = false;
 	public static boolean buzzierBeesPresent = false;
 	public static boolean forbiddenArcanusPresent = false;
-	public static boolean pokecubePresent = false;
 	public static boolean friendsAndFoesPresent = false;
 	public static boolean beekeeperPresent = false;
-	public static boolean quarkPresent = false;
 	public static boolean potionOfBeesPresent = false;
 	public static boolean twilightForestPresent = false;
 	public static boolean dragonEnchantsPresent = false;
 	public static boolean goodallPresent = false;
 	public static boolean backpackedPresent = false;
-	public static boolean projectileDamageAttributePresent = false;
 	public static boolean jonnTrophiesPresent = false;
 	public static boolean lootrPresent = false;
 	public static boolean mekanismPresent = false;
@@ -90,9 +87,6 @@ public class ModChecker {
 
 			modid = "backpacked";
 			loadupModCompat(modid, () -> new BackpackedCompat());
-
-			modid = "projectile_damage";
-			loadupModCompat(modid, () -> new ProjectileDamageAttributeCompat());
 
 			modid = "ad_astra";
 			loadupModCompat(modid, () -> new AdAstraCompat());

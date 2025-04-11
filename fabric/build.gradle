@@ -54,8 +54,6 @@ dependencies {
     modCompileOnly("noobanidus.mods.lootr:lootr-fabric:${rootProject.lootr_version}")
     //modLocalRuntime("noobanidus.mods.lootr:lootr-fabric:${rootProject.lootr_version}")
 
-    //modCompileOnly("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}") { transitive false }
-    //modCompileOnly("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}") { transitive false }
     modCompileOnly("dev.emi:trinkets:${rootProject.trinkets}") { transitive false }
     modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
     //modLocalRuntime("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")

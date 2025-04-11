@@ -7,7 +7,6 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.menus.BuzzingBriefcaseMenu;
 import com.telepathicgrunt.the_bumblezone.menus.CrystallineFlowerMenu;
 import com.telepathicgrunt.the_bumblezone.menus.StrictChestMenu;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;

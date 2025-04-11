@@ -21,6 +21,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,6 +30,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -40,6 +42,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.LiquidBlockContainer;
@@ -56,7 +59,8 @@ import java.util.List;
 
 public class FabricPlatformService implements PlatformService {
 
-    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, int clientTrackingRange, int updateInterval, String buildName) {
+    @Override
+    public <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, int clientTrackingRange, int updateInterval, String buildName) {
         return EntityType.Builder
                 .of(entityFactory, category)
                 .sized(size, size)
@@ -64,8 +68,9 @@ public class FabricPlatformService implements PlatformService {
                 .updateInterval(updateInterval)
                 .build();
     }
-
-    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, int clientTrackingRange, int updateInterval, String buildName) {
+    
+    @Override
+    public <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, int clientTrackingRange, int updateInterval, String buildName) {
         return EntityType.Builder
                 .of(entityFactory, category)
                 .sized(xzSize, ySize)
@@ -73,8 +78,9 @@ public class FabricPlatformService implements PlatformService {
                 .updateInterval(updateInterval)
                 .build();
     }
-
-    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, float eyeHeight, int clientTrackingRange, int updateInterval, String buildName) {
+    
+    @Override
+    public <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, float eyeHeight, int clientTrackingRange, int updateInterval, String buildName) {
         return EntityType.Builder
                 .of(entityFactory, category)
                 .sized(xzSize, ySize)
@@ -83,70 +89,81 @@ public class FabricPlatformService implements PlatformService {
                 .updateInterval(updateInterval)
                 .build();
     }
-
-    public static ModInfo getModInfo(String modid, boolean qualifierIsVersion) {
+    
+    @Override
+    public ModInfo getModInfo(String modid, boolean qualifierIsVersion) {
         return FabricLoader.getInstance()
                 .getModContainer(modid)
                 .map(container -> new FabricModInfo(container.getMetadata()))
                 .orElse(null);
     }
 
-    @Contract(pure = true)
-    public static Fluid getBucketFluid(BucketItem bucket) {
+    @Contract(pure = true)    
+    @Override
+    public Fluid getBucketFluid(BucketItem bucket) {
         Fluid fluid = ((BucketItemAccessor) bucket).bumblezone$getContents();
         return fluid == null ? Fluids.EMPTY : fluid;
     }
 
-    @Contract(pure = true)
-    public static boolean hasCraftingRemainder(ItemStack stack) {
+    @Contract(pure = true)    
+    @Override
+    public boolean hasCraftingRemainder(ItemStack stack) {
         return stack.getItem().hasCraftingRemainingItem();
     }
 
-    @Contract(pure = true)
-    public static ItemStack getCraftingRemainder(ItemStack stack) {
+    @Contract(pure = true)    
+    @Override
+    public ItemStack getCraftingRemainder(ItemStack stack) {
         final Item item = stack.getItem().getCraftingRemainingItem();
         return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
 
-    @Contract(pure = true)
-    public static int getXpDrop(LivingEntity entity, Player attackingPlayer, int xp) {
+    @Contract(pure = true)    
+    @Override
+    public int getXpDrop(LivingEntity entity, Player attackingPlayer, int xp) {
         return xp;
     }
 
-    @Contract(pure = true)
-    public static boolean isModLoaded(String modid) {
+    @Contract(pure = true)    
+    @Override
+    public boolean isModLoaded(String modid) {
         return FabricLoader.getInstance().isModLoaded(modid);
     }
 
-    @Contract(pure = true)
-    public static boolean isNeoForge() {
+    @Contract(pure = true)    
+    @Override
+    public boolean isNeoForge() {
         return false;
     }
 
-    @Contract(pure = true)
-    public static boolean isFakePlayer(ServerPlayer player) {
+    @Contract(pure = true)    
+    @Override
+    public boolean isFakePlayer(ServerPlayer player) {
         //Crude way of doing it but it should work for almost all cases.
         return player != null && player.getClass() != ServerPlayer.class;
     }
 
-    @Contract(pure = true)
-    public static ServerPlayer getFakePlayer(ServerLevel level, GameProfile gameProfile) {
+    @Contract(pure = true)    
+    @Override
+    public ServerPlayer getFakePlayer(ServerLevel level, GameProfile gameProfile) {
         if (gameProfile == null) {
             return FakePlayer.get(level);
         }
         return FakePlayer.get(level, gameProfile);
     }
 
-    @Contract(pure = true)
-    public static SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason) {
+    @Contract(pure = true)    
+    @Override
+    public SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason) {
         return entity.finalizeSpawn(
                 world,
                 world.getCurrentDifficultyAt(entity.blockPosition()),
                 spawnReason,
                 spawnGroupData);
     }
-
-    public static boolean sendBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
+    
+    @Override
+    public boolean sendBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
         boolean result = PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(level, player, pos, state, entity);
         if (!result) {
             PlayerBlockBreakEvents.CANCELED.invoker().onBlockBreakCanceled(level, player, pos, state, entity);
@@ -154,20 +171,24 @@ public class FabricPlatformService implements PlatformService {
         }
         return false;
     }
-
-    public static void afterBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
+    
+    @Override
+    public void afterBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
         PlayerBlockBreakEvents.AFTER.invoker().afterBlockBreak(level, player, pos, state, entity);
     }
-
-    public static double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidData... fluids) {
+    
+    @Override
+    public double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidData... fluids) {
         return entity.getFluidHeight(fallback);
     }
-
-    public static boolean isEyesInNoFluid(Entity entity) {
+    
+    @Override
+    public boolean isEyesInNoFluid(Entity entity) {
         return ((EntityAccessor)entity).bumblezone$getFluidOnEyes().isEmpty();
     }
-
-    public static  InteractionResultHolder<ItemStack> performItemUse(Level world, Player user, InteractionHand hand, Fluid fluid, BzCustomBucketItem bzCustomBucketItem) {
+    
+    @Override
+    public InteractionResultHolder<ItemStack> performItemUse(Level world, Player user, InteractionHand hand, Fluid fluid, BzCustomBucketItem bzCustomBucketItem) {
         ItemStack itemStack = user.getItemInHand(hand);
         BlockHitResult blockHitResult = ItemAccessor.bumblezone$callGetPlayerPOVHitResult(world, user, fluid == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
         if (blockHitResult.getType() == HitResult.Type.MISS) {
@@ -223,8 +244,9 @@ public class FabricPlatformService implements PlatformService {
             }
         }
     }
-
-    public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
+    
+    @Override
+    public boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
         if (entity instanceof Player player) {
             if (!player.mayInteract(level, pos)) {
                 return false;
@@ -237,20 +259,23 @@ public class FabricPlatformService implements PlatformService {
         }
         return true;
     }
-
-    public static boolean isDimensionAllowed(ServerPlayer serverPlayer, ResourceKey<Level> dimension) {
+    
+    @Override
+    public boolean isDimensionAllowed(ServerPlayer serverPlayer, ResourceKey<Level> dimension) {
         if (ModChecker.restrictedPortalsPresent) {
             return !RestrictedPortalsCompat.isDimensionDisallowed(serverPlayer, dimension);
         }
 
         return true;
     }
-
-    public static boolean isItemAbility(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
+    
+    @Override
+    public boolean isItemAbility(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
         return targetBackupClass != null && targetBackupClass.isInstance(stack.getItem());
     }
-
-    public static void disableFlight(Player player) {
+    
+    @Override
+    public void disableFlight(Player player) {
         player.getAbilities().flying = false;
 
         if (player.level().isClientSide()) {
@@ -260,23 +285,30 @@ public class FabricPlatformService implements PlatformService {
         // Sync on server only
         player.onUpdateAbilities();
     }
-
-    public static boolean isDevEnvironment() {
+    
+    @Override
+    public boolean isDevEnvironment() {
         return FabricLoader.getInstance().isDevelopmentEnvironment();
     }
-
-    public static boolean isClientEnvironment() {
+    
+    @Override
+    public boolean isClientEnvironment() {
         return FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT;
     }
-
-    public static boolean shouldMobSplit(Mob parent, List<Mob> children) { return true; }
-
-    public static Fluid getBucketItemFluid(BucketItem stack) {
+    
+    @Override
+    public boolean shouldMobSplit(Mob parent, List<Mob> children) { return true; }
+    
+    @Override
+    public Fluid getBucketItemFluid(BucketItem stack) {
         return ((BucketItemAccessor)stack).bumblezone$getContents();
     }
+    
+    @Override
+    public MinecraftServer currentMinecraftServer = null;
 
-    public static MinecraftServer currentMinecraftServer = null;
-    public static RegistryAccess getCurrentRegistryAccess() {
+    @Override
+    public RegistryAccess getCurrentRegistryAccess() {
         try {
             if (currentMinecraftServer == null || !currentMinecraftServer.isSameThread()) {
                 return GeneralUtilsClient.getClientRegistryAccess();

@@ -22,19 +22,19 @@ repositories {
 
 &nbsp;
 
-Don't forget to change &lt;modversion> with the actual latest version of this mod like `7.5.0` for example. (See older branches's README.md for their stuff)
+Don't forget to change &lt;modversion> with the actual latest version of this mod like `7.8.11` for example. (See older branches's README.md for their stuff)
 
 ```gradle
 dependencies {
    ...
    NEOFORGE: 
-     compileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-neoforge"
+     compileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.21.5-neoforge"
      
-   FABRIC/QUILT: 
-     compileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-fabric"
+   FABRIC: 
+     compileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.21.5-fabric"
      
-   ARCH COMMON MODULE: 
-     compileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-common"
+   COMMON MODULE: 
+     compileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.21.5-common"
 }
 ```
 
@@ -46,48 +46,52 @@ For developers that want to add Bumblezone to their mod's workspace:
 
 ```gradle
 repositories {
-    maven {
-        url = 'https://nexus.resourcefulbees.com/repository/maven-public/'
-        content {
-            includeGroup 'com.telepathicgrunt'
-            includeGroup 'earth.terrarium.athena'
-            includeGroup 'com.teamresourceful.resourcefullib'
+    exclusiveContent {
+        forRepository {
+            maven {
+                url = 'https://nexus.resourcefulbees.com/repository/maven-public/'
+            }
+        }
+        filter {
+            includeGroupAndSubgroups("com.telepathicgrunt")
+            includeGroupAndSubgroups("com.teamresourceful.resourcefullib")
+            includeGroupAndSubgroups("earth.terrarium.athena")
         }
     }
     
-    // Fabric/Quilt only
-    maven {
-        url = 'https://api.modrinth.com/maven/'
-        content {
-            includeGroup 'maven.modrinth'
+    // Fabric only
+    exclusiveContent {
+        forRepository {
+            maven {
+                url = "https://api.modrinth.com/maven/"
+            }
         }
-    }
-    maven {
-        name = "Ladysnake Mods"
-        url = 'https://maven.ladysnake.org/releases'
+        filter {
+            includeGroupAndSubgroups("maven.modrinth")
+        }
     }
 }
 ```
 
 &nbsp;
 
-Don't forget to change &lt;modversion> with the actual latest version of this mod like `7.5.0` for example. (See older branches's README.md for their stuff)
+Don't forget to change &lt;modversion> with the actual latest version of this mod like `7.8.11` for example. (See older branches's README.md for their stuff)
 
 ```gradle
 dependencies {
    ...
    NEOFORGE: 
-     implementation "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-neoforge"
-     implementation "earth.terrarium.athena:athena-forge-1.20.5:3.4.0"
-     implementation "com.teamresourceful.resourcefullib:resourcefullib-forge-1.20.5:2.6.0-beta.7"
+     implementation "com.telepathicgrunt:Bumblezone:<modversion>+1.21.5-neoforge"
+     implementation "earth.terrarium.athena:athena-forge-1.21.4:4.2.0"
+     implementation "com.teamresourceful.resourcefullib:resourcefullib-forge-1.21.5:3.5.0"
      
-   FABRIC/QUILT: 
-     implementation "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-fabric"
-     implementation "earth.terrarium.athena:athena-fabric-1.20.5:3.4.0"
-     implementation "com.teamresourceful.resourcefullib:resourcefullib-fabric-1.20.5:2.6.0-beta.7"
-     implementation "maven.modrinth:midnightlib:1.5.5-fabric" 
+   FABRIC: 
+     modImplementation "com.telepathicgrunt:Bumblezone:<modversion>+1.21.5-fabric"
+     modImplementation "earth.terrarium.athena:athena-fabric-1.21.4:4.2.0"
+     modImplementation "com.teamresourceful.resourcefullib:resourcefullib-fabric-1.21.5:3.5.0"
+     modImplementation "maven.modrinth:midnightlib:1.7.1+1.21.4-fabric" 
    
-   ARCH COMMON MODULE: 
-     compileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.6-common"
+   COMMON MODULE: 
+     compileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.21.5-common"
 }
 ```

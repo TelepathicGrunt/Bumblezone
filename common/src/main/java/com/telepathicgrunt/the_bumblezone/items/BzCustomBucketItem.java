@@ -8,8 +8,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
-import dev.architectury.injectables.annotations.PlatformOnly;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

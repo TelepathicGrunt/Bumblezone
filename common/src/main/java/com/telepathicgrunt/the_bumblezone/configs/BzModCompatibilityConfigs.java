@@ -6,10 +6,6 @@ public class BzModCompatibilityConfigs {
 
 	public static String alternativeFluidToReplaceHoneyFluid = "";
 
-	public static boolean spawnPokecubeBeePokemon = true;
-	public static boolean beePokemonGetsProtectionEffect = true;
-	public static double spawnrateOfPokecubeBeePokemon = 0.1D;
-
 	public static boolean spawnTropicraftBeesMob = true;
 	public static double spawnrateOfTropicraftBeesMobs = 0.025D;
 	public static boolean allowTropicraftSpawnFromDispenserFedBroodBlock = true;
@@ -83,7 +79,6 @@ public class BzModCompatibilityConfigs {
 	);
 
 	public static boolean allowFriendsAndFoesBeekeeperTradesCompat = true;
-	public static boolean injectBzItemsIntoQuarkEnchantmentTooltipsCompat = true;
 
 	public static boolean allowBeeBottleRevivingEmptyBroodBlock = true;
 

@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;

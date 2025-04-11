@@ -52,8 +52,6 @@ dependencies {
     compileOnly "noobanidus.mods.lootr:lootr-neoforge:${rootProject.lootr_version}"
     // runtimeOnly("noobanidus.mods.lootr:lootr-neoforge:${rootProject.lootr_version}")
 
-    compileOnly("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}") { transitive = false }
-
     compileOnly("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}") { transitive = false }
 
     compileOnly("com.hollingsworth.ars_nouveau:ars_nouveau-${project.ars_nouveau}") { transitive = false }

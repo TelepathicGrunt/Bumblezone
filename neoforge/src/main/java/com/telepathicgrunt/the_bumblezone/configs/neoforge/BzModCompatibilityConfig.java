@@ -11,10 +11,6 @@ public class BzModCompatibilityConfig {
 
 	public static ModConfigSpec.ConfigValue<String> alternativeFluidToReplaceHoneyFluid;
 
-	public static ModConfigSpec.BooleanValue spawnPokecubeBeePokemon;
-	public static ModConfigSpec.BooleanValue beePokemonGetsProtectionEffect;
-	public static ModConfigSpec.DoubleValue spawnrateOfPokecubeBeePokemon;
-
 	public static ModConfigSpec.BooleanValue spawnTropicraftBeesMob;
 	public static ModConfigSpec.DoubleValue spawnrateOfTropicraftBeesMobs;
 	public static ModConfigSpec.BooleanValue allowTropicraftSpawnFromDispenserFedBroodBlock;
@@ -39,7 +35,6 @@ public class BzModCompatibilityConfig {
 	public static ModConfigSpec.ConfigValue<List<? extends String>> allowedBees;
 
 	public static ModConfigSpec.BooleanValue allowFriendsAndFoesBeekeeperTradesCompat;
-	public static ModConfigSpec.BooleanValue injectBzItemsIntoQuarkEnchantmentTooltipsCompat;
 
 	public static ModConfigSpec.BooleanValue allowBeeBottleRevivingEmptyBroodBlock;
 
@@ -71,31 +66,6 @@ public class BzModCompatibilityConfig {
 						" Note, this will not replace already placed Bumblezone Honey Fluid.\n")
 				.translation("the_bumblezone.configuration.alternativefluidtoreplacehoneyfluid")
 				.define("alternativeFluidToReplaceHoneyFluid", "");
-
-		builder.pop();
-
-		builder.translation("the_bumblezone.configuration.pokecubecompat").push("Pokecube Compat");
-
-		spawnPokecubeBeePokemon = builder
-				.comment("----------------------------\n",
-						" Spawn Pokecube's bee-like pokemon in The Bumblezone and from Honey Brood Blocks.\n")
-				.translation("the_bumblezone.configuration.spawnpokecubebeepokemon")
-				.define("spawnPokecubeBeePokemon", true);
-
-		beePokemonGetsProtectionEffect = builder
-				.comment("----------------------------\n",
-						" Pokecube's bee-like pokemon that spawn in The Bumblezone will get",
-						" Protection of the Hive effect. Attacking these pokemon in bumblezone will",
-						" give you Wrath of the Hive effect and swarmed of angry bees.\n")
-				.translation("the_bumblezone.configuration.beepokemongetsprotectioneffect")
-				.define("beePokemonGetsProtectionEffect", true);
-
-		spawnrateOfPokecubeBeePokemon = builder
-				.comment("----------------------------\n",
-						" Chance of a Bee spawning from Honeycomb Brood Blocks being replaced by Pokecube's bee Pokemon.",
-						" 0 is no Pokemon mobs and 1 is max Pokemon mobs.\n")
-				.translation("the_bumblezone.configuration.spawnrateofpokecubebeepokemon")
-				.defineInRange("spawnrateOfPokecubeBeePokemon", 0.05D, 0D, 1D);
 
 		builder.pop();
 
@@ -319,16 +289,6 @@ public class BzModCompatibilityConfig {
 
 		builder.pop();
 
-		builder.translation("the_bumblezone.configuration.quarkcompat").push("Quark Compat");
-
-		injectBzItemsIntoQuarkEnchantmentTooltipsCompat = builder
-				.comment("----------------------------\n",
-						" Adds Bumblezone items symbols to Quark's enchantment tooltips!\n")
-				.translation("the_bumblezone.configuration.injectbzitemsintoquarkenchantmenttooltipscompat")
-				.define("injectBzItemsIntoQuarkEnchantmentTooltipsCompat", true);
-
-		builder.pop();
-
 		builder.translation("the_bumblezone.configuration.buzzierbeescompat").push("Buzzier Bees Compat");
 
 		allowBeeBottleRevivingEmptyBroodBlock = builder
@@ -416,8 +376,6 @@ public class BzModCompatibilityConfig {
 
 		BzModCompatibilityConfigs.allowFriendsAndFoesBeekeeperTradesCompat = allowFriendsAndFoesBeekeeperTradesCompat.get();
 
-		BzModCompatibilityConfigs.injectBzItemsIntoQuarkEnchantmentTooltipsCompat = injectBzItemsIntoQuarkEnchantmentTooltipsCompat.get();
-
 		BzModCompatibilityConfigs.spawnTropicraftBeesMob = spawnTropicraftBeesMob.get();
 		BzModCompatibilityConfigs.spawnrateOfTropicraftBeesMobs = spawnrateOfTropicraftBeesMobs.get();
 		BzModCompatibilityConfigs.allowTropicraftSpawnFromDispenserFedBroodBlock = allowTropicraftSpawnFromDispenserFedBroodBlock.get();
@@ -437,10 +395,6 @@ public class BzModCompatibilityConfig {
 		BzModCompatibilityConfigs.allowBeeBucketRevivingEmptyBroodBlock = allowBeeBucketRevivingEmptyBroodBlock.get();
 
 		BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock = allowGoodallBottledBeesRevivingEmptyBroodBlock.get();
-
-		BzModCompatibilityConfigs.spawnPokecubeBeePokemon = spawnPokecubeBeePokemon.get();
-		BzModCompatibilityConfigs.beePokemonGetsProtectionEffect = beePokemonGetsProtectionEffect.get();
-		BzModCompatibilityConfigs.spawnrateOfPokecubeBeePokemon = spawnrateOfPokecubeBeePokemon.get();
 
 		BzModCompatibilityConfigs.spawnResourcefulBeesBeesMob = spawnResourcefulBeesBeesMob.get();
 		BzModCompatibilityConfigs.spawnrateOfResourcefulBeesMobsBrood = spawnrateOfResourcefulBeesMobsBrood.get();
