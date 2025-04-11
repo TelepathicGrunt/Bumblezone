@@ -6,7 +6,7 @@ import com.telepathicgrunt.the_bumblezone.mixin.blocks.DefaultDispenseItemBehavi
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.BlockSource;
@@ -56,7 +56,7 @@ public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
                     beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(BlockPos.containing(beeEntity.position())), MobSpawnType.TRIGGERED, null);
                     beeEntity.setBaby(true);
 
-                    PlatformHooks.finalizeSpawn(beeEntity, world, null, MobSpawnType.DISPENSER);
+                    PlatformService.INSTANCE.finalizeSpawn(beeEntity, world, null, MobSpawnType.DISPENSER);
                     deniedBeeSpawn = !world.addFreshEntity(beeEntity);
                 }
             }

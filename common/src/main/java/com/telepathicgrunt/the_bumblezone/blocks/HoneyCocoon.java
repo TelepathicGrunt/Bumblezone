@@ -15,7 +15,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -207,8 +207,8 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
                 honeyCocoonBlockEntity.removeItem(emptyBroods.get(random.nextInt(emptyBroods.size())).getSecond(), 1);
                 ItemStack consumedItem = honeyCocoonBlockEntity.removeItem(beeFeeding.get(random.nextInt(beeFeeding.size())).getSecond(), 1);
-                if (PlatformHooks.hasCraftingRemainder(consumedItem)) {
-                    ItemStack ejectedItem = PlatformHooks.getCraftingRemainder(consumedItem);
+                if (PlatformService.INSTANCE.hasCraftingRemainder(consumedItem)) {
+                    ItemStack ejectedItem = PlatformService.INSTANCE.getCraftingRemainder(consumedItem);
                     if (ejectedItem.isEmpty()) {
                         ejectedItem = ContainerCraftingRecipe.HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(consumedItem.getItem()).getDefaultInstance();
                     }

@@ -11,7 +11,7 @@ import com.telepathicgrunt.the_bumblezone.loot.EntityLootDropInterface;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
@@ -63,7 +63,7 @@ public abstract class EntityMixin implements EntityLootDropInterface {
             require = 0)
     private boolean bumblezone$applyMissingWaterPhysicsForSugarWaterFluid(boolean appliedFluidPush) {
         if(!appliedFluidPush) {
-            return PlatformHooks.getFluidHeight((Entity) ((Object)this), BzTags.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID_TYPE.get()) > 0;
+            return PlatformService.INSTANCE.getFluidHeight((Entity) ((Object)this), BzTags.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID_TYPE.get()) > 0;
         }
         return true;
     }

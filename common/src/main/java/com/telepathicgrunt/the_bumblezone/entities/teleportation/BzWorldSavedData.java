@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -283,7 +283,7 @@ public class BzWorldSavedData extends SavedData {
 	}
 
 	private static ServerPlayer createSilkTouchFakePlayer(ServerLevel level) {
-		ServerPlayer serverPlayer = PlatformHooks.getFakePlayer(level, null);
+		ServerPlayer serverPlayer = PlatformService.INSTANCE.getFakePlayer(level, null);
 		ItemStack fakeHandItem = Items.STONE_PICKAXE.getDefaultInstance();
 		ItemEnchantments.Mutable mutableItemEnchantments = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
 		mutableItemEnchantments.set(EnchantmentUtils.getEnchantmentHolder(Enchantments.SILK_TOUCH, level), 1);
@@ -317,7 +317,7 @@ public class BzWorldSavedData extends SavedData {
 				serverPlayer.stopSleepInBed(true, true);
 			}
 
-			if (PlatformHooks.isDimensionAllowed(serverPlayer, destination.dimension())) {
+			if (PlatformService.INSTANCE.isDimensionAllowed(serverPlayer, destination.dimension())) {
 				serverPlayer.connection.send(new ClientboundRespawnPacket(new CommonPlayerSpawnInfo(destination.dimensionTypeRegistration(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), serverPlayer.getLastDeathLocation(), serverPlayer.getPortalCooldown()), (byte)3));
 				serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y + 0.1f, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
 				serverPlayer.connection.send(new ClientboundChangeDifficultyPacket(destination.getDifficulty(), destination.getLevelData().isDifficultyLocked()));

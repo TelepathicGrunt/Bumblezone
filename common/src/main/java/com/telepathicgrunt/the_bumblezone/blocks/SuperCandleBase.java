@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
@@ -137,7 +137,7 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
 
     @Override
     public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        if (player.mayInteract(level, blockPos) && (!PlatformHooks.isNeoForge() || !PlatformHooks.isItemAbility(itemStack, null, "firestarter_light"))) {
+        if (player.mayInteract(level, blockPos) && (!PlatformService.INSTANCE.isNeoForge() || !PlatformService.INSTANCE.isItemAbility(itemStack, null, "firestarter_light"))) {
             if (CandleUnlightBehaviors(itemStack, blockState, level, blockPos, player, false) || CandleLightBehaviors(itemStack, blockState, level, blockPos, player, interactionHand, false)) {
                 return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }

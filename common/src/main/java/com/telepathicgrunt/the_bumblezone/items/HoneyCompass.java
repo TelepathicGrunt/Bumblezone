@@ -8,7 +8,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -150,7 +150,7 @@ public class HoneyCompass extends Item {
     }
 
     private static void appendAdvancedTooltipInfo(ItemStack itemStack, TooltipContext tooltipContext, List<Component> components, TooltipFlag tooltipFlag) {
-        if (tooltipContext != null && PlatformHooks.isClientEnvironment()) {
+        if (tooltipContext != null && PlatformService.INSTANCE.isClientEnvironment()) {
             Player player = GeneralUtilsClient.getClientPlayer();
             HoneyCompassBaseData honeyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
             if (player != null && tooltipFlag.isAdvanced() && (honeyCompassBaseData.isBlockCompass() || honeyCompassBaseData.isStructureCompass())) {

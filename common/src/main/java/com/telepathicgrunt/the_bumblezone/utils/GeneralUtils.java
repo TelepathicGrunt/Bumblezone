@@ -7,6 +7,7 @@ import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.mixin.world.SinglePoolElementAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.StructureTemplateAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.Util;
@@ -85,6 +86,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ServiceLoader;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -94,6 +96,10 @@ import java.util.stream.Collectors;
 import static java.util.Objects.requireNonNull;
 
 public class GeneralUtils {
+
+    public static <T> T loadService(Class<T> service) {
+        return ServiceLoader.load(service).findFirst().orElseThrow(() -> new IllegalStateException("No platform implementation found for " + service.getName()));
+    }
 
     /////////////////////////////
 
@@ -198,8 +204,8 @@ public class GeneralUtils {
         }
 
         // give container item of player's item if specified
-        if(giveContainerItem && PlatformHooks.hasCraftingRemainder(copiedPlayerItem)) {
-            ItemStack containerItem = PlatformHooks.getCraftingRemainder(copiedPlayerItem);
+        if(giveContainerItem && PlatformService.INSTANCE.hasCraftingRemainder(copiedPlayerItem)) {
+            ItemStack containerItem = PlatformService.INSTANCE.getCraftingRemainder(copiedPlayerItem);
             if (playerItem.isEmpty()) {
                 // places result item in hand
                 playerEntity.setItemInHand(hand, containerItem);
@@ -390,7 +396,7 @@ public class GeneralUtils {
         if (entity instanceof Player player && !player.mayInteract(level, pos)) {
             return false;
         }
-        return PlatformHooks.isPermissionAllowedAtSpot(level, entity, pos, placingBlock);
+        return PlatformService.INSTANCE.isPermissionAllowedAtSpot(level, entity, pos, placingBlock);
     }
 
     ///////////////////////////////////////////////

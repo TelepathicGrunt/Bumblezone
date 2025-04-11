@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.logging;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import net.minecraft.world.entity.decoration.BlockAttachedEntity;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,7 +17,7 @@ public class BlockAttachedEntityMixin {
             at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;error(Ljava/lang/String;Ljava/lang/Object;)V", remap = false),
             require = 0)
     private void bumblezone$lowerLoggingLevel(Logger instance, String s, Object o, Operation<Void> original) {
-        if (!PlatformHooks.isDevEnvironment()) {
+        if (!PlatformService.INSTANCE.isDevEnvironment()) {
             instance.debug(s, o);
         }
         else {

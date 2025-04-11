@@ -5,7 +5,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.neoforge.BzBiomeModifiers;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.world.level.biome.Biome;
@@ -27,7 +27,7 @@ public record BzModCompatBiomeModifier(HolderSet<Biome> biomes, HolderSet<Placed
 
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         // add a feature to all specified biomes
-        if (feature.size() != 0 && phase == Phase.ADD && PlatformHooks.isModLoaded(modid) && biomes.contains(biome)) {
+        if (feature.size() != 0 && phase == Phase.ADD && PlatformService.INSTANCE.isModLoaded(modid) && biomes.contains(biome)) {
 
             if (modid.equals("productivebees")) {
                 if (BzModCompatibilityConfigs.spawnProductiveBeesHoneycombVariants) {
