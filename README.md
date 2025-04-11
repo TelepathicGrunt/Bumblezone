@@ -14,9 +14,16 @@ For developers that want to add Bumblezone to their mod's workspace:
 
 ```gradle
 repositories {
-  maven {
-     url "https://nexus.resourcefulbees.com/repository/telepathicgrunt/"
-  }
+    exclusiveContent {
+        forRepository {
+            maven {
+                url = "https://nexus.resourcefulbees.com/repository/telepathicgrunt/"
+            }
+        }
+        filter {
+            includeGroupAndSubgroups("com.telepathicgrunt")
+        }
+    }
 }
 ```
 
@@ -49,7 +56,7 @@ repositories {
     exclusiveContent {
         forRepository {
             maven {
-                url = 'https://nexus.resourcefulbees.com/repository/maven-public/'
+                url = "https://nexus.resourcefulbees.com/repository/maven-public/"
             }
         }
         filter {

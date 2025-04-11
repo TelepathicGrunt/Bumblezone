@@ -36,7 +36,7 @@ allprojects {
         exclusiveContent {
             forRepository {
                 maven {
-                    url = 'https://nexus.resourcefulbees.com/repository/maven-public/'
+                    url = "https://nexus.resourcefulbees.com/repository/maven-public/"
                 }
             }
             filter {
