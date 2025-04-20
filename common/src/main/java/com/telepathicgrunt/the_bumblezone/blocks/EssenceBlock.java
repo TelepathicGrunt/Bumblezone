@@ -55,6 +55,8 @@ import java.util.Optional;
 
 
 public abstract class EssenceBlock extends BaseEntityBlock implements BlockExtension {
+    private static final VoxelShape ALMOST_BLOCK = Block.box(0.0001, 0.0001, 0.0001, 0.9999, 0.9999, 0.9999);
+
     public static final GeneralUtils.Lazy<StructurePlaceSettings> PLACEMENT_SETTINGS = new GeneralUtils.Lazy<>(() ->
             new StructurePlaceSettings()
                 .setRotation(Rotation.NONE)
@@ -119,45 +121,9 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                 return Shapes.empty();
             }
 
-            boolean isInBounds = entity.getBoundingBox().inflate(0.01D).intersects(new AABB(blockPos, blockPos.offset(1, 1, 1)));
-            if (!isInBounds) {
-                return Shapes.empty();
+            if (entity instanceof LivingEntity || entity instanceof Player) {
+                return ALMOST_BLOCK;
             }
-
-            boolean isClientside = entity.level().isClientSide();
-            boolean isNonPlayer = entity instanceof LivingEntity && !(entity instanceof Player);
-            boolean isNonEssencedServerPlayer = entity instanceof ServerPlayer serverPlayer && !EssenceOfTheBees.hasEssence(serverPlayer);
-
-            if (isClientside || isNonPlayer || isNonEssencedServerPlayer) {
-                if (!isClientside) {
-                    if (entity instanceof ServerPlayer serverPlayer) {
-                        BlockEntity blockEntity = level.getBlockEntity(blockPos);
-                        if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity && essenceBlockEntity.getPlayerInArena().isEmpty()) {
-                            serverPlayer.displayClientMessage(
-                                    Component.translatable("essence.the_bumblezone.missing_essence_effect").withStyle(ChatFormatting.RED),
-                                    true);
-                        }
-                    }
-
-                    entity.hurt(entity.damageSources().magic(), 0.5f);
-                }
-
-                Vec3 center = Vec3.atCenterOf(blockPos);
-                entity.push(
-                        entity.getX() - center.x(),
-                        entity.getY() - center.y(),
-                        entity.getZ() - center.z());
-
-                return Shapes.block();
-            }
-
-            entityInside(blockState, entity.level(), blockPos, entity);
-
-            Vec3 center = Vec3.atCenterOf(blockPos);
-            entity.push(
-                    entity.getX() - center.x(),
-                    entity.getY() - center.y(),
-                    entity.getZ() - center.z());
         }
 
         return Shapes.empty();
@@ -200,15 +166,41 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
 
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        if (entity instanceof ServerPlayer touchingPlayer
-            && EssenceOfTheBees.hasEssence(touchingPlayer) &&
-            blockState.getBlock() instanceof EssenceBlock essenceBlock)
-        {
+        if (!(blockState.getBlock() instanceof EssenceBlock essenceBlock)) {
+            return;
+        }
+
+        Vec3 center = Vec3.atCenterOf(blockPos);
+        float powerPush = entity instanceof Player ? 10 : 1;
+        entity.push(
+                (entity.getX() - center.x()) * powerPush,
+                (entity.getY() - center.y()) * powerPush,
+                (entity.getZ() - center.z()) * powerPush);
+
+        boolean isClientside = entity.level().isClientSide();
+        boolean isNonPlayer = entity instanceof LivingEntity && !(entity instanceof Player);
+        boolean isNonEssencedServerPlayer = entity instanceof ServerPlayer serverPlayer && !EssenceOfTheBees.hasEssence(serverPlayer);
+
+        if (isClientside || isNonPlayer || isNonEssencedServerPlayer) {
+            if (!isClientside) {
+                if (entity instanceof ServerPlayer serverPlayer) {
+                    BlockEntity blockEntity = level.getBlockEntity(blockPos);
+                    if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity && essenceBlockEntity.getPlayerInArena().isEmpty()) {
+                        serverPlayer.displayClientMessage(
+                                Component.translatable("essence.the_bumblezone.missing_essence_effect").withStyle(ChatFormatting.RED),
+                                true);
+                    }
+                }
+
+                entity.hurt(entity.damageSources().magic(), 0.5f);
+            }
+        }
+
+        if (entity instanceof ServerPlayer touchingPlayer && EssenceOfTheBees.hasEssence(touchingPlayer)) {
             ServerLevel serverLevel = ((ServerLevel) level);
             BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
-            if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity &&
-                essenceBlockEntity.getPlayerInArena().isEmpty())
-            {
+
+            if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity && essenceBlockEntity.getPlayerInArena().isEmpty()) {
 
                 StructureTemplateManager structureTemplateManager = serverLevel.getStructureManager();
                 Optional<StructureTemplate> optionalStructureTemplate = structureTemplateManager.get(getArenaNbt());

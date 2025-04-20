@@ -1,3 +1,14 @@
+### **(V.7.6.12 Changes) (1.20.1 Minecraft)**
+
+#### Blocks:
+Made Essence Blocks not push/damage players in getCollisionShape method but in entityInside instead.
+
+#### Mod Compat:
+Opt-out of Neruina's block suspending system to ensure a hard crash when Essence Blocks breaks.
+ This will prevent issues with unbreakable arenas that are permanent/never despawning.
+ Issue with my block should be a hard crash and reported to me ASAP.
+
+
 ### **(V.7.6.11 Changes) (1.20.1 Minecraft)**
 
 #### Entities:
