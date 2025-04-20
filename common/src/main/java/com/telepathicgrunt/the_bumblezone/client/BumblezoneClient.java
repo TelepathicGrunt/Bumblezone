@@ -183,11 +183,7 @@ public class BumblezoneClient {
         TagsUpdatedEvent.EVENT.addListener((tagsUpdatedEvent) -> KnowingEssenceLootBlockOutlining.resetTargetBlockCache());
     }
 
-    public static void clientSetup(ClientSetupEnqueuedEvent event) {
-        Set<Item> particleMarkerBlocks = new HashSet<>(ClientLevelAccessor.bumblezone$getMARKER_PARTICLE_ITEMS());
-        particleMarkerBlocks.add(BzItems.HEAVY_AIR.get());
-        ClientLevelAccessor.bumblezone$setMARKER_PARTICLE_ITEMS(particleMarkerBlocks);
-    }
+    public static void clientSetup(ClientSetupEnqueuedEvent event) {}
 
     public static void registerBlockEntityRenderers(RegisterBlockEntityRendererEvent<?> event) {
         BlockEntityRenderers.register(BzBlockEntities.ESSENCE_BLOCK.get(), EssenceBlockEntityRenderer::new);
