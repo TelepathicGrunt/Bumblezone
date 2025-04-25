@@ -1,0 +1,75 @@
+{
+  "the_bumblezone:the_bumblezone": {
+    "replace": false,
+    "day": {
+      "very_cold": 1.15,
+      "cold": 1.2,
+      "normal": 1.25,
+      "hot": 1.3,
+      "very_hot": 1.35
+    },
+    "night": {
+      "very_cold": 1.10,
+      "cold": 1.15,
+      "normal": 1.20,
+      "hot": 1.25,
+      "very_hot": 1.30
+    },
+    "height": {
+      "very_low": -0.15,
+      "very_low_height": 58,
+      "low": -0.1,
+      "low_height": 115,
+      "high": -0.1,
+      "high_height": 173,
+      "very_high": -0.15,
+      "very_high_height": 230
+    },
+    "shadow": {
+      "very_cold": 0,
+      "cold": 0,
+      "normal": 0,
+      "hot": 0,
+      "very_hot": 0
+    },
+    "sweat": {
+      "hot": -0.4,
+      "very_hot": -0.8
+    },
+    "wett": {
+      "very_cold": -0.15,
+      "cold": -0.15,
+      "normal": -0.1,
+      "hot": -0.1,
+      "very_hot": -0.5
+    },
+    "soaked": {
+      "very_cold": -0.25,
+      "cold": -0.2,
+      "normal": -0.15,
+      "hot": -0.1,
+      "very_hot": -0.55
+    },
+    "armor": {
+      "very_cold": 0.15,
+      "cold": 0.25,
+      "normal": 0.35,
+      "hot": 0.5,
+      "very_hot": 0.7
+    },
+    "iced_armor": {
+      "very_cold": -0.50,
+      "cold": -0.40,
+      "normal": -0.30,
+      "hot": -0.25,
+      "very_hot": -0.20
+    },
+    "insulated_armor": {
+      "very_cold": 0.30,
+      "cold": 0.40,
+      "normal": 0.65,
+      "hot": 1,
+      "very_hot": 1.5
+    }
+  }
+}
