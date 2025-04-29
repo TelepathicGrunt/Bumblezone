@@ -4,6 +4,8 @@
 Added compat with EnvironmentZ so Bumblezone dimension is around 96 degrees Fahrenheit!
 Special thanks to KrimZik for making the compat JSON file! See their other EnvironmentZ compat here: https://modrinth.com/datapack/environmentz-compats
 
+Fixed bug where Ars Elemental projectiles can still teleport player to Bumblezone without Blink on.
+
 
 ### **(V.7.6.12 Changes) (1.20.1 Minecraft)**
 

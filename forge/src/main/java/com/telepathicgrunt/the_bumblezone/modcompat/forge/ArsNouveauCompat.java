@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
 import com.hollingsworth.arsnouveau.api.spell.AbstractCastMethod;
 import com.hollingsworth.arsnouveau.api.spell.AbstractEffect;
+import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.common.entity.AnimBlockSummon;
 import com.hollingsworth.arsnouveau.common.items.SpellBook;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectAnimate;
@@ -135,9 +136,10 @@ public class ArsNouveauCompat implements ModCompat {
 	private static void handleArsSpellProjectile(EffectResolveEvent.Post event) {
 		if (event.shooter instanceof Player player &&
 			event.resolveEffect == EffectBlink.INSTANCE &&
-			ALLOWED_CAST_METHODS.contains(event.spell.getCastMethod()))
+			ALLOWED_CAST_METHODS.contains(getClosestCastMethod(event.resolver)))
 		{
-			if (event.spell.getCastMethod() == MethodTouch.INSTANCE || event.spell.getCastMethod() == MethodUnderfoot.INSTANCE) {
+			AbstractCastMethod closestCastMethod = getClosestCastMethod(event.resolver);
+			if (closestCastMethod == MethodTouch.INSTANCE || closestCastMethod == MethodUnderfoot.INSTANCE) {
 				ItemStack stack = player.getMainHandItem();
 				if (event.rayTraceResult instanceof BlockHitResult &&
 					stack.is(BzTags.TELEPORT_ITEM_RIGHT_CLICKED_BEEHIVE) ||
@@ -150,11 +152,11 @@ public class ArsNouveauCompat implements ModCompat {
 				return;
 			}
 
-			if (event.spell.getCastMethod() == MethodProjectile.INSTANCE && !ForgeRegistries.ENTITY_TYPES.getValue(SPELL_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
+			if (closestCastMethod == MethodProjectile.INSTANCE && !ForgeRegistries.ENTITY_TYPES.getValue(SPELL_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
 				return;
 			}
 			else if (ModChecker.arsElementalPresent) {
-				if (ArsElementalCompat.isArsElementalCasting(event)) {
+				if (ArsElementalCompat.isArsElementalCasting(closestCastMethod)) {
 					return;
 				}
 			}
@@ -175,10 +177,29 @@ public class ArsNouveauCompat implements ModCompat {
 		}
 	}
 
+	private static AbstractCastMethod getClosestCastMethod(SpellResolver resolver) {
+		if (resolver.castType == null) {
+			if (resolver.previousResolver != null) {
+				return getClosestCastMethod(resolver.previousResolver);
+			}
+		}
+		else {
+			return resolver.castType;
+		}
+
+		return null;
+	}
+
 	public InteractionResult isProjectileTeleportHandled(HitResult hitResult, Entity owner, Projectile projectile) {
 		ResourceLocation projectileRL = ForgeRegistries.ENTITY_TYPES.getKey(projectile.getType());
 		if (projectileRL != null && (projectileRL.equals(SPELL_PROJ_RL) || projectileRL.equals(SPELL_FOLLOW_PROJ_RL))) {
 			return InteractionResult.FAIL;
+		}
+
+		if (ModChecker.arsElementalPresent) {
+			if (ArsElementalCompat.isArsElementalProjectile(projectileRL)) {
+				return InteractionResult.FAIL;
+			}
 		}
 
 		if (hitResult instanceof EntityHitResult entityHitResult && ArsNouveauCompat.isArsWalkingBlock(entityHitResult.getEntity())) {
