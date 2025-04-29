@@ -38,11 +38,11 @@ public class ArsElementalCompat implements ModCompat {
 	}
 
 	@SuppressWarnings("ConstantConditions")
-	public static boolean isArsElementalCasting(EffectResolveEvent.Post event) {
-		if (event.spell.getCastMethod() == MethodHomingProjectile.INSTANCE && !BuiltInRegistries.ENTITY_TYPE.get(SPELL_HOMING_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
+	public static boolean isArsElementalCasting(AbstractCastMethod closestCastMethod) {
+		if (closestCastMethod == MethodHomingProjectile.INSTANCE && !BuiltInRegistries.ENTITY_TYPE.get(SPELL_HOMING_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
 			return true;
 		}
-		else if (event.spell.getCastMethod() == MethodArcProjectile.INSTANCE && !BuiltInRegistries.ENTITY_TYPE.get(SPELL_CURVED_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
+		else if (closestCastMethod == MethodArcProjectile.INSTANCE && !BuiltInRegistries.ENTITY_TYPE.get(SPELL_CURVED_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
 			return true;
 		}
 		return false;

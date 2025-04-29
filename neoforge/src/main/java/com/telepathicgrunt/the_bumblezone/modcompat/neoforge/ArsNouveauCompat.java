@@ -138,7 +138,8 @@ public class ArsNouveauCompat implements ModCompat {
 			event.resolveEffect == EffectBlink.INSTANCE &&
 			ALLOWED_CAST_METHODS.contains(getClosestCastMethod(event.resolver)))
 		{
-			if (event.spell.getCastMethod() == MethodTouch.INSTANCE || event.spell.getCastMethod() == MethodUnderfoot.INSTANCE) {
+			AbstractCastMethod closestCastMethod = getClosestCastMethod(event.resolver);
+			if (closestCastMethod == MethodTouch.INSTANCE || closestCastMethod == MethodUnderfoot.INSTANCE) {
 				ItemStack stack = player.getMainHandItem();
 				if (event.rayTraceResult instanceof BlockHitResult &&
 					stack.is(BzTags.TELEPORT_ITEM_RIGHT_CLICKED_BEEHIVE) ||
@@ -151,11 +152,11 @@ public class ArsNouveauCompat implements ModCompat {
 				return;
 			}
 
-			if (event.spell.getCastMethod() == MethodProjectile.INSTANCE && !BuiltInRegistries.ENTITY_TYPE.get(SPELL_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
+			if (closestCastMethod == MethodProjectile.INSTANCE && !BuiltInRegistries.ENTITY_TYPE.get(SPELL_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
 				return;
 			}
 			else if (ModChecker.arsElementalPresent) {
-				if (ArsElementalCompat.isArsElementalCasting(event)) {
+				if (ArsElementalCompat.isArsElementalCasting(closestCastMethod)) {
 					return;
 				}
 			}
