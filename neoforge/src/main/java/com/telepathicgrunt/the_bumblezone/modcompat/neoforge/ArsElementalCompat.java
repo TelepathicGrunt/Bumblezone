@@ -12,6 +12,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionResult;
 
 import java.util.Set;
 
@@ -42,6 +43,13 @@ public class ArsElementalCompat implements ModCompat {
 			return true;
 		}
 		else if (event.spell.getCastMethod() == MethodArcProjectile.INSTANCE && !BuiltInRegistries.ENTITY_TYPE.get(SPELL_CURVED_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isArsElementalProjectile(ResourceLocation projectileRL) {
+		if (projectileRL != null && (projectileRL.equals(SPELL_HOMING_PROJ_RL) || projectileRL.equals(SPELL_CURVED_PROJ_RL))) {
 			return true;
 		}
 		return false;

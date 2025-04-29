@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
 import com.hollingsworth.arsnouveau.api.spell.AbstractCastMethod;
 import com.hollingsworth.arsnouveau.api.spell.AbstractEffect;
+import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.common.entity.AnimBlockSummon;
 import com.hollingsworth.arsnouveau.common.items.SpellBook;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectAnimate;
@@ -135,7 +136,7 @@ public class ArsNouveauCompat implements ModCompat {
 	private static void handleArsSpellProjectile(EffectResolveEvent.Post event) {
 		if (event.shooter instanceof Player player &&
 			event.resolveEffect == EffectBlink.INSTANCE &&
-			ALLOWED_CAST_METHODS.contains(event.spell.getCastMethod()))
+			ALLOWED_CAST_METHODS.contains(getClosestCastMethod(event.resolver)))
 		{
 			if (event.spell.getCastMethod() == MethodTouch.INSTANCE || event.spell.getCastMethod() == MethodUnderfoot.INSTANCE) {
 				ItemStack stack = player.getMainHandItem();
@@ -175,10 +176,30 @@ public class ArsNouveauCompat implements ModCompat {
 		}
 	}
 
+	private static AbstractCastMethod getClosestCastMethod(SpellResolver resolver) {
+		if (resolver.castType == null) {
+			if (resolver.previousResolver != null) {
+				return getClosestCastMethod(resolver.previousResolver);
+			}
+		}
+		else {
+			return resolver.castType;
+		}
+
+		return null;
+	}
+
+	@Override
 	public InteractionResult isProjectileTeleportHandled(HitResult hitResult, Entity owner, Projectile projectile) {
 		ResourceLocation projectileRL = BuiltInRegistries.ENTITY_TYPE.getKey(projectile.getType());
 		if (projectileRL != null && (projectileRL.equals(SPELL_PROJ_RL) || projectileRL.equals(SPELL_FOLLOW_PROJ_RL))) {
 			return InteractionResult.FAIL;
+		}
+
+		if (ModChecker.arsElementalPresent) {
+			if (ArsElementalCompat.isArsElementalProjectile(projectileRL)) {
+				return InteractionResult.FAIL;
+			}
 		}
 
 		if (hitResult instanceof EntityHitResult entityHitResult && ArsNouveauCompat.isArsWalkingBlock(entityHitResult.getEntity())) {

@@ -58,6 +58,10 @@ dependencies {
 
     modCompileOnly("com.hollingsworth.ars_nouveau:ars_nouveau-${project.ars_nouveau}") { transitive = false }
     modCompileOnly("curse.maven:ars_elemental-561470:${project.ars_elemental_file_id}") { transitive = false }
+    //modRuntimeOnly("com.hollingsworth.ars_nouveau:ars_nouveau-${project.ars_nouveau}") { transitive = false }
+    //modRuntimeOnly("curse.maven:ars_elemental-561470:${project.ars_elemental_file_id}") { transitive = false }
+    //modRuntimeOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}")
+    //modRuntimeOnly("software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}")
 
     // modRuntimeOnly("curse.maven:better-advancements-272515:4631253")
     // modRuntimeOnly("curse.maven:spit-it-out-857141:4614678")
