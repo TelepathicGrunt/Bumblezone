@@ -623,7 +623,9 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    public void shootDirt(@Nullable LivingEntity livingEntity, float speedMultiplier, int totalProjectiles) {
       if (!this.level().isClientSide()) {
          for (int currentProjectile = 0; currentProjectile < totalProjectiles; currentProjectile++) {
+            Vec3 viewVector = this.getViewVector(1.0F);
             DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this);
+            pelletEntity.setPos(pelletEntity.position().add(viewVector.x(), 0, viewVector.z()));
 
             if (this.getEssenceController() != null) {
                pelletEntity.setEventBased(true);
@@ -632,14 +634,14 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
             Vec3 shootAngle;
             if (livingEntity != null) {
                double x = livingEntity.getX() - this.getX();
-               double y = livingEntity.getY(1.3 - speedMultiplier * 1.3) - pelletEntity.getY() - (1.5 - livingEntity.getBbHeight());
+               double y = livingEntity.getY(1.1d - speedMultiplier * speedMultiplier * 0.975d) - pelletEntity.getY() - (1.5d - livingEntity.getBbHeight());
                double z = livingEntity.getZ() - this.getZ();
                shootAngle = new Vec3(x, y, z);
             } else {
                double defaultSpeed = 5;
-               double x = this.getLookAngle().x() * defaultSpeed;
+               double x = viewVector.x() * defaultSpeed;
                double y = 0.3333333333333333;
-               double z = this.getLookAngle().z() * defaultSpeed;
+               double z = viewVector.z() * defaultSpeed;
                shootAngle = new Vec3(x, y, z);
             }
 

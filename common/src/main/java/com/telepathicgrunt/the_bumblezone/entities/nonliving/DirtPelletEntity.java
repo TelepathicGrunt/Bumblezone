@@ -39,6 +39,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -111,6 +112,11 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
 
     protected ParticleOptions getTrailParticle() {
         return getParticle();
+    }
+
+    @Override
+    protected AABB makeBoundingBox() {
+        return super.makeBoundingBox().move(0, -0.1f, 0);
     }
 
     @Override
@@ -241,10 +247,10 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
 
         DamageSource damageSource;
         if (eventBased) {
-            damageSource = this.damageSources().source(BzDamageSources.EVENT_DIRT_PELLET_TYPE, this.getOwner());
+            damageSource = this.damageSources().source(BzDamageSources.EVENT_DIRT_PELLET_TYPE, this, this.getOwner());
         }
         else {
-            damageSource = this.damageSources().source(BzDamageSources.DIRT_PELLET_TYPE, this.getOwner());
+            damageSource = this.damageSources().source(BzDamageSources.DIRT_PELLET_TYPE, this, this.getOwner());
         }
         entity.hurt(damageSource, (float)damage);
         if (entity instanceof LivingEntity livingEntity && !livingEntity.isSpectator()) {

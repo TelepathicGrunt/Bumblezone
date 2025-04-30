@@ -97,7 +97,7 @@ public class RootminRangedAttackGoal extends Goal {
                 return;
             }
             float f = (float) Math.sqrt(distToTarget) / this.attackRadius;
-            this.rootminEntity.runShoot(this.target, 1, false);
+            this.rootminEntity.runShoot(this.target, 1.2f, false);
             this.rootminEntity.exposedTimer = 0;
             this.attackTime = Mth.floor(f * (float) (this.attackIntervalMax - this.attackIntervalMin) + (float) this.attackIntervalMin);
         }

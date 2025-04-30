@@ -232,7 +232,7 @@ public class EssenceBlockGreen extends EssenceBlock {
                         else {
                             rootminEntity.runShoot(
                                 players.get(0),
-                                isHoming ? 0.8F : (float)Mth.lerp(rootminHealthPercent, 1.7D, 0.85D),
+                                isHoming ? 0.8F : (float)Mth.lerp(rootminHealthPercent, 1.7D, 0.9D),
                                 isHoming
                             );
                         }
