@@ -1,7 +1,7 @@
 {
   "effects": "hurt",
   "exhaustion": 0,
-  "message_id": "sentry_watcher_crushing",
+  "message_id": "the_bumblezone.sentry_watcher_crushing",
   "scaling": "always",
   "death_message_type": "default"
 }

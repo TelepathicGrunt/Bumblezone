@@ -3,6 +3,8 @@
   "values": [
     "the_bumblezone:crystalline_flower",
     "the_bumblezone:spikes",
-    "the_bumblezone:sentry_watcher_crushing"
+    "the_bumblezone:sentry_watcher_crushing",
+    "the_bumblezone:dirt_pellet",
+    "the_bumblezone:event_dirt_pellet"
   ]
 }
