@@ -1,7 +1,7 @@
 {
   "effects": "thorns",
   "exhaustion": 0.2,
-  "message_id": "spikes",
+  "message_id": "the_bumblezone.spikes",
   "scaling": "never",
   "death_message_type": "default"
 }

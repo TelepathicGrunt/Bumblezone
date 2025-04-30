@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
@@ -238,7 +239,14 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
             }
         }
 
-        entity.hurt(this.damageSources().thrown(this, this.getOwner()), (float)damage);
+        DamageSource damageSource;
+        if (eventBased) {
+            damageSource = this.damageSources().source(BzDamageSources.EVENT_DIRT_PELLET_TYPE, this.getOwner());
+        }
+        else {
+            damageSource = this.damageSources().source(BzDamageSources.DIRT_PELLET_TYPE, this.getOwner());
+        }
+        entity.hurt(damageSource, (float)damage);
         if (entity instanceof LivingEntity livingEntity && !livingEntity.isSpectator()) {
             if (livingEntity instanceof Player player && player.isCreative()) {
                 return;

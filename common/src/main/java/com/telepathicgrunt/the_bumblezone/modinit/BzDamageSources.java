@@ -12,4 +12,6 @@ public class BzDamageSources {
     public static final ResourceKey<DamageType> SPIKE_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Bumblezone.MODID, "spikes"));
     public static final ResourceKey<DamageType> COSMIC_CRYSTAL_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Bumblezone.MODID, "cosmic_crystal"));
     public static final ResourceKey<DamageType> SENTRY_WATCHER_CRUSHING_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Bumblezone.MODID, "sentry_watcher_crushing"));
+    public static final ResourceKey<DamageType> DIRT_PELLET_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Bumblezone.MODID, "dirt_pellet"));
+    public static final ResourceKey<DamageType> EVENT_DIRT_PELLET_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Bumblezone.MODID, "event_dirt_pellet"));
 }
