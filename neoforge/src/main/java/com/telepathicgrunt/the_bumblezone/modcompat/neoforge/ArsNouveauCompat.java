@@ -161,7 +161,6 @@ public class ArsNouveauCompat implements ModCompat {
 				}
 			}
 
-
 			if(event.rayTraceResult instanceof BlockHitResult) {
 				EntityTeleportationHookup.runTeleportProjectileImpact(event.rayTraceResult, event.shooter, null);
 			}
