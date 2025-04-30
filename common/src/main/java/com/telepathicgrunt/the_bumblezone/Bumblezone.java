@@ -123,7 +123,7 @@ public class Bumblezone {
     public static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().setLenient().disableHtmlEscaping().excludeFieldsWithoutExposeAnnotation().create();
 
     // Note to self:
-    // -XX:+AllowEnchancedClassRedefinition arg with JetBrainsRuntime SDK (JBRSDK) + Single HotSwap Plugin to enable better hotswapping
+    // -XX:+AllowEnhancedClassRedefinition arg with JetBrainsRuntime SDK (JBRSDK) + Single HotSwap Plugin to enable better hotswapping
     // -Dmixin.debug.export=true for mixin dump of transformed classes.
 
     public static final String MODID = "the_bumblezone";
