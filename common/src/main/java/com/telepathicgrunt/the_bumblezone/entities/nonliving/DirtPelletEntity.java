@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminState;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
@@ -28,11 +29,13 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -42,6 +45,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -114,6 +118,11 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
 
     protected ParticleOptions getTrailParticle() {
         return getParticle();
+    }
+
+    @Override
+    protected AABB makeBoundingBox() {
+        return super.makeBoundingBox().move(0, -0.1f, 0);
     }
 
     @Override
@@ -244,10 +253,10 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
 
         DamageSource damageSource;
         if (eventBased) {
-            damageSource = this.damageSources().source(BzDamageSources.EVENT_DIRT_PELLET_TYPE, this.getOwner());
+            damageSource = this.damageSources().source(BzDamageSources.EVENT_DIRT_PELLET_TYPE, this, this.getOwner());
         }
         else {
-            damageSource = this.damageSources().source(BzDamageSources.DIRT_PELLET_TYPE, this.getOwner());
+            damageSource = this.damageSources().source(BzDamageSources.DIRT_PELLET_TYPE, this, this.getOwner());
         }
         entity.hurt(damageSource, (float)damage);
         if (entity instanceof LivingEntity livingEntity && !livingEntity.isSpectator()) {

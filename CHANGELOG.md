@@ -6,6 +6,12 @@ Easier to target this damage type now by other mods.
 
 Added `the_bumblezone:event_damage` damage type tag to allow easier disabling damage scaling from a different mod to these damage types.
 
+Fixed Rootmin shooting not shooting from mouth when Rootmin turns.
+
+Adjusted trajectory for Rootmin Dirt Pellet shooting.
+
+Fixed Dirt Pellet hitbox not centered on the texture.
+
 #### Misc:
 Made the welcome message and near beehive advancement only show when within 3 blocks of a beehive instead of 8 blocks.
 
