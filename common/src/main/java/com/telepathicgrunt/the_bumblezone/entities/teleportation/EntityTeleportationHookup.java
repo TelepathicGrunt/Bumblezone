@@ -76,7 +76,7 @@ public class EntityTeleportationHookup {
             List<PoiRecord> poiInRange = serverLevel.getPoiManager().getInSquare(
                     (pointOfInterestType) -> pointOfInterestType.is(BzTags.IS_NEAR_BEEHIVE_ADVANCEMENT_TRIGGER_POI),
                     serverPlayer.blockPosition(),
-                    8,
+                    3,
                     PoiManager.Occupancy.ANY
                 ).toList();
 

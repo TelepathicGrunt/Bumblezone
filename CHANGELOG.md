@@ -1,5 +1,10 @@
 ### **(V.7.6.13 Changes) (1.20.1 Minecraft)**
 
+#### Misc:
+Made the welcome message and near beehive advancement only show when within 3 blocks of a beehive instead of 8 blocks.
+
+Adjusted welcome message to state advancements have info for entering/exiting dimension.
+
 #### Mod Compat:
 Added compat with EnvironmentZ so Bumblezone dimension is around 96 degrees Fahrenheit!
 Special thanks to KrimZik for making the compat JSON file! See their other EnvironmentZ compat here: https://modrinth.com/datapack/environmentz-compats
