@@ -25,3 +25,5 @@ Special thanks to KrimZik for making the compat JSON file! See their other Envir
 
 Fixed bug where Ars Elemental projectiles can still teleport player to Bumblezone without Blink on.
 
+#### Lang:
+Argentine Spanish (es_ar.json) translation added by Texaliuz!
