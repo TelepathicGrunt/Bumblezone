@@ -218,11 +218,11 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
 
         if (!type.is(BzTags.DIRT_PELLET_FORCE_NO_EXTRA_DAMAGE)) {
             if (type.is(BzTags.DIRT_PELLET_EXTRA_DAMAGE)) {
-                damage = 3;
+                damage = 6;
             }
             else if (!resourceLocation.getNamespace().equals("minecraft") && !resourceLocation.getNamespace().equals(Bumblezone.MODID)) {
                 if (entity instanceof FlyingMob || (entity instanceof Mob mob && mob.getMoveControl() instanceof FlyingMoveControl)) {
-                    damage = 3;
+                    damage = 6;
                 }
             }
         }

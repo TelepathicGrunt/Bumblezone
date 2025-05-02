@@ -12,6 +12,8 @@ Adjusted trajectory for Rootmin Dirt Pellet shooting.
 
 Fixed Dirt Pellet hitbox not centered on the texture.
 
+Doubled the damage that thrown Dirt Pellet does to flying mobs now. From damage of 3 to 6 now.
+
 #### Misc:
 Made the welcome message and near beehive advancement only show when within 3 blocks of a beehive instead of 8 blocks.
 
