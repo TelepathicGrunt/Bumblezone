@@ -237,6 +237,7 @@ public class EssenceBlockYellow extends EssenceBlock {
         ElectricRingEntity ringEntity = BzEntities.ELECTRIC_RING_ENTITY.get().create(serverLevel);
 
         if (ringEntity != null) {
+            ringEntity.addTag("the_bumblezone.yellow_essence_arena");
             ringEntity.setYRot((float) angle);
 
             if (y > 0) {
@@ -273,6 +274,7 @@ public class EssenceBlockYellow extends EssenceBlock {
         int yOffset = (essenceBlockEntity.getArenaSize().getY() - 2) / 2;
         Entity entity = entityTypeToSpawn.spawn(serverLevel, blockPos.offset(0, yOffset, 0), MobSpawnType.TRIGGERED);
         if (entity != null) {
+            entity.addTag("the_bumblezone.yellow_essence_arena");
             eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
 
             UUID playerUUID = essenceBlockEntity.getPlayerInArena().get(serverLevel.getRandom().nextInt(essenceBlockEntity.getPlayerInArena().size()));

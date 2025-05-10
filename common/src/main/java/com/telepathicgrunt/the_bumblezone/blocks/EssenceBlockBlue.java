@@ -214,6 +214,7 @@ public class EssenceBlockBlue extends EssenceBlock {
         if (entity == null) {
             return;
         }
+        entity.addTag("the_bumblezone.blue_essence_arena");
         eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
 
         UUID playerUUID = essenceBlockEntity.getPlayerInArena().get(serverLevel.getRandom().nextInt(essenceBlockEntity.getPlayerInArena().size()));
