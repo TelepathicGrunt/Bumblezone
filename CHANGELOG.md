@@ -1,3 +1,11 @@
+### **(V.7.9.1 Changes) (1.21.1 Minecraft)**
+
+#### Lang:
+Argentine Spanish (es_ar.json) translation fixed by Texaliuz!
+
+Turkish (tr_tr.json) translation added by RuyaSavascisi!
+
+
 ### **(V.7.9.0 Changes) (1.21.1 Minecraft)**
 
 #### Entities:
