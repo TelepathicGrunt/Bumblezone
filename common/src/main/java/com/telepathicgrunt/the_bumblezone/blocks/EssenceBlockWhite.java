@@ -242,7 +242,7 @@ public class EssenceBlockWhite extends EssenceBlock {
     private Entity SpawnNewCrystal(ServerLevel serverLevel, BlockPos blockPos, EssenceBlockEntity essenceBlockEntity, int orbitOffset, float difficultyBoost, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
         CosmicCrystalEntity entity = BzEntities.COSMIC_CRYSTAL_ENTITY.get().spawn(serverLevel, blockPos, MobSpawnType.TRIGGERED);
         if (entity != null) {
-            entity.addTag("bumblezone-white-essence-arena");
+            entity.addTag("the_bumblezone.white_essence_arena");
             entity.setEssenceControllerDimension(serverLevel.dimension());
             entity.setEssenceController(essenceBlockEntity.getUUID());
             entity.setEssenceControllerBlockPos(essenceBlockEntity.getBlockPos());

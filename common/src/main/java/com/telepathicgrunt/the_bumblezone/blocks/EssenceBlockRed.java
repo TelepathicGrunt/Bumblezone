@@ -194,7 +194,7 @@ public class EssenceBlockRed extends EssenceBlock {
         int yOffset = (-(essenceBlockEntity.getArenaSize().getY()) / 2) + 2;
         Entity entity = entityTypeToSpawn.spawn(serverLevel, blockPos.offset(0, yOffset, 0), MobSpawnType.TRIGGERED);
         if (entity != null) {
-            entity.addTag("bumblezone-red-essence-arena");
+            entity.addTag("the_bumblezone.red_essence_arena");
 
             if (entity instanceof Slime slime) {
                 slime.setSize(4, true);
