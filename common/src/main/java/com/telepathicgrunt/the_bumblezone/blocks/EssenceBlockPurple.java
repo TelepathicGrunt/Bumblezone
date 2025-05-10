@@ -145,6 +145,7 @@ public class EssenceBlockPurple extends EssenceBlock {
                 PurpleSpikeEntity spikeEntity = BzEntities.PURPLE_SPIKE_ENTITY.get().create(serverLevel);
 
                 if (spikeEntity != null) {
+                    spikeEntity.addTag("bumblezone-purple-essence-arena");
                     spikeEntity.setEssenceController(essenceBlockEntity.getUUID());
                     spikeEntity.setEssenceControllerBlockPos(essenceBlockEntity.getBlockPos());
                     spikeEntity.setEssenceControllerDimension(serverLevel.dimension());

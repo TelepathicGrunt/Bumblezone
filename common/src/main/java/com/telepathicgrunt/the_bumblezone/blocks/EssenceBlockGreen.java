@@ -253,6 +253,7 @@ public class EssenceBlockGreen extends EssenceBlock {
     private static Entity spawnRootmin(ServerLevel serverLevel, EssenceBlockEntity essenceBlockEntity, BlockPos rootminPos, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
         Entity entity = BzEntities.ROOTMIN.get().spawn(serverLevel, rootminPos, MobSpawnType.TRIGGERED);
         if (entity instanceof RootminEntity rootminEntity) {
+            rootminEntity.addTag("bumblezone-green-essence-arena");
             rootminEntity.setRootminShield(true);
             rootminEntity.setEssenceController(essenceBlockEntity.getUUID());
             rootminEntity.setEssenceControllerBlockPos(essenceBlockEntity.getBlockPos());

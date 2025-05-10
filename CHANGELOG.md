@@ -1,5 +1,17 @@
 ### **(V.7.7.1 Changes) (1.20.1 Minecraft)**
 
+#### Structures:
+Sempiternal Sanctum essence arenas now will add a tag to all spawned entities in the arena.
+These tags are for easier selecting of the entities by datapacks or other mods for easier configuration by modpack makers.
+The tags are the following:
+
+- "bumblezone-red-essence-arena"
+- "bumblezone-yellow-essence-arena"
+- "bumblezone-green-essence-arena"
+- "bumblezone-blue-essence-arena"
+- "bumblezone-purple-essence-arena"
+- "bumblezone-white-essence-arena"
+
 #### Lang:
 Argentine Spanish (es_ar.json) translation fixed by Texaliuz!
 
