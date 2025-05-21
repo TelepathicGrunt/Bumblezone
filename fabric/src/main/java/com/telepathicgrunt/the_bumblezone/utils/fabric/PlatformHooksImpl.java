@@ -194,6 +194,7 @@ public class PlatformHooksImpl {
                 else {
                     blockState = world.getBlockState(blockPos);
                     BlockPos blockPos3 = blockState.getBlock() instanceof LiquidBlockContainer && fluid.is(FluidTags.WATER) ? blockPos : blockPos2;
+                    user.swingingArm = hand;
                     if (bzCustomBucketItem.emptyContents(user, world, blockPos3, blockHitResult)) {
                         bzCustomBucketItem.checkExtraContent(user, world, itemStack, blockPos3);
                         if (user instanceof ServerPlayer serverPlayer) {
@@ -223,7 +224,8 @@ public class PlatformHooksImpl {
             Vec3 centerOfPos = Vec3.atCenterOf(pos);
             Vec3 diff = centerOfPos.subtract(player.position());
             BlockHitResult blockHitResult = new BlockHitResult(centerOfPos, Direction.getNearest(diff.x(), diff.y(), diff.z()), pos, true);
-            InteractionResult interact = UseBlockCallback.EVENT.invoker().interact(player, level, player.swingingArm, blockHitResult);
+            InteractionHand hand = player.swingingArm == null ? InteractionHand.MAIN_HAND : player.swingingArm;
+            InteractionResult interact = UseBlockCallback.EVENT.invoker().interact(player, level, hand, blockHitResult);
             return interact != InteractionResult.FAIL;
         }
         return true;
