@@ -3,6 +3,18 @@
 #### Items:
 (Fabric): Fixed crash with other mods when placing Bumblezone fluid buckets.
 
+#### Blocks:
+Essence Blocks now will prevent players from placing blocks or fluids on it with right click.
+
+Infinity Barrier will attempt to push entities out of itself to reduce chances of entities staying stuck in it.
+
+#### Structures:
+Purple Essence event now will check if player is on a platform or in a climbable block and will break them if found.
+Reduce chances of cheesing this event.
+
+#### Entities:
+Purple Spike entity in the Purple Essence event will now be able to break boats to prevent some cheesing strategies.
+
 
 ### **(V.7.9.1 Changes) (1.21.1 Minecraft)**
 
