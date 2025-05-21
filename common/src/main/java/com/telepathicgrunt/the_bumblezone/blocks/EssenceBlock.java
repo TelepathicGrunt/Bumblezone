@@ -281,6 +281,14 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
         }
     }
 
+    /**
+     * Done to prevent some blocks from being able to attach to this block
+     */
+    @Override
+    public VoxelShape getBlockSupportShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+        return Shapes.empty();
+    }
+
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {
         for (int i = 0; i <= 2; i++) {
             level.addParticle(
