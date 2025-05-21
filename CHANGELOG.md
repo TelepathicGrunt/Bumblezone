@@ -1,3 +1,9 @@
+### **(V.7.9.2 Changes) (1.21.1 Minecraft)**
+
+#### Items:
+(Fabric): Fixed crash with other mods when placing Bumblezone fluid buckets.
+
+
 ### **(V.7.9.1 Changes) (1.21.1 Minecraft)**
 
 #### Structures:
