@@ -5,13 +5,16 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEven
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
@@ -23,10 +26,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SupportType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -51,6 +59,29 @@ public class InfinityBarrier extends BaseEntityBlock implements BlockExtension {
     @Override
     public RenderShape getRenderShape(BlockState arg) {
         return RenderShape.MODEL;
+    }
+
+    /**
+     * Done to prevent some blocks from being able to attach to this block
+     */
+    @Override
+    public VoxelShape getBlockSupportShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+        return Shapes.empty();
+    }
+
+    // Weakly push out any entity stuck inside
+    @Override
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
+        if (!(blockState.getBlock() instanceof InfinityBarrier)) {
+            return;
+        }
+
+        Vec3 center = Vec3.atCenterOf(blockPos);
+        float powerPush = 0.1f;
+        entity.push(
+                (entity.getX() - center.x()) * powerPush,
+                (entity.getY() - center.y()) * powerPush,
+                (entity.getZ() - center.z()) * powerPush);
     }
 
     @Override
@@ -96,25 +127,5 @@ public class InfinityBarrier extends BaseEntityBlock implements BlockExtension {
     @Override
     public OptionalBoolean bz$shouldNotDisplayFluidOverlay() {
         return OptionalBoolean.TRUE;
-    }
-
-    public static InteractionResult onBlockInteractEvent(PlayerItemUseOnBlockEvent event) {
-        Player player = event.user();
-        InteractionHand interactionHand = event.hand();
-        BlockState blockState = event.level().getBlockState(event.hitResult().getBlockPos());
-        if (player != null && blockState.is(BzBlocks.INFINITY_BARRIER.get())) {
-            ItemStack itemStack = player.getItemInHand(interactionHand);
-            Item item = itemStack.getItem();
-            if (item instanceof BlockItem) {
-                return InteractionResult.FAIL;
-            }
-            else if (item instanceof BucketItem) {
-                return InteractionResult.FAIL;
-            }
-            else if (item instanceof HangingEntityItem) {
-                return InteractionResult.FAIL;
-            }
-        }
-        return null;
     }
 }

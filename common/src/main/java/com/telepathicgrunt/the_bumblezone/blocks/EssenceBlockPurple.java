@@ -4,17 +4,21 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.bossbars.ServerEssenceEvent;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PurpleSpikeEntity;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.MusicPacketFromServer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.AABB;
@@ -72,8 +76,19 @@ public class EssenceBlockPurple extends EssenceBlock {
 
     @Override
     public void performUniqueArenaTick(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity) {
-        if (essenceBlockEntity.getPlayerInArena().size() == 0) return;
+        if (essenceBlockEntity.getPlayerInArena().isEmpty()) return;
+
         int timeRemaining = essenceBlockEntity.getEventTimer();
+
+        if (timeRemaining % 5 == 0) {
+            for (UUID playerUUID : essenceBlockEntity.getPlayerInArena()) {
+                Player player = serverLevel.getServer().getPlayerList().getPlayer(playerUUID);
+                if (player != null) {
+                    breakClimbablesAndPlatforms(serverLevel, player);
+
+                }
+            }
+        }
 
         List<EssenceBlockEntity.EventEntities> eventEntitiesInArena = essenceBlockEntity.getEventEntitiesInArena();
         if (eventEntitiesInArena.isEmpty()) {
@@ -128,6 +143,44 @@ public class EssenceBlockPurple extends EssenceBlock {
         }
 
         essenceBlockEntity.getEventBar().setProgress((float) essenceBlockEntity.getEventTimer() / getEventTimeFrame());
+    }
+
+    private static void breakClimbablesAndPlatforms(ServerLevel serverLevel, Player player) {
+        int maxX = (int) Math.ceil(player.getBoundingBox().maxX);
+        int maxY = (int) Math.ceil(player.getBoundingBox().maxY);
+        int maxZ = (int) Math.ceil(player.getBoundingBox().maxZ);
+        int minX = (int) Math.floor(player.getBoundingBox().minX);
+        int minY = (int) Math.floor(player.getBoundingBox().minY);
+        int minZ = (int) Math.floor(player.getBoundingBox().minZ);
+
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+        for (int x = minX; x <= maxX; x++) {
+            for (int z = minZ; z <= maxZ; z++) {
+                for (int y = minY; y <= maxY; y++) {
+                    mutableBlockPos.set(x, y, z);
+                    BlockState state = serverLevel.getBlockState(mutableBlockPos);
+                    if (state.is(BlockTags.CLIMBABLE)) {
+                        serverLevel.destroyBlock(mutableBlockPos, true);
+                    }
+                    else if (!state.getFluidState().isEmpty()) {
+                        serverLevel.setBlock(mutableBlockPos, BzBlocks.HEAVY_AIR.get().defaultBlockState(), 3);
+                    }
+                }
+            }
+        }
+
+        if (player.mainSupportingBlockPos.isPresent()) {
+            int belowY = player.mainSupportingBlockPos.get().getY();
+            for (int x = minX; x <= maxX; x++) {
+                for (int z = minZ; z <= maxZ; z++) {
+                    mutableBlockPos.set(x, belowY, z);
+                    BlockState state = serverLevel.getBlockState(mutableBlockPos);
+                    if (!state.is(BzTags.ESSENCE_BLOCKS) && !state.is(BzBlocks.INFINITY_BARRIER.get())) {
+                        serverLevel.destroyBlock(mutableBlockPos, true);
+                    }
+                }
+            }
+        }
     }
 
     private static void spawnEntities(ServerLevel serverLevel,

@@ -23,6 +23,8 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -201,6 +203,10 @@ public class PurpleSpikeEntity extends Entity {
                                     true));
                         }
 
+                        this.makeParticle(1, true);
+                    }
+                    else if (!(entity instanceof ItemEntity)) {
+                        entity.hurt(this.level().damageSources().source(BzDamageSources.SPIKE_TYPE, this), 1);
                         this.makeParticle(1, true);
                     }
                 }
