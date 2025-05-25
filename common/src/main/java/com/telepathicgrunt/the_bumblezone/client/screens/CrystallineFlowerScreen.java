@@ -11,7 +11,7 @@ import com.telepathicgrunt.the_bumblezone.packets.CrystallineFlowerClickedEnchan
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.services.PlatformService;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -643,7 +643,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                             .withStyle(ChatFormatting.DARK_GRAY);
                 }
                 else {
-                    ModInfo info = PlatformService.INSTANCE.getModInfo(enchantment.namespace);
+                    ModInfo info = PlatformHooks.getModInfo(enchantment.namespace);
                     if (info == null) {
                         String formattedModid = Arrays.stream(enchantment.namespace
                                 .split("_"))

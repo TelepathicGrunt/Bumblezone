@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.fluids.base;
 
-import com.telepathicgrunt.the_bumblezone.services.PlatformService;
+import dev.architectury.injectables.targets.ArchitecturyTarget;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -18,7 +18,7 @@ public class BzBucketItem extends BucketItem implements FluidGetter {
     protected final FluidInfo info;
 
     public BzBucketItem(FluidInfo info, Properties properties) {
-        super("forge".equals(PlatformService.INSTANCE.getPlatformName()) ? Fluids.FLOWING_WATER : info.source(), properties); //This gets replaced in a mixin because of the suppliers.
+        super("forge".equals(ArchitecturyTarget.getCurrentTarget()) ? Fluids.FLOWING_WATER : info.source(), properties); //This gets replaced in a mixin because of the suppliers.
         info.setBucket(() -> this);
         this.info = info;
     }

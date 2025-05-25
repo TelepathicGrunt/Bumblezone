@@ -1,55 +1,97 @@
-plugins {
-    id 'fabric-loom' version '1.10-SNAPSHOT'
-}
-
 dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings(loom.layered {
-        it.officialMojangMappings()
-        it.parchment("org.parchmentmc.data:parchment-${project.parchment_minecraft_version}:${project.parchment_mappings_version}@zip")
-    })
-    compileOnly "org.ow2.asm:asm:${project.asm_version}"
-    compileOnly "org.ow2.asm:asm-analysis:${project.asm_version}"
-    compileOnly "org.ow2.asm:asm-commons:${project.asm_version}"
-    compileOnly "org.ow2.asm:asm-tree:${project.asm_version}"
-    compileOnly "org.ow2.asm:asm-util:${project.asm_version}"
+    // REQUIRED
+    // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
+    // Do NOT use other classes from fabric loader
+    modImplementation("net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}")
 
-    compileOnly "net.fabricmc:sponge-mixin:${project.mixin_version}"
-    compileOnly "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"
-    annotationProcessor "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"
+    modRuntimeOnly(modCompileOnly("earth.terrarium.athena:athena-common-${rootProject.athena}"))
 
-    modRuntimeOnly(modCompileOnly("earth.terrarium.athena:athena-common-${project.athena}"))
+    implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${rootProject.mixin_extras}"))
+
 
     // COMPAT
-    modCompileOnly("mezz.jei:jei-${project.jei_mc}-forge-api:${project.jei}") { transitive = false }
-    modCompileOnly("mezz.jei:jei-${project.jei_mc}-common-api:${project.jei}") { transitive = false }
-    modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:${project.rei}") { transitive = false }
-    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}") { transitive = false }
-    modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config}")
+    modCompileOnly("mezz.jei:jei-${rootProject.jei_mc}-forge-api:${rootProject.jei}")
+    modCompileOnly("mezz.jei:jei-${rootProject.jei_mc}-common-api:${rootProject.jei}")
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:${rootProject.rei}")
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${rootProject.rei}")
+    modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
+    modRuntimeOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
 
-    modCompileOnly("maven.modrinth:projectile-damage-attribute:${project.projectile_damage_attribute}-forge") { transitive = false }
+    modCompileOnly("maven.modrinth:projectile-damage-attribute:${rootProject.projectile_damage_attribute}-forge")
+}
+
+architectury {
+    common("fabric", "forge")
 }
 
 loom {
-    mods {
-        "${mod_id}" {
-            // Tell Loom about each source set used by your mod here. This ensures that your mod's classes are properly transformed by Loader.
-            sourceSet sourceSets.main
+    accessWidenerPath = file("src/main/resources/the_bumblezone.accesswidener")
+}
+
+jar {
+    exclude "architectury.common.json"
+
+    manifest {
+        attributes 'Fabric-Loom-Remap': true
+    }
+}
+
+sourcesJar {
+    exclude "architectury.common.json"
+}
+
+def ENV = System.getenv()
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact remapJar
+            artifact(sourcesJar) {
+                builtBy remapSourcesJar
+            }
+
+            artifactId = "$rootProject.name"
+
+            pom {
+                name = 'TheBumblezone'
+                description = 'A wonderful bee dimension mod with lots of new exploration and adventuring to do!'
+                url = 'https://github.com/TelepathicGrunt/Bumblezone'
+
+                scm {
+                    connection = 'git:https://github.com/TelepathicGrunt/Bumblezone.git'
+                    developerConnection = 'git:https://github.com/TelepathicGrunt/Bumblezone.git'
+                    url = 'https://github.com/TelepathicGrunt/Bumblezone'
+                }
+
+                licenses {
+                    license {
+                        name = 'GNU Lesser General Public License v3.0'
+                        url = 'https://github.com/TelepathicGrunt/Bumblezone/LICENSE'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'telepathic_grunt'
+                        name = 'TelepathicGrunt'
+                        email = 'asarnesespam@gmail.com'
+                    }
+                }
+            }
         }
     }
-
-    def awFile = project.file("src/main/resources/${mod_id}.accesswidener")
-    if (awFile.exists()) {
-        accessWidenerPath.set(awFile)
-    }
-
-    mixin {
-        useLegacyMixinAp = false
-    }
-
-    runs {
-        configureEach {
-            ideConfigGenerated(false)
+    repositories {
+        maven {
+            url = "https://maven.resourcefulbees.com/repository/telepathicgrunt/"
+            credentials {
+                username ENV.MAVEN_USER
+                password ENV.MAVEN_PASS
+            }
         }
     }
 }
+
+task buildAndRelease{}
+tasks.build.mustRunAfter tasks.clean
+tasks.publish.mustRunAfter tasks.build
+tasks.buildAndRelease.dependsOn(tasks.clean, tasks.build, tasks.publish)

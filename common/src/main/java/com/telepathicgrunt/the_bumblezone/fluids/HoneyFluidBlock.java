@@ -8,7 +8,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.services.PlatformService;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -178,7 +178,7 @@ public class HoneyFluidBlock extends BzLiquidBlock {
     public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
         double verticalSpeedDeltaLimit = 0.01D;
         if (entity instanceof Bee beeEntity && !beeEntity.isDeadOrDying()) {
-            if (beeEntity.getHealth() < beeEntity.getMaxHealth() && PlatformService.INSTANCE.isEyesInNoFluid(entity)) {
+            if (beeEntity.getHealth() < beeEntity.getMaxHealth() && PlatformHooks.isEyesInNoFluid(entity)) {
                 float diff = beeEntity.getMaxHealth() - beeEntity.getHealth();
                 beeEntity.heal(diff);
                 BlockState currentState = world.getBlockState(position);

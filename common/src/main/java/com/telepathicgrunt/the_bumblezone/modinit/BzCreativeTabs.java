@@ -6,7 +6,6 @@ import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
-import com.telepathicgrunt.the_bumblezone.services.RegistrationService;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -174,7 +173,7 @@ public class BzCreativeTabs {
             BzItems.WINDY_AIR
     );
 
-    public static final ResourcefulRegistry<CreativeModeTab> CREATIVE_MODE_TABS = RegistrationService.INSTANCE.create(BuiltInRegistries.CREATIVE_MODE_TAB, Bumblezone.MODID);
+    public static final ResourcefulRegistry<CreativeModeTab> CREATIVE_MODE_TABS = ResourcefulRegistries.create(BuiltInRegistries.CREATIVE_MODE_TAB, Bumblezone.MODID);
 
     public static final RegistryEntry<CreativeModeTab> BUMBLEZONE_MAIN_TAB = CREATIVE_MODE_TABS.register("main_tab", () ->
             CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)

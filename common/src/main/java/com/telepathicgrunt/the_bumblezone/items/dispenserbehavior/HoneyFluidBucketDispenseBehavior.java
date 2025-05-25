@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.services.PlatformService;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Position;
@@ -55,7 +55,7 @@ public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavio
                     beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(BlockPos.containing(beeEntity.position())), MobSpawnType.TRIGGERED, null, null);
                     beeEntity.setBaby(true);
 
-                    PlatformService.INSTANCE.finalizeSpawn(beeEntity, world, null, MobSpawnType.DISPENSER, null);
+                    PlatformHooks.finalizeSpawn(beeEntity, world, null, MobSpawnType.DISPENSER, null);
                     deniedBeeSpawn = !world.addFreshEntity(beeEntity);
                     world.setBlockAndUpdate(dispenseBlockPos, blockstate.setValue(HoneycombBrood.STAGE, 0));
                 }

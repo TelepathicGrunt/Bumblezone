@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
-import com.telepathicgrunt.the_bumblezone.services.PlatformService;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
@@ -119,7 +119,7 @@ public class ModChecker {
 	@ApiStatus.Internal
     public static void loadupModCompat(String modid, Supplier<ModCompat> loader){
 		try {
-			if (PlatformService.INSTANCE.isModLoaded(modid)) {
+			if (PlatformHooks.isModLoaded(modid)) {
 				ModCompat compat = loader.get();
 				if (compat.compatTypes().contains(ModCompat.Type.SPAWNS)) SPAWNING_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.EMPTY_BROOD)) BROOD_EMPTY_COMPATS.add(compat);
@@ -157,9 +157,9 @@ public class ModChecker {
 
 	@ApiStatus.Internal
 	public static boolean isNotOutdated(String currentModID, String minVersion, boolean checkQualifierInstead) {
-		if(!PlatformService.INSTANCE.isModLoaded(currentModID)) return true;
+		if(!PlatformHooks.isModLoaded(currentModID)) return true;
 
-		ModInfo info = PlatformService.INSTANCE.getModInfo(currentModID, checkQualifierInstead);
+		ModInfo info = PlatformHooks.getModInfo(currentModID, checkQualifierInstead);
 
 		if (info != null && info.compare(minVersion) < 0) {
 			Bumblezone.LOGGER.info("------------------------------------------------NOTICE-------------------------------------------------------------------------");

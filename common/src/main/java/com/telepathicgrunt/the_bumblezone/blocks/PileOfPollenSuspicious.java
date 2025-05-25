@@ -10,7 +10,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.services.PlatformService;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -122,7 +122,7 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
                 ItemStack heldItem = ((EntityCollisionContextAccessor)ctx).bumblezone$getHeldItem();
                 if (heldItem != null &&
                     !heldItem.isEmpty() &&
-                    (PlatformService.INSTANCE.isToolAction(heldItem, BrushItem.class, "brush_brush") ||
+                    (PlatformHooks.isToolAction(heldItem, BrushItem.class, "brush_brush") ||
                     (heldItem.is(BzTags.SUSPICIOUS_PILE_OF_POLLEN_ADDITIONAL_BRUSHES))))
                 {
                     StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();

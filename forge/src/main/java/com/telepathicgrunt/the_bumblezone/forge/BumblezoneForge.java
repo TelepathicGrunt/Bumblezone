@@ -44,8 +44,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.forge.BzBiomeModifiers;
 import com.telepathicgrunt.the_bumblezone.modinit.forge.BzGlobalLootModifier;
+import com.telepathicgrunt.the_bumblezone.modinit.registry.forge.ResourcefulRegistriesImpl;
 import com.telepathicgrunt.the_bumblezone.modules.forge.ForgeModuleInitalizer;
-import com.telepathicgrunt.the_bumblezone.services.forge.ForgeRegistrationService;
 import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -114,7 +114,7 @@ public class BumblezoneForge {
         BzConfigHandler.setup();
 
         ForgeModuleInitalizer.init();
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(EventPriority.NORMAL, ForgeRegistrationService::onRegisterForgeRegistries);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(EventPriority.NORMAL, ResourcefulRegistriesImpl::onRegisterForgeRegistries);
 
         Bumblezone.init();
 

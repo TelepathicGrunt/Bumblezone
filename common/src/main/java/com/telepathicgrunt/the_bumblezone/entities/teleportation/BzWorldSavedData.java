@@ -4,8 +4,9 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerLevelTickEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
+import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
-import com.telepathicgrunt.the_bumblezone.services.PlatformService;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -233,7 +234,7 @@ public class BzWorldSavedData extends SavedData {
 
 				if (BzDimensionConfigs.enableInitialWelcomeMessage && entity instanceof ServerPlayer serverPlayer) {
 					RUNNABLES_FOR_NEXT_TICK.add(new NextTickRunnable(bumblezoneWorld.getGameTime() + 20, () -> {
-						RegistrationService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(playerData -> {
+						ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(playerData -> {
 							if (!playerData.gottenWelcomedInDimension) {
 								playerData.gottenWelcomedInDimension = true;
 								serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
@@ -243,7 +244,7 @@ public class BzWorldSavedData extends SavedData {
 				}
 			}
 
-			RegistrationService.INSTANCE.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
+			ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
 				capability.setNonBZPos(entity.position());
 				capability.setNonBZDim(entity.level().dimension().location());
 
@@ -285,7 +286,7 @@ public class BzWorldSavedData extends SavedData {
 	}
 
 	private static ServerPlayer createSilkTouchFakePlayer(ServerLevel level) {
-		ServerPlayer serverPlayer = PlatformService.INSTANCE.getFakePlayer(level, null);
+		ServerPlayer serverPlayer = PlatformHooks.getFakePlayer(level, null);
 		ItemStack fakeHandItem = Items.STONE_PICKAXE.getDefaultInstance();
 		HashMap<Enchantment, Integer> enchantmentHashMap = new HashMap<>();
 		enchantmentHashMap.put(Enchantments.SILK_TOUCH, 1);
@@ -307,7 +308,7 @@ public class BzWorldSavedData extends SavedData {
 		entity.setPortalCooldown();
 
 		if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
-			RegistrationService.INSTANCE.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
+			ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
 				capability.setNonBZPos(entity.position());
 				capability.setNonBZDim(entity.level().dimension().location());
 			});
@@ -319,7 +320,7 @@ public class BzWorldSavedData extends SavedData {
 				serverPlayer.stopSleepInBed(true, true);
 			}
 
-			if (PlatformService.INSTANCE.isDimensionAllowed(serverPlayer, destination.dimension())) {
+			if (PlatformHooks.isDimensionAllowed(serverPlayer, destination.dimension())) {
 				serverPlayer.connection.send(new ClientboundRespawnPacket(destination.dimensionTypeId(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), (byte)3, serverPlayer.getLastDeathLocation(), serverPlayer.getPortalCooldown()));
 				serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y + 0.1f, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
 				serverPlayer.connection.send(new ClientboundChangeDifficultyPacket(destination.getDifficulty(), destination.getLevelData().isDifficultyLocked()));

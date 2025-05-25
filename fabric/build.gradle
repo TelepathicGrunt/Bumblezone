@@ -1,180 +1,155 @@
 plugins {
-    id 'fabric-loom' version '1.10-SNAPSHOT'
+    id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 
-repositories {
-    maven { url = 'https://maven.terraformersmc.com/releases' }
-    exclusiveContent {
-        forRepository {
-            maven {
-                name = "ParchmentMC"
-                url = "https://maven.parchmentmc.org"
-            }
-        }
-        filter {
-            includeGroupAndSubgroups("org.parchmentmc")
-        }
-    }
+architectury {
+    platformSetupLoomIde()
+    fabric()
+}
+
+loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
+}
+
+configurations {
+    common
+    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentFabric.extendsFrom common
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings(loom.layered {
-        it.officialMojangMappings()
-        it.parchment("org.parchmentmc.data:parchment-${project.parchment_minecraft_version}:${project.parchment_mappings_version}@zip")
-    })
-    compileOnly(project(":common")) {
-        transitive = false
-    }
-
     // REQUIRED
-    modImplementation("net.fabricmc:fabric-loader:${project.fabric_loader_version}")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}")
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
-    modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-fabric-${project.athena}")))
+    modImplementation("maven.modrinth:midnightlib:${rootProject.midnightlib}")
 
-    modImplementation("maven.modrinth:midnightlib:${project.midnightlib}")
+    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}")
+    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")
+    include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}")
+    include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")
 
-    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components}")
-    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_components}")
-    include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components}")
-    include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_components}")
+    include("me.luligabi:NoIndium:${rootProject.noindium}")
 
-    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${project.mixin_extras_version}")))
+    modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-fabric-${rootProject.athena}")))
 
-    include("me.luligabi:NoIndium:${project.noindium}") { transitive = false }
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
+    common(project(path: ":fabric-base", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":fabric-base", configuration: "transformProductionFabric")) { transitive false }
+
+    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${rootProject.mixin_extras}")))
+
 
     // COMPAT
-    modCompileOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}") { transitive = false }
+    modCompileOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}")
     //modRuntimeOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}")
 
-    modCompileOnly("com.terraformersmc:modmenu:${project.mod_menu}") { transitive = false }
-    modLocalRuntime("com.terraformersmc:modmenu:${project.mod_menu}") { transitive = false }
+    modCompileOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
+    modRuntimeOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
 
-    modCompileOnly("dev.emi:emi-fabric:${project.emi}") { transitive = false }
-    //modLocalRuntime("dev.emi:emi-fabric:${project.emi}")
+    modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
+
+    //modLocalRuntime("dev.emi:emi-fabric:${rootProject.emi}")
 
 //    modLocalRuntime("curse.maven:huge-structure-blocks-474114:4803539")
 //    modLocalRuntime("com.telepathicgrunt:CommandStructures:${project.commandstructures_fabric}")
 //    modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_fabric}")
 }
 
-publishMods {
-    file = tasks.remapJar.archiveFile
-    modLoaders.add("fabric")
+processResources {
+    inputs.property "version", project.version
 
-    File changeLog = rootProject.file("CHANGELOG.md")
-    String changeLogText = changeLog.exists() ? changeLog.text : ""
-
-    def uploadDependenciesCf = [
-            "fabric-api": true,
-            "midnightlib": true,
-            "better-advancements": false
-    ]
-    def uploadDependenciesMr = [
-            "fabric-api": true,
-            "midnightlib": true,
-            "better-advancements": false
-    ]
-
-    if (project.hasProperty('curseforge_id_fabric')) {
-        curseforge('curseforgeFabric') {
-            accessToken = providers.environmentVariable('CURSEFORGEKEY')
-            projectId = project.findProperty('curseforge_id_fabric')
-            minecraftVersions.add(project.minecraft_version)
-            changelog = changeLogText
-
-            uploadDependenciesCf.each { dep, required ->
-                if (required) {
-                    requires(dep)
-                } else {
-                    optional(dep)
-                }
-            }
-        }
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
     }
+}
 
-    if (project.hasProperty('modrinth_id_fabric')) {
-        modrinth('modrinthFabric') {
-            accessToken = providers.environmentVariable('MODRINTH_TOKEN')
-            projectId = project.findProperty('modrinth_id_fabric')
-            minecraftVersions.add(project.minecraft_version)
-            changelog = changeLogText
+shadowJar {
+    exclude "architectury.common.json"
+    configurations = [project.configurations.shadowCommon]
+    archiveClassifier.set("dev-shadow")
+}
 
-            dependencies {
-                uploadDependenciesMr.each { dep, required ->
-                    if (required) {
-                        requires(dep)
-                    } else {
-                        optional(dep)
+remapJar {
+    injectAccessWidener = true
+    inputFile.set shadowJar.archiveFile
+    dependsOn shadowJar
+    archiveClassifier.set(null)
+}
+
+jar {
+    archiveClassifier.set("dev")
+}
+
+sourcesJar {
+    def commonSources = project(":common").sourcesJar
+    dependsOn commonSources
+    from commonSources.archiveFile.map { zipTree(it) }
+}
+
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
+    }
+}
+
+def ENV = System.getenv()
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact remapJar
+            artifact(sourcesJar) {
+                builtBy remapSourcesJar
+            }
+
+            artifactId = "$rootProject.name"
+
+            pom {
+                name = 'TheBumblezone'
+                description = 'A wonderful bee dimension mod with lots of new exploration and adventuring to do!'
+                url = 'https://github.com/TelepathicGrunt/Bumblezone'
+
+                scm {
+                    connection = 'git:https://github.com/TelepathicGrunt/Bumblezone.git'
+                    developerConnection = 'git:https://github.com/TelepathicGrunt/Bumblezone.git'
+                    url = 'https://github.com/TelepathicGrunt/Bumblezone'
+                }
+
+                licenses {
+                    license {
+                        name = 'GNU Lesser General Public License v3.0'
+                        url = 'https://github.com/TelepathicGrunt/Bumblezone/LICENSE'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'telepathic_grunt'
+                        name = 'TelepathicGrunt'
+                        email = 'asarnesespam@gmail.com'
                     }
                 }
             }
         }
     }
-}
-
-loom {
-    mods {
-        "${mod_id}" {
-            // Tell Loom about each source set used by your mod here. This ensures that your mod's classes are properly transformed by Loader.
-            sourceSet sourceSets.main
-            sourceSet project(":common").sourceSets.main
-        }
-    }
-
-    def awFile = project(':common').file("src/main/resources/${mod_id}.accesswidener")
-    if (awFile.exists()) {
-        accessWidenerPath.set(awFile)
-    }
-
-    mixin {
-        useLegacyMixinAp = false
-    }
-
-    runs {
-        configureEach {
-            runDir("run")
-            ideConfigGenerated(true)
-        }
-
-        client {
-            client()
-            setConfigName("Fabric Client")
-
-            if (project.hasProperty('mc_uuid')) {
-                programArg("--uuid=${project.findProperty('mc_uuid')}")
-            }
-
-            if (project.hasProperty('mc_username')) {
-                programArg("--username=${project.findProperty('mc_username')}")
-            }
-
-            if (project.hasProperty('mc_java_agent_path')) {
-                vmArg("-javaagent:${project.findProperty('mc_java_agent_path')}")
+    repositories {
+        maven {
+            url = "https://maven.resourcefulbees.com/repository/telepathicgrunt/"
+            credentials {
+                username ENV.MAVEN_USER
+                password ENV.MAVEN_PASS
             }
         }
-
-        server {
-            server()
-            setConfigName("Fabric Server")
-            programArg('--nogui')
-        }
     }
 }
 
-tasks.named("compileJava", JavaCompile) {
-    source(project(":common").sourceSets.main.allJava)
-}
-
-tasks.named("javadoc", Javadoc).configure {
-    source(project(":common").sourceSets.main.allJava)
-}
-
-tasks.named("sourcesJar", Jar) {
-    from(project(":common").sourceSets.main.allSource)
-}
-
-processResources {
-    from project(":common").sourceSets.main.resources
-}
+task buildAndRelease{}
+tasks.build.mustRunAfter tasks.clean
+tasks.publish.mustRunAfter tasks.build
+tasks.curseforge.mustRunAfter tasks.publish
+tasks.modrinth.mustRunAfter tasks.publish
+tasks.buildAndRelease.dependsOn(tasks.clean, tasks.build, tasks.publish, tasks.curseforge, tasks.modrinth)

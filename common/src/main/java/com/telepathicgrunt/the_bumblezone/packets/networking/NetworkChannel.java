@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.packets.networking;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.NetworkDirection;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
-import com.telepathicgrunt.the_bumblezone.services.RegistrationService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -21,23 +20,23 @@ public class NetworkChannel {
     public NetworkChannel(String modid, String channel) {
         this.channel = new ResourceLocation(modid, channel);
 
-        RegistrationService.INSTANCE.registerChannel(this.channel);
+        PacketChannelHelper.registerChannel(this.channel);
     }
 
     public final <T extends Packet<T>> void registerPacket(NetworkDirection direction, ResourceLocation id, PacketHandler<T> handler, Class<T> packetClass) {
         if (direction == NetworkDirection.CLIENT_TO_SERVER) {
-            RegistrationService.INSTANCE.registerC2SPacket(this.channel, id, handler, packetClass);
+            PacketChannelHelper.registerC2SPacket(this.channel, id, handler, packetClass);
         } else {
-            RegistrationService.INSTANCE.registerS2CPacket(this.channel, id, handler, packetClass);
+            PacketChannelHelper.registerS2CPacket(this.channel, id, handler, packetClass);
         }
     }
 
     public final <T extends Packet<T>> void sendToServer(T packet) {
-        RegistrationService.INSTANCE.sendToServer(this.channel, packet);
+        PacketChannelHelper.sendToServer(this.channel, packet);
     }
 
     public final <T extends Packet<T>> void sendToPlayer(T packet, Player player) {
-        RegistrationService.INSTANCE.sendToPlayer(this.channel, packet, player);
+        PacketChannelHelper.sendToPlayer(this.channel, packet, player);
     }
 
     public final <T extends Packet<T>> void sendToPlayers(T packet, Collection<? extends Player> players) {
