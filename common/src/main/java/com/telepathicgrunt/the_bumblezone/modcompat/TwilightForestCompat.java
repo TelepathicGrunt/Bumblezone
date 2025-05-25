@@ -28,7 +28,7 @@ public class TwilightForestCompat implements ModCompat {
 	public InteractionResult isProjectileTeleportHandled(HitResult hitResult, Entity owner, Projectile projectile) {
 		if (hitResult instanceof EntityHitResult entityHitResult &&
 			projectile != null &&
-			getPersistentData(projectile).getBoolean(ENDER_BOW_ATTACHED_TAG) &&
+			TwilightForestCompatService.INSTANCE.getPersistentData(projectile).orElse(new CompoundTag()).getBoolean(ENDER_BOW_ATTACHED_TAG) &&
 			GeneralUtils.isInTag(BuiltInRegistries.ITEM, BzTags.ITEM_SPECIAL_DEDICATED_COMPAT, BuiltInRegistries.ITEM.get(ENDER_BOW_RL)))
 		{
 			return EntityTeleportationHookup.runEntityHitCheck(entityHitResult, owner, projectile) ? InteractionResult.SUCCESS : InteractionResult.PASS;
@@ -39,11 +39,5 @@ public class TwilightForestCompat implements ModCompat {
 	@Override
 	public EnumSet<Type> compatTypes() {
 		return EnumSet.of(Type.PROJECTILE_IMPACT_HANDLED);
-	}
-
-	@Contract
-	@ExpectPlatform
-	public static CompoundTag getPersistentData(Entity entity) {
-		throw new NotImplementedException("TwilightForestCompat getPesistentData is not implemented!");
 	}
 }

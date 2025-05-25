@@ -4,7 +4,6 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerLevelTickEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
-import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
@@ -231,7 +230,7 @@ public class BzWorldSavedData extends SavedData {
 
 				if (BzDimensionConfigs.enableInitialWelcomeMessage && entity instanceof ServerPlayer serverPlayer) {
 					RUNNABLES_FOR_NEXT_TICK.add(new NextTickRunnable(bumblezoneWorld.getGameTime() + 20, () -> {
-						ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(playerData -> {
+						PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(playerData -> {
 							if (!playerData.gottenWelcomedInDimension) {
 								playerData.gottenWelcomedInDimension = true;
 								serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
@@ -241,7 +240,7 @@ public class BzWorldSavedData extends SavedData {
 				}
 			}
 
-			ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
+			PlatformService.INSTANCE.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
 				capability.setNonBZPos(Optional.of(entity.position()));
 				capability.setNonBZDim(entity.level().dimension().location());
 
@@ -305,7 +304,7 @@ public class BzWorldSavedData extends SavedData {
 		entity.setPortalCooldown();
 
 		if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
-			ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
+			PlatformService.INSTANCE.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
 				capability.setNonBZPos(Optional.of(entity.position()));
 				capability.setNonBZDim(entity.level().dimension().location());
 			});

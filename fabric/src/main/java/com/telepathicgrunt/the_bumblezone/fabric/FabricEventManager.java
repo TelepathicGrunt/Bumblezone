@@ -30,8 +30,8 @@ import com.telepathicgrunt.the_bumblezone.mixin.fabric.fabricapi.BiomeModificati
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
-import com.telepathicgrunt.the_bumblezone.utils.fabric.PlatformService.INSTANCEImpl;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
+import com.telepathicgrunt.the_bumblezone.services.fabric.FabricPlatformService;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
@@ -160,11 +160,11 @@ public class FabricEventManager {
 
         ServerLifecycleEvents.SERVER_STARTING.register((minecraftServer) -> {
             BzServerGoingToStartEvent.EVENT.invoke(new BzServerGoingToStartEvent(minecraftServer));
-            PlatformService.INSTANCEImpl.currentMinecraftServer = minecraftServer;
+            FabricPlatformService.currentMinecraftServer = minecraftServer;
         });
         ServerLifecycleEvents.SERVER_STOPPING.register((minecraftServer) -> {
             BzServerGoingToStopEvent.EVENT.invoke(BzServerGoingToStopEvent.INSTANCE);
-            PlatformService.INSTANCEImpl.currentMinecraftServer = null;
+            FabricPlatformService.currentMinecraftServer = null;
         });
 
         ServerWorldEvents.LOAD.register((server, level) -> {

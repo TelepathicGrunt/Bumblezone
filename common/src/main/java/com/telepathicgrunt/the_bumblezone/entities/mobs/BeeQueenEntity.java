@@ -18,7 +18,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
-import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.packets.TradeHintParticleSpawnPacket;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -586,7 +585,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 PlayerDataHandler.onQueenBeeTrade(serverPlayer, tradedItems);
 
                 if (finalbeeQueenAdvancementDone(serverPlayer)) {
-                    ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> {
+                    PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> {
                         if (!capability.receivedEssencePrize) {
                             spawnReward(forwardVect, sideVect, ESSENCE_DROP, ItemStack.EMPTY, serverPlayer.getUUID());
                             capability.receivedEssencePrize = true;
@@ -613,7 +612,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
         if (stack.isEmpty() && player instanceof ServerPlayer serverPlayer) {
             if (finalbeeQueenAdvancementDone(serverPlayer)) {
-                ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> {
+                PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> {
                     if (!capability.receivedEssencePrize) {
                         Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
                         Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
@@ -692,7 +691,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     PlayerDataHandler.onQueenBeeTrade(serverPlayer);
 
                     if (finalbeeQueenAdvancementDone(serverPlayer)) {
-                        ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> {
+                        PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> {
                             if (!capability.receivedEssencePrize) {
                                 Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
                                 Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);

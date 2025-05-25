@@ -2,16 +2,22 @@ package com.telepathicgrunt.the_bumblezone.services.neoforge;
 
 import com.mojang.authlib.GameProfile;
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.entities.neoforge.DisableFlightAttribute;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
+import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
+import com.telepathicgrunt.the_bumblezone.modules.base.Module;
+import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.neoforge.NeoForgeModInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
@@ -24,16 +30,22 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.fml.util.thread.EffectiveSide;
+import net.neoforged.fml.util.thread.SidedThreadGroups;
+import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.common.NeoForge;
@@ -42,11 +54,13 @@ import net.neoforged.neoforge.common.util.BlockSnapshot;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.Contract;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class NeoPlatformService implements PlatformService {
     
@@ -57,7 +71,7 @@ public class NeoPlatformService implements PlatformService {
                 .sized(size, size)
                 .clientTrackingRange(clientTrackingRange)
                 .updateInterval(updateInterval)
-                .build(buildName);
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
     }
     
     @Override
@@ -67,7 +81,7 @@ public class NeoPlatformService implements PlatformService {
                 .sized(xzSize, ySize)
                 .clientTrackingRange(clientTrackingRange)
                 .updateInterval(updateInterval)
-                .build(buildName);
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
     }
     
     @Override
@@ -78,9 +92,14 @@ public class NeoPlatformService implements PlatformService {
                 .eyeHeight(eyeHeight)
                 .clientTrackingRange(clientTrackingRange)
                 .updateInterval(updateInterval)
-                .build(buildName);
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
     }
     
+    @Override
+    public ModInfo getModInfo(String modid) {
+        return getModInfo(modid, false);
+    }
+
     @Override
     public ModInfo getModInfo(String modid, boolean qualifierIsVersion) {
         return ModList.get().getModContainerById(modid)
@@ -88,49 +107,41 @@ public class NeoPlatformService implements PlatformService {
                 .orElse(null);
     }
 
-    @Contract(pure = true)    
     @Override
     public Fluid getBucketFluid(BucketItem bucket) {
         return bucket.content;
     }
 
-    @Contract(pure = true)    
     @Override
     public boolean hasCraftingRemainder(ItemStack stack) {
         return stack.hasCraftingRemainingItem();
     }
 
-    @Contract(pure = true)    
     @Override
     public ItemStack getCraftingRemainder(ItemStack stack) {
         return stack.getCraftingRemainingItem();
     }
 
-    @Contract(pure = true)    
     @Override
     public int getXpDrop(LivingEntity entity, Player attackingPlayer, int xp) {
         return EventHooks.getExperienceDrop(entity, attackingPlayer, xp);
     }
 
-    @Contract(pure = true)    
     @Override
     public boolean isModLoaded(String modid) {
         return ModList.get().isLoaded(modid);
     }
 
-    @Contract(pure = true)    
     @Override
     public boolean isNeoForge() {
         return true;
     }
 
-    @Contract(pure = true)    
     @Override
     public boolean isFakePlayer(ServerPlayer player) {
         return player.isFakePlayer();
     }
 
-    @Contract(pure = true)    
     @Override
     public ServerPlayer getFakePlayer(ServerLevel level, GameProfile gameProfile) {
         if (gameProfile == null) {
@@ -139,7 +150,6 @@ public class NeoPlatformService implements PlatformService {
         return FakePlayerFactory.get(level, gameProfile);
     }
 
-    @Contract(pure = true)    
     @Override
     public SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason) {
         return EventHooks.finalizeMobSpawn(entity, world, world.getCurrentDifficultyAt(BlockPos.containing(entity.position())), spawnReason, spawnGroupData);
@@ -249,5 +259,24 @@ public class NeoPlatformService implements PlatformService {
         catch (Throwable ignored) {}
 
         return ServerLifecycleHooks.getCurrentServer().registryAccess();
+    }
+
+    @Override
+    public <T extends AbstractContainerMenu> MenuType<T> create(BzMenuTypes.MenuCreator<T> creator) {
+        return new MenuType<>(creator::create, FeatureFlags.DEFAULT_FLAGS);
+    }
+
+    @Override
+    public <T extends Module<T>> Optional<T> getModule(Entity entity, ModuleHolder<T> moduleHolder) {
+        AttachmentType<T> attachmentType = (AttachmentType<T>) NeoForgeRegistries.ATTACHMENT_TYPES.get(moduleHolder.id());
+        if (attachmentType != null) {
+            return Optional.of(entity.getData(attachmentType));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Thread createServerThread(Runnable runnable, String name) {
+        return new Thread(SidedThreadGroups.SERVER, runnable, name);
     }
 }

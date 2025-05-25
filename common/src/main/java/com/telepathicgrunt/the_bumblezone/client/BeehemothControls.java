@@ -6,19 +6,20 @@ import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.events.client.BzKeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.packets.BeehemothControlsPacket;
+import com.telepathicgrunt.the_bumblezone.services.ClientPlatformService;
 import net.minecraft.client.KeyMapping;
 import org.apache.commons.lang3.NotImplementedException;
 import org.lwjgl.glfw.GLFW;
 
 public class BeehemothControls {
-    public static final KeyMapping KEY_BIND_BEEHEMOTH_DOWN = createKey(
+    public static final KeyMapping KEY_BIND_BEEHEMOTH_DOWN = ClientPlatformService.INSTANCE.createKey(
     "key." + Bumblezone.MODID + ".beehemoth_down",
             BeehemothKeyContext.BEEHEMOTH_KEY_CONTEXT,
             InputConstants.Type.KEYSYM.getOrCreate(GLFW.GLFW_KEY_CAPS_LOCK),
             "key.categories." + Bumblezone.MODID
     );
 
-    public static final KeyMapping KEY_BIND_BEEHEMOTH_UP = createKey(
+    public static final KeyMapping KEY_BIND_BEEHEMOTH_UP = ClientPlatformService.INSTANCE.createKey(
     "key." + Bumblezone.MODID + ".beehemoth_up",
             BeehemothKeyContext.BEEHEMOTH_KEY_CONTEXT,
             InputConstants.Type.KEYSYM.getOrCreate(GLFW.GLFW_KEY_SPACE),
@@ -47,11 +48,6 @@ public class BeehemothControls {
                 }
             }
         }
-    }
-
-    @ExpectPlatform
-    public static KeyMapping createKey(String display, KeyConflict conflict, InputConstants.Key key, String category) {
-        throw new NotImplementedException();
     }
 
     private enum BeehemothKeyContext implements KeyConflict {

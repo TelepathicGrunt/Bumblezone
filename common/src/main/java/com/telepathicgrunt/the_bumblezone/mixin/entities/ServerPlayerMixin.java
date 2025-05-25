@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.mixin.entities;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
-import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.worldgen.structures.SempiternalSanctumBehavior;
 import com.telepathicgrunt.the_bumblezone.worldgen.structures.ThronePillarBehavior;
@@ -43,7 +42,7 @@ public abstract class ServerPlayerMixin {
                 blockItem.getBlock() instanceof BeehiveBlock &&
                 PlayerDataHandler.rootAdvancementDone(serverPlayer))
         {
-            ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
+            PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
                 module.craftedBeehives++;
                 BzCriterias.BEEHIVE_CRAFTED_TRIGGER.get().trigger(serverPlayer, module.craftedBeehives);
             });

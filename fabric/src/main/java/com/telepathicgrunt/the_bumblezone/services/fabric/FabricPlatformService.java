@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.services.fabric;
 
 import com.mojang.authlib.GameProfile;
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.mixin.fabric.entity.EntityAccessor;
@@ -9,19 +10,26 @@ import com.telepathicgrunt.the_bumblezone.mixin.fabric.item.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.items.ItemAccessor;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.fabric.RestrictedPortalsCompat;
+import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
+import com.telepathicgrunt.the_bumblezone.modules.base.Module;
+import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.fabric.FabricModInfo;
 import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.impl.attachment.AttachmentRegistryImpl;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -37,6 +45,9 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -46,6 +57,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluid;
@@ -56,40 +68,46 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Contract;
 
 import java.util.List;
+import java.util.Optional;
 
 public class FabricPlatformService implements PlatformService {
 
     @Override
-    public <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, int clientTrackingRange, int updateInterval, String buildName) {
+    public <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, int clientTrackingRange, int updateInterval, String buildName) {
         return EntityType.Builder
                 .of(entityFactory, category)
                 .sized(size, size)
                 .clientTrackingRange(clientTrackingRange)
                 .updateInterval(updateInterval)
-                .build();
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
     }
     
     @Override
-    public <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, int clientTrackingRange, int updateInterval, String buildName) {
+    public <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, int clientTrackingRange, int updateInterval, String buildName) {
         return EntityType.Builder
                 .of(entityFactory, category)
                 .sized(xzSize, ySize)
                 .clientTrackingRange(clientTrackingRange)
                 .updateInterval(updateInterval)
-                .build();
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
     }
-    
+
     @Override
-    public <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, float eyeHeight, int clientTrackingRange, int updateInterval, String buildName) {
+    public <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, float eyeHeight, int clientTrackingRange, int updateInterval, String buildName) {
         return EntityType.Builder
                 .of(entityFactory, category)
                 .sized(xzSize, ySize)
                 .eyeHeight(eyeHeight)
                 .clientTrackingRange(clientTrackingRange)
                 .updateInterval(updateInterval)
-                .build();
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
     }
     
+    @Override
+    public ModInfo getModInfo(String modid) {
+        return getModInfo(modid, false);
+    }
+
     @Override
     public ModInfo getModInfo(String modid, boolean qualifierIsVersion) {
         return FabricLoader.getInstance()
@@ -98,52 +116,44 @@ public class FabricPlatformService implements PlatformService {
                 .orElse(null);
     }
 
-    @Contract(pure = true)    
     @Override
     public Fluid getBucketFluid(BucketItem bucket) {
         Fluid fluid = ((BucketItemAccessor) bucket).bumblezone$getContents();
         return fluid == null ? Fluids.EMPTY : fluid;
     }
 
-    @Contract(pure = true)    
     @Override
     public boolean hasCraftingRemainder(ItemStack stack) {
         return stack.getItem().hasCraftingRemainingItem();
     }
 
-    @Contract(pure = true)    
     @Override
     public ItemStack getCraftingRemainder(ItemStack stack) {
         final Item item = stack.getItem().getCraftingRemainingItem();
         return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
 
-    @Contract(pure = true)    
     @Override
     public int getXpDrop(LivingEntity entity, Player attackingPlayer, int xp) {
         return xp;
     }
 
-    @Contract(pure = true)    
     @Override
     public boolean isModLoaded(String modid) {
         return FabricLoader.getInstance().isModLoaded(modid);
     }
 
-    @Contract(pure = true)    
     @Override
     public boolean isNeoForge() {
         return false;
     }
 
-    @Contract(pure = true)    
     @Override
     public boolean isFakePlayer(ServerPlayer player) {
         //Crude way of doing it but it should work for almost all cases.
         return player != null && player.getClass() != ServerPlayer.class;
     }
 
-    @Contract(pure = true)    
     @Override
     public ServerPlayer getFakePlayer(ServerLevel level, GameProfile gameProfile) {
         if (gameProfile == null) {
@@ -152,7 +162,6 @@ public class FabricPlatformService implements PlatformService {
         return FakePlayer.get(level, gameProfile);
     }
 
-    @Contract(pure = true)    
     @Override
     public SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason) {
         return entity.finalizeSpawn(
@@ -161,7 +170,7 @@ public class FabricPlatformService implements PlatformService {
                 spawnReason,
                 spawnGroupData);
     }
-    
+
     @Override
     public boolean sendBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
         boolean result = PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(level, player, pos, state, entity);
@@ -305,9 +314,8 @@ public class FabricPlatformService implements PlatformService {
     public Fluid getBucketItemFluid(BucketItem stack) {
         return ((BucketItemAccessor)stack).bumblezone$getContents();
     }
-    
-    @Override
-    public MinecraftServer currentMinecraftServer = null;
+
+    public static MinecraftServer currentMinecraftServer = null;
 
     @Override
     public RegistryAccess getCurrentRegistryAccess() {
@@ -319,5 +327,22 @@ public class FabricPlatformService implements PlatformService {
         catch (Throwable ignored) {}
 
         return currentMinecraftServer.registryAccess();
+    }
+
+    @Override
+    public <T extends Module<T>> Optional<T> getModule(Entity entity, ModuleHolder<T> moduleHolder) {
+        AttachmentType<T> attachmentType = (AttachmentType<T>) AttachmentRegistryImpl.get(moduleHolder.id());
+        if (attachmentType != null) {
+            if (!entity.hasAttached(attachmentType)) {
+                entity.setAttached(attachmentType, moduleHolder.factory().get());
+            }
+            return Optional.ofNullable(entity.getAttached(attachmentType));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public <T extends AbstractContainerMenu> MenuType<T> create(BzMenuTypes.MenuCreator<T> creator) {
+        return new MenuType<>(creator::create, FeatureFlags.DEFAULT_FLAGS);
     }
 }

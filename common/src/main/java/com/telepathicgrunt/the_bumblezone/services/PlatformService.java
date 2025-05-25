@@ -3,6 +3,9 @@ package com.telepathicgrunt.the_bumblezone.services;
 import com.mojang.authlib.GameProfile;
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
+import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
+import com.telepathicgrunt.the_bumblezone.modules.base.Module;
+import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
@@ -19,6 +22,8 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -26,155 +31,75 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
-import org.apache.commons.lang3.NotImplementedException;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 
-/**
- * We use @Contract(pure = true) because intellij will think that they always return the same value.
- */
 public interface PlatformService {
     PlatformService INSTANCE = GeneralUtils.loadService(PlatformService.class);
 
-    @Contract(pure=true)
-    public default <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, int clientTrackingRange, int updateInterval, String buildName) {
-        throw new NotImplementedException("PlatformService.INSTANCE createEntityType is not implemented!");
-    }
+    <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, int clientTrackingRange, int updateInterval, String buildName);
 
-    @Contract(pure=true)
-    public default <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, int clientTrackingRange, int updateInterval, String buildName) {
-        throw new NotImplementedException("PlatformService.INSTANCE createEntityType 2 is not implemented!");
-    }
+    <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, int clientTrackingRange, int updateInterval, String buildName);
 
-    @Contract(pure=true)
-    public default <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, float eyeHeight, int clientTrackingRange, int updateInterval, String buildName) {
-        throw new NotImplementedException("PlatformService.INSTANCE createEntityType 3 is not implemented!");
-    }
+    <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, float eyeHeight, int clientTrackingRange, int updateInterval, String buildName);
 
-    @Contract(pure = true)
-    public default SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason) {
-        throw new NotImplementedException("PlatformService.INSTANCE canEntitySpawn is not implemented!");
-    }
+    SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason);
 
-    @Contract(pure = true)
-    public default ServerPlayer getFakePlayer(ServerLevel level, GameProfile gameProfile) {
-        throw new NotImplementedException("PlatformService.INSTANCE getFakePlayer is not implemented!");
-    }
+    ServerPlayer getFakePlayer(ServerLevel level, GameProfile gameProfile);
 
-    @Contract(pure = true)
-    public default boolean isFakePlayer(ServerPlayer player) {
-        throw new NotImplementedException("PlatformService.INSTANCE isFakePlayer is not implemented!");
-    }
+    boolean isFakePlayer(ServerPlayer player);
 
-    @Contract(pure = true)
-    public default boolean isModLoaded(String modid) {
-        throw new NotImplementedException("PlatformService.INSTANCE isModLoaded is not implemented!");
-    }
+    boolean isModLoaded(String modid);
 
-    @Contract(pure = true)
-    public default boolean isNeoForge() {
-        throw new NotImplementedException("PlatformService.INSTANCE isNeoForge is not implemented!");
-    }
+    boolean isNeoForge();
 
-    @Contract(pure = true)
-    public default int getXpDrop(LivingEntity entity, Player attackingPlayer, int xp) {
-        throw new NotImplementedException("PlatformService.INSTANCE getXpDrop is not implemented!");
-    }
+    int getXpDrop(LivingEntity entity, Player attackingPlayer, int xp);
 
-    @Contract(pure = true)
-    public default ItemStack getCraftingRemainder(ItemStack stack) {
-        throw new NotImplementedException("PlatformService.INSTANCE getCraftingRemainder is not implemented!");
-    }
+    ItemStack getCraftingRemainder(ItemStack stack);
 
-    @Contract(pure = true)
-    public default boolean hasCraftingRemainder(ItemStack stack) {
-        throw new NotImplementedException("PlatformService.INSTANCE hasCraftingRemainder is not implemented!");
-    }
+    boolean hasCraftingRemainder(ItemStack stack);
 
-    @Contract(pure = true)
-    public default Fluid getBucketFluid(BucketItem bucket) {
-        throw new NotImplementedException("PlatformService.INSTANCE getBucketFluid is not implemented!");
-    }
-
-    public default ModInfo getModInfo(String modid) {
-        return getModInfo(modid, false);
-    }
+    Fluid getBucketFluid(BucketItem bucket);
 
     @Nullable
-    @Contract(pure=true)
-    public default ModInfo getModInfo(String modid, boolean qualifierIsVersion) {
-        throw new NotImplementedException("PlatformService.INSTANCE getModInfo is not implemented!");
-    }
+    ModInfo getModInfo(String modid);
 
-    @Contract(pure=true)
-    public default boolean sendBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
-        throw new NotImplementedException("PlatformService.INSTANCE sendBlockBreakEvent is not implemented!");
-    }
+    @Nullable
+    ModInfo getModInfo(String modid, boolean qualifierIsVersion);
 
-    @Contract(pure=true)
-    public default void afterBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
-        throw new NotImplementedException("PlatformService.INSTANCE sendBlockBreakEvent is not implemented!");
-    }
+    boolean sendBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player);
 
-    @Contract(pure=true)
-    public default double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidData... fluids) {
-        throw new NotImplementedException("PlatformService.INSTANCE getFluidHeight is not implemented!");
-    }
+    void afterBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player);
 
-    @Contract(pure=true)
-    public default boolean isEyesInNoFluid(Entity entity) {
-        throw new NotImplementedException("PlatformService.INSTANCE isEyesInNoFluid is not implemented!");
-    }
+    double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidData... fluids);
 
-    @Contract(pure=true)
-    public default InteractionResultHolder<ItemStack> performItemUse(Level world, Player user, InteractionHand hand, Fluid fluid, BzCustomBucketItem bzCustomBucketItem) {
-        throw new NotImplementedException("PlatformService.INSTANCE performItemUse is not implemented!");
-    }
+    boolean isEyesInNoFluid(Entity entity);
 
-    @Contract(pure=true)
-    public default boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
-        throw new NotImplementedException("PlatformService.INSTANCE isPermissionAllowedAtSpot is not implemented!");
-    }
+    InteractionResultHolder<ItemStack> performItemUse(Level world, Player user, InteractionHand hand, Fluid fluid, BzCustomBucketItem bzCustomBucketItem);
 
-    @Contract(pure=true)
-    public default boolean isDimensionAllowed(ServerPlayer serverPlayer, ResourceKey<Level> dimension) {
-        throw new NotImplementedException("PlatformService.INSTANCE isDimensionAllowed is not implemented!");
-    }
+    boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock);
 
-    @Contract(pure = true)
-    public default boolean isItemAbility(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
-        throw new NotImplementedException("PlatformService.INSTANCE isItemAbility is not implemented!");
-    }
+    boolean isDimensionAllowed(ServerPlayer serverPlayer, ResourceKey<Level> dimension);
 
-    @Contract(pure=true)
-    public default void disableFlight(Player player) {
-        throw new NotImplementedException("PlatformService.INSTANCE disableFlight is not implemented!");
-    }
+    boolean isItemAbility(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction);
 
-    @Contract(pure=true)
-    public default boolean isDevEnvironment() {
-        throw new NotImplementedException("PlatformService.INSTANCE isDevEnvironment is not implemented!");
-    }
+    void disableFlight(Player player);
 
-    @Contract(pure=true)
-    public default boolean isClientEnvironment() {
-        throw new NotImplementedException("PlatformService.INSTANCE isClientEnvironment is not implemented!");
-    }
+    boolean isDevEnvironment();
 
-    @Contract(pure=true)
-    public default boolean shouldMobSplit(Mob parent, List<Mob> children) {
-        throw new NotImplementedException("PlatformService.INSTANCE fireMobSplitEvents is not implemented!");
-    }
+    boolean isClientEnvironment();
 
-    @Contract(pure = true)
-    public default Fluid getBucketItemFluid(BucketItem stack) {
-        throw new NotImplementedException("PlatformService.INSTANCE getBucketItemFluid is not implemented!");
-    }
+    boolean shouldMobSplit(Mob parent, List<Mob> children);
 
-    @Contract(pure = true)
-    public default RegistryAccess getCurrentRegistryAccess() {
-        throw new NotImplementedException("PlatformService.INSTANCE getCurrentRegistryAccess is not implemented!");
-    }
+    Fluid getBucketItemFluid(BucketItem stack);
+
+    RegistryAccess getCurrentRegistryAccess();
+
+    <T extends AbstractContainerMenu> MenuType<T> create(BzMenuTypes.MenuCreator<T> creator);
+
+    <T extends Module<T>> Optional<T> getModule(Entity entity, ModuleHolder<T> moduleHolder);
+
+    Thread createServerThread(Runnable runnable, String name);
 }
