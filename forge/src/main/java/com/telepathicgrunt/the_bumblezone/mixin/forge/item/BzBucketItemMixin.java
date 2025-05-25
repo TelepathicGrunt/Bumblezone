@@ -37,7 +37,7 @@ public class BzBucketItemMixin extends BucketItem implements FluidGetter {
 
     @NotNull
     @Override
-    public FlowingFluid getFluid() {
+    public Fluid getFluid() {
         return bz$fluidSupplier.get();
     }
 

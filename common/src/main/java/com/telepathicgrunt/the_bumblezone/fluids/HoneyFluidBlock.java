@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
@@ -163,10 +164,10 @@ public class HoneyFluidBlock extends BzLiquidBlock {
         boolean isFalling = blockState.getValue(FALLING);
         FluidState fluidState;
         if(fluidLevel == 0) {
-            fluidState = this.getFluid().getSource(false);
+            fluidState = ((FlowingFluid)this.getFluid()).getSource(false);
         }
         else {
-            fluidState = this.getFluid().getFlowing(fluidLevel, isFalling).setValue(BOTTOM_LEVEL, bottomFluidLevel);
+            fluidState = ((FlowingFluid)this.getFluid()).getFlowing(fluidLevel, isFalling).setValue(BOTTOM_LEVEL, bottomFluidLevel);
         }
         return fluidState.setValue(ABOVE_FLUID, blockState.getValue(ABOVE_FLUID));
     }
