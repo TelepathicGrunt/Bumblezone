@@ -56,13 +56,5 @@
     },
     "breaks": {
         "structureessentials": "=1.20.1-4.5"
-    },
-    "custom": {
-        "cardinal-components": [
-            "the_bumblezone:entity_dim_component",
-            "the_bumblezone:original_flying_speed",
-            "the_bumblezone:living_entity_data",
-            "the_bumblezone:player_data"
-        ]
     }
 }

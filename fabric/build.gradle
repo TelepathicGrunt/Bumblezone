@@ -54,15 +54,6 @@ dependencies {
     modCompileOnly("dev.emi:emi-fabric:${project.emi}") { transitive = false }
     //modLocalRuntime("dev.emi:emi-fabric:${project.emi}")
 
-    modCompileOnly("mezz.jei:jei-${project.jei_mc}-fabric-api:${project.jei}") { transitive = false }
-    modCompileOnly("mezz.jei:jei-${project.jei_mc}-common-api:${project.jei}") { transitive = false }
-    modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:${project.rei}") { transitive = false }
-    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}") { transitive = false }
-    modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config}")
-    modCompileOnly("dev.architectury:architectury:${project.architectury}")
-
-    modCompileOnly("maven.modrinth:projectile-damage-attribute:${project.projectile_damage_attribute}-forge") { transitive = false }
-
     modCompileOnly("dev.emi:trinkets:${trinkets}") { transitive = false }
 
     modCompileOnly("curse.maven:restricted-portals-228266:${rootProject.restricted_portals_file_id}") { transitive = false }
