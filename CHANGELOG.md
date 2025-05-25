@@ -1,3 +1,9 @@
+### **(V.7.9.3 Changes) (1.21.1 Minecraft)**
+
+#### Entities:
+Fix a possible crash when a large entity tries to spawn in Bumblezone when added to Bumblezone's biomes.
+
+
 ### **(V.7.9.2 Changes) (1.21.1 Minecraft)**
 
 #### Items:
