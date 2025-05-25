@@ -154,6 +154,18 @@
       "required": false
     },
     {
+      "id": "craziness_awakened:brown_ant",
+      "required": false
+    },
+    {
+      "id": "craziness_awakened:butterfly",
+      "required": false
+    },
+    {
+      "id": "craziness_awakened:moth",
+      "required": false
+    },
+    {
       "id": "crittersandcompanions:leaf_insect",
       "required": false
     },

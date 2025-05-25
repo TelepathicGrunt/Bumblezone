@@ -414,8 +414,8 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                     MobSpawnSettings.SpawnerData mobspawnsettings$spawnerdata = optional.get();
                     int groupCount = mobspawnsettings$spawnerdata.minCount + randomSource.nextInt(1 + mobspawnsettings$spawnerdata.maxCount - mobspawnsettings$spawnerdata.minCount);
                     SpawnGroupData spawngroupdata = null;
-                    int x = minX + randomSource.nextInt(14) + 1;
-                    int z = minZ + randomSource.nextInt(14) + 1;
+                    int x = minX + randomSource.nextInt(16);
+                    int z = minZ + randomSource.nextInt(16);
                     int tempX = x;
                     int tempZ = z;
 
@@ -433,8 +433,8 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
                         if (mobspawnsettings$spawnerdata.type.canSummon()) {
                             float mobWidth = mobspawnsettings$spawnerdata.type.getWidth();
-                            double finalX = Mth.clamp(x, (double)minX + (double)mobWidth, (double)minX + 16.0D - (double)mobWidth) + 0.5D;
-                            double finalZ = Mth.clamp(z, (double)minZ + (double)mobWidth, (double)minZ + 16.0D - (double)mobWidth) + 0.5D;
+                            double finalX = Mth.clamp(x + 0.5D, (double)minX + (double)mobWidth + 0.5D, (double)minX + 15.5D - (double)mobWidth);
+                            double finalZ = Mth.clamp(z + 0.5D, (double)minZ + (double)mobWidth + 0.5D, (double)minZ + 15.5D - (double)mobWidth);
 
                             if (!serverLevelAccessor.getWorldBorder().isWithinBounds(finalX, finalZ) ||
                                 (mutableBlockPos.getY() < serverLevelAccessor.getMinBuildHeight() || mutableBlockPos.getY() >= serverLevelAccessor.getMaxBuildHeight()))
