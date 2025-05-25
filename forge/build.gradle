@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly(project(path: ':common', configuration: 'namedElements')) {
+    compileOnly(project(':common')) {
         transitive = false
     }
 

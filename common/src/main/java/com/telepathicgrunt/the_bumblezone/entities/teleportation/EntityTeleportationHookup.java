@@ -10,7 +10,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.EntityPosAndDimModule;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
-import com.telepathicgrunt.the_bumblezone.services.RegistrationService;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;

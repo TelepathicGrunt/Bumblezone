@@ -18,7 +18,7 @@ dependencies {
     compileOnly "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"
     annotationProcessor "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"
 
-    modImplementation("earth.terrarium.athena:athena-fabric-${project.athena}")
+    modRuntimeOnly(modCompileOnly("earth.terrarium.athena:athena-common-${project.athena}"))
 
     // COMPAT
     modCompileOnly("mezz.jei:jei-${project.jei_mc}-forge-api:${project.jei}") { transitive = false }
@@ -26,7 +26,6 @@ dependencies {
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:${project.rei}") { transitive = false }
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}") { transitive = false }
     modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config}")
-    modCompileOnly("dev.architectury:architectury:${project.architectury}")
 
     modCompileOnly("maven.modrinth:projectile-damage-attribute:${project.projectile_damage_attribute}-forge") { transitive = false }
 }

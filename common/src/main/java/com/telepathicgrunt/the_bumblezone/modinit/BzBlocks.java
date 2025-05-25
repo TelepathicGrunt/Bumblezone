@@ -42,14 +42,13 @@ import com.telepathicgrunt.the_bumblezone.blocks.WindyAir;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
-import com.telepathicgrunt.the_bumblezone.services.RegistrationService;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.MapColor;
 
 
 public class BzBlocks {
-    public static final ResourcefulRegistry<Block> BLOCKS = RegistrationService.INSTANCE.create(BuiltInRegistries.BLOCK, Bumblezone.MODID);
+    public static final ResourcefulRegistry<Block> BLOCKS = ResourcefulRegistries.create(BuiltInRegistries.BLOCK, Bumblezone.MODID);
     public static final ResourcefulRegistry<Block> CURTAINS = ResourcefulRegistries.create(BLOCKS);
 
     //Blocks
