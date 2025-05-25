@@ -54,14 +54,6 @@ dependencies {
     modCompileOnly("dev.emi:emi-fabric:${project.emi}") { transitive = false }
     //modLocalRuntime("dev.emi:emi-fabric:${project.emi}")
 
-    modCompileOnly("dev.emi:trinkets:${trinkets}") { transitive = false }
-
-    modCompileOnly("curse.maven:restricted-portals-228266:${rootProject.restricted_portals_file_id}") { transitive = false }
-
-    modCompileOnly("maven.modrinth:sodium:${rootProject.sodium}") { transitive = false }
-
-    modCompileOnly("curse.maven:zenith-620928:${project.zenith_file_id}") { transitive = false }
-
 //    modLocalRuntime("curse.maven:huge-structure-blocks-474114:4803539")
 //    modLocalRuntime("com.telepathicgrunt:CommandStructures:${project.commandstructures_fabric}")
 //    modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_fabric}")
