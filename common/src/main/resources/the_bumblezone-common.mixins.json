@@ -3,7 +3,6 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "client.ParticleEngineAccessor",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",
     "blocks.BigDripleafBlockMixin",
@@ -100,6 +99,7 @@
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
     "client.MusicManagerMixin",
+    "client.ParticleEngineAccessor",
     "client.RenderStateShardAccessor",
     "client.SoundEngineAccessor",
     "client.SoundManagerAccessor",
