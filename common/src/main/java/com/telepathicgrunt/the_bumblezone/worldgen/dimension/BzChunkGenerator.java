@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseChunkAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseGeneratorSettingsAccessor;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
@@ -396,24 +397,29 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     public static void spawnNonBeeMobsForChunkGeneration(ServerLevelAccessor serverLevelAccessor, Holder<Biome> biomeHolder, ChunkPos chunkPos, RandomSource randomSource) {
         MobSpawnSettings mobspawnsettings = biomeHolder.value().getMobSettings();
         WeightedRandomList<MobSpawnSettings.SpawnerData> weightedrandomlist = mobspawnsettings.getMobs(MobCategory.CREATURE);
-        weightedrandomlist = WeightedRandomList.create(weightedrandomlist.unwrap().stream().filter(e -> e.type != EntityType.BEE).toList());
+
+        // Bees are spawned by different system if config is true. See BeeDedicatedSpawning class
+        if (BzGeneralConfigs.specialBeeSpawning) {
+            weightedrandomlist = WeightedRandomList.create(weightedrandomlist.unwrap().stream().filter(e -> e.type != EntityType.BEE).toList());
+        }
+
         if (!weightedrandomlist.isEmpty()) {
-            int i = chunkPos.getMinBlockX();
-            int j = chunkPos.getMinBlockZ();
+            int minX = chunkPos.getMinBlockX();
+            int minZ = chunkPos.getMinBlockZ();
             int seaLevel = ((ServerChunkCache)serverLevelAccessor.getChunkSource()).getGenerator().getSeaLevel();
 
             while(randomSource.nextFloat() < mobspawnsettings.getCreatureProbability() * 0.5) {
                 Optional<MobSpawnSettings.SpawnerData> optional = weightedrandomlist.getRandom(randomSource);
                 if (optional.isPresent()) {
                     MobSpawnSettings.SpawnerData mobspawnsettings$spawnerdata = optional.get();
-                    int k = mobspawnsettings$spawnerdata.minCount + randomSource.nextInt(1 + mobspawnsettings$spawnerdata.maxCount - mobspawnsettings$spawnerdata.minCount);
+                    int groupCount = mobspawnsettings$spawnerdata.minCount + randomSource.nextInt(1 + mobspawnsettings$spawnerdata.maxCount - mobspawnsettings$spawnerdata.minCount);
                     SpawnGroupData spawngroupdata = null;
-                    int x = i + randomSource.nextInt(14) + 1;
-                    int z = j + randomSource.nextInt(14) + 1;
-                    int j1 = x;
-                    int k1 = z;
+                    int x = minX + randomSource.nextInt(14) + 1;
+                    int z = minZ + randomSource.nextInt(14) + 1;
+                    int tempX = x;
+                    int tempZ = z;
 
-                    for(int l1 = 0; l1 < k; ++l1) {
+                    for(int currentGroupCount = 0; currentGroupCount < groupCount; ++currentGroupCount) {
                         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(x, randomSource.nextInt(250 - seaLevel) + seaLevel, z);
                         if (serverLevelAccessor.dimensionType().hasCeiling()) {
                             do {
@@ -427,8 +433,8 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
                         if (mobspawnsettings$spawnerdata.type.canSummon()) {
                             float mobWidth = mobspawnsettings$spawnerdata.type.getWidth();
-                            double finalX = Mth.clamp(x, (double)i + (double)mobWidth, (double)i + 16.0D - (double)mobWidth) + 0.5D;
-                            double finalZ = Mth.clamp(z, (double)j + (double)mobWidth, (double)j + 16.0D - (double)mobWidth) + 0.5D;
+                            double finalX = Mth.clamp(x, (double)minX + (double)mobWidth, (double)minX + 16.0D - (double)mobWidth) + 0.5D;
+                            double finalZ = Mth.clamp(z, (double)minZ + (double)mobWidth, (double)minZ + 16.0D - (double)mobWidth) + 0.5D;
 
                             if (!serverLevelAccessor.getWorldBorder().isWithinBounds(finalX, finalZ) ||
                                 (mutableBlockPos.getY() < serverLevelAccessor.getMinBuildHeight() || mutableBlockPos.getY() >= serverLevelAccessor.getMaxBuildHeight()))
@@ -442,6 +448,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
                                 entity.moveTo(finalX, mutableBlockPos.getY(), finalZ, randomSource.nextFloat() * 360.0F, 0.0F);
                                 if (entity instanceof Mob mob) {
+
                                     PlatformHooks.finalizeSpawn(mob, serverLevelAccessor, null, MobSpawnType.CHUNK_GENERATION, null);
 
                                     if (mob.checkSpawnObstruction(serverLevelAccessor)) {
@@ -460,8 +467,8 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
                         x += randomSource.nextInt(5) - randomSource.nextInt(5);
 
-                        for(z += randomSource.nextInt(5) - randomSource.nextInt(5); x < i || x >= i + 16 || z < j || z >= j + 16; z = k1 + randomSource.nextInt(5) - randomSource.nextInt(5)) {
-                            x = j1 + randomSource.nextInt(5) - randomSource.nextInt(5);
+                        for(z += randomSource.nextInt(5) - randomSource.nextInt(5); x < minX || x >= minX + 16 || z < minZ || z >= minZ + 16; z = tempZ + randomSource.nextInt(5) - randomSource.nextInt(5)) {
+                            x = tempX + randomSource.nextInt(5) - randomSource.nextInt(5);
                         }
                     }
                 }
