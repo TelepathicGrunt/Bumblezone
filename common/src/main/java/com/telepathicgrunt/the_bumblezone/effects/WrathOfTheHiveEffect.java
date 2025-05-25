@@ -9,7 +9,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
 import com.telepathicgrunt.the_bumblezone.platform.EffectExtension;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Difficulty;
@@ -124,7 +124,7 @@ public class WrathOfTheHiveEffect extends MobEffect implements EffectExtension {
                             entity.getRandom().nextFloat() * 360.0F,
                             0.0F);
 
-                    PlatformHooks.finalizeSpawn(bee, (ServerLevelAccessor) world, null, MobSpawnType.TRIGGERED, null);
+                    PlatformService.INSTANCE.finalizeSpawn(bee, (ServerLevelAccessor) world, null, MobSpawnType.TRIGGERED, null);
                     world.addFreshEntity(bee);
                 }
             }

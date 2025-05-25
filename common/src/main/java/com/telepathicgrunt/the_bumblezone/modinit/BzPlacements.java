@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
+import com.telepathicgrunt.the_bumblezone.services.RegistrationService;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.decorators.ConditionBasedPlacement;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.decorators.FixedOffset;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.decorators.HoneycombHolePlacer;
@@ -17,7 +18,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 public class BzPlacements {
-    public static final ResourcefulRegistry<PlacementModifierType<?>> PLACEMENT_MODIFIER = ResourcefulRegistries.create(BuiltInRegistries.PLACEMENT_MODIFIER_TYPE, Bumblezone.MODID);
+    public static final ResourcefulRegistry<PlacementModifierType<?>> PLACEMENT_MODIFIER = RegistrationService.INSTANCE.create(BuiltInRegistries.PLACEMENT_MODIFIER_TYPE, Bumblezone.MODID);
 
     public static final RegistryEntry<PlacementModifierType<HoneycombHolePlacer>> HONEYCOMB_HOLE_PLACER = PLACEMENT_MODIFIER.register("honeycomb_hole_placer", () -> () -> HoneycombHolePlacer.CODEC);
     public static final RegistryEntry<PlacementModifierType<Random3DUndergroundChunkPlacement>> RANDOM_3D_UNDERGROUND_CHUNK_PLACEMENT = PLACEMENT_MODIFIER.register("random_3d_underground_chunk_placement", () -> () -> Random3DUndergroundChunkPlacement.CODEC);

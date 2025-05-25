@@ -1,56 +1,24 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.1.2"
-}
-architectury {
-    platformSetupLoomIde()
-    forge()
+    id 'net.neoforged.moddev.legacyforge' version '2.0.88'
 }
 
-loom {
-    accessWidenerPath = project(":common").loom.accessWidenerPath
-
-    forge {
-        convertAccessWideners = true
-        extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
-
-        mixinConfig "the_bumblezone-common.mixins.json"
-        mixinConfig "the_bumblezone-forge.mixins.json"
-
-        runs {
-            all {
-                property 'mixin.env.remapRefMap', 'true'
-                property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            }
-            data {
-                data()
-                programArgs("--all", "--mod", "the_bumblezone")
-                programArgs("--existing", project(":common").file("src/main/resources").absolutePath)
-                programArgs("--output", project(":common").file("src/main/generated/resources").absolutePath)
-            }
-        }
-    }
-}
-
-configurations {
-    common
-    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
-    compileClasspath.extendsFrom common
-    runtimeClasspath.extendsFrom common
-    developmentForge.extendsFrom common
+repositories {
+    maven { url = 'https://maven.fabricmc.net' }
 }
 
 dependencies {
-    // REQUIRED
-    forge "net.minecraftforge:forge:${rootProject.forge_version}"
+    compileOnly(project(':common')) {
+        transitive = false
+    }
 
-    modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-forge-${rootProject.athena}")))
+    annotationProcessor 'net.fabricmc:sponge-mixin:0.13.0+mixin.0.8.5'
 
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+    annotationProcessor "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"
+    compileOnly("io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}")
+    implementation("io.github.llamalad7:mixinextras-forge:${project.mixin_extras_version}")
 
-    implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:${rootProject.mixin_extras}"))
-    implementation(include("io.github.llamalad7:mixinextras-forge:${rootProject.mixin_extras}"))
-
+    modRuntimeOnly(modCompileOnly("earth.terrarium.athena:athena-forge-${project.athena}"))
+    jarJar("earth.terrarium.athena:athena-forge-${project.athena}")
 
     // COMPAT
     modCompileOnly("curse.maven:iron_jetpack-284497:${project.iron_jetpack_file_id}")
@@ -59,10 +27,10 @@ dependencies {
     modCompileOnly("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
 
     modCompileOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
-    //modRuntimeOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
+    //runtimeOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
 
     modCompileOnly("curse.maven:lootr-361276:${project.lootr_file_id}")
-    //modRuntimeOnly("curse.maven:lootr-361276:${project.lootr_file_id}")
+    //runtimeOnly("curse.maven:lootr-361276:${project.lootr_file_id}")
 
     modCompileOnly("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
 
@@ -74,126 +42,149 @@ dependencies {
     modCompileOnly("curse.maven:apotheosis-313970:${project.apotheosis_file_id}")
     modCompileOnly("top.theillusivec4.curios:curios-forge:${project.curios}:api")
 
-    // modRuntimeOnly("curse.maven:better-advancements-272515:4631253")
-    // modRuntimeOnly("curse.maven:spit-it-out-857141:4614678")
-    // modRuntimeOnly("curse.maven:atlasviewer-633577:4597419")
+    // runtimeOnly("curse.maven:better-advancements-272515:4631253")
+    // runtimeOnly("curse.maven:spit-it-out-857141:4614678")
+    // runtimeOnly("curse.maven:atlasviewer-633577:4597419")
 
-    //modCompileOnly("mekanism:Mekanism:${project.mekanism}:api")
-//    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}")// core
-//    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}:additions")// Mekanism: Additions
-//    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}:generators")// Mekanism: Generators
-//    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}:tools")// Mekanism: Tools
+    //compileOnly("mekanism:Mekanism:${project.mekanism}:api")
+//    runtimeOnly("mekanism:Mekanism:${project.mekanism}")// core
+//    runtimeOnly("mekanism:Mekanism:${project.mekanism}:additions")// Mekanism: Additions
+//    runtimeOnly("mekanism:Mekanism:${project.mekanism}:generators")// Mekanism: Generators
+//    runtimeOnly("mekanism:Mekanism:${project.mekanism}:tools")// Mekanism: Tools
 
-    //modRuntimeOnly("mezz.jei:jei-${project.jei_mc}-forge:${project.jei}")
-    //modRuntimeOnly("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
+    //runtimeOnly("mezz.jei:jei-${project.jei_mc}-forge:${project.jei}")
+    //runtimeOnly("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
 
-    //modCompileOnly("dev.emi:emi-forge:${emi}:api")
-    //modRuntimeOnly("dev.emi:emi-forge:${emi}")
+    //compileOnly("dev.emi:emi-forge:${emi}:api")
+    //runtimeOnly("dev.emi:emi-forge:${emi}")
 
-    //modRuntimeOnly("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config}")
-    //modRuntimeOnly("dev.architectury:architectury-forge:${project.architectury}")
-    //modRuntimeOnly("curse.maven:travelersbackpacks-321117:${project.travelersbackpacks_file_id}")
-    //modRuntimeOnly("top.theillusivec4.curios:curios-forge:${project.curios}")
+    //runtimeOnly("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config}")
+    //runtimeOnly("dev.architectury:architectury-forge:${project.architectury}")
+    //runtimeOnly("curse.maven:travelersbackpacks-321117:${project.travelersbackpacks_file_id}")
+    //runtimeOnly("top.theillusivec4.curios:curios-forge:${project.curios}")
 
-    // modRuntimeOnly("curse.maven:huge-structure-blocks-474114:4803547")
-    // modRuntimeOnly("curse.maven:worldedit-225608:4586218")
-    // modRuntimeOnly("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_forge}")
-    // modRuntimeOnly("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_forge}")
+    // runtimeOnly("curse.maven:huge-structure-blocks-474114:4803547")
+    // runtimeOnly("curse.maven:worldedit-225608:4586218")
+    // runtimeOnly("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_forge}")
+    // runtimeOnly("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_forge}")
 
+//    runtimeOnly(compileOnly("curse.maven:craziness-awakened-963163:6524580"))
+//    runtimeOnly("curse.maven:attributefix-280510:4911084")
+//    implementation("com.eliotlash.mclib:mclib:20")
+//    runtimeOnly("software.bernie.geckolib:geckolib-forge-1.20.1:4.7.1.2")
+//    runtimeOnly("curse.maven:pehkui-319596:5393101")
+}
+
+legacyForge {
+    version = "${project.forge_version}"
+
+    runs {
+        client {
+            client()
+            systemProperty 'mixin.env.remapRefMap', 'true'
+            systemProperty 'mixin.env.refMapRemappingFile', project.layout.buildDirectory.get().file('createSrgToMcp/output.srg').asFile.absolutePath
+        }
+
+        server {
+            server()
+            systemProperty 'mixin.env.remapRefMap', 'true'
+            systemProperty 'mixin.env.refMapRemappingFile', project.layout.buildDirectory.get().file('createSrgToMcp/output.srg').asFile.absolutePath
+        }
+    }
+    mods {
+        modServerRun {
+            sourceSet sourceSets.main
+            sourceSet project(":common").sourceSets.main
+        }
+    }
+}
+
+publishMods {
+    file = tasks.reobfJar.archiveFile
+    modLoaders.add("forge")
+
+    File changeLog = rootProject.file("CHANGELOG.md")
+    String changeLogText = changeLog.exists() ? changeLog.text : ""
+
+    def uploadDependenciesCf = [
+        "better-advancements": false
+    ]
+    def uploadDependenciesMr = [
+        "better-advancements": false
+    ]
+
+    if (project.hasProperty('curseforge_id_forge')) {
+        curseforge('CurseforgeForge') {
+            accessToken = providers.environmentVariable('CURSEFORGEKEY')
+            projectId = project.findProperty('curseforge_id_forge')
+            minecraftVersions.add(project.minecraft_version)
+            changelog = changeLogText
+
+            uploadDependenciesCf.each { dep, required ->
+                if (required) {
+                    requires(dep)
+                } else {
+                    optional(dep)
+                }
+            }
+        }
+    }
+
+    if (project.hasProperty('modrinth_id_forge')) {
+        modrinth('modrinthForge') {
+            accessToken = accessToken = providers.environmentVariable('MODRINTH_TOKEN')
+            projectId = project.findProperty('modrinth_id_forge')
+            minecraftVersions.add(project.minecraft_version)
+            changelog = changeLogText
+
+            dependencies {
+                uploadDependenciesMr.each { dep, required ->
+                    if (required) {
+                        requires(dep)
+                    } else {
+                        optional(dep)
+                    }
+                }
+            }
+        }
+    }
+}
+
+mixin {
+    add(sourceSets.main, "${mod_id}.refmap.json")
+
+    config("${mod_id}-common.mixins.json")
+    config("${mod_id}-forge.mixins.json")
+}
+
+tasks.named("compileJava", JavaCompile) {
+    source(project(":common").sourceSets.main.allJava)
+}
+
+tasks.named("javadoc", Javadoc) {
+    source(project(":common").sourceSets.main.allJava)
+}
+
+tasks.named("sourcesJar", Jar) {
+    from(project(":common").sourceSets.main.allSource)
 }
 
 processResources {
-    inputs.property "version", project.version
-
-    filesMatching("META-INF/mods.toml") {
-        expand "version": project.version
-    }
-}
-
-shadowJar {
-    exclude "fabric.mod.json"
-    exclude "architectury.common.json"
-
-    configurations = [project.configurations.shadowCommon]
-    archiveClassifier.set("dev-shadow")
-}
-
-remapJar {
-    inputFile.set shadowJar.archiveFile
-    dependsOn shadowJar
-    archiveClassifier.set(null)
+    from project(":common").sourceSets.main.resources
 }
 
 jar {
-    archiveClassifier.set("dev")
-}
-
-sourcesJar {
-    def commonSources = project(":common").sourcesJar
-    dependsOn commonSources
-    from commonSources.archiveFile.map { zipTree(it) }
-}
-
-components.java {
-    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
-        skip()
+    manifest {
+        attributes([
+                "MixinConfigs": "${project.mod_id}-common.mixins.json,${project.mod_id}-forge.mixins.json"
+        ])
     }
 }
-
-def ENV = System.getenv()
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            artifact remapJar
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
-            }
-
-            artifactId = "$rootProject.name"
-
-            pom {
-                name = 'TheBumblezone'
-                description = 'A wonderful bee dimension mod with lots of new exploration and adventuring to do!'
-                url = 'https://github.com/TelepathicGrunt/Bumblezone'
-
-                scm {
-                    connection = 'git:https://github.com/TelepathicGrunt/Bumblezone.git'
-                    developerConnection = 'git:https://github.com/TelepathicGrunt/Bumblezone.git'
-                    url = 'https://github.com/TelepathicGrunt/Bumblezone'
-                }
-
-                licenses {
-                    license {
-                        name = 'GNU Lesser General Public License v3.0'
-                        url = 'https://github.com/TelepathicGrunt/Bumblezone/LICENSE'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id = 'telepathic_grunt'
-                        name = 'TelepathicGrunt'
-                        email = 'asarnesespam@gmail.com'
-                    }
-                }
-            }
-        }
-    }
-    repositories {
-        maven {
-            url = "https://maven.resourcefulbees.com/repository/telepathicgrunt/"
-            credentials {
-                username ENV.MAVEN_USER
-                password ENV.MAVEN_PASS
-            }
+        "mavenJava"(MavenPublication) {
+            from components.java
         }
     }
 }
-
-task buildAndRelease{}
-tasks.build.mustRunAfter tasks.clean
-tasks.publish.mustRunAfter tasks.build
-tasks.curseforge.mustRunAfter tasks.publish
-tasks.modrinth.mustRunAfter tasks.publish
-tasks.buildAndRelease.dependsOn(tasks.clean, tasks.build, tasks.publish, tasks.curseforge, tasks.modrinth)

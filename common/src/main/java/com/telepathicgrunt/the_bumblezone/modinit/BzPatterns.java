@@ -4,11 +4,12 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
+import com.telepathicgrunt.the_bumblezone.services.RegistrationService;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BannerPattern;
 
 public class BzPatterns {
-    public static final ResourcefulRegistry<BannerPattern> BANNER_PATTERNS = ResourcefulRegistries.create(BuiltInRegistries.BANNER_PATTERN, Bumblezone.MODID);
+    public static final ResourcefulRegistry<BannerPattern> BANNER_PATTERNS = RegistrationService.INSTANCE.create(BuiltInRegistries.BANNER_PATTERN, Bumblezone.MODID);
 
     public static final RegistryEntry<BannerPattern> BEE_BANNER_PATTERN = BANNER_PATTERNS.register("bee", () -> new BannerPattern("bumblezone_bee"));
     public static final RegistryEntry<BannerPattern> HONEYCOMBS_BANNER_PATTERN = BANNER_PATTERNS.register("honeycombs", () -> new BannerPattern("bumblezone_honeycombs"));

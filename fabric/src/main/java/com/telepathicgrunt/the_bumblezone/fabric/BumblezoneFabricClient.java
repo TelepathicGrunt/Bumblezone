@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.fabric;
 
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
-import com.telepathicgrunt.the_bumblezone.fabricbase.FabricClientBaseEventManager;
 import com.telepathicgrunt.the_bumblezone.modcompat.fabric.FabricModChecker;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;

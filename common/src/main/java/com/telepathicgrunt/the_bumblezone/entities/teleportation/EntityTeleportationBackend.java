@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.EntityPosAndDimModule;
-import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import net.minecraft.core.BlockPos;
@@ -39,7 +38,7 @@ public class EntityTeleportationBackend {
         Entity player = entity.getPassengers().stream().filter(e -> e instanceof Player).findFirst().orElse(null);
         if(player != null) entity = player;
 
-        Optional<EntityPosAndDimModule> capOptional = ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM);
+        Optional<EntityPosAndDimModule> capOptional = RegistrationService.INSTANCE.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM);
 
         if (BzDimensionConfigs.forceBumblezoneOriginMobToOverworldCenter &&
             capOptional.isPresent() &&
@@ -249,7 +248,7 @@ public class EntityTeleportationBackend {
 
         // store entity's last position when entering bumblezone.
         if (event.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
-            Optional<EntityPosAndDimModule> lazyOptional = ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM);
+            Optional<EntityPosAndDimModule> lazyOptional = RegistrationService.INSTANCE.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM);
             if(lazyOptional.isPresent()) {
                 EntityPosAndDimModule capability = lazyOptional.orElseThrow(RuntimeException::new);
                 capability.setNonBZDim(entity.level().dimension().location());

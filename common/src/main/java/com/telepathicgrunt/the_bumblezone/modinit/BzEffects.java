@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
+import com.telepathicgrunt.the_bumblezone.services.RegistrationService;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -16,7 +17,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class BzEffects {
-    public static final ResourcefulRegistry<MobEffect> EFFECTS = ResourcefulRegistries.create(BuiltInRegistries.MOB_EFFECT, Bumblezone.MODID);
+    public static final ResourcefulRegistry<MobEffect> EFFECTS = RegistrationService.INSTANCE.create(BuiltInRegistries.MOB_EFFECT, Bumblezone.MODID);
 
     public static final RegistryEntry<MobEffect> WRATH_OF_THE_HIVE = EFFECTS.register("wrath_of_the_hive", () -> new WrathOfTheHiveEffect(MobEffectCategory.HARMFUL, 16737285));
     public static final RegistryEntry<MobEffect> PROTECTION_OF_THE_HIVE = EFFECTS.register("protection_of_the_hive", () -> new ProtectionOfTheHiveEffect(MobEffectCategory.BENEFICIAL, 15049988));

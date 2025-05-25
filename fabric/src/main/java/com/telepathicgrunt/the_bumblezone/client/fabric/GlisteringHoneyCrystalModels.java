@@ -1,0 +1,50 @@
+package com.telepathicgrunt.the_bumblezone.client.fabric;
+
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+
+import java.util.List;
+import java.util.stream.IntStream;
+
+public class GlisteringHoneyCrystalModels {
+
+    public static void setupModels() {
+        ModelLoadingPlugin.register(pluginContext -> {
+            List<ResourceLocation> blockModelIds = IntStream.rangeClosed(1, 16).mapToObj(idx -> new ResourceLocation(Bumblezone.MODID, "block/glistering_honey_crystal/glistering_honey_crystal_" + idx)).toList();
+            ResourceLocation itemModelId = new ModelResourceLocation(BzItems.GLISTERING_HONEY_CRYSTAL.getId(), "inventory");
+
+            // tell Minecraft to load the additional models
+            blockModelIds.forEach(id -> pluginContext.addModels(id.withSuffix("_inside"), id.withSuffix("_outside")));
+
+            // swap base model for composite
+            // also need to swap item model because it cannot resolve the parent otherwise
+            pluginContext.modifyModelOnLoad().register(ModelModifier.OVERRIDE_PHASE, (model, context) -> {
+                ResourceLocation loadedModelId = context.id();
+
+                if (loadedModelId != null) {
+                    if (itemModelId.equals(loadedModelId)) {
+                        return context.getOrLoadModel(blockModelIds.get(0));
+                    }
+
+                    if (blockModelIds.contains(loadedModelId)) {
+                        ResourceLocation insideModelId = loadedModelId.withSuffix("_inside");
+                        ResourceLocation outsideModelId = loadedModelId.withSuffix("_outside");
+                        if (model instanceof BlockModel blockModel) {
+                            return new GlisteringHoneyCrystalUnbakedModel(blockModel, insideModelId, outsideModelId);
+                        } else {
+                            Bumblezone.LOGGER.error("unable to bake model {}, expected BlockModel, got {}", loadedModelId, model.getClass());
+                            return context.getOrLoadModel(outsideModelId); // fall back to full block model
+                        }
+                    }
+                }
+
+                return model;
+            });
+        });
+    }
+}

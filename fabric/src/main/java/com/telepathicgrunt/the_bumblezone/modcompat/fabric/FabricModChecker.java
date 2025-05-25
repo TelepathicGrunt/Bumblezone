@@ -1,10 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.fabric;
 
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.fabricbase.RestrictedPortalsCompat;
-import com.telepathicgrunt.the_bumblezone.modcompat.fabricbase.SpectrumJetpackCompat;
-import com.telepathicgrunt.the_bumblezone.modcompat.fabricbase.TrinketsCompat;
-import com.telepathicgrunt.the_bumblezone.modcompat.fabricbase.ZenithCompat;
 
 import static com.telepathicgrunt.the_bumblezone.modcompat.ModChecker.loadupModCompat;
 import static com.telepathicgrunt.the_bumblezone.modcompat.ModChecker.printErrorToLogs;

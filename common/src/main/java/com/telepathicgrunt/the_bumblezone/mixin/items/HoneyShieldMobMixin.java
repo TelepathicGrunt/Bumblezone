@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.items;
 
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
@@ -21,7 +21,7 @@ public class HoneyShieldMobMixin {
         if(!itemStack.isEmpty() &&
             !itemStack2.isEmpty() &&
             itemStack2.getItem() == BzItems.HONEY_CRYSTAL_SHIELD.get() &&
-            PlatformHooks.isToolAction(itemStack, AxeItem.class, "axe_dig"))
+            PlatformService.INSTANCE.isToolAction(itemStack, AxeItem.class, "axe_dig"))
         {
             HoneyCrystalShield.setShieldCooldown(playerEntity, ((Mob)(Object)this));
             playerEntity.level().broadcastEntityEvent(playerEntity, (byte)30);
