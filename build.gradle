@@ -1,28 +1,3 @@
-
-/*
-Map<String, Map<String, String>> platformSettings = [
-        "fabric": [
-                "curse-id": "363949",
-                "modrinth-id": "eA8SXqWL"
-        ],
-        "forge": [
-                "curse-id": "362479",
-                "modrinth-id": "38tpSycf"
-        ]
-]
-
-Map<String, Map<String, Boolean>> platformDependencies = [
-        "fabric": [
-                "fabric-api": true,
-                "midnightlib": true,
-                "better-advancements": false
-        ],
-        "forge": [
-                "better-advancements": false
-        ]
-]
-*/
-
 plugins {
     id 'idea'
     id 'maven-publish'
@@ -73,6 +48,12 @@ subprojects {
     version = "${rootProject.mod_version}+${rootProject.minecraft_version}-${project.name}"
 
     repositories {
+        maven {
+            url = 'https://maven.parchmentmc.org'
+            content {
+                includeGroup 'org.parchmentmc.data'
+            }
+        }
         maven {
             url = 'https://maven.shedaniel.me'
             content {
@@ -149,6 +130,12 @@ subprojects {
             url = 'https://maven.cafeteria.dev/releases/'
             content {
                 includeGroup 'me.luligabi'
+            }
+        }
+        maven {
+            url = 'https://maven.architectury.dev/'
+            content {
+                includeGroup 'dev.architectury'
             }
         }
         maven {

@@ -23,7 +23,7 @@ dependencies {
         it.officialMojangMappings()
         it.parchment("org.parchmentmc.data:parchment-${project.parchment_minecraft_version}:${project.parchment_mappings_version}@zip")
     })
-    compileOnly(project(":common")) {
+    compileOnly(project(path: ':common', configuration: 'namedElements')) {
         transitive = false
     }
 

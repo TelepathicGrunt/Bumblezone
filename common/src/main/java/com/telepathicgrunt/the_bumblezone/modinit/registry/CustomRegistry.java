@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modinit.registry;
 
+import com.telepathicgrunt.the_bumblezone.services.RegistrationService;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import org.apache.commons.lang3.tuple.Pair;
@@ -11,7 +12,7 @@ import java.util.stream.Stream;
 public interface CustomRegistry<T> extends ResourcefulRegistry<T> {
 
     static <T, K extends Registry<T>> CustomRegistry<T> of(String modId, Class<T> type, ResourceKey<K> key, boolean save, boolean sync, boolean allowModification) {
-        Pair<Supplier<CustomRegistryLookup<T>>, ResourcefulRegistry<T>> pair = ResourcefulRegistries.createCustomRegistryInternal(modId, type, key, save, sync, allowModification);
+        Pair<Supplier<CustomRegistryLookup<T>>, ResourcefulRegistry<T>> pair = RegistrationService.INSTANCE.createCustomRegistryInternal(modId, type, key, save, sync, allowModification);
         return new CustomRegistry<>() {
             @Override
             public CustomRegistryLookup<T> lookup() {
