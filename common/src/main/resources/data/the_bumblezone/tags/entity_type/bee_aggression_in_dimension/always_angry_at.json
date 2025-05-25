@@ -106,6 +106,14 @@
       "required": false
     },
     {
+      "id": "craziness_awakened:spit_bug",
+      "required": false
+    },
+    {
+      "id": "craziness_awakened:mantis",
+      "required": false
+    },
+    {
       "id": "crittersandcompanions:dragonfly",
       "required": false
     },
