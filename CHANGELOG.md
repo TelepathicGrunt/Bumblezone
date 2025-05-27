@@ -1,3 +1,9 @@
+### **(V.7.9.4 Changes) (1.21.1 Minecraft)**
+
+#### Items:
+Fixed essence items not recharging properly when in inventory of a player that had consumed Essence of the Bees.
+
+
 ### **(V.7.9.3 Changes) (1.21.1 Minecraft)**
 
 #### Entities:
