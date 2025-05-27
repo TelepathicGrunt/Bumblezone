@@ -241,8 +241,6 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
                     setAbilityUseRemaining(itemStack, abilityUseRemaining + 1);
                 }
             }
-
-            itemStack.set(BzDataComponents.ABILITY_ESSENCE_LAST_CHARGE_DATA.get(), new AbilityEssenceLastChargeData(serverPlayer.tickCount));
         }
     }
 
