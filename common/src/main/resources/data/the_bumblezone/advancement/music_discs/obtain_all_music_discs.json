@@ -29,6 +29,16 @@
         ]
       }
     },
+    "obtain_music_disc_rivers_of_honey_moserao": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:music_disc_rivers_of_honey_moserao"]
+          }
+        ]
+      }
+    },
     "obtain_music_disc_flight_of_the_bumblebee_rimsky_korsakov": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
@@ -133,6 +143,9 @@
   "requirements": [
     [
       "obtain_music_disc_honey_bee_rat_faced_boy"
+    ],
+    [
+      "obtain_music_disc_rivers_of_honey_moserao"
     ],
     [
       "obtain_music_disc_flight_of_the_bumblebee_rimsky_korsakov"

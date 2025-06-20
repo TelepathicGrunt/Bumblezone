@@ -299,6 +299,7 @@
   "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov": "Music Disc",
   "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy": "Music Disc",
   "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy.download": "https://acidburp.bandcamp.com/track/honey-bee",
+  "item.the_bumblezone.music_disc_rivers_of_honey_moserao": "Music Disc",
   "item.the_bumblezone.music_disc_la_bee_da_loca": "Music Disc",
   "item.the_bumblezone.music_disc_la_bee_da_loca.download": "https://ludocrypt.bandcamp.com/track/la-bee-da-loca",
   "item.the_bumblezone.music_disc_bee_laxing_with_the_hom_bees": "Music Disc",
@@ -465,6 +466,7 @@
 
   "jukebox_song.the_bumblezone.flight_of_the_bumblebee_rimsky_korsakov": "Rimsky Korsakov - Flight of the Bumblebee",
   "jukebox_song.the_bumblezone.honey_bee_rat_faced_boy": "Rat Faced Boy - Honey Bee",
+  "jukebox_song.the_bumblezone.rivers_of_honey_moserao": "Moserao - Rivers of Honey",
   "jukebox_song.the_bumblezone.la_bee_da_loca": "LudoCrypt - La Bee-da Loca",
   "jukebox_song.the_bumblezone.bee_laxing_with_the_hom_bees": "LudoCrypt - Bee-laxing with the Hom-bees",
   "jukebox_song.the_bumblezone.bee_ware_of_the_temple": "LudoCrypt - Bee-ware of the Temple",
@@ -1062,6 +1064,7 @@
   "the_bumblezone.banner_pattern_arrows.description": " An uncommon arrow Banner Pattern that can be found in certain structures and Suspicious Pile of Pollen in Bumblezone dimension",
   "the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov.description": " If you listen closely, you can still hear the buzzing of a swarm of angry bees... This rare music disc can be obtained from Wandering Traders or certain Bumblezone structures! The song is a MIDI version of Flight of the Bumblebee by Rimsky Korsakov.",
   "the_bumblezone.music_disc_honey_bee_rat_faced_boy.description": " Enjoy an awesome banger of a song with bees! This rare music disc can be obtained from Wandering Traders or certain Bumblezone structures! The song is Honey Bee by Rat Faced Boy and you can purchase it from here: https://acidburp.bandcamp.com/track/honey-bee Always support musicians of your favorite songs!",
+  "the_bumblezone.music_disc_rivers_of_honey_moserao.description": " Go with the flow of the dimension with this chill song playing! This rare music disc can be obtained from Wandering Traders or certain Bumblezone structures! The song is Rivers of Honey by Moserao!",
   "the_bumblezone.music_disc_la_bee_da_loca.description": " A smoothing tune as you explore the amazing Bumblezone! This rare music disc can be obtained from Wandering Traders or certain Bumblezone structures! The song is La Bee-da Loca by LudoCrypt and you can purchase it from here: https://ludocrypt.bandcamp.com/track/la-bee-da-loca Always support musicians of your favorite songs!",
   "the_bumblezone.music_disc_bee_laxing_with_the_hom_bees.description": " Relax with a calming song that all bees love! This rare music disc can be obtained from Wandering Traders or certain Bumblezone structures! The song is Bee-laxing with the Hom-bees by LudoCrypt and you can purchase it from here: https://ludocrypt.bandcamp.com/track/bee-laxing-with-the-hom-bees Always support musicians of your favorite songs!",
   "the_bumblezone.music_disc_bee_ware_of_the_temple.description": " An ominous song for an ominous structure... This rare music disc can be obtained from Wandering Traders or certain Bumblezone structures! The song is Bee-ware of the Temple by LudoCrypt and you can purchase it from here: https://ludocrypt.bandcamp.com/track/bee-ware-of-the-temple Always support musicians of your favorite songs!",

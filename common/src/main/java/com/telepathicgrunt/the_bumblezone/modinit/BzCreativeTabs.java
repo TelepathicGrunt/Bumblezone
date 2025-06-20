@@ -150,6 +150,7 @@ public class BzCreativeTabs {
             BzItems.BANNER_PATTERN_ARROWS,
             BzItems.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV,
             BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY,
+            BzItems.MUSIC_DISC_RIVERS_OF_HONEY_MOSERAO,
             BzItems.MUSIC_DISC_LA_BEE_DA_LOCA,
             BzItems.MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES,
             BzItems.MUSIC_DISC_BEE_WARE_OF_THE_TEMPLE,
