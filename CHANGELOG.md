@@ -6,3 +6,6 @@ The song will play randomly in the dimension and will have a music disc form as 
 
 #### Lang:
 es_ar.json updated by Texaliuz
+
+#### Mod Compat:
+Fixed item duplication bug regarding Simple Tombs and the essence arenas
