@@ -10,6 +10,7 @@ public class BzJukeboxSongs {
 
     public static ResourceKey<JukeboxSong> FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = create("flight_of_the_bumblebee_rimsky_korsakov");
     public static ResourceKey<JukeboxSong> HONEY_BEE_RAT_FACED_BOY = create("honey_bee_rat_faced_boy");
+    public static ResourceKey<JukeboxSong> RIVERS_OF_HONEY_MOSERAO = create("rivers_of_honey_moserao");
     public static ResourceKey<JukeboxSong> LA_BEE_DA_LOCA = create("la_bee_da_loca");
     public static ResourceKey<JukeboxSong> BEE_LAXING_WITH_THE_HOM_BEES = create("bee_laxing_with_the_hom_bees");
     public static ResourceKey<JukeboxSong> BEE_WARE_OF_THE_TEMPLE = create("bee_ware_of_the_temple");

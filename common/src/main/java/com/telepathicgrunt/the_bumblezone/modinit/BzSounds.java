@@ -24,6 +24,7 @@ public class BzSounds {
     public static final RegistryEntry<SoundEvent> CONTINUITY_EVENT = registerSoundEvent("music.continuity_event");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = registerSoundEvent("music_disc.flight_of_the_bumblebee_rimsky_korsakov");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = registerSoundEvent("music_disc.honey_bee_rat_faced_boy");
+    public static final RegistryEntry<SoundEvent> MUSIC_DISC_RIVERS_OF_HONEY_MOSERAO = registerSoundEvent("music_disc.rivers_of_honey_moserao");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_LA_BEE_DA_LOCA = registerSoundEvent("music_disc.la_bee_da_loca");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES = registerSoundEvent("music_disc.bee_laxing_with_the_hom_bees");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_BEE_WARE_OF_THE_TEMPLE = registerSoundEvent("music_disc.bee_ware_of_the_temple");
