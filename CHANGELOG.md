@@ -3,3 +3,6 @@
 #### Music:
 Added a new song called Rivers of Honey by Moserao! Special thanks to them for creating this song for Bumblezone!
 The song will play randomly in the dimension and will have a music disc form as well.
+
+#### Lang:
+es_ar.json updated by Texaliuz
