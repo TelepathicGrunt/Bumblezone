@@ -301,6 +301,13 @@
       "required": true
     },
     {
+      "id": "the_bumblezone:music_disc_rivers_of_honey_moserao",
+      "count": 1,
+      "xp_reward": 15,
+      "weight": 3,
+      "required": true
+    },
+    {
       "id": "the_bumblezone:music_disc_la_bee_da_loca",
       "count": 1,
       "xp_reward": 15,

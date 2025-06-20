@@ -43,6 +43,7 @@ public class BzGeneralConfigs {
     public static boolean allowWanderingTraderMusicDiscsTrades = true;
     public static int musicDiscTimeLengthFlightOfTheBumblebee = 216;
     public static int musicDiscTimeLengthHoneyBee = 216;
+    public static int musicDiscTimeLengthRiversOfHoney = 224;
     public static int musicDiscTimeLengthBeeLaxingWithTheHomBees = 300;
     public static int musicDiscTimeLengthLaBeeDaLoca = 176;
     public static int musicDiscTimeLengthBeeWareOfTheTemple = 371;

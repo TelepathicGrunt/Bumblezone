@@ -24,6 +24,11 @@
         "name": "the_bumblezone:music/bee_laxing_with_the_hom_bees",
         "stream": true,
         "volume": 1
+      },
+      {
+        "name": "the_bumblezone:music/rivers_of_honey_moserao_stereo",
+        "stream": true,
+        "volume": 1
       }
     ]
   },
@@ -111,6 +116,14 @@
     "sounds": [
       {
         "name": "the_bumblezone:music/flight_of_the_bumblebee_rimsky_korsakov",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.rivers_of_honey_moserao": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:music/rivers_of_honey_moserao_mono",
         "stream": true
       }
     ]

@@ -27,15 +27,13 @@ public class BzGeneralConfig {
     public static ForgeConfigSpec.BooleanValue superCandlesBurnsMobs;
     public static ForgeConfigSpec.IntValue neurotoxinMaxLevel;
     public static ForgeConfigSpec.IntValue paralyzedMaxTickDuration;
-    public static ForgeConfigSpec.IntValue beeQueenBonusTradeRewardMultiplier;
-    public static ForgeConfigSpec.IntValue beeQueenBonusTradeDurationInTicks;
-    public static ForgeConfigSpec.IntValue beeQueenBonusTradeAmountTillSatified;
     public static ForgeConfigSpec.BooleanValue beeQueenSpecialDayTrades;
     public static ForgeConfigSpec.BooleanValue beeQueenRespawning;
     public static ForgeConfigSpec.BooleanValue beeQueenGroundPickup;
     public static ForgeConfigSpec.BooleanValue allowWanderingTraderMusicDiscsTrades;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthFlightOfTheBumblebee;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthHoneyBee;
+    public static ForgeConfigSpec.IntValue musicDiscTimeLengthRiversOfHoney;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthBeeLaxingWithTheHomBees;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthLaBeeDaLoca;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthBeeWareOfTheTemple;
@@ -329,6 +327,13 @@ public class BzGeneralConfig {
                 .translation("the_bumblezone.config.musicdisctimelengthhoneybee")
                 .defineInRange("musicDiscTimeLengthHoneyBee", 216, 0 , 1000000);
 
+        musicDiscTimeLengthRiversOfHoney = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How long in seconds this music disc will be playing music.",
+                        " This is used for the server to know when to make Allays stop dancing when Jukebox stops playing this music disc.\n")
+                .translation("the_bumblezone.config.musicDiscTimeLengthRiversOfHoney")
+                .defineInRange("musicDiscTimeLengthRiversOfHoney", 224, 0 , 1000000);
+
         musicDiscTimeLengthBeeLaxingWithTheHomBees = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " How long in seconds this music disc will be playing music.",
@@ -540,6 +545,7 @@ public class BzGeneralConfig {
         BzGeneralConfigs.allowWanderingTraderMusicDiscsTrades = allowWanderingTraderMusicDiscsTrades.get();
         BzGeneralConfigs.musicDiscTimeLengthFlightOfTheBumblebee = musicDiscTimeLengthFlightOfTheBumblebee.get();
         BzGeneralConfigs.musicDiscTimeLengthHoneyBee = musicDiscTimeLengthHoneyBee.get();
+        BzGeneralConfigs.musicDiscTimeLengthRiversOfHoney = musicDiscTimeLengthRiversOfHoney.get();
         BzGeneralConfigs.musicDiscTimeLengthBeeLaxingWithTheHomBees = musicDiscTimeLengthBeeLaxingWithTheHomBees.get();
         BzGeneralConfigs.musicDiscTimeLengthLaBeeDaLoca = musicDiscTimeLengthLaBeeDaLoca.get();
         BzGeneralConfigs.musicDiscTimeLengthBeeWareOfTheTemple = musicDiscTimeLengthBeeWareOfTheTemple.get();
