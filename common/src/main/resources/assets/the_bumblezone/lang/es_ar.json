@@ -14,6 +14,10 @@
   "death.attack.the_bumblezone.sentry_watcher_crushing.player": "%1$s fue aplastado hasta la muerte por un Sentry Watcher",
   "death.attack.the_bumblezone.cosmic_crystal": "%1$s fue aniquilado por el poder del Cristal Cósmico",
   "death.attack.the_bumblezone.cosmic_crystal.player": "%1$s fue aniquilado por el poder del Cristal Cósmico",
+  "death.attack.the_bumblezone.dirt_pellet": "%1$s fue vapuleado por %2$s",
+  "death.attack.the_bumblezone.dirt_pellet.item": "%1$s fue vapuleado por %2$s usando %3$s",
+  "death.attack.the_bumblezone.event_dirt_pellet": "%1$s fue vapuleado por %2$s",
+  "death.attack.the_bumblezone.event_dirt_pellet.item": "%1$s fue vapuleado por %2$s usando %3$s",
 
   "block.the_bumblezone.porous_honeycomb_block": "Bloque de Panal Poroso",
   "block.the_bumblezone.filled_porous_honeycomb_block": "Bloque de Panal Poroso Relleno",
