@@ -15,6 +15,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -73,6 +74,11 @@ public class ArenaSpecialBlockHandlerProcessor extends StructureProcessor {
                         Block.dropResources(inWorldBlockState, level, structureBlockInfoWorld.pos(), blockEntity, null, itemStack);
                         level.destroyBlock(structureBlockInfoWorld.pos(), false);
                     }
+                }
+
+                if (inWorldBlockState.is(BzTags.ESSENCE_ARENA_DOES_NOT_REPLACE)) {
+                    level.removeBlockEntity(structureBlockInfoWorld.pos());
+                    level.setBlock(structureBlockInfoWorld.pos(), Blocks.AIR.defaultBlockState(), Block.UPDATE_SUPPRESS_DROPS);
                 }
             }
         }
