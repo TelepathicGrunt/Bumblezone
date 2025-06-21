@@ -25,6 +25,7 @@ public class BzMusicDiscsDownloadLinkTooltip {
 
     public static void SetupTooltipData() {
         AddSong(BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY.get());
+        AddSong(BzItems.MUSIC_DISC_RIVERS_OF_HONEY_MOSERAO.get());
         AddSong(BzItems.MUSIC_DISC_LA_BEE_DA_LOCA.get());
         AddSong(BzItems.MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES.get());
         AddSong(BzItems.MUSIC_DISC_BEE_WARE_OF_THE_TEMPLE.get());
