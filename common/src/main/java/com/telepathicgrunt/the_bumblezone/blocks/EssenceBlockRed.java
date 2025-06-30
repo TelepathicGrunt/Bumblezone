@@ -43,7 +43,7 @@ public class EssenceBlockRed extends EssenceBlock {
 
     public static final MapCodec<EssenceBlockRed> CODEC = Block.simpleCodec(EssenceBlockRed::new);
 
-    private static final float ENTITIES_TO_KILL = 100;
+    private static final int ENTITIES_TO_KILL = 100;
 
     public EssenceBlockRed() {
         this(Properties.of()
