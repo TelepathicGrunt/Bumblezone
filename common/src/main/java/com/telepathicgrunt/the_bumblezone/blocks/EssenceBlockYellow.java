@@ -51,7 +51,7 @@ public class EssenceBlockYellow extends EssenceBlock {
 
     public static final MapCodec<EssenceBlockYellow> CODEC = Block.simpleCodec(EssenceBlockYellow::new);
 
-    private static final float RINGS_TO_PASS = 100;
+    private static final int RINGS_TO_PASS = 100;
 
     public EssenceBlockYellow() {
         this(Properties.of()
