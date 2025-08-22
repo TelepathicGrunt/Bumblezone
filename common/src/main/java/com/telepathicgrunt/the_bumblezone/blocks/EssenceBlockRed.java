@@ -37,7 +37,7 @@ import java.util.UUID;
 
 
 public class EssenceBlockRed extends EssenceBlock {
-    private static final float ENTITIES_TO_KILL = 100;
+    private static final int ENTITIES_TO_KILL = 100;
 
     public EssenceBlockRed() {
         super(Properties.of().mapColor(MapColor.COLOR_RED));

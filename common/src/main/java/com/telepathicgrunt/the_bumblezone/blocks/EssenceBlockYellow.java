@@ -45,7 +45,7 @@ import java.util.UUID;
 
 
 public class EssenceBlockYellow extends EssenceBlock {
-    private static final float RINGS_TO_PASS = 100;
+    private static final int RINGS_TO_PASS = 100;
 
     public EssenceBlockYellow() {
         super(Properties.of().mapColor(MapColor.COLOR_YELLOW));
