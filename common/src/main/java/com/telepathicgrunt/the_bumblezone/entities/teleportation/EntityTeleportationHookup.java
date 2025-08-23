@@ -95,8 +95,9 @@ public class EntityTeleportationHookup {
     //Living Entity ticks
     public static void entityTick(LivingEntity livingEntity) {
         //Makes it so player does not get killed for falling into the void
-        if (livingEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
-            if (livingEntity.getY() < -2) {
+        // Cheaper y pos checks first before dimension checks
+        if (livingEntity.getY() < -2) {
+            if (livingEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
                 if (BzDimensionConfigs.enableExitTeleportation) {
                     if (livingEntity instanceof ServerPlayer serverPlayer) {
                         BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER.trigger(serverPlayer);
@@ -123,7 +124,9 @@ public class EntityTeleportationHookup {
                     }
                 }
             }
-            else if (livingEntity.getY() > 255) {
+        }
+        else if (livingEntity.getY() > 255) {
+            if (livingEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
                 if (BzDimensionConfigs.enableExitTeleportation) {
                     if (livingEntity instanceof ServerPlayer) {
                         BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER.trigger((ServerPlayer) livingEntity);
