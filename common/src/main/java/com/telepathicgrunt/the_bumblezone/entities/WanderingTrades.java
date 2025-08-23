@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzRegisterWanderingTradesEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.world.item.Items;
 
 public class WanderingTrades {

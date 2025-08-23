@@ -4,7 +4,6 @@ package com.telepathicgrunt.the_bumblezone.utils;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;

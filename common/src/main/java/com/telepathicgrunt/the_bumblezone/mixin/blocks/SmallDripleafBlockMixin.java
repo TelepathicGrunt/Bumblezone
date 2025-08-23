@@ -4,7 +4,6 @@ package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterFluid;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SmallDripleafBlock;
 import net.minecraft.world.level.material.FluidState;
