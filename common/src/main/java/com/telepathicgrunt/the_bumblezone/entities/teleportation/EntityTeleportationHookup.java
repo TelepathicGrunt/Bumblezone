@@ -57,9 +57,11 @@ public class EntityTeleportationHookup {
 
     //Notify people of Bumblezone's advancements so they know how to enter dimension
     public static void playerTick(Player player) {
-        if (player instanceof ServerPlayer serverPlayer) {
-            Level level = serverPlayer.level();
-
+        if (player instanceof ServerPlayer serverPlayer &&
+            serverPlayer.level() instanceof ServerLevel serverLevel &&
+            (serverLevel.getGameTime() + serverPlayer.getUUID().getLeastSignificantBits()) % 100 == 0 &&
+            !serverLevel.dimension().equals(BzDimension.BZ_WORLD_KEY))
+        {
             AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements().get(BzCriterias.IS_NEAR_BEEHIVE_ADVANCEMENT);
             if (advancementHolder == null) {
                 return;
@@ -70,29 +72,23 @@ public class EntityTeleportationHookup {
                 return;
             }
 
-            if (level instanceof ServerLevel serverLevel &&
-                (serverLevel.getGameTime() + serverPlayer.getUUID().getLeastSignificantBits()) % 100 == 0 &&
-                !serverLevel.dimension().equals(BzDimension.BZ_WORLD_KEY))
-            {
+            List<PoiRecord> poiInRange = serverLevel.getPoiManager().getInSquare(
+                    (pointOfInterestType) -> pointOfInterestType.is(BzTags.IS_NEAR_BEEHIVE_ADVANCEMENT_TRIGGER_POI),
+                    serverPlayer.blockPosition(),
+                    3,
+                    PoiManager.Occupancy.ANY
+                ).toList();
 
-                List<PoiRecord> poiInRange = serverLevel.getPoiManager().getInSquare(
-                        (pointOfInterestType) -> pointOfInterestType.is(BzTags.IS_NEAR_BEEHIVE_ADVANCEMENT_TRIGGER_POI),
-                        serverPlayer.blockPosition(),
-                        3,
-                        PoiManager.Occupancy.ANY
-                    ).toList();
+            if (!poiInRange.isEmpty()) {
+                BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.get().trigger(serverPlayer);
 
-                if (!poiInRange.isEmpty()) {
-                    BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.get().trigger(serverPlayer);
-
-                    if (BzDimensionConfigs.enableInitialWelcomeMessage) {
-                        ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(playerData -> {
-                            if (!playerData.gottenWelcomed) {
-                                playerData.gottenWelcomed = true;
-                                serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
-                            }
-                        });
-                    }
+                if (BzDimensionConfigs.enableInitialWelcomeMessage) {
+                    ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(playerData -> {
+                        if (!playerData.gottenWelcomed) {
+                            playerData.gottenWelcomed = true;
+                            serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
+                        }
+                    });
                 }
             }
         }
