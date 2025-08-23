@@ -9,7 +9,6 @@ import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
 import com.telepathicgrunt.the_bumblezone.blocks.datamanagers.CrystallineFlowerDataManager;
 import com.telepathicgrunt.the_bumblezone.blocks.datamanagers.PotionCandleDataManager;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
-import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantmentApplication;
 import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantmentApplication;
@@ -31,7 +30,6 @@ import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityHurtEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntitySpawnEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTravelingToDimensionEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityVisibilityEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzProjectileHitEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzRegisterWanderingTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.item.BzRegisterBrewingRecipeEvent;
@@ -145,7 +143,6 @@ public class Bumblezone {
         BzPlayerItemUseOnBlockEvent.EVENT_HIGH.addListener(ItemUseOnBlock::onItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.
         BzPlayerItemUseEvent.EVENT_HIGH.addListener(ItemUseOnBlock::onEarlyItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.
         BzProjectileHitEvent.EVENT_HIGH.addListener(ProjectileImpact::onProjectileImpact); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
-        BzEntityVisibilityEvent.EVENT.addListener(HiddenEffect::hideEntity);
         BzEntityAttackedEvent.EVENT.addListener(NeurotoxinsEnchantmentApplication::entityHurtEvent);
         BzEntityAttackedEvent.EVENT.addListener(HoneyCrystalShield::handledPlayerHurtBehavior);
         BzPlayerBreakSpeedEvent.EVENT.addListener(CombCutterEnchantmentApplication::attemptFasterMining);
