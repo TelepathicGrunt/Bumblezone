@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.containers;
 
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
-import org.jetbrains.annotations.Contract;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
