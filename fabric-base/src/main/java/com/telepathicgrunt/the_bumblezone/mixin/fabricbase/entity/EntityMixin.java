@@ -64,9 +64,9 @@ public abstract class EntityMixin implements BzEntityHooks {
     }
 
     // let honey fluid push entity
-    @Inject(method = "updateInWaterStateAndDoWaterCurrentPushing()V",
-            at = @At(value = "TAIL"))
-    private void bumblezone$fluidPushing(CallbackInfo ci) {
+    @Inject(method = "updateInWaterStateAndDoFluidPushing()Z",
+            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/entity/Entity;updateFluidHeightAndDoFluidPushing(Lnet/minecraft/tags/TagKey;D)Z", ordinal = 0))
+    private void bumblezone$fluidPushing(CallbackInfoReturnable<Boolean> cir) {
         if (this.updateFluidHeightAndDoFluidPushing(BzTags.SPECIAL_HONEY_LIKE, 0.014D)) {
             this.fallDistance = 0.0F;
             this.wasTouchingWater = true;
