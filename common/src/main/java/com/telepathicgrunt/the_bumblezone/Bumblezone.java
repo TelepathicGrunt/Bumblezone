@@ -23,7 +23,6 @@ import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationBackend;
-import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.ItemUseOnBlock;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.ProjectileImpact;
 import com.telepathicgrunt.the_bumblezone.events.block.BzBlockBreakEvent;
@@ -58,7 +57,6 @@ import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemAttackBlockE
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerPickupItemEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.BuzzingBriefcase;
 import com.telepathicgrunt.the_bumblezone.items.BzMusicDiscsDownloadLinkTooltip;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
@@ -132,7 +130,6 @@ public class Bumblezone {
         //Events
         BzRegisterCommandsEvent.EVENT.addListener(BzCommands::registerCommand);
         BzEntitySpawnEvent.EVENT.addListener(ModdedBeesBeesSpawning::onEntitySpawn);
-        BzPlayerTickEvent.EVENT.addListener(BeeAggression::playerTick);
         BzPlayerPickupItemEvent.EVENT.addListener(BeeAggression::pickupItemAnger);
         BzEntityHurtEvent.EVENT_LOWEST.addListener(CalmingEssence::OnAttack);
         BzEntityHurtEvent.EVENT_LOWEST.addListener(BeeAggression::onLivingEntityHurt);
@@ -141,7 +138,6 @@ public class Bumblezone {
         BzEntityDeathEvent.EVENT.addListener(WrathOfTheHiveEffect::onLivingEntityDeath);
         BzEntityDeathEvent.EVENT.addListener(RagingEssence::OnEntityDeath);
         BzEntityDeathEvent.EVENT.addListener(ContinuityEssence::CancelledDeath);
-        BzPlayerTickEvent.EVENT.addListener(EntityTeleportationHookup::playerTick);
         BzEntityTravelingToDimensionEvent.EVENT.addListener(EntityTeleportationBackend::entityChangingDimension);
         BzPlayerItemAttackBlockEvent.EVENT_HIGH.addListener(BuzzingBriefcase::onLeftClickBlock);
         BzPlayerItemUseOnBlockEvent.EVENT_HIGH.addListener(StringCurtain::onBlockInteractEvent);

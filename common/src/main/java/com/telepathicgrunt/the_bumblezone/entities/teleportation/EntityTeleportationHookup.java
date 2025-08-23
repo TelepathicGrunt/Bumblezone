@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.entities.teleportation;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
-import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
@@ -56,8 +55,8 @@ public class EntityTeleportationHookup {
     // Methods that setup and call PlayerTeleportationBackend //
 
     //Notify people of Bumblezone's advancements so they know how to enter dimension
-    public static void playerTick(BzPlayerTickEvent event) {
-        if (event.player() instanceof ServerPlayer serverPlayer && event.end()) {
+    public static void playerTick(Player player) {
+        if (player instanceof ServerPlayer serverPlayer) {
             Level level = serverPlayer.level();
 
             AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements().get(BzCriterias.IS_NEAR_BEEHIVE_ADVANCEMENT);

@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.neoforge;
 
 import com.google.common.util.concurrent.AtomicDouble;
 import com.telepathicgrunt.the_bumblezone.configs.neoforge.BzGeneralConfig;
-import com.telepathicgrunt.the_bumblezone.entities.neoforge.DisableFlightAttribute;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.events.block.BzBlockBreakEvent;
@@ -39,7 +38,6 @@ import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemAttackBlockE
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerPickupItemEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.fluids.neoforge.BzFluidBottlesWrapper;
 import com.telepathicgrunt.the_bumblezone.fluids.neoforge.BzFluidBucketWrapper;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
@@ -98,7 +96,6 @@ import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.event.village.WandererTradesEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
@@ -130,8 +127,6 @@ public class NeoForgeEventManager {
         eventBus.addListener(EventPriority.HIGH, NeoForgeEventManager::onItemUse);
         eventBus.addListener(EventPriority.HIGH, NeoForgeEventManager::onProjectileHitHighPriority);
         eventBus.addListener(EventPriority.LOWEST, NeoForgeEventManager::onBlockBreak);
-        eventBus.addListener(NeoForgeEventManager::onPlayerTickPre);
-        eventBus.addListener(NeoForgeEventManager::onPlayerTickPost);
         eventBus.addListener(NeoForgeEventManager::onPickupItem);
         eventBus.addListener(NeoForgeEventManager::onGrantAdvancement);
         eventBus.addListener(NeoForgeEventManager::onInteractEntity);
@@ -282,26 +277,6 @@ public class NeoForgeEventManager {
         boolean cancel = BzBlockBreakEvent.EVENT_LOWEST.invoke(new BzBlockBreakEvent(event.getPlayer(), event.getState()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);
-        }
-    }
-
-    private static void onPlayerTickPre(PlayerTickEvent.Pre event) {
-        BzPlayerTickEvent eventObject = new BzPlayerTickEvent(event.getEntity(), false);
-
-        BzPlayerTickEvent.EVENT.invoke(eventObject);
-        if (event.getEntity().level().isClientSide()) {
-            BzPlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
-        }
-
-        DisableFlightAttribute.onPlayerTickToRemoveDisabledFlight(event);
-    }
-
-    private static void onPlayerTickPost(PlayerTickEvent.Post event) {
-        BzPlayerTickEvent eventObject = new BzPlayerTickEvent(event.getEntity(), true);
-
-        BzPlayerTickEvent.EVENT.invoke(eventObject);
-        if (event.getEntity().level().isClientSide()) {
-            BzPlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
         }
     }
 

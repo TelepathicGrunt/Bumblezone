@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.events.block.BzBlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityHurtEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerPickupItemEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.FlowerHeadwearHelmet;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
@@ -243,11 +242,10 @@ public class BeeAggression {
         return SET_OF_BEE_NAMED_ENTITIES.contains(type);
     }
 
-    public static void playerTick(BzPlayerTickEvent event) {
-        Player playerEntity = event.player();
-
-        //removes the wrath of the hive if it is disallowed outside dimension
-        if(!playerEntity.level().isClientSide() && playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.holder())) {
+    public static void playerTick(Player playerEntity) {
+        // removes the wrath of the hive if it is disallowed outside dimension
+        // Does not instanceof serverplayer to allow bees to be angry at potentially fake player npcs
+        if (!playerEntity.level().isClientSide() && playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.holder())) {
             if (playerEntity.level().getDifficulty() == Difficulty.PEACEFUL) {
                 playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.holder());
                 WrathOfTheHiveEffect.calmTheBees(playerEntity.level(), playerEntity);

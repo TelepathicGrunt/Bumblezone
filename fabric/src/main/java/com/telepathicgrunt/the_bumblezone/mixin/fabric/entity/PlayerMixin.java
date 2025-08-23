@@ -4,9 +4,10 @@ import com.google.common.util.concurrent.AtomicDouble;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
+import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerBreakSpeedEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerEntityInteractEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.BzShieldItem;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -64,25 +65,10 @@ public abstract class PlayerMixin extends Entity {
     }
 
     @Inject(method = "tick",
-            at = @At("HEAD"))
-    private void bumblezone$onTickPre(CallbackInfo ci) {
-        BzPlayerTickEvent eventObject = new BzPlayerTickEvent((Player) ((Object)this), false);
-
-        BzPlayerTickEvent.EVENT.invoke(eventObject);
-        if (this.level().isClientSide()) {
-            BzPlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
-        }
-    }
-
-    @Inject(method = "tick",
             at = @At("TAIL"))
     private void bumblezone$onTickPost(CallbackInfo ci) {
-        BzPlayerTickEvent eventObject = new BzPlayerTickEvent((Player) ((Object)this), true);
-
-        BzPlayerTickEvent.EVENT.invoke(eventObject);
-        if (this.level().isClientSide()) {
-            BzPlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
-        }
+        BeeAggression.playerTick((Player)(Object)this);
+        EntityTeleportationHookup.playerTick((Player)(Object)this);
     }
 
     @Inject(method = "updateIsUnderwater()Z",
