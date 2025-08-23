@@ -3,8 +3,8 @@ package com.telepathicgrunt.the_bumblezone.fabric;
 import com.telepathicgrunt.the_bumblezone.client.fabric.FabricArmorRenderer;
 import com.telepathicgrunt.the_bumblezone.client.fabric.GlisteringHoneyCrystalModels;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.BzClientTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockColorEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockEntityRendererEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterDimensionEffectsEvent;
@@ -17,6 +17,7 @@ import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterKeyMappingEven
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterMenuScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterRenderTypeEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterShaderEvent;
+import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
@@ -79,8 +80,7 @@ public class FabricClientEventManager {
             return true;
         });
 
-        ClientTickEvents.START_CLIENT_TICK.register((mc) -> BzClientTickEvent.EVENT.invoke(BzClientTickEvent.START));
-        ClientTickEvents.END_CLIENT_TICK.register((mc) -> BzClientTickEvent.EVENT.invoke(BzClientTickEvent.END));
+        ClientTickEvents.END_CLIENT_TICK.register((mc) -> StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer()));
     }
 
     private static <T extends AbstractContainerMenu, U extends Screen & MenuAccess<T>> void registerScreen(MenuType<T> type, BzRegisterMenuScreenEvent.ScreenConstructor<T, U> provider) {

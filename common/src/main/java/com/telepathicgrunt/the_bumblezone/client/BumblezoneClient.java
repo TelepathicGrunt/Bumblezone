@@ -52,11 +52,9 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.variantbee.VariantBee
 import com.telepathicgrunt.the_bumblezone.client.screens.BuzzingBriefcaseScreen;
 import com.telepathicgrunt.the_bumblezone.client.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.client.screens.StrictChestScreen;
-import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.BzClientTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzKeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterArmorProviderEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockColorEvent;
@@ -77,11 +75,9 @@ import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
-import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.items.datacomponents.AbilityEssenceActivityData;
 import com.telepathicgrunt.the_bumblezone.items.essence.AbilityEssenceItem;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.BlockEntityRenderersAccessor;
-import com.telepathicgrunt.the_bumblezone.mixin.client.ClientLevelAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzClientFluids;
@@ -103,8 +99,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.Function;
 
 import static net.minecraft.client.renderer.RenderStateShard.NO_CULL;
@@ -164,11 +158,6 @@ public class BumblezoneClient {
         BzRegisterBlockColorEvent.EVENT.addListener(PotionCandleColoring::registerBlockColors);
         BzRegisterItemColorEvent.EVENT.addListener(PotionCandleColoring::registerItemColors);
         BzRegisterItemColorEvent.EVENT.addListener(FlowerHeadwearColoring::registerItemColors);
-        BzClientTickEvent.EVENT.addListener(event -> {
-            if (event.end()) {
-                StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer());
-            }
-        });
 
         BzClientSetupEnqueuedEvent.EVENT.addListener(BumblezoneClient::clientSetup);
         BzBlockRenderedOnScreenEvent.EVENT.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
