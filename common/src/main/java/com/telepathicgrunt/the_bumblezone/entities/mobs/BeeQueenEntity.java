@@ -14,6 +14,7 @@ import com.telepathicgrunt.the_bumblezone.entities.queentrades.WeightedTradeResu
 import com.telepathicgrunt.the_bumblezone.mixin.entities.ItemEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;

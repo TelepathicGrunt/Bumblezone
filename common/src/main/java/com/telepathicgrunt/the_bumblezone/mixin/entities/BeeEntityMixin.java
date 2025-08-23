@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeeFlowerHeadwearTemptGoal;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;

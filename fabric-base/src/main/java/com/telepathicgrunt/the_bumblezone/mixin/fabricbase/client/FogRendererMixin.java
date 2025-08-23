@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.client.dimension.BzDimensionSpecialEff
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzFlowingFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.base.ClientFluidProperties;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.FogRenderer;
