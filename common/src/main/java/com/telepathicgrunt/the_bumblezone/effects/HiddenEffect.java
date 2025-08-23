@@ -76,8 +76,7 @@ public class HiddenEffect extends BzEffect {
     public static void hideEntity(BzEntityVisibilityEvent event) {
         Registry<MobEffect> mobEffects = event.entity().level().registryAccess().registryOrThrow(Registries.MOB_EFFECT);
         Holder.Reference<MobEffect> hiddenEffectReference = mobEffects.getHolder(BzEffects.HIDDEN.getId()).get();
-        MobEffectInstance hiddenEffect = event.entity().getEffect(hiddenEffectReference);
-        if(hiddenEffect != null) {
+        if (event.entity().hasEffect(hiddenEffectReference)) {
             event.modify(0);
         }
     }

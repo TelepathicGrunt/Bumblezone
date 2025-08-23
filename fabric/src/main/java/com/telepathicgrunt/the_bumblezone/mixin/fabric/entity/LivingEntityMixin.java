@@ -4,10 +4,11 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityAttackedEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityHurtEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityVisibilityEvent;
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
@@ -39,7 +40,8 @@ public abstract class LivingEntityMixin {
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void bumblezone$onTick(CallbackInfo ci) {
-        BzEntityTickEvent.EVENT.invoke(new BzEntityTickEvent((LivingEntity) ((Object) this)));
+        HoneyBeeLeggings.armorStandTick((LivingEntity) (Object) this);
+        EntityTeleportationHookup.entityTick((LivingEntity) (Object) this);
     }
 
     @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)

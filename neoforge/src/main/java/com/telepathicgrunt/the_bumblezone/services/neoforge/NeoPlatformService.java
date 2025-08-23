@@ -169,7 +169,8 @@ public class NeoPlatformService implements PlatformService {
     
     @Override
     public double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidData... fluids) {
-        for (FluidData fluid : fluids) {
+        for (int i = 0, size = fluids.length; i < size; i++) {
+            FluidData fluid = fluids[i];
             double forgeTypeHeight = entity.getFluidTypeHeight(fluid.still().get().getFluidType());
             if (forgeTypeHeight > 0) {
                 return forgeTypeHeight;

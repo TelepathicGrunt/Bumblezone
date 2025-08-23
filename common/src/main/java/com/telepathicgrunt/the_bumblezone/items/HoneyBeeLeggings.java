@@ -160,8 +160,7 @@ public class HoneyBeeLeggings extends BeeArmor {
         }
     }
 
-    public static void armorStandTick(BzEntityTickEvent event) {
-        LivingEntity livingEntity = event.entity();
+    public static void armorStandTick(LivingEntity livingEntity) {
         if (livingEntity instanceof ArmorStand armorStand) {
             ItemStack leggings = armorStand.getItemBySlot(EquipmentSlot.LEGS);
 
