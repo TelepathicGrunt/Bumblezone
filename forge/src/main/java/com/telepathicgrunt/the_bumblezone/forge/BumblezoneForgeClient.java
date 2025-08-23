@@ -10,7 +10,6 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.essence.RadianceEssen
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.KeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockColorEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockEntityRendererEvent;
@@ -27,6 +26,7 @@ import com.telepathicgrunt.the_bumblezone.events.client.RegisterParticleEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterRenderTypeEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterShaderEvent;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
+import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
@@ -158,7 +158,9 @@ public class BumblezoneForgeClient {
     }
 
     private static void onClientTick(TickEvent.ClientTickEvent event) {
-        ClientTickEvent.EVENT.invoke(new ClientTickEvent(event.phase == TickEvent.Phase.END));
+        if (event.phase == TickEvent.Phase.END) {
+            StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer());
+        }
     }
 
     public static void onBlockScreen(RenderBlockScreenEffectEvent event) {
