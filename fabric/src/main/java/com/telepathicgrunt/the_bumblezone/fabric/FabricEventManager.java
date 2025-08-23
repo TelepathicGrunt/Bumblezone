@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.fabric;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
+import com.telepathicgrunt.the_bumblezone.entities.teleportation.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.events.block.BzBlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzRegisterVillagerTradesEvent;
@@ -20,7 +21,6 @@ import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterReloadListe
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterSpawnPlacementsEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerGoingToStartEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerGoingToStopEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerLevelTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzSetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzTagsUpdatedEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemAttackBlockEvent;
@@ -155,8 +155,7 @@ public class FabricEventManager {
 
         BzRegisterDataSerializersEvent.EVENT.invoke(new BzRegisterDataSerializersEvent((id, serializer) -> EntityDataSerializers.registerSerializer(serializer)));
 
-        ServerTickEvents.START_WORLD_TICK.register(world -> BzServerLevelTickEvent.EVENT.invoke(new BzServerLevelTickEvent(world, false)));
-        ServerTickEvents.END_WORLD_TICK.register(world -> BzServerLevelTickEvent.EVENT.invoke(new BzServerLevelTickEvent(world, true)));
+        ServerTickEvents.END_WORLD_TICK.register(BzWorldSavedData::tick);
 
         ServerLifecycleEvents.SERVER_STARTING.register((minecraftServer) -> {
             BzServerGoingToStartEvent.EVENT.invoke(new BzServerGoingToStartEvent(minecraftServer));
