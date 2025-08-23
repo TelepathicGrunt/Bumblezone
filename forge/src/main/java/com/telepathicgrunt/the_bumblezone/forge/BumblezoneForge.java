@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.forge;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.forge.BzConfigHandler;
+import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
@@ -14,7 +15,6 @@ import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityHurtEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityTravelingToDimensionEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityVisibilityEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
@@ -38,6 +38,7 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.forge.block.FireBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.forge.ForgeModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -57,6 +58,7 @@ import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.CreativeModeTab;
@@ -402,7 +404,8 @@ public class BumblezoneForge {
     }
 
     private static void onEntityTick(LivingEvent.LivingTickEvent event) {
-        EntityTickEvent.EVENT.invoke(new EntityTickEvent(event.getEntity()));
+        HoneyBeeLeggings.armorStandTick(event.getEntity());
+        EntityTeleportationHookup.entityTick(event.getEntity());
     }
 
     private static void onEntitySpawn(MobSpawnEvent.FinalizeSpawn event) {

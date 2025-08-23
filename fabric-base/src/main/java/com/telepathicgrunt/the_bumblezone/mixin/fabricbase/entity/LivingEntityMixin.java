@@ -3,12 +3,11 @@ package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.entity;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityHurtEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityVisibilityEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.FinishUseItemEvent;
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -24,12 +23,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -50,7 +47,8 @@ public abstract class LivingEntityMixin {
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void bumblezone$onTick(CallbackInfo ci) {
-        EntityTickEvent.EVENT.invoke(new EntityTickEvent((LivingEntity) ((Object) this)));
+        HoneyBeeLeggings.armorStandTick((LivingEntity)(Object)this);
+        EntityTeleportationHookup.entityTick((LivingEntity)(Object)this);
     }
 
     @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)

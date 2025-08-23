@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone;
 
 import com.mojang.logging.LogUtils;
 import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
-import com.telepathicgrunt.the_bumblezone.blocks.InfinityBarrier;
 import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
@@ -32,7 +31,6 @@ import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityHurtEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityTravelingToDimensionEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityVisibilityEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
@@ -58,7 +56,6 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.BuzzingBriefcase;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
-import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.items.essence.CalmingEssence;
@@ -106,15 +103,6 @@ import com.telepathicgrunt.the_bumblezone.worldgen.dimension.BiomeRegistryHolder
 import com.telepathicgrunt.the_bumblezone.worldgen.surfacerules.PollinatedSurfaceSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.item.HangingEntityItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.BlockState;
 import org.slf4j.Logger;
 
 public class Bumblezone {
@@ -132,7 +120,6 @@ public class Bumblezone {
         RegisterCommandsEvent.EVENT.addListener(BzCommands::registerCommand);
         EntitySpawnEvent.EVENT.addListener(ModdedBeesBeesSpawning::onEntitySpawn);
         PlayerTickEvent.EVENT.addListener(BeeAggression::playerTick);
-        EntityTickEvent.EVENT.addListener(HoneyBeeLeggings::armorStandTick);
         PlayerPickupItemEvent.EVENT.addListener(BeeAggression::pickupItemAnger);
         EntityHurtEvent.EVENT_LOWEST.addListener(CalmingEssence::OnAttack);
         EntityHurtEvent.EVENT_LOWEST.addListener(BeeAggression::onLivingEntityHurt);
@@ -143,7 +130,6 @@ public class Bumblezone {
         EntityDeathEvent.EVENT.addListener(ContinuityEssence::CancelledDeath);
         ServerLevelTickEvent.EVENT.addListener(BzWorldSavedData::worldTick);
         PlayerTickEvent.EVENT.addListener(EntityTeleportationHookup::playerTick);
-        EntityTickEvent.EVENT.addListener(EntityTeleportationHookup::entityTick);
         EntityTravelingToDimensionEvent.EVENT.addListener(EntityTeleportationBackend::entityChangingDimension);
         PlayerItemAttackBlockEvent.EVENT_HIGH.addListener(BuzzingBriefcase::onLeftClickBlock);
         PlayerItemUseOnBlockEvent.EVENT_HIGH.addListener(StringCurtain::onBlockInteractEvent);

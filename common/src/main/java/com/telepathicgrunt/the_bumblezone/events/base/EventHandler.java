@@ -25,5 +25,4 @@ public class EventHandler<T> {
             listener.accept(event);
         }
     }
-
 }

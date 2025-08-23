@@ -69,8 +69,7 @@ public class HiddenEffect extends BzEffect implements EffectExtension {
     }
 
     public static void hideEntity(EntityVisibilityEvent event) {
-        MobEffectInstance hiddenEffect = event.entity().getEffect(BzEffects.HIDDEN.get());
-        if(hiddenEffect != null) {
+        if (event.entity().hasEffect(BzEffects.HIDDEN.get())) {
             event.modify(0);
         }
     }

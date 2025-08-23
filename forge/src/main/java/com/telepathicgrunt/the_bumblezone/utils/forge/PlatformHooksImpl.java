@@ -122,7 +122,8 @@ public class PlatformHooksImpl {
     }
 
     public static double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidInfo... fluids) {
-        for (FluidInfo fluid : fluids) {
+        for (int i = 0, size = fluids.length; i < size; i++) {
+            FluidInfo fluid = fluids[i];
             double forgeTypeHeight = entity.getFluidTypeHeight(fluid.source().getFluidType());
             if (forgeTypeHeight > 0) {
                 return forgeTypeHeight;
