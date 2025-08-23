@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.neoforge;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.telepathicgrunt.the_bumblezone.configs.neoforge.BzGeneralConfig;
 import com.telepathicgrunt.the_bumblezone.entities.neoforge.DisableFlightAttribute;
+import com.telepathicgrunt.the_bumblezone.entities.teleportation.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.events.block.BzBlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzBabySpawnEvent;
@@ -29,7 +30,6 @@ import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterReloadListe
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterSpawnPlacementsEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerGoingToStartEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerGoingToStopEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerLevelTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzSetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzTagsUpdatedEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerBreakSpeedEvent;
@@ -53,6 +53,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
@@ -136,7 +137,6 @@ public class NeoForgeEventManager {
         eventBus.addListener(NeoForgeEventManager::onInteractEntity);
         eventBus.addListener(NeoForgeEventManager::onBreakSpeed);
         eventBus.addListener(NeoForgeEventManager::onTagsUpdate);
-        eventBus.addListener(NeoForgeEventManager::onLevelTickPre);
         eventBus.addListener(NeoForgeEventManager::onLevelTickPost);
         eventBus.addListener(NeoForgeEventManager::onAddReloadListeners);
         eventBus.addListener(NeoForgeEventManager::onDatapackSync);
@@ -344,18 +344,10 @@ public class NeoForgeEventManager {
         };
     }
 
-    private static void onLevelTickPre(LevelTickEvent.Pre event) {
-        if (event.getLevel().isClientSide()) {
-            return;
-        }
-        BzServerLevelTickEvent.EVENT.invoke(new BzServerLevelTickEvent(event.getLevel(), false));
-    }
-
     private static void onLevelTickPost(LevelTickEvent.Post event) {
-        if (event.getLevel().isClientSide()) {
-            return;
+        if (event.getLevel() instanceof ServerLevel serverLevel) {
+            BzWorldSavedData.tick(serverLevel);
         }
-        BzServerLevelTickEvent.EVENT.invoke(new BzServerLevelTickEvent(event.getLevel(), true));
     }
 
     private static void onAddReloadListeners(AddReloadListenerEvent event) {
