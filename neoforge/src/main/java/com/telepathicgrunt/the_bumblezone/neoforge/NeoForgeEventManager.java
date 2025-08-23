@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.neoforge;
 
 import com.google.common.util.concurrent.AtomicDouble;
 import com.telepathicgrunt.the_bumblezone.configs.neoforge.BzGeneralConfig;
+import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.events.block.BzBlockBreakEvent;
@@ -11,7 +12,6 @@ import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityHurtEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntitySpawnEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTravelingToDimensionEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityVisibilityEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzProjectileHitEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzRegisterVillagerTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzRegisterWanderingTradesEvent;
@@ -341,9 +341,7 @@ public class NeoForgeEventManager {
     }
 
     private static void onEntityVisibility(LivingEvent.LivingVisibilityEvent event) {
-        BzEntityVisibilityEvent visibilityEvent = new BzEntityVisibilityEvent(event.getVisibilityModifier(), event.getEntity(), event.getLookingEntity());
-        BzEntityVisibilityEvent.EVENT.invoke(visibilityEvent);
-        event.modifyVisibility(visibilityEvent.visibility() / event.getVisibilityModifier());
+        event.modifyVisibility(HiddenEffect.hideEntity(event.getEntity()));
     }
 
     private static void onEntityDimensionTravel(EntityTravelToDimensionEvent event) {

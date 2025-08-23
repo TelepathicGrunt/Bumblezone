@@ -4,10 +4,10 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityAttackedEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityHurtEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityVisibilityEvent;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -33,9 +33,7 @@ public abstract class LivingEntityMixin {
     @ModifyReturnValue(method = "getVisibilityPercent",
             at = @At(value = "RETURN"))
     private double bumblezone$onEntityVisibility(double visibility, @Nullable Entity entity) {
-        BzEntityVisibilityEvent event = new BzEntityVisibilityEvent(visibility, (LivingEntity) ((Object) this), entity);
-        BzEntityVisibilityEvent.EVENT.invoke(event);
-        return event.visibility();
+        return HiddenEffect.hideEntity((LivingEntity) (Object) this) * visibility;
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
