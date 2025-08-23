@@ -13,7 +13,6 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.essence.RadianceEssen
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.BzClientTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzKeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockColorEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockEntityRendererEvent;
@@ -29,6 +28,7 @@ import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterParticleEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterRenderTypeEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterShaderEvent;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
+import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -82,7 +82,6 @@ public class NeoForgeClientEventManager {
 
         eventBus.addListener(NeoForgeClientEventManager::onBlockScreen);
         eventBus.addListener(NeoForgeClientEventManager::onKeyInput);
-        eventBus.addListener(NeoForgeClientEventManager::onClientTickPre);
         eventBus.addListener(NeoForgeClientEventManager::onClientTickPost);
         eventBus.addListener(NeoForgeClientEventManager::onScreenRendering);
         eventBus.addListener(NeoForgeClientEventManager::onBeforeBlockOutlineRendering);
@@ -200,12 +199,8 @@ public class NeoForgeClientEventManager {
         BzKeyInputEvent.EVENT.invoke(new BzKeyInputEvent(event.getKey(), event.getScanCode(), event.getAction()));
     }
 
-    private static void onClientTickPre(ClientTickEvent.Pre event) {
-        BzClientTickEvent.EVENT.invoke(new BzClientTickEvent(false));
-    }
-
     private static void onClientTickPost(ClientTickEvent.Post event) {
-        BzClientTickEvent.EVENT.invoke(new BzClientTickEvent(true));
+        StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer());
     }
 
     public static void onBlockScreen(RenderBlockScreenEffectEvent event) {
