@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.MobCategory;
@@ -27,7 +27,7 @@ public class MobSpawnLocationMixin {
     {
         //No mobs allowed to spawn on roof of Bumblezone or below Bumblezone
         if ((pos.getY() <= world.getMinBuildHeight() + 1 || pos.getY() >= world.getMaxBuildHeight() - 1) &&
-            world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID))
+            world.dimension().equals(BzDimension.BZ_WORLD_KEY))
         {
             //Bumblezone.LOGGER.log(Level.INFO, "canceled spawn");
             ci.cancel();

@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeeFlowerHeadwearTemptGoal;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -57,7 +57,7 @@ public abstract class BeeEntityMixin extends Entity {
     @Inject(method = "<init>(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
             at = @At(value = "TAIL"))
     private void bumblezone$pollinateSpawnedBee(EntityType<? extends Bee> entityType, Level world, CallbackInfo ci) {
-        if (!world.isClientSide() && world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+        if (!world.isClientSide() && world.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
             Bee beeEntity = (Bee)(Object)this;
 
             //20% chance of being full of pollen

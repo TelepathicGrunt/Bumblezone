@@ -1,13 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.serialization.MapCodec;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -119,7 +119,7 @@ public class HoneycombBrood extends ProperFacingBlock {
             spawnBroodMob(level, random, blockState, position, stage);
             level.setBlock(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().defaultBlockState().setValue(BlockStateProperties.FACING, blockState.getValue(BlockStateProperties.FACING)), 3); // removed honey from this block
 
-            if ((level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+            if ((level.dimension().equals(BzDimension.BZ_WORLD_KEY) ||
                     BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&
@@ -269,7 +269,7 @@ public class HoneycombBrood extends ProperFacingBlock {
         int stage = state.getValue(STAGE);
         if (stage < 3) {
             if ((nearbyEntities != null && !nearbyEntities.isEmpty()) ||
-                (level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ? random.nextInt(10) == 0 : random.nextInt(22) == 0))
+                (level.dimension().equals(BzDimension.BZ_WORLD_KEY) ? random.nextInt(10) == 0 : random.nextInt(22) == 0))
             {
                 level.setBlock(position, state.setValue(STAGE, stage + 1), 2);
             }

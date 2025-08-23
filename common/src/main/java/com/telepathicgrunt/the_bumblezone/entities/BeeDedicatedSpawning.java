@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
@@ -50,7 +50,7 @@ public final class BeeDedicatedSpawning {
     }
 
     public static int getNearbyActiveEntitiesInDimension(ServerLevel level, BlockPos position) {
-        if (level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+        if (level.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
             return ACTIVE_ENTITIES;
         }
         else {
