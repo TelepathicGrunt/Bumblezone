@@ -37,7 +37,6 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemAttackBlockEve
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.forge.block.FireBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.forge.ForgeModChecker;
@@ -93,7 +92,6 @@ import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.FluidInteractionRegistry;
-import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -150,7 +148,6 @@ public class BumblezoneForge {
         eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onItemUse);
         eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onProjectileHitHighPriority);
         eventBus.addListener(EventPriority.LOWEST, BumblezoneForge::onBlockBreak);
-        eventBus.addListener(BumblezoneForge::onPlayerTick);
         eventBus.addListener(BumblezoneForge::onPickupItem);
         eventBus.addListener(BumblezoneForge::onGrantAdvancement);
         eventBus.addListener(BumblezoneForge::onInteractEntity);
@@ -319,15 +316,6 @@ public class BumblezoneForge {
         boolean cancel = BlockBreakEvent.EVENT_LOWEST.invoke(new BlockBreakEvent(event.getPlayer(), event.getState()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);
-        }
-    }
-
-    private static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        PlayerTickEvent eventObject = new PlayerTickEvent(event.player, event.phase == TickEvent.Phase.END);
-
-        PlayerTickEvent.EVENT.invoke(eventObject);
-        if (event.side == LogicalSide.CLIENT) {
-            PlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
         }
     }
 
