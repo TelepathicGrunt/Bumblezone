@@ -71,7 +71,6 @@ import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterParticleEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterRenderTypeEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterShaderEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzTagsUpdatedEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
@@ -146,7 +145,6 @@ public class BumblezoneClient {
 
     public static void init() {
         FactoryManager.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "connected"), ConnectedBlockModel.FACTORY);
-        BzPlayerTickEvent.CLIENT_EVENT.addListener(MusicHandler::tickMusicFader);
 
         BzRegisterParticleEvent.EVENT.addListener(BumblezoneClient::onParticleSetup);
         BzRegisterEntityRenderersEvent.EVENT.addListener(BumblezoneClient::registerEntityRenderers);
