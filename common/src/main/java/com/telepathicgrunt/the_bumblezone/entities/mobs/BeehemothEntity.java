@@ -12,6 +12,7 @@ import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothTemptGoal;
 import com.telepathicgrunt.the_bumblezone.entities.navigation.DirectPathNavigator;
 import com.telepathicgrunt.the_bumblezone.items.BeeBread;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -318,7 +319,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                         }
 
                         if (!(livingEntity instanceof Player player && (player.isCreative() || level().getDifficulty() == Difficulty.PEACEFUL)) &&
-                                (livingEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) || BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
+                                (livingEntity.level().dimension().equals(BzDimension.BZ_WORLD_KEY) || BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                                 !livingEntity.isSpectator())
                         {
                             if (livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder())) {

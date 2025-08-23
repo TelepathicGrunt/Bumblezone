@@ -1,11 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.serialization.MapCodec;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
@@ -81,11 +81,11 @@ public class FilledPorousHoneycomb extends Block {
             GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
 
             Level level = playerEntity.level();
-            if ((level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                    BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
-                    !playerEntity.isCreative() &&
-                    !playerEntity.isSpectator() &&
-                    BzBeeAggressionConfigs.aggressiveBees)
+            if ((level.dimension().equals(BzDimension.BZ_WORLD_KEY) ||
+                BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
+                !playerEntity.isCreative() &&
+                !playerEntity.isSpectator() &&
+                BzBeeAggressionConfigs.aggressiveBees)
             {
                 Registry<MobEffect> mobEffects = level.registryAccess().registryOrThrow(Registries.MOB_EFFECT);
                 boolean hasProtection = playerEntity.hasEffect(mobEffects.getHolder(BzEffects.PROTECTION_OF_THE_HIVE.getId()).get());

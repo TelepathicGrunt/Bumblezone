@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTravelingToDimensionEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.EntityPosAndDimModule;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
@@ -248,7 +249,7 @@ public class EntityTeleportationBackend {
         }
 
         // store entity's last position when entering bumblezone.
-        if (event.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+        if (event.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
             Optional<EntityPosAndDimModule> lazyOptional = ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM);
             if(lazyOptional.isPresent()) {
                 EntityPosAndDimModule capability = lazyOptional.orElseThrow(RuntimeException::new);

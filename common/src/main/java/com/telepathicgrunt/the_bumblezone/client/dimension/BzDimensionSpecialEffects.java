@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.client.dimension;
 
 import com.mojang.blaze3d.shaders.FogShape;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.FogRenderer;
@@ -76,7 +76,7 @@ public class BzDimensionSpecialEffects extends DimensionSpecialEffects {
             fogType == FogType.NONE &&
             thickFog &&
             player != null &&
-            player.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID))
+            player.level().dimension().equals(BzDimension.BZ_WORLD_KEY))
         {
             for (Holder<MobEffect> mobEffectHolder : BuiltInRegistries.MOB_EFFECT.getTagOrEmpty(BzTags.FOG_ADJUSTING_EFFECTS)) {
                 if (player.hasEffect(mobEffectHolder)) {

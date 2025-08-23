@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
@@ -14,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.ChatFormatting;
@@ -94,7 +94,7 @@ public class BeeAggression {
     private static void angerBees(ServerPlayer player, boolean removesProt) {
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that player isn't in creative or spectator
-        if ((player.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+        if ((player.level().dimension().equals(BzDimension.BZ_WORLD_KEY) ||
                 BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                 BzBeeAggressionConfigs.aggressiveBees &&
                 !player.isCreative() &&
@@ -150,7 +150,7 @@ public class BeeAggression {
                 player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder());
                 WrathOfTheHiveEffect.calmTheBees(player.level(), player); // prevent bees from be naturally angry
             }
-            else if((entity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+            else if((entity.level().dimension().equals(BzDimension.BZ_WORLD_KEY) ||
                     BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                     BzBeeAggressionConfigs.aggressiveBees)
             {
@@ -172,7 +172,7 @@ public class BeeAggression {
                 mob.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder());
                 WrathOfTheHiveEffect.calmTheBees(mob.level(), mob); // prevent bees from be naturally angry
             }
-            else if((entity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+            else if((entity.level().dimension().equals(BzDimension.BZ_WORLD_KEY) ||
                     BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                     BzBeeAggressionConfigs.aggressiveBees)
             {
@@ -198,7 +198,7 @@ public class BeeAggression {
                     true));
         }
 
-        if (entity != null && entity.level() != null && !entity.level().isClientSide() && entity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+        if (entity != null && entity.level() != null && !entity.level().isClientSide() && entity.level().dimension().equals(BzDimension.BZ_WORLD_KEY)) {
             for (ModCompat compat : ModChecker.DIM_SPAWN_COMPATS) {
                 compat.onEntitySpawnInDimension(entity);
             }
@@ -212,7 +212,7 @@ public class BeeAggression {
         if (entity != null &&
             entity.level() != null &&
             !entity.level().isClientSide() &&
-            entity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
+            entity.level().dimension().equals(BzDimension.BZ_WORLD_KEY) &&
             BzBeeAggressionConfigs.aggressiveBees &&
             entity instanceof Mob mobEntity &&
             !mobEntity.isNoAi() &&
@@ -251,7 +251,7 @@ public class BeeAggression {
                 WrathOfTheHiveEffect.calmTheBees(playerEntity.level(), playerEntity);
             }
             else if (!(BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone ||
-                    playerEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)))
+                    playerEntity.level().dimension().equals(BzDimension.BZ_WORLD_KEY)))
             {
                 playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.holder());
                 WrathOfTheHiveEffect.calmTheBees(playerEntity.level(), playerEntity);
