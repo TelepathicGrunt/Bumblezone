@@ -67,7 +67,7 @@ public class FilledPorousHoneycomb extends Block {
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
             GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
 
-            if ((playerEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+            if ((playerEntity.level().dimension().equals(BzDimension.BZ_WORLD_KEY) ||
                     BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&

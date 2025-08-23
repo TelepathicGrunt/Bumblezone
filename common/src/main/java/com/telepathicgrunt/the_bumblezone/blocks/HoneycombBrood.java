@@ -105,7 +105,7 @@ public class HoneycombBrood extends ProperFacingBlock {
             spawnBroodMob(world, random, thisBlockState, position, stage);
             world.setBlock(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().defaultBlockState().setValue(BlockStateProperties.FACING, thisBlockState.getValue(BlockStateProperties.FACING)), 3); // removed honey from this block
 
-            if ((playerEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+            if ((playerEntity.level().dimension().equals(BzDimension.BZ_WORLD_KEY) ||
                     BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&
@@ -250,7 +250,7 @@ public class HoneycombBrood extends ProperFacingBlock {
         int stage = state.getValue(STAGE);
         if (stage < 3) {
             if ((nearbyEntities != null && !nearbyEntities.isEmpty()) ||
-                (world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ? random.nextInt(10) == 0 : random.nextInt(22) == 0))
+                (world.dimension().equals(BzDimension.BZ_WORLD_KEY) ? random.nextInt(10) == 0 : random.nextInt(22) == 0))
             {
                 world.setBlock(position, state.setValue(STAGE, stage + 1), 2);
             }

@@ -121,7 +121,7 @@ public class GeneralUtils {
     }
 
     public static int getNearbyActiveEntitiesInDimension(ServerLevel level, BlockPos position) {
-        if (level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+        if (level.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
             return ACTIVE_ENTITIES;
         }
         else {

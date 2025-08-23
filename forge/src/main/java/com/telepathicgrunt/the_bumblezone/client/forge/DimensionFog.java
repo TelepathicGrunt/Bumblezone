@@ -21,7 +21,7 @@ public class DimensionFog {
             Player player = Minecraft.getInstance().player;
             if (player != null &&
                 DimensionSpecialEffects.forType(player.level().dimensionType()).isFoggyAt(player.getBlockX(), player.getBlockZ()) &&
-                player.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID))
+                player.level().dimension().equals(BzDimension.BZ_WORLD_KEY))
             {
                 for (Holder<MobEffect> mobEffectHolder : BuiltInRegistries.MOB_EFFECT.getTagOrEmpty(BzTags.FOG_ADJUSTING_EFFECTS)) {
                     if (player.hasEffect(mobEffectHolder.value())) {

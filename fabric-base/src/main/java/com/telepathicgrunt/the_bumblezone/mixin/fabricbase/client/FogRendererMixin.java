@@ -86,7 +86,7 @@ public class FogRendererMixin {
                 fogType == FogType.NONE &&
                 thickFog &&
                 GeneralUtilsClient.getClientPlayer() != null &&
-                GeneralUtilsClient.getClientPlayer().level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID))
+                GeneralUtilsClient.getClientPlayer().level().dimension().equals(BzDimension.BZ_WORLD_KEY))
         {
             BzDimensionSpecialEffects.fogThicknessAdjustments(fogEnd, fogData);
         }

@@ -248,7 +248,7 @@ public class EntityTeleportationBackend {
         }
 
         // store entity's last position when entering bumblezone.
-        if (event.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+        if (event.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
             Optional<EntityPosAndDimModule> lazyOptional = ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM);
             if(lazyOptional.isPresent()) {
                 EntityPosAndDimModule capability = lazyOptional.orElseThrow(RuntimeException::new);

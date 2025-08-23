@@ -300,7 +300,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         return super.hurt(source, amount);
                     }
 
-                    if ((livingEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                    if ((livingEntity.level().dimension().equals(BzDimension.BZ_WORLD_KEY) ||
                         BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                         BzBeeAggressionConfigs.aggressiveBees)
                     {
