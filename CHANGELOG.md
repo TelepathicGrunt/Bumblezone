@@ -2,3 +2,6 @@
 
 #### Music:
 Fixed Wandering Traders not able to sell Beena Box Music Disc
+
+#### Misc:
+Micro-optimized some code to shave some microseconds lol.

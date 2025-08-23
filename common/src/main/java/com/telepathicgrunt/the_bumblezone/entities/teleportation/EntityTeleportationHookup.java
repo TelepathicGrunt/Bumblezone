@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.entities.teleportation;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
-import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -101,9 +100,7 @@ public class EntityTeleportationHookup {
     }
 
     //Living Entity ticks
-    public static void entityTick(BzEntityTickEvent event) {
-        LivingEntity livingEntity = event.entity();
-
+    public static void entityTick(LivingEntity livingEntity) {
         //Makes it so player does not get killed for falling into the void
         if (livingEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (livingEntity.getY() < -2) {

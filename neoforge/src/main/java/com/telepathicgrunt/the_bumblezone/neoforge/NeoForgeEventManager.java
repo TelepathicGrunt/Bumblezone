@@ -3,13 +3,13 @@ package com.telepathicgrunt.the_bumblezone.neoforge;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.telepathicgrunt.the_bumblezone.configs.neoforge.BzGeneralConfig;
 import com.telepathicgrunt.the_bumblezone.entities.neoforge.DisableFlightAttribute;
+import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.events.block.BzBlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzBabySpawnEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityAttackedEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityHurtEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntitySpawnEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTravelingToDimensionEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityVisibilityEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzProjectileHitEvent;
@@ -42,6 +42,7 @@ import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.fluids.neoforge.BzFluidBottlesWrapper;
 import com.telepathicgrunt.the_bumblezone.fluids.neoforge.BzFluidBucketWrapper;
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.neoforge.block.FireBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.neoforge.NeoForgeModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
@@ -387,7 +388,8 @@ public class NeoForgeEventManager {
 
     private static void onEntityTick(EntityTickEvent.Post event) {
         if (event.getEntity() instanceof LivingEntity livingEntity) {
-            BzEntityTickEvent.EVENT.invoke(new BzEntityTickEvent(livingEntity));
+            HoneyBeeLeggings.armorStandTick(livingEntity);
+            EntityTeleportationHookup.entityTick(livingEntity);
         }
     }
 
