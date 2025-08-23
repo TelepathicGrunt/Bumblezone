@@ -50,7 +50,6 @@ import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterReloadListe
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterSpawnPlacementsEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerGoingToStartEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerGoingToStopEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerLevelTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzSetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzTagsUpdatedEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerBreakSpeedEvent;
@@ -143,7 +142,6 @@ public class Bumblezone {
         BzEntityDeathEvent.EVENT.addListener(WrathOfTheHiveEffect::onLivingEntityDeath);
         BzEntityDeathEvent.EVENT.addListener(RagingEssence::OnEntityDeath);
         BzEntityDeathEvent.EVENT.addListener(ContinuityEssence::CancelledDeath);
-        BzServerLevelTickEvent.EVENT.addListener(BzWorldSavedData::worldTick);
         BzPlayerTickEvent.EVENT.addListener(EntityTeleportationHookup::playerTick);
         BzEntityTravelingToDimensionEvent.EVENT.addListener(EntityTeleportationBackend::entityChangingDimension);
         BzPlayerItemAttackBlockEvent.EVENT_HIGH.addListener(BuzzingBriefcase::onLeftClickBlock);
