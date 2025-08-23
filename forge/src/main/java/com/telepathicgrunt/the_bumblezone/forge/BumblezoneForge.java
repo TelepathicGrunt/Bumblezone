@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.forge;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.forge.BzConfigHandler;
+import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
@@ -17,7 +18,6 @@ import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityHurtEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityTravelingToDimensionEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityVisibilityEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
@@ -380,9 +380,7 @@ public class BumblezoneForge {
     }
 
     private static void onEntityVisibility(LivingEvent.LivingVisibilityEvent event) {
-        EntityVisibilityEvent visibilityEvent = new EntityVisibilityEvent(event.getVisibilityModifier(), event.getEntity(), event.getLookingEntity());
-        EntityVisibilityEvent.EVENT.invoke(visibilityEvent);
-        event.modifyVisibility(visibilityEvent.visibility() / event.getVisibilityModifier());
+        event.modifyVisibility(HiddenEffect.hideEntity(event.getEntity()));
     }
 
     private static void onEntityDimensionTravel(EntityTravelToDimensionEvent event) {

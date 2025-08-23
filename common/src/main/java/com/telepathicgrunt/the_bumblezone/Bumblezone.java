@@ -4,7 +4,6 @@ import com.mojang.logging.LogUtils;
 import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
 import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
-import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantment;
@@ -30,7 +29,6 @@ import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityHurtEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityTravelingToDimensionEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityVisibilityEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
@@ -130,7 +128,6 @@ public class Bumblezone {
         PlayerItemUseOnBlockEvent.EVENT_HIGH.addListener(ItemUseOnBlock::onItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.
         PlayerItemUseEvent.EVENT_HIGH.addListener(ItemUseOnBlock::onEarlyItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.
         ProjectileHitEvent.EVENT_HIGH.addListener(ProjectileImpact::onProjectileImpact); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
-        EntityVisibilityEvent.EVENT.addListener(HiddenEffect::hideEntity);
         EntityAttackedEvent.EVENT.addListener(NeurotoxinsEnchantment::entityHurtEvent);
         EntityAttackedEvent.EVENT.addListener(HoneyCrystalShield::handledPlayerHurtBehavior);
         PlayerBreakSpeedEvent.EVENT.addListener(CombCutterEnchantment::attemptFasterMining);

@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.effects;
 
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityVisibilityEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.platform.EffectExtension;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -68,9 +67,10 @@ public class HiddenEffect extends BzEffect implements EffectExtension {
         super.addAttributeModifiers(entity, attributes, amplifier);
     }
 
-    public static void hideEntity(EntityVisibilityEvent event) {
-        if (event.entity().hasEffect(BzEffects.HIDDEN.get())) {
-            event.modify(0);
+    public static double hideEntity(LivingEntity livingEntity) {
+        if (livingEntity.hasEffect(BzEffects.HIDDEN.get())) {
+            return 0;
         }
+        return 1; // Due to the `* original value`, this will not modify visibility
     }
 }

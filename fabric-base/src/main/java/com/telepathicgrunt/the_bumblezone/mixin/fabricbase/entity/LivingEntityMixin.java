@@ -3,10 +3,10 @@ package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.entity;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityHurtEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityVisibilityEvent;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
@@ -40,9 +40,7 @@ public abstract class LivingEntityMixin {
             at = @At(value = "RETURN")
     )
     private double bumblezone$onEntityVisibility(double visibility, @Nullable Entity entity) {
-        EntityVisibilityEvent event = new EntityVisibilityEvent(visibility, (LivingEntity) ((Object) this), entity);
-        EntityVisibilityEvent.EVENT.invoke(event);
-        return event.visibility();
+        return HiddenEffect.hideEntity((LivingEntity) (Object) this) * visibility;
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
