@@ -30,6 +30,8 @@ public class HoneySlimeFloatGoal extends Goal {
             this.slime.getJumpControl().jump();
         }
 
-        ((HoneySlimeMoveController) this.slime.getMoveControl()).setSpeed(1.2D);
+        if (this.slime.getMoveControl() instanceof HoneySlimeMoveController honeySlimeMoveController) {
+            honeySlimeMoveController.setSpeed(1.2D);
+        }
     }
 }

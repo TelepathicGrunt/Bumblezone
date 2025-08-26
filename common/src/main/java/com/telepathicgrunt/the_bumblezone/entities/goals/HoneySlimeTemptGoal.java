@@ -109,10 +109,10 @@ public class HoneySlimeTemptGoal extends Goal {
         if (this.slime.distanceToSqr(this.closestPlayer) < 6.25D) {
             this.slime.getNavigation().stop();
         }
-        else {
+        else if (this.slime.getMoveControl() instanceof HoneySlimeMoveController honeySlimeMoveController) {
             this.slime.lookAt(this.closestPlayer, 10.0F, 10.0F);
-            ((HoneySlimeMoveController) this.slime.getMoveControl()).setDirection(this.slime.getYRot(), true);
-            ((HoneySlimeMoveController) this.slime.getMoveControl()).setSpeed(1.0D);
+            honeySlimeMoveController.setDirection(this.slime.getYRot(), true);
+            honeySlimeMoveController.setSpeed(1.0D);
         }
 
     }

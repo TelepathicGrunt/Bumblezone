@@ -33,6 +33,8 @@ public class HoneySlimeFaceRandomGoal extends Goal {
             this.chosenDegrees = (float) this.slime.getRandom().nextInt(360);
         }
 
-        ((HoneySlimeMoveController) this.slime.getMoveControl()).setDirection(this.chosenDegrees, false);
+        if (this.slime.getMoveControl() instanceof HoneySlimeMoveController honeySlimeMoveController) {
+            honeySlimeMoveController.setDirection(this.chosenDegrees, false);
+        }
     }
 }

@@ -25,6 +25,8 @@ public class HoneySlimeHopGoal extends Goal {
      * Keep ticking a continuous task that has already been started
      */
     public void tick() {
-        ((HoneySlimeMoveController) this.slime.getMoveControl()).setSpeed(1.0D);
+        if (this.slime.getMoveControl() instanceof HoneySlimeMoveController honeySlimeMoveController) {
+            honeySlimeMoveController.setSpeed(1.0D);
+        }
     }
 }

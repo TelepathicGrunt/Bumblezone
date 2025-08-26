@@ -33,9 +33,13 @@ public class HoneySlimeAngerAttackingGoal extends TargetGoal {
         if (this.slime.isPassenger()) {
             return;
         }
+
         if(this.slime.getTarget() != null) {
             this.slime.lookAt(this.slime.getTarget(), 10.0F, 10.0F);
         }
-        ((HoneySlimeMoveController) this.slime.getMoveControl()).setDirection(this.slime.getYRot(), this.slime.canDamagePlayer());
+
+        if (this.slime.getMoveControl() instanceof HoneySlimeMoveController honeySlimeMoveController) {
+            honeySlimeMoveController.setDirection(this.slime.getYRot(), this.slime.canDamagePlayer());
+        }
     }
 }

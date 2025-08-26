@@ -64,8 +64,11 @@ public class HoneySlimeBreedGoal extends Goal {
         this.slime.getLookControl().setLookAt(this.nearbyMate, 10.0F, (float)this.slime.getMaxHeadXRot());
 
         this.slime.lookAt(this.nearbyMate, 10.0F, 10.0F);
-        ((HoneySlimeMoveController) this.slime.getMoveControl()).setDirection(this.slime.getYRot(), true);
-        ((HoneySlimeMoveController) this.slime.getMoveControl()).setSpeed(1.0D);
+
+        if (this.slime.getMoveControl() instanceof HoneySlimeMoveController honeySlimeMoveController) {
+            honeySlimeMoveController.setDirection(this.slime.getYRot(), true);
+            honeySlimeMoveController.setSpeed(1.0D);
+        }
 
         ++this.spawnBabyDelay;
         if (this.spawnBabyDelay >= 60 && this.slime.distanceToSqr(this.nearbyMate) < 9.0D) {
