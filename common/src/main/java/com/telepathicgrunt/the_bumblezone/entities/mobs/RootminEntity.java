@@ -987,6 +987,11 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
       return super.isAlliedTo(entity);
    }
 
+   @Override
+   protected boolean canRide(Entity entity) {
+      return false;
+   }
+
    public static void considerHiddenRootminsInPath(Path path, RootminEntity mob) {
       if (path != null && !path.isDone() && path.getNodeCount() > 0 && path.getNodeCount() > path.getNextNodeIndex()) {
          BlockPos targetPos = path.getNodePos(path.getNextNodeIndex());

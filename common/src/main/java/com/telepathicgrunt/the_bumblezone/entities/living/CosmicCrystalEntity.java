@@ -1728,6 +1728,21 @@ public class CosmicCrystalEntity extends LivingEntity {
         return super.isInvulnerableTo(damageSource);
     }
 
+    @Override
+    protected boolean canAddPassenger(Entity entity) {
+        return false;
+    }
+
+    @Override
+    protected boolean couldAcceptPassenger() {
+        return false;
+    }
+
+    @Override
+    protected boolean canRide(Entity entity) {
+        return false;
+    }
+
     private void spawnLargeParticleCloud(int radius) {
         int radiusSquared = radius * radius;
         for (int xParticle = -radius; xParticle <= radius; xParticle++) {
