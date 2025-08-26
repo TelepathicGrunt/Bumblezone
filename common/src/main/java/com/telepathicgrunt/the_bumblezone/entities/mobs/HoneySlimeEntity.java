@@ -85,7 +85,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
    private boolean wasOnGround;
 
    public HoneySlimeEntity(Level worldIn) {
-      super(BzEntities.HONEY_SLIME.get(), worldIn);
+      this(BzEntities.HONEY_SLIME.get(), worldIn);
    }
 
    public HoneySlimeEntity(EntityType<? extends HoneySlimeEntity> type, Level worldIn) {
