@@ -1,7 +1,6 @@
-### **(V.7.10.1 Changes) (1.21.1 Minecraft)**
+### **(V.7.10.2 Changes) (1.21.1 Minecraft)**
 
-#### Music:
-Fixed Wandering Traders not able to sell Beena Box Music Disc
+#### Entities:
+Made sure Cosmic Crystal can never have passengers and cannot be a passenger itself.
 
-#### Misc:
-Micro-optimized some code to shave some microseconds lol.
+Rootmins cannot be made to ride other entities now.
