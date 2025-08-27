@@ -62,8 +62,12 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -148,8 +152,8 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
            RootminPose.SHOCK
    );
 
-   public RootminEntity(EntityType<? extends RootminEntity> type, Level worldIn) {
-      super(type, worldIn);
+   public RootminEntity(EntityType<? extends RootminEntity> type, Level level) {
+      super(type, level);
       getFlowerBlock();
       setAnimationState(this.getRootminPose(), RootminPose.NONE, this.idleAnimationState);
       setMaxUpStep(1);
@@ -695,6 +699,10 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
       BlockState state = getFlowerBlock();
       getFlowerOrSetIfMissing(this.level(), state);
 
+      if (this.getRootminPose() == RootminPose.ENTITY_TO_BLOCK) {
+         this.getNavigation().stop();
+      }
+
       super.tick();
 
       if (this.hurtTime == 9) {
@@ -987,6 +995,11 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    @Override
    protected boolean canRide(Entity entity) {
       return false;
+   }
+
+   @Override
+   public double getPassengersRidingOffset() {
+      return this.getBoundingBox().maxY - this.getBoundingBox().minY - 0.14d;
    }
 
    public static void considerHiddenRootminsInPath(Path path, RootminEntity mob) {
