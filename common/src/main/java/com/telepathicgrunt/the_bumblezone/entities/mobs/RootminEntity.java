@@ -49,6 +49,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityAttachment;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -62,6 +63,7 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -697,6 +699,10 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
       BlockState state = getFlowerBlock();
       getFlowerOrSetIfMissing(this.level(), state);
 
+      if (this.getRootminPose() == RootminState.ENTITY_TO_BLOCK) {
+         this.getNavigation().stop();
+      }
+
       super.tick();
 
       if (this.hurtTime == 9) {
@@ -991,6 +997,14 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    protected boolean canRide(Entity entity) {
       return false;
    }
+
+   @Override
+   protected Vec3 getPassengerAttachmentPoint(Entity entity, EntityDimensions entityDimensions, float f) {
+      int passengerIndex = entity.getPassengers().indexOf(entity);
+      Vec3 defaultPos = entityDimensions.attachments().getClamped(EntityAttachment.PASSENGER, passengerIndex, entity.yRotO);
+      return new Vec3(defaultPos.x(), this.getBoundingBox().maxY - this.getBoundingBox().minY, defaultPos.z());
+   }
+
 
    public static void considerHiddenRootminsInPath(Path path, RootminEntity mob) {
       if (path != null && !path.isDone() && path.getNodeCount() > 0 && path.getNodeCount() > path.getNextNodeIndex()) {
