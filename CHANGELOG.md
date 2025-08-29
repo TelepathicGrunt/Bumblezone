@@ -10,3 +10,7 @@ Rootmins now will not be controlled by passenger when Rootmin is in block mode.
 Fixed passenger offset for Rootmins.
 
 Fix an issue where Honey Slime's move controller could be not setup correctly.
+
+#### Lang:
+
+es_ar.json updated by Texaliuz.
