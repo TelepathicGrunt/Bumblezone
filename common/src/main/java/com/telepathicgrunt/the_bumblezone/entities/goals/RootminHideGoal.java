@@ -99,8 +99,7 @@ public class RootminHideGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        if (this.pathNav.isDone()) {
-
+        if (this.pathNav.isDone() && this.mob.onGround() && this.mob.verticalCollisionBelow && !this.mob.getJumping()) {
             this.mob.takePotShot = false;
             this.mob.hideAsBlock(this.destination);
             return false;

@@ -56,6 +56,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.Pose;
@@ -70,11 +71,14 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.PowderSnowBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
@@ -808,10 +812,32 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    }
 
    @Override
+   public void push(Entity entity) {
+      if (this.onGround() && this.verticalCollisionBelow && this.getRootminPose() == RootminState.ENTITY_TO_BLOCK) {
+         return;
+      }
+      super.push(entity);
+   }
+
+   @Override
+   public Vec3 handleRelativeFrictionAndCalculateMovement(Vec3 vec3, float f) {
+      if (this.onGround() && this.verticalCollisionBelow && this.getRootminPose() == RootminState.ENTITY_TO_BLOCK && this.animationTimeBetweenHiding == 0) {
+         if (this.mainSupportingBlockPos.isPresent() && this.position().y() - this.mainSupportingBlockPos.get().getY() < 1.01d) {
+            return new Vec3(0, 0, 0);
+         }
+      }
+      return super.handleRelativeFrictionAndCalculateMovement(vec3, f);
+   }
+
+   public boolean getJumping() {
+      return this.jumping;
+   }
+
+   @Override
    protected void dropAllDeathLoot(ServerLevel level, DamageSource damageSource) {
       BlockState flower = this.getFlowerBlock();
       Entity sourceEntity = damageSource.getEntity() == null ? this : damageSource.getEntity();
-      if (flower != null) {
+      if (flower != null && level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
          ItemStack itemStack = new ItemStack(Items.DIAMOND_PICKAXE);
          itemStack.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.SILK_TOUCH, level), 1);
          LootParams.Builder builder = new LootParams.Builder((ServerLevel) this.level())

@@ -51,20 +51,19 @@ public class RootminNearestAttackableTargetGoal  extends TargetGoal {
     }
 
     protected void findTarget() {
-        this.target = this.mob.level().getNearestEntity(this.mob.level().getEntitiesOfClass(
-                        LivingEntity.class,
-                        this.getTargetSearchArea(this.getFollowDistance()),
-                        livingEntity -> {
-                            if (this.mob instanceof RootminEntity rootminEntity) {
-                                return rootminEntity.canTarget(livingEntity);
-                            }
-                            return false;
-                        }),
-                this.targetConditions,
-                this.mob,
-                this.mob.getX(),
-                this.mob.getEyeY(),
-                this.mob.getZ());
+        if (this.mob instanceof RootminEntity rootminEntity) {
+            AABB searchBounds = this.getTargetSearchArea(this.getFollowDistance());
+            this.target = this.mob.level().getNearestEntity(
+                    this.mob.level().getEntitiesOfClass(
+                            LivingEntity.class,
+                            searchBounds,
+                            rootminEntity::canTarget),
+                    this.targetConditions,
+                    this.mob,
+                    this.mob.getX(),
+                    this.mob.getEyeY(),
+                    this.mob.getZ());
+        }
     }
 
 
