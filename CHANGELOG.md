@@ -1,3 +1,11 @@
+### **(V.7.8.3 Changes) (1.20.1 Minecraft)**
+
+#### Entities:
+Made Rootmins not drop flower if killed while DoMobLoot gamerule is set to false.
+
+Made hidden Rootmins be more performant to TPS when they are hidden as blocks.
+
+
 ### **(V.7.8.2 Changes) (1.20.1 Minecraft)**
 
 #### Entities:

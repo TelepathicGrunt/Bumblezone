@@ -72,6 +72,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -808,10 +809,32 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    }
 
    @Override
+   public void push(Entity entity) {
+      if (this.onGround() && this.verticalCollisionBelow && this.getRootminPose() == RootminPose.ENTITY_TO_BLOCK) {
+         return;
+      }
+      super.push(entity);
+   }
+
+   @Override
+   public Vec3 handleRelativeFrictionAndCalculateMovement(Vec3 vec3, float f) {
+      if (this.onGround() && this.verticalCollisionBelow && this.getRootminPose() == RootminPose.ENTITY_TO_BLOCK && this.animationTimeBetweenHiding == 0) {
+         if (this.mainSupportingBlockPos.isPresent() && this.position().y() - this.mainSupportingBlockPos.get().getY() < 1.01d) {
+            return new Vec3(0, 0, 0);
+         }
+      }
+      return super.handleRelativeFrictionAndCalculateMovement(vec3, f);
+   }
+
+   public boolean getJumping() {
+      return this.jumping;
+   }
+
+   @Override
    protected void dropAllDeathLoot(DamageSource damageSource) {
       BlockState flower = this.getFlowerBlock();
       Entity sourceEntity = damageSource.getEntity() == null ? this : damageSource.getEntity();
-      if (flower != null) {
+      if (flower != null && this.level().getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
          ItemStack itemStack = new ItemStack(Items.DIAMOND_PICKAXE);
          itemStack.enchant(Enchantments.SILK_TOUCH, 1);
          LootParams.Builder builder = new LootParams.Builder((ServerLevel) this.level())
