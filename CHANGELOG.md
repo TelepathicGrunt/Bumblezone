@@ -5,6 +5,8 @@ Made Rootmins not drop flower if killed while DoMobLoot gamerule is set to false
 
 Made hidden Rootmins be more performant to TPS when they are hidden as blocks.
 
+Slightly improved Rootmin rendering.
+
 
 ### **(V.7.8.2 Changes) (1.20.1 Minecraft)**
 
