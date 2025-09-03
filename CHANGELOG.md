@@ -7,6 +7,8 @@ Made hidden Rootmins be more performant to TPS when they are hidden as blocks.
 
 Slightly improved Rootmin rendering.
 
+Added thin dark text border to Beehemoth's friendship text to make it easier to read.
+
 
 ### **(V.7.8.2 Changes) (1.20.1 Minecraft)**
 

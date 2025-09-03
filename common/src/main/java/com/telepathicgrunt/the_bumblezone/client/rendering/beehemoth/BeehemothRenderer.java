@@ -43,18 +43,51 @@ public class BeehemothRenderer extends MobRenderer<BeehemothEntity, BeehemothMod
         if (this.entityRenderDispatcher.distanceToSqr(entity) > 100.0) {
             return;
         }
+
         float f = entity.getNameTagOffsetY() + 0.5F;
+        Font font = this.getFont();
+        float h = -font.width(component) / 2F;
+
+        float shadowXYOffsets = 0.011f;
+        float shadowZOffsets = 0.0001f;
+        float textSize = 0.025f;
+
+        // Shadow
+        RenderTextShadow(component, poseStack, multiBufferSource, packedLight, f, shadowXYOffsets, shadowXYOffsets, shadowZOffsets, textSize, font, h);
+        RenderTextShadow(component, poseStack, multiBufferSource, packedLight, f, shadowXYOffsets, -shadowXYOffsets, shadowZOffsets, textSize, font, h);
+        RenderTextShadow(component, poseStack, multiBufferSource, packedLight, f, -shadowXYOffsets, shadowXYOffsets, shadowZOffsets, textSize, font, h);
+        RenderTextShadow(component, poseStack, multiBufferSource, packedLight, f, -shadowXYOffsets, -shadowXYOffsets, shadowZOffsets, textSize, font, h);
+
+        // Actual text
         poseStack.pushPose();
         poseStack.translate(0.0f, f, 0.0f);
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
-        poseStack.scale(-0.025f, -0.025f, 0.025f);
+        poseStack.scale(-textSize, -textSize, textSize);
         Matrix4f matrix4f = poseStack.last().pose();
-        float g = Minecraft.getInstance().options.getBackgroundOpacity(0.25f);
-        int k = (int)(g * 255.0f) << 24;
-        Font font = this.getFont();
-        float h = -font.width(component) / 2F;
-        font.drawInBatch(component, h, 0, 0x20FFFFFF, false, matrix4f, multiBufferSource, Font.DisplayMode.NORMAL, k, packedLight);
         font.drawInBatch(component, h, 0, -1, false, matrix4f, multiBufferSource, Font.DisplayMode.NORMAL, 0, packedLight);
+        poseStack.popPose();
+    }
+
+    private void RenderTextShadow(
+            Component component,
+            PoseStack poseStack,
+            MultiBufferSource multiBufferSource,
+            int packedLight,
+            float f,
+            float shadowXOffsets,
+            float shadowYOffsets,
+            float shadowZOffsets,
+            float textSize,
+            Font font,
+            float h)
+    {
+        poseStack.pushPose();
+        poseStack.translate(0.0f, f, 0.0f);
+        poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
+        poseStack.translate(shadowXOffsets, shadowYOffsets, shadowZOffsets);
+        poseStack.scale(-textSize, -textSize, textSize);
+        Matrix4f matrix4f = poseStack.last().pose();
+        font.drawInBatch(component, h, 0, 0, false, matrix4f, multiBufferSource, Font.DisplayMode.NORMAL, 0, packedLight);
         poseStack.popPose();
     }
 
