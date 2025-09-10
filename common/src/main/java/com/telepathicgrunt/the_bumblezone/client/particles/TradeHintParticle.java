@@ -26,6 +26,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
@@ -34,7 +35,7 @@ import java.util.List;
 
 public class TradeHintParticle extends Particle {
     public final static int TRADE_REWARD_CYCLE_TIME = 40;
-    public final static double PARTICLE_Y_OFFSET = 4.5D;
+    public final static double PARTICLE_Y_OFFSET = 4D;
     public final static ResourceLocation SPEECH_BUBBLE_TEXTURE = new ResourceLocation(Bumblezone.MODID, "trade_hint/1");
 
     private final RenderBuffers renderBuffers;
@@ -82,9 +83,10 @@ public class TradeHintParticle extends Particle {
         offsetVec.rotate(cameraRotationQuat);
 
         Vec3 vec3 = camera.getPosition();
-        float x = (float)(Mth.lerp(partialTick, this.xo, this.x) - vec3.x()) + offsetVec.x();
+        Vec2 frontOffset = (new Vec2((float) (vec3.x() - this.x), (float) (vec3.z() - this.z))).normalized();
+        float x = (float)(Mth.lerp(partialTick, this.xo, this.x) - vec3.x()) + offsetVec.x() + frontOffset.x;
         float y = (float)(Mth.lerp(partialTick, this.yo, this.y) - vec3.y()) + offsetVec.y();
-        float z = (float)(Mth.lerp(partialTick, this.zo, this.z) - vec3.z()) + offsetVec.z();
+        float z = (float)(Mth.lerp(partialTick, this.zo, this.z) - vec3.z()) + offsetVec.z() + frontOffset.y;
 
         Vector3f[] vector3fs = new Vector3f[]{
                 new Vector3f(-1.0F, -1.0F, 0.0F),
