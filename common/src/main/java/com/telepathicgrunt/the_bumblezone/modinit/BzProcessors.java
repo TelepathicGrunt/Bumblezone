@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.worldgen.processors.ArenaSpecialBlockH
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.BeeDungeonProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.BlockMergeOverridesProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.BlockTickProcessor;
+import com.telepathicgrunt.the_bumblezone.worldgen.processors.ChiseledBookshelfProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.CloseOffOutsideFluidsProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.FluidTickProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.HoneycombBroodRandomizeProcessor;
@@ -56,4 +57,5 @@ public class BzProcessors {
     public static final RegistryEntry<StructureProcessorType<WaterloggingFixProcessor>> WATERLOGGING_FIX_PROCESSOR = STRUCTURE_PROCESSOR.register("waterlogging_fix_processor", () -> () -> WaterloggingFixProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<ArenaSpecialBlockHandlerProcessor>> ARENA_SPECIAL_BLOCK_HANDLER_PROCESSOR = STRUCTURE_PROCESSOR.register("arena_special_block_handler_processor", () -> () -> ArenaSpecialBlockHandlerProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<ReplaceHoneyProcessor>> REPLACE_HONEY_PROCESSOR = STRUCTURE_PROCESSOR.register("replace_honey_processor", () -> () -> ReplaceHoneyProcessor.CODEC);
+    public static final RegistryEntry<StructureProcessorType<ChiseledBookshelfProcessor>> CHISELED_BOOKSHELF_PROCESSOR = STRUCTURE_PROCESSOR.register("chiseled_bookshelf_processor", () -> () -> ChiseledBookshelfProcessor.CODEC);
 }

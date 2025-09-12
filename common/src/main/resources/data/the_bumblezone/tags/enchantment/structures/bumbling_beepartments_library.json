@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:unbreaking",
+    "minecraft:efficiency",
+    "minecraft:sharpness",
+    "minecraft:bane_of_arthropods",
+    "minecraft:power",
+    "minecraft:protection",
+    "minecraft:thorns",
+    "minecraft:feather_falling",
+    "minecraft:lure",
+    "minecraft:luck_of_the_sea",
+    "the_bumblezone:comb_cutter",
+    "the_bumblezone:potent_poison",
+    "the_bumblezone:hive_lifeline"
+  ]
+}

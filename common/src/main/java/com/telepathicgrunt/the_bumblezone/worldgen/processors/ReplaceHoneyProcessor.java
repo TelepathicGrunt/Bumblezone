@@ -54,6 +54,6 @@ public class ReplaceHoneyProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return BzProcessors.FLUID_TICK_PROCESSOR.get();
+        return BzProcessors.REPLACE_HONEY_PROCESSOR.get();
     }
 }
