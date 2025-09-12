@@ -125,6 +125,7 @@ public class BzTags {
     public static final TagKey<Item> ENCHANTABLE_COMB_CUTTER = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "enchantable/comb_cutter"));
     public static final TagKey<Item> ENCHANTABLE_NEUROTOXINS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "enchantable/neurotoxins"));
     public static final TagKey<Item> ENCHANTABLE_POTENT_POISON = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "enchantable/potent_poison"));
+    public static final TagKey<Item> ENCHANTABLE_HIVE_LIFELINE = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "enchantable/hive_lifeline"));
 
     public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(getPlatformTagNamespace(), "honey"));
     public static final TagKey<Fluid> BZ_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "honey"));
@@ -136,6 +137,8 @@ public class BzTags {
     public static final TagKey<Fluid> CONVERTIBLE_TO_SUGAR_WATER = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "convertible_to_sugar_water"));
     public static final TagKey<Fluid> HONEY_BEE_BOOTS_REMOVES_POLLEN_FLUIDS = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings/removes_pollen"));
 
+    public static final TagKey<EntityType<?>> HIVE_LIFELINE_CANNOT_TRIGGER_LIFELINE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "hive_lifeline/cannot_trigger_lifeline"));
+    public static final TagKey<EntityType<?>> HIVE_LIFELINE_TAKES_PLAYER_DAMAGE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "hive_lifeline/takes_player_damage"));
     public static final TagKey<EntityType<?>> POLLEN_PUFF_CAN_POLLINATE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "pollen_puff/can_pollinate"));
     public static final TagKey<EntityType<?>> PILE_OF_POLLEN_CANNOT_SLOW = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "pile_of_pollen/cannot_slow"));
     public static final TagKey<EntityType<?>> HONEY_WEB_CANNOT_SLOW = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "honey_web/cannot_slow"));

@@ -97,6 +97,19 @@
           "name": "the_bumblezone:buzzing_briefcase",
           "type": "minecraft:item",
           "weight": 1
+        },
+        {
+          "name": "minecraft:book",
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "enchantments": [
+                "the_bumblezone:hive_lifeline"
+              ],
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "weight": 1
         }
       ]
     }

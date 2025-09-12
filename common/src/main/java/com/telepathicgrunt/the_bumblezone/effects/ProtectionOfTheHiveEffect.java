@@ -20,7 +20,7 @@ import java.util.UUID;
 
 
 public class ProtectionOfTheHiveEffect extends MobEffect implements EffectExtension {
-    private final static TargetingConditions SEE_THROUGH_WALLS = (TargetingConditions.forCombat()).ignoreLineOfSight();
+    private final static TargetingConditions SEE_THROUGH_WALLS = (TargetingConditions.forCombat()).ignoreLineOfSight().ignoreInvisibilityTesting();
 
     public ProtectionOfTheHiveEffect(MobEffectCategory type, int potionColor) {
         super(type, potionColor);

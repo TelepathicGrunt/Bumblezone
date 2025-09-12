@@ -517,6 +517,10 @@
   "enchantment.the_bumblezone.neurotoxins.desc": "Chance to inflict Paralyzed on non-undead mob and non-iron/snow golems. \nHigher health mobs decreases paralysis chance.",
   "enchantment_lore.the_bumblezone:neurotoxins.description": "Chance to inflict Paralyzed on non-undead mob and non-iron/snow golems. Higher health mobs decreases paralysis chance.",
   "enchantment_lore_forge.the_bumblezone:neurotoxins.description": "Chance to inflict Paralyzed on non-undead mob and non-iron/snow golems. Higher health mobs decreases paralysis chance.",
+  "enchantment.the_bumblezone.hive_lifeline": "Hive Lifeline",
+  "enchantment.the_bumblezone.hive_lifeline.desc": "Any attack damage to player will be transferred to a nearby bee instead! The enchanted armor item gets put on a short cooldown on damage transfer.",
+  "enchantment_lore.the_bumblezone:hive_lifeline.description": "Any attack damage to player will be transferred to a nearby bee instead! The enchanted armor item gets put on a short cooldown on damage transfer.",
+  "enchantment_lore_forge.the_bumblezone:hive_lifeline.description": "Any attack damage to player will be transferred to a nearby bee instead! The enchanted armor item gets put on a short cooldown on damage transfer.",
 
   "biome.the_bumblezone.sugar_water_floor": "Sugar Water Floor",
   "biome.the_bumblezone.hive_wall": "Hive Wall",

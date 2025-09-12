@@ -163,6 +163,19 @@
           ]
         },
         {
+          "name": "minecraft:book",
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "enchantments": [
+                "the_bumblezone:hive_lifeline"
+              ],
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "weight": 30
+        },
+        {
           "type": "minecraft:item",
           "name": "minecraft:leather_boots",
           "weight": 20,
