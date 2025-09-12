@@ -19,6 +19,8 @@
   ],
   "mixins": [
     "block.FireBlockMixin",
+    "block.LavaFluidMixin",
+    "block.LiquidBlockMixin",
     "block.PistonStructureResolverMixin",
     "block.PoiTypesAccessor",
     "block.ShulkerBoxBlockEntityMixin",
