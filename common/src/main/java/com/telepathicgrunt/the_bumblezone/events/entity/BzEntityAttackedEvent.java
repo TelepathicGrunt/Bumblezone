@@ -7,4 +7,6 @@ import net.minecraft.world.entity.LivingEntity;
 public record BzEntityAttackedEvent(LivingEntity entity, DamageSource source, float amount) {
 
     public static final CancellableEventHandler<BzEntityAttackedEvent> EVENT = new CancellableEventHandler<>();
+
+    public static final CancellableEventHandler<BzEntityAttackedEvent> EVENT_HIGH = new CancellableEventHandler<>();
 }

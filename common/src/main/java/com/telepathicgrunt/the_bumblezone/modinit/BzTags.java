@@ -131,6 +131,8 @@ public class BzTags {
     public static final TagKey<Fluid> CONVERTIBLE_TO_SUGAR_WATER = TagKey.create(Registries.FLUID, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "convertible_to_sugar_water"));
     public static final TagKey<Fluid> HONEY_BEE_BOOTS_REMOVES_POLLEN_FLUIDS = TagKey.create(Registries.FLUID, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "honey_bee_leggings/removes_pollen"));
 
+    public static final TagKey<EntityType<?>> HIVE_LIFELINE_CANNOT_TRIGGER_LIFELINE = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "hive_lifeline/cannot_trigger_lifeline"));
+    public static final TagKey<EntityType<?>> HIVE_LIFELINE_TAKES_PLAYER_DAMAGE = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "hive_lifeline/takes_player_damage"));
     public static final TagKey<EntityType<?>> POLLEN_PUFF_CAN_POLLINATE = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "pollen_puff/can_pollinate"));
     public static final TagKey<EntityType<?>> PILE_OF_POLLEN_CANNOT_SLOW = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "pile_of_pollen/cannot_slow"));
     public static final TagKey<EntityType<?>> HONEY_WEB_CANNOT_SLOW = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "honey_web/cannot_slow"));

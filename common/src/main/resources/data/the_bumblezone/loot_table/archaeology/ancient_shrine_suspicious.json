@@ -32,6 +32,17 @@
           "weight": 5
         },
         {
+          "name": "minecraft:book",
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly",
+              "options": "the_bumblezone:hive_lifeline"
+            }
+          ],
+          "weight": 5
+        },
+        {
           "name": "minecraft:diamond",
           "type": "minecraft:item",
           "weight": 4

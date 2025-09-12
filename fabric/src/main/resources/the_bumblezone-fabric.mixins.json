@@ -27,6 +27,7 @@
     "entity.EntityMixin",
     "entity.FloatGoalMixin",
     "entity.ItemEntityMixin",
+    "entity.LivingEntityHighPriorityMixin",
     "entity.LivingEntityMixin",
     "entity.NaturalSpawnerMixin",
     "entity.PatrolSpawnerMixin",
