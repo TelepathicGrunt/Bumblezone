@@ -2,7 +2,7 @@
 
 #### Enchantments:
 
-Added a new treasure enchantment called Hive Lifeline that can only be put onto Bumblezone armor.
+Added a new treasure enchantment called Hive Lifeline that can only be put onto Bumblezone armor or some modded bee-themed armor.
  It will cause any entity attack damage to the player to be redirected to a nearby bee instead and put the armor piece on a brief cooldown!
  Can be obtained from Crystalline Flower, rarely from brushing any Suspicious Pile of Pollen block, or sometimes from libraries in Bumbling Beepartments.
 
