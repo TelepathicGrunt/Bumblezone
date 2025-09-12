@@ -7,7 +7,7 @@
           "input_predicate": {
             "block": "minecraft:chiseled_bookshelf",
             "predicate_type": "minecraft:random_block_match",
-            "probability": 0.9
+            "probability": 0.6
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
@@ -17,6 +17,20 @@
           }
         }
       ]
+    },
+    {
+      "processor_type": "the_bumblezone:chiseled_bookshelf_processor",
+      "allowed_book_enchantments": "#the_bumblezone:structures/bumbling_beepartments_library",
+      "number_of_enchanted": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 2,
+        "min_inclusive": 1
+      },
+      "number_of_books": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 6,
+        "min_inclusive": 5
+      }
     }
   ]
 }
