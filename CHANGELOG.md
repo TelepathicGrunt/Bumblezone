@@ -14,6 +14,10 @@ Wrath of the Hive, Protection of the Hive, and Hidden effects now should properl
 
 Adjusted position of the Trade Hint particle for Bee Queen.
 
+#### Fluids:
+
+(Fabric): Lava will transform into Sugar Infused Stone and Sugar Infused Cobblestone when touching Sugar Water. Matches NeoForge behavior.
+
 #### Lang:
 
 zh_cn.json updated by BaoZouZac.
