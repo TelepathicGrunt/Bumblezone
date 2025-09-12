@@ -96,6 +96,7 @@ import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.event.village.WandererTradesEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
@@ -141,6 +142,7 @@ public class NeoForgeEventManager {
         eventBus.addListener(EventPriority.LOWEST, NeoForgeEventManager::onEntityDeathLowest);
         eventBus.addListener(NeoForgeEventManager::onEntitySpawn);
         eventBus.addListener(NeoForgeEventManager::onEntityTick);
+        eventBus.addListener(NeoForgeEventManager::onPlayerTick);
         eventBus.addListener(NeoForgeEventManager::onEntityDimensionTravel);
         eventBus.addListener(NeoForgeEventManager::onEntityVisibility);
         eventBus.addListener(EventPriority.LOWEST, NeoForgeEventManager::onEntityHurtLowest);
@@ -357,6 +359,10 @@ public class NeoForgeEventManager {
             HoneyBeeLeggings.armorStandTick(livingEntity);
             EntityTeleportationHookup.entityTick(livingEntity);
         }
+    }
+
+    private static void onPlayerTick(PlayerTickEvent.Post event) {
+        EntityTeleportationHookup.playerTick(event.getEntity());
     }
 
     private static void onEntitySpawn(FinalizeSpawnEvent event) {
