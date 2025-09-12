@@ -1,6 +1,118 @@
 {
   "replace": false,
   "values": [
-    "#the_bumblezone:armors/all"
+    "#the_bumblezone:armors/all",
+    {
+      "id": "productivebees:bee_nest_diamond_helmet",
+      "required": false
+    },
+    {
+      "id": "queen_bee:bee_antenna_helmet",
+      "required": false
+    },
+    {
+      "id": "simplehats:beehat",
+      "required": false
+    },
+    {
+      "id": "simplehats:bee_on_head",
+      "required": false
+    },
+    {
+      "id": "spectrum:bee_head",
+      "required": false
+    },
+    {
+      "id": "trophymanager:trophy",
+      "required": false
+    },
+    {
+      "id": "special_drops:bee_helmet",
+      "required": false
+    },
+    {
+      "id": "mcda:beehive_armor_helmet",
+      "required": false
+    },
+    {
+      "id": "mcda:beehive_armor_chestplate",
+      "required": false
+    },
+    {
+      "id": "mcda:beehive_armor_leggings",
+      "required": false
+    },
+    {
+      "id": "mcda:beehive_armor_boots",
+      "required": false
+    },
+    {
+      "id": "mcda:beenest_armor_helmet",
+      "required": false
+    },
+    {
+      "id": "mcda:beenest_armor_chestplate",
+      "required": false
+    },
+    {
+      "id": "mcda:beenest_armor_leggings",
+      "required": false
+    },
+    {
+      "id": "mcda:beenest_armor_boots",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beenest_helmet",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beenest_chestplate",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beenest_leggings",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beenest_boots",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beehive_helmet",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beehive_chestplate",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beehive_leggings",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beehive_boots",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:buzzy_nest",
+      "required": false
+    },
+    {
+      "id": "duneons:beenest_helmet",
+      "required": false
+    },
+    {
+      "id": "duneons:beenest_chestplate",
+      "required": false
+    },
+    {
+      "id": "duneons:beehive_helmet",
+      "required": false
+    },
+    {
+      "id": "duneons:beehive_chestplate",
+      "required": false
+    }
   ]
 }
