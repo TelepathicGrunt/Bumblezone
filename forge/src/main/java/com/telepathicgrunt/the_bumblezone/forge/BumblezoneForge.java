@@ -162,6 +162,7 @@ public class BumblezoneForge {
         eventBus.addListener(EventPriority.LOWEST, BumblezoneForge::onEntityDeathLowest);
         eventBus.addListener(BumblezoneForge::onEntitySpawn);
         eventBus.addListener(BumblezoneForge::onEntityTick);
+        eventBus.addListener(BumblezoneForge::onPlayerTick);
         eventBus.addListener(BumblezoneForge::onEntityDimensionTravel);
         eventBus.addListener(BumblezoneForge::onEntityVisibility);
         eventBus.addListener(EventPriority.LOWEST, BumblezoneForge::onEntityHurtLowest);
@@ -394,6 +395,12 @@ public class BumblezoneForge {
     private static void onEntityTick(LivingEvent.LivingTickEvent event) {
         HoneyBeeLeggings.armorStandTick(event.getEntity());
         EntityTeleportationHookup.entityTick(event.getEntity());
+    }
+
+    private static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            EntityTeleportationHookup.playerTick(event.player);
+        }
     }
 
     private static void onEntitySpawn(MobSpawnEvent.FinalizeSpawn event) {

@@ -22,7 +22,11 @@ Adjusted position of the Trade Hint particle for Bee Queen.
 
 #### Fluids:
 
-(Fabric): Lava will transform into Sugar Infused Stone and Sugar Infused Cobblestone when touching Sugar Water. Matches NeoForge behavior.
+(Fabric): Lava will transform into Sugar Infused Stone and Sugar Infused Cobblestone when touching Sugar Water. Matches Forge behavior.
+
+#### Misc:
+
+(Forge): Fixed Bumblezone welcome message not showing up when near Beehive for first time.
 
 #### Lang:
 
