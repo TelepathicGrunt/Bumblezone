@@ -16,7 +16,7 @@ import net.minecraft.world.entity.animal.Bee;
 import java.util.List;
 
 public class HiddenEffect extends BzEffect {
-    private final static TargetingConditions SEE_THROUGH_WALLS = (TargetingConditions.forCombat()).ignoreLineOfSight();
+    private final static TargetingConditions SEE_THROUGH_WALLS = (TargetingConditions.forCombat()).ignoreLineOfSight().ignoreInvisibilityTesting();
 
     public HiddenEffect(MobEffectCategory type, int potionColor) {
         super(type, potionColor);

@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.datamanagers.PotionCandleDataMa
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantmentApplication;
+import com.telepathicgrunt.the_bumblezone.enchantments.HiveLifelineEnchantmentApplication;
 import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantmentApplication;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
@@ -145,6 +146,7 @@ public class Bumblezone {
         BzProjectileHitEvent.EVENT_HIGH.addListener(ProjectileImpact::onProjectileImpact); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
         BzEntityAttackedEvent.EVENT.addListener(NeurotoxinsEnchantmentApplication::entityHurtEvent);
         BzEntityAttackedEvent.EVENT.addListener(HoneyCrystalShield::handledPlayerHurtBehavior);
+        BzEntityAttackedEvent.EVENT_HIGH.addListener(HiveLifelineEnchantmentApplication::entityHurtEvent);
         BzPlayerBreakSpeedEvent.EVENT.addListener(CombCutterEnchantmentApplication::attemptFasterMining);
         PlayerDataHandler.initEvents();
         BzPlayerGrantAdvancementEvent.EVENT.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);

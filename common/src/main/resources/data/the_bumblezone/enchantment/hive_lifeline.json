@@ -1,0 +1,27 @@
+{
+  "description": {
+    "translate": "enchantment.the_bumblezone.hive_lifeline"
+  },
+  "supported_items": "#the_bumblezone:enchantable/hive_lifeline",
+  "slots": [
+    "armor"
+  ],
+  "weight": 1,
+  "max_level": 1,
+  "anvil_cost": 10,
+  "max_cost": {
+    "base": 50,
+    "per_level_above_first": 10
+  },
+  "min_cost": {
+    "base": 50,
+    "per_level_above_first": 5
+  },
+  "effects": {
+    "the_bumblezone:hive_lifeline": {
+      "armor_cooldown_ticks": 80,
+      "lifeline_entity_range": 16,
+      "lifeline_entity_range_increase_per_additional_level": 6
+    }
+  }
+}

@@ -136,6 +136,7 @@ public class NeoForgeEventManager {
         eventBus.addListener(NeoForgeEventManager::onAddReloadListeners);
         eventBus.addListener(NeoForgeEventManager::onDatapackSync);
         eventBus.addListener(NeoForgeEventManager::onEntityAttacked);
+        eventBus.addListener(EventPriority.HIGH, NeoForgeEventManager::onEntityAttackedHigh);
         eventBus.addListener(NeoForgeEventManager::onEntityDeath);
         eventBus.addListener(EventPriority.LOWEST, NeoForgeEventManager::onEntityDeathLowest);
         eventBus.addListener(NeoForgeEventManager::onEntitySpawn);
@@ -380,6 +381,12 @@ public class NeoForgeEventManager {
         }
     }
 
+    private static void onEntityAttackedHigh(LivingIncomingDamageEvent event) {
+        boolean cancel = BzEntityAttackedEvent.EVENT_HIGH.invoke(new BzEntityAttackedEvent(event.getEntity(), event.getSource(), event.getAmount()), event.isCanceled());
+        if (cancel) {
+            event.setCanceled(true);
+        }
+    }
 
     private static void onEntityAttacked(LivingIncomingDamageEvent event) {
         boolean cancel = BzEntityAttackedEvent.EVENT.invoke(new BzEntityAttackedEvent(event.getEntity(), event.getSource(), event.getAmount()), event.isCanceled());
