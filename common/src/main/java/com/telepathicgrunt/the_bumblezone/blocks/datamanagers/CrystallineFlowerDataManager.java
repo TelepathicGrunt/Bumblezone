@@ -78,11 +78,11 @@ public class CrystallineFlowerDataManager extends SimpleJsonResourceReloadListen
         for (FlowerData flowerData : cachedFlowerData) {
             flowerData.allowNormalConsumption().ifPresent(b -> allowNormalConsumption = b);
 
-            flowerData.disallowTag().flatMap(BuiltInRegistries.ITEM::getTag)
+            flowerData.disallowTag().flatMap(BuiltInRegistries.ITEM::get)
                     .ifPresent(tagItems -> tagItems.forEach(itemHolder -> disallowConsume.add(itemHolder.value())));
 
             flowerData.itemConsumeData().forEach(itemConsumeData -> {
-                BuiltInRegistries.ITEM.getTag(itemConsumeData.tag()).ifPresent(tagItems -> {
+                BuiltInRegistries.ITEM.get(itemConsumeData.tag()).ifPresent(tagItems -> {
                     for (Holder<Item> itemHolder : tagItems) {
                         if (itemConsumeData.maxXp) {
                             itemToXp.put(itemHolder.value(), Pair.of(itemConsumeData.xp, true));

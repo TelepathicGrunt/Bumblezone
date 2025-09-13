@@ -80,12 +80,12 @@ public class SempiternalSanctumBehavior {
                 BzCriterias.SEMPITERNAL_SANCTUM_ENTER_WITH_BEE_ESSENCE_TRIGGER.get().trigger(serverPlayer);
             }
             else if(!serverPlayer.isCreative() && !serverPlayer.isSpectator()) {
-                MobEffectInstance effect = serverPlayer.getEffect(MobEffects.DIG_SLOWDOWN);
+                MobEffectInstance effect = serverPlayer.getEffect(MobEffects.MINING_FATIGUE);
                 if (effect == null || effect.getAmplifier() <= 2) {
                     Component message = Component.translatable("system.the_bumblezone.no_essence").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
                     serverPlayer.displayClientMessage(message, true);
                     serverPlayer.addEffect(new MobEffectInstance(
-                            MobEffects.DIG_SLOWDOWN,
+                            MobEffects.MINING_FATIGUE,
                             800,
                             3,
                             false,

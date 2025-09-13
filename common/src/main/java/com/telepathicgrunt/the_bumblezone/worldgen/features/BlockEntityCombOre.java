@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.features;
 
 import com.mojang.serialization.Codec;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
@@ -9,14 +10,17 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.storage.TagValueInput;
 
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -85,7 +89,13 @@ public class BlockEntityCombOre extends Feature<NbtOreConfiguration> {
 								cachedChunk.setBlockState(blockposMutable, targetBlockState.state, Block.UPDATE_ALL);
 								BlockEntity blockentity = ((EntityBlock)targetBlockState.state.getBlock()).newBlockEntity(blockposMutable, targetBlockState.state);
 								if (blockentity == null) return false;
-								blockentity.loadWithComponents(targetBlockState.stateNbt, context.level().registryAccess());
+								blockentity.loadWithComponents(
+									TagValueInput.create(
+										new ProblemReporter.ScopedCollector(Bumblezone.LOGGER),
+										context.level().registryAccess(),
+										targetBlockState.stateNbt
+									)
+								);
 								cachedChunk.setBlockEntity(blockentity);
 							}
 						}

@@ -76,8 +76,8 @@ public class CombCutterEnchantmentApplication {
             double newSpeed = Math.min(Math.pow(enchantAndLevel.getSecond(), 2 + destroyModifier) +
                     (lesserTarget ? enchantAndLevel.getFirst().lesserTargetBlockBaseSpeedAddition() : enchantAndLevel.getFirst().mainTargetBlockBaseSpeedAddition()), 50);
 
-            if (playerEntity.hasEffect(MobEffects.DIG_SLOWDOWN)) {
-                int amplifier = playerEntity.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier();
+            if (playerEntity.hasEffect(MobEffects.MINING_FATIGUE)) {
+                int amplifier = playerEntity.getEffect(MobEffects.MINING_FATIGUE).getAmplifier();
                 if (amplifier < 0) {
                     amplifier = 3;
                 }

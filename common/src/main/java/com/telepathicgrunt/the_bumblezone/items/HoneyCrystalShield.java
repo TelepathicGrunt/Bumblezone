@@ -192,7 +192,7 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
             if (player.getUseItem().getItem() instanceof HoneyCrystalShield && player.isBlocking()) {
 
                 // apply slowness to attacker
-                attacker.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 165, 1, true, true, false));
+                attacker.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 165, 1, true, true, false));
             }
         }
     }

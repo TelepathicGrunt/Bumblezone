@@ -266,8 +266,8 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
             currentSpeed *= 1.0F + ((float)(player.getEffect(BzEffects.BEENERGIZED.holder()).getAmplifier() + 1));
         }
 
-        if (player.hasEffect(MobEffects.DIG_SLOWDOWN)) {
-            float miningDecrease = switch (player.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) {
+        if (player.hasEffect(MobEffects.MINING_FATIGUE)) {
+            float miningDecrease = switch (player.getEffect(MobEffects.MINING_FATIGUE).getAmplifier()) {
                 case 0 -> 0.3F;
                 case 1 -> 0.09F;
                 case 2 -> 0.0027F;

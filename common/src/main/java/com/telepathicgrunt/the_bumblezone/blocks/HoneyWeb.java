@@ -181,7 +181,7 @@ public class HoneyWeb extends Block {
 
                 if (beeLeggings.isEmpty() && entity instanceof LivingEntity livingEntity) {
                     livingEntity.addEffect(new MobEffectInstance(
-                            MobEffects.MOVEMENT_SLOWDOWN,
+                            MobEffects.SLOWNESS,
                             200,
                             1,
                             false,

@@ -69,7 +69,7 @@ public interface LuminescentWaxBase {
             }
             else {
                 livingEntity.addEffect(new MobEffectInstance(
-                        MobEffects.MOVEMENT_SLOWDOWN,
+                        MobEffects.SLOWNESS,
                         95,
                         0,
                         false,
@@ -77,7 +77,7 @@ public interface LuminescentWaxBase {
                         true));
 
                 livingEntity.addEffect(new MobEffectInstance(
-                        MobEffects.DIG_SLOWDOWN,
+                        MobEffects.MINING_FATIGUE,
                         100,
                         2,
                         false,

@@ -5,7 +5,10 @@ import com.telepathicgrunt.the_bumblezone.mixin.blocks.BlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.BrushableBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BrushableBlock;
@@ -29,12 +32,12 @@ public class StateFocusedBrushableBlockEntity extends BrushableBlockEntity {
     }
 
     @Override
-    protected void brushingCompleted(Player player) {
-        if (this.level == null || this.level.getServer() == null) {
+    public void brushingCompleted(ServerLevel serverLevel, LivingEntity entity, ItemStack itemStack) {
+        if (serverLevel == null) {
             return;
         }
 
-        ((BrushableBlockEntityAccessor)this).bumblezone$callDropContent(player);
+        ((BrushableBlockEntityAccessor)this).bumblezone$callDropContent(serverLevel, entity, itemStack);
 
         BlockState blockState = this.getBlockState();
         this.level.levelEvent(3008, this.getBlockPos(), Block.getId(blockState));

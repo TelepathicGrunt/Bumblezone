@@ -146,8 +146,8 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
     public void onPlayerEnter(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {}
 
     public void onPlayerLeave(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
-        if (serverPlayer.hasEffect(MobEffects.DIG_SLOWDOWN)) {
-            serverPlayer.removeEffect(MobEffects.DIG_SLOWDOWN);
+        if (serverPlayer.hasEffect(MobEffects.MINING_FATIGUE)) {
+            serverPlayer.removeEffect(MobEffects.MINING_FATIGUE);
         }
     }
 

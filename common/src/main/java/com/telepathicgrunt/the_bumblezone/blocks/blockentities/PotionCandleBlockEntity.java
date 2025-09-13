@@ -131,23 +131,23 @@ public class PotionCandleBlockEntity extends BlockEntity {
     @Override
     public void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
         super.loadAdditional(compoundTag, provider);
-        this.color = compoundTag.contains(COLOR_TAG) ? compoundTag.getInt(COLOR_TAG) : DEFAULT_COLOR;
-        if (compoundTag.contains(STATUS_EFFECT_TAG) && !compoundTag.getString(STATUS_EFFECT_TAG).trim().equals("")) {
-            this.mobEffect = BuiltInRegistries.MOB_EFFECT.getHolder(ResourceLocation.tryParse(compoundTag.getString(STATUS_EFFECT_TAG))).orElse(null);
+        this.color = compoundTag.getInt(COLOR_TAG).orElse(DEFAULT_COLOR);
+        if (compoundTag.contains(STATUS_EFFECT_TAG) && !compoundTag.getString(STATUS_EFFECT_TAG).orElse("").trim().isEmpty()) {
+            this.mobEffect = BuiltInRegistries.MOB_EFFECT.get(ResourceLocation.tryParse(compoundTag.getString(STATUS_EFFECT_TAG).orElse(""))).orElse(null);
         }
         else {
             this.mobEffect = null;
         }
-        this.effectLevel = compoundTag.contains(EFFECT_LEVEL_TAG) ? compoundTag.getInt(EFFECT_LEVEL_TAG) : 0;
-        this.maxDuration = compoundTag.contains(MAX_DURATION_TAG) ? compoundTag.getInt(MAX_DURATION_TAG) : DEFAULT_MAX_DURATION;
-        this.currentDuration = compoundTag.contains(CURRENT_DURATION_TAG) ? compoundTag.getInt(CURRENT_DURATION_TAG) : 0;
-        this.instantStartTime = compoundTag.contains(INSTANT_START_TIME_TAG) ? compoundTag.getLong(INSTANT_START_TIME_TAG) : 0;
-        this.infinite = this.mobEffect == null || (compoundTag.contains(INFINITE_TAG) && compoundTag.getBoolean(INFINITE_TAG));
-        this.range = compoundTag.contains(RANGE_TAG) ? compoundTag.getInt(RANGE_TAG) : DEFAULT_RANGE;
-         this.lingerTime = compoundTag.contains(LINGER_TIME_TAG) ? compoundTag.getInt(LINGER_TIME_TAG) : DEFAULT_LINGER_TIME;
+        this.effectLevel = compoundTag.getInt(EFFECT_LEVEL_TAG).orElse(0);
+        this.maxDuration = compoundTag.getInt(MAX_DURATION_TAG).orElse(DEFAULT_MAX_DURATION);
+        this.currentDuration = compoundTag.getInt(CURRENT_DURATION_TAG).orElse(0);
+        this.instantStartTime = compoundTag.getLong(INSTANT_START_TIME_TAG).orElse(0L);
+        this.infinite = this.mobEffect == null || (compoundTag.contains(INFINITE_TAG) && compoundTag.getBoolean(INFINITE_TAG).orElse(false));
+        this.range = compoundTag.getInt(RANGE_TAG).orElse(DEFAULT_RANGE);
+        this.lingerTime = compoundTag.getInt(LINGER_TIME_TAG).orElse(DEFAULT_LINGER_TIME);
 
         if (compoundTag.contains(CALCULATED_EFFECT_APPLY_INTERVAL_TAG)) {
-            this.calculatedEffectApplyInterval = compoundTag.getInt(CALCULATED_EFFECT_APPLY_INTERVAL_TAG);
+            this.calculatedEffectApplyInterval = compoundTag.getInt(CALCULATED_EFFECT_APPLY_INTERVAL_TAG).orElse(0);
         }
         else {
             this.calculatedEffectApplyInterval = createIntervalTimeForEffectApply(this.mobEffect, this.effectLevel, this.lingerTime);

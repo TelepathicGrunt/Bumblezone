@@ -119,7 +119,7 @@ public class HoneyBeeLeggings extends BeeArmor {
     }
 
     private static void effectBehavior(ItemStack itemstack, Level level, LivingEntity livingEntity, RandomSource random, int beeWearablesCount) {
-        MobEffectInstance slowness = livingEntity.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
+        MobEffectInstance slowness = livingEntity.getEffect(MobEffects.SLOWNESS);
         if (slowness != null && (beeWearablesCount >= 3 || level.getGameTime() % 2 == 0)) {
             for (int i = 0; i <= Math.max(beeWearablesCount - 2, 1); i++) {
                 if (slowness.getDuration() > 0) {

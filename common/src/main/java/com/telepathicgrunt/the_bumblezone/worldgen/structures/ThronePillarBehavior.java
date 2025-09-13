@@ -38,7 +38,7 @@ public class ThronePillarBehavior {
             boolean hasBeeQueenNearby = hasBeeQueenNearStructureCenter || !level.getEntitiesOfClass(BeeQueenEntity.class, serverPlayer.getBoundingBox().inflate(30.0D, 30.0D, 30.0D), (e) -> !e.isNoAi()).isEmpty();
             if (hasBeeQueenNearby && !serverPlayer.isCreative() && !serverPlayer.isSpectator() && !EssenceOfTheBees.hasEssence(serverPlayer)) {
                 serverPlayer.addEffect(new MobEffectInstance(
-                        MobEffects.DIG_SLOWDOWN,
+                        MobEffects.MINING_FATIGUE,
                         100,
                         2,
                         false,

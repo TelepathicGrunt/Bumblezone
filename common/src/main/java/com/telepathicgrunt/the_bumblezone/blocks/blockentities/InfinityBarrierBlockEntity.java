@@ -51,8 +51,8 @@ public class InfinityBarrierBlockEntity extends BlockEntity {
             this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 8);
         }
 
-        this.primaryColor = compoundTag.contains(PRIMARY_COLOR_TAG) ? compoundTag.getInt(PRIMARY_COLOR_TAG) : DEFAULT_COLOR_1;
-        this.secondaryColor = compoundTag.contains(SECONDARY_COLOR_TAG) ? compoundTag.getInt(SECONDARY_COLOR_TAG) : DEFAULT_COLOR_2;
+        this.primaryColor = compoundTag.getInt(PRIMARY_COLOR_TAG).orElse(DEFAULT_COLOR_1);
+        this.secondaryColor = compoundTag.getInt(SECONDARY_COLOR_TAG).orElse(DEFAULT_COLOR_2);
     }
 
     @Override

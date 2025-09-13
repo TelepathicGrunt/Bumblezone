@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
@@ -155,10 +156,10 @@ public class EssenceBlockEntity extends BlockEntity {
     public void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
         super.loadAdditional(compoundTag, provider);
         if (compoundTag != null) {
-            this.beaten = compoundTag.getBoolean(BEATEN_TAG);
-            this.eventBar.setProgress(compoundTag.getFloat(PROGRESS_TAG));
-            this.extraEventTrackingProgress = compoundTag.getInt(EXTRA_EVENT_TRACKING_PROGRESS_TAG);
-            this.eventTimer = compoundTag.getInt(EVENT_TIMER_TAG);
+            this.beaten = compoundTag.getBoolean(BEATEN_TAG).orElse(false);
+            this.eventBar.setProgress(compoundTag.getFloat(PROGRESS_TAG).orElse(0F));
+            this.extraEventTrackingProgress = compoundTag.getInt(EXTRA_EVENT_TRACKING_PROGRESS_TAG).orElse(0);
+            this.eventTimer = compoundTag.getInt(EVENT_TIMER_TAG).orElse(0);
             this.eventBar.setEndEventTimer(this.eventTimer, this.getLevel() == null ? 1.0f : this.getLevel().tickRateManager().tickrate());
             if (compoundTag.contains(UUID_TAG)) {
                 this.uuid = compoundTag.getUUID(UUID_TAG);
@@ -206,7 +207,7 @@ public class EssenceBlockEntity extends BlockEntity {
                         Math.abs(serverPlayer.blockPosition().getZ() - this.getBlockPos().getZ()) > ((this.getArenaSize().getZ() + 1) / 2)))
                     {
                         if (this.getBlockState().getBlock() instanceof EssenceBlock essenceBlock) {
-                            essenceBlock.onPlayerLeave(serverPlayer.serverLevel(), serverPlayer, this);
+                            essenceBlock.onPlayerLeave(serverPlayer.level(), serverPlayer, this);
                         }
                         this.getPlayerInArena().remove(playerUUID);
                         this.getEventBar().removePlayer(serverPlayer);
@@ -309,14 +310,14 @@ public class EssenceBlockEntity extends BlockEntity {
                             }
 
                             if (essenceBlock.hasMiningFatigue()) {
-                                if (serverPlayer.hasEffect(MobEffects.DIG_SLOWDOWN) &&
-                                    serverPlayer.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier() >= 0)
+                                if (serverPlayer.hasEffect(MobEffects.MINING_FATIGUE) &&
+                                    serverPlayer.getEffect(MobEffects.MINING_FATIGUE).getAmplifier() >= 0)
                                 {
-                                    serverPlayer.removeEffect(MobEffects.DIG_SLOWDOWN);
+                                    serverPlayer.removeEffect(MobEffects.MINING_FATIGUE);
                                 }
 
                                 serverPlayer.addEffect(new MobEffectInstance(
-                                        MobEffects.DIG_SLOWDOWN,
+                                        MobEffects.MINING_FATIGUE,
                                         essenceBlockEntity.getEventTimer(),
                                         -1,
                                         false,

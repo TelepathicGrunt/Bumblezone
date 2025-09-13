@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.items.datacomponents.CrystallineFlowerData;
@@ -17,12 +18,14 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueInput;
 
 import java.util.UUID;
 
@@ -95,12 +98,12 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
     @Override
     public void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
         super.loadAdditional(compoundTag, provider);
-        this.xpTier = compoundTag.getInt(TIER_TAG);
-        this.currentXp = Math.min(compoundTag.getInt(XP_TAG), getMaxXpForTier(this.xpTier));
+        this.xpTier = compoundTag.getInt(TIER_TAG).orElse(0);
+        this.currentXp = Math.min(compoundTag.getInt(XP_TAG).orElse(0), getMaxXpForTier(this.xpTier));
 
         if (compoundTag.contains(UUID_TAG)) {
             if (compoundTag.getTagType(UUID_TAG) == Tag.TAG_STRING) {
-                this.uuid = UUID.fromString(compoundTag.getString(UUID_TAG));
+                this.uuid = UUID.fromString(compoundTag.getString(UUID_TAG).orElse(""));
             }
             else {
                 this.uuid = compoundTag.getUUID(UUID_TAG);
@@ -239,7 +242,13 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
                     if (bottomHeight != 0) {
                         BlockEntity targetBlockEntity = level.getBlockEntity(this.getBlockPos().below(bottomHeight));
                         if (targetBlockEntity instanceof CrystallineFlowerBlockEntity) {
-                            targetBlockEntity.loadWithComponents(crystallineFlowerBlockEntity.getUpdateTag(level.registryAccess()), level.registryAccess());
+                            targetBlockEntity.loadWithComponents(
+                                    TagValueInput.create(
+                                            new ProblemReporter.ScopedCollector(Bumblezone.LOGGER),
+                                            level.registryAccess(),
+                                            crystallineFlowerBlockEntity.getUpdateTag(level.registryAccess())
+                                    )
+                            );
                         }
                     }
 
@@ -275,7 +284,13 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
 
                     BlockEntity blockEntity2 = level.getBlockEntity(operatingPos);
                     if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
-                        crystallineFlowerBlockEntity2.loadWithComponents(crystallineFlowerBlockEntity.getUpdateTag(level.registryAccess()), level.registryAccess());
+                        crystallineFlowerBlockEntity2.loadWithComponents(
+                                TagValueInput.create(
+                                        new ProblemReporter.ScopedCollector(Bumblezone.LOGGER),
+                                        level.registryAccess(),
+                                        crystallineFlowerBlockEntity.getUpdateTag(level.registryAccess())
+                                )
+                        );
                         blockEntity2.setChanged();
                     }
                 }
@@ -288,7 +303,13 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
                     if (i != 0) {
                         BlockEntity blockEntity2 = level.getBlockEntity(updatePos);
                         if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
-                            crystallineFlowerBlockEntity2.loadWithComponents(crystallineFlowerBlockEntity.getUpdateTag(level.registryAccess()), level.registryAccess());
+                            crystallineFlowerBlockEntity2.loadWithComponents(
+                                    TagValueInput.create(
+                                            new ProblemReporter.ScopedCollector(Bumblezone.LOGGER),
+                                            level.registryAccess(),
+                                            crystallineFlowerBlockEntity.getUpdateTag(level.registryAccess())
+                                    )
+                            );
                         }
                     }
                 }

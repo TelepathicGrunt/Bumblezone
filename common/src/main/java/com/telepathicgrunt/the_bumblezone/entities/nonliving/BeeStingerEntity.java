@@ -70,7 +70,7 @@ public class BeeStingerEntity extends AbstractArrow {
     protected void doPostHurtEffects(LivingEntity livingEntity) {
         if (!livingEntity.getType().is(EntityTypeTags.UNDEAD)) {
             boolean isPoisoned = livingEntity.hasEffect(MobEffects.POISON);
-            boolean isSlowed = livingEntity.hasEffect(MobEffects.MOVEMENT_SLOWDOWN);
+            boolean isSlowed = livingEntity.hasEffect(MobEffects.SLOWNESS);
             boolean isWeakened = livingEntity.hasEffect(MobEffects.WEAKNESS);
             boolean isParalyzed = livingEntity.hasEffect(BzEffects.PARALYZED.holder());
 
@@ -84,7 +84,7 @@ public class BeeStingerEntity extends AbstractArrow {
 
             if (!isParalyzed && isPoisoned && livingEntity.getRandom().nextFloat() < 0.35f) {
                 livingEntity.addEffect(new MobEffectInstance(
-                        MobEffects.MOVEMENT_SLOWDOWN,
+                        MobEffects.SLOWNESS,
                         180,
                         0,
                         true,
@@ -111,7 +111,7 @@ public class BeeStingerEntity extends AbstractArrow {
                         true,
                         true));
 
-                livingEntity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
+                livingEntity.removeEffect(MobEffects.SLOWNESS);
                 livingEntity.removeEffect(MobEffects.WEAKNESS);
 
                 if(!livingEntity.isDeadOrDying() && this.getOwner() instanceof ServerPlayer serverPlayer) {

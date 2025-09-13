@@ -40,7 +40,7 @@ public class RoyalJellyBottle extends Item {
 
         if (!level.isClientSide) {
             livingEntity.removeEffect(MobEffects.POISON);
-            livingEntity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
+            livingEntity.removeEffect(MobEffects.SLOWNESS);
             livingEntity.removeEffect(MobEffects.WEAKNESS);
         }
 
