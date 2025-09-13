@@ -23,6 +23,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -34,6 +35,7 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -210,9 +212,9 @@ public class NeoPlatformService implements PlatformService {
     }
     
     @Override
-    public boolean isItemAbility(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
+    public boolean isItemAbility(ItemStack stack, TagKey<Item> targetBackupTag, String... targetToolAction) {
         return Arrays.stream(targetToolAction).anyMatch(actionString -> stack.canPerformAction(ItemAbility.get(actionString)))
-                || (targetBackupClass != null && targetBackupClass.isInstance(stack.getItem()));
+                || (targetBackupTag != null && stack.is(targetBackupTag));
     }
     
     @Override

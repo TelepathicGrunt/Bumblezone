@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;

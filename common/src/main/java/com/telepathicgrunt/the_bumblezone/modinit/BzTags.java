@@ -116,6 +116,7 @@ public class BzTags {
     public static final TagKey<Item> RADIANCE_CANNOT_REPAIR = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence/radiance/cannot_repair"));
     public static final TagKey<Item> ABILITY_ESSENCE_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "ability_essence_items"));
     public static final TagKey<Item> WASHING_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "washing_items"));
+    public static final TagKey<Item> WAX_CARVING_ITEMS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "wax_carving_items"));
     public static final TagKey<Item> SUSPICIOUS_PILE_OF_POLLEN_ADDITIONAL_BRUSHES = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "suspicious_pile_of_pollen/additional_allowed_brushes"));
     public static final TagKey<Item> COMB_CUTTER_ENCHANTABLE = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "enchantable/comb_cutter"));
     public static final TagKey<Item> NEUROTOXINS_ENCHANTABLE = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "enchantable/neurotoxins"));

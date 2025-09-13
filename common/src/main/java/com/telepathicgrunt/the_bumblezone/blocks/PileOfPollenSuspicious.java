@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import net.minecraft.core.BlockPos;
@@ -142,8 +143,9 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
                 ItemStack heldItem = ((EntityCollisionContextAccessor)ctx).bumblezone$getHeldItem();
                 if (heldItem != null &&
                     !heldItem.isEmpty() &&
-                    (PlatformService.INSTANCE.isItemAbility(heldItem, BrushItem.class, "brush_brush") ||
-                    (heldItem.is(BzTags.SUSPICIOUS_PILE_OF_POLLEN_ADDITIONAL_BRUSHES))))
+                    (PlatformService.INSTANCE.isItemAbility(heldItem, null, "brush_brush") ||
+                    heldItem.getItem() instanceof BrushItem ||
+                    heldItem.is(BzTags.SUSPICIOUS_PILE_OF_POLLEN_ADDITIONAL_BRUSHES)))
                 {
                     StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
                     boolean found = Arrays.stream(stackTrace)
