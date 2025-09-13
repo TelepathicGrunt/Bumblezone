@@ -4,22 +4,20 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.EssenceBlock;
 import com.telepathicgrunt.the_bumblezone.bossbars.ServerEssenceEvent;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.CrystallineFlowerData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -27,6 +25,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -40,6 +39,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -49,10 +51,12 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class EssenceBlockEntity extends BlockEntity {
     private static final String UUID_TAG = "uuid";
@@ -152,93 +156,6 @@ public class EssenceBlockEntity extends BlockEntity {
         this.beaten = beaten;
     }
 
-    @Override
-    public void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        super.loadAdditional(compoundTag, provider);
-        if (compoundTag != null) {
-            this.beaten = compoundTag.getBoolean(BEATEN_TAG).orElse(false);
-            this.eventBar.setProgress(compoundTag.getFloat(PROGRESS_TAG).orElse(0F));
-            this.extraEventTrackingProgress = compoundTag.getInt(EXTRA_EVENT_TRACKING_PROGRESS_TAG).orElse(0);
-            this.eventTimer = compoundTag.getInt(EVENT_TIMER_TAG).orElse(0);
-            this.eventBar.setEndEventTimer(this.eventTimer, this.getLevel() == null ? 1.0f : this.getLevel().tickRateManager().tickrate());
-            if (compoundTag.contains(UUID_TAG)) {
-                this.uuid = compoundTag.getUUID(UUID_TAG);
-            }
-            else {
-                this.uuid = UUID.randomUUID();
-            }
-
-            if (compoundTag.contains(PLAYERS_IN_ARENA_TAG)) {
-                this.playerInArena.clear();
-                for (Tag tag : compoundTag.getList(PLAYERS_IN_ARENA_TAG, Tag.TAG_INT_ARRAY)) {
-                    this.playerInArena.add(NbtUtils.loadUUID(tag));
-                }
-            }
-
-            if (compoundTag.contains(EVENT_ENTITIES_IN_ARENA_TAG)) {
-                this.eventEntitiesInArena.clear();
-                for (Tag tag : compoundTag.getList(EVENT_ENTITIES_IN_ARENA_TAG, Tag.TAG_INT_ARRAY)) {
-                    this.eventEntitiesInArena.add(new EventEntities(NbtUtils.loadUUID(tag)));
-                }
-            }
-
-            this.arenaSize = NbtUtils.readBlockPos(compoundTag.getCompound(ARENA_SIZE_TAG), "arenaSize").orElse(BlockPos.ZERO);
-        }
-
-        if (this.level != null && this.level.isClientSide()) {
-            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 8);
-        }
-    }
-
-    @Override
-    protected void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        super.saveAdditional(compoundTag, provider);
-        saveFieldsToTag(compoundTag);
-
-        // In case player teleports away and chunk unloads this block
-        if (this.getLevel() != null) {
-            for (int i = this.getPlayerInArena().size() - 1; i >= 0; i--) {
-                UUID playerUUID = this.getPlayerInArena().get(i);
-                ServerPlayer serverPlayer = this.getLevel().getServer().getPlayerList().getPlayer(playerUUID);
-                if (serverPlayer != null) {
-                    if (serverPlayer.isDeadOrDying() ||
-                        (Math.abs(serverPlayer.blockPosition().getX() - this.getBlockPos().getX()) > ((this.getArenaSize().getX() + 1) / 2) ||
-                        Math.abs(serverPlayer.blockPosition().getY() - this.getBlockPos().getY()) > ((this.getArenaSize().getY() + 1) / 2) ||
-                        Math.abs(serverPlayer.blockPosition().getZ() - this.getBlockPos().getZ()) > ((this.getArenaSize().getZ() + 1) / 2)))
-                    {
-                        if (this.getBlockState().getBlock() instanceof EssenceBlock essenceBlock) {
-                            essenceBlock.onPlayerLeave(serverPlayer.level(), serverPlayer, this);
-                        }
-                        this.getPlayerInArena().remove(playerUUID);
-                        this.getEventBar().removePlayer(serverPlayer);
-                        this.setChanged();
-                    }
-                }
-            }
-        }
-    }
-
-    private void saveFieldsToTag(CompoundTag compoundTag) {
-        compoundTag.putBoolean(BEATEN_TAG, this.beaten);
-        compoundTag.put(UUID_TAG, NbtUtils.createUUID(this.getUUID()));
-        compoundTag.putInt(EVENT_TIMER_TAG, this.eventTimer);
-        compoundTag.putInt(EXTRA_EVENT_TRACKING_PROGRESS_TAG, this.extraEventTrackingProgress);
-        compoundTag.putFloat(PROGRESS_TAG, this.eventBar.getProgress());
-
-        ListTag players = new ListTag();
-        for (UUID target : this.playerInArena) {
-            players.add(NbtUtils.createUUID(target));
-        }
-        compoundTag.put(PLAYERS_IN_ARENA_TAG, players);
-
-        ListTag eventEntities = new ListTag();
-        for (EventEntities target : this.eventEntitiesInArena) {
-            eventEntities.add(NbtUtils.createUUID(target.uuid()));
-        }
-        compoundTag.put(EVENT_ENTITIES_IN_ARENA_TAG, eventEntities);
-        compoundTag.put(ARENA_SIZE_TAG, NbtUtils.writeBlockPos(this.arenaSize));
-    }
-
     public ResourceLocation getSavedNbtLocation() {
         return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence/saved_area/" +
                 this.getBlockPos().getX() + "_" +
@@ -260,15 +177,8 @@ public class EssenceBlockEntity extends BlockEntity {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
-        CompoundTag tag = new CompoundTag();
-        saveFieldsToTag(tag);
-        return tag;
-    }
-
     public boolean shouldDrawSide(Direction direction) {
-        return Block.shouldRenderFace(this.getBlockState(), this.getLevel(), this.getBlockPos(), direction, this.getBlockPos().relative(direction));
+        return Block.shouldRenderFace(this.getBlockState(), this.level.getBlockState(this.getBlockPos().relative(direction)), direction);
     }
 
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity) {
@@ -494,5 +404,81 @@ public class EssenceBlockEntity extends BlockEntity {
             }
         }
         return null;
+    }
+
+    @Override
+    public void loadAdditional(ValueInput valueInput) {
+        super.loadAdditional(valueInput);
+
+        this.beaten = valueInput.getBooleanOr(BEATEN_TAG, false);
+        this.eventBar.setProgress(valueInput.getFloatOr(PROGRESS_TAG, 0F));
+        this.extraEventTrackingProgress = valueInput.getIntOr(EXTRA_EVENT_TRACKING_PROGRESS_TAG, 0);
+        this.eventTimer = valueInput.getIntOr(EVENT_TIMER_TAG, 0);
+        this.eventBar.setEndEventTimer(this.eventTimer, this.getLevel() == null ? 1.0f : this.getLevel().tickRateManager().tickrate());
+
+        this.uuid = valueInput.read(UUID_TAG, UUIDUtil.CODEC).orElse(java.util.UUID.randomUUID());
+        if (this.uuid.compareTo(CrystallineFlowerData.DEFAULT_UUID) == 0) {
+            this.uuid = java.util.UUID.randomUUID();
+        }
+
+        this.playerInArena.clear();
+        valueInput.read(PLAYERS_IN_ARENA_TAG, UUIDUtil.CODEC_SET).ifPresent(uuidSet -> this.playerInArena.addAll(uuidSet));
+
+        this.eventEntitiesInArena.clear();
+        valueInput.read(EVENT_ENTITIES_IN_ARENA_TAG, UUIDUtil.CODEC_SET).ifPresent(uuidSet -> this.eventEntitiesInArena.addAll(uuidSet.stream().map(EventEntities::new).toList()));
+
+        this.arenaSize = valueInput.read(ARENA_SIZE_TAG, BlockPos.CODEC).orElse(BlockPos.ZERO);
+
+        if (this.level != null && this.level.isClientSide()) {
+            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 8);
+        }
+    }
+
+    @Override
+    protected void saveAdditional(ValueOutput valueOutput) {
+        super.saveAdditional(valueOutput);
+        saveFieldsToTag(valueOutput);
+
+        // In case player teleports away and chunk unloads this block
+        if (this.getLevel() != null) {
+            for (int i = this.getPlayerInArena().size() - 1; i >= 0; i--) {
+                UUID playerUUID = this.getPlayerInArena().get(i);
+                ServerPlayer serverPlayer = this.getLevel().getServer().getPlayerList().getPlayer(playerUUID);
+                if (serverPlayer != null) {
+                    if (serverPlayer.isDeadOrDying() ||
+                            (Math.abs(serverPlayer.blockPosition().getX() - this.getBlockPos().getX()) > ((this.getArenaSize().getX() + 1) / 2) ||
+                                    Math.abs(serverPlayer.blockPosition().getY() - this.getBlockPos().getY()) > ((this.getArenaSize().getY() + 1) / 2) ||
+                                    Math.abs(serverPlayer.blockPosition().getZ() - this.getBlockPos().getZ()) > ((this.getArenaSize().getZ() + 1) / 2)))
+                    {
+                        if (this.getBlockState().getBlock() instanceof EssenceBlock essenceBlock) {
+                            essenceBlock.onPlayerLeave(serverPlayer.level(), serverPlayer, this);
+                        }
+                        this.getPlayerInArena().remove(playerUUID);
+                        this.getEventBar().removePlayer(serverPlayer);
+                        this.setChanged();
+                    }
+                }
+            }
+        }
+    }
+
+    private void saveFieldsToTag(ValueOutput valueOutput) {
+        valueOutput.putBoolean(BEATEN_TAG, this.beaten);
+        valueOutput.store(UUID_TAG, UUIDUtil.CODEC, this.uuid);
+        valueOutput.putInt(EVENT_TIMER_TAG, this.eventTimer);
+        valueOutput.putInt(EXTRA_EVENT_TRACKING_PROGRESS_TAG, this.extraEventTrackingProgress);
+        valueOutput.putFloat(PROGRESS_TAG, this.eventBar.getProgress());
+
+        valueOutput.store(PLAYERS_IN_ARENA_TAG, UUIDUtil.CODEC_SET, new HashSet<>(this.playerInArena));
+        valueOutput.store(EVENT_ENTITIES_IN_ARENA_TAG, UUIDUtil.CODEC_SET, this.eventEntitiesInArena.stream().map(EventEntities::uuid).collect(Collectors.toSet()));
+
+        valueOutput.store(ARENA_SIZE_TAG, BlockPos.CODEC, this.arenaSize);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+        TagValueOutput tagvalueoutput = TagValueOutput.createWithContext(new ProblemReporter.ScopedCollector(Bumblezone.LOGGER), provider);
+        saveFieldsToTag(tagvalueoutput);
+        return tagvalueoutput.buildResult();
     }
 }

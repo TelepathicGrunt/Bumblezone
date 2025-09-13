@@ -11,6 +11,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.UUIDUtil;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -26,6 +28,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import java.util.UUID;
 
@@ -96,77 +101,8 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        super.loadAdditional(compoundTag, provider);
-        this.xpTier = compoundTag.getInt(TIER_TAG).orElse(0);
-        this.currentXp = Math.min(compoundTag.getInt(XP_TAG).orElse(0), getMaxXpForTier(this.xpTier));
-
-        if (compoundTag.contains(UUID_TAG)) {
-            if (compoundTag.getTagType(UUID_TAG) == Tag.TAG_STRING) {
-                this.uuid = UUID.fromString(compoundTag.getString(UUID_TAG).orElse(""));
-            }
-            else {
-                this.uuid = compoundTag.getUUID(UUID_TAG);
-            }
-
-            if (this.uuid.compareTo(CrystallineFlowerData.DEFAULT_UUID) == 0) {
-                this.uuid = java.util.UUID.randomUUID();
-            }
-        }
-        else {
-            this.uuid = java.util.UUID.randomUUID();
-        }
-
-        if (compoundTag.contains(BOOK_SLOT_ITEMS)) {
-            this.bookSlotItems = ItemStack.parse(provider, compoundTag.getCompound(BOOK_SLOT_ITEMS)).orElse(ItemStack.EMPTY);
-        }
-        else {
-            this.bookSlotItems = ItemStack.EMPTY;
-        }
-
-        if (compoundTag.contains(CONSUME_SLOT_ITEMS)) {
-            this.consumeSlotItems = ItemStack.parse(provider, compoundTag.getCompound(CONSUME_SLOT_ITEMS)).orElse(ItemStack.EMPTY);
-        }
-        else {
-            this.consumeSlotItems = ItemStack.EMPTY;
-        }
-    }
-
-    @Override
-    protected void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        super.saveAdditional(compoundTag, provider);
-        saveFieldsToTag(compoundTag, provider);
-    }
-
-    private void saveFieldsToTag(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        compoundTag.putInt(TIER_TAG, this.xpTier);
-        compoundTag.putInt(XP_TAG, this.currentXp);
-        compoundTag.putUUID(UUID_TAG, this.uuid);
-        if (!this.bookSlotItems.isEmpty()) {
-            compoundTag.put(BOOK_SLOT_ITEMS, this.bookSlotItems.save(provider));
-        }
-        if (!this.consumeSlotItems.isEmpty()) {
-            compoundTag.put(CONSUME_SLOT_ITEMS, this.consumeSlotItems.save(provider));
-        }
-    }
-
-    @Override
-    public void saveToItem(ItemStack stack, HolderLookup.Provider provider) {
-        CompoundTag compoundTag = new CompoundTag();
-        this.saveAdditional(compoundTag, provider);
-        BlockItem.setBlockEntityData(stack, this.getType(), compoundTag);
-    }
-
-    @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
-        CompoundTag tag = new CompoundTag();
-        saveFieldsToTag(tag, provider);
-        return tag;
     }
 
     public void addXpAndTier(int xpChange) {
@@ -351,7 +287,48 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void applyImplicitComponents(BlockEntity.DataComponentInput dataComponentInput) {
+    protected void loadAdditional(ValueInput valueInput) {
+        super.loadAdditional(valueInput);
+        this.xpTier = valueInput.getIntOr(TIER_TAG, 0);
+        this.currentXp = Math.min(valueInput.getIntOr(XP_TAG, 0), getMaxXpForTier(this.xpTier));
+
+        this.uuid = valueInput.read(UUID_TAG, UUIDUtil.CODEC).orElse(java.util.UUID.randomUUID());
+        if (this.uuid.compareTo(CrystallineFlowerData.DEFAULT_UUID) == 0) {
+            this.uuid = java.util.UUID.randomUUID();
+        }
+
+        this.bookSlotItems = valueInput.read(BOOK_SLOT_ITEMS, ItemStack.CODEC).orElse(ItemStack.EMPTY);
+        this.consumeSlotItems = valueInput.read(CONSUME_SLOT_ITEMS, ItemStack.CODEC).orElse(ItemStack.EMPTY);
+    }
+
+    @Override
+    protected void saveAdditional(ValueOutput valueOutput) {
+        super.saveAdditional(valueOutput);
+        saveFieldsToTag(valueOutput);
+    }
+
+    private void saveFieldsToTag(ValueOutput valueOutput) {
+        valueOutput.putInt(TIER_TAG, this.xpTier);
+        valueOutput.putInt(XP_TAG, this.currentXp);
+        valueOutput.store(UUID_TAG, UUIDUtil.CODEC, this.uuid);
+
+        if (!this.bookSlotItems.isEmpty()) {
+            valueOutput.store(BOOK_SLOT_ITEMS, ItemStack.CODEC, this.bookSlotItems);
+        }
+        if (!this.consumeSlotItems.isEmpty()) {
+            valueOutput.store(CONSUME_SLOT_ITEMS, ItemStack.CODEC, this.consumeSlotItems);
+        }
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+        TagValueOutput tagvalueoutput = TagValueOutput.createWithContext(new ProblemReporter.ScopedCollector(Bumblezone.LOGGER), provider);
+        saveFieldsToTag(tagvalueoutput);
+        return tagvalueoutput.buildResult();
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentGetter dataComponentInput) {
         super.applyImplicitComponents(dataComponentInput);
         CrystallineFlowerData crystallineFlowerData = dataComponentInput.getOrDefault(BzDataComponents.CRYSTALLINE_FLOWER_DATA.get(), new CrystallineFlowerData());
 
@@ -370,10 +347,10 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void removeComponentsFromTag(CompoundTag compoundTag) {
-        compoundTag.remove(TIER_TAG);
-        compoundTag.remove(XP_TAG);
-        compoundTag.remove(UUID_TAG);
-        super.removeComponentsFromTag(compoundTag);
+    public void removeComponentsFromTag(ValueOutput valueOutput) {
+        valueOutput.discard(TIER_TAG);
+        valueOutput.discard(XP_TAG);
+        valueOutput.discard(UUID_TAG);
+        super.removeComponentsFromTag(valueOutput);
     }
 }

@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.SuperCandleBase;
 import com.telepathicgrunt.the_bumblezone.blocks.SuperCandleWick;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
@@ -14,15 +15,17 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -129,77 +132,8 @@ public class PotionCandleBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        super.loadAdditional(compoundTag, provider);
-        this.color = compoundTag.getInt(COLOR_TAG).orElse(DEFAULT_COLOR);
-        if (compoundTag.contains(STATUS_EFFECT_TAG) && !compoundTag.getString(STATUS_EFFECT_TAG).orElse("").trim().isEmpty()) {
-            this.mobEffect = BuiltInRegistries.MOB_EFFECT.get(ResourceLocation.tryParse(compoundTag.getString(STATUS_EFFECT_TAG).orElse(""))).orElse(null);
-        }
-        else {
-            this.mobEffect = null;
-        }
-        this.effectLevel = compoundTag.getInt(EFFECT_LEVEL_TAG).orElse(0);
-        this.maxDuration = compoundTag.getInt(MAX_DURATION_TAG).orElse(DEFAULT_MAX_DURATION);
-        this.currentDuration = compoundTag.getInt(CURRENT_DURATION_TAG).orElse(0);
-        this.instantStartTime = compoundTag.getLong(INSTANT_START_TIME_TAG).orElse(0L);
-        this.infinite = this.mobEffect == null || (compoundTag.contains(INFINITE_TAG) && compoundTag.getBoolean(INFINITE_TAG).orElse(false));
-        this.range = compoundTag.getInt(RANGE_TAG).orElse(DEFAULT_RANGE);
-        this.lingerTime = compoundTag.getInt(LINGER_TIME_TAG).orElse(DEFAULT_LINGER_TIME);
-
-        if (compoundTag.contains(CALCULATED_EFFECT_APPLY_INTERVAL_TAG)) {
-            this.calculatedEffectApplyInterval = compoundTag.getInt(CALCULATED_EFFECT_APPLY_INTERVAL_TAG).orElse(0);
-        }
-        else {
-            this.calculatedEffectApplyInterval = createIntervalTimeForEffectApply(this.mobEffect, this.effectLevel, this.lingerTime);
-            boolean isInstant = this.mobEffect != null && this.mobEffect.value().isInstantenous();
-            if (!isInstant) {
-                this.lingerTime += this.calculatedEffectApplyInterval;
-            }
-        }
-
-        if (this.level != null && this.level.isClientSide()) {
-            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 8);
-        }
-    }
-
-    @Override
-    protected void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        super.saveAdditional(compoundTag, provider);
-        saveFieldsToTag(compoundTag);
-    }
-
-    private void saveFieldsToTag(CompoundTag compoundTag) {
-        compoundTag.putInt(COLOR_TAG, this.color);
-        if (this.mobEffect != null) {
-            compoundTag.putString(STATUS_EFFECT_TAG, this.mobEffect.getRegisteredName());
-        }
-        compoundTag.putInt(EFFECT_LEVEL_TAG, this.effectLevel);
-        compoundTag.putInt(MAX_DURATION_TAG, this.maxDuration);
-        compoundTag.putInt(CURRENT_DURATION_TAG, this.currentDuration);
-        compoundTag.putLong(INSTANT_START_TIME_TAG, this.instantStartTime);
-        compoundTag.putBoolean(INFINITE_TAG, this.mobEffect == null || this.infinite);
-        compoundTag.putInt(RANGE_TAG, this.range);
-        compoundTag.putInt(LINGER_TIME_TAG, this.lingerTime);
-        compoundTag.putInt(CALCULATED_EFFECT_APPLY_INTERVAL_TAG, this.calculatedEffectApplyInterval);
-    }
-
-    @Override
-    public void saveToItem(ItemStack stack, HolderLookup.Provider provider) {
-        CompoundTag compoundTag = new CompoundTag();
-        this.saveAdditional(compoundTag, provider);
-        BlockItem.setBlockEntityData(stack, this.getType(), compoundTag);
-    }
-
-    @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
-        CompoundTag tag = new CompoundTag();
-        saveFieldsToTag(tag);
-        return tag;
     }
 
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, BlockEntity blockEntity) {
@@ -310,5 +244,68 @@ public class PotionCandleBlockEntity extends BlockEntity {
                 (float)(range / 2),
                 (float)(range / 2),
                 0.1d);
+    }
+
+    @Override
+    public void loadAdditional(ValueInput valueInput) {
+        super.loadAdditional(valueInput);
+
+        this.color = valueInput.getIntOr(COLOR_TAG, DEFAULT_COLOR);
+        if (!valueInput.getStringOr(STATUS_EFFECT_TAG, "").trim().isEmpty()) {
+            this.mobEffect = BuiltInRegistries.MOB_EFFECT.get(ResourceLocation.tryParse(valueInput.getStringOr(STATUS_EFFECT_TAG, ""))).orElse(null);
+        }
+        else {
+            this.mobEffect = null;
+        }
+        this.effectLevel = valueInput.getIntOr(EFFECT_LEVEL_TAG, 0);
+        this.maxDuration = valueInput.getIntOr(MAX_DURATION_TAG, DEFAULT_MAX_DURATION);
+        this.currentDuration = valueInput.getIntOr(CURRENT_DURATION_TAG, 0);
+        this.instantStartTime = valueInput.getLongOr(INSTANT_START_TIME_TAG, 0L);
+        this.infinite = this.mobEffect == null || (valueInput.getBooleanOr(INFINITE_TAG, false));
+        this.range = valueInput.getIntOr(RANGE_TAG, DEFAULT_RANGE);
+        this.lingerTime = valueInput.getIntOr(LINGER_TIME_TAG, DEFAULT_LINGER_TIME);
+
+        if (valueInput.getInt(CALCULATED_EFFECT_APPLY_INTERVAL_TAG).isPresent()) {
+            this.calculatedEffectApplyInterval = valueInput.getIntOr(CALCULATED_EFFECT_APPLY_INTERVAL_TAG, 0);
+        }
+        else {
+            this.calculatedEffectApplyInterval = createIntervalTimeForEffectApply(this.mobEffect, this.effectLevel, this.lingerTime);
+            boolean isInstant = this.mobEffect != null && this.mobEffect.value().isInstantenous();
+            if (!isInstant) {
+                this.lingerTime += this.calculatedEffectApplyInterval;
+            }
+        }
+
+        if (this.level != null && this.level.isClientSide()) {
+            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 8);
+        }
+    }
+
+    @Override
+    protected void saveAdditional(ValueOutput valueOutput) {
+        super.saveAdditional(valueOutput);
+        saveFieldsToTag(valueOutput);
+    }
+
+    private void saveFieldsToTag(ValueOutput valueOutput) {
+        valueOutput.putInt(COLOR_TAG, this.color);
+        if (this.mobEffect != null) {
+            valueOutput.putString(STATUS_EFFECT_TAG, this.mobEffect.getRegisteredName());
+        }
+        valueOutput.putInt(EFFECT_LEVEL_TAG, this.effectLevel);
+        valueOutput.putInt(MAX_DURATION_TAG, this.maxDuration);
+        valueOutput.putInt(CURRENT_DURATION_TAG, this.currentDuration);
+        valueOutput.putLong(INSTANT_START_TIME_TAG, this.instantStartTime);
+        valueOutput.putBoolean(INFINITE_TAG, this.mobEffect == null || this.infinite);
+        valueOutput.putInt(RANGE_TAG, this.range);
+        valueOutput.putInt(LINGER_TIME_TAG, this.lingerTime);
+        valueOutput.putInt(CALCULATED_EFFECT_APPLY_INTERVAL_TAG, this.calculatedEffectApplyInterval);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+        TagValueOutput tagvalueoutput = TagValueOutput.createWithContext(new ProblemReporter.ScopedCollector(Bumblezone.LOGGER), provider);
+        saveFieldsToTag(tagvalueoutput);
+        return tagvalueoutput.buildResult();
     }
 }

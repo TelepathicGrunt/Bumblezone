@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -7,10 +8,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class InfinityBarrierBlockEntity extends BlockEntity {
     public static final int DEFAULT_COLOR_1 = 16777215;
@@ -45,37 +50,8 @@ public class InfinityBarrierBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        super.loadAdditional(compoundTag, provider);
-        if (this.level != null && this.level.isClientSide()) {
-            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 8);
-        }
-
-        this.primaryColor = compoundTag.getInt(PRIMARY_COLOR_TAG).orElse(DEFAULT_COLOR_1);
-        this.secondaryColor = compoundTag.getInt(SECONDARY_COLOR_TAG).orElse(DEFAULT_COLOR_2);
-    }
-
-    @Override
-    protected void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        super.saveAdditional(compoundTag, provider);
-        saveFieldsToTag(compoundTag, provider);
-    }
-
-    private void saveFieldsToTag(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        compoundTag.putInt(PRIMARY_COLOR_TAG, this.primaryColor);
-        compoundTag.putInt(SECONDARY_COLOR_TAG, this.secondaryColor);
-    }
-
-    @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
-        CompoundTag tag = new CompoundTag();
-        saveFieldsToTag(tag, provider);
-        return tag;
     }
 
     public static int getBlockColor(BlockAndTintGetter world, BlockPos pos, int tintIndex) {
@@ -91,5 +67,35 @@ public class InfinityBarrierBlockEntity extends BlockEntity {
             }
         }
         return tintIndex;
+    }
+
+    @Override
+    public void loadAdditional(ValueInput valueInput) {
+        super.loadAdditional(valueInput);
+
+        if (this.level != null && this.level.isClientSide()) {
+            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 8);
+        }
+
+        this.primaryColor = valueInput.getIntOr(PRIMARY_COLOR_TAG, DEFAULT_COLOR_1);
+        this.secondaryColor = valueInput.getIntOr(SECONDARY_COLOR_TAG, DEFAULT_COLOR_2);
+    }
+
+    @Override
+    protected void saveAdditional(ValueOutput valueOutput) {
+        super.saveAdditional(valueOutput);
+        saveFieldsToTag(valueOutput);
+    }
+
+    private void saveFieldsToTag(ValueOutput valueOutput) {
+        valueOutput.putInt(PRIMARY_COLOR_TAG, this.primaryColor);
+        valueOutput.putInt(SECONDARY_COLOR_TAG, this.secondaryColor);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+        TagValueOutput tagvalueoutput = TagValueOutput.createWithContext(new ProblemReporter.ScopedCollector(Bumblezone.LOGGER), provider);
+        saveFieldsToTag(tagvalueoutput);
+        return tagvalueoutput.buildResult();
     }
 }

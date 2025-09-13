@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -22,8 +23,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.loot.LootTable;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,31 +54,6 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
     @Override
     protected Component getDefaultName() {
         return Component.translatable("container.the_bumblezone.honey_cocoon");
-    }
-
-    @Override
-    public void loadAdditional(@NotNull CompoundTag tag, HolderLookup.Provider provider) {
-        super.loadAdditional(tag, provider);
-        this.loadFromTag(tag, provider);
-    }
-
-    public void loadFromTag(CompoundTag compoundTag, HolderLookup.Provider provider) {
-        this.itemStacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        if (!this.tryLoadLootTable(compoundTag) && compoundTag.contains("Items", 9)) {
-            ContainerHelper.loadAllItems(compoundTag, this.itemStacks, provider);
-        }
-        if (compoundTag.hasUUID("blockEntityUuid")) {
-            this.blockEntityUuid = compoundTag.getUUID("blockEntityUuid");
-        }
-    }
-
-    @Override
-    protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.Provider provider) {
-        super.saveAdditional(tag, provider);
-        if (!this.trySaveLootTable(tag)) {
-            ContainerHelper.saveAllItems(tag, this.itemStacks, provider);
-        }
-        tag.putUUID("blockEntityUuid", this.getBlockEntityUuid());
     }
 
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
@@ -227,7 +206,28 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
         return this.lootTable;
     }
 
-    public long getLootSeed () {
+    public long getLootSeed() {
         return this.lootTableSeed;
+    }
+
+    @Override
+    public void loadAdditional(ValueInput valueInput) {
+        super.loadAdditional(valueInput);
+
+        this.itemStacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
+        if (!this.tryLoadLootTable(valueInput)) {
+            ContainerHelper.loadAllItems(valueInput, this.itemStacks);
+        }
+
+        this.blockEntityUuid = valueInput.read("blockEntityUuid", UUIDUtil.CODEC).orElse(null);
+    }
+
+    @Override
+    protected void saveAdditional(ValueOutput valueOutput) {
+        super.saveAdditional(valueOutput);
+        if (!this.trySaveLootTable(valueOutput)) {
+            ContainerHelper.saveAllItems(valueOutput, this.itemStacks);
+        }
+        valueOutput.store("blockEntityUuid", UUIDUtil.CODEC, this.getBlockEntityUuid());
     }
 }
