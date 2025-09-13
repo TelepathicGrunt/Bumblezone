@@ -22,97 +22,97 @@
     ]
   },
   "criteria": {
-    "target_advancement_done_1": {
+    "back_in_action": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
         "target_advancement": "the_bumblezone:the_queens_desire/back_in_action"
       }
     },
-    "target_advancement_done_2": {
+    "fighting_the_swarm": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
         "target_advancement": "the_bumblezone:the_queens_desire/fighting_the_swarm"
       }
     },
-    "target_advancement_done_3": {
+    "flooding_the_housing_market": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
         "target_advancement": "the_bumblezone:the_queens_desire/flooding_the_housing_market"
       }
     },
-    "target_advancement_done_4": {
+    "honey_drunk": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
         "target_advancement": "the_bumblezone:the_queens_desire/honey_drunk"
       }
     },
-    "target_advancement_done_5": {
+    "hungry_hungry_bees": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
         "target_advancement": "the_bumblezone:the_queens_desire/hungry_hungry_bees"
       }
     },
-    "target_advancement_done_6": {
+    "crazy_trader": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
         "target_advancement": "the_bumblezone:the_queens_desire/crazy_trader"
       }
     },
-    "target_advancement_done_7": {
+    "love_bees": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
         "target_advancement": "the_bumblezone:the_queens_desire/love_bees"
       }
     },
-    "target_advancement_done_8": {
+    "otherworldly_mites": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
         "target_advancement": "the_bumblezone:the_queens_desire/otherworldly_mites"
       }
     },
-    "target_advancement_done_9": {
+    "peak_inefficiency": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
         "target_advancement": "the_bumblezone:the_queens_desire/peak_inefficiency"
       }
     },
-    "target_advancement_done_10": {
+    "poison_warfare": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
         "target_advancement": "the_bumblezone:the_queens_desire/poison_warfare"
       }
     },
-    "target_advancement_done_11": {
+    "pollen_fight": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
         "target_advancement": "the_bumblezone:the_queens_desire/pollen_fight"
       }
     },
-    "target_advancement_done_12": {
+    "slimy_mitosis": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
         "target_advancement": "the_bumblezone:the_queens_desire/slimy_mitosis"
       }
     },
-    "target_advancement_done_13": {
+    "terror_fangs": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
         "target_advancement": "the_bumblezone:the_queens_desire/terror_fangs"
       }
     },
-    "target_advancement_done_14": {
+    "the_crazy_florist": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
         "target_advancement": "the_bumblezone:the_queens_desire/the_crazy_florist"
       }
     },
-    "target_advancement_done_15": {
+    "the_great_dragon_slayer": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
         "target_advancement": "the_bumblezone:the_queens_desire/the_great_dragon_slayer"
       }
     },
-    "target_advancement_done_16": {
+    "too_many_legs": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
         "target_advancement": "the_bumblezone:the_queens_desire/too_many_legs"
@@ -121,52 +121,52 @@
   },
   "requirements": [
     [
-      "target_advancement_done_1"
+      "back_in_action"
     ],
     [
-      "target_advancement_done_2"
+      "fighting_the_swarm"
     ],
     [
-      "target_advancement_done_3"
+      "flooding_the_housing_market"
     ],
     [
-      "target_advancement_done_4"
+      "honey_drunk"
     ],
     [
-      "target_advancement_done_5"
+      "hungry_hungry_bees"
     ],
     [
-      "target_advancement_done_6"
+      "crazy_trader"
     ],
     [
-      "target_advancement_done_7"
+      "love_bees"
     ],
     [
-      "target_advancement_done_8"
+      "otherworldly_mites"
     ],
     [
-      "target_advancement_done_9"
+      "peak_inefficiency"
     ],
     [
-      "target_advancement_done_10"
+      "poison_warfare"
     ],
     [
-      "target_advancement_done_11"
+      "pollen_fight"
     ],
     [
-      "target_advancement_done_12"
+      "slimy_mitosis"
     ],
     [
-      "target_advancement_done_13"
+      "terror_fangs"
     ],
     [
-      "target_advancement_done_14"
+      "the_crazy_florist"
     ],
     [
-      "target_advancement_done_15"
+      "the_great_dragon_slayer"
     ],
     [
-      "target_advancement_done_16"
+      "too_many_legs"
     ]
   ]
 }
