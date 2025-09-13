@@ -85,7 +85,7 @@ public interface AncientWaxBase {
             return null;
         }
 
-        Optional<HolderSet.Named<Block>> tagEntries = BuiltInRegistries.BLOCK.getTag(blockIterationTag);
+        Optional<HolderSet.Named<Block>> tagEntries = BuiltInRegistries.BLOCK.get(blockIterationTag);
         if (tagEntries.isPresent() && tagEntries.get().size() > 1) {
 
             List<Block> blockList = tagEntries.get().stream().map(Holder::value).toList();

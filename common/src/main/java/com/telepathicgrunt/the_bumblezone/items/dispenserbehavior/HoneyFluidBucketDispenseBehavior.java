@@ -12,7 +12,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -52,10 +52,10 @@ public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavio
                 if (!world.getBlockState(blockpos).isSolid()) {
                     Mob beeEntity = EntityType.BEE.create(world);
                     beeEntity.moveTo(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, beeEntity.getRandom().nextFloat() * 360.0F, 0.0F);
-                    beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(BlockPos.containing(beeEntity.position())), MobSpawnType.TRIGGERED, null);
+                    beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(BlockPos.containing(beeEntity.position())), EntitySpawnReason.TRIGGERED, null);
                     beeEntity.setBaby(true);
 
-                    PlatformService.INSTANCE.finalizeSpawn(beeEntity, world, null, MobSpawnType.DISPENSER);
+                    PlatformService.INSTANCE.finalizeSpawn(beeEntity, world, null, EntitySpawnReason.DISPENSER);
                     deniedBeeSpawn = !world.addFreshEntity(beeEntity);
                     world.setBlockAndUpdate(dispenseBlockPos, blockstate.setValue(HoneycombBrood.STAGE, 0));
                 }

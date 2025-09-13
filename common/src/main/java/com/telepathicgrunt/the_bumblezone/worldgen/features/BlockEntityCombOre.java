@@ -82,7 +82,7 @@ public class BlockEntityCombOre extends Feature<NbtOreConfiguration> {
 						blockToReplace = cachedChunk.getBlockState(blockposMutable);
 						for(NbtOreConfiguration.TargetBlockState targetBlockState : context.config().targetStates) {
 							if(targetBlockState.target.test(blockToReplace, context.random())) {
-								cachedChunk.setBlockState(blockposMutable, targetBlockState.state, false);
+								cachedChunk.setBlockState(blockposMutable, targetBlockState.state, Block.UPDATE_ALL);
 								BlockEntity blockentity = ((EntityBlock)targetBlockState.state.getBlock()).newBlockEntity(blockposMutable, targetBlockState.state);
 								if (blockentity == null) return false;
 								blockentity.loadWithComponents(targetBlockState.stateNbt, context.level().registryAccess());

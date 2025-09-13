@@ -64,7 +64,7 @@ public class PollenPilingProcessor extends StructureProcessor {
             }
 
             BlockPos belowPos = worldPos.below();
-            if (belowPos.getY() <= levelReader.getMinBuildHeight() || belowPos.getY() >= levelReader.getMaxBuildHeight()) {
+            if (belowPos.getY() <= levelReader.getMinY() || belowPos.getY() >= levelReader.getMaxY()) {
                 return null;
             }
             

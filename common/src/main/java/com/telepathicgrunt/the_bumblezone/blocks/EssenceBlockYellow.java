@@ -27,7 +27,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -272,7 +272,7 @@ public class EssenceBlockYellow extends EssenceBlock {
 
         EntityType<?> entityTypeToSpawn = entityTypeList.get(serverLevel.getRandom().nextInt(entityTypeList.size()));
         int yOffset = (essenceBlockEntity.getArenaSize().getY() - 2) / 2;
-        Entity entity = entityTypeToSpawn.spawn(serverLevel, blockPos.offset(0, yOffset, 0), MobSpawnType.TRIGGERED);
+        Entity entity = entityTypeToSpawn.spawn(serverLevel, blockPos.offset(0, yOffset, 0), EntitySpawnReason.TRIGGERED);
         if (entity != null) {
             entity.addTag("the_bumblezone.yellow_essence_arena");
             eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));

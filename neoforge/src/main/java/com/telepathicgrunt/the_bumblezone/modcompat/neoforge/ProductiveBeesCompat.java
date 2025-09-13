@@ -35,7 +35,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -188,7 +188,7 @@ public class ProductiveBeesCompat implements ModCompat {
             return false;
         }
 
-        if (event.spawnType() == MobSpawnType.DISPENSER && !BzModCompatibilityConfigs.allowProductiveBeesSpawnFromDispenserFedBroodBlock) {
+        if (event.spawnType() == EntitySpawnReason.DISPENSER && !BzModCompatibilityConfigs.allowProductiveBeesSpawnFromDispenserFedBroodBlock) {
             return false;
         }
 

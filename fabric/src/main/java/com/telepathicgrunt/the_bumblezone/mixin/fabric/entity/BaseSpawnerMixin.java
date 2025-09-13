@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntitySpawnEvent;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -18,7 +18,7 @@ public class BaseSpawnerMixin {
     @WrapOperation(method = "serverTick",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Mob;checkSpawnObstruction(Lnet/minecraft/world/level/LevelReader;)Z"))
     private boolean bumblezone$onEntitySpawn(Mob instance, LevelReader level, Operation<Boolean> operation) {
-        if (level instanceof Level theLevel && BzEntitySpawnEvent.EVENT.invoke(new BzEntitySpawnEvent(instance, theLevel, instance.isBaby(), MobSpawnType.SPAWNER))) {
+        if (level instanceof Level theLevel && BzEntitySpawnEvent.EVENT.invoke(new BzEntitySpawnEvent(instance, theLevel, instance.isBaby(), EntitySpawnReason.SPAWNER))) {
             // Return false makes it so the if statement is true to then skip spawning the mob
             return false;
         }

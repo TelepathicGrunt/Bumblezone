@@ -20,7 +20,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -62,7 +62,7 @@ public class SentryWatcherSpawnEgg extends Item {
                         Direction direction = source.state().getValue(DispenserBlock.FACING);
 
                         EntityType<?> entitytype = ((SentryWatcherSpawnEgg)stack.getItem()).getType(stack);
-                        Entity entity = entitytype.spawn(source.level(), stack, null, source.pos().relative(direction), MobSpawnType.DISPENSER, direction != Direction.UP, false);
+                        Entity entity = entitytype.spawn(source.level(), stack, null, source.pos().relative(direction), EntitySpawnReason.DISPENSER, direction != Direction.UP, false);
                         if (entity instanceof SentryWatcherEntity sentryWatcherEntity) {
                             sentryWatcherEntity.setTargetFacing(direction);
                             sentryWatcherEntity.setOwner(Optional.of(DISPENSER_OWNER_UUID));
@@ -118,7 +118,7 @@ public class SentryWatcherSpawnEgg extends Item {
             }
 
             EntityType<?> entityType2 = this.getType(itemStack);
-            Entity entity = entityType2.spawn((ServerLevel)level, itemStack, useOnContext.getPlayer(), blockPos2, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockPos, blockPos2) && direction == Direction.UP);
+            Entity entity = entityType2.spawn((ServerLevel)level, itemStack, useOnContext.getPlayer(), blockPos2, EntitySpawnReason.SPAWN_EGG, true, !Objects.equals(blockPos, blockPos2) && direction == Direction.UP);
             if (entity != null) {
                 if (entity instanceof SentryWatcherEntity sentryWatcherEntity) {
                     if (useOnContext.getClickedFace().getAxis() != Direction.Axis.Y) {
@@ -162,7 +162,7 @@ public class SentryWatcherSpawnEgg extends Item {
             }
             else if (level.mayInteract(player, blockPos) && player.mayUseItemAt(blockPos, blockHitResult.getDirection(), itemStack)) {
                 EntityType<?> entityType = this.getType(itemStack);
-                Entity entity = entityType.spawn((ServerLevel)level, itemStack, player, blockPos, MobSpawnType.SPAWN_EGG, false, false);
+                Entity entity = entityType.spawn((ServerLevel)level, itemStack, player, blockPos, EntitySpawnReason.SPAWN_EGG, false, false);
                 if (entity == null) {
                     return InteractionResultHolder.pass(itemStack);
                 }

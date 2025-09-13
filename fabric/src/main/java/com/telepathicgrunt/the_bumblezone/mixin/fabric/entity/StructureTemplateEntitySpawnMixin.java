@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.fabric.entity;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntitySpawnEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class StructureTemplateEntitySpawnMixin {
 
     @Inject(method = "method_17917",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Mob;finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData;"),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Mob;finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData;"),
             cancellable = true)
     private static void bumblezone$onEntitySpawn(
             Rotation rotation,
@@ -29,7 +29,7 @@ public class StructureTemplateEntitySpawnMixin {
             Entity entity,
             CallbackInfo ci)
     {
-        if (entity instanceof Mob mob && BzEntitySpawnEvent.EVENT.invoke(new BzEntitySpawnEvent(mob, serverLevel, mob.isBaby(), MobSpawnType.STRUCTURE))) {
+        if (entity instanceof Mob mob && BzEntitySpawnEvent.EVENT.invoke(new BzEntitySpawnEvent(mob, serverLevel, mob.isBaby(), EntitySpawnReason.STRUCTURE))) {
             ci.cancel();
         }
     }

@@ -163,7 +163,7 @@ public class FabricPlatformService implements PlatformService {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason) {
+    public SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, EntitySpawnReason spawnReason) {
         return entity.finalizeSpawn(
                 world,
                 world.getCurrentDifficultyAt(entity.blockPosition()),

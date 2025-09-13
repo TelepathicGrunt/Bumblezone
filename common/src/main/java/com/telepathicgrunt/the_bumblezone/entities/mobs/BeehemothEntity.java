@@ -48,7 +48,7 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.PlayerRideable;
 import net.minecraft.world.entity.Saddleable;
 import net.minecraft.world.entity.TamableAnimal;
@@ -343,12 +343,12 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
 
-    public static boolean checkMobSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor iWorld, MobSpawnType spawnReason, BlockPos blockPos, RandomSource random) {
+    public static boolean checkMobSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor iWorld, EntitySpawnReason spawnReason, BlockPos blockPos, RandomSource random) {
         return true;
     }
 
     @Override
-    public boolean checkSpawnRules(LevelAccessor world, MobSpawnType spawnReason) {
+    public boolean checkSpawnRules(LevelAccessor world, EntitySpawnReason spawnReason) {
         return true;
     }
 

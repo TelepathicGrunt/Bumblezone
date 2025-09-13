@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
@@ -16,6 +17,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.ContainerHelper;
@@ -33,6 +35,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.storage.TagValueOutput;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -105,7 +108,9 @@ public class ChiseledBookshelfProcessor extends StructureProcessor {
             }
 
             CompoundTag tag = structureBlockInfoWorld.nbt() == null ? new CompoundTag() : structureBlockInfoWorld.nbt().copy();
-            ContainerHelper.saveAllItems(tag, items, true, levelReader.registryAccess());
+            TagValueOutput tagvalueoutput = TagValueOutput.createWithContext(new ProblemReporter.ScopedCollector(Bumblezone.LOGGER), levelReader.registryAccess());
+            ContainerHelper.saveAllItems(tagvalueoutput, items, true);
+            tag.merge(tagvalueoutput.buildResult());
             tag.remove("last_interacted_slot");
             return new StructureTemplate.StructureBlockInfo(structureBlockInfoWorld.pos(), chiseledBookshelfState, tag);
         }

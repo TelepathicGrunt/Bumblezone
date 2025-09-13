@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -41,7 +42,7 @@ public class RemoveFloatingBlocksProcessor extends StructureProcessor {
                 if (aboveWorldState.hasBlockEntity()) {
                     cachedChunk.removeBlockEntity(mutable);
                 }
-                cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state(), false);
+                cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state(), Block.UPDATE_ALL);
 
                 // detects the invalidly placed blocks
                 mutable.move(Direction.UP);
@@ -50,7 +51,7 @@ public class RemoveFloatingBlocksProcessor extends StructureProcessor {
                     if (aboveWorldState.hasBlockEntity()) {
                         cachedChunk.removeBlockEntity(mutable);
                     }
-                    cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state(), false);
+                    cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state(), Block.UPDATE_ALL);
                     mutable.move(Direction.UP);
                     aboveWorldState = cachedChunk.getBlockState(mutable);
                 }

@@ -78,7 +78,7 @@ public class TagReplaceProcessor extends StructureProcessor {
                 return structureBlockInfoWorld;
             }
 
-            Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.getTag(outputBlockTag);
+            Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.get(outputBlockTag);
 
             if (optionalBlocks.isPresent()) {
                 RandomSource randomSource;
@@ -168,24 +168,24 @@ public class TagReplaceProcessor extends StructureProcessor {
                         }
 
                         oldTopBlock = chunk.getBlockState(oldTopPos);
-                        chunk.setBlockState(oldTopPos, Blocks.AIR.defaultBlockState(), false);
+                        chunk.setBlockState(oldTopPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
                     }
 
                     BlockState oldBlockstate = chunk.getBlockState(mainPos);
                     BlockState belowGroundBlockstate = chunk.getBlockState(groundPos);
 
-                    chunk.setBlockState(mainPos, Blocks.AIR.defaultBlockState(), false);
-                    chunk.setBlockState(groundPos, Blocks.GRASS_BLOCK.defaultBlockState(), false);
+                    chunk.setBlockState(mainPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
+                    chunk.setBlockState(groundPos, Blocks.GRASS_BLOCK.defaultBlockState(), Block.UPDATE_ALL);
 
                     if (checkingState.canSurvive(levelReader, mainPos)) {
                         returnInfo = new StructureTemplate.StructureBlockInfo(structureBlockInfoWorld.pos(), newBlockState, structureBlockInfoWorld.nbt());
                     }
 
                     if (oldTopBlock != null) {
-                        chunk.setBlockState(oldTopPos, oldTopBlock, false);
+                        chunk.setBlockState(oldTopPos, oldTopBlock, Block.UPDATE_ALL);
                     }
-                    chunk.setBlockState(mainPos, oldBlockstate, false);
-                    chunk.setBlockState(groundPos, belowGroundBlockstate, false);
+                    chunk.setBlockState(mainPos, oldBlockstate, Block.UPDATE_ALL);
+                    chunk.setBlockState(groundPos, belowGroundBlockstate, Block.UPDATE_ALL);
                 }
             }
         }

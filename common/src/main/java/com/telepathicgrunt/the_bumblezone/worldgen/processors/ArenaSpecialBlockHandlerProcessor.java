@@ -3,11 +3,13 @@ package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -23,6 +25,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.storage.TagValueInput;
 
 public class ArenaSpecialBlockHandlerProcessor extends StructureProcessor {
 
@@ -51,7 +54,13 @@ public class ArenaSpecialBlockHandlerProcessor extends StructureProcessor {
                 if (structureBlockState.getBlock() instanceof EntityBlock entityBlock) {
                     blockEntity = entityBlock.newBlockEntity(structureBlockInfoWorld.pos(), structureBlockState);
                     if (blockEntity != null) {
-                        blockEntity.loadWithComponents(structureBlockInfoWorld.nbt(), levelReader.registryAccess());
+                        blockEntity.loadWithComponents(
+                            TagValueInput.create(
+                                new ProblemReporter.ScopedCollector(Bumblezone.LOGGER),
+                                levelReader.registryAccess(),
+                                structureBlockInfoWorld.nbt()
+                            )
+                        );
                     }
                 }
                 ItemStack itemStack = new ItemStack(Items.DIAMOND_PICKAXE);

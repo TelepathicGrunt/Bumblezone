@@ -13,7 +13,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
@@ -46,7 +46,7 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         BlockPos chunkCornerPos = new ChunkPos(context.origin()).getWorldPosition().above(context.origin().getY());
 
-        Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.getTag(config.flowerTag);
+        Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.get(config.flowerTag);
         List<Block> blockList = GeneralUtils.convertHoldersetToList(optionalBlocks);
         blockList.removeIf(block -> block.defaultBlockState().is(context.config().disallowedFlowerTag));
 
@@ -95,7 +95,7 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
 
                     Entity spawningEntity = BzEntities.ROOTMIN.get().create(level.getLevel());
                     if (spawningEntity instanceof RootminEntity rootmin) {
-                        Optional<HolderSet.Named<Block>> optionalRootminBlocks = BuiltInRegistries.BLOCK.getTag(config.rootminFlowerTag);
+                        Optional<HolderSet.Named<Block>> optionalRootminBlocks = BuiltInRegistries.BLOCK.get(config.rootminFlowerTag);
                         List<Block> rootminBlockList = GeneralUtils.convertHoldersetToList(optionalRootminBlocks);
                         rootminBlockList.removeIf(block -> block.defaultBlockState().is(context.config().disallowedRootminFlowerTag));
                         BlockState chosenRootminFlower;
@@ -127,7 +127,7 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                         rootmin.finalizeSpawn(
                                 level,
                                 level.getCurrentDifficultyAt(mutable),
-                                MobSpawnType.CHUNK_GENERATION,
+                                EntitySpawnReason.CHUNK_GENERATION,
                                 null);
 
                         level.addFreshEntityWithPassengers(rootmin);

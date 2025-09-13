@@ -28,7 +28,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -210,7 +210,7 @@ public class EssenceBlockBlue extends EssenceBlock {
                 direction.getStepY() * 3,
                 direction.getStepZ() * 3
             ),
-            MobSpawnType.TRIGGERED);
+            EntitySpawnReason.TRIGGERED);
         if (entity == null) {
             return;
         }

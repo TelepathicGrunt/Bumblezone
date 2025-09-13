@@ -151,7 +151,7 @@ public class NeoPlatformService implements PlatformService {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason) {
+    public SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, EntitySpawnReason spawnReason) {
         return EventHooks.finalizeMobSpawn(entity, world, world.getCurrentDifficultyAt(BlockPos.containing(entity.position())), spawnReason, spawnGroupData);
     }
     

@@ -17,6 +17,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -82,7 +83,7 @@ public class PillarProcessor extends StructureProcessor {
             BlockPos.MutableBlockPos currentPos = new BlockPos.MutableBlockPos().set(worldPos);
             StructureProcessorList structureProcessorList = null;
             if(processorList != null && !processorList.equals(EMPTY_RL)) {
-                structureProcessorList = levelReader.registryAccess().registryOrThrow(Registries.PROCESSOR_LIST).get(processorList);
+                structureProcessorList = levelReader.registryAccess().lookupOrThrow(Registries.PROCESSOR_LIST).get(processorList).get().value();
             }
 
             if(levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(new ChunkPos(currentPos))) {
@@ -93,7 +94,7 @@ public class PillarProcessor extends StructureProcessor {
             int terrainY = Integer.MIN_VALUE;
             if(direction == Direction.DOWN && !forcePlacement) {
                 terrainY = GeneralUtils.getFirstLandYFromPos(levelReader, worldPos);
-                if(terrainY <= levelReader.getMinBuildHeight() && pillarHeight + 2 >= worldPos.getY() - levelReader.getMinBuildHeight()) {
+                if(terrainY <= levelReader.getMinY() && pillarHeight + 2 >= worldPos.getY() - levelReader.getMinY()) {
                     // Replaces the data block itself
                     return (replacementState == null || replacementState.is(Blocks.STRUCTURE_VOID)) ?
                             null : new StructureTemplate.StructureBlockInfo(worldPos, replacementState, null);
@@ -129,10 +130,10 @@ public class PillarProcessor extends StructureProcessor {
                     }
                     else {
                         if (isVertical) {
-                            currentChunk.setBlockState(currentPos, newState, false);
+                            currentChunk.setBlockState(currentPos, newState, Block.UPDATE_ALL);
                         }
                         else {
-                            levelReader.getChunk(currentPos).setBlockState(currentPos, newState, false);
+                            levelReader.getChunk(currentPos).setBlockState(currentPos, newState, Block.UPDATE_ALL);
                         }
                     }
                 }

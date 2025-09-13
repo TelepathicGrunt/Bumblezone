@@ -59,7 +59,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -208,12 +208,12 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         return MovementEmission.NONE;
     }
 
-    public static boolean checkMobSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor iWorld, MobSpawnType spawnReason, BlockPos blockPos, RandomSource random) {
+    public static boolean checkMobSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor iWorld, EntitySpawnReason spawnReason, BlockPos blockPos, RandomSource random) {
         return true;
     }
 
     @Override
-    public boolean checkSpawnRules(LevelAccessor world, MobSpawnType spawnReason) {
+    public boolean checkSpawnRules(LevelAccessor world, EntitySpawnReason spawnReason) {
         return true;
     }
 
@@ -488,7 +488,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             bee.finalizeSpawn(
                     (ServerLevel) this.level(),
                     this.level().getCurrentDifficultyAt(spawnBlockPos),
-                    MobSpawnType.TRIGGERED,
+                    EntitySpawnReason.TRIGGERED,
                     null);
 
             bee.addEffect(new MobEffectInstance(

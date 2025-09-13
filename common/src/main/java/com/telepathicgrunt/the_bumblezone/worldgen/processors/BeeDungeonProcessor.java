@@ -54,10 +54,10 @@ public class BeeDungeonProcessor extends StructureProcessor {
             if (compoundTag == null) {
                 return structureBlockInfoWorld;
             }
-            String metadata = compoundTag.getString("metadata");
+            String metadata = compoundTag.getString("metadata").orElse("");
             BlockState belowBlock = levelReader.getChunk(worldPos).getBlockState(worldPos);
 
-            if (!metadata.isEmpty()) {
+            if (metadata.isEmpty()) {
                 nbt = null;
             }
 
@@ -78,7 +78,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
                             blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState();
                         }
                         else if (random.nextFloat() < 0.6f) {
-                            Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.getTag(BzTags.BEE_DUNGEON_POSSIBLE_CANDLES);
+                            Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.get(BzTags.BEE_DUNGEON_POSSIBLE_CANDLES);
                             if (optionalBlocks.isPresent()) {
                                 blockState = optionalBlocks.get().get(random.nextInt(optionalBlocks.get().size())).value().defaultBlockState();
                                 blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(4) + 1);
@@ -94,7 +94,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
                             blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState();
                         }
                         else if (random.nextFloat() < 0.35f) {
-                            Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.getTag(BzTags.BEE_DUNGEON_POSSIBLE_CANDLES);
+                            Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.get(BzTags.BEE_DUNGEON_POSSIBLE_CANDLES);
                             if (optionalBlocks.isPresent()) {
                                 blockState = optionalBlocks.get().get(random.nextInt(optionalBlocks.get().size())).value().defaultBlockState();
                                 blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(random.nextInt(4) + 1) + 1);
@@ -110,7 +110,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
                             blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState();
                         }
                         else if (random.nextFloat() < 0.2f) {
-                            Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.getTag(BzTags.BEE_DUNGEON_POSSIBLE_CANDLES);
+                            Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.get(BzTags.BEE_DUNGEON_POSSIBLE_CANDLES);
                             if (optionalBlocks.isPresent()) {
                                 blockState = optionalBlocks.get().get(random.nextInt(optionalBlocks.get().size())).value().defaultBlockState();
                                 blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(random.nextInt(4) + 1) + 1);

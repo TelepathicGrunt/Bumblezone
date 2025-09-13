@@ -11,7 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -127,9 +127,9 @@ public final class BeeDedicatedSpawning {
                     newBee.setPos(Vec3.atCenterOf(newBeePos));
                     newBee.setDeltaMovement(new Vec3(0, 1D, 0));
                     newBee.setSpeed(0);
-                    newBee.finalizeSpawn(world, world.getCurrentDifficultyAt(newBee.blockPosition()), MobSpawnType.NATURAL, null);
+                    newBee.finalizeSpawn(world, world.getCurrentDifficultyAt(newBee.blockPosition()), EntitySpawnReason.NATURAL, null);
 
-                    PlatformService.INSTANCE.finalizeSpawn(newBee, world, null, MobSpawnType.NATURAL);
+                    PlatformService.INSTANCE.finalizeSpawn(newBee, world, null, EntitySpawnReason.NATURAL);
                     world.addFreshEntity(newBee);
                     entityCountChange++;
                 }

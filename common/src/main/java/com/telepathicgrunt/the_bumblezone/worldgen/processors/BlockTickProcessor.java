@@ -40,7 +40,7 @@ public class BlockTickProcessor extends StructureProcessor {
                 return structureBlockInfoWorld;
             }
 
-            if (structureBlockInfoWorld.pos().getY() > levelReader.getMinBuildHeight() && structureBlockInfoWorld.pos().getY() < levelReader.getMaxBuildHeight()) {
+            if (structureBlockInfoWorld.pos().getY() > levelReader.getMinY() && structureBlockInfoWorld.pos().getY() < levelReader.getMaxY()) {
                 ((LevelAccessor) levelReader).scheduleTick(structureBlockInfoWorld.pos(), structureBlockInfoWorld.state().getBlock(), 0);
             }
         }

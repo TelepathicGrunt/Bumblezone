@@ -17,7 +17,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
@@ -73,9 +73,9 @@ public class ThronePillarBehavior {
 
                 BlockPos queenPos = new BlockPos(structureCenter.getX(), 133, structureCenter.getZ());
                 newBeeQueen.setPos(Vec3.atCenterOf(queenPos));
-                newBeeQueen.finalizeSpawn(level, level.getCurrentDifficultyAt(newBeeQueen.blockPosition()), MobSpawnType.STRUCTURE, null);
+                newBeeQueen.finalizeSpawn(level, level.getCurrentDifficultyAt(newBeeQueen.blockPosition()), EntitySpawnReason.STRUCTURE, null);
 
-                PlatformService.INSTANCE.finalizeSpawn(newBeeQueen, level, null, MobSpawnType.STRUCTURE);
+                PlatformService.INSTANCE.finalizeSpawn(newBeeQueen, level, null, EntitySpawnReason.STRUCTURE);
                 level.addFreshEntity(newBeeQueen);
 
                 level.setBlock(queenPos.above(17), BzFluids.ROYAL_JELLY_FLUID_BLOCK.get().defaultBlockState(), 3);

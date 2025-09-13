@@ -20,7 +20,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.ai.village.poi.PoiManager;
@@ -112,7 +112,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
                     bee.finalizeSpawn(
                             serverLevel,
                             serverLevel.getCurrentDifficultyAt(spawnBlockPos),
-                            MobSpawnType.TRIGGERED,
+                            EntitySpawnReason.TRIGGERED,
                             null
                     );
 
@@ -123,7 +123,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
                             entity.getRandom().nextFloat() * 360.0F,
                             0.0F);
 
-                    PlatformService.INSTANCE.finalizeSpawn(bee, (ServerLevelAccessor) world, null, MobSpawnType.TRIGGERED);
+                    PlatformService.INSTANCE.finalizeSpawn(bee, (ServerLevelAccessor) world, null, EntitySpawnReason.TRIGGERED);
                     world.addFreshEntity(bee);
                 }
             }

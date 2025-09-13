@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.level.LevelAccessor;
 
 import java.util.EnumSet;
@@ -41,7 +41,7 @@ public class TropicraftCompat implements ModCompat {
             return false;
         }
 
-        if (event.spawnType() == MobSpawnType.DISPENSER && !BzModCompatibilityConfigs.allowTropicraftSpawnFromDispenserFedBroodBlock) {
+        if (event.spawnType() == EntitySpawnReason.DISPENSER && !BzModCompatibilityConfigs.allowTropicraftSpawnFromDispenserFedBroodBlock) {
             return false;
         }
 

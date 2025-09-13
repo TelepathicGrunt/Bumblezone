@@ -41,7 +41,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -105,7 +105,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
    }
 
    @Override
-   public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn) {
+   public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, EntitySpawnReason reason, SpawnGroupData spawnDataIn) {
       this.setupHoneySlime(this.isBaby(), true);
       return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn);
    }
@@ -157,7 +157,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
    }
 
    @Override
-   public boolean checkSpawnRules(LevelAccessor world, MobSpawnType spawnReason) {
+   public boolean checkSpawnRules(LevelAccessor world, EntitySpawnReason spawnReason) {
       return true;
    }
 

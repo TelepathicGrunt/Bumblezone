@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Doubles;
 import com.mojang.datafixers.util.Pair;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.mixin.world.SinglePoolElementAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.StructureTemplateAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -21,21 +22,18 @@ import net.minecraft.core.SectionPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.DoubleTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Clearable;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.RandomizableContainer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -52,7 +50,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JigsawBlock;
 import net.minecraft.world.level.block.LiquidBlockContainer;
-import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
@@ -72,6 +69,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BitSetDiscreteVoxelShape;
 import net.minecraft.world.phys.shapes.DiscreteVoxelShape;
@@ -245,7 +243,7 @@ public class GeneralUtils {
     }
 
     public static String getStringMicroOptimised(CompoundTag tag, String key) {
-        return tag.get(key) instanceof StringTag stringTag ? stringTag.getAsString() : "";
+        return tag != null && tag.get(key) instanceof StringTag stringTag ? stringTag.asString().orElse("") : "";
     }
 
     //////////////////////////////////////////////
@@ -256,7 +254,7 @@ public class GeneralUtils {
         ChunkAccess currentChunk = worldView.getChunk(mutable);
         BlockState currentState = currentChunk.getBlockState(mutable);
 
-        while(mutable.getY() >= worldView.getMinBuildHeight() && isReplaceableByStructures(currentState)) {
+        while(mutable.getY() >= worldView.getMinY() && isReplaceableByStructures(currentState)) {
             mutable.move(Direction.DOWN);
             currentState = currentChunk.getBlockState(mutable);
         }
@@ -345,7 +343,7 @@ public class GeneralUtils {
     }
 
     public static <B, T extends B> boolean isInTag(Registry<B> registry, TagKey<B> key, T value) {
-        return registry.getHolder(registry.getId(value)).orElseThrow().is(key);
+        return registry.get(registry.getId(value)).orElseThrow().is(key);
     }
 
     /**
@@ -393,7 +391,7 @@ public class GeneralUtils {
     //////////////////////////////////////////////
 
     public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
-        if (entity instanceof Player player && !player.mayInteract(level, pos)) {
+        if (level instanceof ServerLevel serverLevel && entity instanceof Player player && !player.mayInteract(serverLevel, pos)) {
             return false;
         }
         return PlatformService.INSTANCE.isPermissionAllowedAtSpot(level, entity, pos, placingBlock);
@@ -433,250 +431,278 @@ public class GeneralUtils {
         int n = Integer.MIN_VALUE;
         int o = Integer.MIN_VALUE;
         List<StructureTemplate.StructureBlockInfo> list5 = StructureTemplate.processBlockInfos(serverLevelAccessor, blockPos, blockPos2, structurePlaceSettings, list);
-        for (StructureTemplate.StructureBlockInfo structureBlockInfo : list5) {
-            BlockEntity blockEntity;
-            BlockPos blockPos3 = structureBlockInfo.pos();
-            if (boundingBox != null && !boundingBox.isInside(blockPos3)) continue;
-            FluidState fluidState = structurePlaceSettings.shouldApplyWaterlogging() ? serverLevelAccessor.getFluidState(blockPos3) : null;
-            BlockState blockState = structureBlockInfo.state().mirror(structurePlaceSettings.getMirror()).rotate(structurePlaceSettings.getRotation());
-            if (structureBlockInfo.nbt() != null) {
-                blockEntity = serverLevelAccessor.getBlockEntity(blockPos3);
-                Clearable.tryClear(blockEntity);
-                serverLevelAccessor.setBlock(blockPos3, Blocks.BARRIER.defaultBlockState(), 20);
-            }
-            if (!serverLevelAccessor.setBlock(blockPos3, blockState, i)) continue;
-            j = Math.min(j, blockPos3.getX());
-            k = Math.min(k, blockPos3.getY());
-            l = Math.min(l, blockPos3.getZ());
-            m = Math.max(m, blockPos3.getX());
-            n = Math.max(n, blockPos3.getY());
-            o = Math.max(o, blockPos3.getZ());
-            list4.add(Pair.of(blockPos3, structureBlockInfo.nbt()));
-            if (structureBlockInfo.nbt() != null && (blockEntity = serverLevelAccessor.getBlockEntity(blockPos3)) != null) {
-                if (blockEntity instanceof RandomizableContainerBlockEntity) {
-                    structureBlockInfo.nbt().putLong("LootTableSeed", randomSource.nextLong());
-                }
-                blockEntity.loadWithComponents(structureBlockInfo.nbt(), serverLevelAccessor.registryAccess());
-            }
-            if (fluidState == null) continue;
-            if (blockState.getFluidState().isSource()) {
-                list3.add(blockPos3);
-                continue;
-            }
-            if (!(blockState.getBlock() instanceof LiquidBlockContainer)) continue;
-            ((LiquidBlockContainer) blockState.getBlock()).placeLiquid(serverLevelAccessor, blockPos3, blockState, fluidState);
-            if (fluidState.isSource()) continue;
-            list2.add(blockPos3);
-        }
-        boolean bl = true;
-        Direction[] directions = new Direction[]{Direction.UP, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
-        while (bl && !list2.isEmpty()) {
-            bl = false;
-            Iterator<BlockPos> iterator = list2.iterator();
-            while (iterator.hasNext()) {
-                BlockState blockState2;
-                Object block;
-                BlockPos blockPos3 = iterator.next();
-                FluidState fluidState2 = serverLevelAccessor.getFluidState(blockPos3);
-                for (int p = 0; p < directions.length && !fluidState2.isSource(); ++p) {
-                    BlockPos blockPos5 = blockPos3.relative(directions[p]);
-                    FluidState fluidState = serverLevelAccessor.getFluidState(blockPos5);
-                    if (!fluidState.isSource() || list3.contains(blockPos5)) continue;
-                    fluidState2 = fluidState;
-                }
-                if (!fluidState2.isSource() || !((block = (blockState2 = serverLevelAccessor.getBlockState(blockPos3)).getBlock()) instanceof LiquidBlockContainer)) continue;
-                ((LiquidBlockContainer)block).placeLiquid(serverLevelAccessor, blockPos3, blockState2, fluidState2);
-                bl = true;
-                iterator.remove();
-            }
-        }
-        if (j <= m) {
-            if (!structurePlaceSettings.getKnownShape()) {
-                BitSetDiscreteVoxelShape discreteVoxelShape = new BitSetDiscreteVoxelShape(m - j + 1, n - k + 1, o - l + 1);
-                for (Pair<BlockPos, CompoundTag> pair : list4) {
-                    BlockPos blockPos6 = pair.getFirst();
-                    ((DiscreteVoxelShape)discreteVoxelShape).fill(blockPos6.getX() - j, blockPos6.getY() - k, blockPos6.getZ() - l);
-                }
-                StructureTemplate.updateShapeAtEdge(serverLevelAccessor, i, discreteVoxelShape, j, k, l);
-            }
-            for (Pair<BlockPos, CompoundTag> pair : list4) {
-                BlockEntity blockEntity;
-                BlockPos blockPos7 = pair.getFirst();
-                if (!structurePlaceSettings.getKnownShape()) {
-                    BlockState blockState3;
-                    BlockState blockState2 = serverLevelAccessor.getBlockState(blockPos7);
-                    if (blockState2 != (blockState3 = Block.updateFromNeighbourShapes(blockState2, serverLevelAccessor, blockPos7))) {
-                        serverLevelAccessor.setBlock(blockPos7, blockState3, i & 0xFFFFFFFE);
-                    }
-                    serverLevelAccessor.blockUpdated(blockPos7, blockState3.getBlock());
-                }
-                if (pair.getSecond() == null || (blockEntity = serverLevelAccessor.getBlockEntity(blockPos7)) == null) continue;
-                blockEntity.setChanged();
-            }
-        }
 
-        if (!structurePlaceSettings.isIgnoreEntities()) {
-            placeEntities(serverLevelAccessor, structureTemplate, blockPos, structurePlaceSettings.getMirror(), structurePlaceSettings.getRotation(), structurePlaceSettings.getRotationPivot(), boundingBox, structurePlaceSettings.shouldFinalizeEntities());
+        try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(Bumblezone.LOGGER)) {
+            for (StructureTemplate.StructureBlockInfo structureBlockInfo : list5) {
+                BlockEntity blockEntity;
+                BlockPos blockPos3 = structureBlockInfo.pos();
+                if (boundingBox != null && !boundingBox.isInside(blockPos3)) continue;
+                FluidState fluidState = structurePlaceSettings.shouldApplyWaterlogging() ? serverLevelAccessor.getFluidState(blockPos3) : null;
+                BlockState blockState = structureBlockInfo.state().mirror(structurePlaceSettings.getMirror()).rotate(structurePlaceSettings.getRotation());
+                if (structureBlockInfo.nbt() != null) {
+                    serverLevelAccessor.setBlock(blockPos3, Blocks.BARRIER.defaultBlockState(), 20);
+                }
+                if (!serverLevelAccessor.setBlock(blockPos3, blockState, i)) continue;
+                j = Math.min(j, blockPos3.getX());
+                k = Math.min(k, blockPos3.getY());
+                l = Math.min(l, blockPos3.getZ());
+                m = Math.max(m, blockPos3.getX());
+                n = Math.max(n, blockPos3.getY());
+                o = Math.max(o, blockPos3.getZ());
+                list4.add(Pair.of(blockPos3, structureBlockInfo.nbt()));
+                if (structureBlockInfo.nbt() != null && (blockEntity = serverLevelAccessor.getBlockEntity(blockPos3)) != null) {
+                    if (blockEntity instanceof RandomizableContainerBlockEntity) {
+                        structureBlockInfo.nbt().putLong("LootTableSeed", randomSource.nextLong());
+                    }
+
+                    blockEntity.loadWithComponents(
+                            TagValueInput.create(
+                                    problemreporter$scopedcollector.forChild(blockEntity.problemPath()),
+                                    serverLevelAccessor.registryAccess(),
+                                    structureBlockInfo.nbt()
+                            )
+                    );
+                }
+                if (fluidState == null) continue;
+                if (blockState.getFluidState().isSource()) {
+                    list3.add(blockPos3);
+                    continue;
+                }
+                if (!(blockState.getBlock() instanceof LiquidBlockContainer)) continue;
+                ((LiquidBlockContainer) blockState.getBlock()).placeLiquid(serverLevelAccessor, blockPos3, blockState, fluidState);
+                if (fluidState.isSource()) continue;
+                list2.add(blockPos3);
+            }
+            boolean bl = true;
+            Direction[] directions = new Direction[]{Direction.UP, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
+            while (bl && !list2.isEmpty()) {
+                bl = false;
+                Iterator<BlockPos> iterator = list2.iterator();
+                while (iterator.hasNext()) {
+                    BlockState blockState2;
+                    Object block;
+                    BlockPos blockPos3 = iterator.next();
+                    FluidState fluidState2 = serverLevelAccessor.getFluidState(blockPos3);
+                    for (int p = 0; p < directions.length && !fluidState2.isSource(); ++p) {
+                        BlockPos blockPos5 = blockPos3.relative(directions[p]);
+                        FluidState fluidState = serverLevelAccessor.getFluidState(blockPos5);
+                        if (!fluidState.isSource() || list3.contains(blockPos5)) continue;
+                        fluidState2 = fluidState;
+                    }
+                    if (!fluidState2.isSource() || !((block = (blockState2 = serverLevelAccessor.getBlockState(blockPos3)).getBlock()) instanceof LiquidBlockContainer)) continue;
+                    ((LiquidBlockContainer)block).placeLiquid(serverLevelAccessor, blockPos3, blockState2, fluidState2);
+                    bl = true;
+                    iterator.remove();
+                }
+            }
+            if (j <= m) {
+                if (!structurePlaceSettings.getKnownShape()) {
+                    BitSetDiscreteVoxelShape discreteVoxelShape = new BitSetDiscreteVoxelShape(m - j + 1, n - k + 1, o - l + 1);
+                    for (Pair<BlockPos, CompoundTag> pair : list4) {
+                        BlockPos blockPos6 = pair.getFirst();
+                        ((DiscreteVoxelShape)discreteVoxelShape).fill(blockPos6.getX() - j, blockPos6.getY() - k, blockPos6.getZ() - l);
+                    }
+                    StructureTemplate.updateShapeAtEdge(serverLevelAccessor, i, discreteVoxelShape, j, k, l);
+                }
+                for (Pair<BlockPos, CompoundTag> pair : list4) {
+                    BlockEntity blockEntity;
+                    BlockPos blockPos7 = pair.getFirst();
+                    if (!structurePlaceSettings.getKnownShape()) {
+                        BlockState blockState3;
+                        BlockState blockState2 = serverLevelAccessor.getBlockState(blockPos7);
+                        if (blockState2 != (blockState3 = Block.updateFromNeighbourShapes(blockState2, serverLevelAccessor, blockPos7))) {
+                            serverLevelAccessor.setBlock(blockPos7, blockState3, i & 0xFFFFFFFE);
+                        }
+                        serverLevelAccessor.updateNeighborsAt(blockPos7, blockState3.getBlock());
+                    }
+                    if (pair.getSecond() == null || (blockEntity = serverLevelAccessor.getBlockEntity(blockPos7)) == null) continue;
+                    blockEntity.setChanged();
+                }
+            }
+
+            if (!structurePlaceSettings.isIgnoreEntities()) {
+                ((StructureTemplateAccessor) structureTemplate).bumblezone$callPlaceEntities(
+                        serverLevelAccessor,
+                        blockPos,
+                        structurePlaceSettings.getMirror(),
+                        structurePlaceSettings.getRotation(),
+                        structurePlaceSettings.getRotationPivot(),
+                        boundingBox,
+                        structurePlaceSettings.shouldFinalizeEntities(),
+                        problemreporter$scopedcollector);
+            }
         }
     }
 
+    private static final Direction[] FLUID_CHECKING_DIRECTION = new Direction[]{ Direction.UP, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST };
+
     public static void placeInWorldWithChunkSectionCachingAndWithoutNeighborUpdate(
-            ServerLevelAccessor serverLevelAccessor,
+            ServerLevelAccessor serverLevel,
             StructureTemplate structureTemplate,
-            BlockPos blockPos,
-            BlockPos blockPos2,
-            StructurePlaceSettings structurePlaceSettings,
-            RandomSource randomSource,
-            int i)
+            BlockPos offset,
+            BlockPos pos,
+            StructurePlaceSettings settings,
+            RandomSource random,
+            int flags)
     {
         if (((StructureTemplateAccessor)structureTemplate).bumblezone$getBlocks().isEmpty()) {
             return;
         }
-        List<StructureTemplate.StructureBlockInfo> list = structurePlaceSettings.getRandomPalette(((StructureTemplateAccessor)structureTemplate).bumblezone$getBlocks(), blockPos).blocks();
-        if (list.isEmpty() && structurePlaceSettings.isIgnoreEntities() || structureTemplate.getSize().getX() < 1 || structureTemplate.getSize().getY() < 1 || structureTemplate.getSize().getZ() < 1) {
-            return;
-        }
 
-        UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(serverLevelAccessor);
-        BoundingBox boundingBox = structurePlaceSettings.getBoundingBox();
-        ArrayList<BlockPos> list2 = Lists.newArrayListWithCapacity(structurePlaceSettings.shouldApplyWaterlogging() ? list.size() : 0);
-        ArrayList<BlockPos> list3 = Lists.newArrayListWithCapacity(structurePlaceSettings.shouldApplyWaterlogging() ? list.size() : 0);
-        ArrayList<Pair<BlockPos, CompoundTag>> list4 = Lists.newArrayListWithCapacity(list.size());
-        int j = Integer.MAX_VALUE;
-        int k = Integer.MAX_VALUE;
-        int l = Integer.MAX_VALUE;
-        int m = Integer.MIN_VALUE;
-        int n = Integer.MIN_VALUE;
-        int o = Integer.MIN_VALUE;
-        List<StructureTemplate.StructureBlockInfo> list5 = StructureTemplate.processBlockInfos(serverLevelAccessor, blockPos, blockPos2, structurePlaceSettings, list);
-        for (StructureTemplate.StructureBlockInfo structureBlockInfo : list5) {
-            BlockEntity blockEntity;
-            BlockPos blockPos3 = structureBlockInfo.pos();
-            if (boundingBox != null && !boundingBox.isInside(blockPos3)) continue;
-            FluidState fluidState = structurePlaceSettings.shouldApplyWaterlogging() ? bulkSectionAccess.getFluidState(blockPos3) : null;
-            BlockState blockState = structureBlockInfo.state().mirror(structurePlaceSettings.getMirror()).rotate(structurePlaceSettings.getRotation());
-            if (structureBlockInfo.nbt() != null) {
-                blockEntity = serverLevelAccessor.getBlockEntity(blockPos3);
-                Clearable.tryClear(blockEntity);
+        List<StructureTemplate.StructureBlockInfo> list = settings.getRandomPalette(((StructureTemplateAccessor)structureTemplate).bumblezone$getBlocks(), offset).blocks();
+        if ((!list.isEmpty() || !settings.isIgnoreEntities() && !((StructureTemplateAccessor)structureTemplate).bumblezone$getEntityInfoList().isEmpty())
+                && structureTemplate.getSize().getX() >= 1
+                && structureTemplate.getSize().getY() >= 1
+                && structureTemplate.getSize().getZ() >= 1) {
+            UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(serverLevel);
 
-                SetBlockWithChangeNotified(serverLevelAccessor, bulkSectionAccess, blockPos3, Blocks.BARRIER.defaultBlockState());
-            }
-            if (!SetBlockWithChangeNotified(serverLevelAccessor, bulkSectionAccess, blockPos3, blockState)) continue;
-            j = Math.min(j, blockPos3.getX());
-            k = Math.min(k, blockPos3.getY());
-            l = Math.min(l, blockPos3.getZ());
-            m = Math.max(m, blockPos3.getX());
-            n = Math.max(n, blockPos3.getY());
-            o = Math.max(o, blockPos3.getZ());
-            list4.add(Pair.of(blockPos3, structureBlockInfo.nbt()));
-            if (structureBlockInfo.nbt() != null && (blockEntity = serverLevelAccessor.getBlockEntity(blockPos3)) != null) {
-                if (blockEntity instanceof RandomizableContainerBlockEntity) {
-                    structureBlockInfo.nbt().putLong("LootTableSeed", randomSource.nextLong());
-                }
-                blockEntity.loadWithComponents(structureBlockInfo.nbt(), serverLevelAccessor.registryAccess());
-            }
-            if (fluidState == null) continue;
-            if (blockState.getFluidState().isSource()) {
-                list3.add(blockPos3);
-                continue;
-            }
-            if (!(blockState.getBlock() instanceof LiquidBlockContainer)) continue;
-            ((LiquidBlockContainer) blockState.getBlock()).placeLiquid(serverLevelAccessor, blockPos3, blockState, fluidState);
-            if (fluidState.isSource()) continue;
-            list2.add(blockPos3);
-        }
-        boolean bl = true;
-        Direction[] directions = new Direction[]{Direction.UP, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
-        while (bl && !list2.isEmpty()) {
-            bl = false;
-            Iterator<BlockPos> iterator = list2.iterator();
-            while (iterator.hasNext()) {
-                BlockState blockState2;
-                Object block;
-                BlockPos blockPos3 = iterator.next();
-                FluidState fluidState2 = bulkSectionAccess.getFluidState(blockPos3);
-                for (int p = 0; p < directions.length && !fluidState2.isSource(); ++p) {
-                    BlockPos blockPos5 = blockPos3.relative(directions[p]);
-                    FluidState fluidState = bulkSectionAccess.getFluidState(blockPos5);
-                    if (!fluidState.isSource() || list3.contains(blockPos5)) continue;
-                    fluidState2 = fluidState;
-                }
-                if (!fluidState2.isSource() || !((block = (blockState2 = bulkSectionAccess.getBlockState(blockPos3)).getBlock()) instanceof LiquidBlockContainer)) continue;
-                ((LiquidBlockContainer)block).placeLiquid(serverLevelAccessor, blockPos3, blockState2, fluidState2);
-                bl = true;
-                iterator.remove();
-            }
-        }
-        if (j <= m) {
-            if (!structurePlaceSettings.getKnownShape()) {
-                BitSetDiscreteVoxelShape discreteVoxelShape = new BitSetDiscreteVoxelShape(m - j + 1, n - k + 1, o - l + 1);
-                for (Pair<BlockPos, CompoundTag> pair : list4) {
-                    BlockPos blockPos6 = pair.getFirst();
-                    ((DiscreteVoxelShape)discreteVoxelShape).fill(blockPos6.getX() - j, blockPos6.getY() - k, blockPos6.getZ() - l);
-                }
-                StructureTemplate.updateShapeAtEdge(serverLevelAccessor, i, discreteVoxelShape, j, k, l);
-            }
-            for (Pair<BlockPos, CompoundTag> pair : list4) {
-                BlockEntity blockEntity;
-                BlockPos blockPos7 = pair.getFirst();
-                if (!structurePlaceSettings.getKnownShape()) {
-                    BlockState blockState3;
-                    BlockState blockState2 = bulkSectionAccess.getBlockState(blockPos7);
-                    if (blockState2 != (blockState3 = Block.updateFromNeighbourShapes(blockState2, serverLevelAccessor, blockPos7))) {
-                        SetBlockWithChangeNotified(serverLevelAccessor, bulkSectionAccess, blockPos7, blockState3);
+            BoundingBox boundingbox = settings.getBoundingBox();
+            List<BlockPos> list1 = Lists.newArrayListWithCapacity(settings.shouldApplyWaterlogging() ? list.size() : 0);
+            List<BlockPos> list2 = Lists.newArrayListWithCapacity(settings.shouldApplyWaterlogging() ? list.size() : 0);
+            List<Pair<BlockPos, CompoundTag>> list3 = Lists.newArrayListWithCapacity(list.size());
+            int i = Integer.MAX_VALUE;
+            int j = Integer.MAX_VALUE;
+            int k = Integer.MAX_VALUE;
+            int l = Integer.MIN_VALUE;
+            int i1 = Integer.MIN_VALUE;
+            int j1 = Integer.MIN_VALUE;
+            List<StructureTemplate.StructureBlockInfo> list4 = StructureTemplate.processBlockInfos(serverLevel, offset, pos, settings, list);
+
+            try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(Bumblezone.LOGGER)) {
+                for (StructureTemplate.StructureBlockInfo structuretemplate$structureblockinfo : list4) {
+                    BlockPos blockpos = structuretemplate$structureblockinfo.pos();
+                    if (boundingbox == null || boundingbox.isInside(blockpos)) {
+                        FluidState fluidstate = settings.shouldApplyWaterlogging() ? bulkSectionAccess.getFluidState(blockpos) : null;
+                        BlockState blockstate = structuretemplate$structureblockinfo.state().mirror(settings.getMirror()).rotate(settings.getRotation());
+                        if (structuretemplate$structureblockinfo.nbt() != null) {
+                            SetBlockWithChangeNotified(serverLevel, bulkSectionAccess,blockpos, Blocks.BARRIER.defaultBlockState());
+                        }
+
+                        if (SetBlockWithChangeNotified(serverLevel, bulkSectionAccess, blockpos, blockstate)) {
+                            i = Math.min(i, blockpos.getX());
+                            j = Math.min(j, blockpos.getY());
+                            k = Math.min(k, blockpos.getZ());
+                            l = Math.max(l, blockpos.getX());
+                            i1 = Math.max(i1, blockpos.getY());
+                            j1 = Math.max(j1, blockpos.getZ());
+                            list3.add(Pair.of(blockpos, structuretemplate$structureblockinfo.nbt()));
+                            if (structuretemplate$structureblockinfo.nbt() != null) {
+                                BlockEntity blockentity = serverLevel.getBlockEntity(blockpos);
+                                if (blockentity != null) {
+                                    if (blockentity instanceof RandomizableContainer) {
+                                        structuretemplate$structureblockinfo.nbt().putLong("LootTableSeed", random.nextLong());
+                                    }
+
+                                    blockentity.loadWithComponents(
+                                            TagValueInput.create(
+                                                    problemreporter$scopedcollector.forChild(blockentity.problemPath()),
+                                                    serverLevel.registryAccess(),
+                                                    structuretemplate$structureblockinfo.nbt()
+                                            )
+                                    );
+                                }
+                            }
+
+                            if (fluidstate != null) {
+                                if (blockstate.getFluidState().isSource()) {
+                                    list2.add(blockpos);
+                                } else if (blockstate.getBlock() instanceof LiquidBlockContainer) {
+                                    ((LiquidBlockContainer) blockstate.getBlock()).placeLiquid(serverLevel, blockpos, blockstate, fluidstate);
+                                    if (!fluidstate.isSource()) {
+                                        list1.add(blockpos);
+                                    }
+                                }
+                            }
+                        }
                     }
-                    serverLevelAccessor.blockUpdated(blockPos7, blockState3.getBlock());
                 }
-                if (pair.getSecond() == null || (blockEntity = serverLevelAccessor.getBlockEntity(blockPos7)) == null) continue;
-                blockEntity.setChanged();
-            }
-        }
 
-        if (!structurePlaceSettings.isIgnoreEntities()) {
-            placeEntities(serverLevelAccessor, structureTemplate, blockPos, structurePlaceSettings.getMirror(), structurePlaceSettings.getRotation(), structurePlaceSettings.getRotationPivot(), boundingBox, structurePlaceSettings.shouldFinalizeEntities());
+                boolean flag = true;
+
+                while (flag && !list1.isEmpty()) {
+                    flag = false;
+                    Iterator<BlockPos> iterator = list1.iterator();
+
+                    while (iterator.hasNext()) {
+                        BlockPos blockpos3 = iterator.next();
+                        FluidState fluidstate2 = bulkSectionAccess.getFluidState(blockpos3);
+
+                        for (int i2 = 0; i2 < FLUID_CHECKING_DIRECTION.length && !fluidstate2.isSource(); i2++) {
+                            BlockPos blockpos1 = blockpos3.relative(FLUID_CHECKING_DIRECTION[i2]);
+                            FluidState fluidstate1 = bulkSectionAccess.getFluidState(blockpos1);
+                            if (fluidstate1.isSource() && !list2.contains(blockpos1)) {
+                                fluidstate2 = fluidstate1;
+                            }
+                        }
+
+                        if (fluidstate2.isSource()) {
+                            BlockState blockstate1 = bulkSectionAccess.getBlockState(blockpos3);
+                            Block block = blockstate1.getBlock();
+                            if (block instanceof LiquidBlockContainer) {
+                                ((LiquidBlockContainer) block).placeLiquid(serverLevel, blockpos3, blockstate1, fluidstate2);
+                                flag = true;
+                                iterator.remove();
+                            }
+                        }
+                    }
+                }
+
+                if (i <= l) {
+                    if (!settings.getKnownShape()) {
+                        DiscreteVoxelShape discretevoxelshape = new BitSetDiscreteVoxelShape(l - i + 1, i1 - j + 1, j1 - k + 1);
+
+                        for (Pair<BlockPos, CompoundTag> pair1 : list3) {
+                            BlockPos blockpos2 = pair1.getFirst();
+                            discretevoxelshape.fill(blockpos2.getX() - i, blockpos2.getY() - j, blockpos2.getZ() - k);
+                        }
+
+                        StructureTemplate.updateShapeAtEdge(serverLevel, flags, discretevoxelshape, i, j, k);
+                    }
+
+                    for (Pair<BlockPos, CompoundTag> pair : list3) {
+                        BlockPos blockpos4 = pair.getFirst();
+                        if (!settings.getKnownShape()) {
+                            BlockState blockstate2 = bulkSectionAccess.getBlockState(blockpos4);
+                            BlockState blockstate3 = Block.updateFromNeighbourShapes(blockstate2, serverLevel, blockpos4);
+                            if (blockstate2 != blockstate3) {
+                                SetBlockWithChangeNotified(serverLevel, bulkSectionAccess, blockpos4, blockstate3);
+                            }
+
+                            serverLevel.updateNeighborsAt(blockpos4, blockstate3.getBlock());
+                        }
+
+                        if (pair.getSecond() != null) {
+                            BlockEntity blockentity1 = serverLevel.getBlockEntity(blockpos4);
+                            if (blockentity1 != null) {
+                                blockentity1.setChanged();
+                            }
+                        }
+                    }
+                }
+
+                if (!settings.isIgnoreEntities()) {
+                    ((StructureTemplateAccessor)structureTemplate).bumblezone$callPlaceEntities(
+                            serverLevel,
+                            offset,
+                            settings.getMirror(),
+                            settings.getRotation(),
+                            settings.getRotationPivot(),
+                            boundingbox,
+                            settings.shouldFinalizeEntities(),
+                            problemreporter$scopedcollector
+                    );
+                }
+            }
         }
     }
 
     private static boolean SetBlockWithChangeNotified(ServerLevelAccessor serverLevelAccessor, UnsafeBulkSectionAccess bulkSectionAccess, BlockPos blockPos3, BlockState newState) {
         BlockState oldState = bulkSectionAccess.setBlockStateAndGetOldState(blockPos3, newState, false);
         if (oldState != null) {
-            serverLevelAccessor.getLevel().onBlockStateChange(blockPos3, oldState, newState);
+            serverLevelAccessor.getLevel().updatePOIOnBlockStateChange(blockPos3, oldState, newState);
             return true;
         }
         return false;
-    }
-
-    private static void placeEntities(ServerLevelAccessor serverLevelAccessor, StructureTemplate structureTemplate, BlockPos blockPos, Mirror mirror, Rotation rotation, BlockPos blockPos2, @Nullable BoundingBox boundingBox, boolean bl) {
-        for (StructureTemplate.StructureEntityInfo structureEntityInfo : ((StructureTemplateAccessor)structureTemplate).bumblezone$getEntityInfoList()) {
-            BlockPos blockPos3 = StructureTemplate.transform(structureEntityInfo.blockPos, mirror, rotation, blockPos2).offset(blockPos);
-            if (boundingBox != null && !boundingBox.isInside(blockPos3)) continue;
-            CompoundTag compoundTag = structureEntityInfo.nbt.copy();
-            Vec3 vec3 = StructureTemplate.transform(structureEntityInfo.pos, mirror, rotation, blockPos2);
-            Vec3 vec32 = vec3.add(blockPos.getX(), blockPos.getY(), blockPos.getZ());
-            ListTag listTag = new ListTag();
-            listTag.add(DoubleTag.valueOf(vec32.x));
-            listTag.add(DoubleTag.valueOf(vec32.y));
-            listTag.add(DoubleTag.valueOf(vec32.z));
-            compoundTag.put("Pos", listTag);
-            compoundTag.remove("UUID");
-            createEntityIgnoreException(serverLevelAccessor, compoundTag).ifPresent(entity -> {
-                float f = entity.rotate(rotation);
-                entity.moveTo(vec32.x, vec32.y, vec32.z, f + (entity.mirror(mirror) - entity.getYRot()), entity.getXRot());
-                if (bl && entity instanceof Mob) {
-                    ((Mob)entity).finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(BlockPos.containing(vec32)), MobSpawnType.STRUCTURE, null);
-                }
-                serverLevelAccessor.addFreshEntityWithPassengers(entity);
-            });
-        }
-    }
-
-    private static Optional<Entity> createEntityIgnoreException(ServerLevelAccessor serverLevelAccessor, CompoundTag compoundTag) {
-        try {
-            return EntityType.create(compoundTag, serverLevelAccessor.getLevel());
-        }
-        catch (Exception exception) {
-            return Optional.empty();
-        }
     }
 
     /////////////////////////////////////////////////
@@ -811,7 +837,7 @@ public class GeneralUtils {
         int radiusSq = radius * radius;
 
         // Iterate over all sections in chunk. Note, sections can be negative if world extends to negative.
-        for (int i = chunk.getMinSection(); i < chunk.getMaxSection(); ++i) {
+        for (int i = chunk.getMinSectionY(); i < chunk.getMaxSectionY(); ++i) {
             int sectionWorldY = SectionPos.sectionToBlockCoord(i);
 
             // Make sure this section is in range of the radius we want to check.
@@ -905,7 +931,7 @@ public class GeneralUtils {
 
     public static void fillStartsForStructure(LevelReader level, StructureManager structureManager, Structure structure, LongSet references, Consumer<StructureStart> consumer) {
         for (long ref : references) {
-            SectionPos sectionPos = SectionPos.of(new ChunkPos(ref), level.getMinSection());
+            SectionPos sectionPos = SectionPos.of(new ChunkPos(ref), level.getMinSectionY());
             if (!level.hasChunk(sectionPos.x(), sectionPos.z())) {
                 continue;
             }
@@ -921,7 +947,7 @@ public class GeneralUtils {
 
     public static List<ItemStack> convertBlockTagsToItemStacks(TagKey<Block> baseTag, @Nullable TagKey<Block> disallowTag) {
         List<ItemStack> itemStacks = new ArrayList<>();
-        for (Holder<Block> blockHolder : BuiltInRegistries.BLOCK.getTagOrEmpty(baseTag)) {
+        for (Holder<Block> blockHolder : BuiltInRegistries.BLOCK.getOrEmpty(baseTag)) {
             if (disallowTag == null || !blockHolder.is(disallowTag)) {
                 Item item = blockHolder.value().asItem();
                 if (item == null) {

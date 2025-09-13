@@ -200,7 +200,7 @@ public class LifeEssence extends AbilityEssenceItem {
             }
 
             if (state.is(BzTags.LIFE_IS_DEAD_BUSH)) {
-                List<Block> saplings = GeneralUtils.convertHoldersetToList(BuiltInRegistries.BLOCK.getTag(BzTags.LIFE_DEAD_BUSH_REVIVES_TO));
+                List<Block> saplings = GeneralUtils.convertHoldersetToList(BuiltInRegistries.BLOCK.get(BzTags.LIFE_DEAD_BUSH_REVIVES_TO));
                 saplings.removeIf(sapling -> GeneralUtils.isInTag(BuiltInRegistries.BLOCK, BzTags.LIFE_FORCE_DISALLOWED_DEAD_BUSH_REVIVES_TO, sapling));
                 if (saplings.size() > 0) {
                     Block chosenSapling = saplings.get(level.random.nextInt(saplings.size()));

@@ -13,7 +13,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -43,7 +43,7 @@ public class CreatingHoneySlime {
                         target.getXRot());
 
                 honeySlimeMob.setBaby(slimeSize == 1);
-                honeySlimeMob.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(BlockPos.containing(honeySlimeMob.position())), MobSpawnType.TRIGGERED, null);
+                honeySlimeMob.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(BlockPos.containing(honeySlimeMob.position())), EntitySpawnReason.TRIGGERED, null);
                 // spawn honey slime
                 world.addFreshEntity(honeySlimeMob);
 

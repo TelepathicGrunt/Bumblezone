@@ -45,7 +45,7 @@ public interface PlatformService {
 
     <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, float eyeHeight, int clientTrackingRange, int updateInterval, String buildName);
 
-    SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason);
+    SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, EntitySpawnReason spawnReason);
 
     ServerPlayer getFakePlayer(ServerLevel level, GameProfile gameProfile);
 

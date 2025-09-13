@@ -55,7 +55,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.PathfinderMob;
@@ -443,7 +443,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    }
 
    @Override
-   public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, SpawnGroupData spawnData) {
+   public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason reason, SpawnGroupData spawnData) {
       spawnData = super.finalizeSpawn(level, difficulty, reason, spawnData);
 
       BlockState state = getFlowerBlock();
@@ -522,7 +522,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    }
 
    @Override
-   public boolean checkSpawnRules(LevelAccessor world, MobSpawnType spawnReason) {
+   public boolean checkSpawnRules(LevelAccessor world, EntitySpawnReason spawnReason) {
       return true;
    }
 

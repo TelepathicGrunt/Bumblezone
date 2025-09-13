@@ -22,7 +22,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
@@ -448,10 +448,10 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
                                 entity.moveTo(finalX, mutableBlockPos.getY(), finalZ, randomSource.nextFloat() * 360.0F, 0.0F);
                                 if (entity instanceof Mob mob) {
-                                    PlatformService.INSTANCE.finalizeSpawn(mob, serverLevelAccessor, null, MobSpawnType.CHUNK_GENERATION);
+                                    PlatformService.INSTANCE.finalizeSpawn(mob, serverLevelAccessor, null, EntitySpawnReason.CHUNK_GENERATION);
 
                                     if (mob.checkSpawnObstruction(serverLevelAccessor)) {
-                                        spawngroupdata = mob.finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawngroupdata);
+                                        spawngroupdata = mob.finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(mob.blockPosition()), EntitySpawnReason.CHUNK_GENERATION, spawngroupdata);
                                         mob.moveTo(mob.getX(), mob.getY() + 1, mob.getZ());
                                         serverLevelAccessor.addFreshEntityWithPassengers(mob);
                                     }

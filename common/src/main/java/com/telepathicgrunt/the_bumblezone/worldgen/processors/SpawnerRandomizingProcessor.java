@@ -81,12 +81,12 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
     private CompoundTag SetMobSpawnerEntity(EntityType<?> entity, CompoundTag nbt) {
         if(entity != null) {
             if(nbt != null) {
-                CompoundTag spawnDataTag = nbt.getCompound("SpawnData");
+                CompoundTag spawnDataTag = nbt.getCompound("SpawnData").orElse(new CompoundTag());
                 if(spawnDataTag.isEmpty()) {
                     spawnDataTag = new CompoundTag();
                     nbt.put("SpawnData", spawnDataTag);
                 }
-                CompoundTag entityTag = nbt.getCompound("entity");
+                CompoundTag entityTag = nbt.getCompound("entity").orElse(new CompoundTag());
                 if(entityTag.isEmpty()) {
                     entityTag = new CompoundTag();
                     spawnDataTag.put("entity", entityTag);

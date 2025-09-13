@@ -17,7 +17,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.CommonLevelAccessor;
@@ -82,11 +82,11 @@ public class ResourcefulBeesCompat implements ModCompat {
 
     @Override
     public boolean onBeeSpawn(BzEntitySpawnEvent event, boolean isBaby) {
-        if (!BzModCompatibilityConfigs.spawnResourcefulBeesBeesMob || (event.spawnType() == MobSpawnType.DISPENSER && !BzModCompatibilityConfigs.allowResourcefulBeesSpawnFromDispenserFedBroodBlock)) {
+        if (!BzModCompatibilityConfigs.spawnResourcefulBeesBeesMob || (event.spawnType() == EntitySpawnReason.DISPENSER && !BzModCompatibilityConfigs.allowResourcefulBeesSpawnFromDispenserFedBroodBlock)) {
                return false;
         }
 
-        double spawnRate = event.spawnType() == MobSpawnType.SPAWNER ?
+        double spawnRate = event.spawnType() == EntitySpawnReason.SPAWNER ?
                 BzModCompatibilityConfigs.spawnrateOfResourcefulBeesMobsBrood :
                 BzModCompatibilityConfigs.spawnrateOfResourcefulBeesMobsOther;
 
@@ -99,7 +99,7 @@ public class ResourcefulBeesCompat implements ModCompat {
 
         Registry<EntityType<?>> entityTypes = world.registryAccess().registryOrThrow(Registries.ENTITY_TYPE);
         Optional<HolderSet.Named<EntityType<?>>> optionalNamed = entityTypes.getTag(
-                event.spawnType() == MobSpawnType.CHUNK_GENERATION ?
+                event.spawnType() == EntitySpawnReason.CHUNK_GENERATION ?
                         SPAWNABLE_FROM_CHUNK_CREATION_TAG :
                         SPAWNABLE_FROM_BROOD_BLOCK_TAG);
 

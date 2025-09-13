@@ -37,7 +37,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -344,9 +344,9 @@ public class HoneycombBrood extends ProperFacingBlock {
     private static void spawnMob(Level world, BlockPos.MutableBlockPos blockpos, Mob beeMob, Mob entity) {
         if (entity == null || world.isClientSide()) return;
         entity.moveTo(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, beeMob.getRandom().nextFloat() * 360.0F, 0.0F);
-        entity.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(BlockPos.containing(beeMob.position())), MobSpawnType.TRIGGERED, null);
+        entity.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(BlockPos.containing(beeMob.position())), EntitySpawnReason.TRIGGERED, null);
 
-        PlatformService.INSTANCE.finalizeSpawn(entity, (ServerLevelAccessor) world, null, MobSpawnType.SPAWNER);
+        PlatformService.INSTANCE.finalizeSpawn(entity, (ServerLevelAccessor) world, null, EntitySpawnReason.SPAWNER);
         world.addFreshEntity(entity);
     }
 

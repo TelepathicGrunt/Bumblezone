@@ -51,7 +51,7 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
             if (compoundTag == null) {
                 return structureBlockInfoWorld;
             }
-            String metadata = compoundTag.getString("metadata");
+            String metadata = compoundTag.getString("metadata").orElse("");
             BlockState belowBlock = levelReader.getChunk(worldPos).getBlockState(worldPos);
 
             if (!metadata.isEmpty()) {
@@ -75,7 +75,7 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
                             blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState();
                         }
                         else if (random.nextFloat() < 0.25f) {
-                            Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.getTag(BzTags.SPIDER_INFESTED_BEE_DUNGEON_POSSIBLE_CANDLES);
+                            Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.get(BzTags.SPIDER_INFESTED_BEE_DUNGEON_POSSIBLE_CANDLES);
                             if (optionalBlocks.isPresent()) {
                                 blockState = optionalBlocks.get().get(random.nextInt(optionalBlocks.get().size())).value().defaultBlockState();
                                 blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(4) + 1);
@@ -105,7 +105,7 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
                             blockState = BzBlocks.HONEY_CRYSTAL.get().defaultBlockState();
                         }
                         else if (random.nextFloat() < 0.2f) {
-                            Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.getTag(BzTags.SPIDER_INFESTED_BEE_DUNGEON_POSSIBLE_CANDLES);
+                            Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.get(BzTags.SPIDER_INFESTED_BEE_DUNGEON_POSSIBLE_CANDLES);
                             if (optionalBlocks.isPresent()) {
                                 blockState = optionalBlocks.get().get(random.nextInt(optionalBlocks.get().size())).value().defaultBlockState();
                                 blockState = blockState.setValue(CandleBlock.CANDLES, random.nextInt(random.nextInt(4) + 1) + 1);

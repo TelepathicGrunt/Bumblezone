@@ -17,7 +17,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
@@ -240,7 +240,7 @@ public class EssenceBlockWhite extends EssenceBlock {
     }
 
     private Entity SpawnNewCrystal(ServerLevel serverLevel, BlockPos blockPos, EssenceBlockEntity essenceBlockEntity, int orbitOffset, float difficultyBoost, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
-        CosmicCrystalEntity entity = BzEntities.COSMIC_CRYSTAL_ENTITY.get().spawn(serverLevel, blockPos, MobSpawnType.TRIGGERED);
+        CosmicCrystalEntity entity = BzEntities.COSMIC_CRYSTAL_ENTITY.get().spawn(serverLevel, blockPos, EntitySpawnReason.TRIGGERED);
         if (entity != null) {
             entity.addTag("the_bumblezone.white_essence_arena");
             entity.setEssenceControllerDimension(serverLevel.dimension());

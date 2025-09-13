@@ -20,7 +20,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -273,7 +273,7 @@ public class EssenceBlockGreen extends EssenceBlock {
     }
 
     private static Entity spawnRootmin(ServerLevel serverLevel, EssenceBlockEntity essenceBlockEntity, BlockPos rootminPos, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
-        Entity entity = BzEntities.ROOTMIN.get().spawn(serverLevel, rootminPos, MobSpawnType.TRIGGERED);
+        Entity entity = BzEntities.ROOTMIN.get().spawn(serverLevel, rootminPos, EntitySpawnReason.TRIGGERED);
         if (entity instanceof RootminEntity rootminEntity) {
             rootminEntity.addTag("the_bumblezone.green_essence_arena");
             rootminEntity.setRootminShield(true);
