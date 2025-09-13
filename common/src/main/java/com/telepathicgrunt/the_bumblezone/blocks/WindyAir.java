@@ -18,6 +18,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -79,7 +80,7 @@ public class WindyAir extends ProperFacingBlock {
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+    public boolean propagatesSkylightDown(BlockState blockState) {
         return true;
     }
 
@@ -109,7 +110,7 @@ public class WindyAir extends ProperFacingBlock {
     }
 
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         if (entity instanceof Player player) {
             if ((player.isCreative() && player.getAbilities().flying) || player.isSpectator()) {
                 return;
@@ -148,7 +149,7 @@ public class WindyAir extends ProperFacingBlock {
             strength *= windDirection == Direction.UP ? 2.0f : 0.7f;
         }
 
-        Vec3 pushPower = Vec3.atLowerCornerOf(windDirection.getNormal()).scale(strength);
+        Vec3 pushPower = Vec3.atLowerCornerOf(windDirection.getUnitVec3i()).scale(strength);
         Vec3 newVelocity = entity.getDeltaMovement();
         if (entity instanceof ItemEntity) {
             newVelocity = newVelocity.add(newVelocity.scale(-0.15f));
@@ -193,15 +194,19 @@ public class WindyAir extends ProperFacingBlock {
             blockState.spawnAfterBreak(serverLevel, blockPos, ItemStack.EMPTY, bl);
             blockState.getDrops(builder).forEach(itemStack -> biConsumer.accept(itemStack, blockPos));
         }
+
         level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
-        block.wasExploded(level, blockPos, explosion);
+
+        if (level instanceof ServerLevel serverLevel) {
+            block.wasExploded(serverLevel, blockPos, explosion);
+        }
     }
 
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {
         if (randomSource.nextFloat() < 0.25f) {
             Direction windDirection = blockState.getValue(FACING);
             double strength = 0.1D;
-            Vec3 pushPower = Vec3.atLowerCornerOf(windDirection.getNormal()).scale(strength);
+            Vec3 pushPower = Vec3.atLowerCornerOf(windDirection.getUnitVec3i()).scale(strength);
 
             level.addParticle(
                     BzParticles.WIND_PARTICLE.get(),

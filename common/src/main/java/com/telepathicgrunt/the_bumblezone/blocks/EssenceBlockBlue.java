@@ -188,7 +188,7 @@ public class EssenceBlockBlue extends EssenceBlock {
         }
 
         List<? extends EntityType<?>> entityTypeList = BuiltInRegistries.ENTITY_TYPE
-                .getTag(enemyTagToUse)
+                .get(enemyTagToUse)
                 .map(holders -> holders
                         .stream()
                         .map(Holder::value)
@@ -290,7 +290,7 @@ public class EssenceBlockBlue extends EssenceBlock {
             }
             else if (entity instanceof Mob mob) {
                 List<Item> itemList = BuiltInRegistries.ITEM
-                        .getTag(BzTags.CALMING_ARENA_DROWNED_BONUS_HELD_ITEM)
+                        .get(BzTags.CALMING_ARENA_DROWNED_BONUS_HELD_ITEM)
                         .map(holders -> holders
                                 .stream()
                                 .map(Holder::value)
@@ -305,17 +305,17 @@ public class EssenceBlockBlue extends EssenceBlock {
                 if (mob instanceof Drowned drowned) {
                     ItemStack swimBoots = Items.LEATHER_BOOTS.getDefaultInstance();
                     swimBoots.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.DEPTH_STRIDER, serverLevel), 3);
-                    drowned.equipItemIfPossible(swimBoots);
+                    drowned.equipItemIfPossible(serverLevel, swimBoots);
                     drowned.setDropChance(EquipmentSlot.FEET, 0.2f);
 
                     ItemStack leggings = Items.LEATHER_LEGGINGS.getDefaultInstance();
                     leggings.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.THORNS, serverLevel), 1);
-                    drowned.equipItemIfPossible(leggings);
+                    drowned.equipItemIfPossible(serverLevel, leggings);
                     drowned.setDropChance(EquipmentSlot.LEGS, 0.2f);
 
                     ItemStack chestplate = Items.LEATHER_CHESTPLATE.getDefaultInstance();
                     chestplate.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.PROJECTILE_PROTECTION, serverLevel), 1);
-                    drowned.equipItemIfPossible(chestplate);
+                    drowned.equipItemIfPossible(serverLevel, chestplate);
                     drowned.setDropChance(EquipmentSlot.CHEST, 0.2f);
 
                     ItemStack helmet = serverLevel.getRandom().nextFloat() < 0.1f ?
@@ -327,7 +327,7 @@ public class EssenceBlockBlue extends EssenceBlock {
                     else {
                         helmet.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.RESPIRATION, serverLevel), 3);
                     }
-                    drowned.equipItemIfPossible(helmet);
+                    drowned.equipItemIfPossible(serverLevel, helmet);
                     drowned.setDropChance(EquipmentSlot.HEAD, 0.15f);
 
                     if (isStrong) {
@@ -356,7 +356,7 @@ public class EssenceBlockBlue extends EssenceBlock {
                         }
 
                         drowned.addEffect(new MobEffectInstance(
-                                MobEffects.MOVEMENT_SPEED,
+                                MobEffects.SPEED,
                                 Integer.MAX_VALUE,
                                 4,
                                 false,
@@ -417,13 +417,13 @@ public class EssenceBlockBlue extends EssenceBlock {
 
     @Override
     public void onPlayerEnter(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
-        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.CALMING_EVENT.get().getLocation(), true);
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.CALMING_EVENT.get().location(), true);
         super.onPlayerEnter(serverLevel, serverPlayer, essenceBlockEntity);
     }
 
     @Override
     public void onPlayerLeave(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
-        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.CALMING_EVENT.get().getLocation(), false);
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.CALMING_EVENT.get().location(), false);
         super.onPlayerLeave(serverLevel, serverPlayer, essenceBlockEntity);
     }
 }

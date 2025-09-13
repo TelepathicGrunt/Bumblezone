@@ -13,8 +13,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -34,10 +34,10 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -116,7 +116,11 @@ public class HoneycombBrood extends ProperFacingBlock {
 
             //spawn angry bee if at final stage and front isn't blocked off
             int stage = blockState.getValue(STAGE);
-            spawnBroodMob(level, random, blockState, position, stage);
+
+            if (level instanceof ServerLevel serverLevel) {
+                spawnBroodMob(serverLevel, random, blockState, position, stage);
+            }
+
             level.setBlock(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().defaultBlockState().setValue(BlockStateProperties.FACING, blockState.getValue(BlockStateProperties.FACING)), 3); // removed honey from this block
 
             if ((level.dimension().equals(BzDimension.BZ_WORLD_KEY) ||
@@ -126,9 +130,9 @@ public class HoneycombBrood extends ProperFacingBlock {
                     BzBeeAggressionConfigs.aggressiveBees &&
                     level.getDifficulty() != Difficulty.PEACEFUL)
             {
-                Registry<MobEffect> mobEffects = level.registryAccess().registryOrThrow(Registries.MOB_EFFECT);
+                Registry<MobEffect> mobEffects = level.registryAccess().getOrThrow(Registries.MOB_EFFECT).value();
                 if (playerEntity instanceof ServerPlayer serverPlayer && !EssenceOfTheBees.hasEssence(serverPlayer)) {
-                    Holder.Reference<MobEffect> wrathOfTheHiveEffectHolder = mobEffects.getHolder(BzEffects.WRATH_OF_THE_HIVE.getId()).get();
+                    Holder.Reference<MobEffect> wrathOfTheHiveEffectHolder = mobEffects.get(BzEffects.WRATH_OF_THE_HIVE.getId()).get();
                     if(playerEntity.hasEffect(wrathOfTheHiveEffectHolder)) {
                         playerEntity.removeEffect(wrathOfTheHiveEffectHolder);
                     }
@@ -145,14 +149,15 @@ public class HoneycombBrood extends ProperFacingBlock {
          * Player is feeding larva
          */
         else if (itemStack.is(BzTags.BEE_FEEDING_ITEMS)) {
-            if (!level.isClientSide()) {
+            if (level instanceof ServerLevel serverLevel) {
                 int stage = blockState.getValue(STAGE);
                 boolean successfulGrowth = false;
 
                 //chance of growing the larva
                 if (itemStack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
-                    if (random.nextFloat() < 0.30F)
+                    if (random.nextFloat() < 0.30F) {
                         successfulGrowth = true;
+                    }
                 }
                 else {
                     successfulGrowth = true;
@@ -166,38 +171,36 @@ public class HoneycombBrood extends ProperFacingBlock {
                 if (successfulGrowth) {
                     //spawn bee if at final stage and front isn't blocked off
                     if (stage == 3) {
-                        spawnBroodMob(level, random, blockState, position, stage);
+                        spawnBroodMob(serverLevel, random, blockState, position, stage);
                     }
                     else {
                         int newStage = stage + 1;
                         if (itemStack.is(BzTags.HONEY_BUCKETS) || itemStack.is(BzTags.ROYAL_JELLY_BUCKETS)) {
                             newStage = 3;
-                            if (!level.isClientSide()) {
-                                Direction facing = blockState.getValue(FACING).getOpposite();
-                                Vec3 centerFacePos = new Vec3(
-                                        position.getX() + Math.max(-0.2D, facing.getStepX() == 0 ? 0.5D : facing.getStepX() * 1.2D),
-                                        position.getY() + Math.max(-0.2D, facing.getStepY() == 0 ? 0.5D : facing.getStepY() * 1.2D),
-                                        position.getZ() + Math.max(-0.2D, facing.getStepZ() == 0 ? 0.5D : facing.getStepZ() * 1.2D)
-                                );
+                            Direction facing = blockState.getValue(FACING).getOpposite();
+                            Vec3 centerFacePos = new Vec3(
+                                    position.getX() + Math.max(-0.2D, facing.getStepX() == 0 ? 0.5D : facing.getStepX() * 1.2D),
+                                    position.getY() + Math.max(-0.2D, facing.getStepY() == 0 ? 0.5D : facing.getStepY() * 1.2D),
+                                    position.getZ() + Math.max(-0.2D, facing.getStepZ() == 0 ? 0.5D : facing.getStepZ() * 1.2D)
+                            );
 
-                                ((ServerLevel) level).sendParticles(
-                                        ParticleTypes.HEART,
-                                        centerFacePos.x(),
-                                        centerFacePos.y(),
-                                        centerFacePos.z(),
-                                        3,
-                                        random.nextFloat() * 0.5 - 0.25f,
-                                        random.nextFloat() * 0.2f + 0.2f,
-                                        random.nextFloat() * 0.5 - 0.25f,
-                                        random.nextFloat() * 0.4 + 0.2f);
-                            }
+                            serverLevel.sendParticles(
+                                    ParticleTypes.HEART,
+                                    centerFacePos.x(),
+                                    centerFacePos.y(),
+                                    centerFacePos.z(),
+                                    3,
+                                    random.nextFloat() * 0.5 - 0.25f,
+                                    random.nextFloat() * 0.2f + 0.2f,
+                                    random.nextFloat() * 0.5 - 0.25f,
+                                    random.nextFloat() * 0.4 + 0.2f);
 
                             if(playerEntity instanceof ServerPlayer serverPlayer) {
                                 BzCriterias.HONEY_BUCKET_BROOD_TRIGGER.get().trigger(serverPlayer);
                             }
                         }
 
-                        level.setBlockAndUpdate(position, blockState.setValue(STAGE, newStage));
+                        serverLevel.setBlockAndUpdate(position, blockState.setValue(STAGE, newStage));
                     }
                 }
             }
@@ -223,10 +226,10 @@ public class HoneycombBrood extends ProperFacingBlock {
 
     private static void applyProtection(Player playerEntity) {
         Level level = playerEntity.level();
-        Registry<MobEffect> mobEffects = level.registryAccess().registryOrThrow(Registries.MOB_EFFECT);
+        Registry<MobEffect> mobEffects = level.registryAccess().getOrThrow(Registries.MOB_EFFECT).value();
 
         playerEntity.addEffect(new MobEffectInstance(
-                mobEffects.getHolder(BzEffects.PROTECTION_OF_THE_HIVE.getId()).get(),
+                mobEffects.get(BzEffects.PROTECTION_OF_THE_HIVE.getId()).get(),
                 BzBeeAggressionConfigs.howLongProtectionOfTheHiveLasts,
                 0,
                 false,
@@ -259,11 +262,11 @@ public class HoneycombBrood extends ProperFacingBlock {
         List<LivingEntity> nearbyEntities = null;
 
         if (level.getDifficulty() == Difficulty.PEACEFUL) {
-            Registry<MobEffect> mobEffects = level.registryAccess().registryOrThrow(Registries.MOB_EFFECT);
+            Registry<MobEffect> mobEffects = level.registryAccess().getOrThrow(Registries.MOB_EFFECT).value();
             nearbyEntities = level.getEntitiesOfClass(
                     LivingEntity.class,
                     new AABB(position).inflate(WrathOfTheHiveEffect.NEARBY_WRATH_EFFECT_RADIUS),
-                    entity -> entity.hasEffect(mobEffects.getHolder(BzEffects.WRATH_OF_THE_HIVE.getId()).get()));
+                    entity -> entity.hasEffect(mobEffects.get(BzEffects.WRATH_OF_THE_HIVE.getId()).get()));
         }
 
         int stage = state.getValue(STAGE);
@@ -309,7 +312,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                 BlockState blockState = world.getBlockState(position);
                 int stage = blockState.getValue(STAGE);
                 if (stage == 3) {
-                    spawnBroodMob(world, playerEntity.getRandom(), blockState, position, stage);
+                    spawnBroodMob(serverLevel, playerEntity.getRandom(), blockState, position, stage);
                 }
             }
         }
@@ -317,33 +320,33 @@ public class HoneycombBrood extends ProperFacingBlock {
         return super.playerWillDestroy(world, position, state, playerEntity);
     }
 
-    private static void spawnBroodMob(Level world, RandomSource random, BlockState state, BlockPos position, int stage) {
+    private static void spawnBroodMob(ServerLevel level, RandomSource random, BlockState state, BlockPos position, int stage) {
         //the front of the block
         BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos().set(position);
         blockpos.move(state.getValue(FACING).getOpposite());
 
-        BlockState frontState = world.getBlockState(blockpos);
+        BlockState frontState = level.getBlockState(blockpos);
         if (stage == 3 && frontState.getFluidState().isEmpty() &&
-            !frontState.isCollisionShapeFullBlock(world, position) &&
-            world.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING))
+            !frontState.isCollisionShapeFullBlock(level, position) &&
+            level.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING))
         {
-            Mob beeMob = EntityType.BEE.create(world);
+            Mob beeMob = EntityType.BEE.create(level, EntitySpawnReason.TRIGGERED);
             beeMob.setBaby(true);
-            spawnMob(world, blockpos, beeMob, beeMob);
+            spawnMob(level, blockpos, beeMob, beeMob);
 
             if (random.nextFloat() < 0.1f) {
-                Mob honeySlimeMob = BzEntities.HONEY_SLIME.get().create(world);
+                Mob honeySlimeMob = BzEntities.HONEY_SLIME.get().create(level, EntitySpawnReason.TRIGGERED);
                 honeySlimeMob.setBaby(true);
-                spawnMob(world, blockpos, beeMob, honeySlimeMob);
+                spawnMob(level, blockpos, beeMob, honeySlimeMob);
             }
 
-            world.setBlockAndUpdate(position, state.setValue(STAGE, 0));
+            level.setBlockAndUpdate(position, state.setValue(STAGE, 0));
         }
     }
 
     private static void spawnMob(Level world, BlockPos.MutableBlockPos blockpos, Mob beeMob, Mob entity) {
         if (entity == null || world.isClientSide()) return;
-        entity.moveTo(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, beeMob.getRandom().nextFloat() * 360.0F, 0.0F);
+        entity.snapTo(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, beeMob.getRandom().nextFloat() * 360.0F, 0.0F);
         entity.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(BlockPos.containing(beeMob.position())), EntitySpawnReason.TRIGGERED, null);
 
         PlatformService.INSTANCE.finalizeSpawn(entity, (ServerLevelAccessor) world, null, EntitySpawnReason.SPAWNER);
@@ -405,7 +408,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                     BlockState belowBlockstate = world.getBlockState(belowBlockpos);
                     VoxelShape belowBlockShape = belowBlockstate.getCollisionShape(world, belowBlockpos);
                     double yEndHeight2 = belowBlockShape.max(Direction.Axis.Y);
-                    if ((yEndHeight2 < 1.0D || !belowBlockstate.isSolidRender(world, belowBlockpos)) && belowBlockstate.getFluidState().isEmpty()) {
+                    if ((yEndHeight2 < 1.0D || !belowBlockstate.isSolidRender()) && belowBlockstate.getFluidState().isEmpty()) {
                         this.addHoneyParticle(world, random, position, currentBlockShape, position.getY() - 0.05D);
                     }
                 }

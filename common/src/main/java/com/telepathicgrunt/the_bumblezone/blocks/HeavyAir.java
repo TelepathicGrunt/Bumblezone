@@ -9,7 +9,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -19,6 +19,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -72,7 +73,7 @@ public class HeavyAir extends Block {
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+    public boolean propagatesSkylightDown(BlockState blockState) {
         return true;
     }
 
@@ -97,7 +98,7 @@ public class HeavyAir extends Block {
     }
 
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         if (entity.getType().is(BzTags.HEAVY_AIR_IMMUNE) || entity instanceof Projectile) {
             return;
         }
@@ -107,7 +108,7 @@ public class HeavyAir extends Block {
         }
 
         if (entity instanceof LivingEntity livingEntity && livingEntity.tickCount % 10 == 9) {
-            List<Holder<MobEffect>> effectsToRemove = BuiltInRegistries.MOB_EFFECT.getTag(BzTags.HEAVY_AIR_REMOVE_EFFECTS)
+            List<Holder<MobEffect>> effectsToRemove = BuiltInRegistries.MOB_EFFECT.get(BzTags.HEAVY_AIR_REMOVE_EFFECTS)
                     .stream()
                     .flatMap(HolderSet.ListBacked::stream)
                     .filter(Holder::isBound)
@@ -178,8 +179,7 @@ public class HeavyAir extends Block {
         }
         Block block = blockState.getBlock();
         boolean bl = explosion.getIndirectSourceEntity() instanceof Player;
-        if (block.dropFromExplosion(explosion) && level instanceof ServerLevel) {
-            ServerLevel serverLevel = (ServerLevel)level;
+        if (block.dropFromExplosion(explosion) && level instanceof ServerLevel serverLevel) {
             BlockEntity blockEntity = blockState.hasBlockEntity() ? level.getBlockEntity(blockPos) : null;
             LootParams.Builder builder = new LootParams.Builder(serverLevel).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockPos)).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, explosion.getDirectSourceEntity());
             if (explosion.getBlockInteraction() == Explosion.BlockInteraction.DESTROY_WITH_DECAY) {
@@ -188,8 +188,12 @@ public class HeavyAir extends Block {
             blockState.spawnAfterBreak(serverLevel, blockPos, ItemStack.EMPTY, bl);
             blockState.getDrops(builder).forEach(itemStack -> biConsumer.accept(itemStack, blockPos));
         }
+
         level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
-        block.wasExploded(level, blockPos, explosion);
+
+        if (level instanceof ServerLevel serverLevel) {
+            block.wasExploded(serverLevel, blockPos, explosion);
+        }
     }
 
     @Override

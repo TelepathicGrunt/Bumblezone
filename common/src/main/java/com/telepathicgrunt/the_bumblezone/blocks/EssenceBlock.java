@@ -23,6 +23,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
@@ -96,7 +97,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
     }
 
     @Override
-    public VoxelShape getOcclusionShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+    public VoxelShape getOcclusionShape(BlockState blockState) {
         return Shapes.block();
     }
 
@@ -152,12 +153,12 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+    public boolean propagatesSkylightDown(BlockState blockState) {
         return true;
     }
 
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         if (!(blockState.getBlock() instanceof EssenceBlock essenceBlock)) {
             return;
         }
@@ -209,7 +210,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                         Bumblezone.LOGGER.error("Bumblezone Essence Block failed to create the NBT file to save area - {} - {} - {} - Location: {} - Error: {}", blockState, blockPos, getArenaNbt(), essenceBlockEntity.getSavedNbtLocationAsString(), exception);
                         return;
                     }
-                    savingStructureTemplate.fillFromWorld(serverLevel, blockPos.offset(negativeHalfLengths), size, !PLACEMENT_SETTINGS.getOrFillFromInternal().isIgnoreEntities(), essenceBlock);
+                    savingStructureTemplate.fillFromWorld(serverLevel, blockPos.offset(negativeHalfLengths), size, !PLACEMENT_SETTINGS.getOrFillFromInternal().isIgnoreEntities(), List.of(essenceBlock));
                     try {
                         structureTemplateManager.save(essenceBlockEntity.getSavedNbtLocation());
                     }

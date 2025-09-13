@@ -42,7 +42,7 @@ public interface LuminescentWaxBase {
 
                 if (isLuminescent) {
                     livingEntity.addEffect(new MobEffectInstance(
-                            MobEffects.MOVEMENT_SPEED,
+                            MobEffects.SPEED,
                             110,
                             0,
                             true,
@@ -50,16 +50,16 @@ public interface LuminescentWaxBase {
                             true));
 
                     livingEntity.addEffect(new MobEffectInstance(
-                            MobEffects.DAMAGE_RESISTANCE,
+                            MobEffects.RESISTANCE,
                             110,
                             0,
                             true,
                             false,
                             true));
 
-                    Registry<MobEffect> mobEffects = livingEntity.level().registryAccess().registryOrThrow(Registries.MOB_EFFECT);
+                    Registry<MobEffect> mobEffects = livingEntity.level().registryAccess().getOrThrow(Registries.MOB_EFFECT).value();
                     livingEntity.addEffect(new MobEffectInstance(
-                            mobEffects.getHolder(BzEffects.BEENERGIZED.getId()).get(),
+                            mobEffects.get(BzEffects.BEENERGIZED.getId()).get(),
                             110,
                             0,
                             true,

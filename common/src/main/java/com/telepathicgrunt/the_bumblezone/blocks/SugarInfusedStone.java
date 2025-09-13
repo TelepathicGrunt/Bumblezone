@@ -13,6 +13,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.redstone.Orientation;
+import org.jetbrains.annotations.Nullable;
 
 
 public class SugarInfusedStone extends Block {
@@ -37,9 +39,9 @@ public class SugarInfusedStone extends Block {
     }
 
     @Override
-    public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, BlockPos blockPos1, boolean b) {
+    public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, @Nullable Orientation orientation, boolean b) {
         sugarifyNeighboringWater(level, blockPos);
-        super.neighborChanged(blockState, level, blockPos, block, blockPos1, b);
+        super.neighborChanged(blockState, level, blockPos, block, orientation, b);
     }
 
     @Override

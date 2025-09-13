@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntit
 import com.telepathicgrunt.the_bumblezone.bossbars.ServerEssenceEvent;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ElectricRingEntity;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.mixin.RabbitAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
@@ -234,7 +235,7 @@ public class EssenceBlockYellow extends EssenceBlock {
         }
         angle *= Mth.RAD_TO_DEG;
 
-        ElectricRingEntity ringEntity = BzEntities.ELECTRIC_RING_ENTITY.get().create(serverLevel);
+        ElectricRingEntity ringEntity = BzEntities.ELECTRIC_RING_ENTITY.get().create(serverLevel, EntitySpawnReason.EVENT);
 
         if (ringEntity != null) {
             ringEntity.addTag("the_bumblezone.yellow_essence_arena");
@@ -263,7 +264,7 @@ public class EssenceBlockYellow extends EssenceBlock {
         TagKey<EntityType<?>> enemyTagToUse = BzTags.ESSENCE_RADIANCE_ARENA_NORMAL_ENEMY;
 
         List<? extends EntityType<?>> entityTypeList = BuiltInRegistries.ENTITY_TYPE
-                .getTag(enemyTagToUse)
+                .get(enemyTagToUse)
                 .map(holders -> holders
                         .stream()
                         .map(Holder::value)
@@ -350,7 +351,7 @@ public class EssenceBlockYellow extends EssenceBlock {
                 else if (entity instanceof Mob mob) {
                     mob.setTarget(serverPlayer);
                     if (entity instanceof Rabbit rabbit) {
-                        rabbit.setVariant(Rabbit.Variant.EVIL);
+                        ((RabbitAccessor)rabbit).the_bumblezone$callSetVariant(Rabbit.Variant.EVIL);
                     }
                 }
 
@@ -363,13 +364,13 @@ public class EssenceBlockYellow extends EssenceBlock {
 
     @Override
     public void onPlayerEnter(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
-        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RADIANCE_EVENT.get().getLocation(), true);
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RADIANCE_EVENT.get().location(), true);
         super.onPlayerEnter(serverLevel, serverPlayer, essenceBlockEntity);
     }
 
     @Override
     public void onPlayerLeave(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
-        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RADIANCE_EVENT.get().getLocation(), false);
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RADIANCE_EVENT.get().location(), false);
         removeBonusEffectsFromPlayer(serverPlayer);
         super.onPlayerLeave(serverLevel, serverPlayer, essenceBlockEntity);
     }
@@ -383,14 +384,14 @@ public class EssenceBlockYellow extends EssenceBlock {
         }
         else if (EssenceOfTheBees.hasEssence(serverPlayer)) {
             serverPlayer.addEffect(new MobEffectInstance(
-                    MobEffects.MOVEMENT_SPEED,
+                    MobEffects.SPEED,
                     essenceBlockEntity.getEventTimer(),
                     ringsPassed / 7,
                     false,
                     false));
 
             serverPlayer.addEffect(new MobEffectInstance(
-                    MobEffects.JUMP,
+                    MobEffects.JUMP_BOOST,
                     essenceBlockEntity.getEventTimer(),
                     Math.min(ringsPassed / 7, 8),
                     false,
@@ -404,11 +405,11 @@ public class EssenceBlockYellow extends EssenceBlock {
     }
 
     private static void removeBonusEffectsFromPlayer(ServerPlayer serverPlayer) {
-        if (serverPlayer.hasEffect(MobEffects.JUMP)) {
-            serverPlayer.removeEffect(MobEffects.JUMP);
+        if (serverPlayer.hasEffect(MobEffects.JUMP_BOOST)) {
+            serverPlayer.removeEffect(MobEffects.JUMP_BOOST);
         }
-        if (serverPlayer.hasEffect(MobEffects.MOVEMENT_SPEED)) {
-            serverPlayer.removeEffect(MobEffects.MOVEMENT_SPEED);
+        if (serverPlayer.hasEffect(MobEffects.SPEED)) {
+            serverPlayer.removeEffect(MobEffects.SPEED);
         }
     }
 }

@@ -6,7 +6,9 @@ import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,6 +21,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.AbstractCandleBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
@@ -34,6 +37,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -98,22 +102,30 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
     }
 
     @Override
-    public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+    public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block block, @Nullable Orientation orientation, boolean notify) {
         SuperCandle.placeWickIfPossible(world, pos, false);
-        super.neighborChanged(blockstate, world, pos, block, fromPos, notify);
+        super.neighborChanged(blockstate, world, pos, block, orientation, notify);
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos, BlockPos neighborPos) {
-        if (state.getValue(WATERLOGGED)) {
-            level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+    public BlockState updateShape(BlockState blockstate,
+                                  LevelReader levelReader,
+                                  ScheduledTickAccess tickAccess,
+                                  BlockPos currentPos,
+                                  Direction facing,
+                                  BlockPos facingPos,
+                                  BlockState facingState,
+                                  RandomSource randomSource)
+    {
+        if (blockstate.getValue(WATERLOGGED)) {
+            tickAccess.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelReader));
         }
 
-        return super.updateShape(state, direction, neighborState, level, currentPos, neighborPos);
+        return super.updateShape(blockstate, levelReader, tickAccess, currentPos, facing, facingPos, facingState, randomSource);
     }
 
     @Override
-    public boolean canPlaceLiquid(@Nullable Player player, BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
+    public boolean canPlaceLiquid(@Nullable LivingEntity livingEntity, BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
         return !blockState.getValue(WATERLOGGED) && fluid.is(FluidTags.WATER) && fluid.defaultFluidState().isSource();
     }
 
@@ -137,12 +149,12 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
 
     @Override
     public InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        if (player.mayInteract(level, blockPos) && (!PlatformService.INSTANCE.isNeoForge() || !PlatformService.INSTANCE.isItemAbility(itemStack, null, "firestarter_light"))) {
+        if (level instanceof ServerLevel serverLevel && player.mayInteract(serverLevel, blockPos) && (!PlatformService.INSTANCE.isNeoForge() || !PlatformService.INSTANCE.isItemAbility(itemStack, null, "firestarter_light"))) {
             if (CandleUnlightBehaviors(itemStack, blockState, level, blockPos, player, false) || CandleLightBehaviors(itemStack, blockState, level, blockPos, player, interactionHand, false)) {
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return InteractionResult.SUCCESS_SERVER;
             }
         }
-        return InteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.PASS;
     }
 
     @Override

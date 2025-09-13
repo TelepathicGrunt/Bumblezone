@@ -28,6 +28,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -87,8 +88,8 @@ public class FilledPorousHoneycomb extends Block {
                 !playerEntity.isSpectator() &&
                 BzBeeAggressionConfigs.aggressiveBees)
             {
-                Registry<MobEffect> mobEffects = level.registryAccess().registryOrThrow(Registries.MOB_EFFECT);
-                boolean hasProtection = playerEntity.hasEffect(mobEffects.getHolder(BzEffects.PROTECTION_OF_THE_HIVE.getId()).get());
+                Registry<MobEffect> mobEffects = level.registryAccess().getOrThrow(Registries.MOB_EFFECT).value();
+                boolean hasProtection = playerEntity.hasEffect(mobEffects.get(BzEffects.PROTECTION_OF_THE_HIVE.getId()).get());
                 if(!hasProtection &&
                     playerEntity instanceof ServerPlayer serverPlayer &&
                     !EssenceOfTheBees.hasEssence(serverPlayer) &&
@@ -98,7 +99,7 @@ public class FilledPorousHoneycomb extends Block {
                     serverPlayer.displayClientMessage(message, true);
 
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
-                    playerEntity.addEffect(new MobEffectInstance(mobEffects.getHolder(BzEffects.WRATH_OF_THE_HIVE.getId()).get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles, true));
+                    playerEntity.addEffect(new MobEffectInstance(mobEffects.get(BzEffects.WRATH_OF_THE_HIVE.getId()).get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles, true));
                 }
 
                 if (hasProtection && playerEntity instanceof ServerPlayer serverPlayer) {
@@ -113,7 +114,7 @@ public class FilledPorousHoneycomb extends Block {
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity) {
+    public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         beeHoneyTake(state, level, blockPos, entity);
     }
 
@@ -197,7 +198,7 @@ public class FilledPorousHoneycomb extends Block {
                     BlockState belowBlockstate = world.getBlockState(belowBlockpos);
                     VoxelShape belowBlockShape = belowBlockstate.getCollisionShape(world, belowBlockpos);
                     double yEndHeight2 = belowBlockShape.max(Direction.Axis.Y);
-                    if ((yEndHeight2 < 1.0D || !belowBlockstate.isSolidRender(world, belowBlockpos)) && belowBlockstate.getFluidState().isEmpty()) {
+                    if ((yEndHeight2 < 1.0D || !belowBlockstate.isSolidRender()) && belowBlockstate.getFluidState().isEmpty()) {
                         this.addHoneyParticle(world, random, position, currentBlockShape, position.getY() - 0.05D);
                     }
                 }

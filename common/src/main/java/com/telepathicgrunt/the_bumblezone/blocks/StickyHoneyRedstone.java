@@ -6,8 +6,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -73,9 +75,9 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      */
     @Deprecated
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         updateState(level, blockPos, blockState, 0);
-        super.entityInside(blockState, level, blockPos, entity);
+        super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
     }
 
     protected int getTickRate() {
@@ -98,7 +100,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
             return;
 
         if (blockstate.getValue(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(Direction.DOWN))) {
-            world.blockUpdated(pos, this);
+            world.updateNeighborsAt(pos, this);
         }
 
         for (Direction direction : Direction.values()) {
@@ -130,15 +132,14 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
     /**
      * notify neighbor of changes when replaced
      */
-    @SuppressWarnings("deprecation")
     @Override
-    public void onRemove(BlockState blockstate, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!isMoving && blockstate.getBlock() != newState.getBlock()) {
-            if (blockstate.getValue(POWERED)) {
-                this.updateTarget(world, pos, blockstate);
+    protected void affectNeighborsAfterRemoval(BlockState blockState, ServerLevel level, BlockPos blockPos, boolean pushed) {
+        if (!pushed) {
+            if (blockState.getValue(POWERED)) {
+                this.updateTarget(level, blockPos, blockState);
             }
 
-            super.onRemove(blockstate, world, pos, newState, false);
+            super.affectNeighborsAfterRemoval(blockState, level, blockPos, false);
         }
     }
 
@@ -236,7 +237,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         if (blockState.getValue(POWERED)) {
             for (int i = 0; i == random.nextInt(2); ++i) {
                 Direction randomDirection = Direction.values()[random.nextInt(Direction.values().length)];
-                this.addParticle(new DustParticleOptions(new Vector3f(255, 0, 0), 1.0F), random, world, position, blockState, randomDirection);
+                this.addParticle(new DustParticleOptions(ARGB.colorFromFloat(1.0F, 255, 0, 0), 1.0F), random, world, position, blockState, randomDirection);
             }
         }
     }

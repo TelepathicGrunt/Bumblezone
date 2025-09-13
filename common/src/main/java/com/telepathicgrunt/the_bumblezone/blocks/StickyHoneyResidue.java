@@ -27,6 +27,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -37,6 +38,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
@@ -156,7 +158,7 @@ public class StickyHoneyResidue extends Block {
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState state, BlockGetter blockGetter, BlockPos blockPos) {
+    public boolean propagatesSkylightDown(BlockState state) {
         return true;
     }
 
@@ -186,15 +188,15 @@ public class StickyHoneyResidue extends Block {
      */
     @Deprecated
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         if (entity.getType().is(BzTags.STICKY_HONEY_RESIDUE_CANNOT_SLOW)) {
-            super.entityInside(blockState, level, blockPos, entity);
+            super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
             return;
         }
 
         ItemStack beeLeggings = entity instanceof LivingEntity livingEntity ? HoneyBeeLeggings.getEntityBeeLegging(livingEntity) : ItemStack.EMPTY;
         if(!beeLeggings.isEmpty()) {
-            super.entityInside(blockState, level, blockPos, entity);
+            super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
             return;
         }
 
@@ -214,7 +216,7 @@ public class StickyHoneyResidue extends Block {
             }
         }
 
-        super.entityInside(blockState, level, blockPos, entity);
+        super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
     }
 
     /**
@@ -302,8 +304,16 @@ public class StickyHoneyResidue extends Block {
      * double check to make sure this block has at least one face and can attach.
      */
     @Override
-    public BlockState updateShape(BlockState blockstate, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
-        BlockState newBlockstate = this.setAttachments(blockstate, world, currentPos);
+    public BlockState updateShape(BlockState blockstate,
+                                  LevelReader levelReader,
+                                  ScheduledTickAccess tickAccess,
+                                  BlockPos currentPos,
+                                  Direction facing,
+                                  BlockPos facingPos,
+                                  BlockState facingState,
+                                  RandomSource randomSource)
+    {
+        BlockState newBlockstate = this.setAttachments(blockstate, levelReader, currentPos);
         return !hasAtleastOneAttachment(newBlockstate) ? Blocks.AIR.defaultBlockState() : newBlockstate;
     }
 
@@ -335,7 +345,7 @@ public class StickyHoneyResidue extends Block {
      * This block is full of holes and can let light through
      */
     @Override
-    public int getLightBlock(BlockState state, BlockGetter world, BlockPos pos) {
+    public int getLightBlock(BlockState state) {
         return 1;
     }
 
@@ -369,29 +379,29 @@ public class StickyHoneyResidue extends Block {
                     1.0F,
                     1.0F);
 
-            if (playerEntity instanceof ServerPlayer serverPlayer) {
+            if (level instanceof ServerLevel serverLevel) {
                 if (blockState.getValue(UP)) {
-                    ((ServerLevel) level).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.95D, position.getZ() + 0.5D, 6, 0.3D, 0.0D, 0.3D, 1);
+                    serverLevel.sendParticles(ParticleTypes.FALLING_WATER, false, true, position.getX() + 0.5D, position.getY() + 0.95D, position.getZ() + 0.5D, 6, 0.3D, 0.0D, 0.3D, 1);
                 }
 
                 if (blockState.getValue(NORTH)) {
-                    ((ServerLevel) level).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.05D, 6, 0.3D, 0.3D, 0.0D, 1);
+                    serverLevel.sendParticles(ParticleTypes.FALLING_WATER, false, true, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.05D, 6, 0.3D, 0.3D, 0.0D, 1);
                 }
 
                 if (blockState.getValue(EAST)) {
-                    ((ServerLevel) level).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.95D, position.getY() + 0.5D, position.getZ() + 0.5D, 6, 0.0D, 0.3D, 0.3D, 1);
+                    serverLevel.sendParticles(ParticleTypes.FALLING_WATER, false, true, position.getX() + 0.95D, position.getY() + 0.5D, position.getZ() + 0.5D, 6, 0.0D, 0.3D, 0.3D, 1);
                 }
 
                 if (blockState.getValue(SOUTH)) {
-                    ((ServerLevel) level).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.95D, 6, 0.3D, 0.3D, 0.0D, 1);
+                    serverLevel.sendParticles(ParticleTypes.FALLING_WATER, false, true, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.95D, 6, 0.3D, 0.3D, 0.0D, 1);
                 }
 
                 if (blockState.getValue(WEST)) {
-                    ((ServerLevel) level).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.05D, position.getY() + 0.5D, position.getZ() + 0.5D, 6, 0.0D, 0.3D, 0.3D, 1);
+                    serverLevel.sendParticles(ParticleTypes.FALLING_WATER, false, true, position.getX() + 0.05D, position.getY() + 0.5D, position.getZ() + 0.5D, 6, 0.0D, 0.3D, 0.3D, 1);
                 }
 
                 if (blockState.getValue(DOWN)) {
-                    ((ServerLevel) level).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.05D, position.getZ() + 0.5D, 6, 0.3D, 0.0D, 0.3D, 1);
+                    serverLevel.sendParticles(ParticleTypes.FALLING_WATER, false, true, position.getX() + 0.5D, position.getY() + 0.05D, position.getZ() + 0.5D, 6, 0.3D, 0.0D, 0.3D, 1);
                 }
             }
 

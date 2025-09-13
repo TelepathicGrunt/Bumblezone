@@ -9,13 +9,13 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
@@ -34,6 +34,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.AbstractCandleBlock;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -54,6 +55,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -123,22 +125,30 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
     }
 
     @Override
-    public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+    public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block block, @Nullable Orientation orientation, boolean notify) {
         SuperCandle.placeWickIfPossible(world, pos, false);
-        super.neighborChanged(blockstate, world, pos, block, fromPos, notify);
+        super.neighborChanged(blockstate, world, pos, block, orientation, notify);
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos, BlockPos neighborPos) {
-        if (state.getValue(WATERLOGGED)) {
-            level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+    public BlockState updateShape(BlockState blockstate,
+                                  LevelReader levelReader,
+                                  ScheduledTickAccess tickAccess,
+                                  BlockPos currentPos,
+                                  Direction facing,
+                                  BlockPos facingPos,
+                                  BlockState facingState,
+                                  RandomSource randomSource)
+    {
+        if (blockstate.getValue(WATERLOGGED)) {
+            tickAccess.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelReader));
         }
 
-        return super.updateShape(state, direction, neighborState, level, currentPos, neighborPos);
+        return super.updateShape(blockstate, levelReader, tickAccess, currentPos, facing, facingPos, facingState, randomSource);
     }
 
     @Override
-    public boolean canPlaceLiquid(@Nullable Player player, BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
+    public boolean canPlaceLiquid(@Nullable LivingEntity livingEntity, BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
         return !blockState.getValue(WATERLOGGED) && fluid.is(FluidTags.WATER) && fluid.defaultFluidState().isSource();
     }
 
@@ -179,12 +189,12 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
 
     @Override
     public InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        if (player.mayInteract(level, blockPos) && (!PlatformService.INSTANCE.isNeoForge() || !PlatformService.INSTANCE.isItemAbility(itemStack, null, "firestarter_light"))) {
+        if (level instanceof ServerLevel serverLevel && player.mayInteract(serverLevel, blockPos) && (!PlatformService.INSTANCE.isNeoForge() || !PlatformService.INSTANCE.isItemAbility(itemStack, null, "firestarter_light"))) {
             if (CandleUnlightBehaviors(itemStack, blockState, level, blockPos, player, false) || CandleLightBehaviors(itemStack, blockState, level, blockPos, player, interactionHand, false)) {
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return InteractionResult.SUCCESS_SERVER;
             }
         }
-        return InteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.PASS;
     }
 
     @Override
@@ -254,9 +264,7 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
         CustomData customData = itemStack.get(DataComponents.BLOCK_ENTITY_DATA);
         if (customData != null && !customData.isEmpty()) {
             CompoundTag tag = customData.copyTag();
-            if (tag.contains(PotionCandleBlockEntity.COLOR_TAG)) {
-                return tag.getInt(PotionCandleBlockEntity.COLOR_TAG);
-            }
+            return tag.getInt(PotionCandleBlockEntity.COLOR_TAG).orElse(PotionCandleBlockEntity.DEFAULT_COLOR);
         }
         return PotionCandleBlockEntity.DEFAULT_COLOR;
     }

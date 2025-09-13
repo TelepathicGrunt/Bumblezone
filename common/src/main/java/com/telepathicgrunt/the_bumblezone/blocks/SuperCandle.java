@@ -66,7 +66,7 @@ public interface SuperCandle {
             if (wickWaterlogged) {
                 BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
                 mutableBlockPos.set(wickPosition.below());
-                for (int i = 0; i < chunkAccess.getMaxBuildHeight() - mutableBlockPos.getY(); i++) {
+                for (int i = 0; i < chunkAccess.getMaxY() - mutableBlockPos.getY(); i++) {
                     BlockState currentState = chunkAccess.getBlockState(mutableBlockPos);
                     if (currentState.getBlock() instanceof SuperCandle) {
                         levelAccessor.setBlock(blockPos, currentState.setValue(BlockStateProperties.WATERLOGGED, true), 3);

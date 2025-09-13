@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.bossbars.ServerEssenceEvent;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.mixin.RabbitAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -148,7 +149,7 @@ public class EssenceBlockRed extends EssenceBlock {
                     {
                         int yOffset = (-(essenceBlockEntity.getArenaSize().getY()) / 2) + 2;
                         BlockPos center = blockPos.offset(0, yOffset, 0);
-                        entity.moveTo(center.getX(), center.getY(), center.getZ());
+                        entity.snapTo(center.getX(), center.getY(), center.getZ());
                     }
                 }
             }
@@ -183,7 +184,7 @@ public class EssenceBlockRed extends EssenceBlock {
         }
 
         List<? extends EntityType<?>> entityTypeList = BuiltInRegistries.ENTITY_TYPE
-                .getTag(enemyTagToUse)
+                .get(enemyTagToUse)
                 .map(holders -> holders
                         .stream()
                         .map(Holder::value)
@@ -276,7 +277,7 @@ public class EssenceBlockRed extends EssenceBlock {
                 else if (entity instanceof Mob mob) {
                     mob.setTarget(serverPlayer);
                     if (entity instanceof Rabbit rabbit) {
-                        rabbit.setVariant(Rabbit.Variant.EVIL);
+                        ((RabbitAccessor)rabbit).the_bumblezone$callSetVariant(Rabbit.Variant.EVIL);
                     }
                 }
             }
@@ -285,13 +286,13 @@ public class EssenceBlockRed extends EssenceBlock {
 
     @Override
     public void onPlayerEnter(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
-        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RAGING_EVENT.get().getLocation(), true);
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RAGING_EVENT.get().location(), true);
         super.onPlayerEnter(serverLevel, serverPlayer, essenceBlockEntity);
     }
 
     @Override
     public void onPlayerLeave(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
-        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RAGING_EVENT.get().getLocation(), false);
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RAGING_EVENT.get().location(), false);
         super.onPlayerLeave(serverLevel, serverPlayer, essenceBlockEntity);
     }
 }

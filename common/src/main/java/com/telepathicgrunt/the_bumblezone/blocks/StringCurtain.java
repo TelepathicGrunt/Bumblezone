@@ -13,12 +13,13 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -34,11 +35,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.PathfindingContext;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -56,7 +58,7 @@ public class StringCurtain extends Block {
     public static final BooleanProperty ATTACHED = BooleanProperty.create("attached");
     public static final BooleanProperty CENTER = BooleanProperty.create("center");
     public static final BooleanProperty IS_END = BooleanProperty.create("is_end");
-    public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction> HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
     protected final Map<Pair<Direction, Boolean>, VoxelShape> collisionShapeByMap;
 
     public static final MapCodec<StringCurtain> CODEC = Block.simpleCodec(StringCurtain::new);
@@ -142,7 +144,7 @@ public class StringCurtain extends Block {
     }
 
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         boolean entityShouldBePushed = shouldBlockOffEntity(entity);
         if (entityShouldBePushed) {
             if (!entity.hasControllingPassenger() &&
@@ -201,7 +203,7 @@ public class StringCurtain extends Block {
             }
         }
 
-        super.entityInside(blockState, level, blockPos, entity);
+        super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
     }
 
     @Override
@@ -253,13 +255,13 @@ public class StringCurtain extends Block {
     }
 
     @Override
-    public void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
+    protected void affectNeighborsAfterRemoval(BlockState blockState, ServerLevel level, BlockPos blockPos, boolean pushed) {
         blockUpdateCurtainChainUpward(level, blockPos);
-        super.onRemove(blockState, level, blockPos, blockState2, bl);
+        super.affectNeighborsAfterRemoval(blockState, level, blockPos, false);
     }
 
     @Override
-    public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, BlockPos blockPos2, boolean bl) {
+    public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, @Nullable Orientation orientation, boolean bl) {
         if (!level.isClientSide) {
             if (!blockState.canSurvive(level, blockPos)) {
                 level.destroyBlock(blockPos, true);
@@ -332,7 +334,7 @@ public class StringCurtain extends Block {
                         hitResult.isInside()
                 ));
 
-                if (interactionResult != InteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION) {
+                if (interactionResult != InteractionResult.PASS) {
                     return InteractionResult.SUCCESS;
                 }
             }
@@ -367,7 +369,7 @@ public class StringCurtain extends Block {
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos().set(position);
         BlockState aboveState = world.getBlockState(mutableBlockPos.move(Direction.UP));
         while (aboveState.is(BzTags.STRING_CURTAINS) && world.isInWorldBounds(mutableBlockPos)) {
-            world.blockUpdated(mutableBlockPos, aboveState.getBlock());
+            world.updateNeighborsAt(mutableBlockPos, aboveState.getBlock());
             mutableBlockPos.move(Direction.UP);
         }
     }

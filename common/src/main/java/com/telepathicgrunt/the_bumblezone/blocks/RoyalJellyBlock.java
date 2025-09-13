@@ -14,6 +14,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
@@ -84,7 +85,7 @@ public class RoyalJellyBlock extends HalfTransparentBlock implements BlockExtens
     }
 
     @Override
-    public void fallOn(Level level, BlockState blockState, BlockPos blockPos, Entity entity, float fallDistance) {
+    public void fallOn(Level level, BlockState blockState, BlockPos blockPos, Entity entity, double fallDistance) {
         entity.playSound(BzSounds.ROYAL_JELLY_BLOCK_SLIDE.get(), 1.0F, 1.0F);
         if (!level.isClientSide) {
             showJumpParticles((ServerLevel)level, entity);
@@ -96,14 +97,14 @@ public class RoyalJellyBlock extends HalfTransparentBlock implements BlockExtens
     }
 
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         if (this.isSlidingDown(blockPos, entity)) {
             this.maybeDoSlideAchievement(entity, blockPos);
             this.doSlideMovement(entity);
             this.maybeDoSlideEffects(level, entity);
         }
 
-        super.entityInside(blockState, level, blockPos, entity);
+        super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
     }
 
     private boolean isSlidingDown(BlockPos blockPos, Entity entity) {

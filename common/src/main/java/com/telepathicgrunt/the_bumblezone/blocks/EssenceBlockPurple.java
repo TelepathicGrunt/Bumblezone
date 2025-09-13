@@ -19,6 +19,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -217,7 +218,7 @@ public class EssenceBlockPurple extends EssenceBlock {
         int columnLength = arenaSize.getZ() - 2;
         for (int x = 0; x < rowLength; x++) {
             for (int z = 0; z < columnLength; z++) {
-                PurpleSpikeEntity spikeEntity = BzEntities.PURPLE_SPIKE_ENTITY.get().create(serverLevel);
+                PurpleSpikeEntity spikeEntity = BzEntities.PURPLE_SPIKE_ENTITY.get().create(serverLevel, EntitySpawnReason.EVENT);
 
                 if (spikeEntity != null) {
                     spikeEntity.addTag("the_bumblezone.purple_essence_arena");
@@ -620,13 +621,13 @@ public class EssenceBlockPurple extends EssenceBlock {
 
     @Override
     public void onPlayerEnter(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
-        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.KNOWING_EVENT.get().getLocation(), true);
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.KNOWING_EVENT.get().location(), true);
         super.onPlayerEnter(serverLevel, serverPlayer, essenceBlockEntity);
     }
 
     @Override
     public void onPlayerLeave(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
-        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.KNOWING_EVENT.get().getLocation(), false);
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.KNOWING_EVENT.get().location(), false);
         super.onPlayerLeave(serverLevel, serverPlayer, essenceBlockEntity);
     }
 }

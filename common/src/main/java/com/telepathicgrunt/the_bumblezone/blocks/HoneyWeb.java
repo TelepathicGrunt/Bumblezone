@@ -25,6 +25,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -143,9 +144,9 @@ public class HoneyWeb extends Block {
     }
 
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         if (entity.getType().is(BzTags.HONEY_WEB_CANNOT_SLOW)) {
-            super.entityInside(blockState, level, blockPos, entity);
+            super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
             return;
         }
 
@@ -190,7 +191,7 @@ public class HoneyWeb extends Block {
                 }
             }
         }
-        super.entityInside(blockState, level, blockPos, entity);
+        super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
     }
 
     @Override

@@ -196,7 +196,7 @@ public class EssenceBlockGreen extends EssenceBlock {
                         rootminEntity.setDeltaMovement(moveDirection.x(), moveDirection.y(), moveDirection.z());
                     }
                     else if (diff.length() > 3) {
-                        rootminEntity.moveTo(desiredRootminSpot);
+                        rootminEntity.snapTo(desiredRootminSpot);
                     }
                 }
 
@@ -260,7 +260,7 @@ public class EssenceBlockGreen extends EssenceBlock {
                         }
                     }
                     else {
-                        rootminEntity.lookAt(EntityAnchorArgument.Anchor.FEET, Vec3.atLowerCornerOf(Direction.WEST.getNormal()).add(rootminEntity.position()));
+                        rootminEntity.lookAt(EntityAnchorArgument.Anchor.FEET, Vec3.atLowerCornerOf(Direction.WEST.getUnitVec3i()).add(rootminEntity.position()));
                         rootminEntity.setRootminShield(true);
                     }
                 }
@@ -299,7 +299,7 @@ public class EssenceBlockGreen extends EssenceBlock {
                         AttributeModifier.Operation.ADD_VALUE));
             }
 
-            entity.lookAt(EntityAnchorArgument.Anchor.EYES, Vec3.atLowerCornerOf(Direction.SOUTH.getNormal()));
+            entity.lookAt(EntityAnchorArgument.Anchor.EYES, Vec3.atLowerCornerOf(Direction.SOUTH.getUnitVec3i()));
             eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
         }
         return entity;
@@ -307,13 +307,13 @@ public class EssenceBlockGreen extends EssenceBlock {
 
     @Override
     public void onPlayerEnter(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
-        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.LIFE_EVENT.get().getLocation(), true);
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.LIFE_EVENT.get().location(), true);
         super.onPlayerEnter(serverLevel, serverPlayer, essenceBlockEntity);
     }
 
     @Override
     public void onPlayerLeave(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
-        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.LIFE_EVENT.get().getLocation(), false);
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.LIFE_EVENT.get().location(), false);
         super.onPlayerLeave(serverLevel, serverPlayer, essenceBlockEntity);
     }
 }

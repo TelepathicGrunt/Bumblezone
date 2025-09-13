@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -84,7 +85,7 @@ public class GlisteringHoneyCrystal extends ProperFacingBlock implements BlockEx
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+    public boolean propagatesSkylightDown(BlockState blockState) {
         return true;
     }
 
@@ -100,9 +101,9 @@ public class GlisteringHoneyCrystal extends ProperFacingBlock implements BlockEx
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level world, BlockPos blockPos, Block block, BlockPos fromPos, boolean notify) {
+    public void neighborChanged(BlockState state, Level world, BlockPos blockPos, Block block, Orientation orientation, boolean notify) {
         sugarifyNeighboringWater(world, blockPos);
-        super.neighborChanged(state, world, blockPos, block, fromPos, notify);
+        super.neighborChanged(state, world, blockPos, block, orientation, notify);
     }
 
     private static void sugarifyNeighboringWater(LevelAccessor level, BlockPos blockPos) {

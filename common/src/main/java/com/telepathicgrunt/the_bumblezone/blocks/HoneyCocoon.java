@@ -16,13 +16,9 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -34,11 +30,8 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -46,6 +39,8 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
@@ -62,6 +57,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -134,7 +130,6 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     /**
      * Can be waterlogged so return sugar water fluid if so
      */
-    @SuppressWarnings("deprecation")
     @Override
     public FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? BzFluids.SUGAR_WATER_FLUID.get().getSource(false) : super.getFluidState(state);
@@ -143,24 +138,31 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     /**
      * begin fluid tick if waterlogged
      */
-    @SuppressWarnings("deprecation")
     @Override
-    public BlockState updateShape(BlockState blockstate, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState blockstate,
+                                  LevelReader levelReader,
+                                  ScheduledTickAccess tickAccess,
+                                  BlockPos currentPos,
+                                  Direction facing,
+                                  BlockPos facingPos,
+                                  BlockState facingState,
+                                  RandomSource randomSource)
+    {
         if (blockstate.getValue(WATERLOGGED)) {
-            world.scheduleTick(currentPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(world));
-            world.scheduleTick(currentPos, blockstate.getBlock(), waterDropDelay);
+            tickAccess.scheduleTick(currentPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(levelReader));
+            tickAccess.scheduleTick(currentPos, blockstate.getBlock(), waterDropDelay);
         }
 
-        return super.updateShape(blockstate, facing, facingState, world, currentPos, facingPos);
+        return super.updateShape(blockstate, levelReader, tickAccess, currentPos, facing, facingPos, facingState, randomSource);
     }
 
     @Override
-    public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+    public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block block, Orientation orientation, boolean notify) {
         if (blockstate.getValue(WATERLOGGED)) {
             world.scheduleTick(pos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(world));
             world.scheduleTick(pos, blockstate.getBlock(), waterDropDelay);
         }
-        super.neighborChanged(blockstate, world, pos, block, fromPos, notify);
+        super.neighborChanged(blockstate, world, pos, block, orientation, notify);
     }
 
     /**
@@ -324,7 +326,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     }
 
     @Override
-    public boolean canPlaceLiquid(@Nullable Player player, BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
+    public boolean canPlaceLiquid(@Nullable LivingEntity livingEntity, BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
         return !blockState.getValue(WATERLOGGED) && fluid.is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluid.defaultFluidState().isSource();
     }
 
@@ -343,7 +345,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     }
 
     @Override
-    public ItemStack pickupBlock(@Nullable Player player, LevelAccessor world, BlockPos blockPos, BlockState blockState) {
+    public ItemStack pickupBlock(@Nullable LivingEntity livingEntity, LevelAccessor world, BlockPos blockPos, BlockState blockState) {
         if (blockState.getValue(WATERLOGGED)) {
             world.setBlock(blockPos, blockState.setValue(WATERLOGGED, false), 3);
             return new ItemStack(BzItems.SUGAR_WATER_BUCKET.get());

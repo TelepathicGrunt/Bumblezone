@@ -7,6 +7,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.core.Holder;
+import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -19,7 +20,8 @@ import java.util.Optional;
 
 import static com.telepathicgrunt.the_bumblezone.Bumblezone.GSON;
 
-public class PotionCandleDataManager extends SimpleJsonResourceReloadListener {
+public class PotionCandleDataManager extends SimpleJsonResourceReloadListener<PotionCandleDataManager.EffectData> {
+    private static final FileToIdConverter ASSET_LISTER = FileToIdConverter.json("bz_potion_candle_data");
     public static final PotionCandleDataManager POTION_CANDLE_DATA_MANAGER = new PotionCandleDataManager();
 
     public record EffectData(Holder<MobEffect> effectHolder, OverrideData overrideData) {
@@ -27,6 +29,7 @@ public class PotionCandleDataManager extends SimpleJsonResourceReloadListener {
                 MobEffect.CODEC.fieldOf("effect").forGetter(e -> e.effectHolder),
                 OverrideData.CODEC.fieldOf("override").forGetter(i -> i.overrideData)
         ).apply(instance, instance.stable(EffectData::new)));
+
     }
 
     public record OverrideData(Integer maxLevelCap,
@@ -47,21 +50,12 @@ public class PotionCandleDataManager extends SimpleJsonResourceReloadListener {
     public final Map<MobEffect, OverrideData> effectToOverrideStats = new Object2ObjectArrayMap<>();
 
     public PotionCandleDataManager() {
-        super(GSON, "bz_potion_candle_data");
+        super(EffectData.CODEC, ASSET_LISTER);
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> loader, ResourceManager manager, ProfilerFiller profiler) {
+    protected void apply(Map<ResourceLocation, EffectData> loader, ResourceManager manager, ProfilerFiller profiler) {
         effectToOverrideStats.clear();
-        loader.forEach((fileIdentifier, jsonElement) -> {
-            try {
-                EffectData.CODEC.parse(JsonOps.INSTANCE, jsonElement)
-                        .resultOrPartial((s) -> {})
-                        .ifPresent(data -> effectToOverrideStats.put(data.effectHolder().value(), data.overrideData()));
-            }
-            catch (Exception e) {
-                Bumblezone.LOGGER.error("Bumblezone Error: Couldn't parse potion candle data file: {}", fileIdentifier, e);
-            }
-        });
+        loader.forEach((fileIdentifier, effectData) -> effectToOverrideStats.put(effectData.effectHolder().value(), effectData.overrideData()));
     }
 }

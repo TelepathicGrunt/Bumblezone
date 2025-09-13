@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.level.LevelAccessor;
@@ -30,9 +31,9 @@ public class BzBucketItem extends BucketItem implements FluidGetter {
     }
 
     @Override
-    protected void playEmptySound(@Nullable Player player, @NotNull LevelAccessor level, @NotNull BlockPos pos) {
+    protected void playEmptySound(@Nullable LivingEntity livingEntity, @NotNull LevelAccessor level, @NotNull BlockPos pos) {
         SoundEvent event = info.properties().sounds().getOrDefault("bucket_empty", SoundEvents.BUCKET_EMPTY);
-        level.playSound(player, pos, event, SoundSource.BLOCKS, 1.0F, 1.0F);
-        level.gameEvent(player, GameEvent.FLUID_PLACE, pos);
+        level.playSound(livingEntity, pos, event, SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.gameEvent(livingEntity, GameEvent.FLUID_PLACE, pos);
     }
 }

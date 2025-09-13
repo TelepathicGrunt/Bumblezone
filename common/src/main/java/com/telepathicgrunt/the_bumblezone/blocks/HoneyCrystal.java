@@ -12,8 +12,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
@@ -24,6 +26,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
@@ -101,7 +104,6 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     /**
      * Can be waterlogged so return sugar water fluid if so
      */
-    @SuppressWarnings("deprecation")
     @Override
     public FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? BzFluids.SUGAR_WATER_FLUID.get().getSource(false) : super.getFluidState(state);
@@ -128,21 +130,25 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     /**
      * checks if crystal attachment is still valid and begin fluid tick if waterlogged
      */
-    @SuppressWarnings("deprecation")
     @Override
-    public BlockState updateShape(BlockState blockstate, Direction facing,
-                                                BlockState facingState, LevelAccessor world,
-                                                BlockPos currentPos, BlockPos facingPos) {
-
-        if (facing.getOpposite() == blockstate.getValue(FACING) && !blockstate.canSurvive(world, currentPos)) {
+    public BlockState updateShape(BlockState blockstate,
+                                  LevelReader levelReader,
+                                  ScheduledTickAccess tickAccess,
+                                  BlockPos currentPos,
+                                  Direction facing,
+                                  BlockPos facingPos,
+                                  BlockState facingState,
+                                  RandomSource randomSource)
+    {
+        if (facing.getOpposite() == blockstate.getValue(FACING) && !blockstate.canSurvive(levelReader, currentPos)) {
             return Blocks.AIR.defaultBlockState();
         }
         else {
             if (blockstate.getValue(WATERLOGGED)) {
-                world.scheduleTick(currentPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(world));
+                tickAccess.scheduleTick(currentPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(levelReader));
             }
 
-            return super.updateShape(blockstate, facing, facingState, world, currentPos, facingPos);
+            return super.updateShape(blockstate, levelReader, tickAccess, currentPos, facing, facingPos, facingState, randomSource);
         }
     }
 
@@ -178,7 +184,6 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
      * Allows players to waterlog this block directly with buckets full of water tagged fluids
      */
     @Override
-    @SuppressWarnings("deprecation")
     public InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         if (itemStack.getItem() == Items.GLASS_BOTTLE) {
 
@@ -216,12 +221,12 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
      * This block is translucent and can let some light through
      */
     @Override
-    public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
+    public int getLightBlock(BlockState state) {
         return 1;
     }
 
     @Override
-    public boolean canPlaceLiquid(@Nullable Player player, BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
+    public boolean canPlaceLiquid(@Nullable LivingEntity livingEntity, BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
         return !blockState.getValue(WATERLOGGED) && fluid.is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluid.defaultFluidState().isSource();
     }
 
@@ -240,7 +245,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     }
 
     @Override
-    public ItemStack pickupBlock(@Nullable Player player, LevelAccessor world, BlockPos blockPos, BlockState blockState) {
+    public ItemStack pickupBlock(@Nullable LivingEntity livingEntity, LevelAccessor world, BlockPos blockPos, BlockState blockState) {
         if (blockState.getValue(WATERLOGGED)) {
             world.setBlock(blockPos, blockState.setValue(WATERLOGGED, false), 3);
             return new ItemStack(BzItems.SUGAR_WATER_BUCKET.get());

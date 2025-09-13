@@ -13,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -20,6 +21,8 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -27,6 +30,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.AbstractCandleBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
@@ -43,6 +47,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -104,7 +109,7 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
     }
 
     @Override
-    public void neighborChanged(BlockState blockstate, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+    public void neighborChanged(BlockState blockstate, Level level, BlockPos pos, Block block, @Nullable Orientation orientation, boolean notify) {
         if (!this.canSurvive(blockstate, level, pos)) {
             // Can't use destroyBlock because it skips air marked blocks like this wick.
             FluidState fluidState = level.getFluidState(pos);
@@ -116,29 +121,37 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
             }
         }
         else {
-            super.neighborChanged(blockstate, level, pos, block, fromPos, notify);
+            super.neighborChanged(blockstate, level, pos, block, orientation, notify);
         }
     }
 
     @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!state.is(BzTags.CANDLE_WICKS) || !newState.is(BzTags.CANDLE_WICKS)) {
-            setBelowLit(level, pos, false);
+    protected void affectNeighborsAfterRemoval(BlockState blockState, ServerLevel level, BlockPos blockPos, boolean pushed) {
+        if (!blockState.is(BzTags.CANDLE_WICKS) || !blockState.is(BzTags.CANDLE_WICKS)) {
+            setBelowLit(level, blockPos, false);
         }
-        super.onRemove(state, level, pos, newState, isMoving);
+        super.affectNeighborsAfterRemoval(blockState, level, blockPos, false);
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos, BlockPos neighborPos) {
-        if (state.getValue(WATERLOGGED)) {
-            level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+    public BlockState updateShape(BlockState blockstate,
+                                  LevelReader levelReader,
+                                  ScheduledTickAccess tickAccess,
+                                  BlockPos currentPos,
+                                  Direction facing,
+                                  BlockPos facingPos,
+                                  BlockState facingState,
+                                  RandomSource randomSource)
+    {
+        if (blockstate.getValue(WATERLOGGED)) {
+            tickAccess.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelReader));
         }
 
-        return super.updateShape(state, direction, neighborState, level, currentPos, neighborPos);
+        return super.updateShape(blockstate, levelReader, tickAccess, currentPos, facing, facingPos, facingState, randomSource);
     }
 
     @Override
-    public boolean canPlaceLiquid(@Nullable Player player, BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
+    public boolean canPlaceLiquid(@Nullable LivingEntity livingEntity, BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
         return !blockState.getValue(WATERLOGGED) && fluid.is(FluidTags.WATER) && fluid.defaultFluidState().isSource();
     }
 
@@ -167,7 +180,7 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         if (!state.getValue(LIT) && entity instanceof Projectile projectile) {
             if (!level.isClientSide && projectile.isOnFire() && SuperCandle.canBeLit(level, state, pos.below())) {
                 boolean litWick = SuperCandleWick.setLit(level, level.getBlockState(pos), pos, true);
@@ -204,7 +217,7 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
                 }
             }
         }
-        super.entityInside(state, level, pos, entity);
+        super.entityInside(state, level, pos, entity, insideBlockEffectApplier);
     }
 
     // passed in position should be the spot directly below the wick
@@ -212,7 +225,7 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
         mutableBlockPos.set(blockPos);
         ChunkAccess chunkAccess = levelAccessor.getChunk(blockPos);
-        for (int i = 0; i < mutableBlockPos.getY() - chunkAccess.getMinBuildHeight(); i++) {
+        for (int i = 0; i < mutableBlockPos.getY() - chunkAccess.getMinY(); i++) {
             BlockState currentState = chunkAccess.getBlockState(mutableBlockPos);
             if (currentState.is(BlockTags.SOUL_FIRE_BASE_BLOCKS)) {
                 return true;
@@ -230,7 +243,7 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
         mutableBlockPos.set(blockPos);
         ChunkAccess chunkAccess = levelAccessor.getChunk(blockPos);
-        for (int i = 0; i < chunkAccess.getMaxBuildHeight() - mutableBlockPos.getY(); i++) {
+        for (int i = 0; i < chunkAccess.getMaxY() - mutableBlockPos.getY(); i++) {
             BlockState currentState = chunkAccess.getBlockState(mutableBlockPos);
             if (currentState.is(BzTags.CANDLE_WICKS)) {
                 return mutableBlockPos.immutable();

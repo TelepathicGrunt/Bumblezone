@@ -12,6 +12,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -53,7 +54,7 @@ public class PorousHoneycomb extends Block {
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity) {
+    public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         beeHoneyFill(state, level, blockPos, entity);
     }
 

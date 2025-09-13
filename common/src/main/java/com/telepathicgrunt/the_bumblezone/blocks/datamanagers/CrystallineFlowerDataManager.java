@@ -1,17 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.blocks.datamanagers;
 
-import com.google.gson.JsonElement;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzTagsUpdatedEvent;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -27,9 +24,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.telepathicgrunt.the_bumblezone.Bumblezone.GSON;
-
-public class CrystallineFlowerDataManager extends SimpleJsonResourceReloadListener {
+public class CrystallineFlowerDataManager extends SimpleJsonResourceReloadListener<CrystallineFlowerDataManager.FlowerData> {
+    private static final FileToIdConverter ASSET_LISTER = FileToIdConverter.json("bz_crystalline_flower_data");
     public static final CrystallineFlowerDataManager CRYSTALLINE_FLOWER_DATA_MANAGER = new CrystallineFlowerDataManager();
 
     public record ItemConsumeData(TagKey<Item> tag, int xp, boolean maxXp) {
@@ -55,22 +51,14 @@ public class CrystallineFlowerDataManager extends SimpleJsonResourceReloadListen
 
 
     public CrystallineFlowerDataManager() {
-        super(GSON, "bz_crystalline_flower_data");
+        super(FlowerData.CODEC, ASSET_LISTER);
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> loader, ResourceManager manager, ProfilerFiller profiler) {
+    protected void apply(Map<ResourceLocation, FlowerData> loader, ResourceManager manager, ProfilerFiller profiler) {
         itemToXp.clear();
         disallowConsume.clear();
-        loader.forEach((fileIdentifier, jsonElement) -> {
-            try {
-                DataResult<FlowerData> mapDataResult = FlowerData.CODEC.parse(JsonOps.INSTANCE, jsonElement);
-                mapDataResult.resultOrPartial((s) -> {}).ifPresent(cachedFlowerData::add);
-            }
-            catch (Exception e) {
-                Bumblezone.LOGGER.error("Bumblezone Error: Couldn't parse crystalline flower data file: {}", fileIdentifier, e);
-            }
-        });
+        loader.forEach((fileIdentifier, flowerData) -> cachedFlowerData.add(flowerData));
     }
 
     // KEEP THIS HERE BECAUSE ABOVE FIRES BEFORE TAGS ARE READY

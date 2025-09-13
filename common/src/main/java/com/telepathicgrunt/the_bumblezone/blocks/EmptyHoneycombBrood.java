@@ -13,6 +13,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -67,7 +68,7 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
 
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity) {
+    public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         beeHoneyFill(state, level, blockPos, entity);
     }
 
@@ -107,7 +108,7 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
     public InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult HitResult) {
         for (ModCompat compat : ModChecker.BROOD_EMPTY_COMPATS) {
             InteractionResult compatResult = compat.onEmptyBroodInteract(itemStack, playerEntity, playerHand);
-            if (compatResult == InteractionResult.SUCCESS || compatResult == InteractionResult.CONSUME_PARTIAL) {
+            if (compatResult.consumesAction()) {
                 playerEntity.swing(playerHand);
                 level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
                 level.setBlock(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()

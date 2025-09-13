@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -72,7 +73,7 @@ public class DenseBubbleBlock extends Block implements BucketPickup {
     }
 
     @Override
-    public ItemStack pickupBlock(@Nullable Player player, LevelAccessor levelAccessor, BlockPos blockPos, BlockState blockState) {
+    public ItemStack pickupBlock(@Nullable LivingEntity livingEntity, LevelAccessor levelAccessor, BlockPos blockPos, BlockState blockState) {
         levelAccessor.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 11);
         return new ItemStack(Items.WATER_BUCKET);
     }
@@ -89,7 +90,7 @@ public class DenseBubbleBlock extends Block implements BucketPickup {
 
     @Deprecated
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity) {
+    public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         if (entity instanceof LivingEntity livingEntity) {
             livingEntity.setAirSupply(Math.min(livingEntity.getMaxAirSupply(), livingEntity.getAirSupply() + 2));
         }
@@ -106,7 +107,7 @@ public class DenseBubbleBlock extends Block implements BucketPickup {
             }
         }
 
-        super.entityInside(state, level, blockPos, entity);
+        super.entityInside(state, level, blockPos, entity, insideBlockEffectApplier);
     }
 
     @Override

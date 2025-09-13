@@ -8,9 +8,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -21,10 +23,12 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
 import java.util.List;
@@ -32,13 +36,13 @@ import java.util.List;
 public class RedstoneHoneyWeb extends HoneyWeb {
 
     public static final IntegerProperty POWER = BlockStateProperties.POWER;
-    private static final Vector3f[] COLORS = Util.make(new Vector3f[16], (vec3s) -> {
+    private static final int[] COLORS = Util.make(new int[16], (ints) -> {
         for(int powerLevel = 0; powerLevel <= 15; ++powerLevel) {
             float brightness = (float)powerLevel / 15.0F;
             float red = brightness * 0.6F + (brightness > 0.0F ? 0.4F : 0.3F);
             float green = Mth.clamp(brightness * brightness * 0.7F - 0.5F, 0.0F, 1.0F);
             float blue = Mth.clamp(brightness * brightness * 0.6F - 0.7F, 0.0F, 1.0F);
-            vec3s[powerLevel] = new Vec3(red, green, blue).toVector3f();
+            ints[powerLevel] = ARGB.colorFromFloat(1.0F, red, green, blue);
         }
     });
 
@@ -76,8 +80,8 @@ public class RedstoneHoneyWeb extends HoneyWeb {
     }
 
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        super.entityInside(blockState,level, blockPos, entity);
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+        super.entityInside(blockState,level, blockPos, entity, insideBlockEffectApplier);
         VoxelShape shape = this.shapeByIndex[this.getAABBIndex(blockState)];
         shape = shape.move(blockPos.getX(), blockPos.getY(), blockPos.getZ());
         if (Shapes.joinIsNotEmpty(shape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND)) {
@@ -132,9 +136,9 @@ public class RedstoneHoneyWeb extends HoneyWeb {
     }
 
     @Override
-    public void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState1, boolean pushed) {
-        if (!pushed && !blockState.is(blockState1.getBlock())) {
-            super.onRemove(blockState, level, blockPos, blockState1, false);
+    protected void affectNeighborsAfterRemoval(BlockState blockState, ServerLevel level, BlockPos blockPos, boolean pushed) {
+        if (!pushed) {
+            super.affectNeighborsAfterRemoval(blockState, level, blockPos, false);
             if (!level.isClientSide) {
                 for (Direction direction : Direction.values()) {
                     level.updateNeighborsAt(blockPos.relative(direction), this);
@@ -144,7 +148,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
     }
 
     @Override
-    public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, BlockPos blockPos1, boolean b) {
+    public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, @Nullable Orientation orientation, boolean b) {
         if (!level.isClientSide) {
             if(blockState.is(this) && blockState.getValue(POWER) != 15) {
                 this.updatePowerStrength(level, blockState, blockPos);

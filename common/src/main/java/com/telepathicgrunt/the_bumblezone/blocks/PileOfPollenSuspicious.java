@@ -12,7 +12,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -23,6 +22,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Panda;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -36,6 +36,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BrushableBlock;
@@ -197,10 +198,10 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource randomSource) {
         BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
         if (blockEntity instanceof BrushableBlockEntity brushableBlockEntity) {
-            brushableBlockEntity.checkReset();
+            brushableBlockEntity.checkReset(serverLevel);
         }
         BlockState belowState = serverLevel.getBlockState(blockPos.below());
-        if (!FallingBlock.isFree(belowState) || (belowState.is(BzBlocks.PILE_OF_POLLEN.get()) && belowState.getValue(PileOfPollen.LAYERS) == 8) || blockPos.getY() < serverLevel.getMinBuildHeight()) {
+        if (!FallingBlock.isFree(belowState) || (belowState.is(BzBlocks.PILE_OF_POLLEN.get()) && belowState.getValue(PileOfPollen.LAYERS) == 8) || blockPos.getY() < serverLevel.getMinY()) {
             return;
         }
         FallingBlockEntity fallingBlockEntity = FallingBlockEntity.fall(serverLevel, blockPos, blockState);
@@ -208,8 +209,16 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
     }
 
     @Override
-    public BlockState updateShape(BlockState oldBlockState, Direction direction, BlockState newBlockState, LevelAccessor world, BlockPos blockPos, BlockPos blockPos1) {
-        return !oldBlockState.canSurvive(world, blockPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(oldBlockState, direction, newBlockState, world, blockPos, blockPos1);
+    public BlockState updateShape(BlockState blockstate,
+                                  LevelReader levelReader,
+                                  ScheduledTickAccess tickAccess,
+                                  BlockPos currentPos,
+                                  Direction facing,
+                                  BlockPos facingPos,
+                                  BlockState facingState,
+                                  RandomSource randomSource)
+    {
+        return !blockstate.canSurvive(levelReader, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(blockstate, levelReader, tickAccess, currentPos, facing, facingPos, facingState, randomSource);
     }
 
     @Override
@@ -226,7 +235,7 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
      * Slows all entities inside the block.
      */
     @Override
-    public void entityInside(BlockState blockState, Level world, BlockPos blockPos, Entity entity) {
+    public void entityInside(BlockState blockState, Level world, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         if (!blockState.is(BzBlocks.PILE_OF_POLLEN_SUSPICIOUS.get())) {
             return;
         }
@@ -311,7 +320,7 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
     public static void spawnParticles(BlockState blockState, LevelAccessor world, BlockPos blockPos, RandomSource random, boolean disturbed) {
         for(Direction direction : Direction.values()) {
             BlockPos blockpos = blockPos.relative(direction);
-            if (!world.getBlockState(blockpos).isSolidRender(world, blockpos)) {
+            if (!world.getBlockState(blockpos).isSolidRender()) {
                 double speedYModifier = disturbed ? 0.05D : 0.005D;
                 double speedXZModifier = disturbed ? 0.03D : 0.005D;
                 VoxelShape currentShape = SHAPE;
