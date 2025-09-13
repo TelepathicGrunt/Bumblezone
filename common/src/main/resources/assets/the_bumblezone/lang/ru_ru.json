@@ -957,7 +957,7 @@
   "advancements.the_bumblezone.enter_garden.title": "Садовник и пчёлы",
   "advancements.the_bumblezone.enter_garden.description": "Подними голову! И может увидишь огромный сад, свисающий с сот!",
   "advancements.the_bumblezone.enter_all_structures.title": "Пчелооткрыватель",
-  "advancements.the_bumblezone.enter_all_structures.description": "Невероятно! Вы обнаружили все сооружения в Жужжелище!"
+  "advancements.the_bumblezone.enter_all_structures.description": "Невероятно! Вы обнаружили все сооружения в Жужжелище!",
   "advancements.the_bumblezone.obtain_all_banner_patterns.title": "Модная причуда!",
   "advancements.the_bumblezone.obtain_all_banner_patterns.description": "Удивительно! Вы собрали все узоры флагов из Жужжилища!",
   "advancements.the_bumblezone.discover_all_biomes.title": "Пчелография",
@@ -1243,7 +1243,7 @@
   "the_bumblezone.midnightconfig.allowFriendsAndFoesBeekeeperTradesCompat": "Разрешить совместимость обмена с пчеловодом из Friends And Foes",
   "the_bumblezone.midnightconfig.allowGoodallBottledBeesRevivingEmptyBroodBlock": "Пчёлы в бутылке из Goodall's Bottled Bee могут возрождать блоки родильных сот",
   "the_bumblezone.midnightconfig.allowLootrCompat": "Разрешить совместимость медовых коконов с Lootr",
-  "the_bumblezone.midnightconfig.allowCreateLimestoneForHoneyLavaCompat": "Позволит взаимодействию Мёда/Лавы  создавать известняк из Create'",
+  "the_bumblezone.midnightconfig.allowCreateLimestoneForHoneyLavaCompat": "Позволит взаимодействию Мёда/Лавы создавать известняк из Create",
   "the_bumblezone.midnightconfig.clientComment": "§o§6    Раздел клиента",
   "the_bumblezone.midnightconfig.useBackupModelForVariantBee": "Использовать отдельную модель для редких пчёл",
   "the_bumblezone.midnightconfig.playWrathOfHiveEffectMusic": "Играть музыку эффекта Гнева улья",
@@ -1260,7 +1260,7 @@
   "the_bumblezone.midnightconfig.crystallineFlowerEnchantingPowerAllowedPerTier": "Сила зачарования за единицу высоты",
   "the_bumblezone.midnightconfig.crystallineFlowerExtraTierCost": "Конечная стоимость высоты Добавить/Вычесть",
   "the_bumblezone.midnightconfig.crystallineFlowerExtraXpNeededForTiers": "Дополнительный опыт требуется за единицу высоты",
-  "the_bumblezone.midnightconfig.defaultDimension": "Измерение по умолчанию при выходе из Жужжилища"
+  "the_bumblezone.midnightconfig.defaultDimension": "Измерение по умолчанию при выходе из Жужжилища",
   "the_bumblezone.midnightconfig.knowingEssenceComment": "§o§6    Раздел Эссенции Знаний клиента",
   "the_bumblezone.midnightconfig.knowingEssenceHighlightBosses": "Подсвечивать боссов",
   "the_bumblezone.midnightconfig.knowingEssenceHighlightMonsters": "Подсвечивать монстров",
@@ -1387,7 +1387,7 @@
   "the_bumblezone.configuration.howlongwrathofthehivelasts.tooltip": "Насколько долко будет держаться эффект Гнева улья и эффекты, усиливающие пчёл §7§o(скорость, поглощение, сила)§f. Прим.: Значение измеряется в тиках. 20 тиков = 1 секунда. Состояние агрессии пчёл останется прежним.",
   "the_bumblezone.configuration.beebuffsfromwrath": "Бафы пчёл от Гнева улья",
   "the_bumblezone.configuration.speedboostlevel": "Уровень скорости",
-  "the_bumblezone.configuration.speedboostlevel.tooltip": "Насколько быстро пчёлы двигаются около поверхности §7§o(Не влияет на скорость полёта)§f. Это можно заметить когда пчёлы собираются нанести удар, они обычно касаются пола и эффекто скорости позволяет им делать рывок вперёд. Чем выше значение - тем быстрее этот самый рывок.",
+  "the_bumblezone.configuration.speedboostlevel.tooltip": "Насколько быстро пчёлы двигаются около поверхности §7§o(Не влияет на скорость полёта)§f. Это можно заметить когда пчёлы собираются нанести удар, они обычно касаются пола и эффект скорости позволяет им делать рывок вперёд. Чем выше значение - тем быстрее этот самый рывок.",
   "the_bumblezone.configuration.absorptionboostlevel": "Уровень поглощения",
   "the_bumblezone.configuration.absorptionboostlevel.tooltip": "Насколько много золотых сердец получают пчёлы. Это значит, что вам нужно будет нанести больше урона прежде чем пчела начнёт терять своё настоящее здоровье. Вам потребуется оружие с зачарование Бич членистоногих 5 чтобы убивать пчёл при значении 2 или 3.",
   "the_bumblezone.configuration.strengthboostlevel": "Уровень силы",
@@ -1397,7 +1397,7 @@
   "the_bumblezone.configuration.howlongprotectionofthehivelasts.tooltip": "Как долго существа будут сохранять эффект защиты пчёл после кормления пчёл или Блоки родильных сот. Пчёлы атакуют любого кто атакует существо с этим эффектом.",
 
   "the_bumblezone.configuration.thebumblezonewelcomeoptions": "Приветственное сообщение",
-  "the_bumblezone.configuration.enableinitialwelcomemessage": "Сключить сообщение",
+  "the_bumblezone.configuration.enableinitialwelcomemessage": "Отключить сообщение",
   "the_bumblezone.configuration.enableinitialwelcomemessage.tooltip": "Будет ли показано сообщение, в котором сказано проверить вкладку достижений, когда игрок подходит к улью в первый раз.",
   "the_bumblezone.configuration.teleportationoptions": "Телепортация",
   "the_bumblezone.configuration.enableentranceteleportation": "Включить телепорт для входа",
@@ -1429,7 +1429,7 @@
   "the_bumblezone.configuration.spawnrateofpokecubebeepokemon": "Шанс спавна покемонов из блоков",
   "the_bumblezone.configuration.spawnrateofpokecubebeepokemon.tooltip": "Шанс заменить пчёл появившихся Блоков родильных сот на пчелиного покемона из Pokecube. 0 означает без покемонов и 1 означает максимум покемонов.",
   "the_bumblezone.configuration.tropicraftcompat": "Совместимость с Tropicraft",
-  "the_bumblezone.configuration.spawntropicraftbeesmob": "Разрешить спавн тропических пчёл (Tropibee) ",
+  "the_bumblezone.configuration.spawntropicraftbeesmob": "Разрешить спавн тропических пчёл (Tropibee)",
   "the_bumblezone.configuration.spawntropicraftbeesmob.tooltip": "Разрешить спавн Тропических пчёл из Tropicraft в Жужжилище и из блоков родильных сот вместо обычных пчёл с  §6Шанс спавна тропических пчёл§f.",
   "the_bumblezone.configuration.spawnrateoftropicraftbeesmobs": "Шанс спавна Тропических пчёл",
   "the_bumblezone.configuration.spawnrateoftropicraftbeesmobs.tooltip": "Шанс заменить пчёл появившихся из блоков родильных сот на тропических пчёл из Tropicraft. 0 означает без тропических пчёл и 1 означает максимум тропических пчёл.",
@@ -1796,5 +1796,5 @@
   "tag.entity_type.the_bumblezone.queens_desire.fighting_the_swarm_silverfish": "Чешуйницы",
   "tag.entity_type.the_bumblezone.queens_desire.otherworldly_mites_endermite": "Эндермиты",
   "tag.entity_type.the_bumblezone.queens_desire.terror_fangs_cave_spider": "Пещерные пауки",
-  "tag.entity_type.the_bumblezone.queens_desire.too_many_legs_spiders": "Прочие пауки, кроме пещерных",
+  "tag.entity_type.the_bumblezone.queens_desire.too_many_legs_spiders": "Прочие пауки, кроме пещерных"
 }
