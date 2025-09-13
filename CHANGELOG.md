@@ -1,3 +1,10 @@
+### **(V.7.11.1 Changes) (1.21.1 Minecraft)**
+
+#### Lang:
+
+AstardGrimoire updated and fixed ru_ru.json file
+
+
 ### **(V.7.11.0 Changes) (1.21.1 Minecraft)**
 
 #### Enchantments:
