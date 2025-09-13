@@ -8,7 +8,7 @@ import com.telepathicgrunt.the_bumblezone.mixin.neoforge.block.UseOnContextAcces
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -62,7 +62,7 @@ public final class FramedBlocksCompat implements ModCompat {
                 if (!level.isClientSide()) {
                     be.setCamo(waxCamo.copyWithState(carvedState), hit, player);
                 }
-                event.cancelWithResult(ItemInteractionResult.sidedSuccess(level.isClientSide()));
+                event.cancelWithResult(InteractionResult.SUCCESS);
             }
         }
         else if (camo instanceof AbstractBlockCamoContainer<?> blockCamo) {
@@ -72,7 +72,7 @@ public final class FramedBlocksCompat implements ModCompat {
                     if (!level.isClientSide()) {
                         be.setCamo(blockCamo.copyWithState(rotatedState), hit, player);
                     }
-                    event.cancelWithResult(ItemInteractionResult.sidedSuccess(level.isClientSide()));
+                    event.cancelWithResult(InteractionResult.SUCCESS);
                 }
             }
             else if (blockCamo.getState().getBlock() instanceof AncientWax ancientWax) {
@@ -81,7 +81,7 @@ public final class FramedBlocksCompat implements ModCompat {
                     if (!level.isClientSide()) {
                         be.setCamo(blockCamo.copyWithState(swappedState), hit, player);
                     }
-                    event.cancelWithResult(ItemInteractionResult.sidedSuccess(level.isClientSide()));
+                    event.cancelWithResult(InteractionResult.SUCCESS);
                 }
             }
         }

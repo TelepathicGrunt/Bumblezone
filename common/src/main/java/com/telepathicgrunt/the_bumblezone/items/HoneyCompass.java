@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.ChatFormatting;
@@ -32,6 +33,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeehiveBlock;
@@ -45,6 +47,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public class HoneyCompass extends Item {
     public HoneyCompass(Item.Properties properties) {
@@ -113,43 +116,44 @@ public class HoneyCompass extends Item {
         return Component.translatable(this.getDescriptionId(itemStack));
     }
 
+    // CLIENT-SIDED
     @Override
-    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> components, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Consumer<Component> componentConsumer, TooltipFlag tooltipFlag) {
         HoneyCompassStateData honeyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
         if (honeyCompassStateData.isFailed()) {
-            components.add(Component.translatable("item.the_bumblezone.honey_compass_structure_failed_description"));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.honey_compass_structure_failed_description"));
             return;
         }
 
         HoneyCompassBaseData honeyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
         if (honeyCompassBaseData.customDescription().isPresent()) {
-            components.add(Component.translatable(honeyCompassBaseData.customDescription().get()));
-            appendAdvancedTooltipInfo(itemStack, tooltipContext, components, tooltipFlag);
+            componentConsumer.accept(Component.translatable(honeyCompassBaseData.customDescription().get()));
+            appendAdvancedTooltipInfo(itemStack, tooltipContext, componentConsumer, tooltipFlag);
             return;
         }
 
         if (honeyCompassBaseData.isBlockCompass()) {
-            components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description1"));
-            components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description2"));
-            components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description3"));
-            components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description4"));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.honey_compass_block_description1"));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.honey_compass_block_description2"));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.honey_compass_block_description3"));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.honey_compass_block_description4"));
         }
         else if (honeyCompassBaseData.isStructureCompass()) {
-            components.add(Component.translatable("item.the_bumblezone.honey_compass_structure_description1"));
-            components.add(Component.translatable("item.the_bumblezone.honey_compass_structure_description2"));
-            components.add(Component.translatable("item.the_bumblezone.honey_compass_structure_description3"));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.honey_compass_structure_description1"));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.honey_compass_structure_description2"));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.honey_compass_structure_description3"));
         }
         else {
-            components.add(Component.translatable("item.the_bumblezone.honey_compass_description1"));
-            components.add(Component.translatable("item.the_bumblezone.honey_compass_description2"));
-            components.add(Component.translatable("item.the_bumblezone.honey_compass_description3"));
-            components.add(Component.translatable("item.the_bumblezone.honey_compass_description4"));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.honey_compass_description1"));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.honey_compass_description2"));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.honey_compass_description3"));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.honey_compass_description4"));
         }
 
-        appendAdvancedTooltipInfo(itemStack, tooltipContext, components, tooltipFlag);
+        appendAdvancedTooltipInfo(itemStack, tooltipContext, componentConsumer, tooltipFlag);
     }
 
-    private static void appendAdvancedTooltipInfo(ItemStack itemStack, TooltipContext tooltipContext, List<Component> components, TooltipFlag tooltipFlag) {
+    private static void appendAdvancedTooltipInfo(ItemStack itemStack, TooltipContext tooltipContext, Consumer<Component> componentConsumer, TooltipFlag tooltipFlag) {
         if (tooltipContext != null && PlatformService.INSTANCE.isClientEnvironment()) {
             Player player = GeneralUtilsClient.getClientPlayer();
             HoneyCompassBaseData honeyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
@@ -167,7 +171,7 @@ public class HoneyCompass extends Item {
                     else {
                         distance = player.blockPosition().distManhattan(targetPos.get());
                     }
-                    components.add(Component.translatable("item.the_bumblezone.honey_compass_distance", distance).withStyle(ChatFormatting.DARK_GRAY));
+                    componentConsumer.accept(Component.translatable("item.the_bumblezone.honey_compass_distance", distance).withStyle(ChatFormatting.DARK_GRAY));
                 }
             }
         }

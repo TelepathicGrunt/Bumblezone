@@ -108,7 +108,7 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader world, BlockPos blockPos, BlockState blockState) {
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos blockPos, BlockState blockState, boolean flag) {
         return new ItemStack(BzItems.POLLEN_PUFF.get());
     }
 

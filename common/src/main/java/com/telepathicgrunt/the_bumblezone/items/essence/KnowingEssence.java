@@ -36,6 +36,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class KnowingEssence extends AbilityEssenceItem {
@@ -61,9 +62,9 @@ public class KnowingEssence extends AbilityEssenceItem {
     }
 
     @Override
-    void addDescriptionComponents(List<Component> components) {
-        components.add(Component.translatable("item.the_bumblezone.essence_knowing_description_1").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
-        components.add(Component.translatable("item.the_bumblezone.essence_knowing_description_2").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
+    void addDescriptionComponents(Consumer<Component> components) {
+        components.accept(Component.translatable("item.the_bumblezone.essence_knowing_description_1").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
+        components.accept(Component.translatable("item.the_bumblezone.essence_knowing_description_2").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
     }
 
     @Override
@@ -76,7 +77,7 @@ public class KnowingEssence extends AbilityEssenceItem {
         AbilityEssenceActivityData abilityEssenceActivityData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get());
         if (abilityEssenceActivityData.isActive()) {
             if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 5L == 0) {
-                spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
+                spawnParticles(serverPlayer.level(), serverPlayer.position(), serverPlayer.getRandom());
             }
 
             if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 20L == 0) {
@@ -88,7 +89,7 @@ public class KnowingEssence extends AbilityEssenceItem {
                     List<StructureStart> structureStarts = structureManager.startsForStructure(new ChunkPos(serverPlayer.blockPosition()), s -> true);
                     List<Structure> structures = new ArrayList<>();
 
-                    Registry<Structure> structureRegistry = level.registryAccess().registry(Registries.STRUCTURE).get();
+                    Registry<Structure> structureRegistry = level.registryAccess().getOrThrow(Registries.STRUCTURE).value();
 
                     for(StructureStart structureStart : structureStarts) {
                         if (structureStart.getBoundingBox().isInside(serverPlayer.blockPosition())) {
@@ -186,8 +187,8 @@ public class KnowingEssence extends AbilityEssenceItem {
             }
         }
         else if (entity instanceof OwnableEntity ownableEntity &&
-                ownableEntity.getOwnerUUID() != null &&
-                ownableEntity.getOwnerUUID().equals(player.getUUID()))
+                ownableEntity.getOwnerReference() != null &&
+                ownableEntity.getOwnerReference().matches(player))
         {
             if (BzClientConfigs.knowingEssenceHighlightTamed) {
                 return GREEN;

@@ -24,7 +24,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -71,7 +71,7 @@ public class FilledPorousHoneycomb extends Block {
      * Allow player to harvest honey and put honey into this block using bottles
      */
     @Override
-    public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
+    public InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         /*
          * Player is harvesting the honey from this block if it is filled with honey
          */
@@ -106,7 +106,7 @@ public class FilledPorousHoneycomb extends Block {
                 }
             }
 
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
         return super.useItemOn(itemStack, blockState, world, position, playerEntity, playerHand, raytraceResult);

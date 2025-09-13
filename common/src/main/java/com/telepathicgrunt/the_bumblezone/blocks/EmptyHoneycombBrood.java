@@ -11,7 +11,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
@@ -104,7 +104,7 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
      * Allow player to harvest honey and put honey into this block using bottles
      */
     @Override
-    public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult HitResult) {
+    public InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult HitResult) {
         for (ModCompat compat : ModChecker.BROOD_EMPTY_COMPATS) {
             InteractionResult compatResult = compat.onEmptyBroodInteract(itemStack, playerEntity, playerHand);
             if (compatResult == InteractionResult.SUCCESS || compatResult == InteractionResult.CONSUME_PARTIAL) {
@@ -114,7 +114,7 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
                                 .setValue(HoneycombBrood.STAGE, compatResult == InteractionResult.SUCCESS ? 3 : 2)
                                 .setValue(BlockStateProperties.FACING, blockState.getValue(BlockStateProperties.FACING)),
                         3);
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
 

@@ -31,7 +31,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
@@ -105,7 +105,7 @@ public class HoneycombBrood extends ProperFacingBlock {
      * Allow player to harvest honey and put honey into this block using bottles or wands
      */
     @Override
-    public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
+    public InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         RandomSource random = playerEntity.getRandom();
 
         /*
@@ -139,7 +139,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                 }
             }
 
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
         /*
          * Player is feeding larva
@@ -215,7 +215,7 @@ public class HoneycombBrood extends ProperFacingBlock {
             //removes used item
             GeneralUtils.givePlayerItem(playerEntity, playerHand, ItemStack.EMPTY, true, true);
 
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
         return super.useItemOn(itemStack, blockState, level, position, playerEntity, playerHand, raytraceResult);

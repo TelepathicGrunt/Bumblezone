@@ -4,7 +4,6 @@ import com.telepathicgrunt.the_bumblezone.items.datacomponents.AbilityEssenceAbi
 import com.telepathicgrunt.the_bumblezone.items.datacomponents.AbilityEssenceActivityData;
 import com.telepathicgrunt.the_bumblezone.items.datacomponents.AbilityEssenceCooldownData;
 import com.telepathicgrunt.the_bumblezone.items.datacomponents.AbilityEssenceLastChargeData;
-import com.telepathicgrunt.the_bumblezone.mixin.gameplay.CooldownInstanceAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.gameplay.ItemCooldownsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -12,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -20,10 +20,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public abstract class AbilityEssenceItem extends Item implements ItemExtension {
@@ -82,12 +83,12 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
         AbilityEssenceActivityData abilityEssenceAbilityData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get());
         itemStack.set(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get(), new AbilityEssenceActivityData(abilityEssenceAbilityData.isInInventory(), false, abilityEssenceAbilityData.isLocked()));
         if (vanillaItemCooldown) {
-            serverPlayer.getCooldowns().addCooldown(this, getCooldownTickLength());
+            serverPlayer.getCooldowns().addCooldown(itemStack, getCooldownTickLength());
         }
     }
 
     @Override
-    public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean bl) {
+    public void inventoryTick(ItemStack itemStack, ServerLevel level, Entity entity, EquipmentSlot p_401900_) {
         if (itemStack.is(BzTags.ABILITY_ESSENCE_ITEMS) && entity instanceof ServerPlayer serverPlayer) {
             AbilityEssenceActivityData abilityEssenceActivityData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get());
             boolean isInInventory = abilityEssenceActivityData.isInInventory();
@@ -111,15 +112,15 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
             }
 
             if (forcedCooldown) {
-                if (!serverPlayer.getCooldowns().isOnCooldown(itemStack.getItem())) {
-                    serverPlayer.getCooldowns().addCooldown(itemStack.getItem(), getCooldownTickLength() - cooldownTime);
+                if (!serverPlayer.getCooldowns().isOnCooldown(itemStack)) {
+                    serverPlayer.getCooldowns().addCooldown(itemStack, getCooldownTickLength() - cooldownTime);
                 }
                 incrementCooldownTime(itemStack);
             }
             else {
-                if (serverPlayer.getCooldowns().isOnCooldown(itemStack.getItem())) {
+                if (serverPlayer.getCooldowns().isOnCooldown(itemStack)) {
                     ItemCooldowns.CooldownInstance cooldownInstance = ((ItemCooldownsAccessor)serverPlayer.getCooldowns()).bumblezone$getCooldowns().get(itemStack.getItem());
-                    int tempCooldownTime = ((ItemCooldownsAccessor)serverPlayer.getCooldowns()).bumblezone$getTickCount() - ((CooldownInstanceAccessor)cooldownInstance).bumblezone$getStartTime();
+                    int tempCooldownTime = ((ItemCooldownsAccessor)serverPlayer.getCooldowns()).bumblezone$getTickCount() - cooldownInstance.startTime();
 
                     if (tempCooldownTime > 5) {
                         forcedCooldown = true;
@@ -154,18 +155,18 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> components, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Consumer<Component> componentConsumer, TooltipFlag tooltipFlag) {
         AbilityEssenceActivityData abilityEssenceActivityData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get());
         if (abilityEssenceActivityData.isLocked()) {
-            components.add(Component.translatable("item.the_bumblezone.essence_locked").withStyle(ChatFormatting.DARK_RED));
-            components.add(Component.translatable("item.the_bumblezone.essence_locked_description_1").withStyle(ChatFormatting.GRAY));
-            components.add(Component.translatable("item.the_bumblezone.essence_locked_description_2").withStyle(ChatFormatting.GRAY));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.essence_locked").withStyle(ChatFormatting.DARK_RED));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.essence_locked_description_1").withStyle(ChatFormatting.GRAY));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.essence_locked_description_2").withStyle(ChatFormatting.GRAY));
         }
         else if (abilityEssenceActivityData.isActive()) {
-            components.add(Component.translatable("item.the_bumblezone.essence_active").withStyle(ChatFormatting.RED));
-            components.add(Component.translatable("item.the_bumblezone.essence_usage", getAbilityUseRemaining(itemStack), getMaxAbilityUseAmount()).withStyle(ChatFormatting.YELLOW));
-            components.add(Component.empty());
-            addDescriptionComponents(components);
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.essence_active").withStyle(ChatFormatting.RED));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.essence_usage", getAbilityUseRemaining(itemStack), getMaxAbilityUseAmount()).withStyle(ChatFormatting.YELLOW));
+            componentConsumer.accept(Component.empty());
+            addDescriptionComponents(componentConsumer);
             return;
         }
 
@@ -173,20 +174,20 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
         int cooldownTime = abilityEssenceCooldownData.cooldownTime();
         boolean forcedCooldown = abilityEssenceCooldownData.forcedCooldown();
         if (forcedCooldown) {
-            components.add(Component.translatable("item.the_bumblezone.essence_depleted").withStyle(ChatFormatting.DARK_RED));
-            components.add(Component.translatable("item.the_bumblezone.essence_cooldown", GeneralUtils.formatTickDurationNoMilliseconds(getCooldownTickLength() - cooldownTime, tooltipContext.tickRate())).withStyle(ChatFormatting.DARK_RED));
-            components.add(Component.empty());
-            addDescriptionComponents(components);
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.essence_depleted").withStyle(ChatFormatting.DARK_RED));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.essence_cooldown", GeneralUtils.formatTickDurationNoMilliseconds(getCooldownTickLength() - cooldownTime, tooltipContext.tickRate())).withStyle(ChatFormatting.DARK_RED));
+            componentConsumer.accept(Component.empty());
+            addDescriptionComponents(componentConsumer);
         }
         else {
-            components.add(Component.translatable("item.the_bumblezone.essence_ready").withStyle(ChatFormatting.GREEN));
-            components.add(Component.translatable("item.the_bumblezone.essence_usage", getAbilityUseRemaining(itemStack), getMaxAbilityUseAmount()).withStyle(ChatFormatting.YELLOW));
-            components.add(Component.empty());
-            addDescriptionComponents(components);
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.essence_ready").withStyle(ChatFormatting.GREEN));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.essence_usage", getAbilityUseRemaining(itemStack), getMaxAbilityUseAmount()).withStyle(ChatFormatting.YELLOW));
+            componentConsumer.accept(Component.empty());
+            addDescriptionComponents(componentConsumer);
         }
     }
 
-    abstract void addDescriptionComponents(List<Component> components);
+    abstract void addDescriptionComponents(Consumer<Component> components);
 
     abstract void applyAbilityEffects(ItemStack itemStack, Level level, ServerPlayer serverPlayer);
 

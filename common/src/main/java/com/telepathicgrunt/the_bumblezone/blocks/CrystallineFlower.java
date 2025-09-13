@@ -20,6 +20,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -34,6 +35,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -55,6 +57,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -62,6 +65,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,18 +126,18 @@ public class CrystallineFlower extends BaseEntityBlock {
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier_405359_) {
         VoxelShape voxelShape = getShape(state, level, pos, null).move(pos.getX(), pos.getY(), pos.getZ());
         if (!Shapes.joinIsNotEmpty(voxelShape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND) || level.isClientSide()) {
             return;
         }
 
         if (entity instanceof LivingEntity livingEntity && !BeeAggression.isBeelikeEntity(livingEntity)) {
-            float fallDistance = entity.fallDistance;
+            double fallDistance = entity.fallDistance;
             livingEntity.makeStuckInBlock(state, new Vec3(0.95F, 2, 0.95F));
             entity.fallDistance = fallDistance;
 
-            if (!level.isClientSide() &&
+            if (level instanceof ServerLevel serverLevel &&
                 (livingEntity.xOld != livingEntity.getX() ||
                 livingEntity.yOld != livingEntity.getY() ||
                 livingEntity.zOld != livingEntity.getZ()))
@@ -142,18 +146,18 @@ public class CrystallineFlower extends BaseEntityBlock {
                 double yDiff = Math.abs(livingEntity.getY() - livingEntity.yOld);
                 double zDiff = Math.abs(livingEntity.getZ() - livingEntity.zOld);
                 if (xDiff >= (double)0.001F || yDiff >= (double)0.75F || zDiff >= (double)0.001F) {
-                    livingEntity.hurt(level.damageSources().source(BzDamageSources.CRYSTALLINE_FLOWER_TYPE), 1.5f);
+                    livingEntity.hurtOrSimulate(serverLevel.damageSources().source(BzDamageSources.CRYSTALLINE_FLOWER_TYPE), 1.5f);
 
                     if (livingEntity.isDeadOrDying() &&
                         !livingEntity.wasExperienceConsumed() &&
                         !((LivingEntityAccessor)livingEntity).bumblezone$callIsAlwaysExperienceDropper() &&
                         livingEntity.shouldDropExperience() &&
-                        level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT))
+                        serverLevel.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT))
                     {
-                        BlockEntity blockEntity = level.getBlockEntity(pos);
+                        BlockEntity blockEntity = serverLevel.getBlockEntity(pos);
                         if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity && !crystallineFlowerBlockEntity.isMaxTier()) {
                             int reward = PlatformService.INSTANCE.getXpDrop(livingEntity, null, livingEntity.getExperienceReward((ServerLevel) level, null));
-                            ExperienceOrb.award((ServerLevel) level, livingEntity.position(), reward);
+                            ExperienceOrb.award(serverLevel, livingEntity.position(), reward);
                         }
                     }
                 }
@@ -265,7 +269,7 @@ public class CrystallineFlower extends BaseEntityBlock {
     }
 
     @Override
-    public void neighborChanged(BlockState blockstate, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+    protected void neighborChanged(BlockState blockstate, Level level, BlockPos pos, Block block, @Nullable Orientation orientation, boolean notify) {
         if (canSurvive(blockstate, level, pos)) {
             boolean flowerSpot = isFlowerSpot(level, pos);
             if (flowerSpot != blockstate.getValue(FLOWER)) {
@@ -276,7 +280,7 @@ public class CrystallineFlower extends BaseEntityBlock {
             level.destroyBlock(pos, blockstate.hasProperty(FLOWER) && blockstate.getValue(FLOWER), null, 1);
         }
 
-        super.neighborChanged(blockstate, level, pos, block, fromPos, notify);
+        super.neighborChanged(blockstate, level, pos, block, orientation, notify);
     }
 
     @Override
@@ -339,7 +343,7 @@ public class CrystallineFlower extends BaseEntityBlock {
         int i = 0;
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         BlockState currentState = level.getBlockState(mutable.set(pos.below()));
-        while (currentState.is(BzBlocks.CRYSTALLINE_FLOWER.get()) && mutable.getY() >= level.getMinBuildHeight()) {
+        while (currentState.is(BzBlocks.CRYSTALLINE_FLOWER.get()) && mutable.getY() >= level.getMinY()) {
             i++;
             mutable.move(Direction.DOWN);
             currentState = level.getBlockState(mutable);
@@ -351,7 +355,7 @@ public class CrystallineFlower extends BaseEntityBlock {
         int i = 0;
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         BlockState currentState = level.getBlockState(mutable.set(pos.above()));
-        while (currentState.is(BzBlocks.CRYSTALLINE_FLOWER.get()) && mutable.getY() < level.getMaxBuildHeight()) {
+        while (currentState.is(BzBlocks.CRYSTALLINE_FLOWER.get()) && mutable.getY() < level.getMaxY()) {
             i++;
             mutable.move(Direction.UP);
             currentState = level.getBlockState(mutable);
@@ -365,7 +369,7 @@ public class CrystallineFlower extends BaseEntityBlock {
         mutable.set(pos);
 
         for (int i = 0; i < scanArea; i++) {
-            if (mutable.getY() >= level.getMaxBuildHeight()) {
+            if (mutable.getY() >= level.getMaxY()) {
                 obstructions.add(true);
             }
             else {
@@ -426,15 +430,16 @@ public class CrystallineFlower extends BaseEntityBlock {
                 ), CONTAINER_TITLE);
     }
 
-    @Override
-    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(itemStack, tooltipContext, tooltip, flag);
-        CrystallineFlowerData flowerData = itemStack.getOrDefault(BzDataComponents.CRYSTALLINE_FLOWER_DATA.get(), new CrystallineFlowerData());
-        if (flowerData.uuid().compareTo(CrystallineFlowerData.DEFAULT_UUID) != 0 && flowerData.tier() != 0) {
-            tooltip.add(Component.translatable("item.the_bumblezone.crystalline_flower_info_1", flowerData.tier()).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.ITALIC));
-            tooltip.add(Component.translatable("item.the_bumblezone.crystalline_flower_info_2", flowerData.experience()).withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
-        }
-    }
+    // TODO: move to item
+//    @Override
+//    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag flag) {
+//        super.appendHoverText(itemStack, tooltipContext, tooltip, flag);
+//        CrystallineFlowerData flowerData = itemStack.getOrDefault(BzDataComponents.CRYSTALLINE_FLOWER_DATA.get(), new CrystallineFlowerData());
+//        if (flowerData.uuid().compareTo(CrystallineFlowerData.DEFAULT_UUID) != 0 && flowerData.tier() != 0) {
+//            tooltip.add(Component.translatable("item.the_bumblezone.crystalline_flower_info_1", flowerData.tier()).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.ITALIC));
+//            tooltip.add(Component.translatable("item.the_bumblezone.crystalline_flower_info_2", flowerData.experience()).withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
+//        }
+//    }
 
     private void spawnConsumeParticles(Level world, Vec3 position, RandomSource random, int particleCount) {
         ((ServerLevel)world).sendParticles(ParticleTypes.HAPPY_VILLAGER,

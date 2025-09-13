@@ -17,7 +17,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
@@ -284,7 +284,7 @@ public class StringCurtain extends Block {
     }
 
     @Override
-    public @NotNull ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockstate, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
+    public @NotNull InteractionResult useItemOn(ItemStack itemStack, BlockState blockstate, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         if (blockstate.is(BzTags.STRING_CURTAINS)) {
             if (itemStack.is(BzTags.STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS) && GeneralUtils.isPermissionAllowedAtSpot(world, playerEntity, position, true)) {
                 boolean success = extendCurtainIfPossible(blockstate, world, position);
@@ -301,11 +301,11 @@ public class StringCurtain extends Block {
                         BzCriterias.EXTEND_STRING_CURTAIN_TRIGGER.get().trigger(serverPlayer);
                     }
                 }
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
             else if (itemStack.is(BzTags.STRING_CURTAINS_ITEMS)) {
                 playerEntity.displayClientMessage(Component.translatable("block.the_bumblezone.string_curtain.extending_clarification").withStyle(ChatFormatting.WHITE), true);
-                return ItemInteractionResult.FAIL;
+                return InteractionResult.FAIL;
             }
         }
         return super.useItemOn(itemStack, blockstate, world, position, playerEntity, playerHand, raytraceResult);
@@ -325,14 +325,14 @@ public class StringCurtain extends Block {
             BlockPos pos = hitResult.getBlockPos().relative(hitResult.getDirection()).above();
             BlockState aboveState = player.level().getBlockState(pos);
             if (aboveState.is(BzTags.STRING_CURTAINS)) {
-                ItemInteractionResult interactionResult = aboveState.useItemOn(heldItem, player.level(), player, interactionHand, new BlockHitResult(
+                InteractionResult interactionResult = aboveState.useItemOn(heldItem, player.level(), player, interactionHand, new BlockHitResult(
                         hitResult.getLocation().add(0, 1, 0),
                         hitResult.getDirection(),
                         pos,
                         hitResult.isInside()
                 ));
 
-                if (interactionResult != ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION) {
+                if (interactionResult != InteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION) {
                     return InteractionResult.SUCCESS;
                 }
             }

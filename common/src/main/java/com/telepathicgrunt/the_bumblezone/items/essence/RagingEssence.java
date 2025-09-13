@@ -36,6 +36,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class RagingEssence extends AbilityEssenceItem {
@@ -72,9 +73,9 @@ public class RagingEssence extends AbilityEssenceItem {
     }
 
     @Override
-    void addDescriptionComponents(List<Component> components) {
-        components.add(Component.translatable("item.the_bumblezone.essence_raging_description_1").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.ITALIC));
-        components.add(Component.translatable("item.the_bumblezone.essence_raging_description_2").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.ITALIC));
+    void addDescriptionComponents(Consumer<Component> components) {
+        components.accept(Component.translatable("item.the_bumblezone.essence_raging_description_1").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.ITALIC));
+        components.accept(Component.translatable("item.the_bumblezone.essence_raging_description_2").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.ITALIC));
     }
 
     public static void setRageState(ItemStack itemStack, short rageState) {

@@ -24,7 +24,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class CalmingEssence extends AbilityEssenceItem {
@@ -42,17 +42,17 @@ public class CalmingEssence extends AbilityEssenceItem {
     }
 
     @Override
-    void addDescriptionComponents(List<Component> components) {
-        components.add(Component.translatable("item.the_bumblezone.essence_calming_description_1").withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.ITALIC));
-        components.add(Component.translatable("item.the_bumblezone.essence_calming_description_2").withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.ITALIC));
-        components.add(Component.translatable("item.the_bumblezone.essence_calming_description_3").withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.ITALIC));
+    void addDescriptionComponents(Consumer<Component> components) {
+        components.accept(Component.translatable("item.the_bumblezone.essence_calming_description_1").withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.ITALIC));
+        components.accept(Component.translatable("item.the_bumblezone.essence_calming_description_2").withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.ITALIC));
+        components.accept(Component.translatable("item.the_bumblezone.essence_calming_description_3").withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.ITALIC));
     }
 
     @Override
     public void applyAbilityEffects(ItemStack itemStack, Level level, ServerPlayer serverPlayer) {
         if (itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get()).isActive()) {
             if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 12L == 0) {
-                spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
+                spawnParticles(serverPlayer.level(), serverPlayer.position(), serverPlayer.getRandom());
             }
 
             if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 20L == 0) {

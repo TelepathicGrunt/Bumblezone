@@ -17,12 +17,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class PotionCandleBlockItem extends BlockItem {
 
@@ -52,35 +54,35 @@ public class PotionCandleBlockItem extends BlockItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> components, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Consumer<Component> componentConsumer, TooltipFlag tooltipFlag) {
         CustomData customData = itemStack.get(DataComponents.BLOCK_ENTITY_DATA);
         if (customData != null && !customData.isEmpty()) {
             CompoundTag blockEntityTag = customData.copyTag();
             if (blockEntityTag.contains(PotionCandleBlockEntity.STATUS_EFFECT_TAG)) {
-                ResourceLocation rl = ResourceLocation.tryParse(blockEntityTag.getString(PotionCandleBlockEntity.STATUS_EFFECT_TAG));
+                ResourceLocation rl = ResourceLocation.tryParse(blockEntityTag.getString(PotionCandleBlockEntity.STATUS_EFFECT_TAG).orElse(""));
                 Optional<MobEffect> mobEffect = BuiltInRegistries.MOB_EFFECT.getOptional(rl);
                 if (mobEffect.isPresent()) {
-                    components.add(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.status_effect", mobEffect.get().getDisplayName())));
-                    components.add(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.amplifier", blockEntityTag.getInt(PotionCandleBlockEntity.EFFECT_LEVEL_TAG))));
-                    components.add(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.range", blockEntityTag.getInt(PotionCandleBlockEntity.RANGE_TAG))));
+                    componentConsumer.accept(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.status_effect", mobEffect.get().getDisplayName())));
+                    componentConsumer.accept(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.amplifier", blockEntityTag.getInt(PotionCandleBlockEntity.EFFECT_LEVEL_TAG))));
+                    componentConsumer.accept(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.range", blockEntityTag.getInt(PotionCandleBlockEntity.RANGE_TAG))));
 
-                    if (blockEntityTag.contains(PotionCandleBlockEntity.INFINITE_TAG) && blockEntityTag.getBoolean(PotionCandleBlockEntity.INFINITE_TAG)) {
-                        components.add(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.max_duration", Component.translatable("item.the_bumblezone.potion_candle.infinite"))));
+                    if (blockEntityTag.contains(PotionCandleBlockEntity.INFINITE_TAG) && blockEntityTag.getBoolean(PotionCandleBlockEntity.INFINITE_TAG).orElse(false)) {
+                        componentConsumer.accept(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.max_duration", Component.translatable("item.the_bumblezone.potion_candle.infinite"))));
                     }
                     else if (blockEntityTag.contains(PotionCandleBlockEntity.MAX_DURATION_TAG)) {
-                        components.add(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.max_duration", formatTime(blockEntityTag.getInt(PotionCandleBlockEntity.MAX_DURATION_TAG)))));
+                        componentConsumer.accept(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.max_duration", formatTime(blockEntityTag.getInt(PotionCandleBlockEntity.MAX_DURATION_TAG).orElse(0)))));
                     }
                     else {
-                        components.add(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.max_duration", formatTime(PotionCandleBlockEntity.DEFAULT_MAX_DURATION))));
+                        componentConsumer.accept(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.max_duration", formatTime(PotionCandleBlockEntity.DEFAULT_MAX_DURATION))));
                     }
 
                     if (mobEffect.get().isInstantenous()) {
-                        components.add(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.apply_interval", formatTime(PotionCandleBlockEntity.getInstantEffectThresholdTime(blockEntityTag.getInt(PotionCandleBlockEntity.EFFECT_LEVEL_TAG))))));
+                        componentConsumer.accept(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.apply_interval", formatTime(PotionCandleBlockEntity.getInstantEffectThresholdTime(blockEntityTag.getInt(PotionCandleBlockEntity.EFFECT_LEVEL_TAG).orElse(0))))));
                     }
 
-                    int lingerTime = blockEntityTag.getInt(PotionCandleBlockEntity.LINGER_TIME_TAG);
+                    int lingerTime = blockEntityTag.getInt(PotionCandleBlockEntity.LINGER_TIME_TAG).orElse(0);
                     if (lingerTime > 20) {
-                        components.add(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.lingering_time", formatTime(lingerTime))));
+                        componentConsumer.accept(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.lingering_time", formatTime(lingerTime))));
                     }
                 }
             }

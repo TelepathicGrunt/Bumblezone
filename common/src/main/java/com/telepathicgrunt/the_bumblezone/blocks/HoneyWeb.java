@@ -21,7 +21,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -232,7 +232,7 @@ public class HoneyWeb extends Block {
      * Allow player to remove this block with water buckets, water bottles, or wet sponges
      */
     @Override
-    public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
+    public InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         if (itemStack.is(BzTags.WASHING_ITEMS) &&
             (!itemStack.is(Items.POTION) ||
             (itemStack.getComponents().has(DataComponents.POTION_CONTENTS) && itemStack.getComponents().get(DataComponents.POTION_CONTENTS).is(Potions.WATER))))
@@ -269,7 +269,7 @@ public class HoneyWeb extends Block {
                 }
             }
 
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
         return super.useItemOn(itemStack, blockState, level, position, playerEntity, playerHand, raytraceResult);

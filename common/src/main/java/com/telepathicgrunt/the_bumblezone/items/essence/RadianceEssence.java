@@ -17,6 +17,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -24,6 +26,7 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class RadianceEssence extends AbilityEssenceItem {
@@ -41,32 +44,32 @@ public class RadianceEssence extends AbilityEssenceItem {
     }
 
     @Override
-    void addDescriptionComponents(List<Component> components) {
-        components.add(Component.translatable("item.the_bumblezone.essence_radiance_description_1").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));
-        components.add(Component.translatable("item.the_bumblezone.essence_radiance_description_2").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));
+    void addDescriptionComponents(Consumer<Component> components) {
+        components.accept(Component.translatable("item.the_bumblezone.essence_radiance_description_1").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));
+        components.accept(Component.translatable("item.the_bumblezone.essence_radiance_description_2").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));
     }
 
 
     @Override
     public void applyAbilityEffects(ItemStack itemStack, Level level, ServerPlayer serverPlayer) {
         AbilityEssenceActivityData abilityEssenceActivityData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get());
-        if (abilityEssenceActivityData.isActive() && level.getBrightness(LightLayer.SKY, serverPlayer.blockPosition()) >= 13 && level.isDay()) {
+        if (abilityEssenceActivityData.isActive() && level.getBrightness(LightLayer.SKY, serverPlayer.blockPosition()) >= 13 && level.isBrightOutside()) {
             if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % (serverPlayer.isSprinting() ? 2L : 12L) == 0) {
-                spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
+                spawnParticles(serverPlayer.level(), serverPlayer.position(), serverPlayer.getRandom());
             }
 
             if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 25L == 0) {
 
-                List<Holder<MobEffect>> radianceEffects = BuiltInRegistries.MOB_EFFECT.getTag(BzTags.RADIANCE_SUN_EFFECTS)
+                List<Holder<MobEffect>> radianceEffects = BuiltInRegistries.MOB_EFFECT.get(BzTags.RADIANCE_SUN_EFFECTS)
                         .stream()
                         .flatMap(HolderSet.ListBacked::stream)
                         .filter(Holder::isBound)
                         .toList();
 
                 for (Holder<MobEffect> effectHolder : radianceEffects) {
-                    if (effectHolder.value() == MobEffects.MOVEMENT_SPEED) {
+                    if (effectHolder.value() == MobEffects.SPEED) {
                         serverPlayer.addEffect(new MobEffectInstance(
-                                MobEffects.MOVEMENT_SPEED,
+                                MobEffects.SPEED,
                                 120,
                                 0,
                                 false,
@@ -75,9 +78,9 @@ public class RadianceEssence extends AbilityEssenceItem {
                             return;
                         }
                     }
-                    else if (effectHolder.value() == MobEffects.DAMAGE_RESISTANCE) {
+                    else if (effectHolder.value() == MobEffects.RESISTANCE) {
                         serverPlayer.addEffect(new MobEffectInstance(
-                                MobEffects.DAMAGE_RESISTANCE,
+                                MobEffects.RESISTANCE,
                                 120,
                                 1,
                                 false,
@@ -97,9 +100,9 @@ public class RadianceEssence extends AbilityEssenceItem {
                             return;
                         }
                     }
-                    else if (effectHolder.value() == MobEffects.DIG_SPEED) {
+                    else if (effectHolder.value() == MobEffects.HASTE) {
                         serverPlayer.addEffect(new MobEffectInstance(
-                                MobEffects.DIG_SPEED,
+                                MobEffects.HASTE,
                                 120,
                                 1,
                                 false,
@@ -132,11 +135,14 @@ public class RadianceEssence extends AbilityEssenceItem {
                     }
                 }
 
-                for (ItemStack armorItem : serverPlayer.getArmorSlots()) {
-                    if (armorItem.isDamageableItem() && armorItem.isDamaged() && !armorItem.is(BzTags.RADIANCE_CANNOT_REPAIR)) {
-                        armorItem.setDamageValue(armorItem.getDamageValue() - 1);
-                        if (decrementAbilityUseRemaining(itemStack, serverPlayer, 10)) {
-                            return;
+                for (EquipmentSlot equipmentSlot : EquipmentSlotGroup.ARMOR) {
+                    if (equipmentSlot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
+                        ItemStack armor = serverPlayer.getItemBySlot(equipmentSlot);
+                        if (armor.isDamageableItem() && armor.isDamaged() && !armor.is(BzTags.RADIANCE_CANNOT_REPAIR)) {
+                            armor.setDamageValue(armor.getDamageValue() - 1);
+                            if (decrementAbilityUseRemaining(itemStack, serverPlayer, 10)) {
+                                return;
+                            }
                         }
                     }
                 }

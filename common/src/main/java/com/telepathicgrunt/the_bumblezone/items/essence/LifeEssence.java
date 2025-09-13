@@ -38,6 +38,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class LifeEssence extends AbilityEssenceItem {
@@ -55,9 +56,9 @@ public class LifeEssence extends AbilityEssenceItem {
     }
 
     @Override
-    void addDescriptionComponents(List<Component> components) {
-        components.add(Component.translatable("item.the_bumblezone.essence_life_description_1").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.ITALIC));
-        components.add(Component.translatable("item.the_bumblezone.essence_life_description_2").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.ITALIC));
+    void addDescriptionComponents(Consumer<Component> components) {
+        components.accept(Component.translatable("item.the_bumblezone.essence_life_description_1").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.ITALIC));
+        components.accept(Component.translatable("item.the_bumblezone.essence_life_description_2").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.ITALIC));
     }
 
     @Override
@@ -97,7 +98,7 @@ public class LifeEssence extends AbilityEssenceItem {
             healHealth(stack, serverPlayer, tamableAnimal);
             cureEntityOfEffects(stack, serverPlayer, tamableAnimal);
         }
-        else if (entity instanceof ServerPlayer serverPlayer2 && !serverPlayer.serverLevel().getServer().isPvpAllowed()) {
+        else if (entity instanceof ServerPlayer serverPlayer2 && !serverPlayer.level().getServer().isPvpAllowed()) {
             healHealth(stack, serverPlayer, serverPlayer2);
             cureEntityOfEffects(stack, serverPlayer, serverPlayer2);
         }
@@ -119,7 +120,7 @@ public class LifeEssence extends AbilityEssenceItem {
     private void healHealth(ItemStack stack, ServerPlayer serverPlayer, LivingEntity livingEntity) {
         if (livingEntity.getHealth() < livingEntity.getMaxHealth() && !livingEntity.isDeadOrDying()) {
             livingEntity.heal(1);
-            spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
+            spawnParticles(serverPlayer.level(), serverPlayer.position(), serverPlayer.getRandom());
             decrementAbilityUseRemaining(stack, serverPlayer, 1);
         }
     }
@@ -136,8 +137,8 @@ public class LifeEssence extends AbilityEssenceItem {
 
         int minX = playerPos.getX() - radius;
         int maxX = playerPos.getX() + radius;
-        int minY = Math.max(level.getMinBuildHeight(), playerPos.getY() - radius);
-        int maxY = Math.min(level.getMaxBuildHeight() - 1, playerPos.getY() + radius);
+        int minY = Math.max(level.getMaxY(), playerPos.getY() - radius);
+        int maxY = Math.min(level.getMaxY() - 1, playerPos.getY() + radius);
         int minZ = playerPos.getZ() - radius;
         int maxZ = playerPos.getZ() + radius;
 
@@ -279,7 +280,7 @@ public class LifeEssence extends AbilityEssenceItem {
             }
 
             if (grewBlock) {
-                spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
+                spawnParticles(serverPlayer.level(), serverPlayer.position(), serverPlayer.getRandom());
                 if (level.getRandom().nextFloat() < 0.4F) {
                     decrementAbilityUseRemaining(stack, serverPlayer, 1);
                 }

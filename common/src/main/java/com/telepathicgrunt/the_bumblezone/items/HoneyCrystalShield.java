@@ -27,10 +27,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.enchantment.Enchantment;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
 
@@ -75,12 +77,12 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
      */
     // CLIENT-SIDED
     @Override
-    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Consumer<Component> componentConsumer, TooltipFlag flagIn) {
         if (itemStack.is(BzItems.HONEY_CRYSTAL_SHIELD.get())) {
             int shieldLevel = itemStack.get(BzDataComponents.HONEY_CRYSTAL_SHIELD_CURRENT_LEVEL_DATA.get()).currentLevel();
             int maxLevel = itemStack.get(BzDataComponents.HONEY_CRYSTAL_SHIELD_DEFINED_LEVELS_DATA.get()).maxLevel();
             shieldLevel = Math.max(Math.min(shieldLevel, maxLevel), 1);
-            tooltip.add(Component.translatable("item.the_bumblezone.honey_crystal_shield.level_tooltip").append(": " + (shieldLevel)));
+            componentConsumer.accept(Component.translatable("item.the_bumblezone.honey_crystal_shield.level_tooltip").append(": " + (shieldLevel)));
         }
     }
 

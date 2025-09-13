@@ -44,6 +44,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.BannerPatternItem;
@@ -51,6 +52,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.component.Consumables;
 import net.minecraft.world.level.block.DispenserBlock;
 
 
@@ -208,7 +210,7 @@ public class BzItems {
     public static final RegistryEntry<Item> BEE_QUEEN_SPAWN_EGG = ITEMS.register("bee_queen_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.BEE_QUEEN, /*Prevent item tinting*/ 0xFFFFFFFF, 0xFFFFFFFF,(new Item.Properties().rarity(Rarity.EPIC))));
     public static final RegistryEntry<Item> ROOTMIN_SPAWN_EGG = ITEMS.register("rootmin_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.ROOTMIN, /*Prevent item tinting*/ 0xFFFFFFFF, 0xFFFFFFFF, (new Item.Properties())));
     public static final RegistryEntry<Item> SENTRY_WATCHER_SPAWN_EGG = ITEMS.register("sentry_watcher_spawn_egg", () -> new SentryWatcherSpawnEgg(BzEntities.SENTRY_WATCHER, (new Item.Properties().rarity(Rarity.RARE))));
-    public static final RegistryEntry<Item> ESSENCE_OF_THE_BEES = ITEMS.register("essence_of_the_bees", () -> new EssenceOfTheBees(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).fireResistant()));
+    public static final RegistryEntry<Item> ESSENCE_OF_THE_BEES = ITEMS.register("essence_of_the_bees", () -> new EssenceOfTheBees(new Item.Properties().rarity(Rarity.EPIC).food(BzFoods.ESSENCE_OF_THE_BEES, BzConsumables.ESSENCE_OF_THE_BEES).stacksTo(1).fireResistant()));
     public static final RegistryEntry<Item> ESSENCE_RAGING = ITEMS.register("essence_raging", () -> new RagingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
     public static final RegistryEntry<Item> ESSENCE_KNOWING = ITEMS.register("essence_knowing", () -> new KnowingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
     public static final RegistryEntry<Item> ESSENCE_CALMING = ITEMS.register("essence_calming", () -> new CalmingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));

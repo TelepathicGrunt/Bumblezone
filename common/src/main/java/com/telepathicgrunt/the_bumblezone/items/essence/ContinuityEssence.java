@@ -3,8 +3,10 @@ package com.telepathicgrunt.the_bumblezone.items.essence;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityDeathEvent;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.FoodDataAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.ServerPlayerAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -43,13 +45,17 @@ import net.minecraft.world.item.component.WrittenBookContent;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.Vec3;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class ContinuityEssence extends AbilityEssenceItem {
@@ -57,7 +63,15 @@ public class ContinuityEssence extends AbilityEssenceItem {
     private static final Supplier<Integer> cooldownLengthInTicks = () -> BzGeneralConfigs.continuityEssenceCooldown;
     private static final Supplier<Integer> abilityUseAmount = () -> 1;
     private static final ConcurrentLinkedQueue<TickCapsule> NEXT_TICK_BEHAVIORS = new ConcurrentLinkedQueue<>();
-    private static final Style INTENTIONAL_GAME_DESIGN_STYLE = Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://bugs.mojang.com/browse/MCPE-28723")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("MCPE-28723")));
+    private static final Style INTENTIONAL_GAME_DESIGN_STYLE;
+
+    static {
+        try {
+            INTENTIONAL_GAME_DESIGN_STYLE = Style.EMPTY.withClickEvent(new ClickEvent.OpenUrl(new URI("https://bugs.mojang.com/browse/MCPE-28723"))).withHoverEvent(new HoverEvent.ShowText(Component.literal("MCPE-28723")));
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private record TickCapsule(Runnable runnable, long tickTarget) {}
 
@@ -71,9 +85,9 @@ public class ContinuityEssence extends AbilityEssenceItem {
     }
 
     @Override
-    void addDescriptionComponents(List<Component> components) {
-        components.add(Component.translatable("item.the_bumblezone.essence_continuity_description_1").withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
-        components.add(Component.translatable("item.the_bumblezone.essence_continuity_description_2").withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
+    void addDescriptionComponents(Consumer<Component> components) {
+        components.accept(Component.translatable("item.the_bumblezone.essence_continuity_description_1").withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
+        components.accept(Component.translatable("item.the_bumblezone.essence_continuity_description_2").withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
     }
 
     @Override
@@ -103,10 +117,10 @@ public class ContinuityEssence extends AbilityEssenceItem {
         LivingEntity livingEntity = event.entity();
         if (livingEntity instanceof ServerPlayer player) {
             DamageSource source = event.source();
-            Registry<DamageType> damageTypeRegistry = player.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE);
+            Registry<DamageType> damageTypeRegistry = player.level().registryAccess().getOrThrow(Registries.DAMAGE_TYPE).value();
 
             // Kill command. Do not activate in that case.
-            if (damageTypeRegistry.get(DamageTypes.GENERIC_KILL) == event.source().type() &&
+            if (damageTypeRegistry.get(DamageTypes.GENERIC_KILL).get().value() == event.source().type() &&
                     source.getEntity() == null &&
                     source.getDirectEntity() == null &&
                     source.getSourcePosition() == null)
@@ -118,7 +132,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
             if (player.isDeadOrDying() &&
                 itemStack.getItem() instanceof ContinuityEssence continuityEssence &&
                 itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get()).isActive() &&
-                !player.getCooldowns().isOnCooldown(itemStack.getItem()))
+                !player.getCooldowns().isOnCooldown(itemStack))
             {
                 playerReset(player);
 
@@ -131,7 +145,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
 
                 MinecraftServer server = player.level().getServer();
                 if (server != null) {
-                    spawnParticles(player.serverLevel(), player.position(), player.getRandom());
+                    spawnParticles(player.level(), player.position(), player.getRandom());
                     respawn(itemStack, continuityEssence, player, server, event.source());
                 }
                 return true;
@@ -144,16 +158,16 @@ public class ContinuityEssence extends AbilityEssenceItem {
     private static void respawn(ItemStack stack, ContinuityEssence continuityEssence, ServerPlayer serverPlayer, MinecraftServer server, DamageSource damageSource) {
         ResourceKey<Level> oldDimension = serverPlayer.level().dimension();
         BlockPos oldPosition = serverPlayer.blockPosition();
-        ResourceKey<Level> respawnDimension = serverPlayer.getRespawnDimension();
-        BlockPos respawningLinkedPosition = serverPlayer.getRespawnPosition();
+        ResourceKey<Level> respawnDimension = serverPlayer.getRespawnConfig() != null ? serverPlayer.getRespawnConfig().dimension() : Level.OVERWORLD;
+        BlockPos respawningLinkedPosition = serverPlayer.getRespawnConfig() != null ? serverPlayer.getRespawnConfig().pos() : server.overworld().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, BlockPos.ZERO);
 
         ServerLevel desiredDestination = server.getLevel(respawnDimension);
-        Optional<Vec3> optionalRespawnPoint = desiredDestination != null && respawningLinkedPosition != null ?
-                Optional.of(serverPlayer.findRespawnPositionAndUseSpawnBlock(true, DimensionTransition.DO_NOTHING).pos()) : Optional.empty();
+        Optional<Vec3> optionalRespawnPoint = desiredDestination != null ?
+                Optional.of(serverPlayer.findRespawnPositionAndUseSpawnBlock(true, TeleportTransition.DO_NOTHING).position()) : Optional.empty();
 
-        ServerLevel finalDestination = desiredDestination != null && optionalRespawnPoint.isPresent() ? desiredDestination : server.overworld();
+        ServerLevel finalDestination = desiredDestination != null ? desiredDestination : server.overworld();
 
-        if (optionalRespawnPoint.isEmpty() && respawningLinkedPosition != null) {
+        if (optionalRespawnPoint.isEmpty()) {
             serverPlayer.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.NO_RESPAWN_BLOCK_AVAILABLE, 0.0f));
         }
 
@@ -188,8 +202,8 @@ public class ContinuityEssence extends AbilityEssenceItem {
 
             NEXT_TICK_BEHAVIORS.add(new TickCapsule(() -> {
                 spawnParticles(finalDestination, playerRespawnPosition, finalDestination.getRandom());
-                serverPlayer.getCooldowns().addCooldown(continuityEssence, continuityEssence.getCooldownTickLength());
-            }, serverPlayer.serverLevel().getGameTime() + 5));
+                serverPlayer.getCooldowns().addCooldown(BzItems.ESSENCE_CONTINUITY.getId(), continuityEssence.getCooldownTickLength());
+            }, serverPlayer.level().getGameTime() + 5));
         });
 
         spawnBook(serverPlayer, damageSource, oldDimension, oldPosition, finalDestination, playerRespawnPosition);
@@ -305,7 +319,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
 
     private static void playerReset(ServerPlayer player) {
         player.setHealth(player.getMaxHealth());
-        player.getFoodData().setExhaustion(0);
+        ((FoodDataAccessor)player.getFoodData()).the_bumblezone$setExhaustionLevel(0);
         player.getFoodData().eat(20, 20);
         player.clearFire();
         player.setAirSupply(player.getMaxAirSupply());

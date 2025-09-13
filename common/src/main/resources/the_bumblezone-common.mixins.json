@@ -3,6 +3,7 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "entities.FoodDataAccessor",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",
     "blocks.BigDripleafBlockMixin",
@@ -62,7 +63,6 @@
     "entities.ServerGamePacketListenerImplMixin",
     "entities.ServerPlayerAccessor",
     "entities.ServerPlayerMixin",
-    "gameplay.CooldownInstanceAccessor",
     "gameplay.ItemCooldownsAccessor",
     "gameplay.ServerGamePacketListenerImplAccessor",
     "gameplay.ServerPlayerGameModeMixin",

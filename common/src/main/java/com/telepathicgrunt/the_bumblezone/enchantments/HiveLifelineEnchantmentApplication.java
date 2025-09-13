@@ -12,6 +12,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -46,13 +48,16 @@ public class HiveLifelineEnchantmentApplication {
 
         ItemStack currentHiveLifelineArmor = null;
         Pair<HiveLifelineMarker, Integer> hiveLifelineMarker = null;
-        for (ItemStack armorItem : player.getArmorSlots()) {
-            if (!player.getCooldowns().isOnCooldown(armorItem.getItem())) {
-                Pair<HiveLifelineMarker, Integer> enchantmentResult = getHiveLifelineEnchantLevel(armorItem);
-                if (enchantmentResult != null) {
-                    currentHiveLifelineArmor = armorItem;
-                    hiveLifelineMarker = enchantmentResult;
-                    break;
+        for (EquipmentSlot equipmentSlot : EquipmentSlotGroup.ARMOR) {
+            if (equipmentSlot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
+                ItemStack armor = player.getItemBySlot(equipmentSlot);
+                if (!player.getCooldowns().isOnCooldown(armor)) {
+                    Pair<HiveLifelineMarker, Integer> enchantmentResult = getHiveLifelineEnchantLevel(armor);
+                    if (enchantmentResult != null) {
+                        currentHiveLifelineArmor = armor;
+                        hiveLifelineMarker = enchantmentResult;
+                        break;
+                    }
                 }
             }
         }
@@ -87,7 +92,7 @@ public class HiveLifelineEnchantmentApplication {
             }
 
             nearbyEntity.hurt(event.source(), event.amount());
-            player.getCooldowns().addCooldown(currentHiveLifelineArmor.getItem(), hiveLifelineMarker.getFirst().armorCooldownTicks());
+            player.getCooldowns().addCooldown(currentHiveLifelineArmor, hiveLifelineMarker.getFirst().armorCooldownTicks());
 
             serverLevel.sendParticles(
                     BzParticles.SPARKLE_PARTICLE.get(),
