@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
@@ -53,21 +54,21 @@ public class BzCustomBucketItem extends BzBucketItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, InteractionHand hand) {
-        InteractionResultHolder<ItemStack> specialActionResult = PlatformService.INSTANCE.performItemUse(world, playerEntity, hand, this.fluid, this);
-        if (specialActionResult.getResult() != InteractionResult.PASS) {
+    public InteractionResult use(Level world, Player playerEntity, InteractionHand hand) {
+        InteractionResult specialActionResult = PlatformService.INSTANCE.performItemUse(world, playerEntity, hand, this.fluid, this);
+        if (specialActionResult != InteractionResult.PASS) {
             checkAndGrantAdvancement(world, playerEntity, specialActionResult);
             return specialActionResult;
         }
 
-        InteractionResultHolder<ItemStack> actionResult = super.use(world, playerEntity, hand);
+        InteractionResult actionResult = super.use(world, playerEntity, hand);
         checkAndGrantAdvancement(world, playerEntity, actionResult);
         return actionResult;
     }
 
-    private void checkAndGrantAdvancement(Level world, Player playerEntity, InteractionResultHolder<ItemStack> actionResult) {
+    private void checkAndGrantAdvancement(Level world, Player playerEntity, InteractionResult actionResult) {
         if (getFluid() == BzFluids.SUGAR_WATER_FLUID.get() &&
-            (actionResult.getResult() == InteractionResult.CONSUME || actionResult.getResult() == InteractionResult.SUCCESS) &&
+            actionResult.consumesAction() &&
             playerEntity instanceof ServerPlayer serverPlayer)
         {
             BlockHitResult raytraceresult = getPlayerPOVHitResult(world, playerEntity, ClipContext.Fluid.NONE);

@@ -14,6 +14,7 @@ import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.neoforge.NeoForgeModInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -22,6 +23,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
@@ -116,12 +118,12 @@ public class NeoPlatformService implements PlatformService {
 
     @Override
     public boolean hasCraftingRemainder(ItemStack stack) {
-        return stack.hasCraftingRemainingItem();
+        return stack.getCraftingRemainder() != ItemStack.EMPTY;
     }
 
     @Override
     public ItemStack getCraftingRemainder(ItemStack stack) {
-        return stack.getCraftingRemainingItem();
+        return stack.getCraftingRemainder();
     }
 
     @Override
@@ -187,13 +189,13 @@ public class NeoPlatformService implements PlatformService {
     }
     
     @Override
-    public InteractionResultHolder<ItemStack> performItemUse(Level world, Player user, InteractionHand hand, Fluid fluid, BzCustomBucketItem bzCustomBucketItem) {
-        return InteractionResultHolder.pass(user.getItemInHand(hand));
+    public InteractionResult performItemUse(Level world, Player user, InteractionHand hand, Fluid fluid, BzCustomBucketItem bzCustomBucketItem) {
+        return InteractionResult.PASS;
     }
     
     @Override
     public boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
-        if (entity instanceof Player player && !player.mayInteract(level, pos)) {
+        if (entity instanceof Player player && level instanceof ServerLevel serverLevel && !player.mayInteract(serverLevel, pos)) {
             return false;
         }
 
@@ -271,11 +273,8 @@ public class NeoPlatformService implements PlatformService {
 
     @Override
     public <T extends Module<T>> Optional<T> getModule(Entity entity, ModuleHolder<T> moduleHolder) {
-        AttachmentType<T> attachmentType = (AttachmentType<T>) NeoForgeRegistries.ATTACHMENT_TYPES.get(moduleHolder.id());
-        if (attachmentType != null) {
-            return Optional.of(entity.getData(attachmentType));
-        }
-        return Optional.empty();
+        Optional<Holder.Reference<AttachmentType<?>>> attachmentType = NeoForgeRegistries.ATTACHMENT_TYPES.get(moduleHolder.id());
+        return (Optional<T>) attachmentType.map(attachmentTypeReference -> entity.getData(attachmentTypeReference.value()));
     }
 
     @Override

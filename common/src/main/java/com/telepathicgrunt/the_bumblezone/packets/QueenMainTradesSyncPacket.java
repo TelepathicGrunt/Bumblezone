@@ -54,18 +54,17 @@ public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedLis
                 return new QueenMainTradesSyncPacket(parsedData);
             }
 
-            ListTag tagList = data.getList("main_trades").get();
+            ListTag tagList = data.getList("main_trades").orElse(new ListTag());
             for (int i = 0; i < tagList.size(); i++) {
-                CompoundTag tradeCompound = tagList.getCompound(i).get();
-                CompoundTag firstHalf = tradeCompound.getCompound("input").get();
-                ListTag secondHalf = tradeCompound.getList("output").get();
+                CompoundTag tradeCompound = tagList.getCompound(i).orElse(new CompoundTag());
+                CompoundTag firstHalf = tradeCompound.getCompound("input").orElse(new CompoundTag());
+                ListTag secondHalf = tradeCompound.getList("output").orElse(new ListTag());
 
                 DataResult<MainTradeRowInput> dataResult1 = MainTradeRowInput.CODEC.parse(NbtOps.INSTANCE, firstHalf);
                 dataResult1.error().ifPresent(e -> Bumblezone.LOGGER.error("Failed to parse Queen Main Trade packet tag (first half): {}", e));
 
                 DataResult<WeightedList<WeightedTradeResult>> dataResult2 = WeightedList.codec(WeightedTradeResult.CODEC).parse(NbtOps.INSTANCE, secondHalf);
                 dataResult2.error().ifPresent(e -> Bumblezone.LOGGER.error("Failed to parse Queen Main Trade packet tag (second half): {}", e));
-
 
                 dataResult1.result().ifPresent(input -> dataResult2.result().ifPresent(output -> parsedData.add(Pair.of(input, output))));
             }

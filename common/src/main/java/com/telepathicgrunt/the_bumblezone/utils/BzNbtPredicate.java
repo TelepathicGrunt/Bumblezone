@@ -2,15 +2,18 @@ package com.telepathicgrunt.the_bumblezone.utils;
 
 
 import com.mojang.serialization.Codec;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NumericTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.level.storage.TagValueOutput;
 import org.jetbrains.annotations.Nullable;
 
 // Source: https://github.com/Resourceful-Bees/ResourcefulLib/blob/master/common/src/main/java/com/teamresourceful/resourcefullib/common/codecs/predicates/NbtPredicate.java
@@ -32,15 +35,16 @@ public record BzNbtPredicate(CompoundTag tag) {
     }
 
     public static CompoundTag getEntityTagToCompare(Entity entity) {
-        CompoundTag compoundtag = entity.saveWithoutId(new CompoundTag());
+        TagValueOutput tagvalueoutput = TagValueOutput.createWithContext(new ProblemReporter.ScopedCollector(Bumblezone.LOGGER), entity.level().registryAccess());
+        entity.saveWithoutId(tagvalueoutput);
         if (entity instanceof Player player) {
-            ItemStack itemstack = player.getInventory().getSelected();
+            ItemStack itemstack = player.getInventory().getSelectedItem();
             if (!itemstack.isEmpty()) {
-                compoundtag.put("SelectedItem", itemstack.save(entity.level().registryAccess()));
+                tagvalueoutput.store("SelectedItem", ItemStack.CODEC, itemstack);
             }
         }
 
-        return compoundtag;
+        return tagvalueoutput.buildResult();
     }
 
     public static boolean compareNbt(@Nullable Tag tag, @Nullable Tag tag2, boolean bl) {
@@ -54,14 +58,14 @@ public record BzNbtPredicate(CompoundTag tag) {
             return false;
         }
         if (tag instanceof NumericTag numericTag && tag2 instanceof NumericTag numericTag2) {
-            return numericTag.getAsDouble() == numericTag2.getAsDouble();
+            return numericTag.doubleValue() == numericTag2.doubleValue();
         }
         if (!tag.getClass().equals(tag2.getClass())) {
             return false;
         }
         if (tag instanceof CompoundTag compoundTag) {
             CompoundTag compoundTag2 = (CompoundTag)tag2;
-            for (String string : compoundTag.getAllKeys()) {
+            for (String string : compoundTag.keySet()) {
                 Tag tag3 = compoundTag.get(string);
                 if (compareNbt(tag3, compoundTag2.get(string), bl)) continue;
                 return false;

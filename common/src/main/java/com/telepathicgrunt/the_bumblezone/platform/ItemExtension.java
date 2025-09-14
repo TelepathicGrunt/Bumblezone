@@ -6,9 +6,9 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.ApiStatus;
@@ -25,8 +25,8 @@ public interface ItemExtension {
     }
 
     default EquipmentSlot bz$getEquipmentSlot(ItemStack stack) {
-        if (stack.getItem() instanceof ArmorItem) {
-            return ((ArmorItem)stack.getItem()).getEquipmentSlot();
+        if (stack.getComponents().has(DataComponents.EQUIPPABLE)) {
+            return stack.getComponents().get(DataComponents.EQUIPPABLE).slot();
         }
 
         return EquipmentSlot.MAINHAND;

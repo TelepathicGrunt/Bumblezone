@@ -66,7 +66,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Contract;
 
 import java.util.List;
 import java.util.Optional;
@@ -125,13 +124,13 @@ public class FabricPlatformService implements PlatformService {
 
     @Override
     public boolean hasCraftingRemainder(ItemStack stack) {
-        return stack.getItem().hasCraftingRemainingItem();
+        return stack.getItem().getCraftingRemainder() != ItemStack.EMPTY;
     }
 
     @Override
     public ItemStack getCraftingRemainder(ItemStack stack) {
-        final Item item = stack.getItem().getCraftingRemainingItem();
-        return item == null ? ItemStack.EMPTY : new ItemStack(item);
+        final ItemStack itemStack = stack.getItem().getCraftingRemainder();
+        return itemStack == ItemStack.EMPTY ? ItemStack.EMPTY : new ItemStack(itemStack.getItem());
     }
 
     @Override
@@ -198,14 +197,14 @@ public class FabricPlatformService implements PlatformService {
     }
     
     @Override
-    public InteractionResultHolder<ItemStack> performItemUse(Level world, Player user, InteractionHand hand, Fluid fluid, BzCustomBucketItem bzCustomBucketItem) {
+    public InteractionResult performItemUse(Level world, Player user, InteractionHand hand, Fluid fluid, BzCustomBucketItem bzCustomBucketItem) {
         ItemStack itemStack = user.getItemInHand(hand);
         BlockHitResult blockHitResult = ItemAccessor.bumblezone$callGetPlayerPOVHitResult(world, user, fluid == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
         if (blockHitResult.getType() == HitResult.Type.MISS) {
-            return InteractionResultHolder.pass(itemStack);
+            return InteractionResult.PASS;
         }
         else if (blockHitResult.getType() != HitResult.Type.BLOCK) {
-            return InteractionResultHolder.pass(itemStack);
+            return InteractionResult.PASS;
         }
         else {
             BlockPos blockPos = blockHitResult.getBlockPos();
@@ -221,16 +220,16 @@ public class FabricPlatformService implements PlatformService {
                             user.awardStat(Stats.ITEM_USED.get(bzCustomBucketItem));
                             fluidDrainable.getPickupSound().ifPresent((sound) -> user.playSound(sound, 1.0F, 1.0F));
                             world.gameEvent(user, GameEvent.FLUID_PICKUP, blockPos);
-                            ItemStack itemStack3 = ItemUtils.createFilledResult(itemStack, user, itemStack2);
+                            ItemUtils.createFilledResult(itemStack, user, itemStack2);
                             if (user instanceof ServerPlayer serverPlayer) {
                                 CriteriaTriggers.FILLED_BUCKET.trigger(serverPlayer, itemStack2);
                             }
 
-                            return InteractionResultHolder.sidedSuccess(itemStack3, world.isClientSide());
+                            return InteractionResult.SUCCESS;
                         }
                     }
 
-                    return InteractionResultHolder.fail(itemStack);
+                    return InteractionResult.FAIL;
                 }
                 else {
                     blockState = world.getBlockState(blockPos);
@@ -243,15 +242,16 @@ public class FabricPlatformService implements PlatformService {
                         }
 
                         user.awardStat(Stats.ITEM_USED.get(bzCustomBucketItem));
-                        return InteractionResultHolder.sidedSuccess(BucketItem.getEmptySuccessItem(itemStack, user), world.isClientSide());
+                        BucketItem.getEmptySuccessItem(itemStack, user);
+                        return InteractionResult.SUCCESS;
                     }
                     else {
-                        return InteractionResultHolder.fail(itemStack);
+                        return InteractionResult.FAIL;
                     }
                 }
             }
             else {
-                return InteractionResultHolder.fail(itemStack);
+                return InteractionResult.FAIL;
             }
         }
     }
@@ -259,12 +259,12 @@ public class FabricPlatformService implements PlatformService {
     @Override
     public boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
         if (entity instanceof Player player) {
-            if (!player.mayInteract(level, pos)) {
+            if (level instanceof ServerLevel serverLevel && !player.mayInteract(serverLevel, pos)) {
                 return false;
             }
 
             Vec3 centerOfPos = Vec3.atCenterOf(pos);
-            BlockHitResult blockHitResult = new BlockHitResult(centerOfPos, Direction.getNearest(centerOfPos.subtract(player.position())), pos, true);
+            BlockHitResult blockHitResult = new BlockHitResult(centerOfPos, Direction.getApproximateNearest(centerOfPos.subtract(player.position())), pos, true);
             InteractionHand hand = player.swingingArm == null ? InteractionHand.MAIN_HAND : player.swingingArm;
             InteractionResult interact = UseBlockCallback.EVENT.invoker().interact(player, level, hand, blockHitResult);
             return interact != InteractionResult.FAIL;

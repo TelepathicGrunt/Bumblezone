@@ -53,8 +53,8 @@ public class EnchantmentUtils {
 		boolean bookFlag = itemStack.is(Items.BOOK) || itemStack.is(Items.ENCHANTED_BOOK);
 		boolean allowTreasure = xpTier == 7;
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(itemStack);
-		Registry<Enchantment> enchantmentRegistry = level.registryAccess().registry(Registries.ENCHANTMENT).get();
-		enchantmentRegistry.holders().forEach(enchantment -> {
+		Registry<Enchantment> enchantmentRegistry = level.registryAccess().getOrThrow(Registries.ENCHANTMENT).value();
+		enchantmentRegistry.listElements().forEach(enchantment -> {
 
 			boolean forceAllowed = enchantment.is(BzTags.FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
 			boolean disallowed = enchantment.is(BzTags.DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
@@ -78,7 +78,7 @@ public class EnchantmentUtils {
 					if (forceAllowed || enchantmentLevel >= enchantment.value().getMinCost(i)) {
 						EnchantmentInstance enchantmentInstance = new EnchantmentInstance(enchantment, xpTier <= 2 ? 1 : i);
 						if (xpTier > EnchantmentUtils.getEnchantmentTierCost(enchantmentInstance)) {
-							map.put(enchantmentRegistry.getKey(enchantmentInstance.enchantment.value()), enchantmentInstance);
+							map.put(enchantmentRegistry.getKey(enchantmentInstance.enchantment().value()), enchantmentInstance);
 							break;
 						}
 					}
@@ -101,12 +101,12 @@ public class EnchantmentUtils {
 
 	public static int getEnchantmentTierCost(EnchantmentInstance enchantmentInstance) {
 		return getEnchantmentTierCost(
-				enchantmentInstance.level,
-				enchantmentInstance.enchantment.value().getMinCost(
-						enchantmentInstance.enchantment.unwrapKey().get().location().getNamespace().equals("minecraft") ?
-						Math.max(enchantmentInstance.level, 2) : enchantmentInstance.level),
-				enchantmentInstance.enchantment.is(EnchantmentTags.TREASURE),
-				enchantmentInstance.enchantment.is(EnchantmentTags.CURSE));
+				enchantmentInstance.level(),
+				enchantmentInstance.enchantment().value().getMinCost(
+						enchantmentInstance.enchantment().unwrapKey().get().location().getNamespace().equals("minecraft") ?
+						Math.max(enchantmentInstance.level(), 2) : enchantmentInstance.level()),
+				enchantmentInstance.enchantment().is(EnchantmentTags.TREASURE),
+				enchantmentInstance.enchantment().is(EnchantmentTags.CURSE));
 	}
 
 	public static int getEnchantmentTierCost(int level, int minCost, boolean isTreasureOnly, boolean isCurse) {
@@ -128,10 +128,10 @@ public class EnchantmentUtils {
 	}
 
 	public static Holder<Enchantment> getEnchantmentHolder(ResourceLocation enchantmentRL, Level level) {
-		return level.registryAccess().registry(Registries.ENCHANTMENT).get().getHolder(enchantmentRL).orElse(null);
+		return level.registryAccess().getOrThrow(Registries.ENCHANTMENT).value().get(enchantmentRL).orElse(null);
 	}
 
 	public static Holder<Enchantment> getEnchantmentHolder(ResourceKey<Enchantment> enchantmentRL, Level level) {
-		return level.registryAccess().registry(Registries.ENCHANTMENT).get().getHolder(enchantmentRL).orElse(null);
+		return level.registryAccess().getOrThrow(Registries.ENCHANTMENT).value().get(enchantmentRL).orElse(null);
 	}
 }
