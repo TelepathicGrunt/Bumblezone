@@ -50,9 +50,6 @@ public class NeoForgeModChecker {
             modid = "buzzier_bees";
             loadupModCompat(modid, () -> new BuzzierBeesCompat());
 
-            modid = "forbidden_arcanus";
-            loadupModCompat(modid, () -> new ForbiddenArcanusCompat());
-
             modid = "potionofbees";
             loadupModCompat(modid, () -> new PotionOfBeesCompat());
 
