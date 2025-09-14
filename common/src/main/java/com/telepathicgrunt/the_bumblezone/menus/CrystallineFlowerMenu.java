@@ -173,7 +173,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                     EnchantmentInstance oldEnchantSelected = oldAvailableEnchantments.get(selectedEnchantment);
                     selectedEnchantment = null;
 
-                    setupResultSlot(oldEnchantSelected.enchantment.unwrapKey().get().location());
+                    setupResultSlot(oldEnchantSelected.enchantment().unwrapKey().get().location());
                     broadcastChanges();
                     crystallineFlowerBlockEntity.setBookSlotItems(bookSlot.getItem());
                     crystallineFlowerBlockEntity.syncPillar();
@@ -595,10 +595,10 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                     }
 
                     if (tempCopy.is(Items.BOOK) || tempCopy.is(Items.ENCHANTED_BOOK)) {
-                        tempCopy.enchant(enchantmentForItem.enchantment, enchantmentForItem.level);
+                        tempCopy.enchant(enchantmentForItem.enchantment(), enchantmentForItem.level());
                     }
                     else {
-                        tempCopy.enchant(enchantmentForItem.enchantment, enchantmentForItem.level);
+                        tempCopy.enchant(enchantmentForItem.enchantment(), enchantmentForItem.level());
                     }
 
                     if (!ItemStack.matches(tempCopy, enchantedSlot.getItem())) {
@@ -614,15 +614,15 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             if (player instanceof ServerPlayer serverPlayer) {
                 List<EnchantmentSkeleton> availableEnchantmentsSkeletons =
                         availableEnchantments.values().stream().map(e -> {
-                            ResourceLocation resourceLocation = e.enchantment.unwrapKey().get().location();
+                            ResourceLocation resourceLocation = e.enchantment().unwrapKey().get().location();
                             return new EnchantmentSkeleton(
                                     resourceLocation.getPath(),
                                     resourceLocation.getNamespace(),
-                                    e.level,
-                                    e.enchantment.value().getMinCost(resourceLocation.getNamespace().equals("minecraft") ? Math.max(e.level, 2) : e.level),
-                                    e.level == e.enchantment.value().getMaxLevel(),
-                                    e.enchantment.is(EnchantmentTags.CURSE),
-                                    e.enchantment.is(EnchantmentTags.TREASURE)
+                                    e.level(),
+                                    e.enchantment().value().getMinCost(resourceLocation.getNamespace().equals("minecraft") ? Math.max(e.level(), 2) : e.level()),
+                                    e.level() == e.enchantment().value().getMaxLevel(),
+                                    e.enchantment().is(EnchantmentTags.CURSE),
+                                    e.enchantment().is(EnchantmentTags.TREASURE)
                             );
                         }).toList();
 

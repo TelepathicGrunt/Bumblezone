@@ -11,7 +11,7 @@ import com.telepathicgrunt.the_bumblezone.loot.EntityLootDropInterface;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
@@ -69,7 +69,7 @@ public abstract class EntityMixin implements EntityLootDropInterface {
     }
     
     // let pollinated bees fill certain BZ blocks
-    @Inject(method = "checkInsideBlocks()V",
+    @Inject(method = "checkInsideBlocks(Ljava/util/List;Lnet/minecraft/world/entity/InsideBlockEffectApplier$StepBasedCollector;)V",
             at = @At(value = "HEAD"))
     private void bumblezone$pollinatedBeeBlockFilling(CallbackInfo ci) {
         if (((Object)this) instanceof Bee bee && (bee.hasNectar() || bee.getHealth() < bee.getMaxHealth())) {

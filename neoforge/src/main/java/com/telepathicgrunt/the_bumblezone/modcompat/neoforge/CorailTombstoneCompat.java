@@ -26,10 +26,7 @@ public class CorailTombstoneCompat implements ModCompat {
         ModChecker.corailTombstonePresent = true;
     }
 
-    @EventBusSubscriber(
-            modid = Bumblezone.MODID,
-            bus = EventBusSubscriber.Bus.GAME
-    )
+    @EventBusSubscriber(modid = Bumblezone.MODID)
     public static final class CorailCompatEvents {
 
         // Mods.toml has Corail Tombstone as optional and runs after Bumblezone.
@@ -40,11 +37,11 @@ public class CorailTombstoneCompat implements ModCompat {
             if (ModChecker.corailTombstonePresent &&
                 !event.getDrops().isEmpty() &&
                 event.getEntity() instanceof ServerPlayer serverPlayer &&
-                !serverPlayer.isFakePlayer() && !event.getEntity().level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY))
+                !serverPlayer.isFakePlayer() && !serverPlayer.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY))
             {
                 if (serverPlayer.level().dimension().equals(BzDimension.BZ_WORLD_KEY)) {
 
-                    StructureManager structureManager = ((ServerLevel)serverPlayer.level()).structureManager();
+                    StructureManager structureManager = serverPlayer.level().structureManager();
                     StructureStart detectedStructure = structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.SEMPITERNAL_SANCTUMS);
                     if (detectedStructure.isValid()) {
 

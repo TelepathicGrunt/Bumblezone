@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modules.neoforge;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.neoforge.BzAttachmentTypes;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
@@ -67,5 +68,5 @@ public class NeoForgeModuleInitializer {
         return AttachmentType.builder(value.factory()).serialize(value.codec());
     }
 
-    private record ModuleRegistryValue<T extends Module<T>>(ResourceLocation id, Codec<T> codec, Supplier<T> factory) { }
+    private record ModuleRegistryValue<T extends Module<T>>(ResourceLocation id, MapCodec<T> codec, Supplier<T> factory) { }
 }

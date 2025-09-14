@@ -48,12 +48,12 @@ public class TropicraftCompat implements ModCompat {
         Mob entity = event.entity();
         LevelAccessor world = event.level();
 
-        Entity newEntity = TROPIBEE.get().create(entity.level());
+        Entity newEntity = TROPIBEE.get().create(entity.level(), event.spawnType());
         if (!(newEntity instanceof Mob tropibee)) {
             return false;
         }
 
-        tropibee.moveTo(
+        tropibee.snapTo(
                 entity.getX(),
                 entity.getY(),
                 entity.getZ(),

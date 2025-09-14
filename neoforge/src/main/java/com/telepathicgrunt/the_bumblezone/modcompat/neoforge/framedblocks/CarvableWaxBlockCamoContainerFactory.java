@@ -144,7 +144,7 @@ final class CarvableWaxBlockCamoContainerFactory extends AbstractBlockCamoContai
      */
     @Override
     protected CarvableWaxBlockCamoContainer readFromNetwork(CompoundTag tag) {
-        BlockState state = Block.stateById(tag.getInt("state"));
+        BlockState state = Block.stateById(tag.getIntOr("state", 0));
         return new CarvableWaxBlockCamoContainer(state);
     }
 

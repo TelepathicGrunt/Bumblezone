@@ -3,8 +3,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.logging;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
-import net.minecraft.world.entity.decoration.BlockAttachedEntity;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.world.level.chunk.LevelChunk;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;

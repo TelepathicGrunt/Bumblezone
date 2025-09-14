@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.entity;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerPickupItemEvent;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -14,9 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class ItemEntityMixin {
 
     @Inject(method = "playerTouch",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;take(Lnet/minecraft/world/entity/Entity;I)V"),
-            locals = LocalCapture.CAPTURE_FAILHARD)
-    private void bumelzone$onPlayerTouch(Player player, CallbackInfo ci, ItemStack stack) {
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;take(Lnet/minecraft/world/entity/Entity;I)V")
+    )
+    private void bumelzone$onPlayerTouch(Player player, CallbackInfo ci, @Local(ordinal = 0) ItemStack stack) {
         BzPlayerPickupItemEvent.EVENT.invoke(new BzPlayerPickupItemEvent(player, stack.copy()));
     }
 }

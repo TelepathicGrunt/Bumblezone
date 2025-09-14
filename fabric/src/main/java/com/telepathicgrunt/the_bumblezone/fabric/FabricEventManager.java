@@ -96,6 +96,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.phys.BlockHitResult;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -176,8 +177,8 @@ public class FabricEventManager {
         BzRegisterReloadListenerEvent.EVENT.invoke(new BzRegisterReloadListenerEvent((id, listener) ->
                 ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricReloadListener(id, listener))));
         BzRegisterSpawnPlacementsEvent.EVENT.invoke(new BzRegisterSpawnPlacementsEvent(FabricEventManager::registerPlacement));
-        CommonLifecycleEvents.TAGS_LOADED.register((registry, client) ->
-                BzTagsUpdatedEvent.EVENT.invoke(new BzTagsUpdatedEvent(registry, client)));
+        CommonLifecycleEvents.TAGS_LOADED.register((registryAccess, client) ->
+                BzTagsUpdatedEvent.EVENT.invoke(new BzTagsUpdatedEvent(registryAccess, client)));
         PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, blockentity) ->
                 !BzBlockBreakEvent.EVENT_LOWEST.invoke(new BzBlockBreakEvent(player, state)));
         CommandRegistrationCallback.EVENT.register((dispatcher, context, environment) ->
@@ -266,16 +267,17 @@ public class FabricEventManager {
 
     private static void setupWanderingTrades() {
         var trades = VillagerTrades.WANDERING_TRADER_TRADES;
-        List<VillagerTrades.ItemListing> basic = Arrays.stream(trades.get(1)).collect(Collectors.toList());
-        List<VillagerTrades.ItemListing> rare = Arrays.stream(trades.get(2)).collect(Collectors.toList());
+        List<VillagerTrades.ItemListing> basic = Arrays.stream(trades.get(1).getLeft()).collect(Collectors.toList());
+        List<VillagerTrades.ItemListing> rare = Arrays.stream(trades.get(2).getLeft()).collect(Collectors.toList());
         BzRegisterWanderingTradesEvent.EVENT.invoke(new BzRegisterWanderingTradesEvent(basic::add, rare::add));
-        trades.put(1, basic.toArray(new VillagerTrades.ItemListing[0]));
-        trades.put(2, rare.toArray(new VillagerTrades.ItemListing[0]));
+        trades.set(0, Pair.of(basic.toArray(new VillagerTrades.ItemListing[0]), 1));
+        trades.set(1, Pair.of(rare.toArray(new VillagerTrades.ItemListing[0]), 2));
+        //TODO: check if above is correct modification
     }
 
     private static void setupVillagerTrades() {
         var trades = VillagerTrades.TRADES;
-        for (var profession : BuiltInRegistries.VILLAGER_PROFESSION) {
+        for (var profession : BuiltInRegistries.VILLAGER_PROFESSION.registryKeySet()) {
             if (profession == null) continue;
             Int2ObjectMap<VillagerTrades.ItemListing[]> profTrades = trades.computeIfAbsent(profession, key -> new Int2ObjectOpenHashMap<>());
             Int2ObjectMap<List<VillagerTrades.ItemListing>> listings = new Int2ObjectOpenHashMap<>();
@@ -296,7 +298,7 @@ public class FabricEventManager {
 
     private static Iterable<Holder<PlacedFeature>> getPlacedFeaturesByTag(BiomeModificationContext context, TagKey<PlacedFeature> placedFeatureTagKey) {
         RegistryAccess registryAccess = ((BiomeModificationContextImplMixin)context).bumblezone$getRegistries();
-        Registry<PlacedFeature> placedFeatureRegistry = registryAccess.registryOrThrow(Registries.PLACED_FEATURE);
+        Registry<PlacedFeature> placedFeatureRegistry = registryAccess.getOrThrow(Registries.PLACED_FEATURE).value();
         return placedFeatureRegistry.getTagOrEmpty(placedFeatureTagKey);
     }
 
@@ -312,12 +314,12 @@ public class FabricEventManager {
         return result != null ? result : InteractionResult.PASS;
     }
 
-    public static InteractionResultHolder<ItemStack> onItemUse(Player player, Level level, InteractionHand hand) {
+    public static InteractionResult onItemUse(Player player, Level level, InteractionHand hand) {
         BzPlayerItemUseEvent event = new BzPlayerItemUseEvent(player, level, player.getItemInHand(hand));
         if (BzPlayerItemUseEvent.EVENT_HIGH.invoke(event)) {
-            return InteractionResultHolder.success(event.usingStack());
+            return InteractionResult.SUCCESS.heldItemTransformedTo(event.usingStack());
         }
-        return InteractionResultHolder.pass(event.usingStack());
+        return InteractionResult.PASS;
     }
 
     private static boolean allowLivingEntityDeath(LivingEntity livingEntity, DamageSource damageSource, float damage) {

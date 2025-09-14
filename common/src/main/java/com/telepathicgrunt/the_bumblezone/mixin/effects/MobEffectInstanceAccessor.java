@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(MobEffectInstance.class)
 public interface MobEffectInstanceAccessor {
     @Invoker("tickDownDuration")
-    int bumblezone$callTickDownDuration();
+    void bumblezone$callTickDownDuration();
 
     @Accessor("duration")
     void bumblezone$setDuration(int duration);

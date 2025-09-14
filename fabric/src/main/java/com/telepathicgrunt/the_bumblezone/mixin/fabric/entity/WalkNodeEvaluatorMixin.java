@@ -17,9 +17,8 @@ public class WalkNodeEvaluatorMixin {
 
     @Inject(method = "getPathTypeStatic(Lnet/minecraft/world/level/pathfinder/PathfindingContext;Lnet/minecraft/core/BlockPos$MutableBlockPos;)Lnet/minecraft/world/level/pathfinder/PathType;",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/pathfinder/PathfindingContext;getPathTypeFromState(III)Lnet/minecraft/world/level/pathfinder/PathType;"),
-            locals = LocalCapture.CAPTURE_FAILHARD,
             cancellable = true)
-    private static void bumblezone$getBlockPathTypeRaw(PathfindingContext pathfindingContext, BlockPos.MutableBlockPos mutableBlockPos, CallbackInfoReturnable<PathType> cir, int x, int y, int z) {
+    private static void bumblezone$getBlockPathTypeRaw(PathfindingContext pathfindingContext, BlockPos.MutableBlockPos mutableBlockPos, CallbackInfoReturnable<PathType> cir) {
         BlockState blockState = pathfindingContext.getBlockState(mutableBlockPos);
         if (blockState.getBlock() instanceof BlockExtension extension) {
             PathType blockpathtypes = extension.bz$getBlockPathType(blockState, pathfindingContext.level(), mutableBlockPos, null);

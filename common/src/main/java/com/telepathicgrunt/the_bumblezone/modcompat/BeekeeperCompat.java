@@ -5,6 +5,8 @@ import com.telepathicgrunt.the_bumblezone.entities.BasicItemTrade;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzRegisterVillagerTradesEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.item.Items;
@@ -12,11 +14,11 @@ import net.minecraft.world.item.Items;
 import java.util.Optional;
 
 public class BeekeeperCompat implements ModCompat {
-    private static Optional<VillagerProfession> BEEKEEPER;
+    private static ResourceKey<VillagerProfession> BEEKEEPER;
 
     public BeekeeperCompat() {
         if(BzModCompatibilityConfigs.allowBeekeeperTradesCompat) {
-            BEEKEEPER = BuiltInRegistries.VILLAGER_PROFESSION.getOptional(ResourceLocation.fromNamespaceAndPath("bk", "beekeeper"));
+            BEEKEEPER = ResourceKey.create(Registries.VILLAGER_PROFESSION, ResourceLocation.fromNamespaceAndPath("bk", "beekeeper"));
             BzRegisterVillagerTradesEvent.EVENT.addListener(BeekeeperCompat::setupBeekeeperTrades);
         }
 
@@ -25,7 +27,7 @@ public class BeekeeperCompat implements ModCompat {
     }
 
     public static void setupBeekeeperTrades(BzRegisterVillagerTradesEvent event) {
-        if(BEEKEEPER.isPresent() && event.type() == BEEKEEPER.get()) {
+        if (event.type() == BEEKEEPER) {
             event.addTrade(2,
                     new BasicItemTrade(Items.EMERALD, BzItems.STICKY_HONEY_RESIDUE.get(), 1, 2, 10, 8, 0.05F));
 

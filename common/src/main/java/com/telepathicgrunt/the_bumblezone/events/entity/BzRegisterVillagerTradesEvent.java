@@ -1,12 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.events.entity;
 
 import com.telepathicgrunt.the_bumblezone.events.base.EventHandler;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 
 import java.util.function.BiConsumer;
 
-public record BzRegisterVillagerTradesEvent(VillagerProfession type, BiConsumer<Integer, VillagerTrades.ItemListing> trade) {
+public record BzRegisterVillagerTradesEvent(ResourceKey<VillagerProfession> type, BiConsumer<Integer, VillagerTrades.ItemListing> trade) {
 
     public static final EventHandler<BzRegisterVillagerTradesEvent> EVENT = new EventHandler<>();
 

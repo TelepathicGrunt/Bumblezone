@@ -39,7 +39,7 @@ public class IronJetpacksCompat implements ModCompat {
 					}
 				}
 
-				if (!player.getCooldowns().isOnCooldown(jetpack.getItem())) {
+				if (!player.getCooldowns().isOnCooldown(jetpack)) {
 					if (player instanceof ServerPlayer serverPlayer) {
 						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
 								.withStyle(ChatFormatting.ITALIC)
@@ -47,7 +47,7 @@ public class IronJetpacksCompat implements ModCompat {
 					}
 				}
 
-				player.getCooldowns().addCooldown(jetpack.getItem(), 40);
+				player.getCooldowns().addCooldown(jetpack, 40);
 			}
 		}
 	}

@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -15,7 +16,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface FlowingFluidAccessor {
 
     @Invoker("spreadToSides")
-    void bumblezone$callSpreadToSides(Level levelAccessor, BlockPos pos, FluidState fluidState, BlockState blockState);
+    void bumblezone$callSpreadToSides(ServerLevel levelAccessor, BlockPos pos, FluidState fluidState, BlockState blockState);
 
     @Invoker("sourceNeighborCount")
     int bumblezone$callSourceNeighborCount(LevelReader levelReader, BlockPos pos);

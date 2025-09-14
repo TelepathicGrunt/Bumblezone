@@ -1,13 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.modules;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
 import net.minecraft.resources.ResourceLocation;
 
 public class LivingEntityDataModule implements Module<LivingEntityDataModule> {
-    public static final Codec<LivingEntityDataModule> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<LivingEntityDataModule> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             Codec.INT.fieldOf("missedParalysis").forGetter(module -> module.missedParalysis)
     ).apply(instance, LivingEntityDataModule::new));
 
@@ -31,7 +32,7 @@ public class LivingEntityDataModule implements Module<LivingEntityDataModule> {
     }
 
     @Override
-    public Codec<LivingEntityDataModule> codec() {
+    public MapCodec<LivingEntityDataModule> codec() {
         return CODEC;
     }
 

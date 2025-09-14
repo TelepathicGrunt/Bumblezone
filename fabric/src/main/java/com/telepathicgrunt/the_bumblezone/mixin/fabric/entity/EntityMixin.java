@@ -12,7 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.portal.TeleportTransition;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -51,10 +51,10 @@ public abstract class EntityMixin implements BzEntityHooks {
 
     @Shadow public abstract void clearFire();
 
-    @Inject(method = "changeDimension",
+    @Inject(method = "teleport",
             at = @At("HEAD"),
             cancellable = true)
-    private void bumblezone$onChangeDimension(DimensionTransition dimensionTransition, CallbackInfoReturnable<Entity> cir) {
+    private void bumblezone$onChangeDimension(TeleportTransition dimensionTransition, CallbackInfoReturnable<Entity> cir) {
         if (BzEntityTravelingToDimensionEvent.EVENT.invoke(new BzEntityTravelingToDimensionEvent(dimensionTransition.newLevel().dimension(), (Entity)(Object)this))) {
             cir.setReturnValue(null);
         }

@@ -26,7 +26,7 @@ public class FabricReloadListener implements IdentifiableResourceReloadListener 
     }
 
     @Override
-    public CompletableFuture<Void> reload(PreparationBarrier barrier, ResourceManager manager, ProfilerFiller profiler, ProfilerFiller profiler2, Executor executor, Executor executor2) {
-        return listener.reload(barrier, manager, profiler, profiler2, executor, executor2);
+    public CompletableFuture<Void> reload(PreparationBarrier barrier, ResourceManager manager, Executor executor, Executor executor2) {
+        return listener.reload(barrier, manager, executor, executor2);
     }
 }

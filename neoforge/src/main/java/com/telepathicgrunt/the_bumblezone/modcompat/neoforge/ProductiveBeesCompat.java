@@ -59,9 +59,9 @@ public class ProductiveBeesCompat implements ModCompat {
     private static final GeneralUtils.Lazy<List<ResourceLocation>> SPIDER_DUNGEON_HONEYCOMBS = new GeneralUtils.Lazy<>(() ->
             BeeReloadListener.INSTANCE.getData().entrySet().stream().filter(e -> {
                 CompoundTag tag = e.getValue();
-                int primary = tag.getInt("primaryColor");
+                int primary = tag.getIntOr("primaryColor", 0);
                 return BzModCompatibilityConfigs.allowedCombsForDungeons.contains(e.getKey().toString()) &&
-                        tag.getBoolean("createComb") &&
+                        tag.getBooleanOr("createComb", false) &&
                         (colorsAreClose(GeneralUtils.colorToInt(106, 127, 0), primary, 150) ||
                         colorsAreClose(GeneralUtils.colorToInt(129, 198, 0), primary, 150) ||
                         colorsAreClose(GeneralUtils.colorToInt(34, 45, 0), primary, 150));
@@ -71,7 +71,7 @@ public class ProductiveBeesCompat implements ModCompat {
             BeeReloadListener.INSTANCE.getData().entrySet().stream().filter(e -> {
                 CompoundTag tag = e.getValue();
                 return BzModCompatibilityConfigs.allowedCombsForDungeons.contains(e.getKey().toString()) &&
-                        tag.getBoolean("createComb") &&
+                        tag.getBooleanOr("createComb", false) &&
                         !SPIDER_DUNGEON_HONEYCOMBS.getOrFillFromInternal().contains(e.getKey());
             }).map(Map.Entry::getKey).toList());
 
@@ -200,12 +200,12 @@ public class ProductiveBeesCompat implements ModCompat {
         LevelAccessor world = event.level();
 
         // randomly pick a productive bee (the nbt determines the bee)
-        ConfigurableBee productiveBeeEntity = ModEntities.CONFIGURABLE_BEE.get().create(entity.level());
+        ConfigurableBee productiveBeeEntity = ModEntities.CONFIGURABLE_BEE.get().create(entity.level(), event.spawnType());
         if (productiveBeeEntity == null) {
             return false;
         }
 
-        productiveBeeEntity.moveTo(
+        productiveBeeEntity.snapTo(
                 entity.getX(),
                 entity.getY(),
                 entity.getZ(),
@@ -221,7 +221,7 @@ public class ProductiveBeesCompat implements ModCompat {
                 world.getCurrentDifficultyAt(productiveBeeEntity.blockPosition()),
                 event.spawnType(),
                 null);
-        productiveBeeEntity.setBeeType(newTag.getString("type"));
+        productiveBeeEntity.setBeeType(newTag.getStringOr("type", ""));
 
         world.addFreshEntity(productiveBeeEntity);
         return true;
@@ -230,8 +230,8 @@ public class ProductiveBeesCompat implements ModCompat {
     @Override
     public OptionalBoolean validateCombType(CompoundTag tag) {
         if (tag.contains("type")) {
-            CompoundTag productiveBeesData = BeeReloadListener.INSTANCE.getData().get(ResourceLocation.tryParse(tag.getString("type")));
-            if (productiveBeesData != null && productiveBeesData.getBoolean("createComb")) {
+            CompoundTag productiveBeesData = BeeReloadListener.INSTANCE.getData().get(ResourceLocation.tryParse(tag.getStringOr("type", "")));
+            if (productiveBeesData != null && productiveBeesData.getBooleanOr("createComb" ,false)) {
                 return OptionalBoolean.TRUE;
             }
         }
@@ -298,7 +298,7 @@ public class ProductiveBeesCompat implements ModCompat {
     }
 
     public static boolean isFilledBabyBeeCageItem(ItemStack stack) {
-        return isFilledBeeCageItem(stack) && stack.get(DataComponents.CUSTOM_DATA).getUnsafe().getInt("Age") < 0;
+        return isFilledBeeCageItem(stack) && stack.get(DataComponents.CUSTOM_DATA).getUnsafe().getIntOr("Age", 0) < 0;
     }
 
     @Override
@@ -324,7 +324,7 @@ public class ProductiveBeesCompat implements ModCompat {
                             true);
                 }
 
-                return isFilledBabyBeeCageItem(itemstack) ? InteractionResult.CONSUME_PARTIAL : InteractionResult.SUCCESS;
+                return isFilledBabyBeeCageItem(itemstack) ? InteractionResult.CONSUME : InteractionResult.SUCCESS;
             }
         }
 
@@ -339,10 +339,10 @@ public class ProductiveBeesCompat implements ModCompat {
             int secondary = 0x231100;
 
             if (nbt.contains("primaryColor")) {
-                primary = nbt.getInt("primaryColor");
+                primary = nbt.getIntOr("primaryColor", primary);
             }
             if (nbt.contains("secondaryColor")) {
-                secondary = nbt.getInt("secondaryColor");
+                secondary = nbt.getIntOr("secondaryColor", secondary);
             }
 
             return Pair.of(primary, secondary);

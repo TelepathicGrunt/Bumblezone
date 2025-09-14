@@ -12,7 +12,8 @@ import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -42,8 +43,8 @@ public abstract class LivingEntityMixin {
         EntityTeleportationHookup.entityTick((LivingEntity) (Object) this);
     }
 
-    @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
-    private void bumblezone$onHurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "hurtServer", at = @At("HEAD"), cancellable = true)
+    private void bumblezone$onHurt(ServerLevel serverLevel, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if (BzEntityAttackedEvent.EVENT.invoke(new BzEntityAttackedEvent((LivingEntity) ((Object) this), source, amount))) {
             cir.setReturnValue(false);
         }
@@ -53,7 +54,7 @@ public abstract class LivingEntityMixin {
             at = @At(value = "INVOKE",
                     target = "Lnet/minecraft/world/entity/LivingEntity;getDamageAfterArmorAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F",
                     ordinal = 0))
-    private void bumblezone$onActualHurt(DamageSource source, float amount, CallbackInfo cir) {
+    private void bumblezone$onActualHurt(ServerLevel serverLevel, DamageSource source, float amount, CallbackInfo cir) {
         BzEntityHurtEvent.EVENT_LOWEST.invoke(new BzEntityHurtEvent((LivingEntity) ((Object) this), source, amount));
     }
 

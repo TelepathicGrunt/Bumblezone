@@ -21,6 +21,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.packets.TradeHintParticleSpawnPacket;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
 import net.minecraft.ChatFormatting;
@@ -539,7 +540,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             if (specialDayItems.isPresent()) {
                 Optional<WeightedTradeResult> reward = specialDayItems.get().getSecond().getRandom(this.random);
                 if (reward.isPresent()) {
-                    spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), ((ItemEntityAccessor) itemEntity).bumblezone$getThrower(), specialDayItems.get().getFirst());
+                    spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), ((ItemEntityAccessor) itemEntity).bumblezone$getThrower().getUUID(), specialDayItems.get().getFirst());
                     tradedItems++;
                 }
             }
@@ -552,7 +553,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
                 Optional<WeightedTradeResult> reward = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.get(item).getRandom(this.random);
                 if (reward.isPresent()) {
-                    spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), ((ItemEntityAccessor) itemEntity).bumblezone$getThrower());
+                    spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), ((ItemEntityAccessor) itemEntity).bumblezone$getThrower().getUUID());
                     tradedItems++;
                 }
             }

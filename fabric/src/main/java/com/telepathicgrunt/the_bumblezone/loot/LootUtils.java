@@ -23,8 +23,9 @@ public class LootUtils {
 
         ResourceLocation resourceLocation = minecraftServer
                 .reloadableRegistries()
-                .get()
-                .registryOrThrow(Registries.LOOT_TABLE)
+                .lookup()
+                .getOrThrow(Registries.LOOT_TABLE)
+                .value()
                 .getKey(lootTable);
 
         boolean isEntityLootTable = (resourceLocation == null ? "" : resourceLocation.getPath()).contains("entities/");

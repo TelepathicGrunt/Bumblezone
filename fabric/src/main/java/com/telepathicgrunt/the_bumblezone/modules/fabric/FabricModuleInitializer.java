@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modules.fabric;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistrar;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
@@ -24,11 +25,11 @@ public class FabricModuleInitializer {
         });
     }
 
-    public static <A> void createPersistent(ResourceLocation id, Codec<A> codec, boolean copyOnDeath) {
+    public static <A> void createPersistent(ResourceLocation id, MapCodec<A> codec, boolean copyOnDeath) {
         Objects.requireNonNull(id, "identifier cannot be null");
         Objects.requireNonNull(codec, "codec cannot be null");
 
-        AttachmentRegistry.Builder<A> builder = AttachmentRegistry.<A>builder().persistent(codec);
+        AttachmentRegistry.Builder<A> builder = AttachmentRegistry.<A>builder().persistent(codec.codec());
         if (copyOnDeath) {
             builder = builder.copyOnDeath();
         }

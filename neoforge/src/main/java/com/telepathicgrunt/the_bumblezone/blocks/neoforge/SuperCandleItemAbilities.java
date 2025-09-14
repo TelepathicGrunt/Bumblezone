@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks.neoforge;
 
 import com.telepathicgrunt.the_bumblezone.blocks.SuperCandle;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,7 +18,10 @@ public class SuperCandleItemAbilities {
             return null;
         }
 
-        if (context.getPlayer() != null && !context.getPlayer().mayInteract(context.getLevel(), context.getClickedPos())) {
+        if (context.getPlayer() != null &&
+            context.getLevel() instanceof ServerLevel serverLevel &&
+            !context.getPlayer().mayInteract(serverLevel, context.getClickedPos()))
+        {
             return null;
         }
 

@@ -71,7 +71,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -306,7 +306,7 @@ public class NeoForgeEventManager {
     }
 
     private static void onTagsUpdate(TagsUpdatedEvent event) {
-        BzTagsUpdatedEvent.EVENT.invoke(new BzTagsUpdatedEvent(event.getRegistryAccess(), event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED));
+        BzTagsUpdatedEvent.EVENT.invoke(new BzTagsUpdatedEvent(event.getLookupProvider(), event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED));
     }
 
     private static void onSpawnPlacements(RegisterSpawnPlacementsEvent event) {
@@ -328,8 +328,8 @@ public class NeoForgeEventManager {
         }
     }
 
-    private static void onAddReloadListeners(AddReloadListenerEvent event) {
-        BzRegisterReloadListenerEvent.EVENT.invoke(new BzRegisterReloadListenerEvent((id, listener) -> event.addListener(listener)));
+    private static void onAddReloadListeners(AddServerReloadListenersEvent event) {
+        BzRegisterReloadListenerEvent.EVENT.invoke(new BzRegisterReloadListenerEvent(event::addListener));
     }
 
     private static void onDatapackSync(OnDatapackSyncEvent event) {

@@ -8,7 +8,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.datamanagers.CrystallineFlowerD
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.menus.CrystallineFlowerMenu;
-import com.telepathicgrunt.the_bumblezone.mixin.entities.ExperienceOrbAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.ExperienceOrbInvoker;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -206,7 +206,7 @@ public class CrystallineFlower extends BaseEntityBlock {
                 int xpGranted = Math.min(xpToHighestAvailableTier, experienceOrb.getValue());
 
                 crystallineFlowerBlockEntity.addXpAndTier(xpGranted);
-                ((ExperienceOrbAccessor)experienceOrb).bumblezone$setValue(experienceOrb.getValue() - xpGranted);
+                ((ExperienceOrbInvoker)experienceOrb).bumblezone$setValue(experienceOrb.getValue() - xpGranted);
                 if (experienceOrb.getValue() <= 0) {
                     experienceOrb.discard();
                 }

@@ -6,7 +6,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntit
 import com.telepathicgrunt.the_bumblezone.bossbars.ServerEssenceEvent;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ElectricRingEntity;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
-import com.telepathicgrunt.the_bumblezone.mixin.RabbitAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.RabbitAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;

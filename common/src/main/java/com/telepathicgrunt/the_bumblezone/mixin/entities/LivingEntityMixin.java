@@ -26,6 +26,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Collection;
+
 @Mixin(value = LivingEntity.class, priority = 1200)
 public abstract class LivingEntityMixin extends Entity {
 
@@ -80,11 +82,13 @@ public abstract class LivingEntityMixin extends Entity {
         }
     }
 
-    @Inject(method = "onEffectRemoved(Lnet/minecraft/world/effect/MobEffectInstance;)V",
+    @Inject(method = "onEffectsRemoved(Ljava/util/Collection;)V",
             at = @At(value = "TAIL"))
-    private void bumblezone$runAtEffectRemoval(MobEffectInstance mobEffectInstance, CallbackInfo ci) {
-        WrathOfTheHiveEffect.effectRemoval((LivingEntity) (Object) this, mobEffectInstance);
-        ParalyzedEffect.effectRemoval((LivingEntity) (Object) this, mobEffectInstance);
+    private void bumblezone$runAtEffectRemoval(Collection<MobEffectInstance> mobEffectInstances, CallbackInfo ci) {
+        for (MobEffectInstance mobEffectInstance : mobEffectInstances) {
+            WrathOfTheHiveEffect.effectRemoval((LivingEntity) (Object) this, mobEffectInstance);
+            ParalyzedEffect.effectRemoval((LivingEntity) (Object) this, mobEffectInstance);
+        }
     }
 
     @WrapOperation(

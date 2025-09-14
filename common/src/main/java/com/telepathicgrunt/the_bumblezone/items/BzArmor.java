@@ -7,10 +7,11 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class BzArmor extends ArmorItem implements ItemExtension {
+public class BzArmor extends Item implements ItemExtension {
     public BzArmor(Holder<ArmorMaterial> armorMaterial, ArmorItem.Type armorType, Properties properties) {
         super(armorMaterial, armorType, properties);
     }

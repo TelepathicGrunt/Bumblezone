@@ -32,7 +32,7 @@ public class DragonEnchantsCompat implements ModCompat {
 	public InteractionResult isProjectileTeleportHandled(HitResult hitResult, Entity owner, Projectile projectile) {
 		if (hitResult instanceof BlockHitResult blockHitResult &&
 			projectile != null &&
-			projectile.getPersistentData().getBoolean(END_STEP_ENCHANT_ATTACHED_TAG) &&
+			projectile.getPersistentData().getBooleanOr(END_STEP_ENCHANT_ATTACHED_TAG, false) &&
 			EnchantmentUtils.getEnchantmentHolder(END_STEP_RL, projectile.level()).is(BzTags.ENCHANT_SPECIAL_DEDICATED_COMPAT))
 		{
 			return EntityTeleportationHookup.runTeleportProjectileImpact(blockHitResult, owner, projectile) ? InteractionResult.SUCCESS : InteractionResult.PASS;

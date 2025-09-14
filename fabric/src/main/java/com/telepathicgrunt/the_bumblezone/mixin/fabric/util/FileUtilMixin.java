@@ -15,7 +15,8 @@ public abstract class FileUtilMixin {
     @Unique
     private static final Pattern RESERVED_WINDOWS_FILENAMES_BUMBLEZONE = Pattern.compile(".*\\.|(?:CON|PRN|AUX|NUL|CLOCK\\$|CONIN\\$|CONOUT\\$|(?:COM|LPT)[¹²³0-9])(?:\\..*)?", Pattern.CASE_INSENSITIVE);
 
-    @ModifyExpressionValue(method = "isPathPortable(Ljava/nio/file/Path;)Z", at = @At(value = "FIELD", target = "net/minecraft/FileUtil.RESERVED_WINDOWS_FILENAMES:Ljava/util/regex/Pattern;", opcode = Opcodes.GETSTATIC, ordinal = 0))
+    @ModifyExpressionValue(method = "isPathPartPortable(Ljava/lang/String;)Z",
+            at = @At(value = "FIELD", target = "net/minecraft/FileUtil.RESERVED_WINDOWS_FILENAMES:Ljava/util/regex/Pattern;", opcode = Opcodes.GETSTATIC, ordinal = 0))
     private static Pattern bumblezone$fixMC268617(Pattern original) {
         return RESERVED_WINDOWS_FILENAMES_BUMBLEZONE;
     }

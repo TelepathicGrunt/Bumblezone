@@ -8,7 +8,6 @@
     "block.FireBlockMixin",
     "block.SuperCandleMixin",
     "block.UseOnContextAccessor",
-    "effect.WrathOfTheHiveEffectMixin",
     "entity.EntityMixin",
     "item.BzArrowItemMixin",
     "item.ItemExtensionMixin"

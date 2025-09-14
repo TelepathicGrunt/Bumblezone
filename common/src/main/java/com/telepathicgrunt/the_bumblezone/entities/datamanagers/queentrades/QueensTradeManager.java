@@ -9,7 +9,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzTagsUpdatedEvent;
-import com.telepathicgrunt.the_bumblezone.mixin.util.WeightedRandomListAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.util.WeightedListAccessor;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.MainTradeRowInput;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.RandomizeTradeRowInput;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
@@ -20,6 +20,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -27,6 +28,7 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -48,7 +50,8 @@ import java.util.stream.Collectors;
 
 import static com.telepathicgrunt.the_bumblezone.Bumblezone.GSON;
 
-public class QueensTradeManager extends SimpleJsonResourceReloadListener {
+public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensTradeManager.TradeCollection> {
+    private static final FileToIdConverter ASSET_LISTER = FileToIdConverter.json("bz_bee_queen_trades");
     public static final QueensTradeManager QUEENS_TRADE_MANAGER = new QueensTradeManager();
 
     private final List<TradeCollection> rawTrades = new ArrayList<>();
@@ -120,21 +123,13 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
     }
 
     public QueensTradeManager() {
-        super(GSON, "bz_bee_queen_trades");
+        super(TradeCollection.CODEC, ASSET_LISTER);
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> loader, ResourceManager manager, ProfilerFiller profiler) {
+    protected void apply(Map<ResourceLocation, TradeCollection> loader, ResourceManager manager, ProfilerFiller profiler) {
         rawTrades.clear();
-        loader.forEach((fileIdentifier, jsonElement) -> {
-            try {
-                DataResult<TradeCollection> mapDataResult = TradeCollection.CODEC.parse(JsonOps.INSTANCE, jsonElement);
-                mapDataResult.resultOrPartial((s) -> {}).ifPresent(rawTrades::add);
-            }
-            catch (Exception e) {
-                Bumblezone.LOGGER.error("Bumblezone Error: Couldn't parse bee queen trades file {}", fileIdentifier, e);
-            }
-        });
+        loader.forEach((fileIdentifier, tradeCollection) -> rawTrades.add(tradeCollection));
     }
 
     // KEEP THIS HERE BECAUSE ABOVE FIRES BEFORE TAGS ARE READY
@@ -217,8 +212,8 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                     return true;
                 }
 
-                List<WeightedTradeResult> tradeResults = tempQueenTradesFirstPass.get(item).getFirst().unwrap();
-                if (tradeResults.stream().anyMatch(r -> r.getItems().stream().anyMatch(t -> !wantSet.contains(t.getItem())))) {
+                List<Weighted<WeightedTradeResult>> tradeResults = tempQueenTradesFirstPass.get(item).getFirst().unwrap();
+                if (tradeResults.stream().anyMatch(r -> r.value().getItems().stream().anyMatch(t -> !wantSet.contains(t.getItem())))) {
                     for (Item item2 : wantSet) {
                         tempQueenTradesFirstPass.put(item2, Pair.of(tempQueenTradesFirstPass.get(item2).getFirst(), null));
                     }
@@ -236,7 +231,10 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
 
         Set<TagKey<Item>> collectedTag = new HashSet<>();
         for (Object2ObjectMap.Entry<Item, Pair<WeightedList<WeightedTradeResult>, TagKey<Item>>> pairEntry : tempQueenTradesFirstPass.object2ObjectEntrySet()) {
-            pairEntry.getValue().getFirst().unwrap().forEach(e -> e.setTotalWeight(((WeightedRandomListAccessor)pairEntry.getValue().getFirst()).bumblezone$getTotalWeight()));
+            pairEntry.getValue().getFirst().unwrap().forEach(e -> {
+                int weight = ((WeightedListAccessor)pairEntry.getValue().getFirst().unwrap()).bumblezone$getTotalWeight();
+                e.value().setTotalWeight(weight);
+            });
 
             if (pairEntry.getValue().getSecond() == null || !collectedTag.contains(pairEntry.getValue().getSecond())) {
                 tempRecipeViewerMainTrades.add(Pair.of(
@@ -264,7 +262,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
     private static TradeWantEntry getInputTradeEntry(RawTradeInputEntry rawTradeInputEntry) {
         if (rawTradeInputEntry.entry.startsWith("#")) {
             TagKey<Item> tagKey = TagKey.create(Registries.ITEM, ResourceLocation.tryParse(rawTradeInputEntry.entry.replace("#", "")));
-            Optional<HolderSet.Named<Item>> tag = BuiltInRegistries.ITEM.getTag(tagKey);
+            Optional<HolderSet.Named<Item>> tag = BuiltInRegistries.ITEM.get(tagKey);
             if (tag.isEmpty() && rawTradeInputEntry.required) {
                 Bumblezone.LOGGER.error("Trade input entry is set to required but " + rawTradeInputEntry.entry + " tag does not exist.");
             }
@@ -273,7 +271,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
             }
         }
         else {
-            Optional<Holder.Reference<Item>> item = BuiltInRegistries.ITEM.getHolder(ResourceKey.create(Registries.ITEM, ResourceLocation.tryParse(rawTradeInputEntry.entry)));
+            Optional<Holder.Reference<Item>> item = BuiltInRegistries.ITEM.get(ResourceKey.create(Registries.ITEM, ResourceLocation.tryParse(rawTradeInputEntry.entry)));
             if (item.isEmpty() && rawTradeInputEntry.required) {
                 Bumblezone.LOGGER.error("Trade input entry is set to required but " + rawTradeInputEntry.entry + " item does not exist.");
             }
@@ -290,7 +288,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         for (RawTradeOutputEntry rawTradeOutputEntry : rawTradeOutputEntries) {
             if (rawTradeOutputEntry.tag().isPresent()) {
                 TagKey<Item> tagKey = TagKey.create(Registries.ITEM, ResourceLocation.tryParse(rawTradeOutputEntry.tag().get().replace("#", "")));
-                Optional<HolderSet.Named<Item>> tag = BuiltInRegistries.ITEM.getTag(tagKey);
+                Optional<HolderSet.Named<Item>> tag = BuiltInRegistries.ITEM.get(tagKey);
                 if (tag.isEmpty()) {
                     if (rawTradeOutputEntry.required) {
                         Bumblezone.LOGGER.error("Trade result tag is set to required but " + rawTradeOutputEntry + " tag entry does not exist.");
@@ -322,10 +320,12 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
             Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedList<WeightedTradeResult>> temp = new Object2ObjectOpenHashMap<>();
             if (tempSpecialDaysQueenTrades.containsKey(item) && tempSpecialDaysQueenTrades.get(item).containsKey(specialDaysEntry)) {
                 WeightedList<WeightedTradeResult> existingTrades = tempSpecialDaysQueenTrades.get(item).get(specialDaysEntry);
-                resultItems.addAll(existingTrades.unwrap());
+                existingTrades.unwrap().forEach(existingTrade -> resultItems.add(existingTrade.value()));
             }
 
-            temp.put(specialDaysEntry, WeightedList.create(resultItems));
+            WeightedList.Builder<WeightedTradeResult> builder = WeightedList.builder();
+            resultItems.forEach(builder::add);
+            temp.put(specialDaysEntry, builder.build());
             tempSpecialDaysQueenTrades.put(item, temp);
         }
     }
@@ -338,7 +338,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
             boolean needsSorting = false;
 
             if (tempQueenTrades.containsKey(item)) {
-                existingTrades.addAll(tempQueenTrades.get(item).getFirst().unwrap());
+                tempQueenTrades.get(item).getFirst().unwrap().forEach(existingTrade -> existingTrades.add(existingTrade.value()));
                 key = null;
                 needsSorting = true;
             }
@@ -351,7 +351,9 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 existingTrades.sort((a, b) -> b.weight - a.weight);
             }
 
-            tempQueenTrades.put(item, Pair.of(WeightedList.create(existingTrades), key));
+            WeightedList.Builder<WeightedTradeResult> builder = WeightedList.builder();
+            existingTrades.forEach(builder::add);
+            tempQueenTrades.put(item, Pair.of(builder.build(), key));
         }
     }
 
@@ -359,12 +361,18 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         List<Item> items = tradeRandomizeEntry.wantItems().stream().map(Holder::value).toList();
         for (Item item : items) {
             if (tempQueenTrades.containsKey(item)) {
-                List<WeightedTradeResult> existingTrades = new ArrayList<>(tempQueenTrades.get(item).getFirst().unwrap());
+                List<WeightedTradeResult> existingTrades = new ArrayList<>();
+                tempQueenTrades.get(item).getFirst().unwrap().forEach(existingTrade -> existingTrades.add(existingTrade.value()));
                 existingTrades.add(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items.stream().map(Item::getDefaultInstance).toList()), 1, 0 , 1));
-                tempQueenTrades.put(item, Pair.of(WeightedList.create(existingTrades), null));
+
+                WeightedList.Builder<WeightedTradeResult> builder = WeightedList.builder();
+                existingTrades.forEach(builder::add);
+                tempQueenTrades.put(item, Pair.of(builder.build(), null));
             }
             else {
-                tempQueenTrades.put(item, Pair.of(WeightedList.create(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items.stream().map(Item::getDefaultInstance).toList()), 1, 0 , 1)), tradeRandomizeEntry.tagKey.orElse(null)));
+                WeightedList.Builder<WeightedTradeResult> builder = WeightedList.builder();
+                builder.add(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items.stream().map(Item::getDefaultInstance).toList()), 1, 0 , 1));
+                tempQueenTrades.put(item, Pair.of(builder.build(), tradeRandomizeEntry.tagKey.orElse(null)));
             }
         }
     }

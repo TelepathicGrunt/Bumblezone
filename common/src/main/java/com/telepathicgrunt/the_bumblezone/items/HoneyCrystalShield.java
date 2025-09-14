@@ -13,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.utils.TriState;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.DamageTypeTags;
@@ -29,6 +30,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -148,7 +150,8 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
         DamageSources damageSources = player.level().damageSources();
 
         // checks for explosion and player
-        if (player.getUseItem().getItem() instanceof HoneyCrystalShield &&
+        ItemStack usedItem = player.getUseItem();
+        if (usedItem.getItem() instanceof HoneyCrystalShield &&
             player.isBlocking() &&
             (source.is(DamageTypeTags.IS_EXPLOSION) || source.is(DamageTypeTags.IS_FIRE)))
         {
@@ -159,14 +162,14 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
             if (source.is(DamageTypeTags.IS_EXPLOSION)) {
                 // damage our shield greatly and do player screen shake
                 player.indicateDamage(0, 0);
-                ((PlayerDamageShieldInvoker) player).bumblezone$callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 3, 18));
+                damageShield(player, usedItem, Math.max(player.getUseItem().getMaxDamage() / 3, 18));
             }
             else if (source.is(DamageTypeTags.IS_FIRE) && !player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
                 if (source.is(DamageTypeTags.IS_PROJECTILE)) {
-                    ((PlayerDamageShieldInvoker) player).bumblezone$callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 6, 3));
+                    damageShield(player, usedItem, Math.max(player.getUseItem().getMaxDamage() / 6, 3));
                 }
                 else {
-                    ((PlayerDamageShieldInvoker) player).bumblezone$callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 100, 3));
+                    damageShield(player, usedItem, Math.max(player.getUseItem().getMaxDamage() / 100, 3));
                     return false; //continue the damaging
                 }
             }
@@ -179,6 +182,15 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
         }
 
         return false;
+    }
+
+    private static void damageShield(Player player, ItemStack shieldItem, int damage) {
+        if (damage > 0 && player instanceof ServerPlayer serverPlayer) {
+            shieldItem.hurtAndBreak(damage, serverPlayer.level(), serverPlayer, item -> {
+                serverPlayer.onEquippedItemBroken(item, LivingEntity.getSlotForHand(serverPlayer.getUsedItemHand()));
+                serverPlayer.stopUsingItem(); // Neo: Fix MC-168573 ("After breaking a shield, the player's off-hand can't finish using some items")
+            });
+        }
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.client;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
 import net.minecraft.client.Minecraft;
@@ -15,11 +16,10 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(ScreenEffectRenderer.class)
 public abstract class ScreenEffectRendererMixin {
 
-    @Inject(method = "renderScreenEffect(Lnet/minecraft/client/Minecraft;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ScreenEffectRenderer;renderTex(Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;Lcom/mojang/blaze3d/vertex/PoseStack;)V"),
-            locals = LocalCapture.CAPTURE_FAILHARD,
+    @Inject(method = "renderScreenEffect(ZF)V",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ScreenEffectRenderer;renderTex(Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;)V"),
             cancellable = true)
-    private static void bumblezone$blockRenderedOnScreenEvent(Minecraft minecraft, PoseStack poseStack, CallbackInfo ci, Player player, BlockState blockState) {
+    private void bumblezone$blockRenderedOnScreenEvent(boolean bl, float f, CallbackInfo ci, @Local PoseStack poseStack, @Local Player player, @Local BlockState blockState) {
         if (BzBlockRenderedOnScreenEvent.EVENT.invoke(new BzBlockRenderedOnScreenEvent(player, poseStack, BzBlockRenderedOnScreenEvent.Type.BLOCK, blockState, player.blockPosition()))) {
             ci.cancel();
         }

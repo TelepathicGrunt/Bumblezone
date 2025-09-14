@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.HeavyAir;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -14,9 +15,11 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
+import java.util.Optional;
+
 public class ReliquaryCompat implements ModCompat {
 
-	public static Item RENDING_GALE;
+	public static Optional<Holder.Reference<Item>> RENDING_GALE;
 
 	public ReliquaryCompat() {
 		RENDING_GALE = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("reliquary", "rending_gale"));
@@ -29,7 +32,7 @@ public class ReliquaryCompat implements ModCompat {
 	}
 
 	public static void onRendingGaleItemUse(PlayerInteractEvent.RightClickItem event) {
-		if (RENDING_GALE != null && event.getItemStack().is(RENDING_GALE)) {
+		if (RENDING_GALE.isPresent() && event.getItemStack().is(RENDING_GALE.get())) {
 			Entity entity = event.getEntity();
 			if (entity != null && HeavyAir.isInHeavyAir(entity.level(), entity.getBoundingBox())) {
 				if (entity instanceof ServerPlayer serverPlayer) {

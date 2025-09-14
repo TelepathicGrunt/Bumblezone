@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modules;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
@@ -11,7 +12,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.Optional;
 
 public class EntityPosAndDimModule implements Module<EntityPosAndDimModule> {
-    public static final Codec<EntityPosAndDimModule> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<EntityPosAndDimModule> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             ResourceLocation.CODEC.fieldOf("nonBZDimension").orElse(ResourceLocation.tryParse(BzDimensionConfigs.defaultDimension)).forGetter(module -> module.nonBZDimension),
             Vec3.CODEC.optionalFieldOf("nonBZPosition").forGetter(module -> module.nonBZPosition)
     ).apply(instance, EntityPosAndDimModule::new));
@@ -57,7 +58,7 @@ public class EntityPosAndDimModule implements Module<EntityPosAndDimModule> {
     }
 
     @Override
-    public Codec<EntityPosAndDimModule> codec() {
+    public MapCodec<EntityPosAndDimModule> codec() {
         return CODEC;
     }
 

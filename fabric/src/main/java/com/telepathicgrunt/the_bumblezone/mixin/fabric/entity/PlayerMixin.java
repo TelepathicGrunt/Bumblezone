@@ -82,25 +82,4 @@ public abstract class PlayerMixin extends Entity {
             }
         }
     }
-
-    @WrapOperation(method = "hurtCurrentlyUsedShield",
-            at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z",
-                    ordinal = 0))
-    private boolean bumblezone$damageHoneyCrystalShield(ItemStack callingItem, Item vanillaShield, Operation<Boolean> originalCall) {
-        if(callingItem.is(BzItems.HONEY_CRYSTAL_SHIELD.get())) {
-            return true;
-        }
-        return originalCall.call(callingItem, vanillaShield);
-    }
-
-    @Inject(method = "disableShield",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemCooldowns;addCooldown(Lnet/minecraft/world/item/Item;I)V"))
-    private void bumblezone$applyCooldownForShield(CallbackInfo ci) {
-        inventory.items.forEach(item -> {
-            if (item.getItem() instanceof BzShieldItem) {
-                getCooldowns().addCooldown(item.getItem(), 100);
-            }
-        });
-    }
 }

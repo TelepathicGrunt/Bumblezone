@@ -343,6 +343,11 @@ public class FabricPlatformService implements PlatformService {
     }
 
     @Override
+    public Thread createServerThread(Runnable runnable, String name) {
+        return new Thread(runnable, name);
+    }
+
+    @Override
     public <T extends AbstractContainerMenu> MenuType<T> create(BzMenuTypes.MenuCreator<T> creator) {
         return new MenuType<>(creator::create, FeatureFlags.DEFAULT_FLAGS);
     }

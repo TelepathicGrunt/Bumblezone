@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modules;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
@@ -8,7 +9,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.resources.ResourceLocation;
 
 public class PlayerDataModule implements Module<PlayerDataModule> {
-    public static final Codec<PlayerDataModule> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<PlayerDataModule> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             Codec.BOOL.fieldOf("isBeeEssenced").forGetter(module -> module.isBeeEssenced),
             Codec.BOOL.fieldOf("gottenWelcomed").forGetter(module -> module.gottenWelcomed),
             Codec.BOOL.fieldOf("gottenWelcomedInDimension").forGetter(module -> module.gottenWelcomedInDimension),
@@ -117,7 +118,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
     }
 
     @Override
-    public Codec<PlayerDataModule> codec() {
+    public MapCodec<PlayerDataModule> codec() {
         return CODEC;
     }
 

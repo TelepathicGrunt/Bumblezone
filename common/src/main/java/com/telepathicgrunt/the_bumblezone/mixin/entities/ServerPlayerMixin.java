@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.worldgen.structures.SempiternalSanctumBehavior;
 import com.telepathicgrunt.the_bumblezone.worldgen.structures.ThronePillarBehavior;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,21 +32,22 @@ public abstract class ServerPlayerMixin {
         SempiternalSanctumBehavior.runStructureMessagesAndFatigue(serverPlayer);
     }
 
-    @Inject(method = "triggerRecipeCrafted(Lnet/minecraft/world/item/crafting/RecipeHolder;Ljava/util/List;)V",
-            at = @At(value = "HEAD"),
-            locals = LocalCapture.CAPTURE_FAILHARD)
-    private void bumblezone$hookToRecipeCrafting(RecipeHolder<?> recipeHolder, List<ItemStack> list, CallbackInfo ci) {
-        ServerPlayer serverPlayer = (ServerPlayer)(Object)this;
-        ItemStack createdItem = recipeHolder.value().getResultItem(serverPlayer.level().registryAccess());
-
-        if (createdItem.getItem() instanceof BlockItem blockItem &&
-                blockItem.getBlock() instanceof BeehiveBlock &&
-                PlayerDataHandler.rootAdvancementDone(serverPlayer))
-        {
-            PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
-                module.craftedBeehives++;
-                BzCriterias.BEEHIVE_CRAFTED_TRIGGER.get().trigger(serverPlayer, module.craftedBeehives);
-            });
-        }
-    }
+    //TODO: restore advancement functionality
+//    @Inject(method = "triggerRecipeCrafted(Lnet/minecraft/world/item/crafting/RecipeHolder;Ljava/util/List;)V",
+//            at = @At(value = "HEAD"),
+//            locals = LocalCapture.CAPTURE_FAILHARD)
+//    private void bumblezone$hookToRecipeCrafting(RecipeHolder<?> recipeHolder, List<ItemStack> list, CallbackInfo ci) {
+//        ServerPlayer serverPlayer = (ServerPlayer)(Object)this;
+//        ItemStack createdItem = recipeHolder.value().getResultItem(serverPlayer.level().registryAccess());
+//
+//        if (createdItem.getItem() instanceof BlockItem blockItem &&
+//                blockItem.getBlock() instanceof BeehiveBlock &&
+//                PlayerDataHandler.rootAdvancementDone(serverPlayer))
+//        {
+//            PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
+//                module.craftedBeehives++;
+//                BzCriterias.BEEHIVE_CRAFTED_TRIGGER.get().trigger(serverPlayer, module.craftedBeehives);
+//            });
+//        }
+//    }
 }

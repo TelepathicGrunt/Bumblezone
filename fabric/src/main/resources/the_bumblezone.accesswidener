@@ -1,16 +1,17 @@
 accessWidener   v2  named
 
-accessible method net/minecraft/world/level/block/entity/BrushableBlockEntity brushingCompleted (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;)V
-
-accessible method net/minecraft/world/level/block/entity/BlockEntityType <init> (Lnet/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier;Ljava/util/Set;)V
 accessible class net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier
-
+accessible method net/minecraft/world/level/block/entity/BlockEntityType <init> (Lnet/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier;Ljava/util/Set;)V
+accessible method net/minecraft/world/level/block/entity/BrushableBlockEntity brushingCompleted (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;)V
 accessible method net/minecraft/world/entity/item/FallingBlockEntity <init> (Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/level/block/state/BlockState;)V
+
+accessible class net/minecraft/world/level/block/PointedDripstoneBlock$FluidInfo
+accessible method net/minecraft/world/level/block/PointedDripstoneBlock$FluidInfo <init> (Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/Fluid;Lnet/minecraft/world/level/block/state/BlockState;)V
 
 accessible method net/minecraft/world/level/material/FlowingFluid canMaybePassThrough (Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/FluidState;)Z
 
-accessible method net/minecraft/world/item/ItemCooldowns$CooldownInstance <init> (II)V
 accessible class net/minecraft/world/item/ItemCooldowns$CooldownInstance
+accessible method net/minecraft/world/item/ItemCooldowns$CooldownInstance <init> (II)V
 
 accessible class net/minecraft/world/level/levelgen/DensityFunctions$BeardifierMarker
 extendable class net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator
@@ -21,3 +22,7 @@ accessible method net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator do
 accessible class net/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule
 accessible class net/minecraft/world/level/levelgen/SurfaceRules$Context
 
+accessible class net/minecraft/world/entity/animal/Bee$BeeWanderGoal
+
+accessible class net/minecraft/client/renderer/RenderStateShard$TextureStateShard
+accessible class net/minecraft/client/particle/ParticleEngine$MutableSpriteSet

@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.entity;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzBabySpawnEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
@@ -14,11 +15,10 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class AnimalMixin {
 
     @Inject(method = "spawnChildFromBreeding",
-        at = @At(value = "INVOKE_ASSIGN",
-                target = "Lnet/minecraft/world/entity/animal/Animal;getBreedOffspring(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/AgeableMob;)Lnet/minecraft/world/entity/AgeableMob;"),
-        locals = LocalCapture.CAPTURE_FAILHARD,
-        cancellable = true)
-    public void bumblezone$onSpawnChildFromBreeding(ServerLevel serverLevel, Animal otherParent, CallbackInfo ci, AgeableMob baby) {
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/world/entity/AgeableMob;setBaby(Z)V"),
+            cancellable = true)
+    public void bumblezone$onSpawnChildFromBreeding(ServerLevel serverLevel, Animal otherParent, CallbackInfo ci, @Local(ordinal = 0) AgeableMob baby) {
         Animal parent = (Animal)(Object)this;
         if (BzBabySpawnEvent.EVENT.invoke(new BzBabySpawnEvent(parent, otherParent, parent.getLoveCause(), baby))) {
             parent.setAge(6000);

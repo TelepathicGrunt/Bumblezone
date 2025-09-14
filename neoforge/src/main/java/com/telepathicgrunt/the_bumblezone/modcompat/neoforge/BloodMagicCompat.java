@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.HeavyAir;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -14,9 +15,11 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
+import java.util.Optional;
+
 public class BloodMagicCompat implements ModCompat {
 
-	public static Item AIR_SIGIL;
+	public static Optional<Holder.Reference<Item>> AIR_SIGIL;
 
 	public BloodMagicCompat() {
 		AIR_SIGIL = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("bloodmagic", "airsigil"));
@@ -29,7 +32,7 @@ public class BloodMagicCompat implements ModCompat {
 	}
 
 	public static void onAirSigilItemUse(PlayerInteractEvent.RightClickItem event) {
-		if (AIR_SIGIL != null && event.getItemStack().is(AIR_SIGIL)) {
+		if (AIR_SIGIL.isPresent() && event.getItemStack().is(AIR_SIGIL.get())) {
 			Entity entity = event.getEntity();
 			if (entity != null && HeavyAir.isInHeavyAir(entity.level(), entity.getBoundingBox())) {
 				if (entity instanceof ServerPlayer serverPlayer) {
