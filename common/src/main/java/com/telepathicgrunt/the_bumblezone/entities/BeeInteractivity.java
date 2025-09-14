@@ -64,7 +64,7 @@ public class BeeInteractivity {
 
 
     // heal bees with sugar water bottle or honey bottle
-    public static InteractionResult beeFeeding(Level world, Player playerEntity, InteractionHand hand, Entity target) {
+    public static InteractionResult beeFeeding(Level level, Player playerEntity, InteractionHand hand, Entity target) {
         if (target instanceof Bee beeEntity && !beeEntity.isDeadOrDying()) {
 
             ItemStack itemstack = playerEntity.getItemInHand(hand);
@@ -83,17 +83,20 @@ public class BeeInteractivity {
             }
 
             // Disallow all non-tagged items from being fed to bees
-            if(!itemstack.is(BzTags.BEE_FEEDING_ITEMS))
+            if (!itemstack.is(BzTags.BEE_FEEDING_ITEMS)) {
                 return InteractionResult.PASS;
-            if(world.isClientSide())
+            }
+
+            if (!(level instanceof ServerLevel serverLevel)) {
                 return InteractionResult.SUCCESS;
+            }
 
             boolean removedWrath;
             ItemStack itemstackOriginal = itemstack.copy();
 
             // Special cased items so the ActionResultType continues and make the item's behavior not lost.
             if (itemstackOriginal.getItem() == BzItems.BEE_BREAD.get()) {
-                removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
+                removedWrath = calmAndSpawnHearts(serverLevel, playerEntity, beeEntity, 0.3f, 3);
 
                 if(removedWrath && playerEntity instanceof ServerPlayer serverPlayer) {
                     BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.get().trigger(serverPlayer, itemstackOriginal);
@@ -111,7 +114,7 @@ public class BeeInteractivity {
                 boolean isRoyalFed = itemstack.is(BzItems.ROYAL_JELLY_BOTTLE.get()) || itemstack.is(BzItems.ROYAL_JELLY_BUCKET.get());
                 boolean isRoyalFedBucket = itemstack.is(BzItems.ROYAL_JELLY_BUCKET.get());
 
-                removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, isRoyalFed ? 1 : 0.8f, isRoyalFed ? 15 : 5);
+                removedWrath = calmAndSpawnHearts(serverLevel, playerEntity, beeEntity, isRoyalFed ? 1 : 0.8f, isRoyalFed ? 15 : 5);
                 if (beeEntity.isBaby()) {
                     if (isRoyalFed || playerEntity.getRandom().nextBoolean()) {
                         beeEntity.setBaby(false);
@@ -122,7 +125,7 @@ public class BeeInteractivity {
                 }
                 else {
                     int nearbyAdultBees = 0;
-                    for (Bee nearbyBee : world.getEntitiesOfClass(Bee.class, beeEntity.getBoundingBox().inflate(4), beeEntity1 -> true)) {
+                    for (Bee nearbyBee : serverLevel.getEntitiesOfClass(Bee.class, beeEntity.getBoundingBox().inflate(4), beeEntity1 -> true)) {
                         nearbyBee.setInLove(playerEntity);
                         if(!nearbyBee.isBaby()) nearbyAdultBees++;
                     }
@@ -141,11 +144,11 @@ public class BeeInteractivity {
             }
             else if(itemRL.getPath().contains("honey")) {
                 beeEntity.heal(2);
-                removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
+                removedWrath = calmAndSpawnHearts(serverLevel, playerEntity, beeEntity, 0.3f, 3);
             }
             else {
                 beeEntity.heal(1);
-                removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.1f, 3);
+                removedWrath = calmAndSpawnHearts(serverLevel, playerEntity, beeEntity, 0.1f, 3);
             }
 
             // remove current item
@@ -197,14 +200,14 @@ public class BeeInteractivity {
         return InteractionResult.PASS;
     }
 
-    public static boolean calmAndSpawnHearts(Level world, Player playerEntity, LivingEntity beeEntity, float calmChance, int hearts) {
+    public static boolean calmAndSpawnHearts(ServerLevel serverLevel, Player playerEntity, LivingEntity beeEntity, float calmChance, int hearts) {
         RandomSource random = playerEntity.getRandom();
         boolean calmed = random.nextFloat() < calmChance;
         boolean removedWrath = false;
         if (calmed) {
             if(playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.holder())) {
                 playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.holder());
-                WrathOfTheHiveEffect.calmTheBees(playerEntity.level(), playerEntity);
+                WrathOfTheHiveEffect.calmTheBees(serverLevel, playerEntity);
                 removedWrath = true;
             }
 
@@ -216,7 +219,7 @@ public class BeeInteractivity {
                     false,
                     true));
 
-            ((ServerLevel)playerEntity.level()).sendParticles(BzParticles.SPARKLE_PARTICLE.get(),
+            serverLevel.sendParticles(BzParticles.SPARKLE_PARTICLE.get(),
                     playerEntity.position().x(),
                     playerEntity.getEyeY() - 0.25d,
                     playerEntity.position().z(),
@@ -231,8 +234,7 @@ public class BeeInteractivity {
             }
         }
 
-        if (world instanceof ServerLevel serverLevel &&
-            (beeEntity instanceof Bee bee ? (!bee.isAngry() || calmed) : calmed))
+        if (beeEntity instanceof Bee bee ? (!bee.isAngry() || calmed) : calmed)
         {
             serverLevel.sendParticles(
                     ParticleTypes.HEART,

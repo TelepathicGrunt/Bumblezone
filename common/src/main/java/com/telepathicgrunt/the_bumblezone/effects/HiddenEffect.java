@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -39,11 +40,11 @@ public class HiddenEffect extends BzEffect {
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
-        super.applyEffectTick(livingEntity, amplifier);
+    public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity livingEntity, int amplifier) {
+        super.applyEffectTick(serverLevel, livingEntity, amplifier);
 
-        Registry<MobEffect> mobEffects = livingEntity.level().registryAccess().registryOrThrow(Registries.MOB_EFFECT);
-        Holder.Reference<MobEffect> hiddenEffectReference = mobEffects.getHolder(BzEffects.HIDDEN.getId()).get();
+        Registry<MobEffect> mobEffects = serverLevel.registryAccess().getOrThrow(Registries.MOB_EFFECT).value();
+        Holder.Reference<MobEffect> hiddenEffectReference = mobEffects.get(BzEffects.HIDDEN.getId()).get();
         MobEffectInstance effect = livingEntity.getEffect(hiddenEffectReference);
         if (effect != null && effect.getDuration() <= 1) {
             PileOfPollen.reapplyHiddenEffectIfInsidePollenPile(livingEntity);
@@ -56,9 +57,13 @@ public class HiddenEffect extends BzEffect {
      */
     @Override
     public void onEffectStarted(LivingEntity livingEntity, int amplifier) {
-        if (amplifier >= 1) {
+        if (amplifier >= 1 && livingEntity.level() instanceof ServerLevel serverLevel) {
             SEE_THROUGH_WALLS.range(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D);
-            List<Bee> beeList = livingEntity.level().getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D));
+            List<Bee> beeList = serverLevel.getNearbyEntities(
+                    Bee.class,
+                    SEE_THROUGH_WALLS,
+                    livingEntity,
+                    livingEntity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D));
 
             for (Bee bee : beeList) {
                 if(bee.getTarget() == livingEntity) {
@@ -73,8 +78,8 @@ public class HiddenEffect extends BzEffect {
     }
 
     public static double hideEntity(LivingEntity livingEntity) {
-        Registry<MobEffect> mobEffects = livingEntity.level().registryAccess().registryOrThrow(Registries.MOB_EFFECT);
-        Holder.Reference<MobEffect> hiddenEffectReference = mobEffects.getHolder(BzEffects.HIDDEN.getId()).get();
+        Registry<MobEffect> mobEffects = livingEntity.level().registryAccess().getOrThrow(Registries.MOB_EFFECT).value();
+        Holder.Reference<MobEffect> hiddenEffectReference = mobEffects.get(BzEffects.HIDDEN.getId()).get();
         if (livingEntity.hasEffect(hiddenEffectReference)) {
             return 0;
         }

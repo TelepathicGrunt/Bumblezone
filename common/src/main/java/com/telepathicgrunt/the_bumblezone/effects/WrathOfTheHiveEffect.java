@@ -8,8 +8,8 @@ import com.telepathicgrunt.the_bumblezone.entities.BeeDedicatedSpawning;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Difficulty;
@@ -17,18 +17,16 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.ai.village.poi.PoiManager;
 import net.minecraft.world.entity.ai.village.poi.PoiRecord;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
@@ -65,19 +63,17 @@ public class WrathOfTheHiveEffect extends MobEffect {
      * Makes the bees swarm at the entity
      */
     @Override
-    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
-        Level world = entity.level();
-
+    public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity entity, int amplifier) {
         if (entity instanceof Mob mob && mob.isNoAi()) {
             return false;
         }
 
         if (entity.isDeadOrDying()) {
-            calmTheBees(world, entity);
+            calmTheBees(serverLevel, entity);
             return false;
         }
 
-        if (entity instanceof Player && world.getDifficulty() == Difficulty.PEACEFUL) {
+        if (entity instanceof Player && serverLevel.getDifficulty() == Difficulty.PEACEFUL) {
             return false;
         }
 
@@ -91,10 +87,9 @@ public class WrathOfTheHiveEffect extends MobEffect {
 
         //Maximum aggression
         if (amplifier >= 2) {
-            unBEElievablyHighAggression(world, entity);
+            unBEElievablyHighAggression(serverLevel, entity);
 
-            if(world instanceof ServerLevel serverLevel &&
-                BeeDedicatedSpawning.getNearbyActiveEntitiesInDimension(serverLevel, entity.blockPosition()) < BzGeneralConfigs.broodBlocksBeeSpawnCapacity * 3.0f)
+            if(BeeDedicatedSpawning.getNearbyActiveEntitiesInDimension(serverLevel, entity.blockPosition()) < BzGeneralConfigs.broodBlocksBeeSpawnCapacity * 3.0f)
             {
                 // Spawn bees when high wrath effect.
                 // Must be very low as this method is fired every tick for status effects.
@@ -102,11 +97,11 @@ public class WrathOfTheHiveEffect extends MobEffect {
                 if(entity.getRandom().nextFloat() <= 0.09f) {
                     // Grab a nearby air materialposition a bit away
                     BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(entity, 30, 10);
-                    if(!world.getBlockState(spawnBlockPos).isAir()) {
+                    if(!serverLevel.getBlockState(spawnBlockPos).isAir()) {
                         return false;
                     }
 
-                    Bee bee = EntityType.BEE.create(world);
+                    Bee bee = EntityType.BEE.create(serverLevel, EntitySpawnReason.EVENT);
                     if(bee == null) return true;
 
                     bee.finalizeSpawn(
@@ -116,26 +111,26 @@ public class WrathOfTheHiveEffect extends MobEffect {
                             null
                     );
 
-                    bee.absMoveTo(
+                    bee.snapTo(
                             spawnBlockPos.getX() + 0.5D,
                             spawnBlockPos.getY() + 0.5D,
                             spawnBlockPos.getZ() + 0.5D,
                             entity.getRandom().nextFloat() * 360.0F,
                             0.0F);
 
-                    PlatformService.INSTANCE.finalizeSpawn(bee, (ServerLevelAccessor) world, null, EntitySpawnReason.TRIGGERED);
-                    world.addFreshEntity(bee);
+                    PlatformService.INSTANCE.finalizeSpawn(bee, serverLevel, null, EntitySpawnReason.TRIGGERED);
+                    serverLevel.addFreshEntity(bee);
                 }
             }
         }
         //Anything lower than 2 is medium aggression
         else {
-            mediumAggression(world, entity);
+            mediumAggression(serverLevel, entity);
         }
 
         // makes brood blocks grow faster near wrath of the hive entities.
-        if (!world.isClientSide() && entity instanceof Player) {
-            PoiManager poiManager = ((ServerLevel)world).getPoiManager();
+        if (entity instanceof Player) {
+            PoiManager poiManager = serverLevel.getPoiManager();
             List<PoiRecord> poiInRange = poiManager.getInSquare(
                     (pointOfInterestType) -> pointOfInterestType.value() == BzPOI.BROOD_BLOCK_POI.get(),
                     entity.blockPosition(),
@@ -151,9 +146,9 @@ public class WrathOfTheHiveEffect extends MobEffect {
 
                         int yDiff = Math.abs(entity.blockPosition().getY() - poi.getPos().getY());
                         if (yDiff <= NEARBY_WRATH_EFFECT_RADIUS) {
-                            BlockState state = world.getBlockState(poi.getPos());
+                            BlockState state = serverLevel.getBlockState(poi.getPos());
                             if (state.getBlock() instanceof HoneycombBrood) {
-                                state.tick((ServerLevel) world, poi.getPos(), entity.getRandom());
+                                state.tick(serverLevel, poi.getPos(), entity.getRandom());
                             }
                         }
                     }
@@ -167,7 +162,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
     /**
      * Bees are angry but not crazy angry
      */
-    public static void mediumAggression(Level world, LivingEntity livingEntity) {
+    public static void mediumAggression(ServerLevel world, LivingEntity livingEntity) {
         setAggression(world,
                 livingEntity,
                 Bee.class,
@@ -181,7 +176,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
     /**
      * Bees are REALLY angry!!! HIGH TAIL IT OUTTA THERE BRUH!!!
      */
-    public static void unBEElievablyHighAggression(Level world, LivingEntity livingEntity) {
+    public static void unBEElievablyHighAggression(ServerLevel world, LivingEntity livingEntity) {
         setAggression(world,
                 livingEntity,
                 Bee.class,
@@ -191,7 +186,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
                 BzBeeAggressionConfigs.strengthBoostLevel - 1);
     }
 
-    private static void setAggression(Level world, LivingEntity livingEntity, Class<? extends Mob> entityToFind, TargetingConditions sightMode, int speed, int absorption, int strength) {
+    private static void setAggression(ServerLevel world, LivingEntity livingEntity, Class<? extends Mob> entityToFind, TargetingConditions sightMode, int speed, int absorption, int strength) {
         if(BeeAggression.isBeelikeEntity(livingEntity)) {
             return;
         }
@@ -239,9 +234,9 @@ public class WrathOfTheHiveEffect extends MobEffect {
                         bee.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, leftoverDuration, absorption, false, false));
                     }
 
-                    currentEffect = bee.getEffect(MobEffects.DAMAGE_BOOST);
+                    currentEffect = bee.getEffect(MobEffects.STRENGTH);
                     if (currentEffect == null || currentEffect.getDuration() < leftoverDuration) {
-                        bee.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, leftoverDuration, strength, false, true));
+                        bee.addEffect(new MobEffectInstance(MobEffects.STRENGTH, leftoverDuration, strength, false, true));
                     }
                 }
             }
@@ -251,7 +246,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
     /**
      * Calm the bees that are attacking the incoming entity
      */
-    public static void calmTheBees(Level world, LivingEntity livingEntity) {
+    public static void calmTheBees(ServerLevel world, LivingEntity livingEntity) {
         SEE_THROUGH_WALLS.range(BzBeeAggressionConfigs.aggressionTriggerRadius * 1.2d);
         List<Bee> beeList = world.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius * 1.2d));
         for (Bee bee : beeList) {
@@ -263,7 +258,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
                 bee.setTarget(null);
                 bee.setAggressive(false);
                 bee.setRemainingPersistentAngerTime(0);
-                bee.removeEffect(MobEffects.DAMAGE_BOOST);
+                bee.removeEffect(MobEffects.STRENGTH);
                 bee.removeEffect(MobEffects.SPEED);
                 bee.removeEffect(MobEffects.ABSORPTION);
             }
@@ -293,8 +288,8 @@ public class WrathOfTheHiveEffect extends MobEffect {
 
     public static void onLivingEntityDeath(BzEntityDeathEvent event) {
         LivingEntity livingEntity = event.entity();
-        if (livingEntity != null) {
-            WrathOfTheHiveEffect.calmTheBees(livingEntity.level(), livingEntity);
+        if (livingEntity != null && livingEntity.level() instanceof ServerLevel serverLevel) {
+            WrathOfTheHiveEffect.calmTheBees(serverLevel, livingEntity);
         }
     }
 }

@@ -35,7 +35,7 @@ public class ParalyzedEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
+    public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity livingEntity, int amplifier) {
         if (livingEntity.getType().is(EntityTypeTags.UNDEAD) || livingEntity.getType().is(BzTags.PARALYZED_IMMUNE)) {
             return false;
         }

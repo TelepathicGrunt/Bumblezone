@@ -13,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.BumblezoneAPI;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.Util;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -22,6 +23,8 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.ResourceKeyArgument;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -137,12 +140,12 @@ public class OpCommands {
         LiteralCommandNode<CommandSourceStack> source5 = commandDispatcher.register(Commands.literal(commandTagLogOutputString)
                 .requires((permission) -> permission.hasPermission(2))
                 .then(Commands.argument("registry", ResourceKeyArgument.key(ROOT_REGISTRY_KEY))
-                        .suggests((ctx, builder) -> SharedSuggestionProvider.suggestResource(ctx.getSource().registryAccess().listRegistries().map(ResourceKey::location), builder))
+                        .suggests((ctx, builder) -> SharedSuggestionProvider.suggestResource(ctx.getSource().registryAccess().listRegistries().map(HolderLookup.RegistryLookup::key).map(ResourceKey::location), builder))
                 .then(Commands.argument("tag", ResourceLocationArgument.id())
-                        .suggests(suggestFromRegistry(r -> r.getTagNames().map(TagKey::location)::iterator, "registry", ROOT_REGISTRY_KEY))
+                        .suggests(suggestFromRegistry(r -> r.getTags().map(HolderSet.Named::key).map(TagKey::location)::iterator, "registry", ROOT_REGISTRY_KEY))
                 .executes(cs -> {
                     final ResourceKey<? extends Registry<?>> registryKey = getResourceKey(cs, "registry", ROOT_REGISTRY_KEY).orElseThrow();
-                    final Registry<?> registry = cs.getSource().getServer().registryAccess().registry(registryKey).get();
+                    final Registry<?> registry = cs.getSource().getServer().registryAccess().lookupOrThrow(registryKey);
                     final ResourceLocation tagLocation = ResourceLocationArgument.getId(cs, "tag");
                     final TagKey<?> tagKey = TagKey.create(cast(registryKey), tagLocation);
                     final Iterable<? extends Holder<?>> tag = registry.getTagOrEmpty(cast(tagKey));
@@ -353,8 +356,8 @@ public class OpCommands {
             final String argumentString,
             final ResourceKey<Registry<T>> registryKey) {
         return (ctx, builder) -> getResourceKey(ctx, argumentString, registryKey)
-                .flatMap(key -> ctx.getSource().registryAccess().registry(key).map(registry -> {
-                    SharedSuggestionProvider.suggestResource(namesFunction.apply(registry), builder);
+                .flatMap(key -> ctx.getSource().registryAccess().get(key).map(registry -> {
+                    SharedSuggestionProvider.suggestResource(namesFunction.apply(registry.value()), builder);
                     return builder.buildFuture();
                 }))
                 .orElseGet(builder::buildFuture);

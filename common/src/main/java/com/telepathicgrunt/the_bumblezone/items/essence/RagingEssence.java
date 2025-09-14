@@ -191,9 +191,9 @@ public class RagingEssence extends AbilityEssenceItem {
                             .toList();
 
                     for (Holder<MobEffect> effectHolder : radianceEffects) {
-                        if (effectHolder.value() == MobEffects.DAMAGE_BOOST) {
+                        if (effectHolder.value() == MobEffects.STRENGTH) {
                             serverPlayer.addEffect(new MobEffectInstance(
-                                MobEffects.DAMAGE_BOOST,
+                                MobEffects.STRENGTH,
                                 (int) ((level.getGameTime() - getEmpoweredTimestamp(itemStack)) * 4),
                                 BzGeneralConfigs.ragingEssenceStrengthLevels[rageState - 1] - 1,
                                 false,

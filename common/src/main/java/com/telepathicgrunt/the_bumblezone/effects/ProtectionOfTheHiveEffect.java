@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.effects;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -45,14 +46,16 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
      */
     @Override
     public void onEffectStarted(LivingEntity livingEntity, int amplifier) {
-        SEE_THROUGH_WALLS.range(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D);
-        List<Bee> beeList = livingEntity.level().getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D));
+        if (livingEntity.level() instanceof ServerLevel serverLevel) {
+            SEE_THROUGH_WALLS.range(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D);
+            List<Bee> beeList = serverLevel.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D));
 
-        for (Bee bee : beeList) {
-            if(bee.getTarget() == livingEntity && !bee.isNoAi()) {
-                bee.setTarget(null);
-                bee.setPersistentAngerTarget(null);
-                bee.setRemainingPersistentAngerTime(0);
+            for (Bee bee : beeList) {
+                if(bee.getTarget() == livingEntity && !bee.isNoAi()) {
+                    bee.setTarget(null);
+                    bee.setPersistentAngerTarget(null);
+                    bee.setRemainingPersistentAngerTime(0);
+                }
             }
         }
 
@@ -63,14 +66,14 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
      * Makes the bees swarm at the attacking entity
      */
     @Override
-    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity entity, int amplifier) {
        if (entity.hurtTime > 0 && entity.getLastHurtByMob() != null) {
            if (entity.getLastHurtByMob() instanceof Player player && player.isCreative()) {
                return true;
            }
 
            if (!(entity.getLastHurtByMob() instanceof Bee)) {
-               resetBeeAngry(entity.level(), entity.getLastHurtByMob());
+               resetBeeAngry(serverLevel, entity.getLastHurtByMob());
                entity.getLastHurtByMob().addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.holder(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, amplifier, true, true, true));
                if (entity instanceof ServerPlayer serverPlayer) {
                    BzCriterias.PROTECTION_OF_THE_HIVE_DEFENSE_TRIGGER.get().trigger(serverPlayer, serverPlayer.getLastHurtByMob());
@@ -84,12 +87,12 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
     /**
      * Changes the entity Bees are angry at.
      */
-    public static void resetBeeAngry(Level world, LivingEntity livingEntity) {
+    public static void resetBeeAngry(ServerLevel level, LivingEntity livingEntity) {
         LivingEntity entity = livingEntity;
         UUID uuid = entity.getUUID();
 
         SEE_THROUGH_WALLS.range(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D);
-        List<Bee> beeList = world.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D));
+        List<Bee> beeList = level.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D));
 
         if(livingEntity instanceof Bee) {
             entity = null;

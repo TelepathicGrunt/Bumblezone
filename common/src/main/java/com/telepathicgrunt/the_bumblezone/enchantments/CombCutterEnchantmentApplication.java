@@ -37,7 +37,7 @@ public class CombCutterEnchantmentApplication {
             for (ResourceLocation key : BuiltInRegistries.BLOCK.keySet()) {
                 String path = key.getPath();
                 if(path.contains("comb") || path.contains("luminescent_wax") || path.contains("ancient_wax")) {
-                    validBlocks.add(BuiltInRegistries.BLOCK.get(key));
+                    validBlocks.add(BuiltInRegistries.BLOCK.get(key).get().value());
                 }
             }
             return validBlocks;
@@ -49,7 +49,7 @@ public class CombCutterEnchantmentApplication {
             Set<Block> validBlocks = new HashSet<>();
             for (ResourceLocation key : BuiltInRegistries.BLOCK.keySet()) {
                 String path = key.getPath();
-                Block block = BuiltInRegistries.BLOCK.get(key);
+                Block block = BuiltInRegistries.BLOCK.get(key).get().value();
                 if (block instanceof BeehiveBlock || path.contains("hive") || path.contains("nest") || (path.contains("wax") && !path.contains("waxed"))) {
                     validBlocks.add(block);
                 }

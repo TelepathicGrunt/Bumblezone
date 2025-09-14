@@ -6,7 +6,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
-import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;s
+import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.Util;
 import net.minecraft.commands.CommandSourceStack;

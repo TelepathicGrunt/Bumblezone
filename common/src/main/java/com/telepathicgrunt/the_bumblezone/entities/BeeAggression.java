@@ -55,10 +55,10 @@ public class BeeAggression {
         for (ResourceLocation id : BuiltInRegistries.ENTITY_TYPE.keySet()) {
             String mobName = id.getPath();
             if(mobName.contains("bee") || mobName.contains("bumble_beast")) {
-                SET_OF_BEE_NAMED_ENTITIES.add(BuiltInRegistries.ENTITY_TYPE.get(id));
+                SET_OF_BEE_NAMED_ENTITIES.add(BuiltInRegistries.ENTITY_TYPE.get(id).get().value());
             }
             if(LIST_OF_BEE_HATING_NAMES.stream().anyMatch(mobName::contains)) {
-                SET_OF_BEE_HATED_NAMED_ENTITIES.add(BuiltInRegistries.ENTITY_TYPE.get(id));
+                SET_OF_BEE_HATED_NAMED_ENTITIES.add(BuiltInRegistries.ENTITY_TYPE.get(id).get().value());
             }
         }
     }
@@ -140,6 +140,10 @@ public class BeeAggression {
 
     //Bees hit by a mob or player will inflict Wrath of the Hive onto the attacker.
     public static void beeHitAndAngered(Entity entity, Entity attackerEntity) {
+        if (!(attackerEntity.level() instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that if it is a player, that they aren't in creative or spectator
         if(attackerEntity instanceof Player player &&
@@ -148,7 +152,7 @@ public class BeeAggression {
         {
             if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder())) {
                 player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder());
-                WrathOfTheHiveEffect.calmTheBees(player.level(), player); // prevent bees from be naturally angry
+                WrathOfTheHiveEffect.calmTheBees(serverLevel, player); // prevent bees from be naturally angry
             }
             else if((entity.level().dimension().equals(BzDimension.BZ_WORLD_KEY) ||
                     BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
@@ -170,7 +174,7 @@ public class BeeAggression {
         else if(attackerEntity instanceof Mob mob) {
             if(mob.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder())) {
                 mob.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder());
-                WrathOfTheHiveEffect.calmTheBees(mob.level(), mob); // prevent bees from be naturally angry
+                WrathOfTheHiveEffect.calmTheBees(serverLevel, mob); // prevent bees from be naturally angry
             }
             else if((entity.level().dimension().equals(BzDimension.BZ_WORLD_KEY) ||
                     BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
@@ -210,13 +214,12 @@ public class BeeAggression {
 
         //Also checks to make sure we are in the dimension.
         if (entity != null &&
-            entity.level() != null &&
             !entity.level().isClientSide() &&
             entity.level().dimension().equals(BzDimension.BZ_WORLD_KEY) &&
             BzBeeAggressionConfigs.aggressiveBees &&
             entity instanceof Mob mobEntity &&
             !mobEntity.isNoAi() &&
-            (!(entity instanceof OwnableEntity ownableEntity) || ownableEntity.getOwnerUUID() == null))
+            (!(entity instanceof OwnableEntity ownableEntity) || ownableEntity.getOwnerReference() == null))
         {
             if (mobEntity.getType().is(BzTags.FORCED_BEE_CALM_AT)) {
                 return false;
@@ -245,32 +248,31 @@ public class BeeAggression {
     public static void playerTick(Player playerEntity) {
         // removes the wrath of the hive if it is disallowed outside dimension
         // Does not instanceof serverplayer to allow bees to be angry at potentially fake player npcs
-        if (!playerEntity.level().isClientSide() && playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.holder())) {
+        if (playerEntity.level() instanceof ServerLevel serverLevel && playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.holder())) {
             if (playerEntity.level().getDifficulty() == Difficulty.PEACEFUL) {
                 playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.holder());
-                WrathOfTheHiveEffect.calmTheBees(playerEntity.level(), playerEntity);
+                WrathOfTheHiveEffect.calmTheBees(serverLevel, playerEntity);
             }
             else if (!(BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone ||
                     playerEntity.level().dimension().equals(BzDimension.BZ_WORLD_KEY)))
             {
                 playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.holder());
-                WrathOfTheHiveEffect.calmTheBees(playerEntity.level(), playerEntity);
+                WrathOfTheHiveEffect.calmTheBees(serverLevel, playerEntity);
             }
         }
 
         //Makes the fog redder when this effect is active
-        if(playerEntity.level().isClientSide()) {
+        if (playerEntity.level().isClientSide()) {
             boolean wrathEffect = playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.holder());
-            if(wrathEffect) {
+            if (wrathEffect) {
                 MusicHandler.playStopAngryBeeMusic(playerEntity, BzClientConfigs.playWrathOfHiveEffectMusic);
             }
 
-            if(!WrathOfTheHiveEffect.ACTIVE_WRATH && wrathEffect) {
+            if (!WrathOfTheHiveEffect.ACTIVE_WRATH && wrathEffect) {
                 WrathOfTheHiveEffect.ACTIVE_WRATH = true;
             }
-            else if(WrathOfTheHiveEffect.ACTIVE_WRATH && !wrathEffect) {
+            else if (WrathOfTheHiveEffect.ACTIVE_WRATH && !wrathEffect) {
                 MusicHandler.playStopAngryBeeMusic(playerEntity, false);
-                WrathOfTheHiveEffect.calmTheBees(playerEntity.level(), playerEntity);
                 WrathOfTheHiveEffect.ACTIVE_WRATH = false;
             }
         }
@@ -278,7 +280,7 @@ public class BeeAggression {
 
     // Makes bees angry if in Cell Maze or other tagged structures.
     public static void applyAngerIfInTaggedStructures(ServerPlayer serverPlayer) {
-        StructureManager structureManager = ((ServerLevel)serverPlayer.level()).structureManager();
+        StructureManager structureManager = serverPlayer.level().structureManager();
         if (structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.WRATH_CAUSING).isValid()) {
             if (!FlowerHeadwearHelmet.getFlowerHeadwear(serverPlayer).isEmpty()) {
                 BzCriterias.FLOWER_HEADWEAR_WRATH_STRUCTURE_TRIGGER.get().trigger(serverPlayer);

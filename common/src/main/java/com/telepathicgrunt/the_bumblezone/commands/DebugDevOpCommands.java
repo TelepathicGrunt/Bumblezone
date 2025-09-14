@@ -5,13 +5,14 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterCommandsEvent;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Collection;
@@ -43,21 +44,16 @@ public class DebugDevOpCommands {
 
     private static void setCooldown(CommandSourceStack commandSourceStack, Collection<ServerPlayer> targets, int cooldownTime, CommandContext<CommandSourceStack> cs) {
         for (ServerPlayer targetPlayer : targets) {
-            for (ItemStack itemStack : targetPlayer.getHandSlots()) {
+            for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
+                ItemStack itemStack = targetPlayer.getItemBySlot(equipmentSlot);
                 if (!itemStack.isEmpty()) {
-                    targetPlayer.getCooldowns().addCooldown(itemStack.getItem(), cooldownTime);
+                    targetPlayer.getCooldowns().addCooldown(itemStack, cooldownTime);
                 }
             }
 
-            for (ItemStack itemStack : targetPlayer.getArmorSlots()) {
+            for (ItemStack itemStack : targetPlayer.getInventory().getNonEquipmentItems()) {
                 if (!itemStack.isEmpty()) {
-                    targetPlayer.getCooldowns().addCooldown(itemStack.getItem(), cooldownTime);
-                }
-            }
-
-            for (ItemStack itemStack : targetPlayer.getInventory().items) {
-                if (!itemStack.isEmpty()) {
-                    targetPlayer.getCooldowns().addCooldown(itemStack.getItem(), cooldownTime);
+                    targetPlayer.getCooldowns().addCooldown(itemStack, cooldownTime);
                 }
             }
         }
