@@ -44,11 +44,6 @@ public record CrystallineFlowerClickedEnchantmentButtonPacket(int containerId, R
         }
 
         @Override
-        public Class<CrystallineFlowerClickedEnchantmentButtonPacket> type() {
-            return CrystallineFlowerClickedEnchantmentButtonPacket.class;
-        }
-
-        @Override
         public ResourceLocation id() {
             return ID;
         }

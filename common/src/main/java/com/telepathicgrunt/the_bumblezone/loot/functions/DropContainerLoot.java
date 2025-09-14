@@ -37,8 +37,8 @@ public class DropContainerLoot extends LootItemConditionalFunction {
     @Override
     public ItemStack run(ItemStack itemStack, LootContext lootContext) {
         Level level = lootContext.getLevel();
-        Vec3 spawnPos = lootContext.getParamOrNull(LootContextParams.ORIGIN);
-        BlockEntity be = lootContext.getParamOrNull(LootContextParams.BLOCK_ENTITY);
+        Vec3 spawnPos = lootContext.getParameter(LootContextParams.ORIGIN);
+        BlockEntity be = lootContext.getParameter(LootContextParams.BLOCK_ENTITY);
         if(spawnPos != null && be instanceof Container container) {
             if (!(ModChecker.lootrPresent && BzModCompatibilityConfigs.allowLootrCompat &&
                 container instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity &&

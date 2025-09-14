@@ -20,7 +20,7 @@ public class EssenceOnlySpawn implements LootItemCondition {
 
     @Override
     public boolean test(LootContext lootContext) {
-        Entity entity = lootContext.getParamOrNull(LootContextParams.THIS_ENTITY);
+        Entity entity = lootContext.getParameter(LootContextParams.THIS_ENTITY);
         if (entity instanceof ServerPlayer serverPlayer) {
             return EssenceOfTheBees.hasEssence(serverPlayer);
         }

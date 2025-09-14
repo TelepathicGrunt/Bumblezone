@@ -52,11 +52,6 @@ public record CrystallineFlowerEnchantmentPacket(int containerId, List<Enchantme
         }
 
         @Override
-        public Class<CrystallineFlowerEnchantmentPacket> type() {
-            return CrystallineFlowerEnchantmentPacket.class;
-        }
-
-        @Override
         public ResourceLocation id() {
             return ID;
         }

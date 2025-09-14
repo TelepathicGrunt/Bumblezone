@@ -34,7 +34,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -68,7 +68,7 @@ public class REICompat implements REIClientPlugin {
                 .ifPresent(recipe -> registerExtraRecipes(recipe.value(), registry, false));
 
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades.isEmpty()) {
-            for (Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades) {
+            for (Pair<MainTradeRowInput, WeightedList<WeightedTradeResult>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades) {
                 for (WeightedTradeResult weightedTradeResult : trade.getSecond().unwrap()) {
                     List<ItemStack> rewardCollection = weightedTradeResult.getItems();
                     registry.add(new REIQueenTradesInfo(

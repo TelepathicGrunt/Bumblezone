@@ -49,11 +49,6 @@ public record SyncBeehemothSpeedConfigFromServer(double newBeehemothSpeed) imple
         }
 
         @Override
-        public Class<SyncBeehemothSpeedConfigFromServer> type() {
-            return SyncBeehemothSpeedConfigFromServer.class;
-        }
-
-        @Override
         public ResourceLocation id() {
             return ID;
         }

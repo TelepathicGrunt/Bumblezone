@@ -43,11 +43,6 @@ public record BumbleBeeChestplateFlyingPacket(byte isFlying) implements Packet<B
         }
 
         @Override
-        public Class<BumbleBeeChestplateFlyingPacket> type() {
-            return BumbleBeeChestplateFlyingPacket.class;
-        }
-
-        @Override
         public ResourceLocation id() {
             return ID;
         }

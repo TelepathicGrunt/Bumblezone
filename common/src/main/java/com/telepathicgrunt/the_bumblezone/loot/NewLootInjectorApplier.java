@@ -29,8 +29,8 @@ public final class NewLootInjectorApplier {
 
     public static boolean checkIfInjectBeeStingerLoot(LootContext context) {
         if (BzGeneralConfigs.beeLootInjection || BzGeneralConfigs.moddedBeeLootInjection) {
-            if(context.hasParam(LootContextParams.THIS_ENTITY)) {
-                if (context.getParam(LootContextParams.THIS_ENTITY) instanceof Bee bee) {
+            if(context.hasParameter(LootContextParams.THIS_ENTITY)) {
+                if (context.getParameter(LootContextParams.THIS_ENTITY) instanceof Bee bee) {
                     if (!((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).bumblezone$getParams()).getVisitedBzVisitedLootRL().contains(STINGER_DROP_LOOT_TABLE_RL) &&
                         !((EntityLootDropInterface)bee).thebumblezone_hasPerformedEntityDrops())
                     {
@@ -54,7 +54,7 @@ public final class NewLootInjectorApplier {
     }
 
     public static void injectLoot(LootContext context, List<ItemStack> originalLoot, ResourceLocation lootTableToPullFrom) {
-        Optional<Holder.Reference<LootTable>> optionalLootTableReference = context.getResolver().get(Registries.LOOT_TABLE, ResourceKey.create(Registries.LOOT_TABLE, lootTableToPullFrom));
+        Optional<Holder.Reference<LootTable>> optionalLootTableReference = context.getResolver().get(Registries.LOOT_TABLE).get().value().get(ResourceKey.create(Registries.LOOT_TABLE, lootTableToPullFrom));
         if (optionalLootTableReference.isEmpty()) {
             return;
         }
@@ -65,8 +65,8 @@ public final class NewLootInjectorApplier {
         stingerLootTable.getRandomItems(((LootContextAccessor)context).bumblezone$getParams(), newItems::add);
         originalLoot.addAll(newItems);
 
-        if (context.hasParam(LootContextParams.THIS_ENTITY)) {
-            Entity entity = context.getParam(LootContextParams.THIS_ENTITY);
+        if (context.hasParameter(LootContextParams.THIS_ENTITY)) {
+            Entity entity = context.getParameter(LootContextParams.THIS_ENTITY);
             if (entity != null) {
                 ((EntityLootDropInterface)entity).thebumblezone_performedEntityDrops();
             }

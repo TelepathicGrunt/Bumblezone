@@ -9,9 +9,9 @@ import net.minecraft.world.entity.player.Player;
 
 public class SyncHorseOwnerUUIDPacketToServerHandleBody {
     public static void handle(SyncHorseOwnerUUIDPacketToServer message, Player player) {
-        Entity entity = ((ServerLevel)player.level()).getEntity(message.horseUUID());
-        if (entity instanceof AbstractHorse abstractHorse && abstractHorse.getOwnerUUID() != null) {
-            SyncHorseOwnerUUIDPacketFromServer.sendToClient(abstractHorse, abstractHorse.getId(), abstractHorse.getOwnerUUID());
+        Entity entity = player.level().getEntity(message.horseUUID());
+        if (entity instanceof AbstractHorse abstractHorse && abstractHorse.getOwnerReference() != null) {
+            SyncHorseOwnerUUIDPacketFromServer.sendToClient(abstractHorse, abstractHorse.getId(), abstractHorse.getOwnerReference().getUUID());
         }
     }
 }

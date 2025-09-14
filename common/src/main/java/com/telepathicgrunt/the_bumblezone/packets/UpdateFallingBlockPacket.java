@@ -42,11 +42,6 @@ public record UpdateFallingBlockPacket(int fallingBlockId, short layer) implemen
         }
 
         @Override
-        public Class<UpdateFallingBlockPacket> type() {
-            return UpdateFallingBlockPacket.class;
-        }
-
-        @Override
         public ResourceLocation id() {
             return ID;
         }

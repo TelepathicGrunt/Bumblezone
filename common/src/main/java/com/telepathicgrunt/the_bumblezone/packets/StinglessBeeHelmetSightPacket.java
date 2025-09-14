@@ -43,11 +43,6 @@ public record StinglessBeeHelmetSightPacket(byte giveAdvancement) implements Pac
         }
 
         @Override
-        public Class<StinglessBeeHelmetSightPacket> type() {
-            return StinglessBeeHelmetSightPacket.class;
-        }
-
-        @Override
         public ResourceLocation id() {
             return ID;
         }

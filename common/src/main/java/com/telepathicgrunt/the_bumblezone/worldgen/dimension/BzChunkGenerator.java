@@ -17,7 +17,7 @@ import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -396,20 +396,20 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
     public static void spawnNonBeeMobsForChunkGeneration(ServerLevelAccessor serverLevelAccessor, Holder<Biome> biomeHolder, ChunkPos chunkPos, RandomSource randomSource) {
         MobSpawnSettings mobspawnsettings = biomeHolder.value().getMobSettings();
-        WeightedRandomList<MobSpawnSettings.SpawnerData> weightedrandomlist = mobspawnsettings.getMobs(MobCategory.CREATURE);
+        WeightedList<MobSpawnSettings.SpawnerData> WeightedList = mobspawnsettings.getMobs(MobCategory.CREATURE);
 
         // Bees are spawned by different system if config is true. See BeeDedicatedSpawning class
         if (BzGeneralConfigs.specialBeeSpawning) {
-            weightedrandomlist = WeightedRandomList.create(weightedrandomlist.unwrap().stream().filter(e -> e.type != EntityType.BEE).toList());
+            WeightedList = WeightedList.create(WeightedList.unwrap().stream().filter(e -> e.type != EntityType.BEE).toList());
         }
 
-        if (!weightedrandomlist.isEmpty()) {
+        if (!WeightedList.isEmpty()) {
             int minX = chunkPos.getMinBlockX();
             int minZ = chunkPos.getMinBlockZ();
             int seaLevel = ((ServerChunkCache)serverLevelAccessor.getChunkSource()).getGenerator().getSeaLevel();
 
             while(randomSource.nextFloat() < mobspawnsettings.getCreatureProbability() * 0.5) {
-                Optional<MobSpawnSettings.SpawnerData> optional = weightedrandomlist.getRandom(randomSource);
+                Optional<MobSpawnSettings.SpawnerData> optional = WeightedList.getRandom(randomSource);
                 if (optional.isPresent()) {
                     MobSpawnSettings.SpawnerData mobspawnsettings$spawnerdata = optional.get();
                     int groupCount = mobspawnsettings$spawnerdata.minCount + randomSource.nextInt(1 + mobspawnsettings$spawnerdata.maxCount - mobspawnsettings$spawnerdata.minCount);

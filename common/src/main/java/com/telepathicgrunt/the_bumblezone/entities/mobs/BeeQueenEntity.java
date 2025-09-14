@@ -43,7 +43,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
-import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
@@ -416,7 +416,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                                     setIsSpecialDay(false);
                                 }
                                 wantItem = specialDayItem.get().get(this.random.nextInt(specialDayItem.get().size()));
-                                Optional<Pair<QueensTradeManager.SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> specialDayRewards = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItems(wantItem);
+                                Optional<Pair<QueensTradeManager.SpecialDaysEntry, WeightedList<WeightedTradeResult>>> specialDayRewards = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItems(wantItem);
                                 if (specialDayRewards.isEmpty()) {
                                     setIsSpecialDay(false);
                                 }
@@ -535,7 +535,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
         boolean didSpecialDayTrade = false;
         if (getIsSpecialDay() && QueensTradeManager.QUEENS_TRADE_MANAGER.specialDayQueenTrades.containsKey(item)) {
-            Optional<Pair<QueensTradeManager.SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> specialDayItems = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItems(item);
+            Optional<Pair<QueensTradeManager.SpecialDaysEntry, WeightedList<WeightedTradeResult>>> specialDayItems = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItems(item);
             if (specialDayItems.isPresent()) {
                 Optional<WeightedTradeResult> reward = specialDayItems.get().getSecond().getRandom(this.random);
                 if (reward.isPresent()) {
@@ -642,7 +642,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         boolean traded = false;
 
         if (QueensTradeManager.QUEENS_TRADE_MANAGER.specialDayQueenTrades.containsKey(item)) {
-            Optional<Pair<QueensTradeManager.SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> specialDayItems = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItems(item);
+            Optional<Pair<QueensTradeManager.SpecialDaysEntry, WeightedList<WeightedTradeResult>>> specialDayItems = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItems(item);
             if (specialDayItems.isPresent()) {
                 if (this.level().isClientSide()) {
                     return InteractionResult.SUCCESS;

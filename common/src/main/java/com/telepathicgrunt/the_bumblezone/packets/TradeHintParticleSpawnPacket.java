@@ -44,7 +44,7 @@ public record TradeHintParticleSpawnPacket(int queenId, Item wantItem, List<Item
         @Override
         public TradeHintParticleSpawnPacket decode(RegistryFriendlyByteBuf buffer) {
             int queenId = buffer.readInt();
-            Item wantItem = BuiltInRegistries.ITEM.get(buffer.readResourceLocation());
+            Item wantItem = BuiltInRegistries.ITEM.get(buffer.readResourceLocation()).get().value();
 
             int sizeOfRewards = buffer.readInt();
             List<ItemStack> rewardItems = new ArrayList<>(sizeOfRewards);
@@ -58,11 +58,6 @@ public record TradeHintParticleSpawnPacket(int queenId, Item wantItem, List<Item
         @Override
         public Runnable handle(TradeHintParticleSpawnPacket message) {
             return () -> TradeHintParticleSpawnPacketHandler.handle(message);
-        }
-
-        @Override
-        public Class<TradeHintParticleSpawnPacket> type() {
-            return TradeHintParticleSpawnPacket.class;
         }
 
         @Override

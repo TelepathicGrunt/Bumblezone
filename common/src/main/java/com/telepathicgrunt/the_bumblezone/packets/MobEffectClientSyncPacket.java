@@ -96,11 +96,6 @@ public record MobEffectClientSyncPacket(int entityId, ResourceLocation effectRl,
         }
 
         @Override
-        public Class<MobEffectClientSyncPacket> type() {
-            return MobEffectClientSyncPacket.class;
-        }
-
-        @Override
         public ResourceLocation id() {
             return ID;
         }

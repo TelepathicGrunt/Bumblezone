@@ -11,7 +11,7 @@ public class MobEffectClientSyncPacketHandleBody {
     public static void handle(MobEffectClientSyncPacket message) {
         Entity entity = GeneralUtilsClient.getClientLevel().getEntity(message.entityId());
         if (entity instanceof LivingEntity) {
-            BuiltInRegistries.MOB_EFFECT.getHolder(message.effectRl()).ifPresent(mobEffect -> {
+            BuiltInRegistries.MOB_EFFECT.get(message.effectRl()).ifPresent(mobEffect -> {
                 if (message.effectDurationTicks() == 0) {
                     ((LivingEntity) entity).removeEffect(mobEffect);
                 }

@@ -18,12 +18,12 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
@@ -63,14 +63,14 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
     }
 
     @Override
-    public Set<LootContextParam<?>> getReferencedContextParams() {
+    public Set<ContextKey<?>> getReferencedContextParams() {
         return ImmutableSet.of(LootContextParams.ORIGIN);
     }
 
     @Override
     public ItemStack run(ItemStack itemStack, LootContext lootContext) {
         if (itemStack.is(BzItems.HONEY_COMPASS.get())) {
-            Vec3 vec3 = lootContext.getParamOrNull(LootContextParams.ORIGIN);
+            Vec3 vec3 = lootContext.getParameter(LootContextParams.ORIGIN);
             if (vec3 != null) {
                 UUID searchId = UUID.randomUUID();
                 BlockPos blockPos = BlockPos.containing(vec3);
@@ -93,9 +93,9 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
                 ));
 
                 ResourceKey<Structure> structure = null;
-                Registry<Structure> structureRegistry = lootContext.getLevel().registryAccess().registry(Registries.STRUCTURE).get();
+                Registry<Structure> structureRegistry = lootContext.getLevel().registryAccess().getOrThrow(Registries.STRUCTURE).value();
                 List<Structure> structuresList = structureRegistry
-                        .getTag(destination)
+                        .get(destination)
                         .map(holders -> holders
                             .stream()
                             .map(Holder::value)

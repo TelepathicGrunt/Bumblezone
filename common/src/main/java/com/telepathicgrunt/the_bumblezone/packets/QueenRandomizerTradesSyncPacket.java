@@ -51,9 +51,9 @@ public record QueenRandomizerTradesSyncPacket(List<RandomizeTradeRowInput> recip
                 return new QueenRandomizerTradesSyncPacket(parsedData);
             }
 
-            ListTag tagList = data.getList("randomize_trades", Tag.TAG_STRING);
+            ListTag tagList = data.getList("randomize_trades").get();
             for (int i = 0; i < tagList.size(); i++) {
-                TagKey<Item> tagKey = TagKey.create(Registries.ITEM, ResourceLocation.tryParse(tagList.getString(i)));
+                TagKey<Item> tagKey = TagKey.create(Registries.ITEM, ResourceLocation.tryParse(tagList.getString(i).orElse("")));
                 RandomizeTradeRowInput wantEntry = new RandomizeTradeRowInput(Optional.of(tagKey));
                 parsedData.add(wantEntry);
             }
@@ -75,11 +75,6 @@ public record QueenRandomizerTradesSyncPacket(List<RandomizeTradeRowInput> recip
         @Override
         public Runnable handle(final QueenRandomizerTradesSyncPacket pkt) {
             return () -> QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades = pkt.recipeViewerRandomizerTrades();
-        }
-
-        @Override
-        public Class<QueenRandomizerTradesSyncPacket> type() {
-            return QueenRandomizerTradesSyncPacket.class;
         }
 
         @Override

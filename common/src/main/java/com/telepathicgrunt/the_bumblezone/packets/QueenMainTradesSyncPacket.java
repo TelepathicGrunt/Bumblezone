@@ -19,12 +19,12 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.util.random.WeightedList;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>>> recipeViewerMainTrades) implements Packet<QueenMainTradesSyncPacket> {
+public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedList<WeightedTradeResult>>> recipeViewerMainTrades) implements Packet<QueenMainTradesSyncPacket> {
     public static Gson gson = new GsonBuilder().create();
 
     public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "queen_main_trades_sync_packet");
@@ -46,7 +46,7 @@ public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedRan
 
         @Override
         public QueenMainTradesSyncPacket decode(final RegistryFriendlyByteBuf buf) {
-            List<Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>>> parsedData = new ArrayList<>();
+            List<Pair<MainTradeRowInput, WeightedList<WeightedTradeResult>>> parsedData = new ArrayList<>();
 
             CompoundTag data = (CompoundTag) buf.readNbt(NbtAccounter.create(104857600L));
             if (data == null) {
@@ -54,16 +54,16 @@ public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedRan
                 return new QueenMainTradesSyncPacket(parsedData);
             }
 
-            ListTag tagList = data.getList("main_trades", Tag.TAG_COMPOUND);
+            ListTag tagList = data.getList("main_trades").get();
             for (int i = 0; i < tagList.size(); i++) {
-                CompoundTag tradeCompound = tagList.getCompound(i);
-                CompoundTag firstHalf = tradeCompound.getCompound("input");
-                ListTag secondHalf = tradeCompound.getList("output", Tag.TAG_COMPOUND);
+                CompoundTag tradeCompound = tagList.getCompound(i).get();
+                CompoundTag firstHalf = tradeCompound.getCompound("input").get();
+                ListTag secondHalf = tradeCompound.getList("output").get();
 
                 DataResult<MainTradeRowInput> dataResult1 = MainTradeRowInput.CODEC.parse(NbtOps.INSTANCE, firstHalf);
                 dataResult1.error().ifPresent(e -> Bumblezone.LOGGER.error("Failed to parse Queen Main Trade packet tag (first half): {}", e));
 
-                DataResult<WeightedRandomList<WeightedTradeResult>> dataResult2 = WeightedRandomList.codec(WeightedTradeResult.CODEC).parse(NbtOps.INSTANCE, secondHalf);
+                DataResult<WeightedList<WeightedTradeResult>> dataResult2 = WeightedList.codec(WeightedTradeResult.CODEC).parse(NbtOps.INSTANCE, secondHalf);
                 dataResult2.error().ifPresent(e -> Bumblezone.LOGGER.error("Failed to parse Queen Main Trade packet tag (second half): {}", e));
 
 
@@ -77,14 +77,14 @@ public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedRan
         public void encode(final QueenMainTradesSyncPacket pkt, final RegistryFriendlyByteBuf buf) {
             CompoundTag data = new CompoundTag();
             ListTag listTag = new ListTag();
-            for (Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>> tradeRow : pkt.recipeViewerMainTrades()) {
+            for (Pair<MainTradeRowInput, WeightedList<WeightedTradeResult>> tradeRow : pkt.recipeViewerMainTrades()) {
 
                 CompoundTag pairData = new CompoundTag();
                 DataResult<Tag> dataResult1 = MainTradeRowInput.CODEC.encodeStart(NbtOps.INSTANCE, tradeRow.getFirst());
                 dataResult1.error().ifPresent(e -> Bumblezone.LOGGER.error("Failed to encode Queen Main Trade packet tag (first half): {}", e));
                 dataResult1.result().ifPresent(r -> pairData.put("input", r));
 
-                DataResult<Tag> dataResult = WeightedRandomList.codec(WeightedTradeResult.CODEC).encodeStart(NbtOps.INSTANCE, tradeRow.getSecond());
+                DataResult<Tag> dataResult = WeightedList.codec(WeightedTradeResult.CODEC).encodeStart(NbtOps.INSTANCE, tradeRow.getSecond());
                 dataResult.error().ifPresent(e -> Bumblezone.LOGGER.error("Failed to encode Queen Main Trade packet tag (second half): {}", e));
                 dataResult.result().ifPresent(r -> pairData.put("output", r));
 
@@ -97,11 +97,6 @@ public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedRan
         @Override
         public Runnable handle(final QueenMainTradesSyncPacket pkt) {
             return () -> QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades = pkt.recipeViewerMainTrades();
-        }
-
-        @Override
-        public Class<QueenMainTradesSyncPacket> type() {
-            return QueenMainTradesSyncPacket.class;
         }
 
         @Override

@@ -44,11 +44,6 @@ public record SyncHorseOwnerUUIDPacketFromServer(int horseId, UUID ownerUUID) im
         }
 
         @Override
-        public Class<SyncHorseOwnerUUIDPacketFromServer> type() {
-            return SyncHorseOwnerUUIDPacketFromServer.class;
-        }
-
-        @Override
         public ResourceLocation id() {
             return ID;
         }

@@ -42,11 +42,6 @@ public record MusicPacketFromServer(ResourceLocation musicRL, boolean play) impl
         }
 
         @Override
-        public Class<MusicPacketFromServer> type() {
-            return MusicPacketFromServer.class;
-        }
-
-        @Override
         public ResourceLocation id() {
             return ID;
         }

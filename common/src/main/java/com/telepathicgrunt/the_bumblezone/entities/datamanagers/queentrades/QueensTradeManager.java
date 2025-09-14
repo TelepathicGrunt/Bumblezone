@@ -27,7 +27,7 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -52,10 +52,10 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
     public static final QueensTradeManager QUEENS_TRADE_MANAGER = new QueensTradeManager();
 
     private final List<TradeCollection> rawTrades = new ArrayList<>();
-    public Object2ObjectOpenHashMap<Item, WeightedRandomList<WeightedTradeResult>> queenTrades = new Object2ObjectOpenHashMap<>();
-    public Object2ObjectOpenHashMap<Item, Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> specialDayQueenTrades = new Object2ObjectOpenHashMap<>();
+    public Object2ObjectOpenHashMap<Item, WeightedList<WeightedTradeResult>> queenTrades = new Object2ObjectOpenHashMap<>();
+    public Object2ObjectOpenHashMap<Item, Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedList<WeightedTradeResult>>> specialDayQueenTrades = new Object2ObjectOpenHashMap<>();
     public List<RandomizeTradeRowInput> recipeViewerRandomizerTrades = new ArrayList<>();
-    public List<Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>>> recipeViewerMainTrades = new ArrayList<>();
+    public List<Pair<MainTradeRowInput, WeightedList<WeightedTradeResult>>> recipeViewerMainTrades = new ArrayList<>();
 
     public record TradeCollection(
         Optional<SpecialDaysEntry> specialDaysEntry,
@@ -144,12 +144,12 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         }
 
         List<RandomizeTradeRowInput> tempRecipeViewerRandomizerTrades = new ArrayList<>();
-        List<Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>>> tempRecipeViewerMainTrades = new ArrayList<>();
+        List<Pair<MainTradeRowInput, WeightedList<WeightedTradeResult>>> tempRecipeViewerMainTrades = new ArrayList<>();
 
         // TagKey is to store if the key item was from a Tag or not.
-        Object2ObjectOpenHashMap<Item, Pair<WeightedRandomList<WeightedTradeResult>, TagKey<Item>>> tempQueenTradesFirstPass = new Object2ObjectOpenHashMap<>();
-        Object2ObjectOpenHashMap<Item, WeightedRandomList<WeightedTradeResult>> tempQueenTrades = new Object2ObjectOpenHashMap<>();
-        Object2ObjectOpenHashMap<Item, Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> tempSpecialDaysQueenTrades = new Object2ObjectOpenHashMap<>();
+        Object2ObjectOpenHashMap<Item, Pair<WeightedList<WeightedTradeResult>, TagKey<Item>>> tempQueenTradesFirstPass = new Object2ObjectOpenHashMap<>();
+        Object2ObjectOpenHashMap<Item, WeightedList<WeightedTradeResult>> tempQueenTrades = new Object2ObjectOpenHashMap<>();
+        Object2ObjectOpenHashMap<Item, Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedList<WeightedTradeResult>>> tempSpecialDaysQueenTrades = new Object2ObjectOpenHashMap<>();
 
         for (TradeCollection entry : rawTrades) {
             if (entry.specialDaysEntry().isPresent()) {
@@ -227,7 +227,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
             }
 
             for (Item item : wantSet) {
-                Pair<WeightedRandomList<WeightedTradeResult>, TagKey<Item>> pair = tempQueenTradesFirstPass.remove(item);
+                Pair<WeightedList<WeightedTradeResult>, TagKey<Item>> pair = tempQueenTradesFirstPass.remove(item);
                 tempQueenTrades.put(item, pair.getFirst());
             }
 
@@ -235,7 +235,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         });
 
         Set<TagKey<Item>> collectedTag = new HashSet<>();
-        for (Object2ObjectMap.Entry<Item, Pair<WeightedRandomList<WeightedTradeResult>, TagKey<Item>>> pairEntry : tempQueenTradesFirstPass.object2ObjectEntrySet()) {
+        for (Object2ObjectMap.Entry<Item, Pair<WeightedList<WeightedTradeResult>, TagKey<Item>>> pairEntry : tempQueenTradesFirstPass.object2ObjectEntrySet()) {
             pairEntry.getValue().getFirst().unwrap().forEach(e -> e.setTotalWeight(((WeightedRandomListAccessor)pairEntry.getValue().getFirst()).bumblezone$getTotalWeight()));
 
             if (pairEntry.getValue().getSecond() == null || !collectedTag.contains(pairEntry.getValue().getSecond())) {
@@ -311,7 +311,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         return tradeResultEntries;
     }
 
-    private static void populateSpecialDaysQueenTrades(Object2ObjectOpenHashMap<Item, Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> tempSpecialDaysQueenTrades, SpecialDaysEntry specialDaysEntry, List<TradeResultEntry> tradeResultEntries, TradeWantEntry tradeWantEntry) {
+    private static void populateSpecialDaysQueenTrades(Object2ObjectOpenHashMap<Item, Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedList<WeightedTradeResult>>> tempSpecialDaysQueenTrades, SpecialDaysEntry specialDaysEntry, List<TradeResultEntry> tradeResultEntries, TradeWantEntry tradeWantEntry) {
         List<Item> wantItems = new ArrayList<>(tradeWantEntry.wantItems().stream().map(Holder::value).toList());
         for (Item item : wantItems) {
             List<WeightedTradeResult> resultItems = new ArrayList<>();
@@ -319,18 +319,18 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 resultItems.add(new WeightedTradeResult(tradeResultEntry.tagKey(), Optional.of(tradeResultEntry.resultItems()), tradeResultEntry.count(), tradeResultEntry.xpReward(), tradeResultEntry.weight()));
             }
 
-            Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>> temp = new Object2ObjectOpenHashMap<>();
+            Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedList<WeightedTradeResult>> temp = new Object2ObjectOpenHashMap<>();
             if (tempSpecialDaysQueenTrades.containsKey(item) && tempSpecialDaysQueenTrades.get(item).containsKey(specialDaysEntry)) {
-                WeightedRandomList<WeightedTradeResult> existingTrades = tempSpecialDaysQueenTrades.get(item).get(specialDaysEntry);
+                WeightedList<WeightedTradeResult> existingTrades = tempSpecialDaysQueenTrades.get(item).get(specialDaysEntry);
                 resultItems.addAll(existingTrades.unwrap());
             }
 
-            temp.put(specialDaysEntry, WeightedRandomList.create(resultItems));
+            temp.put(specialDaysEntry, WeightedList.create(resultItems));
             tempSpecialDaysQueenTrades.put(item, temp);
         }
     }
 
-    private static void populateMainQueenTrades(Object2ObjectOpenHashMap<Item, Pair<WeightedRandomList<WeightedTradeResult>, TagKey<Item>>> tempQueenTrades, List<TradeResultEntry> tradeResultEntries, TradeWantEntry tradeWantEntry) {
+    private static void populateMainQueenTrades(Object2ObjectOpenHashMap<Item, Pair<WeightedList<WeightedTradeResult>, TagKey<Item>>> tempQueenTrades, List<TradeResultEntry> tradeResultEntries, TradeWantEntry tradeWantEntry) {
         List<Item> wantItems = tradeWantEntry.wantItems().stream().map(Holder::value).toList();
         for (Item item : wantItems) {
             List<WeightedTradeResult> existingTrades = new ArrayList<>();
@@ -351,20 +351,20 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 existingTrades.sort((a, b) -> b.weight - a.weight);
             }
 
-            tempQueenTrades.put(item, Pair.of(WeightedRandomList.create(existingTrades), key));
+            tempQueenTrades.put(item, Pair.of(WeightedList.create(existingTrades), key));
         }
     }
 
-    private static void populateRandomizedQueenTrades(Object2ObjectOpenHashMap<Item, Pair<WeightedRandomList<WeightedTradeResult>, TagKey<Item>>> tempQueenTrades, TradeWantEntry tradeRandomizeEntry) {
+    private static void populateRandomizedQueenTrades(Object2ObjectOpenHashMap<Item, Pair<WeightedList<WeightedTradeResult>, TagKey<Item>>> tempQueenTrades, TradeWantEntry tradeRandomizeEntry) {
         List<Item> items = tradeRandomizeEntry.wantItems().stream().map(Holder::value).toList();
         for (Item item : items) {
             if (tempQueenTrades.containsKey(item)) {
                 List<WeightedTradeResult> existingTrades = new ArrayList<>(tempQueenTrades.get(item).getFirst().unwrap());
                 existingTrades.add(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items.stream().map(Item::getDefaultInstance).toList()), 1, 0 , 1));
-                tempQueenTrades.put(item, Pair.of(WeightedRandomList.create(existingTrades), null));
+                tempQueenTrades.put(item, Pair.of(WeightedList.create(existingTrades), null));
             }
             else {
-                tempQueenTrades.put(item, Pair.of(WeightedRandomList.create(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items.stream().map(Item::getDefaultInstance).toList()), 1, 0 , 1)), tradeRandomizeEntry.tagKey.orElse(null)));
+                tempQueenTrades.put(item, Pair.of(WeightedList.create(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items.stream().map(Item::getDefaultInstance).toList()), 1, 0 , 1)), tradeRandomizeEntry.tagKey.orElse(null)));
             }
         }
     }
@@ -372,10 +372,10 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
     /////////////////////////////////////////////////////
     // Special day trades
 
-    public Optional<Pair<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> getSpecialDayItems(Item item) {
-        Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>> specialDayData = specialDayQueenTrades.get(item);
+    public Optional<Pair<SpecialDaysEntry, WeightedList<WeightedTradeResult>>> getSpecialDayItems(Item item) {
+        Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedList<WeightedTradeResult>> specialDayData = specialDayQueenTrades.get(item);
         if (specialDayData != null) {
-            for (Map.Entry<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>> specialDaysEntry : specialDayData.entrySet()) {
+            for (Map.Entry<SpecialDaysEntry, WeightedList<WeightedTradeResult>> specialDaysEntry : specialDayData.entrySet()) {
                 LocalDate dateNow = LocalDate.now();
                 LocalDate specialDayThisYear = getDateForYear(dateNow.getYear(), specialDaysEntry.getKey()).minusDays(1);
                 if (specialDayThisYear.isBefore(dateNow) && specialDayThisYear.plusDays(specialDaysEntry.getKey().daysLong() + 1).isAfter(dateNow)) {
@@ -393,8 +393,8 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
 
     public Optional<List<Item>> getSpecialDayItem() {
         List<Item> specialDayItems = new ArrayList<>();
-        for (Map.Entry<Item, Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> entry : specialDayQueenTrades.entrySet()) {
-            for (Map.Entry<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>> specialDaysEntry : entry.getValue().entrySet()) {
+        for (Map.Entry<Item, Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedList<WeightedTradeResult>>> entry : specialDayQueenTrades.entrySet()) {
+            for (Map.Entry<SpecialDaysEntry, WeightedList<WeightedTradeResult>> specialDaysEntry : entry.getValue().entrySet()) {
                 LocalDate dateNow = LocalDate.now();
                 LocalDate specialDayThisYear = getDateForYear(dateNow.getYear(), specialDaysEntry.getKey()).minusDays(1);
                 if (specialDayThisYear.isBefore(dateNow) && specialDayThisYear.plusDays(specialDaysEntry.getKey().daysLong() + 1).isAfter(dateNow)) {

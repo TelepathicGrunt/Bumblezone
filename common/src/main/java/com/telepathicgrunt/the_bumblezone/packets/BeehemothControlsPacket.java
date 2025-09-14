@@ -49,11 +49,6 @@ public record BeehemothControlsPacket(byte upPressed, byte downPressed) implemen
         }
 
         @Override
-        public Class<BeehemothControlsPacket> type() {
-            return BeehemothControlsPacket.class;
-        }
-
-        @Override
         public ResourceLocation id() {
             return ID;
         }
