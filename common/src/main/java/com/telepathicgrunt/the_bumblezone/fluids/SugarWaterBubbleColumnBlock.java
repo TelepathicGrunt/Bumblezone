@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
@@ -16,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BubbleColumnBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -24,6 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.redstone.Orientation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -66,13 +69,26 @@ public class SugarWaterBubbleColumnBlock extends BubbleColumnBlock {
     }
 
     @Override
-    public BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2) {
-        levelAccessor.scheduleTick(blockPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(levelAccessor));
-        if (!blockState.canSurvive(levelAccessor, blockPos) || direction == Direction.DOWN || direction == Direction.UP && !blockState2.is(Blocks.BUBBLE_COLUMN) && canExistIn(blockState2)) {
-            levelAccessor.scheduleTick(blockPos, BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK.get(), 5);
+    public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, Orientation orientation, boolean notify) {
+        level.scheduleTick(blockPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(level));
+        if (!blockState.canSurvive(level, blockPos) || orientation.getDirections().contains(Direction.DOWN) || orientation.getDirections().contains(Direction.UP)) {
+            boolean ticked = false;
+            if (orientation.getDirections().contains(Direction.DOWN)) {
+                BlockState sideState = level.getBlockState(blockPos.below());
+                if (!sideState.is(Blocks.BUBBLE_COLUMN) && canExistIn(sideState)) {
+                    level.scheduleTick(blockPos, BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK.get(), 5);
+                }
+            }
+
+            if (!ticked && orientation.getDirections().contains(Direction.UP)) {
+                BlockState sideState = level.getBlockState(blockPos.above());
+                if (!sideState.is(Blocks.BUBBLE_COLUMN) && canExistIn(sideState)) {
+                    level.scheduleTick(blockPos, BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK.get(), 5);
+                }
+            }
         }
 
-        return super.updateShape(blockState, direction, blockState2, levelAccessor, blockPos, blockPos2);
+        super.neighborChanged(blockState, level, blockPos, block, orientation, notify);
     }
 
     @Override
@@ -134,13 +150,13 @@ public class SugarWaterBubbleColumnBlock extends BubbleColumnBlock {
      */
     @Deprecated
     @Override
-    public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
+    public void entityInside(BlockState state, Level world, BlockPos position, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         if (entity instanceof Bee beeEntity && !beeEntity.isDeadOrDying()) {
             if (beeEntity.hurtMarked) {
                 beeEntity.heal(1);
             }
         }
 
-        super.entityInside(state, world, position, entity);
+        super.entityInside(state, world, position, entity, insideBlockEffectApplier);
     }
 }

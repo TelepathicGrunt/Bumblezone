@@ -6,10 +6,14 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -19,6 +23,7 @@ import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.redstone.Orientation;
 
 
 public class SugarWaterBlock extends LiquidBlock implements FluidGetter {
@@ -43,19 +48,14 @@ public class SugarWaterBlock extends LiquidBlock implements FluidGetter {
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-        if (this.shouldSpreadLiquid(world, pos, state)) {
-            world.scheduleTick(pos, state.getFluidState().getType(), this.getFluid().getTickDelay(world));
-        }
-    }
-
-    @Override
-    public BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor world, BlockPos blockPos, BlockPos blockPos2) {
-        if (blockState.getFluidState().isSource()) {
-            SugarWaterBubbleColumnBlock.updateColumn(world, blockPos, world.getBlockState(blockPos.below()));
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, Orientation orientation, boolean notify) {
+        if (this.shouldSpreadLiquid(level, pos, state)) {
+            level.scheduleTick(pos, state.getFluidState().getType(), this.getFluid().getTickDelay(level));
         }
 
-        return super.updateShape(blockState, direction, blockState2, world, blockPos, blockPos2);
+        if (state.getFluidState().isSource()) {
+            SugarWaterBubbleColumnBlock.updateColumn(level, pos, level.getBlockState(pos.below()));
+        }
     }
 
     @Override
@@ -100,14 +100,14 @@ public class SugarWaterBlock extends LiquidBlock implements FluidGetter {
      */
     @Deprecated
     @Override
-    public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
+    public void entityInside(BlockState state, Level world, BlockPos position, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         if (entity instanceof Bee beeEntity && !beeEntity.isDeadOrDying()) {
             if (beeEntity.hurtMarked) {
                 beeEntity.heal(1);
             }
         }
 
-        super.entityInside(state, world, position, entity);
+        super.entityInside(state, world, position, entity, insideBlockEffectApplier);
     }
 
     private void triggerMixEffects(Level world, BlockPos pos) {

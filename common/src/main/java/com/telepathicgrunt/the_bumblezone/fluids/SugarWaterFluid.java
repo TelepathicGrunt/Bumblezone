@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -61,9 +62,9 @@ public abstract class SugarWaterFluid extends BzFluid {
     }
 
     @Override
-    public void randomTick(Level level, BlockPos position, FluidState state, RandomSource random) {
+    public void randomTick(ServerLevel serverLevel, BlockPos position, FluidState state, RandomSource random) {
         //only attempts to grow sugar cane 50% of the time.
-        if (random.nextBoolean() || !level.hasChunksAt(position, position)) {
+        if (random.nextBoolean() || !serverLevel.hasChunksAt(position, position)) {
             return; // NeoForge: prevent loading unloaded chunks when checking neighbor's light
         }
 
@@ -75,12 +76,12 @@ public abstract class SugarWaterFluid extends BzFluid {
 
             //check one of the spot next to sugar water for sugar cane to grow
             mutablePos.set(position).move(direction).move(Direction.UP);
-            BlockState sideCropState = level.getBlockState(mutablePos);
+            BlockState sideCropState = serverLevel.getBlockState(mutablePos);
 
             if (sideCropState.is(BzTags.SUGAR_WATER_GROWS_PLANT_FASTER)) {
                 if (sideCropState.getBlock() instanceof SugarCaneBlock) {
                     // Only grow if we are next to ground that holds the sugar cane-like block
-                    if (level.getBlockState(mutablePos.below()).getBlock() instanceof SugarCaneBlock) {
+                    if (serverLevel.getBlockState(mutablePos.below()).getBlock() instanceof SugarCaneBlock) {
                         continue;
                     }
 
@@ -88,7 +89,7 @@ public abstract class SugarWaterFluid extends BzFluid {
 
                     //find top of sugar cane
                     while (sideCropState.getBlock() == Blocks.SUGAR_CANE && height <= 5) {
-                        sideCropState = level.getBlockState(mutablePos.move(Direction.UP));
+                        sideCropState = serverLevel.getBlockState(mutablePos.move(Direction.UP));
                         height++;
                     }
 
@@ -97,7 +98,7 @@ public abstract class SugarWaterFluid extends BzFluid {
                     }
 
                     mutablePos.move(Direction.DOWN);
-                    BlockState topSugarCaneLikeBlock = level.getBlockState(mutablePos);
+                    BlockState topSugarCaneLikeBlock = serverLevel.getBlockState(mutablePos);
 
                     Optional<Property<Integer>> blockCurrentAge = GeneralUtils.getBlockCurrentAge(topSugarCaneLikeBlock);
                     if (blockCurrentAge.isPresent()) {
@@ -108,13 +109,13 @@ public abstract class SugarWaterFluid extends BzFluid {
                                 mutablePos.move(Direction.UP);
                                 BlockState newTopSugarCaneLikeBlock = topSugarCaneLikeBlock.setValue(blockCurrentAge.get(), 0);
                                 newTopSugarCaneLikeBlock = GeneralUtils.copyNonAgeProperties(topSugarCaneLikeBlock, newTopSugarCaneLikeBlock);
-                                level.setBlock(mutablePos, newTopSugarCaneLikeBlock, 3);
+                                serverLevel.setBlock(mutablePos, newTopSugarCaneLikeBlock, 3);
                             }
                             // Age up the block instead of growing
                             else {
                                 BlockState newTopSugarCaneLikeBlock = topSugarCaneLikeBlock.setValue(blockCurrentAge.get(), (topSugarCaneLikeBlock.getValue(blockCurrentAge.get())) + 1);
                                 newTopSugarCaneLikeBlock = GeneralUtils.copyNonAgeProperties(topSugarCaneLikeBlock, newTopSugarCaneLikeBlock);
-                                level.setBlock(mutablePos, newTopSugarCaneLikeBlock, 3);
+                                serverLevel.setBlock(mutablePos, newTopSugarCaneLikeBlock, 3);
                             }
                         }
                     }
@@ -127,7 +128,7 @@ public abstract class SugarWaterFluid extends BzFluid {
                         if (agePropertyMaxAge.isPresent() && !agePropertyMaxAge.get().equals(sideCropState.getValue(blockCurrentAge.get()))) {
                             BlockState newSideCropState = sideCropState.setValue(blockCurrentAge.get(), (sideCropState.getValue(blockCurrentAge.get())) + 1);
                             newSideCropState = GeneralUtils.copyNonAgeProperties(sideCropState, newSideCropState);
-                            level.setBlock(mutablePos, newSideCropState, 3);
+                            serverLevel.setBlock(mutablePos, newSideCropState, 3);
                         }
                     }
                 }
@@ -215,21 +216,6 @@ public abstract class SugarWaterFluid extends BzFluid {
     }
 
     @Override
-    public final boolean canHoldFluid(BlockGetter blockGetter, BlockPos blockPos, BlockState blockState, Fluid fluid) {
-        Block block = blockState.getBlock();
-        if (block instanceof LiquidBlockContainer liquidBlockContainer) {
-            return liquidBlockContainer.canPlaceLiquid(null, blockGetter, blockPos, blockState, fluid) || ((LiquidBlockContainer) block).canPlaceLiquid(null, blockGetter, blockPos, blockState, fluid == BzFluids.SUGAR_WATER_FLUID.get() ? Fluids.WATER : Fluids.FLOWING_WATER);
-        }
-        if (block instanceof DoorBlock || blockState.is(BlockTags.SIGNS) || blockState.is(Blocks.LADDER) || blockState.is(Blocks.SUGAR_CANE) || blockState.is(Blocks.BUBBLE_COLUMN)) {
-            return false;
-        }
-        if (blockState.is(BlockTags.PORTALS) || blockState.is(Blocks.STRUCTURE_VOID) || blockState.is(BlockTags.UNDERWATER_BONEMEALS) || blockState.is(Blocks.KELP) || blockState.is(Blocks.KELP_PLANT)) {
-            return false;
-        }
-        return !blockState.blocksMotion();
-    }
-
-    @Override
     protected void spreadTo(LevelAccessor levelAccessor, BlockPos blockPos, BlockState blockState, Direction direction, FluidState fluidState) {
         if (blockState.getBlock() instanceof LiquidBlockContainer liquidBlockContainer) {
             boolean canPlaceLiquid = liquidBlockContainer.canPlaceLiquid(null, levelAccessor, blockPos, blockState, fluidState.getType());
@@ -269,7 +255,7 @@ public abstract class SugarWaterFluid extends BzFluid {
         }
 
         @Override
-        protected boolean canConvertToSource(Level level) {
+        protected boolean canConvertToSource(ServerLevel level) {
             return level.getGameRules().getBoolean(GameRules.RULE_WATER_SOURCE_CONVERSION);
         }
     }
@@ -291,7 +277,7 @@ public abstract class SugarWaterFluid extends BzFluid {
         }
 
         @Override
-        protected boolean canConvertToSource(Level level) {
+        protected boolean canConvertToSource(ServerLevel level) {
             return level.getGameRules().getBoolean(GameRules.RULE_WATER_SOURCE_CONVERSION);
         }
     }

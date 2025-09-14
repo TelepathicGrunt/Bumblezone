@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,6 +17,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -29,6 +31,7 @@ import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.Vec3;
 
 import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.ABOVE_FLUID;
@@ -71,18 +74,13 @@ public class RoyalJellyFluidBlock extends LiquidBlock implements FluidGetter {
     }
 
     @Override
-    public void neighborChanged(BlockState blockState, Level world, BlockPos blockPos, Block block, BlockPos fromPos, boolean notify) {
-        if (this.neighboringFluidInteractions(world, blockPos)) {
-            world.scheduleTick(blockPos, blockState.getFluidState().getType(), RoyalJellyFluid.adjustedFlowSpeed(this.getFluid().getTickDelay(world), world, blockPos));
-        }
-    }
-
-    @Override
-    public BlockState updateShape(BlockState blockState, Direction direction, BlockState previousBlockState, LevelAccessor level, BlockPos blockPos, BlockPos blockPos1) {
-        if (blockState.getFluidState().isSource() || previousBlockState.getFluidState().isSource()) {
+    public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, Orientation orientation, boolean notify) {
+        if (this.neighboringFluidInteractions(level, blockPos)) {
             level.scheduleTick(blockPos, blockState.getFluidState().getType(), RoyalJellyFluid.adjustedFlowSpeed(this.getFluid().getTickDelay(level), level, blockPos));
         }
-        return super.updateShape(blockState, direction, previousBlockState, level, blockPos, blockPos1);
+        else if (blockState.getFluidState().isSource()) {
+            level.scheduleTick(blockPos, blockState.getFluidState().getType(), RoyalJellyFluid.adjustedFlowSpeed(this.getFluid().getTickDelay(level), level, blockPos));
+        }
     }
 
     @Override
@@ -92,13 +90,13 @@ public class RoyalJellyFluidBlock extends LiquidBlock implements FluidGetter {
         }
     }
 
-    private boolean neighboringFluidInteractions(Level world, BlockPos pos)  {
+    private boolean neighboringFluidInteractions(Level level, BlockPos pos)  {
         boolean lavaflag = false;
         boolean lavadownflag = false;
 
         for (Direction direction : Direction.values()) {
             BlockPos sidePos = pos.relative(direction);
-            FluidState sideFluid = world.getFluidState(sidePos);
+            FluidState sideFluid = level.getFluidState(sidePos);
             if (sideFluid.is(FluidTags.LAVA)) {
                 lavaflag = true;
                 if (direction == Direction.DOWN) {
@@ -107,29 +105,29 @@ public class RoyalJellyFluidBlock extends LiquidBlock implements FluidGetter {
                 break;
             }
             else if(!sideFluid.isEmpty() && !sideFluid.is(BzTags.HONEY_FLUID)) {
-                FluidState currentFluid = world.getFluidState(pos);
+                FluidState currentFluid = level.getFluidState(pos);
                 if (direction == Direction.DOWN && currentFluid.hasProperty(BOTTOM_LEVEL) && currentFluid.getValue(BOTTOM_LEVEL) != 0) {
                     continue;
                 }
 
                 if (direction == Direction.UP) {
-                    world.setBlock(pos, BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState(), 3);
+                    level.setBlock(pos, BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState(), 3);
                     return false;
                 }
 
-                BlockState sideState = world.getBlockState(sidePos);
+                BlockState sideState = level.getBlockState(sidePos);
                 if (sideState.getBlock() instanceof LiquidBlock || !sideState.getFluidState().isEmpty() || sideState.canBeReplaced()) {
-                    world.setBlock(sidePos, BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState(), 3);
+                    level.setBlock(sidePos, BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState(), 3);
                 }
                 else if (!currentFluid.isSource()) {
-                    world.setBlock(pos, BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState(), 3);
+                    level.setBlock(pos, BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState(), 3);
                     return false;
                 }
             }
         }
 
         if (lavaflag) {
-            FluidState currentFluid = world.getFluidState(pos);
+            FluidState currentFluid = level.getFluidState(pos);
             if (currentFluid.isSource()) {
                 BlockState resultBlockState = BzBlocks.SUGAR_INFUSED_STONE.get().defaultBlockState();
                 for (ModCompat compat : ModChecker.HONEY_FLUID_LAVA_INTERACTION_COMPATS) {
@@ -139,8 +137,8 @@ public class RoyalJellyFluidBlock extends LiquidBlock implements FluidGetter {
                     }
                 }
 
-                world.setBlockAndUpdate(pos, resultBlockState);
-                this.triggerMixEffects(world, pos);
+                level.setBlockAndUpdate(pos, resultBlockState);
+                this.triggerMixEffects(level, pos);
                 return false;
             }
 
@@ -153,8 +151,8 @@ public class RoyalJellyFluidBlock extends LiquidBlock implements FluidGetter {
                     }
                 }
 
-                world.setBlockAndUpdate(pos, resultBlockState);
-                this.triggerMixEffects(world, pos);
+                level.setBlockAndUpdate(pos, resultBlockState);
+                this.triggerMixEffects(level, pos);
                 return false;
             }
         }
@@ -181,7 +179,7 @@ public class RoyalJellyFluidBlock extends LiquidBlock implements FluidGetter {
      * Heal bees if they are damaged or create honey source if pollinated
      */
     @Override
-    public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
+    public void entityInside(BlockState state, Level world, BlockPos position, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
         double verticalSpeedDeltaLimit = 0.01D;
         if (entity instanceof Bee beeEntity && !beeEntity.isDeadOrDying()) {
             if (PlatformService.INSTANCE.isEyesInNoFluid(entity)) {
@@ -231,7 +229,7 @@ public class RoyalJellyFluidBlock extends LiquidBlock implements FluidGetter {
                     true));
         }
 
-        super.entityInside(state, world, position, entity);
+        super.entityInside(state, world, position, entity, insideBlockEffectApplier);
     }
 
     private void triggerMixEffects(Level world, BlockPos pos) {

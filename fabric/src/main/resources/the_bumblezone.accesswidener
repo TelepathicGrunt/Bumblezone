@@ -7,5 +7,7 @@ accessible class net/minecraft/world/level/block/entity/BlockEntityType$BlockEnt
 
 accessible method net/minecraft/world/entity/item/FallingBlockEntity <init> (Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/level/block/state/BlockState;)V
 
+accessible method net/minecraft/world/level/material/FlowingFluid canMaybePassThrough (Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/FluidState;)Z
+
 accessible method net/minecraft/world/item/ItemCooldowns$CooldownInstance <init> (II)V
 accessible class net/minecraft/world/item/ItemCooldowns$CooldownInstance

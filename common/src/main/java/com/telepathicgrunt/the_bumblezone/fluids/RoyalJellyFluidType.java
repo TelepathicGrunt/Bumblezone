@@ -27,9 +27,6 @@ public class RoyalJellyFluidType {
                 .density(2000)
                 .temperature(300)
                 .tickRate(30)
-                .still(RoyalJellyClientProperties.ROYAL_JELLY_FLUID_STILL_TEXTURE)
-                .flowing(RoyalJellyClientProperties.ROYAL_JELLY_FLUID_FLOWING_TEXTURE)
-                .overlay(RoyalJellyClientProperties.ROYAL_JELLY_FLUID_FLOWING_TEXTURE)
                 .sounds("bucket_fill", SoundEvents.BUCKET_FILL)
                 .sounds("bucket_empty", SoundEvents.BUCKET_EMPTY)
                 .sounds("fluid_vaporize", SoundEvents.FIRE_EXTINGUISH);

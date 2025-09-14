@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
@@ -116,16 +117,16 @@ public abstract class RoyalJellyFluid extends BzFluid {
     }
 
     @Override
-    public void tick(Level world, BlockPos blockPos, FluidState fluidState) {
+    public void tick(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, FluidState fluidState) {
         boolean justFilledBottom = false;
         // removes self if not source and is not fed.
         // otherwise, schedule fluid tick and update flow.
         if (!fluidState.isSource()) {
-            FluidState newFluidState = this.getNewLiquid(world, blockPos, world.getBlockState(blockPos));
-            int spreadDelay = this.getSpreadDelay(world, blockPos, fluidState, newFluidState);
+            FluidState newFluidState = this.getNewLiquid(serverLevel, blockPos, serverLevel.getBlockState(blockPos));
+            int spreadDelay = this.getSpreadDelay(serverLevel, blockPos, fluidState, newFluidState);
             if (newFluidState.isEmpty()) {
                 fluidState = newFluidState;
-                world.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
+                serverLevel.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
             }
             else if (!newFluidState.equals(fluidState)) {
                 if(fluidState.getValue(BOTTOM_LEVEL) != 0 && (newFluidState.isSource() || newFluidState.getValue(BOTTOM_LEVEL) == 0))
@@ -133,9 +134,9 @@ public abstract class RoyalJellyFluid extends BzFluid {
 
                 fluidState = newFluidState;
                 BlockState blockstate = newFluidState.createLegacyBlock();
-                world.setBlock(blockPos, blockstate, 2);
-                world.scheduleTick(blockPos, newFluidState.getType(), adjustedFlowSpeed(spreadDelay, world, blockPos));
-                world.updateNeighborsAt(blockPos, blockstate.getBlock());
+                serverLevel.setBlock(blockPos, blockstate, 2);
+                serverLevel.scheduleTick(blockPos, newFluidState.getType(), adjustedFlowSpeed(spreadDelay, serverLevel, blockPos));
+                serverLevel.updateNeighborsAt(blockPos, blockstate.getBlock());
             }
         }
 
@@ -145,44 +146,42 @@ public abstract class RoyalJellyFluid extends BzFluid {
         if (!fluidState.isEmpty()) {
             int bottomFluidLevel = fluidState.isSource() ? 0 : fluidState.getValue(BOTTOM_LEVEL);
             if(bottomFluidLevel == 0) {
-                BlockState blockState = world.getBlockState(blockPos);
                 BlockPos belowBlockPos = blockPos.below();
-                BlockState belowBlockState = world.getBlockState(belowBlockPos);
-                FluidState belowFluidState = this.getNewLiquid(world, belowBlockPos, belowBlockState);
+                BlockState belowBlockState = serverLevel.getBlockState(belowBlockPos);
+                FluidState belowFluidState = this.getNewLiquid(serverLevel, belowBlockPos, belowBlockState);
                 if (!belowBlockState.getFluidState().is(BzTags.ROYAL_JELLY_FLUID) &&
-                    this.canSpreadTo(world, blockPos, blockState, Direction.DOWN, belowBlockPos, belowBlockState, world.getFluidState(belowBlockPos), belowFluidState.getType())) {
+                    this.canMaybePassThrough(serverLevel, blockPos, blockState, Direction.DOWN, belowBlockPos, belowBlockState, belowFluidState)) {
 
                     if(!justFilledBottom) {
-                        this.spreadDown(world, belowBlockPos, belowBlockState, Direction.DOWN, belowFluidState);
-                        if (((FlowingFluidAccessor)this).bumblezone$callSourceNeighborCount(world, blockPos) >= 3) {
-                            ((FlowingFluidAccessor)this).bumblezone$callSpreadToSides(world, blockPos, fluidState, blockState);
+                        this.spreadDown(serverLevel, belowBlockPos, belowBlockState, Direction.DOWN, belowFluidState);
+                        if (((FlowingFluidAccessor)this).bumblezone$callSourceNeighborCount(serverLevel, blockPos) >= 3) {
+                            ((FlowingFluidAccessor)this).bumblezone$callSpreadToSides(serverLevel, blockPos, fluidState, blockState);
                         }
                     }
                 }
                 else if (fluidState.isSource() || !belowBlockState.getFluidState().getType().isSame(this)) {
-                    ((FlowingFluidAccessor)this).bumblezone$callSpreadToSides(world, blockPos, fluidState, blockState);
+                    ((FlowingFluidAccessor)this).bumblezone$callSpreadToSides(serverLevel, blockPos, fluidState, blockState);
                 }
             }
         }
     }
 
     @Override
-    protected void spread(Level world, BlockPos blockPos, FluidState fluidState) {
+    protected void spread(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, FluidState fluidState) {
         if (!fluidState.isEmpty()) {
             int bottomFluidLevel = fluidState.getValue(BOTTOM_LEVEL);
             if(bottomFluidLevel == 0) {
-                BlockState blockState = world.getBlockState(blockPos);
                 BlockPos belowBlockPos = blockPos.below();
-                BlockState belowBlockState = world.getBlockState(belowBlockPos);
-                FluidState belowFluidState = this.getNewLiquid(world, belowBlockPos, belowBlockState);
-                if (!belowBlockState.getFluidState().is(BzTags.ROYAL_JELLY_FLUID) && this.canSpreadTo(world, blockPos, blockState, Direction.DOWN, belowBlockPos, belowBlockState, world.getFluidState(belowBlockPos), belowFluidState.getType())) {
-                    this.spreadDown(world, belowBlockPos, belowBlockState, Direction.DOWN, belowFluidState);
-                    if (((FlowingFluidAccessor)this).bumblezone$callSourceNeighborCount(world, blockPos) >= 3) {
-                        ((FlowingFluidAccessor)this).bumblezone$callSpreadToSides(world, blockPos, fluidState, blockState);
+                BlockState belowBlockState = serverLevel.getBlockState(belowBlockPos);
+                FluidState belowFluidState = this.getNewLiquid(serverLevel, belowBlockPos, belowBlockState);
+                if (!belowBlockState.getFluidState().is(BzTags.ROYAL_JELLY_FLUID) && this.canMaybePassThrough(serverLevel, blockPos, blockState, Direction.DOWN, belowBlockPos, belowBlockState, belowFluidState)) {
+                    this.spreadDown(serverLevel, belowBlockPos, belowBlockState, Direction.DOWN, belowFluidState);
+                    if (((FlowingFluidAccessor)this).bumblezone$callSourceNeighborCount(serverLevel, blockPos) >= 3) {
+                        ((FlowingFluidAccessor)this).bumblezone$callSpreadToSides(serverLevel, blockPos, fluidState, blockState);
                     }
                 }
                 else if (fluidState.isSource() || !belowBlockState.getFluidState().getType().isSame(this)) {
-                    ((FlowingFluidAccessor)this).bumblezone$callSpreadToSides(world, blockPos, fluidState, blockState);
+                    ((FlowingFluidAccessor)this).bumblezone$callSpreadToSides(serverLevel, blockPos, fluidState, blockState);
                 }
             }
         }
@@ -196,7 +195,7 @@ public abstract class RoyalJellyFluid extends BzFluid {
     }
 
     @Override
-    protected FluidState getNewLiquid(Level worldReader, BlockPos blockPos, BlockState blockState) {
+    protected FluidState getNewLiquid(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState) {
         boolean isBzFluidBlock = blockState.hasProperty(BOTTOM_LEVEL) && blockState.hasProperty(LiquidBlock.LEVEL);
         int lowestNeighboringFluidLevel = isBzFluidBlock ? blockState.getValue(BOTTOM_LEVEL) : HoneyFluidBlock.maxBottomLayer;
         int currentFluidLevel = isBzFluidBlock ? blockState.getFluidState().isSource() ? 8 : blockState.getFluidState().getValue(LEVEL) : 0;
@@ -205,15 +204,15 @@ public abstract class RoyalJellyFluid extends BzFluid {
         boolean hasAboveFluid = isBzFluidBlock ? blockState.getValue(ABOVE_FLUID) : false;
 
         BlockPos aboveBlockPos = blockPos.above();
-        BlockState aboveBlockState = worldReader.getBlockState(aboveBlockPos);
-        BlockState belowBlockState = worldReader.getBlockState(blockPos.below());
-        boolean canPassThroughBelow = ((FlowingFluidAccessor)this).bumblezone$callCanPassThroughWall(Direction.DOWN, worldReader, blockPos, blockState, blockPos.below(), belowBlockState);
+        BlockState aboveBlockState = serverLevel.getBlockState(aboveBlockPos);
+        BlockState belowBlockState = serverLevel.getBlockState(blockPos.below());
+        boolean canPassThroughBelow = ((FlowingFluidAccessor)this).bumblezone$callCanPassThroughWall(Direction.DOWN, serverLevel, blockPos, blockState, blockPos.below(), belowBlockState);
 
         for(Direction direction : Direction.Plane.HORIZONTAL) {
             BlockPos sideBlockPos = blockPos.relative(direction);
-            BlockState sideBlockState = worldReader.getBlockState(sideBlockPos);
+            BlockState sideBlockState = serverLevel.getBlockState(sideBlockPos);
             FluidState sideFluidState = sideBlockState.getFluidState();
-            if (sideFluidState.getType().isSame(this) && ((FlowingFluidAccessor)this).bumblezone$callCanPassThroughWall(direction, worldReader, blockPos, blockState, sideBlockPos, sideBlockState)) {
+            if (sideFluidState.getType().isSame(this) && ((FlowingFluidAccessor)this).bumblezone$callCanPassThroughWall(direction, serverLevel, blockPos, blockState, sideBlockPos, sideBlockState)) {
                 if (sideFluidState.isSource()) {
                     ++neighboringFluidSource;
                 }
@@ -230,12 +229,12 @@ public abstract class RoyalJellyFluid extends BzFluid {
         int newBottomFluidLevel = Math.max(lowestNeighboringFluidLevel - 1, 0);
         boolean isFalling = true;
         int newFluidLevel = 8;
-        int dropOffValue = this.getDropOff(worldReader);
+        int dropOffValue = this.getDropOff(serverLevel);
         if(hasAboveFluid && !aboveFluidIsThisFluid) {
             dropOffValue = 0;
         }
 
-        if (aboveFluidIsThisFluid && ((FlowingFluidAccessor)this).bumblezone$callCanPassThroughWall(Direction.UP, worldReader, blockPos, blockState, aboveBlockPos, aboveBlockState)) {
+        if (aboveFluidIsThisFluid && ((FlowingFluidAccessor)this).bumblezone$callCanPassThroughWall(Direction.UP, serverLevel, blockPos, blockState, aboveBlockPos, aboveBlockState)) {
             if(!aboveFluidState.isSource() && aboveFluidState.is(BzTags.SPECIAL_HONEY_LIKE) && aboveFluidState.getValue(BOTTOM_LEVEL) != 0) {
                 newFluidLevel = highestNeighboringFluidLevel - dropOffValue;
             }
@@ -297,7 +296,7 @@ public abstract class RoyalJellyFluid extends BzFluid {
         }
 
         @Override
-        protected boolean canConvertToSource(Level level) {
+        protected boolean canConvertToSource(ServerLevel level) {
             return true;
         }
     }
@@ -325,7 +324,7 @@ public abstract class RoyalJellyFluid extends BzFluid {
         }
 
         @Override
-        protected boolean canConvertToSource(Level level) {
+        protected boolean canConvertToSource(ServerLevel level) {
             return false;
         }
     }

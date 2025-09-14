@@ -26,10 +26,6 @@ public class SugarWaterFluidType {
                 .viscosity(1100)
                 .density(1100)
                 .temperature(300)
-                .still(SugarWaterClientProperties.FLUID_STILL_TEXTURE)
-                .flowing(SugarWaterClientProperties.FLUID_FLOWING_TEXTURE)
-                .overlay(SugarWaterClientProperties.FLUID_OVERLAY_TEXTURE)
-                .screenOverlay(SugarWaterClientProperties.TEXTURE_UNDERWATER)
                 .sounds("bucket_fill", SoundEvents.BUCKET_FILL)
                 .sounds("bucket_empty", SoundEvents.BUCKET_EMPTY)
                 .sounds("fluid_vaporize", SoundEvents.FIRE_EXTINGUISH);

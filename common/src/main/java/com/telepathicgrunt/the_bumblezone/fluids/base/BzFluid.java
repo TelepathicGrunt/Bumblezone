@@ -4,6 +4,7 @@ import com.teamresourceful.resourcefullib.common.fluid.ResourcefulFlowingFluid;
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
@@ -53,7 +54,7 @@ public abstract class BzFluid extends ResourcefulFlowingFluid {
     }
 
     @Override
-    protected boolean canConvertToSource(@NotNull Level level) {
+    protected boolean canConvertToSource(@NotNull ServerLevel level) {
         return info.properties().canConvertToSource();
     }
 
