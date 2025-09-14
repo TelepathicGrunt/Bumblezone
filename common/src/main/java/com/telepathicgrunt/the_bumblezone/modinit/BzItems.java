@@ -6,7 +6,6 @@ import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.CarvableWax;
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
-import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.items.BeeBread;
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.BeeStinger;
@@ -40,19 +39,14 @@ import com.telepathicgrunt.the_bumblezone.items.essence.LifeEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.RadianceEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.RagingEssence;
 import net.minecraft.core.cauldron.CauldronInteraction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.food.Foods;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterials;
-import net.minecraft.world.item.BannerPatternItem;
+import net.minecraft.tags.BannerPatternTags;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.component.Consumables;
+import net.minecraft.world.item.equipment.ArmorMaterials;
 import net.minecraft.world.level.block.DispenserBlock;
 
 
@@ -157,17 +151,17 @@ public class BzItems {
 
     //items
     public static final RegistryEntry<Item> ROYAL_JELLY_BUCKET = ITEMS.register("royal_jelly_bucket", () -> new BzCustomBucketItem(BzFluids.ROYAL_JELLY_FLUID_TYPE.get(), new Item.Properties().rarity(Rarity.EPIC).craftRemainder(Items.BUCKET).stacksTo(1)));
-    public static final RegistryEntry<Item> ROYAL_JELLY_BOTTLE = ITEMS.register("royal_jelly_bottle", () -> new RoyalJellyBottle((new Item.Properties().rarity(Rarity.EPIC)).craftRemainder(Items.GLASS_BOTTLE).food(new FoodProperties.Builder().usingConvertsTo(Items.GLASS_BOTTLE).nutrition(12).saturationModifier(1.0F).effect(new MobEffectInstance(MobEffects.SLOW_FALLING, 9600, 0), 1.0F).effect(new MobEffectInstance(MobEffects.JUMP_BOOST, 9600, 3), 1.0F).effect(new MobEffectInstance(MobEffects.SPEED, 9600, 1), 1.0F).effect(new MobEffectInstance(BzEffects.BEENERGIZED.holder(), 9600, 2), 1.0F).build()).stacksTo(16)));
+    public static final RegistryEntry<Item> ROYAL_JELLY_BOTTLE = ITEMS.register("royal_jelly_bottle", () -> new RoyalJellyBottle((new Item.Properties().rarity(Rarity.EPIC)).craftRemainder(Items.GLASS_BOTTLE).usingConvertsTo(Items.GLASS_BOTTLE).food(BzFoodAndConsumables.ROYAL_JELLY_BOTTLE_FOOD, BzFoodAndConsumables.ROYAL_JELLY_BOTTLE_CONSUME).stacksTo(16)));
     public static final RegistryEntry<Item> HONEY_BUCKET = ITEMS.register("honey_bucket", () -> new BzCustomBucketItem(BzFluids.HONEY_FLUID_TYPE.get(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryEntry<Item> SUGAR_WATER_BUCKET = ITEMS.register("sugar_water_bucket", () -> new BzCustomBucketItem(BzFluids.SUGAR_WATER_FLUID_TYPE.get(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
-    public static final RegistryEntry<Item> SUGAR_WATER_BOTTLE = ITEMS.register("sugar_water_bottle", () -> new SugarWaterBottle((new Item.Properties()).craftRemainder(Items.GLASS_BOTTLE).food(new FoodProperties.Builder().usingConvertsTo(Items.GLASS_BOTTLE).nutrition(1).saturationModifier(0.05F).effect(new MobEffectInstance(MobEffects.DIG_SPEED, 600, 0), 1.0F).build()).stacksTo(16)));
+    public static final RegistryEntry<Item> SUGAR_WATER_BOTTLE = ITEMS.register("sugar_water_bottle", () -> new SugarWaterBottle((new Item.Properties()).craftRemainder(Items.GLASS_BOTTLE).usingConvertsTo(Items.GLASS_BOTTLE).food(BzFoodAndConsumables.SUGAR_WATER_FOOD, BzFoodAndConsumables.SUGAR_WATER_CONSUME).stacksTo(16)));
     public static final RegistryEntry<Item> HONEY_COMPASS = ITEMS.register("honey_compass", () -> new HoneyCompass(new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryEntry<Item> BEE_BREAD = ITEMS.register("bee_bread", () -> new BeeBread(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationModifier(0.1F).alwaysEdible().effect(new MobEffectInstance(BzEffects.BEENERGIZED.holder(), 6000, 0), 1.0F).effect(new MobEffectInstance(MobEffects.CONFUSION, 120, 1), 1.0F).build())));
-    public static final RegistryEntry<Item> BEE_SOUP = ITEMS.register("bee_soup", () -> new Item(new Item.Properties().craftRemainder(Items.BOWL).food(new FoodProperties.Builder().usingConvertsTo(Items.BOWL).nutrition(12).saturationModifier(1.6F).effect(new MobEffectInstance(BzEffects.BEENERGIZED.holder(), 12000, 1), 1.0F).effect(new MobEffectInstance(MobEffects.LEVITATION, 800, 0), 0.2F).effect(new MobEffectInstance(MobEffects.POISON, 800, 0), 0.2F).effect(new MobEffectInstance(MobEffects.SLOW_FALLING, 6000, 0), 0.2F).effect(new MobEffectInstance(MobEffects.LUCK, 18000, 0), 0.2F).effect(new MobEffectInstance(BzEffects.PARALYZED.holder(), Math.min(BzGeneralConfigs.paralyzedMaxTickDuration, 200), 0), 0.2F).build())));
+    public static final RegistryEntry<Item> BEE_BREAD = ITEMS.register("bee_bread", () -> new BeeBread(new Item.Properties().food(BzFoodAndConsumables.BEE_BREAD_FOOD, BzFoodAndConsumables.BEE_BREAD_CONSUME)));
+    public static final RegistryEntry<Item> BEE_SOUP = ITEMS.register("bee_soup", () -> new Item(new Item.Properties().craftRemainder(Items.BOWL).usingConvertsTo(Items.BOWL).food(BzFoodAndConsumables.BEE_SOUP_FOOD, BzFoodAndConsumables.BEE_BREAD_CONSUME)));
     public static final RegistryEntry<Item> BUZZING_BRIEFCASE = ITEMS.register("buzzing_briefcase", () -> new BuzzingBriefcase(new Item.Properties().stacksTo(1)));
     public static final RegistryEntry<Item> POLLEN_PUFF = ITEMS.register("pollen_puff", () -> new PollenPuff(new Item.Properties().stacksTo(16)));
     public static final RegistryEntry<Item> DIRT_PELLET = ITEMS.register("dirt_pellet", () -> new DirtPellet(new Item.Properties().stacksTo(16)));
-    public static final RegistryEntry<HoneyCrystalShards> HONEY_CRYSTAL_SHARDS = ITEMS.register("honey_crystal_shards", () -> new HoneyCrystalShards(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationModifier(0.15F).build())));
+    public static final RegistryEntry<HoneyCrystalShards> HONEY_CRYSTAL_SHARDS = ITEMS.register("honey_crystal_shards", () -> new HoneyCrystalShards(new Item.Properties().food(BzFoodAndConsumables.HONEY_CRYSTAL_SHARDS_FOOD)));
     public static final RegistryEntry<Item> BEE_STINGER = ITEMS.register("bee_stinger", () -> new BeeStinger(new Item.Properties()));
     public static final RegistryEntry<Item> STINGER_SPEAR = ITEMS.register("stinger_spear", () -> new StingerSpearItem(new Item.Properties().stacksTo(1).durability(220).attributes(StingerSpearItem.createAttributes()).rarity(Rarity.UNCOMMON)));
     public static final RegistryEntry<Item> BEE_CANNON = ITEMS.register("bee_cannon", () -> new BeeCannon(new Item.Properties().stacksTo(1).durability(50)));
@@ -184,14 +178,14 @@ public class BzItems {
     public static final RegistryEntry<Item> HONEY_BEE_LEGGINGS_2 = ITEMS.register("honey_bee_leggings_2", () -> new HoneyBeeLeggings(BzArmorMaterials.BEE_MATERIAL.holder(), ArmorItem.Type.LEGGINGS, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).durability(360), 2));
     public static final RegistryEntry<Item> CARPENTER_BEE_BOOTS_1 = ITEMS.register("carpenter_bee_boots_1", () -> new CarpenterBeeBoots(BzArmorMaterials.BEE_MATERIAL.holder(), ArmorItem.Type.BOOTS, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).durability(312), 1));
     public static final RegistryEntry<Item> CARPENTER_BEE_BOOTS_2 = ITEMS.register("carpenter_bee_boots_2", () -> new CarpenterBeeBoots(BzArmorMaterials.BEE_MATERIAL.holder(), ArmorItem.Type.BOOTS, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).durability(312), 2));
-    public static final RegistryEntry<Item> BANNER_PATTERN_BEE = ITEMS.register("banner_pattern_bee", () -> new BannerPatternItem(BzTags.PATTERN_ITEM_BEE, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-    public static final RegistryEntry<Item> BANNER_PATTERN_HONEYCOMBS = ITEMS.register("banner_pattern_honeycombs", () -> new BannerPatternItem(BzTags.PATTERN_ITEM_HONEYCOMBS, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-    public static final RegistryEntry<Item> BANNER_PATTERN_SWORDS = ITEMS.register("banner_pattern_swords", () -> new BannerPatternItem(BzTags.PATTERN_ITEM_SWORDS, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-    public static final RegistryEntry<Item> BANNER_PATTERN_SUN = ITEMS.register("banner_pattern_sun", () -> new BannerPatternItem(BzTags.PATTERN_ITEM_SUN, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-    public static final RegistryEntry<Item> BANNER_PATTERN_PLUSES = ITEMS.register("banner_pattern_pluses", () -> new BannerPatternItem(BzTags.PATTERN_ITEM_PLUSES, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-    public static final RegistryEntry<Item> BANNER_PATTERN_EYES = ITEMS.register("banner_pattern_eyes", () -> new BannerPatternItem(BzTags.PATTERN_ITEM_EYES, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-    public static final RegistryEntry<Item> BANNER_PATTERN_PEACE = ITEMS.register("banner_pattern_peace", () -> new BannerPatternItem(BzTags.PATTERN_ITEM_PEACE, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-    public static final RegistryEntry<Item> BANNER_PATTERN_ARROWS = ITEMS.register("banner_pattern_arrows", () -> new BannerPatternItem(BzTags.PATTERN_ITEM_ARROWS, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final RegistryEntry<Item> BANNER_PATTERN_BEE = ITEMS.register("banner_pattern_bee", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).component(DataComponents.PROVIDES_BANNER_PATTERNS, BzTags.PATTERN_ITEM_BEE)));
+    public static final RegistryEntry<Item> BANNER_PATTERN_HONEYCOMBS = ITEMS.register("banner_pattern_honeycombs", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).component(DataComponents.PROVIDES_BANNER_PATTERNS, BzTags.PATTERN_ITEM_HONEYCOMBS)));
+    public static final RegistryEntry<Item> BANNER_PATTERN_SWORDS = ITEMS.register("banner_pattern_swords", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).component(DataComponents.PROVIDES_BANNER_PATTERNS, BzTags.PATTERN_ITEM_SWORDS)));
+    public static final RegistryEntry<Item> BANNER_PATTERN_SUN = ITEMS.register("banner_pattern_sun", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).component(DataComponents.PROVIDES_BANNER_PATTERNS, BzTags.PATTERN_ITEM_SUN)));
+    public static final RegistryEntry<Item> BANNER_PATTERN_PLUSES = ITEMS.register("banner_pattern_pluses", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).component(DataComponents.PROVIDES_BANNER_PATTERNS, BzTags.PATTERN_ITEM_PLUSES)));
+    public static final RegistryEntry<Item> BANNER_PATTERN_EYES = ITEMS.register("banner_pattern_eyes", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).component(DataComponents.PROVIDES_BANNER_PATTERNS, BzTags.PATTERN_ITEM_EYES)));
+    public static final RegistryEntry<Item> BANNER_PATTERN_PEACE = ITEMS.register("banner_pattern_peace", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).component(DataComponents.PROVIDES_BANNER_PATTERNS, BzTags.PATTERN_ITEM_PEACE)));
+    public static final RegistryEntry<Item> BANNER_PATTERN_ARROWS = ITEMS.register("banner_pattern_arrows", () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).component(DataComponents.PROVIDES_BANNER_PATTERNS, BzTags.PATTERN_ITEM_ARROWS)));
     public static final RegistryEntry<Item> MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = ITEMS.register("music_disc_flight_of_the_bumblebee_rimsky_korsakov", () -> new Item((new Item.Properties()).stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(BzJukeboxSongs.FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV)));
     public static final RegistryEntry<Item> MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = ITEMS.register("music_disc_honey_bee_rat_faced_boy", () -> new Item((new Item.Properties()).stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(BzJukeboxSongs.HONEY_BEE_RAT_FACED_BOY)));
     public static final RegistryEntry<Item> MUSIC_DISC_RIVERS_OF_HONEY_MOSERAO = ITEMS.register("music_disc_rivers_of_honey_moserao", () -> new Item((new Item.Properties()).stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(BzJukeboxSongs.RIVERS_OF_HONEY_MOSERAO)));
@@ -210,7 +204,7 @@ public class BzItems {
     public static final RegistryEntry<Item> BEE_QUEEN_SPAWN_EGG = ITEMS.register("bee_queen_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.BEE_QUEEN, /*Prevent item tinting*/ 0xFFFFFFFF, 0xFFFFFFFF,(new Item.Properties().rarity(Rarity.EPIC))));
     public static final RegistryEntry<Item> ROOTMIN_SPAWN_EGG = ITEMS.register("rootmin_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.ROOTMIN, /*Prevent item tinting*/ 0xFFFFFFFF, 0xFFFFFFFF, (new Item.Properties())));
     public static final RegistryEntry<Item> SENTRY_WATCHER_SPAWN_EGG = ITEMS.register("sentry_watcher_spawn_egg", () -> new SentryWatcherSpawnEgg(BzEntities.SENTRY_WATCHER, (new Item.Properties().rarity(Rarity.RARE))));
-    public static final RegistryEntry<Item> ESSENCE_OF_THE_BEES = ITEMS.register("essence_of_the_bees", () -> new EssenceOfTheBees(new Item.Properties().rarity(Rarity.EPIC).food(BzFoods.ESSENCE_OF_THE_BEES, BzConsumables.ESSENCE_OF_THE_BEES).stacksTo(1).fireResistant()));
+    public static final RegistryEntry<Item> ESSENCE_OF_THE_BEES = ITEMS.register("essence_of_the_bees", () -> new EssenceOfTheBees(new Item.Properties().rarity(Rarity.EPIC).food(BzFoods.ESSENCE_OF_THE_BEES, BzFoodAndConsumables.ESSENCE_OF_THE_BEES_CONSUME).stacksTo(1).fireResistant()));
     public static final RegistryEntry<Item> ESSENCE_RAGING = ITEMS.register("essence_raging", () -> new RagingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
     public static final RegistryEntry<Item> ESSENCE_KNOWING = ITEMS.register("essence_knowing", () -> new KnowingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
     public static final RegistryEntry<Item> ESSENCE_CALMING = ITEMS.register("essence_calming", () -> new CalmingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
@@ -219,7 +213,7 @@ public class BzItems {
     public static final RegistryEntry<Item> ESSENCE_CONTINUITY = ITEMS.register("essence_continuity", () -> new ContinuityEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
 
     public static void setupCauldronCompat() {
-        CauldronInteraction.WATER.map().put(BzItems.FLOWER_HEADWEAR.get(), CauldronInteraction.DYED_ITEM);
+        CauldronInteraction.WATER.map().put(BzItems.FLOWER_HEADWEAR.get(), CauldronInteraction::dyedItemIteration);
     }
 
     public static void setupDispenserBehaviors() {

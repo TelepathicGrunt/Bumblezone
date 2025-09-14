@@ -29,6 +29,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -178,7 +179,7 @@ public class HoneyCompass extends Item {
     }
 
     @Override
-    public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean bl) {
+    public void inventoryTick(ItemStack itemStack, ServerLevel level, Entity entity, EquipmentSlot equipmentSlot) {
         if (!level.isClientSide) {
             HoneyCompassStateData honeyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
             boolean locked = honeyCompassStateData.locked();
@@ -273,7 +274,7 @@ public class HoneyCompass extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand)  {
+    public InteractionResult use(Level level, Player player, InteractionHand interactionHand)  {
         ItemStack itemStack = player.getItemInHand(interactionHand);
         BlockPos playerPos = player.blockPosition();
 
@@ -293,22 +294,22 @@ public class HoneyCompass extends Item {
         Optional<String> targetBlock = honeyCompassTargetData.targetBlock();
         Optional<String> targetStructureTag = honeyCompassTargetData.targetStructureTag();
 
-        InteractionResultHolder<ItemStack> interactionResult = null;
+        InteractionResult interactionResult = null;
         if (isFailed && targetStructureTag.isPresent()) {
             if (level instanceof ServerLevel serverLevel && serverLevel.getServer().getWorldData().worldGenOptions().generateStructures()) {
                 TagKey<Structure> structureTagKey = TagKey.create(Registries.STRUCTURE, ResourceLocation.tryParse(targetStructureTag.get()));
-                Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registry(Registries.STRUCTURE).flatMap(registry -> registry.getTag(structureTagKey));
+                Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().get(Registries.STRUCTURE).flatMap(registry -> registry.value().get(structureTagKey));
                 boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> !serverLevel.getChunkSource().getGeneratorState().getPlacementsForStructure(structureHolder).isEmpty());
                 if (structureExists) {
                     isLoading = true;
                     isFailed = false;
                     ThreadExecutor.locate((ServerLevel) level, structureTagKey, playerPos, 100, false)
                             .thenOnServerThread(foundPos -> setCompassData((ServerLevel) level, (ServerPlayer) player, interactionHand, itemStack, foundPos));
-                    interactionResult = InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
+                    interactionResult = InteractionResult.SUCCESS_SERVER.heldItemTransformedTo(itemStack);
                 }
                 else {
                     player.displayClientMessage(Component.translatable("item.the_bumblezone.honey_compass_structure_wrong_dimension"), true);
-                    interactionResult = InteractionResultHolder.pass(itemStack);
+                    interactionResult = InteractionResult.PASS;
                 }
             }
         }
@@ -325,7 +326,7 @@ public class HoneyCompass extends Item {
                 setCompassStateData(honeyCompassStateData, locked, searchId, isLoading, isFailed, locatedSpecialStructure, itemStack);
                 setCompassBaseData(honeyCompassBaseData, compassType, itemStack);
                 setCompassTargetData(honeyCompassTargetData, targetBlock, targetStructureTag, targetPos, targetDimension, itemStack);
-                return InteractionResultHolder.fail(itemStack);
+                return InteractionResult.FAIL;
             }
             else {
                 isLoading = false;
@@ -337,17 +338,17 @@ public class HoneyCompass extends Item {
         }
 
         if (level instanceof ServerLevel serverLevel && !honeyCompassBaseData.isStructureCompass()) {
-            Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registry(Registries.STRUCTURE).flatMap(registry -> registry.getTag(BzTags.HONEY_COMPASS_DEFAULT_LOCATING));
+            Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().get(Registries.STRUCTURE).flatMap(registry -> registry.value().get(BzTags.HONEY_COMPASS_DEFAULT_LOCATING));
             boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> !serverLevel.getChunkSource().getGeneratorState().getPlacementsForStructure(structureHolder).isEmpty());
             if (structureExists) {
                 isLoading = true;
                 ThreadExecutor.locate((ServerLevel) level, BzTags.HONEY_COMPASS_DEFAULT_LOCATING, playerPos, 100, false)
                         .thenOnServerThread(foundPos -> setCompassData((ServerLevel) level, (ServerPlayer) player, interactionHand, itemStack, foundPos));
-                interactionResult = InteractionResultHolder.success(itemStack);
+                interactionResult = InteractionResult.SUCCESS.heldItemTransformedTo(itemStack);
             }
             else {
                 player.displayClientMessage(Component.translatable("item.the_bumblezone.honey_compass_structure_wrong_dimension"), true);
-                interactionResult = InteractionResultHolder.pass(itemStack);
+                interactionResult = InteractionResult.PASS;
             }
         }
 
@@ -511,7 +512,7 @@ public class HoneyCompass extends Item {
                 }
             }
 
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.SUCCESS_SERVER;
         }
 
         return super.useOn(useOnContext);

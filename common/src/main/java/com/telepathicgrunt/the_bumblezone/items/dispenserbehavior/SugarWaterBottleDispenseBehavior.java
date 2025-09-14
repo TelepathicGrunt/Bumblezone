@@ -4,15 +4,15 @@ import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -47,8 +47,8 @@ public class SugarWaterBottleDispenseBehavior extends DefaultDispenseItemBehavio
 
                     // do nothing if front is blocked off
                     if (!world.getBlockState(blockpos).isSolid()) {
-                        Mob beeEntity = EntityType.BEE.create(world);
-                        beeEntity.moveTo(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, beeEntity.getRandom().nextFloat() * 360.0F, 0.0F);
+                        Mob beeEntity = EntityType.BEE.create(world, EntitySpawnReason.TRIGGERED);
+                        beeEntity.snapTo(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, beeEntity.getRandom().nextFloat() * 360.0F, 0.0F);
                         beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(BlockPos.containing(beeEntity.position())), EntitySpawnReason.TRIGGERED, null);
                         beeEntity.setBaby(true);
 

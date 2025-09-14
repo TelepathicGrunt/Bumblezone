@@ -115,7 +115,7 @@ public class RagingEssence extends AbilityEssenceItem {
             }
 
             if (rageState > 0 && ((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 5L == 0) {
-                spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom(), rageState);
+                spawnParticles(serverPlayer.level(), serverPlayer.position(), serverPlayer.getRandom(), rageState);
 
                 // timer between kills
                 if (level.getGameTime() - getEmpoweredTimestamp(itemStack) > maxEmpoweredTimeLimit) {
@@ -172,7 +172,7 @@ public class RagingEssence extends AbilityEssenceItem {
                 if (!currentTargetsToKill.isEmpty()) {
 
                     for (UUID uuid : currentTargetsToKill) {
-                        Entity entity = serverPlayer.serverLevel().getEntity(uuid);
+                        Entity entity = serverPlayer.level().getEntity(uuid);
 
                         // An entity is out of range. Break chain.
                         if (entity == null || entity.distanceToSqr(serverPlayer.position()) > trackingRange * trackingRange) {
@@ -184,7 +184,7 @@ public class RagingEssence extends AbilityEssenceItem {
 
                 // damage boost and particles
                 if (rageState > 0) {
-                    List<Holder<MobEffect>> radianceEffects = BuiltInRegistries.MOB_EFFECT.getTag(BzTags.RAGING_RAGE_EFFECTS)
+                    List<Holder<MobEffect>> radianceEffects = BuiltInRegistries.MOB_EFFECT.get(BzTags.RAGING_RAGE_EFFECTS)
                             .stream()
                             .flatMap(HolderSet.ListBacked::stream)
                             .filter(Holder::isBound)
@@ -222,7 +222,7 @@ public class RagingEssence extends AbilityEssenceItem {
             if (livingEntity.isDeadOrDying() &&
                 itemStack.getItem() instanceof RagingEssence ragingEssence &&
                 abilityEssenceActivityData.isActive() &&
-                !player.getCooldowns().isOnCooldown(itemStack.getItem()))
+                !player.getCooldowns().isOnCooldown(itemStack))
             {
                 List<UUID> currentTargetsToKill = RagingEssence.getCurrentTargets(itemStack);
                 int rageState = RagingEssence.getRageState(itemStack);
@@ -261,7 +261,7 @@ public class RagingEssence extends AbilityEssenceItem {
         setCurrentTargets(stack, new ArrayList<>());
         setRageState(stack, (short)0);
 
-        List<Holder<MobEffect>> radianceEffects = BuiltInRegistries.MOB_EFFECT.getTag(BzTags.RAGING_RAGE_EFFECTS)
+        List<Holder<MobEffect>> radianceEffects = BuiltInRegistries.MOB_EFFECT.get(BzTags.RAGING_RAGE_EFFECTS)
                 .stream()
                 .flatMap(HolderSet.ListBacked::stream)
                 .filter(Holder::isBound)
@@ -271,7 +271,7 @@ public class RagingEssence extends AbilityEssenceItem {
             serverPlayer.removeEffect(effectHolder);
         }
 
-        serverPlayer.serverLevel().sendParticles(
+        serverPlayer.level().sendParticles(
                 ParticleTypes.POOF,
                 serverPlayer.position().x(),
                 serverPlayer.position().y() + 1,

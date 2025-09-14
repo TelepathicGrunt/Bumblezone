@@ -210,7 +210,7 @@ public class EssenceBlockBlue extends EssenceBlock {
                 direction.getStepY() * 3,
                 direction.getStepZ() * 3
             ),
-            EntitySpawnReason.TRIGGERED);
+            EntitySpawnReason.EVENT);
         if (entity == null) {
             return;
         }

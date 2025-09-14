@@ -3,15 +3,12 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
-import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,66 +18,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
 public class RoyalJellyBottle extends Item {
 
     public RoyalJellyBottle(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    public ItemStack finishUsingItem(ItemStack itemStack, Level level, LivingEntity livingEntity) {
-        super.finishUsingItem(itemStack, level, livingEntity);
-        if (livingEntity instanceof ServerPlayer serverplayer) {
-            CriteriaTriggers.CONSUME_ITEM.trigger(serverplayer, itemStack);
-            serverplayer.awardStat(Stats.ITEM_USED.get(this));
-        }
-
-        if (!level.isClientSide) {
-            livingEntity.removeEffect(MobEffects.POISON);
-            livingEntity.removeEffect(MobEffects.SLOWNESS);
-            livingEntity.removeEffect(MobEffects.WEAKNESS);
-        }
-
-        if (itemStack.isEmpty()) {
-            return new ItemStack(Items.GLASS_BOTTLE);
-        }
-        else {
-            return itemStack;
-        }
-    }
-
-    /**
-     * How long it takes to use or consume an item
-     */
-    @Override
-    public int getUseDuration(ItemStack itemStack, LivingEntity livingEntity) {
-        return 40;
-    }
-
-    /**
-     * returns the action that specifies what animation to play when the items is being used
-     */
-    @Override
-    public UseAnim getUseAnimation(ItemStack itemStack) {
-        return UseAnim.DRINK;
-    }
-
-    @Override
-    public SoundEvent getDrinkingSound() {
-        return BzSounds.ROYAL_JELLY_DRINK.get();
-    }
-
-    @Override
-    public SoundEvent getEatingSound() {
-        return BzSounds.ROYAL_JELLY_DRINK.get();
-    }
-
-    @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        return ItemUtils.startUsingInstantly(level, player, hand);
     }
 
     @Override

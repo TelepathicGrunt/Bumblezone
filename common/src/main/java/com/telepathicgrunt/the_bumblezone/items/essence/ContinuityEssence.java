@@ -37,6 +37,7 @@ import net.minecraft.world.damagesource.DeathMessageType;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -91,7 +92,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
     }
 
     @Override
-    public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean bl) {
+    public void inventoryTick(ItemStack itemStack, ServerLevel level, Entity entity, EquipmentSlot equipmentSlot) {
         TickCapsule tickCapsule = NEXT_TICK_BEHAVIORS.poll();
         if (tickCapsule != null) {
             if (level.getGameTime() > tickCapsule.tickTarget) {
@@ -107,7 +108,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
 //            serverPlayer.getCooldowns().removeCooldown(this);
 //        }
 
-        super.inventoryTick(itemStack, level, entity, i, bl);
+        super.inventoryTick(itemStack, level, entity, equipmentSlot);
     }
 
     @Override

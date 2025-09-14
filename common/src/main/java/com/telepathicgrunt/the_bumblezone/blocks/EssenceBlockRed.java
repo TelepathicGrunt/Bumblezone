@@ -193,7 +193,7 @@ public class EssenceBlockRed extends EssenceBlock {
 
         EntityType<?> entityTypeToSpawn = entityTypeList.get(serverLevel.getRandom().nextInt(entityTypeList.size()));
         int yOffset = (-(essenceBlockEntity.getArenaSize().getY()) / 2) + 2;
-        Entity entity = entityTypeToSpawn.spawn(serverLevel, blockPos.offset(0, yOffset, 0), EntitySpawnReason.TRIGGERED);
+        Entity entity = entityTypeToSpawn.spawn(serverLevel, blockPos.offset(0, yOffset, 0), EntitySpawnReason.EVENT);
         if (entity != null) {
             entity.addTag("the_bumblezone.red_essence_arena");
 
