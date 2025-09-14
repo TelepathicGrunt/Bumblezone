@@ -478,7 +478,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             Vec3 vec37 = this.handleRelativeFrictionAndCalculateMovement();
             double ySpeed = vec37.y;
             if (this.level().isClientSide && !this.level().hasChunkAt(blockPos)) {
-               if (this.getY() > (double)this.level().getMinBuildHeight()) {
+               if (this.getY() > (double)this.level().getMinY()) {
                   ySpeed = -0.1;
                }
                else {

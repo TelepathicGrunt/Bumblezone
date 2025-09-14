@@ -62,7 +62,7 @@ public class OptimizedJigsawManager {
             Structure.GenerationContext context,
             Holder<StructureTemplatePool> startPoolHolder,
             int size,
-            ResourceLocation structureID,
+            Structure structureObject,
             BlockPos startPos,
             boolean doBoundaryAdjustments,
             Optional<Heightmap.Types> heightmapType,
@@ -75,7 +75,7 @@ public class OptimizedJigsawManager {
                 context,
                 startPoolHolder,
                 size,
-                structureID,
+                structureObject,
                 startPos,
                 doBoundaryAdjustments,
                 heightmapType,
@@ -92,7 +92,7 @@ public class OptimizedJigsawManager {
             Structure.GenerationContext context,
             Holder<StructureTemplatePool> startPoolHolder,
             int size,
-            ResourceLocation structureID,
+            Structure structureObject,
             BlockPos startPos,
             boolean doBoundaryAdjustments,
             Optional<Heightmap.Types> heightmapType,
@@ -110,6 +110,7 @@ public class OptimizedJigsawManager {
         // Get starting pool
         StructureTemplatePool startPool = startPoolHolder.value();
         if(startPool.size() == 0) {
+            ResourceLocation structureID = context.registryAccess().getOrThrow(Registries.STRUCTURE).value().getKey(structureObject);
             Bumblezone.LOGGER.warn("Bumblezone: Empty or nonexistent start pool in structure: {}  Crash is imminent", structureID);
             throw new RuntimeException("Bumblezone: Empty or nonexistent start pool in structure: " + structureID + " Crash is imminent");
         }
@@ -183,7 +184,7 @@ public class OptimizedJigsawManager {
         int finalPieceCenterY = pieceCenterY;
 
         // Get jigsaw pool registry
-        Registry<StructureTemplatePool> jigsawPoolRegistry = context.registryAccess().registryOrThrow(Registries.TEMPLATE_POOL);
+        Registry<StructureTemplatePool> jigsawPoolRegistry = context.registryAccess().getOrThrow(Registries.TEMPLATE_POOL).value();
 
         return Optional.of(new Structure.GenerationStub(new BlockPos(pieceCenterX, pieceCenterY, pieceCenterZ), (structurePiecesBuilder) -> {
 //            var timer1 = System.currentTimeMillis();
@@ -212,7 +213,7 @@ public class OptimizedJigsawManager {
             structureBoundsAdjuster.accept(structurePiecesBuilder, components);
 
             // Do not generate if out of bounds
-            if(structurePiecesBuilder.getBoundingBox().maxY() > context.heightAccessor().getMaxBuildHeight()) {
+            if(structurePiecesBuilder.getBoundingBox().maxY() > context.heightAccessor().getMaxY()) {
                 structurePiecesBuilder.clear();
                 return;
             }
@@ -237,15 +238,15 @@ public class OptimizedJigsawManager {
             StructureTemplateManager structureTemplateManager,
             WorldgenRandom worldgenRandom
     ) {
-        List<StructureTemplate.StructureBlockInfo> list = structurePoolElement.getShuffledJigsawBlocks(structureTemplateManager, blockPos, rotation, worldgenRandom);
+        List<StructureTemplate.JigsawBlockInfo> list = structurePoolElement.getShuffledJigsawBlocks(structureTemplateManager, blockPos, rotation, worldgenRandom);
         Optional<BlockPos> optional = Optional.empty();
 
-        for (StructureTemplate.StructureBlockInfo structureBlockInfo : list) {
+        for (StructureTemplate.JigsawBlockInfo structureBlockInfo : list) {
             ResourceLocation resourceLocation2 = ResourceLocation.tryParse(
-                    Objects.requireNonNull(structureBlockInfo.nbt(), () -> structureBlockInfo + " nbt was null").getString("name")
+                Objects.requireNonNull(structureBlockInfo.info().nbt(), () -> structureBlockInfo + " nbt was null").getStringOr("name", "")
             );
             if (resourceLocation.equals(resourceLocation2)) {
-                optional = Optional.of(structureBlockInfo.pos());
+                optional = Optional.of(structureBlockInfo.info().pos());
                 break;
             }
         }
@@ -301,7 +302,7 @@ public class OptimizedJigsawManager {
             MutableObject<BoxOctree> parentOctree = new MutableObject<>();
 
             // Get list of all jigsaw blocks in this piece
-            List<StructureTemplate.StructureBlockInfo> pieceJigsawBlocks;
+            List<StructureTemplate.JigsawBlockInfo> pieceJigsawBlocks;
             if (pieceBlueprint instanceof SinglePoolElement singlePoolElement) {
                 pieceJigsawBlocks = GeneralUtils.getShuffledJigsawBlocksWithoutPriority(singlePoolElement, this.structureTemplateManager, piecePos, pieceRotation, this.random);
             }
@@ -309,19 +310,19 @@ public class OptimizedJigsawManager {
                 pieceJigsawBlocks = pieceBlueprint.getShuffledJigsawBlocks(this.structureTemplateManager, piecePos, pieceRotation, this.random);
             }
 
-            for (StructureTemplate.StructureBlockInfo jigsawBlock : pieceJigsawBlocks) {
+            for (StructureTemplate.JigsawBlockInfo jigsawBlock : pieceJigsawBlocks) {
+                StructureTemplate.StructureBlockInfo structureBlockInfo = jigsawBlock.info();
                 // Gather jigsaw block information
-                Direction direction = JigsawBlock.getFrontFacing(jigsawBlock.state());
-                BlockPos jigsawBlockPos = jigsawBlock.pos();
+                Direction direction = JigsawBlock.getFrontFacing(structureBlockInfo.state());
+                BlockPos jigsawBlockPos = structureBlockInfo.pos();
                 BlockPos jigsawBlockTargetPos = jigsawBlockPos.relative(direction);
 
                 // Get the jigsaw block's piece pool
-                ResourceLocation jigsawBlockPool = ResourceLocation.tryParse(jigsawBlock.nbt().getString("pool"));
-                Optional<StructureTemplatePool> poolOptional = this.poolRegistry.getOptional(jigsawBlockPool);
+                Optional<StructureTemplatePool> poolOptional = this.poolRegistry.getOptional(jigsawBlock.pool());
 
                 // Only continue if we are using the jigsaw pattern registry and if it is not empty
-                if (!(poolOptional.isPresent() && (poolOptional.get().size() != 0 || Objects.equals(jigsawBlockPool, Pools.EMPTY.location())))) {
-                    Bumblezone.LOGGER.warn("Bumblezone: Empty or nonexistent pool: {} which is being called from {}", jigsawBlockPool, pieceBlueprint instanceof SinglePoolElement ? ((SinglePoolElementAccessor) pieceBlueprint).bumblezone$getTemplate().left().get() : "not a SinglePoolElement class");
+                if (!(poolOptional.isPresent() && (poolOptional.get().size() != 0 || Objects.equals(jigsawBlock.pool(), Pools.EMPTY)))) {
+                    Bumblezone.LOGGER.warn("Bumblezone: Empty or nonexistent pool: {} which is being called from {}", jigsawBlock.pool(), pieceBlueprint instanceof SinglePoolElement ? ((SinglePoolElementAccessor) pieceBlueprint).bumblezone$getTemplate().left().get() : "not a SinglePoolElement class");
                     continue;
                 }
 
@@ -363,7 +364,7 @@ public class OptimizedJigsawManager {
         private StructurePoolElement processList(
                 List<Pair<StructurePoolElement, Integer>> candidatePieces,
                 boolean doBoundaryAdjustments,
-                StructureTemplate.StructureBlockInfo jigsawBlock,
+                StructureTemplate.JigsawBlockInfo jigsawBlock,
                 BlockPos jigsawBlockTargetPos,
                 int pieceMinY,
                 BlockPos jigsawBlockPos,
@@ -411,7 +412,7 @@ public class OptimizedJigsawManager {
 
                 // Try different rotations to see which sides of the piece are fit to be the receiving end
                 for (Rotation rotation : Rotation.getShuffled(this.random)) {
-                    List<StructureTemplate.StructureBlockInfo> candidateJigsawBlocks;
+                    List<StructureTemplate.JigsawBlockInfo> candidateJigsawBlocks;
                     if (candidatePiece instanceof SinglePoolElement singlePoolElement) {
                         candidateJigsawBlocks = GeneralUtils.getShuffledJigsawBlocksWithoutPriority(singlePoolElement, this.structureTemplateManager, BlockPos.ZERO, rotation, this.random);
                     }
@@ -425,15 +426,15 @@ public class OptimizedJigsawManager {
                     int candidateHeightAdjustments;
                     if (doBoundaryAdjustments && tempCandidateBoundingBox.getYSpan() <= 16) {
                         candidateHeightAdjustments = candidateJigsawBlocks.stream().mapToInt((pieceCandidateJigsawBlock) -> {
-                            if (!tempCandidateBoundingBox.isInside(pieceCandidateJigsawBlock.pos().relative(JigsawBlock.getFrontFacing(pieceCandidateJigsawBlock.state())))) {
+                            StructureTemplate.StructureBlockInfo structureBlockInfo = pieceCandidateJigsawBlock.info();
+                            if (!tempCandidateBoundingBox.isInside(structureBlockInfo.pos().relative(JigsawBlock.getFrontFacing(structureBlockInfo.state())))) {
                                 return 0;
                             }
                             else {
-                                ResourceLocation candidateTargetPool = ResourceLocation.tryParse(pieceCandidateJigsawBlock.nbt().getString("pool"));
-                                Optional<StructureTemplatePool> candidateTargetPoolOptional = this.poolRegistry.getOptional(candidateTargetPool);
+                                Optional<StructureTemplatePool> candidateTargetPoolOptional = this.poolRegistry.getOptional(pieceCandidateJigsawBlock.pool());
                                 Optional<StructureTemplatePool> candidateTargetFallbackOptional = candidateTargetPoolOptional.flatMap((structureTemplatePool) -> Optional.of(structureTemplatePool.getFallback().value()));
-                                int tallestCandidateTargetPoolPieceHeight = candidateTargetPoolOptional.map((p_242842_1_) -> p_242842_1_.getMaxSize(this.structureTemplateManager)).orElse(0);
-                                int tallestCandidateTargetFallbackPieceHeight = candidateTargetFallbackOptional.map((p_242840_1_) -> p_242840_1_.getMaxSize(this.structureTemplateManager)).orElse(0);
+                                int tallestCandidateTargetPoolPieceHeight = candidateTargetPoolOptional.map((structureTemplatePool) -> structureTemplatePool.getMaxSize(this.structureTemplateManager)).orElse(0);
+                                int tallestCandidateTargetFallbackPieceHeight = candidateTargetFallbackOptional.map((structureTemplatePool) -> structureTemplatePool.getMaxSize(this.structureTemplateManager)).orElse(0);
                                 return Math.max(tallestCandidateTargetPoolPieceHeight, tallestCandidateTargetFallbackPieceHeight);
                             }
                         }).max().orElse(0);
@@ -443,12 +444,11 @@ public class OptimizedJigsawManager {
                     }
 
                     // Check for each of the candidate's jigsaw blocks for a match
-                    String parentJoint = GeneralUtils.getStringMicroOptimised(jigsawBlock.nbt(), "joint");
-                    String parentTarget = GeneralUtils.getStringMicroOptimised(jigsawBlock.nbt(), "target");
 
-                    for (StructureTemplate.StructureBlockInfo candidateJigsawBlock : candidateJigsawBlocks) {
-                        if (GeneralUtils.canJigsawsAttach(jigsawBlock, candidateJigsawBlock, parentJoint, parentTarget)) {
-                            BlockPos candidateJigsawBlockPos = candidateJigsawBlock.pos();
+                    for (StructureTemplate.JigsawBlockInfo candidateJigsawBlock : candidateJigsawBlocks) {
+                        if (GeneralUtils.canJigsawsAttach(jigsawBlock, candidateJigsawBlock)) {
+                            StructureTemplate.StructureBlockInfo structureBlockInfo = candidateJigsawBlock.info();
+                            BlockPos candidateJigsawBlockPos = structureBlockInfo.pos();
                             BlockPos candidateJigsawBlockRelativePos = new BlockPos(jigsawBlockTargetPos.getX() - candidateJigsawBlockPos.getX(), jigsawBlockTargetPos.getY() - candidateJigsawBlockPos.getY(), jigsawBlockTargetPos.getZ() - candidateJigsawBlockPos.getZ());
 
                             // Get the bounding box for the piece, offset by the relative position difference
@@ -457,7 +457,7 @@ public class OptimizedJigsawManager {
                             // Determine how much the candidate jigsaw block is off in the y direction.
                             // This will be needed to offset the candidate piece so that the jigsaw blocks line up properly.
                             int candidateJigsawBlockRelativeY = candidateJigsawBlockPos.getY();
-                            int candidateJigsawYOffsetNeeded = jigsawBlockRelativeY - candidateJigsawBlockRelativeY + JigsawBlock.getFrontFacing(jigsawBlock.state()).getStepY();
+                            int candidateJigsawYOffsetNeeded = jigsawBlockRelativeY - candidateJigsawBlockRelativeY + JigsawBlock.getFrontFacing(jigsawBlock.info().state()).getStepY();
 
                             // Determine how much we need to offset the candidate piece itself in order to have the jigsaw blocks aligned.
                             // Depends on if the placement of both pieces is rigid or not

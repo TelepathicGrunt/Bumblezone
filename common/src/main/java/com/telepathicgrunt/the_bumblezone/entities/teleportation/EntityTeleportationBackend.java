@@ -48,7 +48,7 @@ public class EntityTeleportationBackend {
             destination.getChunk(BlockPos.ZERO);
             int heightMapY = destination.getHeight(Heightmap.Types.MOTION_BLOCKING, 0, 0);
             ChunkGenerator chunkGenerator = destination.getChunkSource().getGenerator();
-            if (heightMapY > destination.getMinBuildHeight() && heightMapY < chunkGenerator.getMinY() + chunkGenerator.getGenDepth()) {
+            if (heightMapY > destination.getMinY() && heightMapY < chunkGenerator.getMinY() + chunkGenerator.getGenDepth()) {
                 return new Vec3(0.5d, heightMapY + 0.5d, 0.5d);
             }
             else {

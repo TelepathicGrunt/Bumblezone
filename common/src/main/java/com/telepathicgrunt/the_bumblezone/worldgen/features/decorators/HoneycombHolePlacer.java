@@ -49,15 +49,15 @@ public class HoneycombHolePlacer extends PlacementModifier {
         List<StructureStart> structureStarts = new ArrayList<>();
         List<StructureStart> structureStartsPiecewiseCheck = new ArrayList<>();
         if (placementContext.getLevel() instanceof WorldGenRegion worldGenRegion) {
-            Registry<Structure> structureRegistry = worldGenRegion.registryAccess().registry(Registries.STRUCTURE).get();
+            Registry<Structure> structureRegistry = worldGenRegion.registryAccess().getOrThrow(Registries.STRUCTURE).value();
             structureManager = placementContext.getLevel().getLevel().structureManager();
 
             SectionPos sectionPos = SectionPos.of(blockPos);
 
             structureStarts = GeneralUtils.startsForAllStructure(worldGenRegion, structureManager, sectionPos,
-                    struct -> structureRegistry.getHolderOrThrow(structureRegistry.getResourceKey(struct).get()).is(BzTags.NO_HONEYCOMB_HOLES));
+                    struct -> structureRegistry.getOrThrow(structureRegistry.getResourceKey(struct).get()).is(BzTags.NO_HONEYCOMB_HOLES));
             structureStartsPiecewiseCheck = GeneralUtils.startsForAllStructure(worldGenRegion, structureManager, sectionPos,
-                    struct -> structureRegistry.getHolderOrThrow(structureRegistry.getResourceKey(struct).get()).is(BzTags.NO_HONEYCOMB_HOLES_PIECEWISE));
+                    struct -> structureRegistry.getOrThrow(structureRegistry.getResourceKey(struct).get()).is(BzTags.NO_HONEYCOMB_HOLES_PIECEWISE));
         }
 
         //Repeats twice with an offset on second pass

@@ -56,14 +56,14 @@ public class StructureDisallowByTag extends PlacementModifier {
     public Stream<BlockPos> getPositions(PlacementContext placementContext, RandomSource random, BlockPos blockPos) {
 
         if (placementContext.getLevel() instanceof WorldGenRegion worldGenRegion) {
-            Registry<Structure> structureRegistry = worldGenRegion.registryAccess().registry(Registries.STRUCTURE).get();
+            Registry<Structure> structureRegistry = worldGenRegion.registryAccess().getOrThrow(Registries.STRUCTURE).value();
             StructureManager structureManager = placementContext.getLevel().getLevel().structureManager();
             SectionPos sectionPos = SectionPos.of(blockPos);
 
             boolean doTagCheck = isDoTagCheck(blockPos);
             if (this.disallowTag.isPresent() && doTagCheck) {
                 List<StructureStart> structureStarts = GeneralUtils.startsForAllStructure(worldGenRegion, structureManager, sectionPos,
-                        struct -> structureRegistry.getHolderOrThrow(structureRegistry.getResourceKey(struct).get()).is(this.disallowTag.get()));
+                        struct -> structureRegistry.getOrThrow(structureRegistry.getResourceKey(struct).get()).is(this.disallowTag.get()));
 
                 if (!structureStarts.isEmpty()) {
                     boolean validSpot = true;

@@ -180,7 +180,7 @@ public class KnowingEssenceLootBlockOutlining {
                         blockState.is(BzTags.KNOWING_BLOCK_FORCED_HIGHLIGHTING) ||
                         (blockState.getBlock() instanceof InfestedBlock && !blockState.is(BzTags.KNOWING_BLOCK_PREVENT_HIGHLIGHTING)))))
             {
-                int minSectionY = chunk.getMinBuildHeight() + (i * 16);
+                int minSectionY = chunk.getMinY() + (i * 16);
                 for (int sectionX = 0; sectionX < 16; sectionX++) {
                     for (int sectionZ = 0; sectionZ < 16; sectionZ++) {
                         for (int sectionY = 0; sectionY < 16; sectionY++) {

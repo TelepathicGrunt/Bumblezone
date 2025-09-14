@@ -54,8 +54,8 @@ public class HoneycombHole extends Feature<NbtFeatureConfig> {
         BlockPos position = context.origin().above(context.config().structureYOffset);
 
         StructurePlaceSettings structurePlacementData = (new StructurePlaceSettings()).setRotation(Rotation.NONE).setLiquidSettings(LiquidSettings.IGNORE_WATERLOGGING).setRotationPivot(halfLengths).setIgnoreEntities(false).setKnownShape(true);
-        Registry<StructureProcessorList> processorListRegistry = context.level().getLevel().getServer().registryAccess().registryOrThrow(Registries.PROCESSOR_LIST);
-        StructureProcessorList emptyProcessor = processorListRegistry.get(EMPTY);
+        Registry<StructureProcessorList> processorListRegistry = context.level().getLevel().getServer().registryAccess().getOrThrow(Registries.PROCESSOR_LIST).value();
+        StructureProcessorList emptyProcessor = processorListRegistry.getValue(EMPTY);
 
         Optional<StructureProcessorList> processor = processorListRegistry.getOptional(context.config().processor);
         processor.orElse(emptyProcessor).list().forEach(structurePlacementData::addProcessor); // add all processors

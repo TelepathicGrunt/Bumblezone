@@ -120,7 +120,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
             Registry<DamageType> damageTypeRegistry = player.level().registryAccess().getOrThrow(Registries.DAMAGE_TYPE).value();
 
             // Kill command. Do not activate in that case.
-            if (damageTypeRegistry.get(DamageTypes.GENERIC_KILL).get().value() == event.source().type() &&
+            if (damageTypeRegistry.getOrThrow(DamageTypes.GENERIC_KILL).value() == event.source().type() &&
                     source.getEntity() == null &&
                     source.getDirectEntity() == null &&
                     source.getSourcePosition() == null)

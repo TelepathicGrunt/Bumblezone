@@ -26,7 +26,7 @@ public class MobSpawnLocationMixin {
                                                         CallbackInfo ci)
     {
         //No mobs allowed to spawn on roof of Bumblezone or below Bumblezone
-        if ((pos.getY() <= world.getMinBuildHeight() + 1 || pos.getY() >= world.getMaxBuildHeight() - 1) &&
+        if ((pos.getY() <= world.getMinY() + 1 || pos.getY() >= world.getMaxY() - 1) &&
             world.dimension().equals(BzDimension.BZ_WORLD_KEY))
         {
             //Bumblezone.LOGGER.log(Level.INFO, "canceled spawn");

@@ -86,7 +86,7 @@ public class HoneyCaveRoomStructure extends Structure {
                 context,
                 this.startPool,
                 this.size,
-                context.registryAccess().registry(Registries.STRUCTURE).get().getKey(this),
+                this,
                 centerPos,
                 false,
                 this.projectStartToHeightmap,

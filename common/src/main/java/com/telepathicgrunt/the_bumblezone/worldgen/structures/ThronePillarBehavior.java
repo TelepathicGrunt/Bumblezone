@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -25,6 +26,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ThronePillarBehavior {
@@ -51,25 +53,24 @@ public class ThronePillarBehavior {
             }
 
             List<ItemStack> throneCompasses = new ArrayList<>();
-            for (ItemStack item : serverPlayer.getInventory().items) {
+            for (ItemStack item : serverPlayer.getInventory()) {
                 if (item.is(BzItems.HONEY_COMPASS.get())) {
                     HoneyCompassBaseData honeyCompassBaseData = item.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
                     HoneyCompassStateData honeyCompassStateData = item.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
                     HoneyCompassTargetData honeyCompassTargetData = item.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
                     if (!honeyCompassStateData.locatedSpecialStructure() &&
-                        honeyCompassBaseData.isStructureCompass() &&
-                        honeyCompassBaseData.customName().isPresent() &&
-                        honeyCompassBaseData.customName().get().equals("item.the_bumblezone.honey_compass_throne_structure") &&
-                        honeyCompassTargetData.targetPos().isPresent() &&
-                        honeyCompassTargetData.targetPos().get().above(128).closerThan(structureCenter, 128))
-                    {
+                            honeyCompassBaseData.isStructureCompass() &&
+                            honeyCompassBaseData.customName().isPresent() &&
+                            honeyCompassBaseData.customName().get().equals("item.the_bumblezone.honey_compass_throne_structure") &&
+                            honeyCompassTargetData.targetPos().isPresent() &&
+                            honeyCompassTargetData.targetPos().get().above(128).closerThan(structureCenter, 128)) {
                         throneCompasses.add(item);
                     }
                 }
             }
 
             if (!hasBeeQueenNearby && !throneCompasses.isEmpty()) {
-                BeeQueenEntity newBeeQueen = BzEntities.BEE_QUEEN.get().create(level);
+                BeeQueenEntity newBeeQueen = BzEntities.BEE_QUEEN.get().create(level, EntitySpawnReason.EVENT);
 
                 BlockPos queenPos = new BlockPos(structureCenter.getX(), 133, structureCenter.getZ());
                 newBeeQueen.setPos(Vec3.atCenterOf(queenPos));

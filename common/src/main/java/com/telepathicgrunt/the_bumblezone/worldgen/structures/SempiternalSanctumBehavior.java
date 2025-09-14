@@ -43,7 +43,8 @@ public class SempiternalSanctumBehavior {
                     // Don't send message if player logs in while in structure.
                     if (serverPlayer.tickCount > 40) {
                         ResourceLocation resourceLocation = serverPlayer.level().registryAccess()
-                                .registry(Registries.STRUCTURE).get()
+                                .getOrThrow(Registries.STRUCTURE)
+                                .value()
                                 .getKey(detectedStructure.getStructure());
 
                         ChatFormatting color;
@@ -95,18 +96,18 @@ public class SempiternalSanctumBehavior {
             }
 
             if (serverPlayer.tickCount % 60 == 20) {
-                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.SEMPITERNAL_SANCTUM.get().getLocation(), true);
+                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.SEMPITERNAL_SANCTUM.get().location(), true);
             }
 
         }
         else {
             if (serverPlayer.tickCount % 60 == 20 && PLAYERS_IN_SANCTUMS.contains(serverPlayer.getUUID())) {
-                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.SEMPITERNAL_SANCTUM.get().getLocation(), false);
-                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RADIANCE_EVENT.get().getLocation(), false);
-                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.LIFE_EVENT.get().getLocation(), false);
-                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.CALMING_EVENT.get().getLocation(), false);
-                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.KNOWING_EVENT.get().getLocation(), false);
-                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.CONTINUITY_EVENT.get().getLocation(), false);
+                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.SEMPITERNAL_SANCTUM.get().location(), false);
+                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RADIANCE_EVENT.get().location(), false);
+                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.LIFE_EVENT.get().location(), false);
+                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.CALMING_EVENT.get().location(), false);
+                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.KNOWING_EVENT.get().location(), false);
+                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.CONTINUITY_EVENT.get().location(), false);
 
                 PLAYERS_IN_SANCTUMS.remove(serverPlayer.getUUID());
             }

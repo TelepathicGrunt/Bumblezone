@@ -20,7 +20,7 @@ public class Layer {
 
     public Holder<Biome> sample(int x, int z) {
         int resultBiomeID = this.area.get(x, z);
-        Optional<Holder.Reference<Biome>> biome = BiomeRegistryHolder.BIOME_REGISTRY.getHolder(resultBiomeID);
+        Optional<Holder.Reference<Biome>> biome = BiomeRegistryHolder.BIOME_REGISTRY.get(resultBiomeID);
         if (biome.isEmpty()) {
             if (SharedConstants.IS_RUNNING_IN_IDE) {
                 throw Util.pauseInIde(new IllegalStateException("Unknown biome id: " + resultBiomeID));
@@ -29,7 +29,7 @@ public class Layer {
                 // Spawn ocean if we can't resolve the biome from the layers.
                 ResourceKey<Biome> backupBiomeKey = Biomes.OCEAN;
                 Bumblezone.LOGGER.warn("Unknown biome id: ${}. Will spawn ${} instead.", resultBiomeID, backupBiomeKey.location());
-                return BiomeRegistryHolder.BIOME_REGISTRY.getHolderOrThrow(backupBiomeKey);
+                return BiomeRegistryHolder.BIOME_REGISTRY.getOrThrow(backupBiomeKey);
             }
         }
         else {

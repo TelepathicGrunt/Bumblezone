@@ -49,7 +49,7 @@ public class LootTableMixin {
             cancellable = true)
     private void bumblezone_switchToDimensionFishingLoot(LootContext lootContext, Consumer<ItemStack> consumer, CallbackInfo ci) {
         if (NewLootInjectorApplier.checkIfValidForDimensionFishingLoot(lootContext)) {
-            Optional<Holder.Reference<LootTable>> optionalLootTableReference = lootContext.getResolver().get(Registries.LOOT_TABLE, NewLootInjectorApplier.VANILLA_FISHING_LOOT_TABLE_RK);
+            Optional<Holder.Reference<LootTable>> optionalLootTableReference = lootContext.getResolver().getOrThrow(Registries.LOOT_TABLE).value().get(NewLootInjectorApplier.VANILLA_FISHING_LOOT_TABLE_RK);
             if (optionalLootTableReference.isPresent() && optionalLootTableReference.get().value() == ((LootTable)(Object)this)) {
                 ObjectArrayList<ItemStack> newItems = new ObjectArrayList<>();
                 NewLootInjectorApplier.injectLoot(lootContext, newItems, NewLootInjectorApplier.BZ_DIMENSION_FISHING_LOOT_TABLE_RL);

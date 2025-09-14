@@ -52,6 +52,7 @@ import net.minecraft.world.level.block.JigsawBlock;
 import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.JigsawBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -224,26 +225,16 @@ public class GeneralUtils {
     //////////////////////////////////////////////
 
     // More optimized with checking if the jigsaw blocks can connect
-    public static boolean canJigsawsAttach(StructureTemplate.StructureBlockInfo jigsaw1, StructureTemplate.StructureBlockInfo jigsaw2, String parentJoint, String parentTarget) {
-        FrontAndTop prop1 = jigsaw1.state().getValue(JigsawBlock.ORIENTATION);
-        FrontAndTop prop2 = jigsaw2.state().getValue(JigsawBlock.ORIENTATION);
+    public static boolean canJigsawsAttach(StructureTemplate.JigsawBlockInfo parentJigsaw, StructureTemplate.JigsawBlockInfo childJigsaw) {
+        if (!parentJigsaw.target().equals(childJigsaw.name())) {
+            return false;
+        }
+
+        FrontAndTop prop1 = parentJigsaw.info().state().getValue(JigsawBlock.ORIENTATION);
+        FrontAndTop prop2 = childJigsaw.info().state().getValue(JigsawBlock.ORIENTATION);
 
         return prop1.front() == prop2.front().getOpposite() &&
-                (prop1.top() == prop2.top() || isRollableJoint(parentJoint, prop1)) &&
-                parentTarget.equals(getStringMicroOptimised(jigsaw2.nbt(), "name"));
-    }
-
-    private static boolean isRollableJoint(String joint, FrontAndTop prop1) {
-        if (!joint.equals("rollable") && !joint.equals("aligned")) {
-            return !prop1.front().getAxis().isHorizontal();
-        }
-        else {
-            return joint.equals("rollable");
-        }
-    }
-
-    public static String getStringMicroOptimised(CompoundTag tag, String key) {
-        return tag != null && tag.get(key) instanceof StringTag stringTag ? stringTag.asString().orElse("") : "";
+                (prop1.top() == prop2.top() || parentJigsaw.jointType() == JigsawBlockEntity.JointType.ROLLABLE);
     }
 
     //////////////////////////////////////////////
@@ -947,7 +938,7 @@ public class GeneralUtils {
 
     public static List<ItemStack> convertBlockTagsToItemStacks(TagKey<Block> baseTag, @Nullable TagKey<Block> disallowTag) {
         List<ItemStack> itemStacks = new ArrayList<>();
-        for (Holder<Block> blockHolder : BuiltInRegistries.BLOCK.getOrEmpty(baseTag)) {
+        for (Holder<Block> blockHolder : BuiltInRegistries.BLOCK.getTagOrEmpty(baseTag)) {
             if (disallowTag == null || !blockHolder.is(disallowTag)) {
                 Item item = blockHolder.value().asItem();
                 if (item == null) {
@@ -968,9 +959,9 @@ public class GeneralUtils {
     /**
      * Bumblezone structures do not use priority in Jigsaws, so we can skip the expensive priority sorting.
      */
-    public static List<StructureTemplate.StructureBlockInfo> getShuffledJigsawBlocksWithoutPriority(SinglePoolElement singlePoolElement, StructureTemplateManager structureTemplateManager, BlockPos blockPos, Rotation rotation, RandomSource randomSource) {
+    public static List<StructureTemplate.JigsawBlockInfo> getShuffledJigsawBlocksWithoutPriority(SinglePoolElement singlePoolElement, StructureTemplateManager structureTemplateManager, BlockPos blockPos, Rotation rotation, RandomSource randomSource) {
         StructureTemplate structureTemplate = ((SinglePoolElementAccessor)singlePoolElement).bumblezone$getTemplate().map(structureTemplateManager::getOrCreate, Function.identity());
-        ObjectArrayList<StructureTemplate.StructureBlockInfo> objectArrayList = structureTemplate.filterBlocks(blockPos, new StructurePlaceSettings().setRotation(rotation), Blocks.JIGSAW, true);
+        List<StructureTemplate.JigsawBlockInfo> objectArrayList = structureTemplate.getJigsaws(blockPos, rotation);
         Util.shuffle(objectArrayList, randomSource);
         return objectArrayList;
     }

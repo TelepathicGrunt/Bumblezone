@@ -37,7 +37,7 @@ public class StickyHoneyResidueFeature extends Feature<NoneFeatureConfiguration>
         if (originalBlockstate.isAir() && !originalBlockstate.is(BzTags.AIR_LIKE)) {
             BlockState honeyResidue = ALL_DIRECTION_RESIDUE;
             if (honeyResidue.canSurvive(context.level(), context.origin())) {
-                honeyResidue = honeyResidue.updateShape(Direction.DOWN, honeyResidue, context.level(), context.origin(), context.origin());
+                honeyResidue = honeyResidue.updateShape(context.level(), context.level(), context.origin(), Direction.DOWN, context.origin(), honeyResidue, context.random());
 
                 BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
                 for(Direction side : Direction.Plane.HORIZONTAL) {

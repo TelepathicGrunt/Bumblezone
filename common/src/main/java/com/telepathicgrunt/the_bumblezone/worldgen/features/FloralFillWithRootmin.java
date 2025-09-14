@@ -73,7 +73,7 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
 
                 mutable.set(chunkCornerPos).move(xOffset, 0, zOffset);
                 boolean isAtGrassBlock = setMutableToGrassBlock(cachedChunk, bulkSectionAccess, mutable);
-                if (!isAtGrassBlock || mutable.getY() <= cachedChunk.getMinBuildHeight() || mutable.getY() >= cachedChunk.getMaxBuildHeight()) {
+                if (!isAtGrassBlock || mutable.getY() <= cachedChunk.getMinY() || mutable.getY() >= cachedChunk.getMaxY()) {
                     continue;
                 }
 
@@ -93,7 +93,7 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                 if (spawnRootmin && mutable.getY() != 39) {
                     bulkSectionAccess.setBlockState(mutable, Blocks.AIR.defaultBlockState(), false);
 
-                    Entity spawningEntity = BzEntities.ROOTMIN.get().create(level.getLevel());
+                    Entity spawningEntity = BzEntities.ROOTMIN.get().create(level.getLevel(), EntitySpawnReason.CHUNK_GENERATION);
                     if (spawningEntity instanceof RootminEntity rootmin) {
                         Optional<HolderSet.Named<Block>> optionalRootminBlocks = BuiltInRegistries.BLOCK.get(config.rootminFlowerTag);
                         List<Block> rootminBlockList = GeneralUtils.convertHoldersetToList(optionalRootminBlocks);
@@ -109,7 +109,7 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
 
                         rootmin.setPersistenceRequired();
                         rootmin.setFlowerBlock(chosenRootminFlower);
-                        rootmin.moveTo(
+                        rootmin.snapTo(
                                 (double)mutable.getX() + 0.5D,
                                 mutable.getY(),
                                 (double)mutable.getZ() + 0.5D,
@@ -172,8 +172,8 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
         BlockState currentState = bulkSectionAccess.getBlockState(mutable);
         Direction previousDirection = null;
         while (!currentState.is(Blocks.GRASS_BLOCK) &&
-                mutable.getY() > cachedChunk.getMinBuildHeight() &&
-                mutable.getY() < cachedChunk.getMaxBuildHeight())
+                mutable.getY() > cachedChunk.getMinY() &&
+                mutable.getY() < cachedChunk.getMaxY())
         {
             if (currentState.is(Blocks.CAVE_AIR)) {
                 if (previousDirection == Direction.DOWN) {

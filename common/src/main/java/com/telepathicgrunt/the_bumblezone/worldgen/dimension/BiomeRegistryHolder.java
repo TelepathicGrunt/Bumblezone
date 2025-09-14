@@ -11,17 +11,17 @@ public class BiomeRegistryHolder {
     private static final ResourceLocation EMPTY_RL = ResourceLocation.fromNamespaceAndPath("b", "empty");
 
     public static void setupBiomeRegistry(MinecraftServer server) {
-        BIOME_REGISTRY = server.registryAccess().registry(Registries.BIOME).get();
+        BIOME_REGISTRY = server.registryAccess().getOrThrow(Registries.BIOME).value();
     }
 
     public static ResourceLocation convertToRL(int id) {
         if (id == -1) {
             return EMPTY_RL;
         }
-        return BIOME_REGISTRY.getHolder(id).get().key().location();
+        return BIOME_REGISTRY.get(id).get().key().location();
     }
 
     public static int convertToID(ResourceLocation biome) {
-        return BIOME_REGISTRY.getId(BIOME_REGISTRY.get(biome));
+        return BIOME_REGISTRY.getId(BIOME_REGISTRY.getValue(biome));
     }
 }

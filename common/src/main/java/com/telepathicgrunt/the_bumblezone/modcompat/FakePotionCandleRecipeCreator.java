@@ -37,13 +37,13 @@ public class FakePotionCandleRecipeCreator {
         Set<MobEffect> effects = new HashSet<>();
         List<Holder<Potion>> potions = new ArrayList<>();
         for (ResourceLocation potionKey : BuiltInRegistries.POTION.keySet()) {
-            Optional<Holder.Reference<Potion>> potion = BuiltInRegistries.POTION.getHolder(potionKey);
+            Optional<Holder.Reference<Potion>> potion = BuiltInRegistries.POTION.get(potionKey);
             if (oneRecipeOnly && !potions.isEmpty()) {
                 break;
             }
 
             if (potion.isEmpty() || potion.get().value().getEffects().stream().allMatch(e ->
-                effects.contains(e.getEffect().value()) || BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect().value()).orElseThrow()).is(BzTags.DISALLOWED_POTION_CANDLE_EFFECTS)))
+                effects.contains(e.getEffect().value()) || BuiltInRegistries.MOB_EFFECT.getOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect().value()).orElseThrow()).is(BzTags.DISALLOWED_POTION_CANDLE_EFFECTS)))
             {
                 continue;
             }

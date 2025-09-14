@@ -6,7 +6,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseChunkAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseGeneratorSettingsAccessor;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -43,7 +43,6 @@ import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.levelgen.Aquifer;
 import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.DensityFunctions;
-import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
@@ -117,7 +116,8 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     public record BiomeNoise(Supplier<BiomeSource> biomeSource,
-                             Supplier<Climate.Sampler> sampler) implements DensityFunction.SimpleFunction {
+                             Supplier<Climate.Sampler> sampler) implements DensityFunction.SimpleFunction
+    {
         public static final KeyDispatchDataCodec<BiomeNoise> CODEC = KeyDispatchDataCodec.of(MapCodec.unit(new BiomeNoise(null, null)));
 
         @Override
@@ -155,7 +155,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     @Override
-    protected void doCreateBiomes(Blender blender, RandomState randomState, StructureManager structureManager, ChunkAccess chunkAccess) {
+    public void doCreateBiomes(Blender blender, RandomState randomState, StructureManager structureManager, ChunkAccess chunkAccess) {
         NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk((chunkAccess1) -> this.createNoiseChunk(chunkAccess1, structureManager, blender, randomState));
         Climate.Sampler sampler = ((NoiseChunkExtension) noiseChunk).the_bumblezone$getCachedClimateSampler();
         BiomeResolver biomeresolver = getBiomeResolver(((NoiseChunkExtension) noiseChunk).the_bumblezone$getBiomeSource());
@@ -167,7 +167,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     @Override
-    protected NoiseChunk createNoiseChunk(ChunkAccess chunkAccess, StructureManager structureManager, Blender blender, RandomState randomState) {
+    public NoiseChunk createNoiseChunk(ChunkAccess chunkAccess, StructureManager structureManager, Blender blender, RandomState randomState) {
         NoiseChunk noiseChunk = super.createNoiseChunk(chunkAccess, structureManager, blender, randomState);
         postInitNoiseChunk(randomState, noiseChunk);
         return noiseChunk;
@@ -185,7 +185,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     @Override
     public int getBaseHeight(int x, int z, Heightmap.Types types, LevelHeightAccessor levelHeightAccessor, RandomState randomState) {
         return this.iterateNoiseColumn(levelHeightAccessor, randomState, x, z, null, types.isOpaque())
-                .orElse(levelHeightAccessor.getMinBuildHeight());
+                .orElse(levelHeightAccessor.getMinY());
     }
 
     @Override
@@ -276,7 +276,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         NoiseChunk noisechunk = chunkAccess.getOrCreateNoiseChunk((noiseChunk) -> this.createNoiseChunk(noiseChunk, structureManager, blender, randomState));
         biomeManager = new NoVerticalBlendBiomeManager(biomeManager, ((NoiseChunkExtension) noisechunk).the_bumblezone$getBiomeSource() instanceof BiomeManager.NoiseBiomeSource noiseBiomeSource ? noiseBiomeSource : null);
         NoiseGeneratorSettings noisegeneratorsettings = this.settings.value();
-        randomState.surfaceSystem().buildSurface(randomState, biomeManager, worldGenRegion.registryAccess().registry(Registries.BIOME).get(), noisegeneratorsettings.useLegacyRandomSource(), worldgenerationcontext, chunkAccess, noisechunk, noisegeneratorsettings.surfaceRule());
+        randomState.surfaceSystem().buildSurface(randomState, biomeManager, worldGenRegion.registryAccess().getOrThrow(Registries.BIOME).value(), noisegeneratorsettings.useLegacyRandomSource(), worldgenerationcontext, chunkAccess, noisechunk, noisegeneratorsettings.surfaceRule());
     }
 
     public void buildSurface(ChunkAccess chunkAccess, WorldGenerationContext worldGenerationContext, RandomState randomState, StructureManager structureManager, BiomeManager biomeManager, Registry<Biome> biomeRegistry, Blender blender) {
@@ -286,10 +286,10 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     @Override
-    public void applyCarvers(WorldGenRegion worldGenRegion, long seed, RandomState randomState, BiomeManager biomeManager, StructureManager structureManager, ChunkAccess chunkAccess, GenerationStep.Carving carving) {}
+    public void applyCarvers(WorldGenRegion worldGenRegion, long seed, RandomState randomState, BiomeManager biomeManager, StructureManager structureManager, ChunkAccess chunkAccess) {}
 
     @Override
-    protected ChunkAccess doFill(Blender blender, StructureManager structureManager, RandomState randomState, ChunkAccess chunkAccess, int x, int z) {
+    public ChunkAccess doFill(Blender blender, StructureManager structureManager, RandomState randomState, ChunkAccess chunkAccess, int minCellY, int cellCountY) {
         NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk((chunkAccess1) -> this.createNoiseChunk(chunkAccess1, structureManager, blender, randomState));
         Heightmap heightmap = chunkAccess.getOrCreateHeightmapUnprimed(Heightmap.Types.OCEAN_FLOOR_WG);
         Heightmap heightmap1 = chunkAccess.getOrCreateHeightmapUnprimed(Heightmap.Types.WORLD_SURFACE_WG);
@@ -311,11 +311,11 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                 int bottomBlockY = chunkAccess.getSectionsCount() - 1;
                 LevelChunkSection levelchunksection = chunkAccess.getSection(chunkAccess.getSectionsCount() - 1);
 
-                for(int i2 = z - 1; i2 >= 0; --i2) {
+                for(int i2 = cellCountY - 1; i2 >= 0; --i2) {
                     noiseChunk.selectCellYZ(i2, l1);
 
                     for(int j2 = l - 1; j2 >= 0; --j2) {
-                        int k2 = (x + i2) * l + j2;
+                        int k2 = (minCellY + i2) * l + j2;
                         int l2 = k2 & 15;
                         int i3 = chunkAccess.getSectionIndex(k2);
                         if (bottomBlockY != i3) {
@@ -387,7 +387,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     public void spawnOriginalMobs(WorldGenRegion region) {
         if (!this.settings.value().disableMobGeneration()) {
             ChunkPos chunkpos = region.getCenter();
-            Holder<Biome> holder = region.getBiome(chunkpos.getWorldPosition().atY(region.getMaxBuildHeight() - 1));
+            Holder<Biome> holder = region.getBiome(chunkpos.getWorldPosition().atY(region.getMaxY() - 1));
             WorldgenRandom worldgenrandom = new WorldgenRandom(new LegacyRandomSource(RandomSupport.generateUniqueSeed()));
             worldgenrandom.setDecorationSeed(region.getSeed(), chunkpos.getMinBlockX(), chunkpos.getMinBlockZ());
             spawnNonBeeMobsForChunkGeneration(region, holder, chunkpos, worldgenrandom);
@@ -396,23 +396,23 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
     public static void spawnNonBeeMobsForChunkGeneration(ServerLevelAccessor serverLevelAccessor, Holder<Biome> biomeHolder, ChunkPos chunkPos, RandomSource randomSource) {
         MobSpawnSettings mobspawnsettings = biomeHolder.value().getMobSettings();
-        WeightedList<MobSpawnSettings.SpawnerData> WeightedList = mobspawnsettings.getMobs(MobCategory.CREATURE);
+        WeightedList<MobSpawnSettings.SpawnerData> weightedList = mobspawnsettings.getMobs(MobCategory.CREATURE);
 
         // Bees are spawned by different system if config is true. See BeeDedicatedSpawning class
         if (BzGeneralConfigs.specialBeeSpawning) {
-            WeightedList = WeightedList.create(WeightedList.unwrap().stream().filter(e -> e.type != EntityType.BEE).toList());
+            weightedList = WeightedList.of(weightedList.unwrap().stream().filter(e -> e.value().type() != EntityType.BEE).toList());
         }
 
-        if (!WeightedList.isEmpty()) {
+        if (!weightedList.isEmpty()) {
             int minX = chunkPos.getMinBlockX();
             int minZ = chunkPos.getMinBlockZ();
             int seaLevel = ((ServerChunkCache)serverLevelAccessor.getChunkSource()).getGenerator().getSeaLevel();
 
             while(randomSource.nextFloat() < mobspawnsettings.getCreatureProbability() * 0.5) {
-                Optional<MobSpawnSettings.SpawnerData> optional = WeightedList.getRandom(randomSource);
+                Optional<MobSpawnSettings.SpawnerData> optional = weightedList.getRandom(randomSource);
                 if (optional.isPresent()) {
                     MobSpawnSettings.SpawnerData mobspawnsettings$spawnerdata = optional.get();
-                    int groupCount = mobspawnsettings$spawnerdata.minCount + randomSource.nextInt(1 + mobspawnsettings$spawnerdata.maxCount - mobspawnsettings$spawnerdata.minCount);
+                    int groupCount = mobspawnsettings$spawnerdata.minCount() + randomSource.nextInt(1 + mobspawnsettings$spawnerdata.maxCount() - mobspawnsettings$spawnerdata.minCount());
                     SpawnGroupData spawngroupdata = null;
                     int x = minX + randomSource.nextInt(16);
                     int z = minZ + randomSource.nextInt(16);
@@ -428,31 +428,31 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
                             do {
                                 mutableBlockPos.move(Direction.DOWN);
-                            } while (serverLevelAccessor.getBlockState(mutableBlockPos).isAir() && mutableBlockPos.getY() > serverLevelAccessor.getMinBuildHeight());
+                            } while (serverLevelAccessor.getBlockState(mutableBlockPos).isAir() && mutableBlockPos.getY() > serverLevelAccessor.getMinY());
                         }
 
-                        if (mobspawnsettings$spawnerdata.type.canSummon()) {
-                            float mobWidth = mobspawnsettings$spawnerdata.type.getWidth();
+                        if (mobspawnsettings$spawnerdata.type().canSummon()) {
+                            float mobWidth = mobspawnsettings$spawnerdata.type().getWidth();
                             double finalX = Mth.clamp(x + 0.5D, (double)minX + (double)mobWidth + 0.5D, (double)minX + 15.5D - (double)mobWidth);
                             double finalZ = Mth.clamp(z + 0.5D, (double)minZ + (double)mobWidth + 0.5D, (double)minZ + 15.5D - (double)mobWidth);
 
                             if (!serverLevelAccessor.getWorldBorder().isWithinBounds(finalX, finalZ) ||
-                                (mutableBlockPos.getY() < serverLevelAccessor.getMinBuildHeight() || mutableBlockPos.getY() >= serverLevelAccessor.getMaxBuildHeight()))
+                                (mutableBlockPos.getY() < serverLevelAccessor.getMinY() || mutableBlockPos.getY() >= serverLevelAccessor.getMaxY()))
                             {
                                 continue;
                             }
 
                             Entity entity = null;
                             try {
-                                entity = mobspawnsettings$spawnerdata.type.create(serverLevelAccessor.getLevel());
+                                entity = mobspawnsettings$spawnerdata.type().create(serverLevelAccessor.getLevel(), EntitySpawnReason.CHUNK_GENERATION);
 
-                                entity.moveTo(finalX, mutableBlockPos.getY(), finalZ, randomSource.nextFloat() * 360.0F, 0.0F);
+                                entity.snapTo(finalX, mutableBlockPos.getY(), finalZ, randomSource.nextFloat() * 360.0F, 0.0F);
                                 if (entity instanceof Mob mob) {
                                     PlatformService.INSTANCE.finalizeSpawn(mob, serverLevelAccessor, null, EntitySpawnReason.CHUNK_GENERATION);
 
                                     if (mob.checkSpawnObstruction(serverLevelAccessor)) {
                                         spawngroupdata = mob.finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(mob.blockPosition()), EntitySpawnReason.CHUNK_GENERATION, spawngroupdata);
-                                        mob.moveTo(mob.getX(), mob.getY() + 1, mob.getZ());
+                                        mob.snapTo(mob.getX(), mob.getY() + 1, mob.getZ());
                                         serverLevelAccessor.addFreshEntityWithPassengers(mob);
                                     }
                                 }

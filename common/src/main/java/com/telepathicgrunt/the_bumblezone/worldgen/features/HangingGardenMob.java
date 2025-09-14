@@ -39,14 +39,14 @@ public class HangingGardenMob extends Feature<NoneFeatureConfiguration> {
             return false;
         }
 
-        Entity spawningEntity = entityToSpawn.create(context.level().getLevel());
+        Entity spawningEntity = entityToSpawn.create(context.level().getLevel(), EntitySpawnReason.CHUNK_GENERATION);
 
         if (spawningEntity instanceof Mob mob) {
             mob.finalizeSpawn(context.level(), context.level().getCurrentDifficultyAt(context.origin()), EntitySpawnReason.STRUCTURE, null);
             mob.setPersistenceRequired();
         }
 
-        spawningEntity.moveTo(
+        spawningEntity.snapTo(
                 (double)context.origin().getX() + 0.5D,
                 context.origin().getY(),
                 (double)context.origin().getZ() + 0.5D,

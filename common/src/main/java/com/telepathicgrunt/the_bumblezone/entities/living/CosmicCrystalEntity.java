@@ -1229,7 +1229,7 @@ public class CosmicCrystalEntity extends LivingEntity {
                 }
             }
             else {
-                q = this.getY() > (double)this.level().getMinBuildHeight() ? -0.1 : 0.0;
+                q = this.getY() > (double)this.level().getMinY() ? -0.1 : 0.0;
             }
 
             this.setDeltaMovement(vec37.x * (double)f, q * (double)0.98f, vec37.z * (double)f);
