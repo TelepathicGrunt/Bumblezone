@@ -1,5 +1,9 @@
 ### **(V.7.9.1 Changes) (1.20.1 Minecraft)**
 
+#### Misc:
+
+Grass Blocks now can spread to nearby dirt in Bumblezone at any light value.
+
 #### Lang:
 
 AstardGrimoire updated and fixed ru_ru.json file
