@@ -20,6 +20,7 @@
     "blocks.PistonStructureResolverMixin",
     "blocks.PointedDripstoneBlockMixin",
     "blocks.SmallDripleafBlockMixin",
+    "blocks.SpreadingSnowyDirtBlockMixin",
     "blocks.StemBlockAccessor",
     "blocks.VineBlockAccessor",
     "blocks.WaterEquivalenceMixin",
