@@ -12,7 +12,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -26,12 +25,11 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class ThronePillarBehavior {
     public static void applyFatigueAndSpawningBeeQueen(ServerPlayer serverPlayer) {
-        ServerLevel level = (ServerLevel) serverPlayer.level();
+        ServerLevel level = serverPlayer.level();
         StructureManager structureManager = level.structureManager();
         StructureStart structureStart = structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.BEE_QUEEN_MINING_FATIGUE);
         if (structureStart.isValid()) {
