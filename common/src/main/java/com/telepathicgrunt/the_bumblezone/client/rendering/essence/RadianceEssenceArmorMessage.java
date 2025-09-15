@@ -9,8 +9,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import org.joml.Matrix3x2fStack;
 
 public class RadianceEssenceArmorMessage {
     private static final String DURABILITY_TEXT = "item.the_bumblezone.essence_radiance_durability_text";
@@ -26,39 +29,38 @@ public class RadianceEssenceArmorMessage {
             Minecraft minecraft = Minecraft.getInstance();
 
             int i = 0;
-            for (ItemStack armorStack : player.getArmorSlots()) {
-                boolean isLowDurability = false;
-                MutableComponent bodyText;
-                if (!armorStack.isEmpty()) {
-                    int maxDamage = armorStack.getMaxDamage();
-                    int currentHealth = armorStack.getMaxDamage() - armorStack.getDamageValue();
-                    if (currentHealth < maxDamage * 0.25) {
-                        bodyText = Component.translatable(DURABILITY_LOW_TEXT, currentHealth, maxDamage).withStyle(ChatFormatting.RED);
-                        isLowDurability = true;
-                    }
-                    else {
-                        bodyText = Component.translatable(DURABILITY_TEXT, currentHealth, maxDamage);
+            for (EquipmentSlot equipmentSlot : EquipmentSlotGroup.ARMOR) {
+                if (equipmentSlot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
+                    ItemStack armorStack = player.getItemBySlot(equipmentSlot);
+                    boolean isLowDurability = false;
+                    MutableComponent bodyText;
+                    if (!armorStack.isEmpty()) {
+                        int maxDamage = armorStack.getMaxDamage();
+                        int currentHealth = armorStack.getMaxDamage() - armorStack.getDamageValue();
+                        if (currentHealth < maxDamage * 0.25) {
+                            bodyText = Component.translatable(DURABILITY_LOW_TEXT, currentHealth, maxDamage).withStyle(ChatFormatting.RED);
+                            isLowDurability = true;
+                        } else {
+                            bodyText = Component.translatable(DURABILITY_TEXT, currentHealth, maxDamage);
+                        }
+
+                        if (i == 3) {
+                            MutableComponent line = setupComponent(minecraft, HELMET_TEXT, bodyText, isLowDurability);
+                            renderScrollingString(minecraft, guiGraphics, armorStack, line, 60, 30);
+                        } else if (i == 2) {
+                            MutableComponent line = setupComponent(minecraft, CHESTPLATE_TEXT, bodyText, isLowDurability);
+                            renderScrollingString(minecraft, guiGraphics, armorStack, line, 40, 20);
+                        } else if (i == 1) {
+                            MutableComponent line = setupComponent(minecraft, LEGGINGS_TEXT, bodyText, isLowDurability);
+                            renderScrollingString(minecraft, guiGraphics, armorStack, line, 20, 10);
+                        } else if (i == 0) {
+                            MutableComponent line = setupComponent(minecraft, BOOTS_TEXT, bodyText, isLowDurability);
+                            renderScrollingString(minecraft, guiGraphics, armorStack, line, 0, 0);
+                        }
                     }
 
-                    if (i == 3) {
-                        MutableComponent line = setupComponent(minecraft, HELMET_TEXT, bodyText, isLowDurability);
-                        renderScrollingString(minecraft, guiGraphics, armorStack, line, 60, 30);
-                    }
-                    else if (i == 2) {
-                        MutableComponent line = setupComponent(minecraft, CHESTPLATE_TEXT, bodyText, isLowDurability);
-                        renderScrollingString(minecraft, guiGraphics, armorStack, line, 40, 20);
-                    }
-                    else if (i == 1) {
-                        MutableComponent line = setupComponent(minecraft, LEGGINGS_TEXT, bodyText, isLowDurability);
-                        renderScrollingString(minecraft, guiGraphics, armorStack, line, 20, 10);
-                    }
-                    else if (i == 0) {
-                        MutableComponent line = setupComponent(minecraft, BOOTS_TEXT, bodyText, isLowDurability);
-                        renderScrollingString(minecraft, guiGraphics, armorStack, line, 0, 0);
-                    }
+                    i++;
                 }
-
-                i++;
             }
         }
     }
@@ -92,16 +94,16 @@ public class RadianceEssenceArmorMessage {
                 0xFFE090
         );
 
-        PoseStack pose = guiGraphics.pose();
-        pose.pushPose();
+        Matrix3x2fStack pose = guiGraphics.pose();
+        pose.pushMatrix();
 
         pose.translate(
                 BzClientConfigs.radianceEssenceArmorDurabilityXCoord - 2,
                 guiGraphics.guiHeight() - (BzClientConfigs.radianceEssenceArmorDurabilityYCoord - 2) - yOffset2,
-                0);
+                pose);
 
-        pose.scale(0.7f, 0.7f, 1);
+        pose.scale(0.7f, 0.7f, pose);
         guiGraphics.renderItem(armorItem, 0, 0);
-        pose.popPose();
+        pose.popMatrix();
     }
 }

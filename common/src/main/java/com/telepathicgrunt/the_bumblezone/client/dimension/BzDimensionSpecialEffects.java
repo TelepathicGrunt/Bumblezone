@@ -1,12 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.client.dimension;
 
-import com.mojang.blaze3d.shaders.FogShape;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
-import net.minecraft.client.renderer.FogRenderer;
+import net.minecraft.client.renderer.fog.FogRenderer;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
@@ -18,7 +17,7 @@ import java.util.function.Consumer;
 
 public class BzDimensionSpecialEffects extends DimensionSpecialEffects {
     public BzDimensionSpecialEffects() {
-        super(-1000000f, true, SkyType.NONE, false, false);
+        super(SkyType.NONE, false, false);
     }
 
     @Override

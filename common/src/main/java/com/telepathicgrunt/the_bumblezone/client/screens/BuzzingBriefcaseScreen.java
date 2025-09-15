@@ -32,12 +32,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.TagValueOutput;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -124,9 +126,9 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                         catch (Exception e) {
                             BEE_INVENTORY.add(new BeeState(bee, MISSING_PRIMARY_COLOR, MISSING_SECONDARY_COLOR));
                             Bumblezone.LOGGER.warn("Bumblezone Buzzing Briefcase Clientside: Error trying to dynamically get color for following bee -");
-                            CompoundTag tag = new CompoundTag();
-                            bee.saveWithoutId(tag);
-                            Bumblezone.LOGGER.warn("Bee: {}", tag);
+                            TagValueOutput tagvalueoutput = TagValueOutput.createWithContext(new ProblemReporter.ScopedCollector(Bumblezone.LOGGER), bee.level().registryAccess());
+                            bee.saveWithoutId(tagvalueoutput);
+                            Bumblezone.LOGGER.warn("Bee: {}", tagvalueoutput.buildResult());
                         }
                         ((BeeEntityInvoker)bee).bumblezone$callSetHasNectar(pollinated);
                     }

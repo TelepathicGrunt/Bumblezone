@@ -179,16 +179,15 @@ public class TradeHintParticle extends Particle {
     }
 
     private void renderItem(ItemStack itemStack, PoseStack poseStack, MultiBufferSource.BufferSource bufferSource) {
-        BakedModel bakedmodel = itemRenderer.getModel(itemStack, Minecraft.getInstance().level, null, 0);
-        this.itemRenderer.render(
+        this.itemRenderer.renderStatic(
                 itemStack,
                 ItemDisplayContext.GUI,
-                false,
-                poseStack,
-                bufferSource,
                 LightTexture.FULL_BRIGHT,
                 OverlayTexture.NO_OVERLAY,
-                bakedmodel);
+                poseStack,
+                bufferSource,
+                Minecraft.getInstance().level,
+                0);
     }
 
     @Override
