@@ -18,11 +18,11 @@
     "mods.MidnightConfigScreenMixin"
   ],
   "mixins": [
-    "block.FireBlockMixin",
-    "block.LavaFluidMixin",
-    "block.LiquidBlockMixin",
-    "block.PistonStructureResolverMixin",
-    "block.ShulkerBoxBlockEntityMixin",
+    "blocks.FireBlockMixin",
+    "blocks.LavaFluidMixin",
+    "blocks.LiquidBlockMixin",
+    "blocks.PistonStructureResolverMixin",
+    "blocks.ShulkerBoxBlockEntityMixin",
     "entities.AnimalMixin",
     "entities.BaseSpawnerMixin",
     "entities.EntityAccessor",
@@ -40,9 +40,9 @@
     "entities.StructureTemplateEntitySpawnMixin",
     "entities.WalkNodeEvaluatorMixin",
     "fabricapi.BiomeModificationContextImplMixin",
-    "item.BucketItemAccessor",
-    "item.ItemStackMixin",
-    "item.ProjectileWeaponItemMixin",
+    "items.BucketItemAccessor",
+    "items.ItemStackMixin",
+    "items.ProjectileWeaponItemMixin",
     "loot.LootTableMixin",
     "util.FileUtilMixin"
   ]

@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.neoforge.block;
+package com.telepathicgrunt.the_bumblezone.mixin.neoforge.blocks;
 
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.phys.BlockHitResult;

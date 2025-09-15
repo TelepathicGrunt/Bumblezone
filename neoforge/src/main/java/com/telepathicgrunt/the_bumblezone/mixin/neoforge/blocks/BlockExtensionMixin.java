@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.neoforge.block;
+package com.telepathicgrunt.the_bumblezone.mixin.neoforge.blocks;
 
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;

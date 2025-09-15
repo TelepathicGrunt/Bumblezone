@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.neoforge.entity;
+package com.telepathicgrunt.the_bumblezone.mixin.neoforge.entities;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import net.minecraft.tags.FluidTags;

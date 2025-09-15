@@ -7,6 +7,7 @@ import mekanism.api.MekanismAPI;
 import mekanism.api.event.MekanismTeleportEvent;
 import mekanism.api.gear.ICustomModule;
 import mekanism.api.gear.IModule;
+import mekanism.api.gear.IModuleContainer;
 import mekanism.api.gear.IModuleHelper;
 import mekanism.api.gear.ModuleData;
 import net.minecraft.ChatFormatting;
@@ -26,11 +27,12 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.EnumSet;
+import java.util.Objects;
 import java.util.Optional;
 
-public class MekanismCompat <MODULE extends ICustomModule<MODULE>> implements ModCompat {
-	final DeferredHolder<ModuleData<?>, ModuleData<MODULE>> JETPACK_UNIT = DeferredHolder.create(MekanismAPI.MODULE_REGISTRY_NAME, ResourceLocation.fromNamespaceAndPath("mekanism", "jetpack_unit"));
-	final DeferredHolder<ModuleData<?>, ModuleData<MODULE>> GRAV_UNIT = DeferredHolder.create(MekanismAPI.MODULE_REGISTRY_NAME, ResourceLocation.fromNamespaceAndPath("mekanism", "gravitational_modulating_unit"));
+public class MekanismCompat implements ModCompat {
+	final DeferredHolder<ModuleData<?>, ModuleData<?>> JETPACK_UNIT = DeferredHolder.create(MekanismAPI.MODULE_REGISTRY_NAME, ResourceLocation.fromNamespaceAndPath("mekanism", "jetpack_unit"));
+	final DeferredHolder<ModuleData<?>, ModuleData<?>> GRAV_UNIT = DeferredHolder.create(MekanismAPI.MODULE_REGISTRY_NAME, ResourceLocation.fromNamespaceAndPath("mekanism", "gravitational_modulating_unit"));
 	public static Optional<Holder.Reference<Item>> JETPACK;
 	public static Optional<Holder.Reference<Item>> JETPACK_ARMORED;
 
@@ -69,19 +71,21 @@ public class MekanismCompat <MODULE extends ICustomModule<MODULE>> implements Mo
 			}
 
 			if (player instanceof ServerPlayer) {
-				IModule<?> jetpackUnit = IModuleHelper.INSTANCE.getModule(chestplate, JETPACK_UNIT);
+				IModuleContainer moduleContainer = Objects.requireNonNull(IModuleHelper.INSTANCE.getModuleContainer(chestplate));
+
+				IModule<?> jetpackUnit = moduleContainer.getUnchecked(JETPACK_UNIT);
 				if (jetpackUnit != null && jetpackUnit.isEnabled()) {
 					jetpackUnit.toggleEnabled(
-							IModuleHelper.INSTANCE.getModuleContainer(chestplate),
+							moduleContainer,
 							chestplate,
 							player,
 							Component.translatable("system.the_bumblezone.denied_mek_jetpack_module").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.RED));
 				}
 
-				IModule<?> gravUnit = IModuleHelper.INSTANCE.getModule(chestplate, GRAV_UNIT);
+				IModule<?> gravUnit = moduleContainer.getUnchecked(GRAV_UNIT);
 				if (gravUnit != null && gravUnit.isEnabled()) {
 					gravUnit.toggleEnabled(
-							IModuleHelper.INSTANCE.getModuleContainer(chestplate),
+							moduleContainer,
 							chestplate,
 							player,
 							Component.translatable("system.the_bumblezone.denied_mek_grav_module").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.RED));

@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.fabric.item;
+package com.telepathicgrunt.the_bumblezone.mixin.fabric.items;
 
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import net.minecraft.world.item.Item;

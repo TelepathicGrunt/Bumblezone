@@ -6,7 +6,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.mixin.fabric.entities.EntityAccessor;
-import com.telepathicgrunt.the_bumblezone.mixin.fabric.item.BucketItemAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.fabric.items.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.items.ItemAccessor;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.fabric.RestrictedPortalsCompat;

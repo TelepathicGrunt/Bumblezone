@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.neoforge.item;
+package com.telepathicgrunt.the_bumblezone.mixin.neoforge.items;
 
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import net.minecraft.world.item.ItemStack;

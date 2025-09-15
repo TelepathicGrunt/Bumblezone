@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.neoforge.block;
+package com.telepathicgrunt.the_bumblezone.mixin.neoforge.blocks;
 
 import com.telepathicgrunt.the_bumblezone.blocks.PotionCandleBase;
 import com.telepathicgrunt.the_bumblezone.blocks.SuperCandle;

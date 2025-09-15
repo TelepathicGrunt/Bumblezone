@@ -41,7 +41,7 @@ import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.fluids.neoforge.BzFluidBottlesWrapper;
 import com.telepathicgrunt.the_bumblezone.fluids.neoforge.BzFluidBucketWrapper;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
-import com.telepathicgrunt.the_bumblezone.mixin.neoforge.block.FireBlockInvoker;
+import com.telepathicgrunt.the_bumblezone.mixin.neoforge.blocks.FireBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.neoforge.NeoForgeModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;

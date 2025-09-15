@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.fabric.block;
+package com.telepathicgrunt.the_bumblezone.mixin.fabric.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.core.Direction;

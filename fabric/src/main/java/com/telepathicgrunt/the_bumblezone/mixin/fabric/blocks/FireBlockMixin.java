@@ -1,9 +1,8 @@
-package com.telepathicgrunt.the_bumblezone.mixin.neoforge.block;
+package com.telepathicgrunt.the_bumblezone.mixin.fabric.blocks;
 
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCocoon;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -22,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class FireBlockMixin {
 
     // Make Honey Cocoon drop items when fire broken
-    @Inject(method = "checkBurnOut(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;ILnet/minecraft/util/RandomSource;ILnet/minecraft/core/Direction;)V",
+    @Inject(method = "checkBurnOut(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;ILnet/minecraft/util/RandomSource;I)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;removeBlock(Lnet/minecraft/core/BlockPos;Z)Z"),
             require = 0)
     private void thebumblezone_fireHoneyCocoonLootDrop(Level level,
@@ -30,7 +29,6 @@ public class FireBlockMixin {
                                                        int fireChance,
                                                        RandomSource randomSource,
                                                        int fireAge,
-                                                       Direction face,
                                                        CallbackInfo ci)
     {
         BlockState fireBrokenBlock = level.getBlockState(blockPos);

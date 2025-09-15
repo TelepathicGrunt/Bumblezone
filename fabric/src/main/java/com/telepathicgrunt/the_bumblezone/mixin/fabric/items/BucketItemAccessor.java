@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.fabric.item;
+package com.telepathicgrunt.the_bumblezone.mixin.fabric.items;
 
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.level.material.Fluid;

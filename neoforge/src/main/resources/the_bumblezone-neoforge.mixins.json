@@ -3,14 +3,14 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin.neoforge",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "block.BlockExtensionMixin",
-    "block.FireBlockInvoker",
-    "block.FireBlockMixin",
-    "block.SuperCandleMixin",
-    "block.UseOnContextAccessor",
-    "entity.EntityMixin",
-    "item.BzArrowItemMixin",
-    "item.ItemExtensionMixin"
+    "blocks.BlockExtensionMixin",
+    "blocks.FireBlockInvoker",
+    "blocks.FireBlockMixin",
+    "blocks.SuperCandleMixin",
+    "blocks.UseOnContextAccessor",
+    "entities.EntityMixin",
+    "items.BzArrowItemMixin",
+    "items.ItemExtensionMixin"
   ],
   "client": [
     "client.BzArmorMixin"
