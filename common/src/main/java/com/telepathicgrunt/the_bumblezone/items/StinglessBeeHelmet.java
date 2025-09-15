@@ -11,7 +11,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.StinglessBeeHelmetSightPacket;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
-import net.minecraft.core.Holder;
 import net.minecraft.network.protocol.game.ClientboundSetPassengersPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -20,13 +19,13 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -38,8 +37,14 @@ public class StinglessBeeHelmet extends BeeArmor {
     public static int BEE_WEARABLES_COUNT = 0;
     public static int PACKET_SEND_COOLDOWN_CLIENTSIDE = 20;
 
-    public StinglessBeeHelmet(Holder<ArmorMaterial> material, ArmorItem.Type armorType, Properties properties, int variant) {
-        super(material, armorType, properties.component(BzDataComponents.STINGLESS_BEE_HELMET_DATA.get(), new StinglessBeeHelmetData()), variant, false);
+    public StinglessBeeHelmet(Properties properties, int variant) {
+        super(properties
+                .stacksTo(1)
+                .repairable(BzTags.BEE_ARMOR_REPAIR_ITEMS)
+                .rarity(Rarity.UNCOMMON).durability(264)
+                .component(BzDataComponents.STINGLESS_BEE_HELMET_DATA.get(), new StinglessBeeHelmetData()),
+            variant,
+            false);
     }
 
     @Override
@@ -55,7 +60,7 @@ public class StinglessBeeHelmet extends BeeArmor {
         boolean hasBeeRider = beeHelmetData.hasBeeRider();
         long beeRiderStartTime = beeHelmetData.beeRiderStartTime();
 
-        if (player.getCooldowns().isOnCooldown(itemStack.getItem())) {
+        if (player.getCooldowns().isOnCooldown(itemStack)) {
             if (hasBeeRider) {
                 ejectAllBeeRiders(player);
 
@@ -73,7 +78,7 @@ public class StinglessBeeHelmet extends BeeArmor {
 
         int beeWearablesCount = BeeArmor.getBeeThemedWearablesCount(player);
 
-        MobEffectInstance nausea = player.getEffect(MobEffects.CONFUSION);
+        MobEffectInstance nausea = player.getEffect(MobEffects.NAUSEA);
         if (nausea != null) {
             int decreaseSpeed = (int)((beeWearablesCount * 3d) - 2);
             for (int i = 0; i < decreaseSpeed; i++) {
@@ -159,8 +164,8 @@ public class StinglessBeeHelmet extends BeeArmor {
 
     public static boolean shouldEntityGlow(Player player, Entity entity) {
         if (entity instanceof Bee || entity instanceof BeehemothEntity || entity instanceof BeeQueenEntity) {
-            if (player.getCooldowns().isOnCooldown(BzItems.STINGLESS_BEE_HELMET_1.get()) ||
-                player.getCooldowns().isOnCooldown(BzItems.STINGLESS_BEE_HELMET_2.get()))
+            if (player.getCooldowns().isOnCooldown(BzItems.STINGLESS_BEE_HELMET_1.get().getDefaultInstance()) ||
+                player.getCooldowns().isOnCooldown(BzItems.STINGLESS_BEE_HELMET_2.get().getDefaultInstance()))
             {
                 return false;
             }
@@ -176,7 +181,7 @@ public class StinglessBeeHelmet extends BeeArmor {
             !playerEntity.isShiftKeyDown() &&
             playerEntity.getItemInHand(playerEntity.getUsedItemHand()).isEmpty() &&
             playerEntity.getPassengers().isEmpty() &&
-            !playerEntity.getCooldowns().isOnCooldown(itemStack.getItem()))
+            !playerEntity.getCooldowns().isOnCooldown(itemStack))
         {
             if ((entity instanceof Bee && !entity.getType().is(BzTags.STINGLESS_BEE_HELMET_DISALLOWED_PASSENGERS)) ||
                 entity.getType().is(BzTags.STINGLESS_BEE_HELMET_FORCED_ALLOWED_PASSENGERS))
@@ -214,9 +219,12 @@ public class StinglessBeeHelmet extends BeeArmor {
     }
 
     public static ItemStack getEntityBeeHelmet(LivingEntity entity) {
-        for (ItemStack armor : entity.getArmorSlots()) {
-            if (armor.getItem() instanceof StinglessBeeHelmet) {
-                return armor;
+        for (EquipmentSlot equipmentSlot : EquipmentSlotGroup.ARMOR) {
+            if (equipmentSlot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
+                ItemStack armor = entity.getItemBySlot(equipmentSlot);
+                if (armor.getItem() instanceof StinglessBeeHelmet) {
+                    return armor;
+                }
             }
         }
         return ItemStack.EMPTY;

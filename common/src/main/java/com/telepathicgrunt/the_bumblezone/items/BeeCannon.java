@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -14,10 +16,11 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,12 +30,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -45,7 +51,12 @@ public class BeeCannon extends Item implements ItemExtension {
     public static final int MAX_NUMBER_OF_BEES = 3;
 
     public BeeCannon(Properties properties) {
-        super(properties.component(BzDataComponents.BEE_CANNON_DATA.get(), CustomData.EMPTY));
+        super(properties
+                .stacksTo(1)
+                .durability(50)
+                .enchantable(1)
+                .repairable(BzTags.BEE_CANNON_REPAIR_ITEMS)
+                .component(BzDataComponents.BEE_CANNON_DATA.get(), CustomData.EMPTY));
     }
 
     @Override
@@ -56,7 +67,7 @@ public class BeeCannon extends Item implements ItemExtension {
     }
 
     @Override
-    public void releaseUsing(ItemStack beeCannon, Level level, LivingEntity livingEntity, int currentDuration) {
+    public boolean releaseUsing(ItemStack beeCannon, Level level, LivingEntity livingEntity, int currentDuration) {
         if (!level.isClientSide() && livingEntity instanceof Player player) {
             ItemStack mutableBeeCannon = player.getItemInHand(InteractionHand.MAIN_HAND);
 
@@ -65,7 +76,7 @@ public class BeeCannon extends Item implements ItemExtension {
             if (remainingDuration / (float)getChargeDuration(mutableBeeCannon, livingEntity) > 0.99f && numberOfBees > 0) {
                 List<Entity> bees = tryReleaseBees(level, mutableBeeCannon);
                 if (bees.isEmpty()) {
-                    return;
+                    return false;
                 }
 
                 player.awardStat(Stats.ITEM_USED.get(beeCannon.getItem()));
@@ -95,7 +106,7 @@ public class BeeCannon extends Item implements ItemExtension {
                         1);
 
                 bees.forEach(bee -> {
-                    bee.moveTo(playerEyePos.x(),
+                    bee.snapTo(playerEyePos.x(),
                             playerEyePos.y() - 0.5D,
                             playerEyePos.z(),
                             player.getYRot(),
@@ -123,19 +134,22 @@ public class BeeCannon extends Item implements ItemExtension {
                 if (numberOfBees >= MAX_NUMBER_OF_BEES && player instanceof ServerPlayer serverPlayer) {
                     BzCriterias.BEE_CANNON_FULL_TRIGGER.get().trigger(serverPlayer);
                 }
+
+                return true;
             }
         }
+        return false;
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
+    public InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
         ItemStack beeCannon = player.getItemInHand(interactionHand);
         if (getNumberOfBees(beeCannon) == 0) {
-            return InteractionResultHolder.fail(beeCannon);
+            return InteractionResult.FAIL;
         }
         else {
             player.startUsingItem(interactionHand);
-            return InteractionResultHolder.consume(beeCannon);
+            return InteractionResult.CONSUME;
         }
     }
 
@@ -145,7 +159,7 @@ public class BeeCannon extends Item implements ItemExtension {
             !(entity instanceof Bee bee) ||
             bee.isAngry() ||
             bee.getType().is(BzTags.CANNON_BEES_DISALLOWED_BEE) ||
-            playerEntity.getCooldowns().isOnCooldown(beeCannon.getItem()))
+            playerEntity.getCooldowns().isOnCooldown(beeCannon))
         {
             return InteractionResult.PASS;
         }
@@ -164,12 +178,12 @@ public class BeeCannon extends Item implements ItemExtension {
     public static List<Entity> tryReleaseBees(Level level, ItemStack beeCannonItem) {
         if (getNumberOfBees(beeCannonItem) > 0 && beeCannonItem.has(BzDataComponents.BEE_CANNON_DATA.get())) {
             CompoundTag cannonTag = beeCannonItem.get(BzDataComponents.BEE_CANNON_DATA.get()).copyTag();
-            ListTag beeList = cannonTag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
+            ListTag beeList = cannonTag.getListOrEmpty(TAG_BEES);
             List<Entity> releasedBees = new ObjectArrayList<>();
             for (int i = beeList.size() - 1; i >= 0; i--) {
-                CompoundTag beeTag = beeList.getCompound(0);
-                beeList.remove(0);
-                releasedBees.add(EntityType.loadEntityRecursive(beeTag, level, entityx -> entityx));
+                CompoundTag beeTag = beeList.getCompoundOrEmpty(0);
+                beeList.removeFirst();
+                releasedBees.add(EntityType.loadEntityRecursive(beeTag, level, EntitySpawnReason.SPAWN_ITEM_USE, entityx -> entityx));
             }
             beeCannonItem.set(BzDataComponents.BEE_CANNON_DATA.get(), CustomData.of(cannonTag));
             return releasedBees;
@@ -179,22 +193,25 @@ public class BeeCannon extends Item implements ItemExtension {
 
     public static boolean tryAddBee(ItemStack beeCannonItem, Entity bee) {
         if (getNumberOfBees(beeCannonItem) < MAX_NUMBER_OF_BEES && beeCannonItem.has(BzDataComponents.BEE_CANNON_DATA.get())) {
-            String beeTypeRL = bee.getEncodeId();
+            String beeTypeRL = ((EntityAccessor)bee).bumblezone$callGetEncodeId();
             if (beeTypeRL == null) {
                 return false;
             }
 
             CompoundTag cannonTag = beeCannonItem.get(BzDataComponents.BEE_CANNON_DATA.get()).copyTag();
-            ListTag beeList = cannonTag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
+            ListTag beeList = cannonTag.getListOrEmpty(TAG_BEES);
             CompoundTag beeTag = new CompoundTag();
 
             bee.stopRiding();
             bee.ejectPassengers();
             beeTag.putString("id", beeTypeRL);
-            bee.saveWithoutId(beeTag);
+            TagValueOutput tagvalueoutput = TagValueOutput.createWithContext(new ProblemReporter.ScopedCollector(Bumblezone.LOGGER), bee.level().registryAccess());
+            bee.saveWithoutId(tagvalueoutput);
+            beeTag.merge(tagvalueoutput.buildResult());
 
             UUID uUID = bee.getUUID();
-            bee.load(beeTag);
+            ValueInput tagvalueinput = TagValueInput.create(new ProblemReporter.ScopedCollector(Bumblezone.LOGGER), bee.level().registryAccess(), beeTag);
+            bee.load(tagvalueinput);
             bee.setUUID(uUID);
             beeTag.remove("UUID");
             beeList.add(beeTag);
@@ -212,7 +229,7 @@ public class BeeCannon extends Item implements ItemExtension {
         if (beeCannonItem.has(BzDataComponents.BEE_CANNON_DATA.get())) {
             CompoundTag cannonTag = beeCannonItem.get(BzDataComponents.BEE_CANNON_DATA.get()).copyTag();
             if (cannonTag.contains(TAG_BEES)) {
-                ListTag beeList = cannonTag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
+                ListTag beeList = cannonTag.getListOrEmpty(TAG_BEES);
                 return beeList.size();
             }
             else {
@@ -221,19 +238,6 @@ public class BeeCannon extends Item implements ItemExtension {
             }
         }
         return 0;
-    }
-
-    /**
-     * Return whether this item is repairable in an anvil.
-     */
-    @Override
-    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return repair.is(BzTags.BEE_CANNON_REPAIR_ITEMS);
-    }
-
-    @Override
-    public int getEnchantmentValue() {
-        return 1;
     }
 
     @Override
@@ -247,8 +251,8 @@ public class BeeCannon extends Item implements ItemExtension {
     }
 
     @Override
-    public UseAnim getUseAnimation(ItemStack itemStack) {
-        return UseAnim.BOW;
+    public ItemUseAnimation getUseAnimation(ItemStack itemStack) {
+        return ItemUseAnimation.BOW;
     }
 
     @Override

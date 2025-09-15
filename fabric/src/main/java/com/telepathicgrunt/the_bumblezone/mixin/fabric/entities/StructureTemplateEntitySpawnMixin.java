@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.fabric.entity;
+package com.telepathicgrunt.the_bumblezone.mixin.fabric.entities;
 
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntitySpawnEvent;
 import net.minecraft.world.entity.Entity;

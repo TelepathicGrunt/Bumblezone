@@ -9,7 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -21,11 +21,11 @@ import net.minecraft.world.phys.Vec3;
 
 public class PollenPuff extends Item implements ProjectileItem {
     public PollenPuff(Item.Properties properties) {
-        super(properties);
+        super(properties.stacksTo(16));
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, InteractionHand hand) {
+    public InteractionResult use(Level world, Player playerEntity, InteractionHand hand) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
 
         if (!world.isClientSide()) {
@@ -41,7 +41,7 @@ public class PollenPuff extends Item implements ProjectileItem {
             }
         }
 
-        return InteractionResultHolder.sidedSuccess(itemstack, world.isClientSide());
+        return InteractionResult.SUCCESS;
     }
 
     public static void spawnItemstackEntity(Level world, RandomSource random, BlockPos blockPos, ItemStack itemStack) {

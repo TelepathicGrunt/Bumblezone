@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityAttackedEvent;
 import com.telepathicgrunt.the_bumblezone.items.datacomponents.HoneyCrystalShieldCurrentLevelData;
 import com.telepathicgrunt.the_bumblezone.items.datacomponents.HoneyCrystalShieldDefinedLevelsData;
-import com.telepathicgrunt.the_bumblezone.mixin.items.PlayerDamageShieldInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -13,8 +12,8 @@ import com.telepathicgrunt.the_bumblezone.utils.TriState;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
@@ -27,22 +26,42 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.BlocksAttacks;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
-public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
+public class HoneyCrystalShield extends ShieldItem implements ItemExtension {
 
-    public HoneyCrystalShield(Properties properties, int initialDurability) {
+    public HoneyCrystalShield(Properties properties) {
         super(properties
+                .stacksTo(1)
+                .repairable(BzTags.HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS)
+                .equippableUnswappable(EquipmentSlot.OFFHAND)
+                .durability(40)
+                .component(BzDataComponents.HONEY_CRYSTAL_SHIELD_DEFINED_LEVELS_DATA.get(), new HoneyCrystalShieldDefinedLevelsData(40))
                 .component(BzDataComponents.HONEY_CRYSTAL_SHIELD_CURRENT_LEVEL_DATA.get(), new HoneyCrystalShieldCurrentLevelData())
-                .component(BzDataComponents.HONEY_CRYSTAL_SHIELD_DEFINED_LEVELS_DATA.get(), new HoneyCrystalShieldDefinedLevelsData(initialDurability))
-                .durability(initialDurability));
+               .component(
+                        DataComponents.BLOCKS_ATTACKS,
+                        new BlocksAttacks(
+                                0.25F,
+                                1.0F,
+                                List.of(new BlocksAttacks.DamageReduction(90.0F, Optional.empty(), 0.0F, 1.0F)),
+                                new BlocksAttacks.ItemDamageFunction(3.0F, 1.0F, 1.0F),
+                                Optional.of(DamageTypeTags.BYPASSES_SHIELD),
+                                Optional.of(SoundEvents.SHIELD_BLOCK),
+                                Optional.of(SoundEvents.SHIELD_BREAK)
+                        )
+                )
+                .component(DataComponents.BREAK_SOUND, SoundEvents.SHIELD_BREAK)
+                .rarity(Rarity.UNCOMMON));
     }
 
     @Override
@@ -53,25 +72,6 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
         if (itemStack.get(BzDataComponents.HONEY_CRYSTAL_SHIELD_DEFINED_LEVELS_DATA.get()) == null) {
             itemStack.set(BzDataComponents.HONEY_CRYSTAL_SHIELD_DEFINED_LEVELS_DATA.get(), new HoneyCrystalShieldDefinedLevelsData(itemStack.getMaxDamage()));
         }
-    }
-
-    /**
-     * Specify what item can repair this shield
-     */
-    @Override
-    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return repair.is(BzTags.HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS);
-    }
-
-    @Override
-    public EquipmentSlot bz$getEquipmentSlot(ItemStack stack) {
-        return EquipmentSlot.OFFHAND;
-    }
-
-    // Called on Forge
-    @Nullable
-    public EquipmentSlot getEquipmentSlot(ItemStack stack) {
-        return this.bz$getEquipmentSlot(stack);
     }
 
     /**
@@ -147,8 +147,6 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
      * Deals massive damage to shield when blocking explosion or getting fire damage with Honey Crystal Shield
      */
     public static boolean damageShieldFromExplosionAndFire(DamageSource source, Player player) {
-        DamageSources damageSources = player.level().damageSources();
-
         // checks for explosion and player
         ItemStack usedItem = player.getUseItem();
         if (usedItem.getItem() instanceof HoneyCrystalShield &&

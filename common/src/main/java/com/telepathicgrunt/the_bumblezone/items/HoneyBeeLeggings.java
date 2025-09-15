@@ -10,19 +10,18 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,10 +29,13 @@ import net.minecraft.world.phys.Vec3;
 
 public class HoneyBeeLeggings extends BeeArmor {
 
-    public HoneyBeeLeggings(Holder<ArmorMaterial> material, ArmorItem.Type armorType, Properties properties, int variant) {
-        super(material,
-            armorType,
-            properties.component(BzDataComponents.HONEY_BEE_LEGGINGS_DATA.get(), new HoneyBeeLeggingsData()),
+    public HoneyBeeLeggings(Properties properties, int variant) {
+        super(properties
+                .stacksTo(1)
+                .durability(360)
+                .repairable(BzTags.BEE_ARMOR_REPAIR_ITEMS)
+                .component(BzDataComponents.HONEY_BEE_LEGGINGS_DATA.get(), new HoneyBeeLeggingsData())
+                .rarity(Rarity.UNCOMMON),
             variant,
             false);
     }
@@ -51,7 +53,7 @@ public class HoneyBeeLeggings extends BeeArmor {
             return;
         }
 
-        if (player.getCooldowns().isOnCooldown(itemstack.getItem())) {
+        if (player.getCooldowns().isOnCooldown(itemstack)) {
             return;
         }
 
@@ -135,8 +137,8 @@ public class HoneyBeeLeggings extends BeeArmor {
         }
     }
 
-    private static void spawnParticles(Level world, LivingEntity livingEntity, RandomSource random, boolean isPollinated, boolean isSprinting, int beeWearablesCount) {
-        if(world.isClientSide() && isPollinated && (isSprinting || random.nextFloat() < (beeWearablesCount >= 3 ? 0.03f : 0.025f))) {
+    private static void spawnParticles(Level level, LivingEntity livingEntity, RandomSource random, boolean isPollinated, boolean isSprinting, int beeWearablesCount) {
+        if(level.isClientSide() && isPollinated && (isSprinting || random.nextFloat() < (beeWearablesCount >= 3 ? 0.03f : 0.025f))) {
             int particles = beeWearablesCount >= 3 ? 2 : 1;
             for(int i = 0; i < particles; i++){
                 double speedYModifier = isSprinting ? 0.05D : 0.02D;
@@ -146,8 +148,9 @@ public class HoneyBeeLeggings extends BeeArmor {
                 double zOffset = (random.nextFloat() * 0.1) - 0.05;
                 Vec3 pos = livingEntity.position();
 
-                world.addParticle(
+                level.addParticle(
                         BzParticles.POLLEN_PARTICLE.get(),
+                        true,
                         true,
                         pos.x() + xOffset,
                         pos.y() + yOffset,
@@ -176,9 +179,12 @@ public class HoneyBeeLeggings extends BeeArmor {
     }
 
     public static ItemStack getEntityBeeLegging(LivingEntity entity) {
-        for (ItemStack armor : entity.getArmorSlots()) {
-            if (armor.getItem() instanceof HoneyBeeLeggings) {
-                return armor;
+        for (EquipmentSlot equipmentSlot : EquipmentSlotGroup.ARMOR) {
+            if (equipmentSlot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
+                ItemStack armor = entity.getItemBySlot(equipmentSlot);
+                if (armor.getItem() instanceof HoneyBeeLeggings) {
+                    return armor;
+                }
             }
         }
         return ItemStack.EMPTY;

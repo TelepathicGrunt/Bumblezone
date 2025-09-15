@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFoodAndConsumables;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,12 +19,18 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 
 public class RoyalJellyBottle extends Item {
 
     public RoyalJellyBottle(Properties properties) {
-        super(properties);
+        super(properties
+                .stacksTo(16)
+                .craftRemainder(Items.GLASS_BOTTLE)
+                .usingConvertsTo(Items.GLASS_BOTTLE)
+                .food(BzFoodAndConsumables.ROYAL_JELLY_BOTTLE_FOOD, BzFoodAndConsumables.ROYAL_JELLY_BOTTLE_CONSUME)
+                .rarity(Rarity.EPIC));
     }
 
     @Override

@@ -1,9 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.VariantBeeEntity;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemAttackBlockEvent;
 import com.telepathicgrunt.the_bumblezone.menus.BuzzingBriefcaseMenuProvider;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -17,13 +19,15 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -32,6 +36,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -47,7 +54,9 @@ public class BuzzingBriefcase extends Item {
     public static final int MAX_NUMBER_OF_BEES = 14;
 
     public BuzzingBriefcase(Properties properties) {
-        super(properties.component(BzDataComponents.BUZZING_BRIEFCASE_DATA.get(), CustomData.EMPTY));
+        super(properties
+                .stacksTo(1)
+                .component(BzDataComponents.BUZZING_BRIEFCASE_DATA.get(), CustomData.EMPTY));
     }
 
     @Override
@@ -58,20 +67,20 @@ public class BuzzingBriefcase extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (player.getCooldowns().isOnCooldown(stack.getItem())) {
-            return new InteractionResultHolder<>(InteractionResult.PASS, stack);
+        if (player.getCooldowns().isOnCooldown(stack)) {
+            return InteractionResult.PASS;
         }
 
         if (player.isShiftKeyDown()) {
             player.openMenu(new BuzzingBriefcaseMenuProvider(stack));
 
             player.awardStat(BzStats.INTERACT_WITH_BUZZING_BRIEFCASE_RL.get());
-            return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+            return InteractionResult.SUCCESS;
         }
 
-        return new InteractionResultHolder<>(InteractionResult.PASS, stack);
+        return InteractionResult.PASS;
     }
 
     public static InteractionResult onLeftClickBlock(BzPlayerItemAttackBlockEvent event) {
@@ -80,7 +89,7 @@ public class BuzzingBriefcase extends Item {
 
         if (event.hand() != InteractionHand.MAIN_HAND ||
             !briefcaseItem.is(BzItems.BUZZING_BRIEFCASE.get()) ||
-            player.getCooldowns().isOnCooldown(briefcaseItem.getItem()))
+            player.getCooldowns().isOnCooldown(briefcaseItem))
         {
             return null;
         }
@@ -97,7 +106,7 @@ public class BuzzingBriefcase extends Item {
 
             player.awardStat(Stats.ITEM_USED.get(briefcaseItem.getItem()));
 
-            serverPlayer.getCooldowns().addCooldown(briefcaseItem.getItem(), 10);
+            serverPlayer.getCooldowns().addCooldown(briefcaseItem, 10);
             return InteractionResult.SUCCESS;
         }
 
@@ -105,10 +114,10 @@ public class BuzzingBriefcase extends Item {
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity victim, LivingEntity attacker) {
+    public void hurtEnemy(ItemStack stack, LivingEntity victim, LivingEntity attacker) {
         if (attacker instanceof Player player) {
-            if (player.getCooldowns().isOnCooldown(stack.getItem())) {
-                return false;
+            if (player.getCooldowns().isOnCooldown(stack)) {
+                return;
             }
 
             boolean isVictimBeelike = BeeAggression.isBeelikeEntity(victim);
@@ -121,13 +130,12 @@ public class BuzzingBriefcase extends Item {
                 }
             }
 
-            if(!isVictimBeelike && player instanceof ServerPlayer serverPlayer && !releasedBees.isEmpty()) {
+            if (!isVictimBeelike && player instanceof ServerPlayer serverPlayer && !releasedBees.isEmpty()) {
                 BzCriterias.BUZZING_BRIEFCASE_RELEASE_TRIGGER.get().trigger(serverPlayer);
                 serverPlayer.awardStat(Stats.ITEM_USED.get(stack.getItem()));
-                serverPlayer.getCooldowns().addCooldown(stack.getItem(), 10);
+                serverPlayer.getCooldowns().addCooldown(stack, 10);
             }
         }
-        return true;
     }
 
     @Override
@@ -141,7 +149,7 @@ public class BuzzingBriefcase extends Item {
         }
 
         ItemStack briefcaseItem = player.getItemInHand(playerHand);
-        if (player.getCooldowns().isOnCooldown(briefcaseItem.getItem())) {
+        if (player.getCooldowns().isOnCooldown(briefcaseItem)) {
             return InteractionResult.PASS;
         }
 
@@ -156,7 +164,7 @@ public class BuzzingBriefcase extends Item {
             }
 
             CompoundTag cannonTag = briefcaseItem.get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()).getUnsafe();
-            int variantBeesCaught = cannonTag.getInt(TAG_VARANT_BEES);
+            int variantBeesCaught = cannonTag.getIntOr(TAG_VARANT_BEES, 0);
             if (player instanceof ServerPlayer serverPlayer && variantBeesCaught > 0) {
                 BzCriterias.VARIANT_BEE_BRIEFCASE_CAPTURE_TRIGGER.get().trigger(serverPlayer, variantBeesCaught);
             }
@@ -214,7 +222,7 @@ public class BuzzingBriefcase extends Item {
 
                         if (hitResult instanceof BlockHitResult blockHitResult) {
                             Vec3 locationClicked = hitResult.getLocation();
-                            Vec3 offset = Vec3.atLowerCornerOf(blockHitResult.getDirection().getNormal());
+                            Vec3 offset = Vec3.atLowerCornerOf(blockHitResult.getDirection().getUnitVec3i());
                             if (blockHitResult.getDirection() == Direction.UP) {
                                 offset = offset.scale(0.35d);
                             }
@@ -228,7 +236,7 @@ public class BuzzingBriefcase extends Item {
 
                 Vec3 finalPos1 = finalPos;
                 bees.forEach(bee -> {
-                    bee.moveTo(finalPos1.x(),
+                    bee.snapTo(finalPos1.x(),
                             finalPos1.y(),
                             finalPos1.z(),
                             player.getYRot(),
@@ -246,17 +254,17 @@ public class BuzzingBriefcase extends Item {
     public static List<Entity> getBeesStored(Level level, ItemStack briefcaseItem, boolean removeFromList) {
         if (getNumberOfBees(briefcaseItem) > 0) {
             CompoundTag briefcaseTag = briefcaseItem.get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()).copyTag();
-            ListTag beeList = briefcaseTag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
+            ListTag beeList = briefcaseTag.getListOrEmpty(TAG_BEES);
             List<Entity> beesStored = new ObjectArrayList<>();
             if (removeFromList) {
                 for (int i = beeList.size() - 1; i >= 0; i--) {
-                    CompoundTag beeTag = beeList.getCompound(0);
+                    CompoundTag beeTag = beeList.getCompoundOrEmpty(0);
                     beeList.removeFirst();
-                    Entity entity = EntityType.loadEntityRecursive(beeTag, level, entityx -> entityx);
+                    Entity entity = EntityType.loadEntityRecursive(beeTag, level, EntitySpawnReason.SPAWN_ITEM_USE, entityx -> entityx);
 
                     if (entity != null) {
                         if (entity instanceof VariantBeeEntity) {
-                            briefcaseTag.putInt(TAG_VARANT_BEES, Math.max(0, briefcaseTag.getInt(TAG_VARANT_BEES) - 1));
+                            briefcaseTag.putInt(TAG_VARANT_BEES, Math.max(0, briefcaseTag.getIntOr(TAG_VARANT_BEES, 0) - 1));
                         }
 
                         if (addBeeToList(beesStored, beeTag, entity)) {
@@ -267,8 +275,8 @@ public class BuzzingBriefcase extends Item {
             }
             else {
                 for (int i = 0 ; i < beeList.size(); i++) {
-                    CompoundTag beeTag = beeList.getCompound(i);
-                    Entity entity = EntityType.loadEntityRecursive(beeTag, level, entityx -> entityx);
+                    CompoundTag beeTag = beeList.getCompoundOrEmpty(i);
+                    Entity entity = EntityType.loadEntityRecursive(beeTag, level, EntitySpawnReason.SPAWN_ITEM_USE, entityx -> entityx);
                     if (entity != null) {
                         if (addBeeToList(beesStored, beeTag, entity)) {
                             break;
@@ -291,11 +299,12 @@ public class BuzzingBriefcase extends Item {
 
     private static boolean addBeeToList(List<Entity> beesStored, CompoundTag beeTag, Entity entity) {
         if (entity instanceof LivingEntity livingEntity) {
-            if (beeTag.contains("Attributes", 9)) {
-                livingEntity.getAttributes().load(beeTag.getList("Attributes", 10));
+            if (beeTag.contains("Attributes")) {
+                ValueInput tagvalueinput = TagValueInput.create(new ProblemReporter.ScopedCollector(Bumblezone.LOGGER), livingEntity.level().registryAccess(), beeTag);
+                tagvalueinput.read("attributes", AttributeInstance.Packed.LIST_CODEC).ifPresent(livingEntity.getAttributes()::apply);
             }
-            if (beeTag.contains("Health", 99)) {
-                livingEntity.setHealth(beeTag.getFloat("Health"));
+            if (beeTag.contains("Health")) {
+                livingEntity.setHealth(beeTag.getFloatOr("Health", 10));
             }
         }
 
@@ -306,16 +315,16 @@ public class BuzzingBriefcase extends Item {
     public static Entity getSpecificBeesStored(Level level, ItemStack briefcaseItem, int beeIndex, boolean removeFromList) {
         if (getNumberOfBees(briefcaseItem) > 0) {
             CompoundTag briefcaseTag = briefcaseItem.get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()).copyTag();
-            ListTag beeList = briefcaseTag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
+            ListTag beeList = briefcaseTag.getListOrEmpty(TAG_BEES);
             if (beeIndex < beeList.size()) {
-                CompoundTag beeTag = beeList.getCompound(beeIndex);
+                CompoundTag beeTag = beeList.getCompoundOrEmpty(beeIndex);
                 if (removeFromList) {
                     beeList.remove(beeIndex);
                 }
 
-                Entity entity = EntityType.loadEntityRecursive(beeTag, level, entityx -> entityx);
+                Entity entity = EntityType.loadEntityRecursive(beeTag, level, EntitySpawnReason.SPAWN_ITEM_USE, entityx -> entityx);
                 if (entity instanceof VariantBeeEntity && removeFromList) {
-                    briefcaseTag.putInt(TAG_VARANT_BEES, Math.max(0, briefcaseTag.getInt(TAG_VARANT_BEES) - 1));
+                    briefcaseTag.putInt(TAG_VARANT_BEES, Math.max(0, briefcaseTag.getIntOr(TAG_VARANT_BEES, 0) - 1));
                 }
 
                 if (removeFromList) {
@@ -335,22 +344,25 @@ public class BuzzingBriefcase extends Item {
 
     public static boolean tryAddBee(ItemStack briefcaseItem, Entity bee) {
         if (getNumberOfBees(briefcaseItem) < MAX_NUMBER_OF_BEES) {
-            String beeTypeRL = bee.getEncodeId();
+            String beeTypeRL = ((EntityAccessor)bee).bumblezone$callGetEncodeId();
             if (beeTypeRL == null) {
                 return false;
             }
 
             CompoundTag briefcaseTag = briefcaseItem.get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()).copyTag();
-            ListTag beeList = briefcaseTag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
+            ListTag beeList = briefcaseTag.getListOrEmpty(TAG_BEES);
             CompoundTag beeTag = new CompoundTag();
 
             bee.stopRiding();
             bee.ejectPassengers();
             beeTag.putString("id", beeTypeRL);
-            bee.saveWithoutId(beeTag);
+            TagValueOutput tagvalueoutput = TagValueOutput.createWithContext(new ProblemReporter.ScopedCollector(Bumblezone.LOGGER), bee.level().registryAccess());
+            bee.saveWithoutId(tagvalueoutput);
+            beeTag.merge(tagvalueoutput.buildResult());
 
             UUID uUID = bee.getUUID();
-            bee.load(beeTag);
+            ValueInput tagvalueinput = TagValueInput.create(new ProblemReporter.ScopedCollector(Bumblezone.LOGGER), bee.level().registryAccess(), beeTag);
+            bee.load(tagvalueinput);
             bee.setUUID(uUID);
             beeTag.remove("UUID");
             beeList.add(beeTag);
@@ -359,7 +371,7 @@ public class BuzzingBriefcase extends Item {
             bee.discard();
 
             if (bee instanceof VariantBeeEntity) {
-                briefcaseTag.putInt(TAG_VARANT_BEES, briefcaseTag.getInt(TAG_VARANT_BEES) + 1);
+                briefcaseTag.putInt(TAG_VARANT_BEES, briefcaseTag.getIntOr(TAG_VARANT_BEES, 0) + 1);
             }
 
             CustomData customData1 = CustomData.of(briefcaseTag);
@@ -372,7 +384,7 @@ public class BuzzingBriefcase extends Item {
     public static int getNumberOfBees(ItemStack briefcaseItem) {
         CompoundTag briefcaseTag = briefcaseItem.get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()).copyTag();
         if (briefcaseTag.contains(TAG_BEES)) {
-            ListTag beeList = briefcaseTag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
+            ListTag beeList = briefcaseTag.getListOrEmpty(TAG_BEES);
             return beeList.size();
         }
         else {

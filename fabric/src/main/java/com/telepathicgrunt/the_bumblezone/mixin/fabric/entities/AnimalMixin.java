@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.fabric.entity;
+package com.telepathicgrunt.the_bumblezone.mixin.fabric.entities;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzBabySpawnEvent;
@@ -9,7 +9,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(Animal.class)
 public class AnimalMixin {

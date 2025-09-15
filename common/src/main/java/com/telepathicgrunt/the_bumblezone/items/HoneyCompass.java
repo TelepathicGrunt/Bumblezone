@@ -9,13 +9,14 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -27,12 +28,12 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
@@ -45,7 +46,6 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.structure.Structure;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -55,7 +55,8 @@ public class HoneyCompass extends Item {
         super(properties
                 .component(BzDataComponents.HONEY_COMPASS_BASE_DATA.get(), new HoneyCompassBaseData())
                 .component(BzDataComponents.HONEY_COMPASS_STATE_DATA.get(), new HoneyCompassStateData())
-                .component(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get(), new HoneyCompassTargetData()));
+                .component(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get(), new HoneyCompassTargetData())
+                .rarity(Rarity.UNCOMMON));
     }
 
     @Override
@@ -77,8 +78,20 @@ public class HoneyCompass extends Item {
         return honeyCompassStateData.locked() || super.isFoil(itemStack);
     }
 
-    @Override
-    public String getDescriptionId(ItemStack itemStack) {
+    public Component getName(ItemStack itemStack) {
+        HoneyCompassBaseData honeyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
+        if (honeyCompassBaseData.isBlockCompass()) {
+            HoneyCompassTargetData honeyCompassTargetData = itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
+            Optional<Block> block = honeyCompassTargetData.getStoredBlock();
+            if (block.isPresent() && block.get() != Blocks.AIR) {
+                return Component.translatable(this.getNameBase(itemStack), block.get().getName());
+            }
+            return Component.translatable(this.getNameBase(itemStack), Component.translatable("item.the_bumblezone.honey_compass_unknown_block"));
+        }
+        return Component.translatable(this.getNameBase(itemStack));
+    }
+
+    private String getNameBase(ItemStack itemStack) {
         HoneyCompassStateData honeyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
         if (honeyCompassStateData.isLoading()) {
             return "item.the_bumblezone.honey_compass_structure_loading";
@@ -101,20 +114,7 @@ public class HoneyCompass extends Item {
             return "item.the_bumblezone.honey_compass_block";
         }
 
-        return super.getDescriptionId(itemStack);
-    }
-
-    public Component getName(ItemStack itemStack) {
-        HoneyCompassBaseData honeyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
-        if (honeyCompassBaseData.isBlockCompass()) {
-            HoneyCompassTargetData honeyCompassTargetData = itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
-            Optional<Block> block = honeyCompassTargetData.getStoredBlock();
-            if (block.isPresent() && block.get() != Blocks.AIR) {
-                return Component.translatable(this.getDescriptionId(itemStack), block.get().getName());
-            }
-            return Component.translatable(this.getDescriptionId(itemStack), Component.translatable("item.the_bumblezone.honey_compass_unknown_block"));
-        }
-        return Component.translatable(this.getDescriptionId(itemStack));
+        return this.components().getOrDefault(DataComponents.ITEM_NAME, CommonComponents.EMPTY).getContents().toString();
     }
 
     // CLIENT-SIDED

@@ -318,7 +318,7 @@ public class RagingEssence extends AbilityEssenceItem {
 
             return offHandItem.is(BzItems.ESSENCE_RAGING.get()) &&
                     offHandItem.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get()).isActive() &&
-                    !player.getCooldowns().isOnCooldown(offHandItem.getItem());
+                    !player.getCooldowns().isOnCooldown(offHandItem);
         }
         return false;
     }

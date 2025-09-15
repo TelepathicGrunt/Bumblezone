@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
+import com.telepathicgrunt.the_bumblezone.modinit.BzFoodAndConsumables;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFoods;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
@@ -22,6 +24,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -30,7 +33,11 @@ import java.util.ArrayList;
 public class EssenceOfTheBees extends Item {
 
     public EssenceOfTheBees(Properties properties) {
-        super(properties);
+        super(properties
+                .stacksTo(1)
+                .fireResistant()
+                .food(BzFoods.ESSENCE_OF_THE_BEES, BzFoodAndConsumables.ESSENCE_OF_THE_BEES_CONSUME)
+                .rarity(Rarity.EPIC));
     }
 
     @Override

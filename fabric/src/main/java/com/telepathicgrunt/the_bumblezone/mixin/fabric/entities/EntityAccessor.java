@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.fabric.entity;
+package com.telepathicgrunt.the_bumblezone.mixin.fabric.entities;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;

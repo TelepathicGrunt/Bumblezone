@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.fabric.entity;
+package com.telepathicgrunt.the_bumblezone.mixin.fabric.entities;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;

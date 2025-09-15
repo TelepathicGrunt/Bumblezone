@@ -38,19 +38,14 @@ public class PotionCandleBlockItem extends BlockItem {
         if (level.isClientSide() && customData != null && !customData.isEmpty() && level.getBlockEntity(pos) instanceof PotionCandleBlockEntity potionCandleBlockEntity) {
             CompoundTag blockEntityTag = customData.copyTag();
 
-            int color = blockEntityTag.contains(PotionCandleBlockEntity.COLOR_TAG) ? blockEntityTag.getInt(PotionCandleBlockEntity.COLOR_TAG) : PotionCandleBlockEntity.DEFAULT_COLOR;
+            int color = blockEntityTag.contains(PotionCandleBlockEntity.COLOR_TAG) ? blockEntityTag.getIntOr(PotionCandleBlockEntity.COLOR_TAG, PotionCandleBlockEntity.DEFAULT_COLOR) : PotionCandleBlockEntity.DEFAULT_COLOR;
             potionCandleBlockEntity.setColor(color);
 
-            ResourceLocation rl = ResourceLocation.tryParse(blockEntityTag.getString(PotionCandleBlockEntity.STATUS_EFFECT_TAG));
-            Optional<Holder.Reference<MobEffect>> optionalMobEffectReference = BuiltInRegistries.MOB_EFFECT.getHolder(rl);
+            ResourceLocation rl = ResourceLocation.tryParse(blockEntityTag.getStringOr(PotionCandleBlockEntity.STATUS_EFFECT_TAG, ""));
+            Optional<Holder.Reference<MobEffect>> optionalMobEffectReference = BuiltInRegistries.MOB_EFFECT.get(rl);
             optionalMobEffectReference.ifPresent(potionCandleBlockEntity::setMobEffect);
         }
         return super.updateCustomBlockEntityTag(pos, level, player, itemStack, state);
-    }
-
-    @Override
-    public String getDescriptionId() {
-        return this.getOrCreateDescriptionId();
     }
 
     @Override

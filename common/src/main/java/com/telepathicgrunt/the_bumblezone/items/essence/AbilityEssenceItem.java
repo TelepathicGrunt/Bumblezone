@@ -19,6 +19,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
@@ -34,10 +35,13 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
 
     public AbilityEssenceItem(Properties properties, Supplier<Integer> cooldownTickLength, Supplier<Integer> abilityUseAmount) {
         super(properties
+                .stacksTo(1)
+                .fireResistant()
                 .component(BzDataComponents.ABILITY_ESSENCE_ABILITY_DATA.get(), new AbilityEssenceAbilityData())
                 .component(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get(), new AbilityEssenceCooldownData())
                 .component(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get(), new AbilityEssenceActivityData())
-                .component(BzDataComponents.ABILITY_ESSENCE_LAST_CHARGE_DATA.get(), new AbilityEssenceLastChargeData()));
+                .component(BzDataComponents.ABILITY_ESSENCE_LAST_CHARGE_DATA.get(), new AbilityEssenceLastChargeData())
+                .rarity(Rarity.EPIC));
         this.cooldownTickLength = cooldownTickLength;
         this.abilityUseAmount = abilityUseAmount;
     }

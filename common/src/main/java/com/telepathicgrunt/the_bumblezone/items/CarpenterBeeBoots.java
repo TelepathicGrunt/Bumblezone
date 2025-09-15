@@ -8,10 +8,9 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.stats.Stats;
@@ -20,12 +19,12 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -35,11 +34,14 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
 
     private static final int HANGING_COOLDOWN_IN_TICKS = 10;
 
-    public CarpenterBeeBoots(Holder<ArmorMaterial> material, ArmorItem.Type armorType, Properties properties, int variant) {
-        super(material,
-            armorType,
-            properties.component(BzDataComponents.CARPENTER_BEE_BOOTS_MINING_DATA.get(), new CarpenterBeeBootsMiningData())
-                    .component(BzDataComponents.CARPENTER_BEE_BOOTS_HANGING_DATA.get(), new CarpenterBeeBootsHangingData()),
+    public CarpenterBeeBoots(Properties properties, int variant) {
+        super(properties
+                .stacksTo(1)
+                .durability(312)
+                .repairable(BzTags.BEE_ARMOR_REPAIR_ITEMS)
+                .component(BzDataComponents.CARPENTER_BEE_BOOTS_MINING_DATA.get(), new CarpenterBeeBootsMiningData())
+                .component(BzDataComponents.CARPENTER_BEE_BOOTS_HANGING_DATA.get(), new CarpenterBeeBootsHangingData())
+                .rarity(Rarity.UNCOMMON),
             variant,
             false);
     }
@@ -60,7 +62,7 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
             return;
         }
 
-        if (player.getCooldowns().isOnCooldown(itemStack.getItem())) {
+        if (player.getCooldowns().isOnCooldown(itemStack)) {
             return;
         }
 
@@ -309,9 +311,12 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
     }
 
     public static ItemStack getEntityBeeBoots(LivingEntity entity) {
-        for(ItemStack armor : entity.getArmorSlots()) {
-            if(armor.getItem() instanceof CarpenterBeeBoots) {
-                return armor;
+        for (EquipmentSlot equipmentSlot : EquipmentSlotGroup.ARMOR) {
+            if (equipmentSlot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
+                ItemStack armor = entity.getItemBySlot(equipmentSlot);
+                if (armor.getItem() instanceof CarpenterBeeBoots) {
+                    return armor;
+                }
             }
         }
         return ItemStack.EMPTY;

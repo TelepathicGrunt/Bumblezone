@@ -30,4 +30,7 @@ public interface EntityAccessor {
 
     @Invoker("collide")
     Vec3 bumblezone$callCollide(Vec3 vec3);
+
+    @Invoker("getEncodeId")
+    String bumblezone$callGetEncodeId();
 }

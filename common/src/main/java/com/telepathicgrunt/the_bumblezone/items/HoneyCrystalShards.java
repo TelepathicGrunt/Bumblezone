@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.HoneyCrystalShardEntity;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFoodAndConsumables;
 import com.telepathicgrunt.the_bumblezone.platform.BzArrowItem;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
@@ -14,7 +15,7 @@ import net.minecraft.world.level.Level;
 
 public class HoneyCrystalShards extends BzArrowItem {
     public HoneyCrystalShards(Properties properties) {
-        super(properties);
+        super(properties.food(BzFoodAndConsumables.HONEY_CRYSTAL_SHARDS_FOOD));
     }
 
     @Override

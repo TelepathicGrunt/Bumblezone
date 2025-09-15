@@ -17,7 +17,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -29,6 +29,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -40,7 +41,12 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
     public static final float BASE_THROWN_DAMAGE = 1.5F;
 
     public StingerSpearItem(Properties properties) {
-        super(properties);
+        super(properties
+                .stacksTo(1)
+                .durability(220)
+                .repairable(BzTags.STINGER_SPEAR_REPAIR_ITEMS)
+                .attributes(StingerSpearItem.createAttributes())
+                .rarity(Rarity.UNCOMMON));
     }
 
     public static @NotNull ItemAttributeModifiers createAttributes() {
@@ -59,16 +65,8 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
         return 50000;
     }
 
-    /**
-     * Specify what item can repair this weapon
-     */
     @Override
-    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return repair.is(BzTags.STINGER_SPEAR_REPAIR_ITEMS);
-    }
-
-    @Override
-    public void releaseUsing(ItemStack itemStack, Level level, LivingEntity livingEntity, int currentDuration) {
+    public boolean releaseUsing(ItemStack itemStack, Level level, LivingEntity livingEntity, int currentDuration) {
         if (livingEntity instanceof Player player) {
             int remainingDuration = this.getUseDuration(itemStack, player) - currentDuration;
             if (remainingDuration >= 10) {
@@ -88,24 +86,27 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
                 }
 
                 player.awardStat(Stats.ITEM_USED.get(this));
+                return true;
             }
         }
+
+        return false;
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
+    public InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
         if (itemStack.getDamageValue() >= itemStack.getMaxDamage() - 1) {
-            return InteractionResultHolder.fail(itemStack);
+            return InteractionResult.FAIL;
         }
         else {
             player.startUsingItem(interactionHand);
-            return InteractionResultHolder.consume(itemStack);
+            return InteractionResult.CONSUME;
         }
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack itemStack, LivingEntity victim, LivingEntity user) {
+    public void hurtEnemy(ItemStack itemStack, LivingEntity victim, LivingEntity user) {
         int durabilityDecrease = 1;
 
         if (!victim.getType().is(EntityTypeTags.UNDEAD)) {
@@ -141,8 +142,6 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
         {
             BzCriterias.STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER.get().trigger(serverPlayer);
         }
-
-        return true;
     }
 
     @Override

@@ -4,19 +4,18 @@ import com.telepathicgrunt.the_bumblezone.modcompat.BackpackedCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import net.minecraft.core.Holder;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 
 public abstract class BeeArmor extends BzArmor {
     private final int variant;
     private final boolean transTexture;
 
-    public BeeArmor(Holder<ArmorMaterial> material, ArmorItem.Type armorType, Properties properties, int variant, boolean transTexture) {
-        super(material, armorType, properties);
+    public BeeArmor(Properties properties, int variant, boolean transTexture) {
+        super(properties);
         this.variant = variant;
         this.transTexture = transTexture;
     }
@@ -32,10 +31,13 @@ public abstract class BeeArmor extends BzArmor {
     public static int getBeeThemedWearablesCount(Entity entity) {
         int beeWearablesCount = 0;
         if (entity instanceof LivingEntity livingEntity) {
-            for (ItemStack armor : livingEntity.getArmorSlots()) {
-                if (armor.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_WEARABLES)) {
-                    if (isAllowedBeeArmorBoosting(armor)) {
-                        beeWearablesCount++;
+            for (EquipmentSlot equipmentSlot : EquipmentSlotGroup.ARMOR) {
+                if (equipmentSlot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
+                    ItemStack armor = livingEntity.getItemBySlot(equipmentSlot);
+                    if (armor.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_WEARABLES)) {
+                        if (isAllowedBeeArmorBoosting(armor)) {
+                            beeWearablesCount++;
+                        }
                     }
                 }
             }

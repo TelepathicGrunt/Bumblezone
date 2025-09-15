@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFoodAndConsumables;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -16,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class BeeBread extends Item {
     public BeeBread(Properties properties) {
-        super(properties);
+        super(properties.food(BzFoodAndConsumables.BEE_BREAD_FOOD, BzFoodAndConsumables.BEE_BREAD_CONSUME));
     }
 
     @SuppressWarnings("ConstantConditions")

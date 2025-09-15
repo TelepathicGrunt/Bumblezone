@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -19,21 +20,16 @@ import net.minecraft.world.level.Level;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class FlowerHeadwearHelmet extends BzArmor implements ItemExtension {
-    public FlowerHeadwearHelmet(Holder<ArmorMaterial> material, Type armorType, Properties properties) {
-        super(material, armorType, properties);
-    }
-
-    /**
-     * Return whether this item is repairable in an anvil.
-     */
-    @Override
-    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return repair.is(BzTags.FLOWER_HEADWEAR_REPAIR_ITEMS);
+    public FlowerHeadwearHelmet(Properties properties) {
+        super(properties
+                .stacksTo(1)
+                .durability(55)
+                .repairable(BzTags.FLOWER_HEADWEAR_REPAIR_ITEMS));
     }
 
     @Override
     public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) {
-        if (player.getCooldowns().isOnCooldown(itemstack.getItem())) {
+        if (player.getCooldowns().isOnCooldown(itemstack)) {
             return;
         }
 
@@ -59,13 +55,16 @@ public class FlowerHeadwearHelmet extends BzArmor implements ItemExtension {
 
     public static ItemStack getFlowerHeadwear(LivingEntity entity) {
 
-        for (ItemStack armor : entity.getArmorSlots()) {
-            if (armor.getItem() instanceof FlowerHeadwearHelmet flowerHeadwearHelmet) {
-                if (entity instanceof Player player && player.getCooldowns().isOnCooldown(flowerHeadwearHelmet)) {
-                    continue;
-                }
+        for (EquipmentSlot equipmentSlot : EquipmentSlotGroup.ARMOR) {
+            if (equipmentSlot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
+                ItemStack armor = entity.getItemBySlot(equipmentSlot);
+                if (armor.getItem() instanceof FlowerHeadwearHelmet) {
+                    if (entity instanceof Player player && player.getCooldowns().isOnCooldown(armor)) {
+                        continue;
+                    }
 
-                return armor;
+                    return armor;
+                }
             }
         }
 
@@ -73,7 +72,7 @@ public class FlowerHeadwearHelmet extends BzArmor implements ItemExtension {
         for (ModCompat compat : ModChecker.CUSTOM_EQUIPMENT_SLOTS_COMPATS) {
             compat.getNumberOfMatchingEquippedItemsInCustomSlots(entity, (itemStack) -> {
                 if (itemStack.is(BzItems.FLOWER_HEADWEAR.get())) {
-                    if (entity instanceof Player player && player.getCooldowns().isOnCooldown(itemStack.getItem())) {
+                    if (entity instanceof Player player && player.getCooldowns().isOnCooldown(itemStack)) {
                         return false;
                     }
 

@@ -37,11 +37,6 @@ public class BzBlockItem extends BlockItem {
     }
 
     @Override
-    public String getDescriptionId() {
-        return this.useBlockName ? this.getBlock().getDescriptionId() : this.getOrCreateDescriptionId();
-    }
-
-    @Override
     protected BlockState getPlacementState(BlockPlaceContext context) {
         BlockState placingState = this.blockState == null ? this.getBlock().getStateForPlacement(context) : this.blockState;
         if (placingState != null && placingState.is(BzBlocks.CARVABLE_WAX.get())) {

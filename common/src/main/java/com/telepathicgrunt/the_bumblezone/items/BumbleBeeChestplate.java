@@ -9,16 +9,16 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.BumbleBeeChestplateFlyingPacket;
-import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -26,10 +26,13 @@ import java.util.Optional;
 
 public class BumbleBeeChestplate extends BeeArmor {
 
-    public BumbleBeeChestplate(Holder<ArmorMaterial> material, ArmorItem.Type armorType, Properties properties, boolean transTexture, int variant) {
-        super(material,
-            armorType,
-            properties.component(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get(), new BumbleBeeChestplateData()),
+    public BumbleBeeChestplate(Properties properties, boolean transTexture, int variant) {
+        super(properties
+                .stacksTo(1)
+                .durability(384)
+                .repairable(BzTags.BEE_ARMOR_REPAIR_ITEMS)
+                .component(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get(), new BumbleBeeChestplateData())
+                .rarity(Rarity.UNCOMMON),
             variant,
             transTexture);
     }
@@ -50,7 +53,7 @@ public class BumbleBeeChestplate extends BeeArmor {
 
         boolean isFlying = chestplateData.isFlying();
 
-        if (player.getCooldowns().isOnCooldown(itemstack.getItem())) {
+        if (player.getCooldowns().isOnCooldown(itemstack)) {
             if (isFlying) {
                 itemstack.set(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get(),
                         new BumbleBeeChestplateData(
@@ -154,9 +157,12 @@ public class BumbleBeeChestplate extends BeeArmor {
     }
 
     public static ItemStack getEntityBeeChestplate(LivingEntity entity) {
-        for (ItemStack armor : entity.getArmorSlots()) {
-            if (armor.getItem() instanceof BumbleBeeChestplate) {
-                return armor;
+        for (EquipmentSlot equipmentSlot : EquipmentSlotGroup.ARMOR) {
+            if (equipmentSlot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
+                ItemStack armor = entity.getItemBySlot(equipmentSlot);
+                if (armor.getItem() instanceof BumbleBeeChestplate) {
+                    return armor;
+                }
             }
         }
         return ItemStack.EMPTY;

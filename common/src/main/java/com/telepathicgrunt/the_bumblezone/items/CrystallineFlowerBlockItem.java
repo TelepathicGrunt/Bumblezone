@@ -7,6 +7,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -15,7 +16,13 @@ import java.util.List;
 
 public class CrystallineFlowerBlockItem extends BzBlockItem {
     public CrystallineFlowerBlockItem(Block block, Properties properties, boolean fitInContainers, boolean useBlockName) {
-        super(block, properties.component(BzDataComponents.CRYSTALLINE_FLOWER_DATA.get(), new CrystallineFlowerData()), fitInContainers, useBlockName);
+        super(block,
+            properties
+                .stacksTo(1)
+                .component(BzDataComponents.CRYSTALLINE_FLOWER_DATA.get(), new CrystallineFlowerData())
+                .rarity(Rarity.UNCOMMON),
+            fitInContainers,
+            useBlockName);
     }
 
     @Override

@@ -22,10 +22,11 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -48,8 +49,8 @@ import org.jetbrains.annotations.Nullable;
 public class BzCustomBucketItem extends BzBucketItem {
     public final Fluid fluid;
 
-    public BzCustomBucketItem(FluidData info, Properties builder) {
-        super(info, builder);
+    public BzCustomBucketItem(FluidData info, Properties properties) {
+        super(info, properties.stacksTo(1).craftRemainder(Items.BUCKET));
         this.fluid = info.still().get().getSource();
     }
 
@@ -106,13 +107,12 @@ public class BzCustomBucketItem extends BzBucketItem {
     }
 
     // Override and redirect neoforge patched method to our own.
-    @PlatformOnly({"neoforge"})
-    public boolean emptyContents(@Nullable Player player, Level world, BlockPos pos, @Nullable BlockHitResult hitResult, @Nullable ItemStack container) {
+    public boolean emptyContents(@Nullable LivingEntity player, Level world, BlockPos pos, @Nullable BlockHitResult hitResult, @Nullable ItemStack container) {
         return emptyContents(player, world, pos, hitResult);
     }
 
     @Override
-    public boolean emptyContents(@Nullable Player player, Level level, BlockPos pos, @Nullable BlockHitResult hitResult) {
+    public boolean emptyContents(@Nullable LivingEntity player, Level level, BlockPos pos, @Nullable BlockHitResult hitResult) {
         if (!(this.fluid instanceof FlowingFluid) || !GeneralUtils.isPermissionAllowedAtSpot(level, player, pos, true)) {
             return false;
         }

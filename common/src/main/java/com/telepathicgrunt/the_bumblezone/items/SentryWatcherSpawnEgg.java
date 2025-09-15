@@ -17,13 +17,13 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -47,8 +47,8 @@ public class SentryWatcherSpawnEgg extends Item {
     private final Supplier<? extends EntityType<? extends Entity>> entityType;
     public static final UUID DISPENSER_OWNER_UUID = new UUID(0, 0);
 
-    public SentryWatcherSpawnEgg(Supplier<? extends EntityType<? extends Entity>> typeIn, Properties builder) {
-        super(builder);
+    public SentryWatcherSpawnEgg(Supplier<? extends EntityType<? extends Entity>> typeIn, Properties properties) {
+        super(properties.rarity(Rarity.RARE));
         this.entityType = typeIn;
         setupDispenserBehavior();
     }
@@ -118,7 +118,7 @@ public class SentryWatcherSpawnEgg extends Item {
             }
 
             EntityType<?> entityType2 = this.getType(itemStack);
-            Entity entity = entityType2.spawn((ServerLevel)level, itemStack, useOnContext.getPlayer(), blockPos2, EntitySpawnReason.SPAWN_EGG, true, !Objects.equals(blockPos, blockPos2) && direction == Direction.UP);
+            Entity entity = entityType2.spawn((ServerLevel)level, itemStack, useOnContext.getPlayer(), blockPos2, EntitySpawnReason.SPAWN_ITEM_USE, true, !Objects.equals(blockPos, blockPos2) && direction == Direction.UP);
             if (entity != null) {
                 if (entity instanceof SentryWatcherEntity sentryWatcherEntity) {
                     if (useOnContext.getClickedFace().getAxis() != Direction.Axis.Y) {
@@ -146,25 +146,25 @@ public class SentryWatcherSpawnEgg extends Item {
         }
     }
 
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
+    public InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
         BlockHitResult blockHitResult = ItemAccessor.bumblezone$callGetPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
         if (blockHitResult.getType() != HitResult.Type.BLOCK) {
-            return InteractionResultHolder.pass(itemStack);
+            return InteractionResult.PASS;
         }
         else if (!(level instanceof ServerLevel)) {
-            return InteractionResultHolder.success(itemStack);
+            return InteractionResult.SUCCESS;
         }
         else {
             BlockPos blockPos = blockHitResult.getBlockPos();
             if (!(level.getBlockState(blockPos).getBlock() instanceof LiquidBlock)) {
-                return InteractionResultHolder.pass(itemStack);
+                return InteractionResult.PASS;
             }
             else if (level.mayInteract(player, blockPos) && player.mayUseItemAt(blockPos, blockHitResult.getDirection(), itemStack)) {
                 EntityType<?> entityType = this.getType(itemStack);
-                Entity entity = entityType.spawn((ServerLevel)level, itemStack, player, blockPos, EntitySpawnReason.SPAWN_EGG, false, false);
+                Entity entity = entityType.spawn((ServerLevel)level, itemStack, player, blockPos, EntitySpawnReason.SPAWN_ITEM_USE, false, false);
                 if (entity == null) {
-                    return InteractionResultHolder.pass(itemStack);
+                    return InteractionResult.PASS;
                 }
                 else {
                     if (entity instanceof SentryWatcherEntity sentryWatcherEntity) {
@@ -188,11 +188,11 @@ public class SentryWatcherSpawnEgg extends Item {
 
                     player.awardStat(Stats.ITEM_USED.get(this));
                     level.gameEvent(player, GameEvent.ENTITY_PLACE, entity.position());
-                    return InteractionResultHolder.consume(itemStack);
+                    return InteractionResult.CONSUME;
                 }
             }
             else {
-                return InteractionResultHolder.fail(itemStack);
+                return InteractionResult.FAIL;
             }
         }
     }
@@ -201,9 +201,9 @@ public class SentryWatcherSpawnEgg extends Item {
         if (itemStack.has(DataComponents.ENTITY_DATA)) {
             CompoundTag compoundTag = itemStack.get(DataComponents.ENTITY_DATA).getUnsafe();
             if (compoundTag.contains("EntityTag")) {
-                CompoundTag compoundTag2 = compoundTag.getCompound("EntityTag");
-                if (compoundTag2.contains("id", 8)) {
-                    return EntityType.byString(compoundTag2.getString("id")).orElse(this.entityType.get());
+                CompoundTag compoundTag2 = compoundTag.getCompoundOrEmpty("EntityTag");
+                if (compoundTag2.contains("id")) {
+                    return EntityType.byString(compoundTag2.getStringOr("id", "")).orElse(this.entityType.get());
                 }
             }
         }

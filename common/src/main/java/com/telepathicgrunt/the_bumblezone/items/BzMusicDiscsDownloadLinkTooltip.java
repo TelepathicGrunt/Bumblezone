@@ -21,7 +21,7 @@ import java.util.function.Consumer;
 
 public class BzMusicDiscsDownloadLinkTooltip {
 
-    private static final Map<ResourceKey<JukeboxSong>, String> SONG_WITH_DOWNLOAD_LINKS = new HashMap<>();
+    private static final Map<Optional<ResourceKey<JukeboxSong>>, String> SONG_WITH_DOWNLOAD_LINKS = new HashMap<>();
 
     public static void SetupTooltipData() {
         AddSong(BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY.get());
@@ -45,7 +45,7 @@ public class BzMusicDiscsDownloadLinkTooltip {
     }
 
     public static void appendDownloadLinkText(JukeboxPlayable jukeboxPlayable, Item.TooltipContext tooltipContext, Consumer<Component> consumer, TooltipFlag tooltipFlag) {
-        if (jukeboxPlayable.showInTooltip() && SONG_WITH_DOWNLOAD_LINKS.containsKey(jukeboxPlayable.song().key())) {
+        if (SONG_WITH_DOWNLOAD_LINKS.containsKey(jukeboxPlayable.song().key())) {
             if (tooltipContext.registries() != null) {
                 Optional<Integer> songDescLength = jukeboxPlayable
                         .song()

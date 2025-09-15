@@ -7,7 +7,7 @@ import net.minecraft.core.Position;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
@@ -17,12 +17,11 @@ import net.minecraft.world.level.Level;
 
 public class DirtPellet extends Item implements ProjectileItem {
     public DirtPellet(Properties properties) {
-        super(properties);
-
+        super(properties.stacksTo(16));
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, InteractionHand hand) {
+    public InteractionResult use(Level world, Player playerEntity, InteractionHand hand) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
 
         if (!world.isClientSide()) {
@@ -38,7 +37,7 @@ public class DirtPellet extends Item implements ProjectileItem {
             }
         }
 
-        return InteractionResultHolder.sidedSuccess(itemstack, world.isClientSide());
+        return InteractionResult.SUCCESS;
     }
 
     @Override

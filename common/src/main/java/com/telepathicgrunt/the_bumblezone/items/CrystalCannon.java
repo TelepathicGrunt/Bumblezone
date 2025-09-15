@@ -14,15 +14,16 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ProjectileWeaponItem;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -37,7 +38,13 @@ import java.util.function.Predicate;
 public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension {
 
     public CrystalCannon(Properties properties) {
-        super(properties.component(BzDataComponents.CRYSTAL_CANNON_DATA.get(), new CrystalCannonData()));
+        super(properties
+                .stacksTo(1)
+                .enchantable(1)
+                .durability(80)
+                .repairable(BzTags.CRYSTAL_CANNON_REPAIR_ITEMS)
+                .component(BzDataComponents.CRYSTAL_CANNON_DATA.get(), new CrystalCannonData())
+                .rarity(Rarity.UNCOMMON));
     }
 
     @Override
@@ -64,7 +71,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
                 livingEntity.getX(),
                 livingEntity.getEyeY() - 0.25f,
                 livingEntity.getZ());
-        projectile.moveTo(entityEyePos.x(),
+        projectile.snapTo(entityEyePos.x(),
                 entityEyePos.y(),
                 entityEyePos.z(),
                 livingEntity.getYRot(),
@@ -88,7 +95,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
     }
 
     @Override
-    public void releaseUsing(ItemStack crystalCannon, Level level, LivingEntity livingEntity, int currentDuration) {
+    public boolean releaseUsing(ItemStack crystalCannon, Level level, LivingEntity livingEntity, int currentDuration) {
         if (!level.isClientSide()) {
             ItemStack mutableCrystalCannon = livingEntity.getItemInHand(InteractionHand.MAIN_HAND);
 
@@ -117,23 +124,25 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
 
                 // Consume one extra durability
                 mutableCrystalCannon.hurtAndBreak(1, livingEntity, EquipmentSlot.MAINHAND);
+                return true;
             }
         }
+        return false;
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
+    public InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
         ItemStack crystalCannon = player.getItemInHand(interactionHand);
         if (!level.isClientSide()) {
             loadProjectiles(player, crystalCannon);
         }
 
         if (getNumberOfCrystals(crystalCannon) == 0) {
-            return InteractionResultHolder.fail(crystalCannon);
+            return InteractionResult.FAIL;
         }
         else {
             player.startUsingItem(interactionHand);
-            return InteractionResultHolder.consume(crystalCannon);
+            return InteractionResult.CONSUME;
         }
     }
 
@@ -179,14 +188,6 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
         return crystalCannonData.crystalStored();
     }
 
-    /**
-     * Return whether this item is repairable in an anvil.
-     */
-    @Override
-    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return repair.is(BzTags.CRYSTAL_CANNON_REPAIR_ITEMS);
-    }
-
     @Override
     public Predicate<ItemStack> getSupportedHeldProjectiles() {
         return (itemStack) -> itemStack.is(BzItems.HONEY_CRYSTAL_SHARDS.get());
@@ -195,11 +196,6 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
     @Override
     public Predicate<ItemStack> getAllSupportedProjectiles() {
         return (itemStack) -> itemStack.is(BzItems.HONEY_CRYSTAL_SHARDS.get());
-    }
-
-    @Override
-    public int getEnchantmentValue() {
-        return 1;
     }
 
     @Override
@@ -218,8 +214,8 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
     }
 
     @Override
-    public UseAnim getUseAnimation(ItemStack itemStack) {
-        return UseAnim.BOW;
+    public ItemUseAnimation getUseAnimation(ItemStack itemStack) {
+        return ItemUseAnimation.BOW;
     }
 
     @Override
