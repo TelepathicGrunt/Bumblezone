@@ -522,6 +522,10 @@
   "enchantment.the_bumblezone.neurotoxins.desc": "Probabilidad de paralizar criaturas no-muertas y golems que no sean de hierro o nieve.\nCuanto más vida tenga el objetivo, menor será la probabilidad de parálisis.",
   "enchantment_lore.the_bumblezone:neurotoxins.description": "Probabilidad de paralizar criaturas no-muertas y golems que no sean de hierro o nieve. Cuanto más vida tenga el objetivo, menor será la probabilidad de parálisis.",
   "enchantment_lore_forge.the_bumblezone:neurotoxins.description": "Probabilidad de paralizar criaturas no-muertas y golems que no sean de hierro o nieve. Cuanto más vida tenga el objetivo, menor será la probabilidad de parálisis.",
+  "enchantment.the_bumblezone.hive_lifeline": "Línea Vital de la Colmena",
+  "enchantment.the_bumblezone.hive_lifeline.desc": "¡Cualquier daño de ataque al jugador será transferido a una abeja cercana! La pieza de armadura encantada entra en un breve tiempo de reutilización tras transferir el daño.",
+  "enchantment_lore.the_bumblezone:hive_lifeline.description": "¡Cualquier daño de ataque al jugador será transferido a una abeja cercana! La pieza de armadura encantada entra en un breve tiempo de reutilización tras transferir el daño.",
+  "enchantment_lore_forge.the_bumblezone:hive_lifeline.description": "¡Cualquier daño de ataque al jugador será transferido a una abeja cercana! La pieza de armadura encantada entra en un breve tiempo de reutilización tras transferir el daño.",
 
   "biome.the_bumblezone.sugar_water_floor": "Piso de Agua Azucarada",
   "biome.the_bumblezone.hive_wall": "Muro de Colmena",
