@@ -8,6 +8,8 @@ Grass Blocks now can spread to nearby dirt in Bumblezone at any light value.
 
 AstardGrimoire updated and fixed ru_ru.json file
 
+Texaliuz updated es_ar.json file
+
 
 ### **(V.7.9.0 Changes) (1.20.1 Minecraft)**
 
