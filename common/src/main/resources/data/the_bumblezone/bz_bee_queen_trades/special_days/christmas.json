@@ -357,10 +357,8 @@
       "required": false
     },
     {
-      "item": {
-        "id": "yuushya:christmas_hat",
-        "count": 1
-      },
+      "id": "yuushya:christmas_hat",
+      "count": 1,
       "xp_reward": 0,
       "weight": 1,
       "required": false

@@ -1,3 +1,14 @@
+### **(V.7.9.2 Changes) (1.20.1 Minecraft)**
+
+#### Entities:
+
+Fixed tier 4 trades and holiday trades not working for Bee Queen.
+
+#### Compat:
+
+Fixed Buzzier Bees Glazed Porkchop not being feedable to bees. (PR from Toblerone0508)
+
+
 ### **(V.7.9.1 Changes) (1.20.1 Minecraft)**
 
 #### Misc:
