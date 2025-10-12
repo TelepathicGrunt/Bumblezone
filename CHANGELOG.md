@@ -1,6 +1,14 @@
+### **(V.7.11.2 Changes) (1.21.1 Minecraft)**
+
+#### Compat:
+
+Fixed Buzzier Bees Glazed Porkchop not being feedable to bees. (PR from Toblerone0508)
+
+
 ### **(V.7.11.1 Changes) (1.21.1 Minecraft)**
 
 #### Misc:
+
 Grass Blocks now can spread to nearby dirt in Bumblezone at any light value.
 
 #### Lang:

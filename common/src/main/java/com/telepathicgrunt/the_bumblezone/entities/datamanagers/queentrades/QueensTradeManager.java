@@ -91,12 +91,12 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         ).apply(instance, instance.stable(RawTradeInputEntry::new)));
     }
 
-    public record RawTradeOutputEntry(Optional<String> tag, Optional<ItemStack> itemstack, boolean required, int count, int xpReward, int weight) {
+    public record RawTradeOutputEntry(Optional<String> tag, Optional<ItemStack> itemstack, boolean required, int countOutputForTags, int xpReward, int weight) {
         public static final Codec<RawTradeOutputEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
                 Codec.STRING.optionalFieldOf("tag").forGetter(e -> e.tag),
                 ItemStack.CODEC.optionalFieldOf("item").forGetter(e -> e.itemstack),
                 Codec.BOOL.fieldOf("required").forGetter(e -> e.required),
-                Codec.intRange(1, 64).fieldOf("count_output_for_tags").orElse(1).forGetter(e -> e.count),
+                Codec.intRange(1, 64).fieldOf("count_output_for_tags").orElse(1).forGetter(e -> e.countOutputForTags),
                 ExtraCodecs.NON_NEGATIVE_INT.fieldOf("xp_reward").forGetter(e -> e.xpReward),
                 ExtraCodecs.POSITIVE_INT.fieldOf("weight").forGetter(e -> e.weight)
         ).apply(instance, instance.stable(RawTradeOutputEntry::new)));
@@ -129,12 +129,21 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         loader.forEach((fileIdentifier, jsonElement) -> {
             try {
                 DataResult<TradeCollection> mapDataResult = TradeCollection.CODEC.parse(JsonOps.INSTANCE, jsonElement);
-                mapDataResult.resultOrPartial((s) -> {}).ifPresent(rawTrades::add);
+                mapDataResult.resultOrPartial((s) -> {}).ifPresent(result -> {
+                    validateResult(result);
+                    rawTrades.add(result);
+                });
             }
             catch (Exception e) {
                 Bumblezone.LOGGER.error("Bumblezone Error: Couldn't parse bee queen trades file {}", fileIdentifier, e);
             }
         });
+    }
+
+    private void validateResult(TradeCollection result) throws IllegalArgumentException {
+        if (result.resultItems().isEmpty() && !result.randomizerTrade()) {
+            throw new IllegalArgumentException("Cannot have empty resultItems list if randomizerTrade is false. If resultItems field is present in file, check for typos or mistakes in file.");
+        }
     }
 
     // KEEP THIS HERE BECAUSE ABOVE FIRES BEFORE TAGS ARE READY
@@ -296,7 +305,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                         Bumblezone.LOGGER.error("Trade result tag is set to required but " + rawTradeOutputEntry + " tag entry does not exist.");
                     }
                 }
-                else tag.ifPresent(holders -> tradeResultEntries.add(new TradeResultEntry(Optional.of(tagKey), holders.stream().map(i -> i.value().getDefaultInstance()).collect(Collectors.toCollection(ArrayList::new)), rawTradeOutputEntry.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
+                else tag.ifPresent(holders -> tradeResultEntries.add(new TradeResultEntry(Optional.of(tagKey), holders.stream().map(i -> i.value().getDefaultInstance()).collect(Collectors.toCollection(ArrayList::new)), rawTradeOutputEntry.countOutputForTags(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
             }
             else {
                 if (rawTradeOutputEntry.itemstack().isEmpty() || rawTradeOutputEntry.itemstack().get().isEmpty()) {
