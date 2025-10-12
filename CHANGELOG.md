@@ -4,6 +4,8 @@
 
 Fixed tier 4 trades and holiday trades not working for Bee Queen.
 
+Made Bee Queen trade files have more validation feedback on malformed files.
+
 #### Compat:
 
 Fixed Buzzier Bees Glazed Porkchop not being feedable to bees. (PR from Toblerone0508)

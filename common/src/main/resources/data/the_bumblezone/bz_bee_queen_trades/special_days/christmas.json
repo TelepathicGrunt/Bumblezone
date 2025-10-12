@@ -350,8 +350,8 @@
       "required": false
     },
     {
-      "tag": "stoneworked:presents",
-      "count_output_for_tags": 1,
+      "id": "#stoneworked:presents",
+      "count": 1,
       "xp_reward": 0,
       "weight": 1,
       "required": false
