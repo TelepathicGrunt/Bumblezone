@@ -63,14 +63,14 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
     public record TradeCollection(
         Optional<SpecialDaysEntry> specialDaysEntry,
         Optional<List<RawTradeInputEntry>> randomizerItems,
-        Optional<List<RawTradeInputEntry>> wantItems,
+        List<RawTradeInputEntry> wantItems,
         Optional<List<RawTradeOutputEntry>> resultItems,
         boolean randomizerTrade)
     {
         public static final Codec<TradeCollection> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
                 SpecialDaysEntry.CODEC.optionalFieldOf("special_days").forGetter(e -> e.specialDaysEntry),
                 RawTradeInputEntry.CODEC.listOf().optionalFieldOf("randomizes").forGetter(e -> e.randomizerItems),
-                RawTradeInputEntry.CODEC.listOf().optionalFieldOf("wants").forGetter(e -> e.wantItems),
+                RawTradeInputEntry.CODEC.listOf().fieldOf("wants").forGetter(e -> e.wantItems),
                 RawTradeOutputEntry.CODEC.listOf().optionalFieldOf("possible_rewards").forGetter(e -> e.resultItems),
                 Codec.BOOL.fieldOf("is_color_randomizer_trade").orElse(false).forGetter(e -> e.randomizerTrade)
         ).apply(instance, instance.stable(TradeCollection::new)));
@@ -129,7 +129,16 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
     @Override
     protected void apply(Map<ResourceLocation, TradeCollection> loader, ResourceManager manager, ProfilerFiller profiler) {
         rawTrades.clear();
-        loader.forEach((fileIdentifier, tradeCollection) -> rawTrades.add(tradeCollection));
+        loader.forEach((fileIdentifier, tradeCollection) -> {
+            validateResult(fileIdentifier, tradeCollection);
+            rawTrades.add(tradeCollection);
+        });
+    }
+
+    private void validateResult(ResourceLocation fileIdentifier, TradeCollection tradeCollection) throws IllegalArgumentException {
+        if (tradeCollection.resultItems().isEmpty() && !tradeCollection.randomizerTrade()) {
+            Bumblezone.LOGGER.error("Cannot have empty resultItems list if randomizerTrade is false. If resultItems field is present in file, check for typos or mistakes in file: {}", fileIdentifier);
+        }
     }
 
     // KEEP THIS HERE BECAUSE ABOVE FIRES BEFORE TAGS ARE READY
@@ -150,7 +159,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
             if (entry.specialDaysEntry().isPresent()) {
                 if (entry.wantItems().isEmpty()) continue;
                 if (entry.resultItems().isEmpty()) continue;
-                for (RawTradeInputEntry rawTradeWantEntry : entry.wantItems().get()) {
+                for (RawTradeInputEntry rawTradeWantEntry : entry.wantItems()) {
                     TradeWantEntry tradeWantEntry = getInputTradeEntry(rawTradeWantEntry);
 
                     if (tradeWantEntry == null || tradeWantEntry.wantItems().size() == 0) {
@@ -186,7 +195,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
             else {
                 if (entry.wantItems().isEmpty()) continue;
                 if (entry.resultItems().isEmpty()) continue;
-                for (RawTradeInputEntry rawTradeWantEntry : entry.wantItems().get()) {
+                for (RawTradeInputEntry rawTradeWantEntry : entry.wantItems()) {
                     TradeWantEntry tradeWantEntry = getInputTradeEntry(rawTradeWantEntry);
 
                     if (tradeWantEntry == null || tradeWantEntry.wantItems().size() == 0) {
