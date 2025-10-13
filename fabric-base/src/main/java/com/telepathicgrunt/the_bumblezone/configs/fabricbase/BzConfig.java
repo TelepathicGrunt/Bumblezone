@@ -226,6 +226,9 @@ public class BzConfig extends MidnightConfig {
     @Comment
     public static Comment generalComment;
 
+    @Entry(min=0, max=1)
+    public static double variantBeeAfterWorldgenSpawnRate = 0.05D;
+
     @Entry
     public static List<String> variantBeeTypes = Arrays.asList(
             "redtail_bee",
@@ -247,7 +250,7 @@ public class BzConfig extends MidnightConfig {
 
 
     @Entry(min=0, max=100)
-    public static double beehemothSpeed = 0.95;
+    public static double beehemothSpeed = 0.95D;
 
     @Entry
     public static boolean beehemothFriendlyFire = true;
@@ -483,6 +486,7 @@ public class BzConfig extends MidnightConfig {
             BeehemothEntity.beehemothSpeedConfigChanged = true;
         }
 
+        BzGeneralConfigs.variantBeeAfterWorldgenSpawnRate = variantBeeAfterWorldgenSpawnRate;
         BzGeneralConfigs.variantBeeTypes = variantBeeTypes;
         BzGeneralConfigs.beehemothFriendlyFire = beehemothFriendlyFire;
         BzGeneralConfigs.beeQueenSpecialDayTrades = beeQueenSpecialDayTrades;

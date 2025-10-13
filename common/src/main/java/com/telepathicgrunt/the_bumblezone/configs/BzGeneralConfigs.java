@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BzGeneralConfigs {
+    public static double variantBeeAfterWorldgenSpawnRate = 0.05D;
     public static List<String> variantBeeTypes = Arrays.asList(
             "redtail_bee",
             "green_bee",
