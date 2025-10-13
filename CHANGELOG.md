@@ -12,6 +12,10 @@ Added `variantBeeAfterWorldgenSpawnRate` config option so people can increase th
 
 Fixed Buzzier Bees Glazed Porkchop not being feedable to bees. (PR from Toblerone0508)
 
+#### Lang:
+
+Romz24 updated and fixed ru_ru.json file
+
 
 ### **(V.7.9.1 Changes) (1.20.1 Minecraft)**
 
