@@ -1,5 +1,9 @@
 ### **(V.7.11.2 Changes) (1.21.1 Minecraft)**
 
+#### Entities:
+
+Added `variantBeeAfterWorldgenSpawnRate` config option so people can increase the rates of variant bees if they wish to do so.
+
 #### Compat:
 
 Fixed Buzzier Bees Glazed Porkchop not being feedable to bees. (PR from Toblerone0508)
