@@ -12,6 +12,7 @@ public class BzGeneralConfig {
     public static final ModConfigSpec GENERAL_SPEC;
 
     public static ModConfigSpec.BooleanValue bzHoneyFluidFromHoneyBottles;
+    public static ModConfigSpec.DoubleValue variantBeeAfterWorldgenSpawnRate;
     public static ModConfigSpec.ConfigValue<List<? extends String>> variantBeeTypes;
     public static ModConfigSpec.DoubleValue beehemothSpeed;
     public static ModConfigSpec.BooleanValue beehemothFriendlyFire;
@@ -78,6 +79,14 @@ public class BzGeneralConfig {
 
 
         builder.translation("the_bumblezone.configuration.variantbeeoptions").push("Variant Bee Options");
+
+        variantBeeAfterWorldgenSpawnRate = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Rates for Variant Bees to spawn when doing normal mob spawning over time.",
+                        " Will not affect spawnrates of this mob from worldgen generating chunks.",
+                        " For the worldgen spawning rates, overriding the biome json with a datapack is required.\n")
+                .translation("the_bumblezone.config.variantbeeafterworldgenspawnrate")
+                .defineInRange("variantBeeAfterWorldgenSpawnRate", 0.05D, 0D, 1D);
 
         variantBeeTypes = builder
                 .comment("----------------------------\n",
@@ -463,6 +472,7 @@ public class BzGeneralConfig {
             BeehemothEntity.beehemothSpeedConfigChanged = true;
         }
 
+        BzGeneralConfigs.variantBeeAfterWorldgenSpawnRate = variantBeeAfterWorldgenSpawnRate.get();
         BzGeneralConfigs.variantBeeTypes = new ArrayList<>(variantBeeTypes.get());
         BzGeneralConfigs.beehemothFriendlyFire = beehemothFriendlyFire.get();
         BzGeneralConfigs.specialBeeSpawning = specialBeeSpawning.get();

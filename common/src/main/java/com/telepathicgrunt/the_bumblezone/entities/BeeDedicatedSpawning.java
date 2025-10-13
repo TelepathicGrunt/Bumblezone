@@ -121,7 +121,7 @@ public final class BeeDedicatedSpawning {
                         continue;
                     }
 
-                    Bee newBee = (BzGeneralConfigs.variantBeeTypes.size() > 0 && world.getRandom().nextFloat() < 0.05f) ?
+                    Bee newBee = (BzGeneralConfigs.variantBeeTypes.size() > 0 && world.getRandom().nextFloat() < BzGeneralConfigs.variantBeeAfterWorldgenSpawnRate) ?
                             BzEntities.VARIANT_BEE.get().create(world) : EntityType.BEE.create(world);
 
                     newBee.setPos(Vec3.atCenterOf(newBeePos));
