@@ -1,3 +1,10 @@
+### **(V.7.11.3 Changes) (1.21.1 Minecraft)**
+
+#### Blocks:
+
+Fixed Luminescent Wax Channel block not having reversed animation when horizontally sheared.
+
+
 ### **(V.7.11.2 Changes) (1.21.1 Minecraft)**
 
 #### Entities:
