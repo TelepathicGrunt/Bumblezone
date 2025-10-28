@@ -1,3 +1,11 @@
+### **(V.7.9.4 Changes) (1.20.1 Minecraft)**
+
+#### Structures:
+Added configs to change the Sempiternal Sanctum arena time frames. Config names are: 
+ `blueArenaTimeFrameInTicks`, `greenArenaTimeFrameInTicks`, `purpleArenaTimeFrameInTicks`, 
+ `redArenaTimeFrameInTicks`, `yellowArenaTimeFrameInTicks`, `whiteArenaTimeFrameInTicks`
+
+
 ### **(V.7.9.3 Changes) (1.20.1 Minecraft)**
 
 #### Blocks:

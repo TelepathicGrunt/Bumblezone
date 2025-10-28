@@ -115,6 +115,24 @@ public class BzConfig extends MidnightConfig {
     public static boolean blueArenaBubblesMechanic = true;
 
     @Entry
+    public static int blueArenaTimeFrameInTicks = 10800;
+
+    @Entry
+    public static int greenArenaTimeFrameInTicks = 6000;
+
+    @Entry
+    public static int purpleArenaTimeFrameInTicks = 5020;
+
+    @Entry
+    public static int redArenaTimeFrameInTicks = 11200;
+
+    @Entry
+    public static int yellowArenaTimeFrameInTicks = 6000;
+
+    @Entry
+    public static int whiteArenaTimeFrameInTicks = 10000;
+
+    @Entry
     public static int cosmicCrystalHealth = 60;
 
     @Entry
@@ -515,6 +533,12 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning;
         BzGeneralConfigs.repeatableEssenceEvents = repeatableEssenceEvents;
         BzGeneralConfigs.blueArenaBubblesMechanic = blueArenaBubblesMechanic;
+        BzGeneralConfigs.blueArenaTimeFrameInTicks = blueArenaTimeFrameInTicks;
+        BzGeneralConfigs.greenArenaTimeFrameInTicks = greenArenaTimeFrameInTicks;
+        BzGeneralConfigs.purpleArenaTimeFrameInTicks = purpleArenaTimeFrameInTicks;
+        BzGeneralConfigs.redArenaTimeFrameInTicks = redArenaTimeFrameInTicks;
+        BzGeneralConfigs.yellowArenaTimeFrameInTicks = yellowArenaTimeFrameInTicks;
+        BzGeneralConfigs.whiteArenaTimeFrameInTicks = whiteArenaTimeFrameInTicks;
         BzGeneralConfigs.cosmicCrystalHealth = cosmicCrystalHealth;
         BzGeneralConfigs.ragingEssenceAbilityUse = ragingEssenceAbilityUse;
         BzGeneralConfigs.ragingEssenceCooldown = ragingEssenceCooldown;

@@ -38,7 +38,7 @@ public class EssenceBlockWhite extends EssenceBlock {
 
     @Override
     public int getEventTimeFrame() {
-        return 10000;
+        return BzGeneralConfigs.whiteArenaTimeFrameInTicks;
     }
 
     @Override
