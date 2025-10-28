@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.bossbars.ServerEssenceEvent;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ElectricRingEntity;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.RabbitAccessor;
@@ -82,7 +83,7 @@ public class EssenceBlockYellow extends EssenceBlock {
 
     @Override
     public int getEventTimeFrame() {
-        return 6000;
+        return BzGeneralConfigs.yellowArenaTimeFrameInTicks;
     }
 
     @Override
