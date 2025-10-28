@@ -53,6 +53,12 @@ public class BzGeneralConfigs {
     public static int crystallineFlowerExtraTierCost = 0;
     public static boolean repeatableEssenceEvents = true;
     public static boolean blueArenaBubblesMechanic = true;
+    public static int blueArenaTimeFrameInTicks = 10800;
+    public static int greenArenaTimeFrameInTicks = 6000;
+    public static int purpleArenaTimeFrameInTicks = 5020;
+    public static int redArenaTimeFrameInTicks = 11200;
+    public static int yellowArenaTimeFrameInTicks = 6000;
+    public static int whiteArenaTimeFrameInTicks = 10000;
     public static int cosmicCrystalHealth = 60;
     public static int ragingEssenceAbilityUse = 28;
     public static int ragingEssenceCooldown = 36000;
