@@ -54,6 +54,12 @@ public class BzGeneralConfig {
     public static ForgeConfigSpec.BooleanValue keepEssenceOfTheBeesOnRespawning;
     public static ForgeConfigSpec.BooleanValue repeatableEssenceEvents;
     public static ForgeConfigSpec.BooleanValue blueArenaBubblesMechanic;
+    public static ForgeConfigSpec.IntValue blueArenaTimeFrameInTicks;
+    public static ForgeConfigSpec.IntValue greenArenaTimeFrameInTicks;
+    public static ForgeConfigSpec.IntValue purpleArenaTimeFrameInTicks;
+    public static ForgeConfigSpec.IntValue redArenaTimeFrameInTicks;
+    public static ForgeConfigSpec.IntValue yellowArenaTimeFrameInTicks;
+    public static ForgeConfigSpec.IntValue whiteArenaTimeFrameInTicks;
     public static ForgeConfigSpec.IntValue cosmicCrystalHealth;
     public static ForgeConfigSpec.IntValue ragingEssenceAbilityUse;
     public static ForgeConfigSpec.IntValue ragingEssenceCooldown;
@@ -428,6 +434,42 @@ public class BzGeneralConfig {
                 .translation("the_bumblezone.config.bluearenabubblesmechanic")
                 .define("blueArenaBubblesMechanic", true);
 
+        blueArenaTimeFrameInTicks = builder
+                .comment("----------------------------\n",
+                        " How long in ticks the Blue Arena in Sempiternal Sanctum will last.\n")
+                .translation("the_bumblezone.configuration.bluearenatimeframeinticks")
+                .defineInRange("blueArenaTimeFrameInTicks", 10800, 1, 1000000);
+
+        greenArenaTimeFrameInTicks = builder
+                .comment("----------------------------\n",
+                        " How long in ticks the Green Arena in Sempiternal Sanctum will last.\n")
+                .translation("the_bumblezone.configuration.greenarenatimeframeinticks")
+                .defineInRange("greenArenaTimeFrameInTicks", 6000, 1, 1000000);
+
+        purpleArenaTimeFrameInTicks = builder
+                .comment("----------------------------\n",
+                        " How long in ticks the Purple Arena in Sempiternal Sanctum will last.\n")
+                .translation("the_bumblezone.configuration.purplearenatimeframeinticks")
+                .defineInRange("purpleArenaTimeFrameInTicks", 5020, 1, 1000000);
+
+        redArenaTimeFrameInTicks = builder
+                .comment("----------------------------\n",
+                        " How long in ticks the Red Arena in Sempiternal Sanctum will last.\n")
+                .translation("the_bumblezone.configuration.redarenatimeframeinticks")
+                .defineInRange("redArenaTimeFrameInTicks", 10800, 1, 1000000);
+
+        yellowArenaTimeFrameInTicks = builder
+                .comment("----------------------------\n",
+                        " How long in ticks the Yellow Arena in Sempiternal Sanctum will last.\n")
+                .translation("the_bumblezone.configuration.yellowarenatimeframeinticks")
+                .defineInRange("yellowArenaTimeFrameInTicks", 6000, 1, 1000000);
+
+        whiteArenaTimeFrameInTicks = builder
+                .comment("----------------------------\n",
+                        " How long in ticks the White Arena in Sempiternal Sanctum will last.\n")
+                .translation("the_bumblezone.configuration.whitearenatimeframeinticks")
+                .defineInRange("whiteArenaTimeFrameInTicks", 10000, 1, 1000000);
+
         cosmicCrystalHealth = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " How much max health Cosmic Crystal entity has. (For Continuity Essence event)\n")
@@ -575,6 +617,12 @@ public class BzGeneralConfig {
         BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning.get();
         BzGeneralConfigs.repeatableEssenceEvents = repeatableEssenceEvents.get();
         BzGeneralConfigs.blueArenaBubblesMechanic = blueArenaBubblesMechanic.get();
+        BzGeneralConfigs.blueArenaTimeFrameInTicks = blueArenaTimeFrameInTicks.get();
+        BzGeneralConfigs.greenArenaTimeFrameInTicks = greenArenaTimeFrameInTicks.get();
+        BzGeneralConfigs.purpleArenaTimeFrameInTicks = purpleArenaTimeFrameInTicks.get();
+        BzGeneralConfigs.redArenaTimeFrameInTicks = redArenaTimeFrameInTicks.get();
+        BzGeneralConfigs.yellowArenaTimeFrameInTicks = yellowArenaTimeFrameInTicks.get();
+        BzGeneralConfigs.whiteArenaTimeFrameInTicks = whiteArenaTimeFrameInTicks.get();
         BzGeneralConfigs.cosmicCrystalHealth = cosmicCrystalHealth.get();
         BzGeneralConfigs.ragingEssenceAbilityUse = ragingEssenceAbilityUse.get();
         BzGeneralConfigs.ragingEssenceCooldown = ragingEssenceCooldown.get();
