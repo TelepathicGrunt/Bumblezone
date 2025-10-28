@@ -1,3 +1,9 @@
+### **(V.7.11.4 Changes) (1.21.1 Minecraft)**
+
+#### Blocks:
+(NeoForge): Fixed Heavy Air not undoing creative flight ban when player leaves the block.
+
+
 ### **(V.7.11.3 Changes) (1.21.1 Minecraft)**
 
 #### Blocks:

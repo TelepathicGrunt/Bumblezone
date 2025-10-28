@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.neoforge;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.telepathicgrunt.the_bumblezone.configs.neoforge.BzGeneralConfig;
 import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
+import com.telepathicgrunt.the_bumblezone.entities.neoforge.DisableFlightAttribute;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.events.block.BzBlockBreakEvent;
@@ -146,6 +147,7 @@ public class NeoForgeEventManager {
         eventBus.addListener(NeoForgeEventManager::onEntityDimensionTravel);
         eventBus.addListener(NeoForgeEventManager::onEntityVisibility);
         eventBus.addListener(EventPriority.LOWEST, NeoForgeEventManager::onEntityHurtLowest);
+        eventBus.addListener(DisableFlightAttribute::onPlayerTickToRemoveDisabledFlight);
     }
 
     private static void onAddTabContents(BuildCreativeModeTabContentsEvent event) {
