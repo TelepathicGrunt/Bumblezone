@@ -1,3 +1,14 @@
+### **(V.7.11.4 Changes) (1.21.1 Minecraft)**
+
+#### Blocks:
+(NeoForge): Fixed Heavy Air not undoing creative flight ban when player leaves the block.
+
+#### Structures:
+Added configs to change the Sempiternal Sanctum arena time frames. Config names are: 
+ `blueArenaTimeFrameInTicks`, `greenArenaTimeFrameInTicks`, `purpleArenaTimeFrameInTicks`, 
+ `redArenaTimeFrameInTicks`, `yellowArenaTimeFrameInTicks`, `whiteArenaTimeFrameInTicks`
+
+
 ### **(V.7.11.3 Changes) (1.21.1 Minecraft)**
 
 #### Blocks:
