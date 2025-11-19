@@ -1,5 +1,9 @@
 ### **(V.7.11.5 Changes) (1.21.1 Minecraft)**
 
+#### Mod Compat:
+
+Fixed Pollinated Pillar biome icon not showing properly in EMI Ores mod.
+
 #### Lang:
 
 Texaliuz updated es_ar.json file
