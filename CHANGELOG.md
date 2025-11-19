@@ -1,3 +1,14 @@
+### **(V.7.11.5 Changes) (1.21.1 Minecraft)**
+
+#### Lang:
+
+Texaliuz updated es_ar.json file
+
+PrincessStelllar updated pt_br.json file
+
+mc-kaishixiaxue updated zh_cn.json file
+
+
 ### **(V.7.11.4 Changes) (1.21.1 Minecraft)**
 
 #### Blocks:
