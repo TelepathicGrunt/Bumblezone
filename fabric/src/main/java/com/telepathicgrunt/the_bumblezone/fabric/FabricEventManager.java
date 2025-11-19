@@ -59,6 +59,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -218,20 +219,5 @@ public class FabricEventManager {
             return InteractionResultHolder.success(event.usingStack());
         }
         return InteractionResultHolder.pass(event.usingStack());
-    }
-
-    private static boolean allowLivingEntityDeath(LivingEntity livingEntity, DamageSource damageSource, float damage) {
-        if (BzEntityDeathEvent.EVENT.invoke(new BzEntityDeathEvent(livingEntity, damageSource))) {
-            return false;
-        }
-        else if (BzEntityDeathEvent.EVENT_LOWEST.invoke(new BzEntityDeathEvent(livingEntity, damageSource))) {
-            return false;
-        }
-
-        if (livingEntity instanceof ServerPlayer serverPlayer && serverPlayer.isDeadOrDying()) {
-            SempiternalSanctumBehavior.onArenaAreaDeath((ServerLevel) serverPlayer.level(), serverPlayer);
-        }
-
-        return true;
     }
 }

@@ -48,12 +48,6 @@ description='''A wonderful bee dimension mod with lots of new exploration and ad
     versionRange="[1.20.1-4.9.0.152,)"
 
 [[dependencies.the_bumblezone]]
-    modId="tombstone"
-    mandatory=false
-    ordering="AFTER"
-    versionRange="[0,)"
-
-[[dependencies.the_bumblezone]]
     modId="structureessentials"
     mandatory=false
     versionRange="(,1.20.1-4.5),(1.20.1-4.5,)"

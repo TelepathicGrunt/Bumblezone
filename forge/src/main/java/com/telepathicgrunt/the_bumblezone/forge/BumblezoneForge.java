@@ -46,6 +46,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.forge.BzBiomeModifiers;
 import com.telepathicgrunt.the_bumblezone.modinit.forge.BzGlobalLootModifier;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.forge.ResourcefulRegistriesImpl;
 import com.telepathicgrunt.the_bumblezone.modules.forge.ForgeModuleInitalizer;
+import com.telepathicgrunt.the_bumblezone.worldgen.structures.SempiternalSanctumBehavior;
 import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -53,6 +54,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
@@ -429,6 +431,10 @@ public class BumblezoneForge {
         boolean cancel = EntityDeathEvent.EVENT_LOWEST.invoke(new EntityDeathEvent(event.getEntity(), event.getSource()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);
+        }
+
+        if (!event.isCanceled() && event.getEntity() instanceof ServerPlayer serverPlayer && serverPlayer.isDeadOrDying()) {
+            SempiternalSanctumBehavior.onArenaAreaDeath((ServerLevel) serverPlayer.level(), serverPlayer);
         }
     }
 

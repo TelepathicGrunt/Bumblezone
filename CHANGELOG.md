@@ -1,3 +1,24 @@
+### **(V.7.9.5 Changes) (1.20.1 Minecraft)**
+
+#### Structures:
+
+Dying near the Essence Block in Sempiternal Sanctums will now move the player just outside the bounds of the sanctum's arena.
+This will allow Gravestone/Tombstone mods to continue spawning their block and not risk item duplication issues with arena nor break arena's invincible blocks.
+This does mean Bumblezone will no longer drop player items with unlimited despawn timer when Corail Tombstone is on and near Essence Block. Their tombstone block will spawn now.
+
+#### Mod Compat:
+
+Fixed Pollinated Pillar biome icon not showing properly in EMI Ores mod.
+
+#### Lang:
+
+Texaliuz updated es_ar.json file
+
+PrincessStelllar updated pt_br.json file
+
+mc-kaishixiaxue updated zh_cn.json file
+
+
 ### **(V.7.9.4 Changes) (1.20.1 Minecraft)**
 
 #### Structures:

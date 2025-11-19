@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterEntityAttribu
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.SetupEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.worldgen.structures.SempiternalSanctumBehavior;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -19,6 +20,8 @@ import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.CreativeModeTab;
@@ -85,6 +88,10 @@ public class FabricBaseEventManager {
         }
         else if (EntityDeathEvent.EVENT_LOWEST.invoke(new EntityDeathEvent(livingEntity, damageSource))) {
             return false;
+        }
+
+        if (livingEntity instanceof ServerPlayer serverPlayer && serverPlayer.isDeadOrDying()) {
+            SempiternalSanctumBehavior.onArenaAreaDeath((ServerLevel) serverPlayer.level(), serverPlayer);
         }
 
         return true;
