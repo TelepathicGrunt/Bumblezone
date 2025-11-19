@@ -683,7 +683,6 @@
   "system.the_bumblezone.denied_mek_jetpack_module": "Защита святилища активирована - модуль реактивного ранца отключён",
   "system.the_bumblezone.denied_mek_grav_module": "Защита святилища активирована - антигравитационный модуль отключён",
   "system.the_bumblezone.royal_jelly_bottle.cannot_take_from_source_block": "Не тратьте жидкость! Используйте ведро!",
-  "system.the_bumblezone.corail_tombstone_drop_compat": "Вы погибли слишком близко к Блоку эссенции. Досадно. Инвентарь выброшен без таймера исчезновения.",
 
   "essence.the_bumblezone.missing_essence_effect": "Для активации блока необходимо поглотить Эссенцию пчёл...",
   "essence.the_bumblezone.red_essence_event": "§cЭссенция Ярости§f - §cПоражение§f за %s",

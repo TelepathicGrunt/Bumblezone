@@ -32,6 +32,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import com.telepathicgrunt.the_bumblezone.utils.fabric.PlatformHooksImpl;
+import com.telepathicgrunt.the_bumblezone.worldgen.structures.SempiternalSanctumBehavior;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
@@ -73,6 +74,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
@@ -326,6 +329,10 @@ public class FabricEventManager {
         }
         else if (BzEntityDeathEvent.EVENT_LOWEST.invoke(new BzEntityDeathEvent(livingEntity, damageSource))) {
             return false;
+        }
+
+        if (livingEntity instanceof ServerPlayer serverPlayer && serverPlayer.isDeadOrDying()) {
+            SempiternalSanctumBehavior.onArenaAreaDeath((ServerLevel) serverPlayer.level(), serverPlayer);
         }
 
         return true;

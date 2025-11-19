@@ -665,7 +665,6 @@
   "system.the_bumblezone.denied_mek_jetpack_module": "Magia Anti-tecnología Activada - Módulo de Jetpack",
   "system.the_bumblezone.denied_mek_grav_module": "Magia Anti-tecnología Activada - Módulo de Gravedad",
   "system.the_bumblezone.royal_jelly_bottle.cannot_take_from_source_block": "No desperdicies el fluido! Usa un cubo en su lugar!",
-  "system.the_bumblezone.corail_tombstone_drop_compat": "No se crean tumbas ya que están demasiado cerca del Bloque de Esencia. El inventario se deja caer sin temporizador de desaparición.",
 
   "essence.the_bumblezone.missing_essence_effect": "Necesitas consumir la Esencia de las Abejas primero...",
   "essence.the_bumblezone.red_essence_event": "§cEsencia de Furia§f - §cFallo§f en %s",

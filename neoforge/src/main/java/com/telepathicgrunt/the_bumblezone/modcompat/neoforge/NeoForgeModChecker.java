@@ -90,9 +90,6 @@ public class NeoForgeModChecker {
 
             modid = "tokenenchanter";
             loadupModCompat(modid, () -> new TokenEnchanterCompat());
-
-            modid = "tombstone";
-            loadupModCompat(modid, () -> new CorailTombstoneCompat());
         }
         catch (Throwable e) {
             printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");

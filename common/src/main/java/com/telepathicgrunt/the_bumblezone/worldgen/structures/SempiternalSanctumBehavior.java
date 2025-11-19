@@ -1,12 +1,17 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.structures;
 
+import com.telepathicgrunt.the_bumblezone.blocks.EssenceBlock;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.MusicPacketFromServer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -14,8 +19,14 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.StructureManager;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.HashSet;
 import java.util.UUID;
@@ -109,6 +120,41 @@ public class SempiternalSanctumBehavior {
                 MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.CONTINUITY_EVENT.get().getLocation(), false);
 
                 PLAYERS_IN_SANCTUMS.remove(serverPlayer.getUUID());
+            }
+        }
+    }
+
+    public static void onArenaAreaDeath(ServerLevel serverLevel, ServerPlayer serverPlayer) {
+        if (serverLevel.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
+
+            StructureManager structureManager = serverLevel.structureManager();
+            StructureStart detectedStructure = structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.SEMPITERNAL_SANCTUMS);
+            if (detectedStructure.isValid()) {
+
+                BlockPos structureCenter = detectedStructure.getBoundingBox().getCenter().below(20);
+                BlockState blockState = serverLevel.getBlockState(structureCenter);
+                BlockEntity blockEntity = serverLevel.getBlockEntity(structureCenter);
+                if (!(blockState.is(BzTags.ESSENCE_BLOCKS) &&
+                    blockEntity instanceof EssenceBlockEntity essenceBlockEntity &&
+                    AABB.ofSize(
+                            Vec3.atCenterOf(structureCenter),
+                            essenceBlockEntity.getArenaSize().getX() + 2,
+                            essenceBlockEntity.getArenaSize().getY() + 2,
+                            essenceBlockEntity.getArenaSize().getZ() + 2
+                    ).contains(Vec3.atCenterOf(serverPlayer.blockPosition()))))
+                {
+                    return;
+                }
+
+                Direction directionOffset = Direction.Plane.HORIZONTAL.getRandomDirection(serverLevel.getRandom());
+                int xOffset = (int) (((essenceBlockEntity.getArenaSize().getX() * 0.5f) + 3) * directionOffset.getStepX());
+                int zOffset = (int) (((essenceBlockEntity.getArenaSize().getZ() * 0.5f) + 3) * directionOffset.getStepZ());
+                Vec3 newPosition = Vec3.atCenterOf(structureCenter.offset(xOffset, -6, zOffset));
+                serverPlayer.removeVehicle();
+                serverPlayer.setDeltaMovement(new Vec3(0, 0, 0));
+                serverPlayer.setPos(newPosition);
+                serverPlayer.setOldPosAndRot();
+                serverPlayer.teleportTo(serverLevel, serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), serverPlayer.getYRot(), serverPlayer.getXRot());
             }
         }
     }

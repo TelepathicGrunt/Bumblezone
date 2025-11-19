@@ -48,11 +48,13 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.worldgen.structures.SempiternalSanctumBehavior;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
@@ -86,6 +88,7 @@ import net.neoforged.neoforge.event.entity.living.BabyEntitySpawnEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.AdvancementEvent;
@@ -386,6 +389,10 @@ public class NeoForgeEventManager {
         boolean cancel = BzEntityDeathEvent.EVENT_LOWEST.invoke(new BzEntityDeathEvent(event.getEntity(), event.getSource()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);
+        }
+
+        if (!event.isCanceled() && event.getEntity() instanceof ServerPlayer serverPlayer && serverPlayer.isDeadOrDying()) {
+            SempiternalSanctumBehavior.onArenaAreaDeath((ServerLevel) serverPlayer.level(), serverPlayer);
         }
     }
 

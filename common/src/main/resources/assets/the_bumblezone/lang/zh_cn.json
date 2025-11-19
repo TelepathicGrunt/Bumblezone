@@ -683,7 +683,6 @@
     "system.the_bumblezone.denied_mek_jetpack_module": "反科技魔法激活 - 喷气背包模块",
     "system.the_bumblezone.denied_mek_grav_module": "反科技魔法激活 - 重力模块",
     "system.the_bumblezone.royal_jelly_bottle.cannot_take_from_source_block": "别浪费液体，请使用桶！",
-    "system.the_bumblezone.corail_tombstone_drop_compat": "墓碑距离精华方块过近，生成失败！物品已掉落，但没有消失时间限制。",
 
     "essence.the_bumblezone.missing_essence_effect": "你需要先食用蜜蜂精华…",
     "essence.the_bumblezone.red_essence_event": "§c暴怒精华§f - 将在%s后判定§c失败",

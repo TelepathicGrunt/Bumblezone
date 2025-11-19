@@ -39,6 +39,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -136,6 +137,16 @@ public class EssenceBlockEntity extends BlockEntity {
     }
 
     public BlockPos getArenaSize() {
+        // Arena size is essentially a cache. (updated on arena spawn and persisted. Or getArenaSize is called before arena)
+        if (arenaSize.equals(BlockPos.ZERO) && this.level instanceof ServerLevel serverLevel) {
+            StructureTemplateManager structureTemplateManager = serverLevel.getStructureManager();
+            Optional<StructureTemplate> optionalStructureTemplate = structureTemplateManager.get(((EssenceBlock)this.getBlockState().getBlock()).getArenaNbt());
+            optionalStructureTemplate.ifPresent(loadingStructureTemplate -> {
+                Vec3i size = loadingStructureTemplate.getSize();
+                this.setArenaSize(new BlockPos(size));
+            });
+        }
+
         return arenaSize;
     }
 
@@ -462,7 +473,6 @@ public class EssenceBlockEntity extends BlockEntity {
         essenceBlockEntity.getEventEntitiesInArena().clear();
         essenceBlockEntity.setExtraEventTrackingProgress(0);
         essenceBlockEntity.setEventTimer(0);
-        essenceBlockEntity.setArenaSize(BlockPos.ZERO);
         essenceBlockEntity.setChanged();
     }
 
