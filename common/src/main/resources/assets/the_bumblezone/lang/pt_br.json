@@ -683,7 +683,6 @@
   "system.the_bumblezone.denied_mek_jetpack_module": "Magia Anti-tecnologia Ativada - Módulo de Jetpack",
   "system.the_bumblezone.denied_mek_grav_module": "Magia Anti-tecnologia Ativada - Módulo Grav",
   "system.the_bumblezone.royal_jelly_bottle.cannot_take_from_source_block": "Não desperdice o fluido! Use um balde!",
-  "system.the_bumblezone.corail_tombstone_drop_compat": "Nenhuma sepultura criada por estar muito perto do Bloco de Essência. O inventário é dropado sem temporizador de desaparecimento.",
 
   "essence.the_bumblezone.missing_essence_effect": "Você precisa consumir a Essência das Abelhas primeiro...",
   "essence.the_bumblezone.red_essence_event": "§cEssência da Fúria§f - §cFalha§f em %s",
