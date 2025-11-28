@@ -1,3 +1,10 @@
+### **(V.7.11.6 Changes) (1.21.1 Minecraft)**
+
+#### Entities:
+
+Fixed `beehemothSpeed` config value not being read properly by clients connected to a server that has a changed value.
+
+
 ### **(V.7.11.5 Changes) (1.21.1 Minecraft)**
 
 #### Structures:
