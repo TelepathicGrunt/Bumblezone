@@ -735,7 +735,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 double strafeSpeed = 0;
 
                 if (livingEntity.zza != 0 || this.movingStraightUp || this.movingStraightDown) {
-                    currentSpeed = Math.min(BeehemothEntity.beehemothSpeedConfigValue * speedModifier, currentSpeed + 0.003D);
+                    currentSpeed = Math.min(beehemothSpeedConfigValue * speedModifier, currentSpeed + 0.003D);
                 }
                 else {
                     currentSpeed = Math.max(0, currentSpeed - 0.2D);
