@@ -1,5 +1,6 @@
 {
   "values": [
+    "minecraft:chorus_flower",
     "minecraft:wither_rose",
     {
       "id": "betterarcheology:growth_totem",

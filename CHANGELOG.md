@@ -1,3 +1,10 @@
+### **(V.7.11.7 Changes) (1.21.1 Minecraft)**
+
+#### Structures:
+
+Stopped Chorus Flower from appearing in Structure's loot tables.
+
+
 ### **(V.7.11.6 Changes) (1.21.1 Minecraft)**
 
 #### Entities:
