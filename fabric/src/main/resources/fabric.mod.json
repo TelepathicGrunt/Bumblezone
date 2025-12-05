@@ -1,58 +1,60 @@
 {
-    "schemaVersion": 1,
-    "id": "the_bumblezone",
-    "version": "$version",
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${version}",
+  "name": "${mod_display_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "TelepathicGrunt"
+  ],
+  "contact": {
+    "homepage": "${homepage_url}",
+    "sources": "${sources_url}",
+    "issues": "${issues_url}"
+  },
 
-    "name": "The Bumblezone - Fabric",
-    "description": "A wonderful bee dimension mod with lots of new exploration and adventuring to do! Check out the advancements for how to play the mod!",
-    "authors": [
-        "TelepathicGrunt"
+  "license": "LGPLv3",
+  "icon": "assets/the_bumblezone/the_bumblezone_logo_small.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.telepathicgrunt.the_bumblezone.fabric.BumblezoneFabric"
     ],
-    "contact": {
-        "homepage": "https://www.curseforge.com/minecraft/mc-mods/the-bumblezone",
-        "sources": "https://github.com/TelepathicGrunt/Bumblezone",
-        "issues": "https://github.com/TelepathicGrunt/Bumblezone/issues"
-    },
-
-    "license": "LGPLv3",
-    "icon": "assets/the_bumblezone/the_bumblezone_logo_small.png",
-
-    "environment": "*",
-    "entrypoints": {
-        "main": [
-            "com.telepathicgrunt.the_bumblezone.fabric.BumblezoneFabric"
-        ],
-        "client": [
-            "com.telepathicgrunt.the_bumblezone.fabric.BumblezoneFabricClient"
-        ],
-        "server": [
-            "com.telepathicgrunt.the_bumblezone.fabric.BumblezoneFabricServer"
-        ],
-        "modmenu": [
-            "com.telepathicgrunt.the_bumblezone.configs.fabric.ModMenuCompat"
-        ],
-        "emi": [
-            "com.telepathicgrunt.the_bumblezone.modcompat.EMICompat"
-        ],
-        "rei_client": [
-            "com.telepathicgrunt.the_bumblezone.modcompat.REICompat"
-        ],
-        "jei_mod_plugin": [
-            "com.telepathicgrunt.the_bumblezone.modcompat.JEIIntegration"
-        ]
-    },
-    "mixins": [
-        "the_bumblezone-fabric.mixins.json",
-        "the_bumblezone-common.mixins.json"
+    "client": [
+      "com.telepathicgrunt.the_bumblezone.fabric.BumblezoneFabricClient"
     ],
-    "depends": {
-        "fabricloader": "*",
-        "minecraft": ">=1.21.1",
-        "fabric": ">=0.100.6",
-        "resourcefullib": ">=3.0.11",
-        "midnightlib": "*"
-    },
-    "breaks": {
-        "structureessentials": "=1.21-4.5"
-    }
+    "server": [
+      "com.telepathicgrunt.the_bumblezone.fabric.BumblezoneFabricServer"
+    ],
+    "modmenu": [
+      "com.telepathicgrunt.the_bumblezone.configs.fabric.ModMenuCompat"
+    ],
+    "emi": [
+      "com.telepathicgrunt.the_bumblezone.modcompat.EMICompat"
+    ],
+    "rei_client": [
+      "com.telepathicgrunt.the_bumblezone.modcompat.REICompat"
+    ],
+    "jei_mod_plugin": [
+      "com.telepathicgrunt.the_bumblezone.modcompat.JEIIntegration"
+    ]
+  },
+  "mixins": [
+    "${mod_id}-fabric.mixins.json",
+    "${mod_id}-common.mixins.json"
+  ],
+  "accessWidener": "${mod_id}.accesswidener",
+
+  "depends": {
+    "java": ">=${java_version}",
+    "fabricloader": ">=${fabric_loader_version}",
+    "minecraft": ">=1.21.1",
+    "fabric": ">=0.100.6",
+    "resourcefullib": ">=3.0.11",
+    "midnightlib": "*"
+  },
+  "breaks": {
+      "structureessentials": "=1.21-4.5"
+  }
 }
