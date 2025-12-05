@@ -3,6 +3,8 @@
   "values": [
     "minecraft:wither_rose",
     "minecraft:azure_bluet",
+    "minecraft:open_eyeblossom",
+    "minecraft:closed_eyeblossom",
     {
       "id": "alchemists_garden:cloudelion",
       "required": false
