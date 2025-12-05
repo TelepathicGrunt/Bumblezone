@@ -5,7 +5,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterCommandsEvent;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -18,7 +18,7 @@ import java.util.Collection;
 
 public class DebugDevOpCommands {
     public static void createCommand(BzRegisterCommandsEvent commandEvent) {
-        if (!PlatformHooks.isDevEnvironment()) {
+        if (!PlatformService.INSTANCE.isDevEnvironment()) {
             return;
         }
 

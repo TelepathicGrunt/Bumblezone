@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -79,8 +79,8 @@ public interface AncientWaxBase {
 
     @Nullable
     default BlockState trySwap(ItemStack itemStack, BlockState currentState, BlockPos blockPos, Player playerEntity, InteractionHand playerHand, TagKey<Block> blockIterationTag) {
-        if (!PlatformHooks.isItemAbility(itemStack, ShearsItem.class, "shears_carve") &&
-            !PlatformHooks.isItemAbility(itemStack, SwordItem.class, "sword_dig"))
+        if (!PlatformService.INSTANCE.isItemAbility(itemStack, ShearsItem.class, "shears_carve") &&
+            !PlatformService.INSTANCE.isItemAbility(itemStack, SwordItem.class, "sword_dig"))
         {
             return null;
         }

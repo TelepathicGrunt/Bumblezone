@@ -5,7 +5,7 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -105,12 +105,12 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
     @Override
     public NonNullList<ItemStack> getRemainingItems(CraftingInput craftingInput) {
         NonNullList<ItemStack> remainingInv = NonNullList.withSize(craftingInput.size(), ItemStack.EMPTY);
-        int containerOutput = PlatformHooks.hasCraftingRemainder(this.result) ? this.result.getCount() : 0;
+        int containerOutput = PlatformService.INSTANCE.hasCraftingRemainder(this.result) ? this.result.getCount() : 0;
 
         for(int i = 0; i < remainingInv.size(); ++i) {
             ItemStack itemStack = craftingInput.getItem(i);
-            ItemStack craftingContainer = PlatformHooks.getCraftingRemainder(itemStack);
-            ItemStack recipeContainer = PlatformHooks.getCraftingRemainder(this.result);
+            ItemStack craftingContainer = PlatformService.INSTANCE.getCraftingRemainder(itemStack);
+            ItemStack recipeContainer = PlatformService.INSTANCE.getCraftingRemainder(this.result);
             if (craftingContainer.isEmpty() && HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.containsKey(itemStack.getItem())) {
                 craftingContainer = HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(itemStack.getItem()).getDefaultInstance();
             }

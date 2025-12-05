@@ -4,6 +4,10 @@
 
 Stopped Chorus Flower from appearing in Structure's loot tables.
 
+#### Misc:
+
+Switch the dev build system to use ModDevGradle instead of Architectury. Hopefully no bugs.
+
 
 ### **(V.7.11.6 Changes) (1.21.1 Minecraft)**
 

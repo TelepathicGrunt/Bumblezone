@@ -11,7 +11,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -75,7 +75,7 @@ public class ThronePillarBehavior {
                 newBeeQueen.setPos(Vec3.atCenterOf(queenPos));
                 newBeeQueen.finalizeSpawn(level, level.getCurrentDifficultyAt(newBeeQueen.blockPosition()), MobSpawnType.STRUCTURE, null);
 
-                PlatformHooks.finalizeSpawn(newBeeQueen, level, null, MobSpawnType.STRUCTURE);
+                PlatformService.INSTANCE.finalizeSpawn(newBeeQueen, level, null, MobSpawnType.STRUCTURE);
                 level.addFreshEntity(newBeeQueen);
 
                 level.setBlock(queenPos.above(17), BzFluids.ROYAL_JELLY_FLUID_BLOCK.get().defaultBlockState(), 3);

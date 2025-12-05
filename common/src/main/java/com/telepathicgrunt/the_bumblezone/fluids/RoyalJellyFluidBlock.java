@@ -8,7 +8,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -184,7 +184,7 @@ public class RoyalJellyFluidBlock extends LiquidBlock implements FluidGetter {
     public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
         double verticalSpeedDeltaLimit = 0.01D;
         if (entity instanceof Bee beeEntity && !beeEntity.isDeadOrDying()) {
-            if (PlatformHooks.isEyesInNoFluid(entity)) {
+            if (PlatformService.INSTANCE.isEyesInNoFluid(entity)) {
                 if (beeEntity.getHealth() < beeEntity.getMaxHealth()) {
                     float diff = beeEntity.getMaxHealth() - beeEntity.getHealth();
                     beeEntity.heal(diff);

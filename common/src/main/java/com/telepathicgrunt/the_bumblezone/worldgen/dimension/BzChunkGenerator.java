@@ -6,7 +6,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseChunkAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseGeneratorSettingsAccessor;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -448,7 +448,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
                                 entity.moveTo(finalX, mutableBlockPos.getY(), finalZ, randomSource.nextFloat() * 360.0F, 0.0F);
                                 if (entity instanceof Mob mob) {
-                                    PlatformHooks.finalizeSpawn(mob, serverLevelAccessor, null, MobSpawnType.CHUNK_GENERATION);
+                                    PlatformService.INSTANCE.finalizeSpawn(mob, serverLevelAccessor, null, MobSpawnType.CHUNK_GENERATION);
 
                                     if (mob.checkSpawnObstruction(serverLevelAccessor)) {
                                         spawngroupdata = mob.finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawngroupdata);

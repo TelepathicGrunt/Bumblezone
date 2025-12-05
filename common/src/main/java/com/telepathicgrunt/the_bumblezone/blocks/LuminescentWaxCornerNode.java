@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -61,8 +61,8 @@ public class LuminescentWaxCornerNode extends RotationFacingBlock implements Lum
     @Nullable
     public BlockState tryRotate(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand) {
         if (blockState.getBlock() instanceof LuminescentWaxCornerNode &&
-            (PlatformHooks.isItemAbility(itemStack, ShearsItem.class, "shears_carve") ||
-            PlatformHooks.isItemAbility(itemStack, SwordItem.class, "sword_dig")))
+            (PlatformService.INSTANCE.isItemAbility(itemStack, ShearsItem.class, "shears_carve") ||
+            PlatformService.INSTANCE.isItemAbility(itemStack, SwordItem.class, "sword_dig")))
         {
 
             Direction newDirectProperty = blockState.getValue(FACING);

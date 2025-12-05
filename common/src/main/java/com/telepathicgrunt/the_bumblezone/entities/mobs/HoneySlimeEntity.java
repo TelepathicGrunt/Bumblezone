@@ -16,7 +16,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -220,7 +220,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
                }
             }
 
-            if (PlatformHooks.shouldMobSplit(this, children)) {
+            if (PlatformService.INSTANCE.shouldMobSplit(this, children)) {
                children.forEach(this.level()::addFreshEntity);
             }
          }

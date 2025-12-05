@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -83,7 +83,7 @@ public final class BeeDedicatedSpawning {
             boolean isTooFar = true;
             
             for (ServerPlayer serverPlayer : serverPlayers) {
-                if (PlatformHooks.isFakePlayer(serverPlayer)) {
+                if (PlatformService.INSTANCE.isFakePlayer(serverPlayer)) {
                     continue;
                 }
 
@@ -103,7 +103,7 @@ public final class BeeDedicatedSpawning {
         int maxWildBeeLimit = beesPerPlayer * serverPlayers.size();
         if (allWildBees.size() <= maxWildBeeLimit) {
             for (ServerPlayer serverPlayer : serverPlayers) {
-                if (PlatformHooks.isFakePlayer(serverPlayer)) {
+                if (PlatformService.INSTANCE.isFakePlayer(serverPlayer)) {
                     continue;
                 }
 
@@ -129,7 +129,7 @@ public final class BeeDedicatedSpawning {
                     newBee.setSpeed(0);
                     newBee.finalizeSpawn(world, world.getCurrentDifficultyAt(newBee.blockPosition()), MobSpawnType.NATURAL, null);
 
-                    PlatformHooks.finalizeSpawn(newBee, world, null, MobSpawnType.NATURAL);
+                    PlatformService.INSTANCE.finalizeSpawn(newBee, world, null, MobSpawnType.NATURAL);
                     world.addFreshEntity(newBee);
                     entityCountChange++;
                 }

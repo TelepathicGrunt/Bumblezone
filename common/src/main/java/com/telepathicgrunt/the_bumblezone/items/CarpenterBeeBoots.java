@@ -9,7 +9,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
@@ -111,7 +111,7 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
                         BlockEntity entity = level.getBlockEntity(belowBlockPos);
 
                         // Handle if the event is canceled
-                        if (PlatformHooks.sendBlockBreakEvent(level, belowBlockPos, state, entity, player)) {
+                        if (PlatformService.INSTANCE.sendBlockBreakEvent(level, belowBlockPos, state, entity, player)) {
                             return;
                         }
 
@@ -139,7 +139,7 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
                                     BzCriterias.CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER.get().trigger(serverPlayer);
                                 }
                             }
-                            PlatformHooks.afterBlockBreakEvent(level, belowBlockPos, state, entity, player);
+                            PlatformService.INSTANCE.afterBlockBreakEvent(level, belowBlockPos, state, entity, player);
                         }
 
                         lastSentState = -1;

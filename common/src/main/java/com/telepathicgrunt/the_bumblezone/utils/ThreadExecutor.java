@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.utils;
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzServerGoingToStopEvent;
-import dev.architectury.injectables.annotations.ExpectPlatform;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -15,7 +15,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.phys.Vec3;
-import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -53,15 +52,10 @@ public class ThreadExecutor {
 
                     @Override
                     public Thread newThread(Runnable r) {
-                        return createServerThread(r, namePrefix + threadNum.getAndIncrement());
+                        return PlatformService.INSTANCE.createServerThread(r, namePrefix + threadNum.getAndIncrement());
                     }
                 }
         );
-    }
-
-    @ExpectPlatform
-    public static Thread createServerThread(Runnable runnable, String name) {
-        throw new NotImplementedException("ThreadExecutor#createServerThread");
     }
 
     private static void shutdownExecutorService() {

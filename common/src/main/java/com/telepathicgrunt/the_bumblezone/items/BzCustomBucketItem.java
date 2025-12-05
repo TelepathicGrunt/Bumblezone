@@ -8,8 +8,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
-import dev.architectury.injectables.annotations.PlatformOnly;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -56,7 +55,7 @@ public class BzCustomBucketItem extends BzBucketItem {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, InteractionHand hand) {
-        InteractionResultHolder<ItemStack> specialActionResult = PlatformHooks.performItemUse(world, playerEntity, hand, this.fluid, this);
+        InteractionResultHolder<ItemStack> specialActionResult = PlatformService.INSTANCE.performItemUse(world, playerEntity, hand, this.fluid, this);
         if (specialActionResult.getResult() != InteractionResult.PASS) {
             checkAndGrantAdvancement(world, playerEntity, specialActionResult);
             return specialActionResult;
@@ -107,7 +106,6 @@ public class BzCustomBucketItem extends BzBucketItem {
     }
 
     // Override and redirect neoforge patched method to our own.
-    @PlatformOnly({"neoforge"})
     public boolean emptyContents(@Nullable Player player, Level world, BlockPos pos, @Nullable BlockHitResult hitResult, @Nullable ItemStack container) {
         return emptyContents(player, world, pos, hitResult);
     }

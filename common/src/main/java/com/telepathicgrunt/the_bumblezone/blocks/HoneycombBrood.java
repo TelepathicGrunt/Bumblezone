@@ -14,7 +14,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -346,7 +346,7 @@ public class HoneycombBrood extends ProperFacingBlock {
         entity.moveTo(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, beeMob.getRandom().nextFloat() * 360.0F, 0.0F);
         entity.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(BlockPos.containing(beeMob.position())), MobSpawnType.TRIGGERED, null);
 
-        PlatformHooks.finalizeSpawn(entity, (ServerLevelAccessor) world, null, MobSpawnType.SPAWNER);
+        PlatformService.INSTANCE.finalizeSpawn(entity, (ServerLevelAccessor) world, null, MobSpawnType.SPAWNER);
         world.addFreshEntity(entity);
     }
 

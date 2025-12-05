@@ -1,19 +1,25 @@
-package com.telepathicgrunt.the_bumblezone.utils.fabric;
+package com.telepathicgrunt.the_bumblezone.services.fabric;
 
 import com.mojang.authlib.GameProfile;
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
-import com.telepathicgrunt.the_bumblezone.mixin.fabric.entity.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.fabric.item.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.items.ItemAccessor;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.fabric.RestrictedPortalsCompat;
+import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
+import com.telepathicgrunt.the_bumblezone.modules.base.Module;
+import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
+import com.telepathicgrunt.the_bumblezone.utils.fabric.FabricModInfo;
 import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.impl.attachment.AttachmentRegistryImpl;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -37,6 +43,9 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -54,13 +63,14 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Contract;
 
 import java.util.List;
+import java.util.Optional;
 
-public class PlatformHooksImpl {
+public class FabricPlatformService implements PlatformService {
 
-    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, int clientTrackingRange, int updateInterval, String buildName) {
+    @Override
+    public <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, int clientTrackingRange, int updateInterval, String buildName) {
         return EntityType.Builder
                 .of(entityFactory, category)
                 .sized(size, size)
@@ -68,8 +78,9 @@ public class PlatformHooksImpl {
                 .updateInterval(updateInterval)
                 .build();
     }
-
-    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, int clientTrackingRange, int updateInterval, String buildName) {
+    
+    @Override
+    public <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, int clientTrackingRange, int updateInterval, String buildName) {
         return EntityType.Builder
                 .of(entityFactory, category)
                 .sized(xzSize, ySize)
@@ -78,7 +89,8 @@ public class PlatformHooksImpl {
                 .build();
     }
 
-    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, float eyeHeight, int clientTrackingRange, int updateInterval, String buildName) {
+    @Override
+    public <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, float eyeHeight, int clientTrackingRange, int updateInterval, String buildName) {
         return EntityType.Builder
                 .of(entityFactory, category)
                 .sized(xzSize, ySize)
@@ -87,62 +99,68 @@ public class PlatformHooksImpl {
                 .updateInterval(updateInterval)
                 .build();
     }
+    
+    @Override
+    public ModInfo getModInfo(String modid) {
+        return getModInfo(modid, false);
+    }
 
-    public static ModInfo getModInfo(String modid, boolean qualifierIsVersion) {
+    @Override
+    public ModInfo getModInfo(String modid, boolean qualifierIsVersion) {
         return FabricLoader.getInstance()
                 .getModContainer(modid)
                 .map(container -> new FabricModInfo(container.getMetadata()))
                 .orElse(null);
     }
 
-    @Contract(pure = true)
-    public static Fluid getBucketFluid(BucketItem bucket) {
+    @Override
+    public Fluid getBucketFluid(BucketItem bucket) {
         Fluid fluid = ((BucketItemAccessor) bucket).bumblezone$getContents();
         return fluid == null ? Fluids.EMPTY : fluid;
     }
 
-    @Contract(pure = true)
-    public static boolean hasCraftingRemainder(ItemStack stack) {
+    @Override
+    public boolean hasCraftingRemainder(ItemStack stack) {
         return stack.getItem().hasCraftingRemainingItem();
     }
 
-    @Contract(pure = true)
-    public static ItemStack getCraftingRemainder(ItemStack stack) {
+    @Override
+    public ItemStack getCraftingRemainder(ItemStack stack) {
         final Item item = stack.getItem().getCraftingRemainingItem();
         return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
 
-    @Contract(pure = true)
-    public static int getXpDrop(LivingEntity entity, Player attackingPlayer, int xp) {
+    @Override
+    public int getXpDrop(LivingEntity entity, Player attackingPlayer, int xp) {
         return xp;
     }
 
-    @Contract(pure = true)
-    public static boolean isModLoaded(String modid) {
+    @Override
+    public boolean isModLoaded(String modid) {
         return FabricLoader.getInstance().isModLoaded(modid);
     }
 
-    @Contract(pure = true)
-    public static boolean isNeoForge() {
+    @Override
+    public boolean isNeoForge() {
         return false;
     }
 
-    @Contract(pure = true)
-    public static boolean isFakePlayer(ServerPlayer player) {
+    @Override
+    public boolean isFakePlayer(ServerPlayer player) {
         //Crude way of doing it but it should work for almost all cases.
         return player != null && player.getClass() != ServerPlayer.class;
     }
 
-    @Contract(pure = true)
-    public static ServerPlayer getFakePlayer(ServerLevel level, GameProfile gameProfile) {
+    @Override
+    public ServerPlayer getFakePlayer(ServerLevel level, GameProfile gameProfile) {
         if (gameProfile == null) {
             return FakePlayer.get(level);
         }
         return FakePlayer.get(level, gameProfile);
     }
 
-    @Contract(pure = true)
-    public static SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason) {
+    @Override
+    public SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason) {
         return entity.finalizeSpawn(
                 world,
                 world.getCurrentDifficultyAt(entity.blockPosition()),
@@ -150,7 +168,8 @@ public class PlatformHooksImpl {
                 spawnGroupData);
     }
 
-    public static boolean sendBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
+    @Override
+    public boolean sendBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
         boolean result = PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(level, player, pos, state, entity);
         if (!result) {
             PlayerBlockBreakEvents.CANCELED.invoker().onBlockBreakCanceled(level, player, pos, state, entity);
@@ -158,20 +177,24 @@ public class PlatformHooksImpl {
         }
         return false;
     }
-
-    public static void afterBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
+    
+    @Override
+    public void afterBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
         PlayerBlockBreakEvents.AFTER.invoker().afterBlockBreak(level, player, pos, state, entity);
     }
-
-    public static double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidData... fluids) {
+    
+    @Override
+    public double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidData... fluids) {
         return entity.getFluidHeight(fallback);
     }
-
-    public static boolean isEyesInNoFluid(Entity entity) {
-        return ((EntityAccessor)entity).bumblezone$getFluidOnEyes().isEmpty();
+    
+    @Override
+    public boolean isEyesInNoFluid(Entity entity) {
+        return ((com.telepathicgrunt.the_bumblezone.mixin.fabric.entity.EntityAccessor)entity).bumblezone$getFluidOnEyes().isEmpty();
     }
-
-    public static  InteractionResultHolder<ItemStack> performItemUse(Level world, Player user, InteractionHand hand, Fluid fluid, BzCustomBucketItem bzCustomBucketItem) {
+    
+    @Override
+    public InteractionResultHolder<ItemStack> performItemUse(Level world, Player user, InteractionHand hand, Fluid fluid, BzCustomBucketItem bzCustomBucketItem) {
         ItemStack itemStack = user.getItemInHand(hand);
         BlockHitResult blockHitResult = ItemAccessor.bumblezone$callGetPlayerPOVHitResult(world, user, fluid == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
         if (blockHitResult.getType() == HitResult.Type.MISS) {
@@ -228,8 +251,9 @@ public class PlatformHooksImpl {
             }
         }
     }
-
-    public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
+    
+    @Override
+    public boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
         if (entity instanceof Player player) {
             if (!player.mayInteract(level, pos)) {
                 return false;
@@ -243,20 +267,23 @@ public class PlatformHooksImpl {
         }
         return true;
     }
-
-    public static boolean isDimensionAllowed(ServerPlayer serverPlayer, ResourceKey<Level> dimension) {
+    
+    @Override
+    public boolean isDimensionAllowed(ServerPlayer serverPlayer, ResourceKey<Level> dimension) {
         if (ModChecker.restrictedPortalsPresent) {
             return !RestrictedPortalsCompat.isDimensionDisallowed(serverPlayer, dimension);
         }
 
         return true;
     }
-
-    public static boolean isItemAbility(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
+    
+    @Override
+    public boolean isItemAbility(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
         return targetBackupClass != null && targetBackupClass.isInstance(stack.getItem());
     }
-
-    public static void disableFlight(Player player) {
+    
+    @Override
+    public void disableFlight(Player player) {
         player.getAbilities().flying = false;
 
         if (player.level().isClientSide()) {
@@ -266,23 +293,29 @@ public class PlatformHooksImpl {
         // Sync on server only
         player.onUpdateAbilities();
     }
-
-    public static boolean isDevEnvironment() {
+    
+    @Override
+    public boolean isDevEnvironment() {
         return FabricLoader.getInstance().isDevelopmentEnvironment();
     }
-
-    public static boolean isClientEnvironment() {
+    
+    @Override
+    public boolean isClientEnvironment() {
         return FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT;
     }
-
-    public static boolean shouldMobSplit(Mob parent, List<Mob> children) { return true; }
-
-    public static Fluid getBucketItemFluid(BucketItem stack) {
+    
+    @Override
+    public boolean shouldMobSplit(Mob parent, List<Mob> children) { return true; }
+    
+    @Override
+    public Fluid getBucketItemFluid(BucketItem stack) {
         return ((BucketItemAccessor)stack).bumblezone$getContents();
     }
 
     public static MinecraftServer currentMinecraftServer = null;
-    public static RegistryAccess getCurrentRegistryAccess() {
+
+    @Override
+    public RegistryAccess getCurrentRegistryAccess() {
         try {
             if (currentMinecraftServer == null || !currentMinecraftServer.isSameThread()) {
                 return GeneralUtilsClient.getClientRegistryAccess();
@@ -291,5 +324,22 @@ public class PlatformHooksImpl {
         catch (Throwable ignored) {}
 
         return currentMinecraftServer.registryAccess();
+    }
+
+    @Override
+    public <T extends Module<T>> Optional<T> getModule(Entity entity, ModuleHolder<T> moduleHolder) {
+        AttachmentType<T> attachmentType = (AttachmentType<T>) AttachmentRegistryImpl.get(moduleHolder.id());
+        if (attachmentType != null) {
+            if (!entity.hasAttached(attachmentType)) {
+                entity.setAttached(attachmentType, moduleHolder.factory().get());
+            }
+            return Optional.ofNullable(entity.getAttached(attachmentType));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Thread createServerThread(Runnable runnable, String name) {
+        return new Thread(runnable, name);
     }
 }

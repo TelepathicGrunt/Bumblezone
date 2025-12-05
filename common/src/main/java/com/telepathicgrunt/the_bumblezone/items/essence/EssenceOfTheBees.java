@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
-import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.particles.ParticleTypes;
@@ -129,11 +129,11 @@ public class EssenceOfTheBees extends Item {
     }
 
     public static void setEssence(ServerPlayer serverPlayer, boolean newValue) {
-        ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> capability.isBeeEssenced = newValue);
+        PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> capability.isBeeEssenced = newValue);
     }
 
     public static boolean hasEssence(ServerPlayer serverPlayer) {
-        return ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA)
+        return PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA)
                 .map(c -> c.isBeeEssenced)
                 .orElse(false);
     }

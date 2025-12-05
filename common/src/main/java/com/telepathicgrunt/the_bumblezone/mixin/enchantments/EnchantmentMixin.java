@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.enchantments;
 
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.TriState;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.ItemStack;
@@ -39,7 +39,7 @@ public class EnchantmentMixin {
     @Unique
     private void bumblezone$checkEnchantability(ItemStack itemStack, CallbackInfoReturnable<Boolean> cir) {
         if (itemStack.getItem() instanceof ItemExtension itemExtension) {
-            PlatformHooks.getCurrentRegistryAccess().registry(Registries.ENCHANTMENT).ifPresent(enchantmentRegistry -> {
+            PlatformService.INSTANCE.getCurrentRegistryAccess().registry(Registries.ENCHANTMENT).ifPresent(enchantmentRegistry -> {
                 enchantmentRegistry.getResourceKey((Enchantment) (Object) this).ifPresent(resourceKey -> {
                     TriState result = itemExtension.bz$canEnchant(itemStack, enchantmentRegistry.getHolderOrThrow(resourceKey));
                     if (result != TriState.PASS) {

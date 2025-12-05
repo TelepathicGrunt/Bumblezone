@@ -9,7 +9,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -128,7 +128,7 @@ public class HeavyAir extends Block {
             }
 
             if (player.getAbilities().flying) {
-                PlatformHooks.disableFlight(player);
+                PlatformService.INSTANCE.disableFlight(player);
             }
 
             if (entity instanceof TemporaryPlayerData temporaryPlayerData) {
