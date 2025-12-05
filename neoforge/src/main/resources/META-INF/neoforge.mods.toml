@@ -26,6 +26,5 @@ sourcesUrl="${sources_url}"
     { modId = "neoforge", type = "required", versionRange = "*", ordering = "NONE", side = "BOTH" },
     { modId = "minecraft", type = "required", versionRange = "[1.21.5,1.22)", ordering = "NONE", side = "BOTH" },
     { modId = "resourcefullib", type = "required", versionRange = "[3.0.11,)", ordering = "NONE", side = "BOTH" },
-    { modId = "tombstone", type = "optional", versionRange = "*", ordering = "BEFORE" },
     { modId = "structureessentials", type = "incompatible", versionRange = "[4.5]", reason="Structure Essentials v4.5 completely destroys Bumblezone's dimension. Downgrade or upgrade Structure Essentials off of v4.5." },
 ]
