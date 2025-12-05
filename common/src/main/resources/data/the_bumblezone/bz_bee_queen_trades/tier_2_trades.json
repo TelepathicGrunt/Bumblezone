@@ -149,6 +149,34 @@
       "required": false
     },
     {
+      "id": "extended_industrialization:crystallized_honey",
+      "required": false
+    },
+    {
+      "id": "extended_industrialization:crystallized_honey",
+      "required": false
+    },
+    {
+      "id": "occultism:cursed_honey",
+      "required": false
+    },
+    {
+      "id": "barbequesdelight:honey_mustard_sauce",
+      "required": false
+    },
+    {
+      "id": "rusticdelight:honey_coffee",
+      "required": false
+    },
+    {
+      "id": "rusticdelight:honey_pancake",
+      "required": false
+    },
+    {
+      "id": "rusticdelight:honey_pancakes",
+      "required": false
+    },
+    {
       "id": "windswept:wild_berry_juice",
       "required": false
     },

@@ -10,6 +10,14 @@
     {
       "id": "minecraft:cookie",
       "required": true
+    },
+    {
+      "id": "#c:foods/cookie",
+      "required": false
+    },
+    {
+      "id": "arsdelight:source_berry_cookie",
+      "required": false
     }
   ],
   "possible_rewards": [
@@ -359,6 +367,105 @@
     {
       "id": "yuushya:christmas_hat",
       "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "mcwholidays:santa_hat_wall_deco",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "mcwholidays:big_green_present",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "mcwholidays:big_red_present",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "mcwholidays:big_blue_present",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "mcwholidays:big_dark_blue_present",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "mcwholidays:big_yellow_present",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "mcwholidays:big_cyan_present",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "mcwholidays:big_purple_present",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "mcwholidays:big_magenta_present",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "mcwholidays:candy_cane",
+        "count": 4
+      },
+      "xp_reward": 0,
+      "weight": 2,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "brewery:gingerbread",
+        "count": 1
+      },
       "xp_reward": 0,
       "weight": 1,
       "required": false

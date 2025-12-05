@@ -8,6 +8,14 @@
     "#the_bumblezone:buckets/honey",
     "#the_bumblezone:buckets/royal_jelly",
     {
+      "id": "barbequesdelight:honey_mustard_sauce",
+      "required": false
+    },
+    {
+      "id": "beachparty:honey_cocktail",
+      "required": false
+    },
+    {
       "id": "bk:royal_jelly",
       "required": false
     },
@@ -20,7 +28,7 @@
       "required": false
     },
     {
-      "id": "buzzier_bees:glazed_porkchop",
+      "id": "buzzier_bees:honey_porkchop",
       "required": false
     },
     {
@@ -60,6 +68,10 @@
       "required": false
     },
     {
+      "id": "extended_industrialization:crystallized_honey",
+      "required": false
+    },
+    {
       "id": "farmersdelight:honey_cookie",
       "required": false
     },
@@ -89,6 +101,18 @@
     },
     {
       "id": "forestry:honeyed_slice",
+      "required": false
+    },
+    {
+      "id": "moredelight:toast_with_honey",
+      "required": false
+    },
+    {
+      "id": "occultism:cursed_honey",
+      "required": false
+    },
+    {
+      "id": "occultism:sweet_honey_heart",
       "required": false
     },
     {
@@ -133,6 +157,18 @@
     },
     {
       "id": "productivebees:sugarbag_honeycomb",
+      "required": false
+    },
+    {
+      "id": "rusticdelight:honey_coffee",
+      "required": false
+    },
+    {
+      "id": "rusticdelight:honey_pancake",
+      "required": false
+    },
+    {
+      "id": "rusticdelight:honey_pancakes",
       "required": false
     },
     {

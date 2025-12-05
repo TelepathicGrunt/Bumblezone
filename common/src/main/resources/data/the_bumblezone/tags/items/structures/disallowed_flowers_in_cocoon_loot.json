@@ -162,6 +162,14 @@
       "required": false
     },
     {
+      "id": "eternal_starlight:withered_starlight_flower",
+      "required": false
+    },
+    {
+      "id": "eternal_starlight:withered_desert_amethysia",
+      "required": false
+    },
+    {
       "id": "expandeddelight:wild_asparagus",
       "required": false
     },

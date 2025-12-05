@@ -10,6 +10,10 @@
       "required": false
     },
     {
+      "id": "eternal_starlight:nest",
+      "required": false
+    },
+    {
       "id": "llamarama:flight_of_the_bumble_llama",
       "required": false
     },

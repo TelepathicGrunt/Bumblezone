@@ -1,18 +1,38 @@
 ### **(V.7.11.6 Changes) (1.21.1 Minecraft)**
 
+#### Blocks:
+
+Crystalline Flower can be placed on a few more mod's crystal-looking full blocks.
+
+#### Entities:
+
+Bee Queen takes/gives a bit more modded items now, especially the holiday specific trades.
+
+Made some more modded honey foods be feedable to bees.
+
 #### Structures:
 
 Stopped Chorus Flower and a few other modded non-flowers from appearing in Structure's loot tables for the random flower entry.
 
-#### Mod Compat:
+Disallow some non-colorful modded flowers/modded non-flowers from showing in Hanging Gardens structure.
 
-Crystalline Flower can be placed on a few more mod's crystal-looking full blocks.
+Eternal Starlight's Nest Music Disc can now sometimes be found in Dance Floor structure and Gazebuzz Cluster structure.
+
+#### Items:
 
 Throwing Pollen Puff at Variant and Ventures's Murk, Verdant, and Thicket will spawn Moss Carpet nearby sometimes.
 
 Throwing Pollen Puff at Vanillabackport's Creaking will spawn Pale Moss Carpet and Open Eyeblossoms nearby sometimes.
 
-Disallow some non-colorful modded flowers from showing in Hanging Gardens structure.
+Wearing Plushie Buddies's Plushie Bee on head now will count towards Bumblezone armor set bonus when Bumblezone armor is also equipped.
+
+#### Misc:
+
+Switch the dev build system to use ModDevGradle instead of Architectury. Hopefully no bugs.
+
+#### Modded Compat:
+
+Added missing icon for Bumbling Beepartments biome in Emi Ores.
 
 
 ### **(V.7.11.5 Changes) (1.21.1 Minecraft)**

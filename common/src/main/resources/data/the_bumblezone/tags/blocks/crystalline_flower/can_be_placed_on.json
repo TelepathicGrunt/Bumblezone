@@ -125,6 +125,18 @@
       "required": false
     },
     {
+      "id": "cataclysm:void_lantern_block",
+      "required": false
+    },
+    {
+      "id": "cataclysm:void_crystal",
+      "required": false
+    },
+    {
+      "id": "cataclysm:void_stone",
+      "required": false
+    },
+    {
       "id": "cavesanddepths:chiseled_amethyst_block",
       "required": false
     },
@@ -158,6 +170,42 @@
     },
     {
       "id": "diamethysts:budding_diamethyst_block",
+      "required": false
+    },
+    {
+      "id": "eternal_starlight:red_starlight_crystal_block",
+      "required": false
+    },
+    {
+      "id": "eternal_starlight:blue_starlight_crystal_block",
+      "required": false
+    },
+    {
+      "id": "eternal_starlight:red_crystal_moss_block",
+      "required": false
+    },
+    {
+      "id": "eternal_starlight:blue_crystal_moss_block",
+      "required": false
+    },
+    {
+      "id": "eternal_starlight:raw_aethersent_block",
+      "required": false
+    },
+    {
+      "id": "eternal_starlight:aethersent_block",
+      "required": false
+    },
+    {
+      "id": "eternal_starlight:glacite",
+      "required": false
+    },
+    {
+      "id": "eternal_starlight:glacite_block",
+      "required": false
+    },
+    {
+      "id": "eternal_starlight:starlit_diamond_block",
       "required": false
     },
     {
@@ -389,6 +437,14 @@
       "required": false
     },
     {
+      "id": "justdirethings:time_crystal_block",
+      "required": false
+    },
+    {
+      "id": "justdirethings:time_crystal_budding_block",
+      "required": false
+    },
+    {
       "id": "nature_arise:topaz_block",
       "required": false
     },
@@ -518,6 +574,14 @@
     },
     {
       "id": "quark:waxed_black_corundum",
+      "required": false
+    },
+    {
+      "id": "rubinated_nether:molten_ruby_block",
+      "required": false
+    },
+    {
+      "id": "rubinated_nether:ruby_block",
       "required": false
     },
     {

@@ -161,6 +161,10 @@
       "required": false
     },
     {
+      "id": "hazennstuff:wisewood_leaves",
+      "required": false
+    },
+    {
       "id": "minestuck:frost_leaves",
       "required": false
     },
@@ -358,6 +362,14 @@
     },
     {
       "id": "various_update:cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "vinery:dark_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "vinery:apple_leaves",
       "required": false
     }
   ]

@@ -85,6 +85,10 @@
       "required": false
     },
     {
+      "id": "occultism:sweet_honey_heart",
+      "required": false
+    },
+    {
       "id": "pamhc2foodextended:honeyglazedcarrotsitem",
       "required": false
     },
