@@ -13,7 +13,7 @@
     },
     {
       "id": "#c:foods/cookie",
-      "required": true
+      "required": false
     },
     {
       "id": "arsdelight:source_berry_cookie",
