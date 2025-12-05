@@ -29,7 +29,7 @@ public class StateFocusedBrushableBlockEntity extends BrushableBlockEntity {
     }
 
     @Override
-    protected void brushingCompleted(Player player) {
+    public void brushingCompleted(Player player) {
         if (this.level == null || this.level.getServer() == null) {
             return;
         }

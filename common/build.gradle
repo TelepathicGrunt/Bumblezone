@@ -29,17 +29,18 @@ dependencies {
     compileOnly "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"
     annotationProcessor "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"
 
-    runtimeOnly(compileOnly("earth.terrarium.athena:athena-common-${rootProject.athena}")) { transitive = false  }
+    compileOnly("earth.terrarium.athena:athena-neoforge-${rootProject.athena}") { transitive = false  }
     compileOnly("com.teamresourceful.resourcefullib:resourcefullib-neoforge-${rootProject.resourcefullib}") { transitive = false  }
 
     // COMPAT
     compileOnly("mezz.jei:jei-${project.jei_mc}-forge-api:${project.jei}") { transitive = false  }
     compileOnly("mezz.jei:jei-${project.jei_mc}-common-api:${project.jei}") { transitive = false  }
-    compileOnly("dev.emi:emi-xplat-intermediary:${project.emi}:api") { transitive = false  }
-    compileOnly("me.shedaniel:RoughlyEnoughItems-api:${project.rei}") { transitive = false  }
-    compileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}") { transitive = false  }
-    compileOnly("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config}") { transitive = false  }
-    compileOnly("noobanidus.mods.lootr:lootr-common:${project.lootr_version}") { transitive = false  }
+    compileOnly("dev.emi:emi-neoforge:${project.emi}:api") { transitive = false  }
+    compileOnly("me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei}") { transitive = false  }
+    compileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}")
+    compileOnly("dev.architectury:architectury-neoforge:${project.architectury}") { transitive = false  }
+    compileOnly("me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config}") { transitive = false  }
+    compileOnly("noobanidus.mods.lootr:lootr-neoforge:${project.lootr_version}") { transitive = false  }
     compileOnly("maven.modrinth:projectile-damage-attribute:${project.projectile_damage_attribute}-forge") { transitive = false  }
 }
 

@@ -11,14 +11,14 @@ import net.minecraft.client.KeyMapping;
 import org.lwjgl.glfw.GLFW;
 
 public class BeehemothControls {
-    public static final KeyMapping KEY_BIND_BEEHEMOTH_DOWN = ClientPlatformService.INSTANCE.INSTANCE.createKey(
+    public static final KeyMapping KEY_BIND_BEEHEMOTH_DOWN = ClientPlatformService.INSTANCE.createKey(
     "key." + Bumblezone.MODID + ".beehemoth_down",
             BeehemothKeyContext.BEEHEMOTH_KEY_CONTEXT,
             InputConstants.Type.KEYSYM.getOrCreate(GLFW.GLFW_KEY_CAPS_LOCK),
             "key.categories." + Bumblezone.MODID
     );
 
-    public static final KeyMapping KEY_BIND_BEEHEMOTH_UP = ClientPlatformService.INSTANCE.INSTANCE.createKey(
+    public static final KeyMapping KEY_BIND_BEEHEMOTH_UP = ClientPlatformService.INSTANCE.createKey(
     "key." + Bumblezone.MODID + ".beehemoth_up",
             BeehemothKeyContext.BEEHEMOTH_KEY_CONTEXT,
             InputConstants.Type.KEYSYM.getOrCreate(GLFW.GLFW_KEY_SPACE),

@@ -155,7 +155,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     @Override
-    protected void doCreateBiomes(Blender blender, RandomState randomState, StructureManager structureManager, ChunkAccess chunkAccess) {
+    public void doCreateBiomes(Blender blender, RandomState randomState, StructureManager structureManager, ChunkAccess chunkAccess) {
         NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk((chunkAccess1) -> this.createNoiseChunk(chunkAccess1, structureManager, blender, randomState));
         Climate.Sampler sampler = ((NoiseChunkExtension) noiseChunk).the_bumblezone$getCachedClimateSampler();
         BiomeResolver biomeresolver = getBiomeResolver(((NoiseChunkExtension) noiseChunk).the_bumblezone$getBiomeSource());
@@ -167,7 +167,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     @Override
-    protected NoiseChunk createNoiseChunk(ChunkAccess chunkAccess, StructureManager structureManager, Blender blender, RandomState randomState) {
+    public NoiseChunk createNoiseChunk(ChunkAccess chunkAccess, StructureManager structureManager, Blender blender, RandomState randomState) {
         NoiseChunk noiseChunk = super.createNoiseChunk(chunkAccess, structureManager, blender, randomState);
         postInitNoiseChunk(randomState, noiseChunk);
         return noiseChunk;
@@ -289,7 +289,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     public void applyCarvers(WorldGenRegion worldGenRegion, long seed, RandomState randomState, BiomeManager biomeManager, StructureManager structureManager, ChunkAccess chunkAccess, GenerationStep.Carving carving) {}
 
     @Override
-    protected ChunkAccess doFill(Blender blender, StructureManager structureManager, RandomState randomState, ChunkAccess chunkAccess, int x, int z) {
+    public ChunkAccess doFill(Blender blender, StructureManager structureManager, RandomState randomState, ChunkAccess chunkAccess, int x, int z) {
         NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk((chunkAccess1) -> this.createNoiseChunk(chunkAccess1, structureManager, blender, randomState));
         Heightmap heightmap = chunkAccess.getOrCreateHeightmapUnprimed(Heightmap.Types.OCEAN_FLOOR_WG);
         Heightmap heightmap1 = chunkAccess.getOrCreateHeightmapUnprimed(Heightmap.Types.WORLD_SURFACE_WG);
