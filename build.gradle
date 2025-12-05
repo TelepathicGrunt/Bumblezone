@@ -81,6 +81,16 @@ allprojects {
                 includeGroupAndSubgroups("me.shedaniel")
             }
         }
+        exclusiveContent {
+            forRepository {
+                maven {
+                    url = "https://maven.architectury.dev/"
+                }
+            }
+            filter {
+                includeGroupAndSubgroups("dev.architectury")
+            }
+        }
     }
 
     tasks.register('buildAndRelease') {
