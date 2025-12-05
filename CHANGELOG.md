@@ -26,6 +26,8 @@ Throwing Pollen Puff at Vanillabackport's Creaking will spawn Pale Moss Carpet a
 
 Wearing Plushie Buddies's Plushie Bee on head now will count towards Bumblezone armor set bonus when Bumblezone armor is also equipped.
 
+Slightly adjusted the look of one Bumblezone chestplate.
+
 #### Modded Compat:
 
 Added missing icon for Bumbling Beepartments biome in Emi Ores.
