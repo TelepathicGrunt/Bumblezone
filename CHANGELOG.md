@@ -14,7 +14,7 @@ Crystalline Flower can be placed on a few more mod's crystal-looking full blocks
 
 Throwing Pollen Puff at Variant and Ventures's Murk, Verdant, and Thicket will spawn Moss Carpet nearby sometimes.
 
-Throwing Pollen Puff at Vanillabackport's Creaking will spawn Pale Moss Carpet nearby sometimes.
+Throwing Pollen Puff at Vanillabackport's Creaking will spawn Pale Moss Carpet and Open Eyeblossoms nearby sometimes.
 
 
 ### **(V.7.11.6 Changes) (1.21.1 Minecraft)**
