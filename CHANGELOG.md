@@ -1,11 +1,28 @@
-### **(V.7.9.6 Changes) (1.20.1 Minecraft)**
+### **(V.7.11.7 Changes) (1.20.1 Minecraft)**
 
 #### Structures:
 
-Stopped Chorus Flower from appearing in Structure's loot tables.
+Stopped Chorus Flower and a few other modded non-flowers from appearing in Structure's loot tables for the random flower entry.
+
+Switch the dev build system to use ModDevGradle instead of Architectury. Hopefully no bugs.
+
+#### Mod Compat:
+
+Crystalline Flower can be placed on a few more mod's crystal-looking full blocks.
+
+Throwing Pollen Puff at Variant and Ventures's Murk, Verdant, and Thicket will spawn Moss Carpet nearby sometimes.
+
+Throwing Pollen Puff at Vanillabackport's Creaking will spawn Pale Moss Carpet nearby sometimes.
 
 
-### **(V.7.9.5 Changes) (1.20.1 Minecraft)**
+### **(V.7.11.6 Changes) (1.21.1 Minecraft)**
+
+#### Entities:
+
+Fixed `beehemothSpeed` config value not being read properly by clients connected to a server that has a changed value.
+
+
+### **(V.7.11.5 Changes) (1.21.1 Minecraft)**
 
 #### Structures:
 

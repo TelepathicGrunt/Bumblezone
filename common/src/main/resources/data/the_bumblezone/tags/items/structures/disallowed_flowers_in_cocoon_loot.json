@@ -1,9 +1,128 @@
 {
   "values": [
+    "minecraft:short_grass",
+    "minecraft:fern",
     "minecraft:chorus_flower",
+    "minecraft:nether_wart",
     "minecraft:wither_rose",
     {
       "id": "betterarcheology:growth_totem",
+      "required": false
+    },
+    {
+      "id": "betterend:mossy_glowshroom_fur",
+      "required": false
+    },
+    {
+      "id": "betterend:lucernia_outer_leaves",
+      "required": false
+    },
+    {
+      "id": "betterend:cave_bush",
+      "required": false
+    },
+    {
+      "id": "betterend:tenanea_leaves",
+      "required": false
+    },
+    {
+      "id": "betterend:dragon_tree_leaves",
+      "required": false
+    },
+    {
+      "id": "betterend:tenanea_outer_leaves",
+      "required": false
+    },
+    {
+      "id": "betterend:lucernia_leaves",
+      "required": false
+    },
+    {
+      "id": "betterend:amaranita_fur",
+      "required": false
+    },
+    {
+      "id": "betterend:helix_tree_leaves",
+      "required": false
+    },
+    {
+      "id": "betterend:glowing_pillar_leaves",
+      "required": false
+    },
+    {
+      "id": "betterend:pythadendron_leaves",
+      "required": false
+    },
+    {
+      "id": "betterend:blue_vine_fur",
+      "required": false
+    },
+    {
+      "id": "betterend:lacugrove_leaves",
+      "required": false
+    },
+    {
+      "id": "betterend:umbrella_tree_membrane",
+      "required": false
+    },
+    {
+      "id": "betternether:willow_leaves",
+      "required": false
+    },
+    {
+      "id": "betternether:swamp_grass",
+      "required": false
+    },
+    {
+      "id": "betternether:soul_vine",
+      "required": false
+    },
+    {
+      "id": "betternether:rubeus_leaves",
+      "required": false
+    },
+    {
+      "id": "betternether:nether_grass",
+      "required": false
+    },
+    {
+      "id": "betternether:ink_bush_seed",
+      "required": false
+    },
+    {
+      "id": "betternether:nether_sakura_leaves",
+      "required": false
+    },
+    {
+      "id": "betternether:magma_flower",
+      "required": false
+    },
+    {
+      "id": "betternether:anchor_tree_leaves",
+      "required": false
+    },
+    {
+      "id": "betternether:soul_grass",
+      "required": false
+    },
+    {
+      "id": "betternether:nether_reed_stem",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:null_leaves",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:wilted_lily",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:sprout",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:clover",
       "required": false
     },
     {
@@ -127,6 +246,10 @@
       "required": false
     },
     {
+      "id": "mynethersdelight:bullet_pepper",
+      "required": false
+    },
+    {
       "id": "naturaldecormod:bird_nest_spruce",
       "required": false
     },
@@ -136,6 +259,10 @@
     },
     {
       "id": "naturaldecormod:dwarf_pink_bottle_brush",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:sedge_grass",
       "required": false
     },
     {
@@ -248,6 +375,10 @@
     },
     {
       "id": "valleycraft:blue_soul_rose",
+      "required": false
+    },
+    {
+      "id": "vanillabackport:closed_eyeblossom",
       "required": false
     }
   ]

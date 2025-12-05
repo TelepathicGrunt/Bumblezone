@@ -25,6 +25,10 @@
       "required": false
     },
     {
+      "id": "aether:enchanted_gravitite",
+      "required": false
+    },
+    {
       "id": "alexscaves:block_of_pearl",
       "required": false
     },
@@ -58,6 +62,18 @@
     },
     {
       "id": "alexscaves:block_of_azure_neodynium",
+      "required": false
+    },
+    {
+      "id": "betterend:aurora_crystal",
+      "required": false
+    },
+    {
+      "id": "betterend:smaragdant_crystal",
+      "required": false
+    },
+    {
+      "id": "betterend:budding_smaragdant_crystal",
       "required": false
     },
     {
