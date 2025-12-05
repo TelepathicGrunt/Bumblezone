@@ -8,6 +8,10 @@
           "weight": 2
         },
         {
+          "data": { "Name": "vanillabackport:open_eyeblossom" },
+          "weight": 1
+        },
+        {
           "data": { "Name": "minecraft:air" },
           "weight": 1
         }
