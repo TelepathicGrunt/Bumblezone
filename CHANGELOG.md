@@ -16,6 +16,8 @@ Throwing Pollen Puff at Variant and Ventures's Murk, Verdant, and Thicket will s
 
 Throwing Pollen Puff at Vanillabackport's Creaking will spawn Pale Moss Carpet and Open Eyeblossoms nearby sometimes.
 
+Disallow some non-colorful modded flowers from showing in Hanging Gardens structure.
+
 
 ### **(V.7.11.6 Changes) (1.21.1 Minecraft)**
 

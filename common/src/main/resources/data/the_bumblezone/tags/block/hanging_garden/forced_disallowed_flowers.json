@@ -722,6 +722,14 @@
     {
       "id": "valleycraft:blue_soul_rose",
       "required": false
+    },
+    {
+      "id": "vanillabackport:open_eyeblossom",
+      "required": false
+    },
+    {
+      "id": "vanillabackport:closed_eyeblossom",
+      "required": false
     }
   ]
 }
