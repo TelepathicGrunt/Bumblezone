@@ -45,15 +45,13 @@
         "${mod_id}-common.mixins.json"
     ],
     "accessWidener": "${mod_id}.accesswidener",
+
     "depends": {
         "java": ">=${java_version}",
         "fabricloader": ">=${fabric_loader_version}",
-        "minecraft": ">=1.21.5",
+        "minecraft": ">=1.21.10",
         "fabric": ">=0.100.6",
         "resourcefullib": ">=3.0.11",
         "midnightlib": "*"
-    },
-    "breaks": {
-        "structureessentials": "=1.21-4.5"
     }
 }

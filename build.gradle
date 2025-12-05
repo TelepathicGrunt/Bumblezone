@@ -2,7 +2,9 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'me.modmuss50.mod-publish-plugin' version '0.8.4' apply false
-    id 'net.neoforged.moddev' version '2.0.110' apply false
+    id 'net.neoforged.moddev' version '2.0.121' apply false
+    id 'net.fabricmc.fabric-loom-companion' version '1.14.4' apply false
+    id 'fabric-loom' version '1.14-SNAPSHOT' apply false
 }
 
 def javaVersion = 21

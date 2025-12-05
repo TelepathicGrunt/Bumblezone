@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.11-SNAPSHOT'
+    id 'fabric-loom'
 }
 
 repositories {
@@ -140,10 +140,6 @@ loom {
     def awFile = project.file("src/main/resources/${mod_id}.accesswidener")
     if (awFile.exists()) {
         accessWidenerPath.set(awFile)
-    }
-
-    mixin {
-        useLegacyMixinAp = false
     }
 
     runs {
