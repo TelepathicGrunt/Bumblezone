@@ -623,55 +623,43 @@
       "required": false
     },
     {
-      "item": {
-        "id": "mcwholidays:carved_friendly_pumpkin",
-        "count": 1
-      },
+      "id": "mcwholidays:carved_friendly_pumpkin",
+      "count": 1,
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "item": {
-        "id": "mcwholidays:carved_screaming_pumpkin",
-        "count": 1
-      },
+      "id": "mcwholidays:carved_screaming_pumpkin",
+      "count": 1,
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "item": {
-        "id": "mcwholidays:carved_evil_pumpkin",
-        "count": 1
-      },
+      "id": "mcwholidays:carved_evil_pumpkin",
+      "count": 1,
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "item": {
-        "id": "mcwholidays:carved_shocked_pumpkin",
-        "count": 1
-      },
+      "id": "mcwholidays:carved_shocked_pumpkin",
+      "count": 1,
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "item": {
-        "id": "mcwholidays:carved_smile_pumpkin",
-        "count": 1
-      },
+      "id": "mcwholidays:carved_smile_pumpkin",
+      "count": 1,
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "item": {
-        "id": "mcwholidays:witch_hat",
-        "count": 1
-      },
+      "id": "mcwholidays:witch_hat",
+      "count": 1,
       "xp_reward": 0,
       "weight": 1,
       "required": false
