@@ -62,6 +62,16 @@ dependencies {
     //modRuntimeOnly("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config}")
     modCompileOnly("curse.maven:restricted_portals-228266:${project.restricted_portals_file_id}")
 
+    modCompileOnly("mezz.jei:jei-${project.jei_mc}-fabric:${project.jei}")
+    modCompileOnly("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
+
+    modCompileOnly("dev.emi:emi-xplat-intermediary:${project.emi}:api")
+
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-fabric:${project.rei}") { transitive = false  }
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}")
+
+    modCompileOnly("maven.modrinth:projectile-damage-attribute:${project.projectile_damage_attribute}-fabric") { transitive = false  }
+
 //    modLocalRuntime("com.telepathicgrunt:CommandStructures-Fabric:${project.commandstructures_fabric}")
 //    modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_fabric}")
 }
@@ -70,7 +80,7 @@ publishMods {
     file = tasks.remapJar.archiveFile
     modLoaders.add("fabric")
 
-    File changeLog = rootProject.file("CHANGELOG.md")
+    File changeLog = project.file("CHANGELOG.md")
     String changeLogText = changeLog.exists() ? changeLog.text : ""
 
     def uploadDependenciesCf = [

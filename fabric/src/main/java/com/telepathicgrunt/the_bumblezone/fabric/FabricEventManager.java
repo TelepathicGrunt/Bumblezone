@@ -31,7 +31,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
-import com.telepathicgrunt.the_bumblezone.utils.fabric.PlatformServiceImpl;
+import com.telepathicgrunt.the_bumblezone.services.fabric.FabricPlatformService;
 import com.telepathicgrunt.the_bumblezone.worldgen.structures.SempiternalSanctumBehavior;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -162,11 +162,11 @@ public class FabricEventManager {
 
         ServerLifecycleEvents.SERVER_STARTING.register((minecraftServer) -> {
             BzServerGoingToStartEvent.EVENT.invoke(new BzServerGoingToStartEvent(minecraftServer));
-            PlatformServiceImpl.currentMinecraftServer = minecraftServer;
+            FabricPlatformService.currentMinecraftServer = minecraftServer;
         });
         ServerLifecycleEvents.SERVER_STOPPING.register((minecraftServer) -> {
             BzServerGoingToStopEvent.EVENT.invoke(BzServerGoingToStopEvent.INSTANCE);
-            PlatformServiceImpl.currentMinecraftServer = null;
+            FabricPlatformService.currentMinecraftServer = null;
         });
 
         ServerWorldEvents.LOAD.register((server, level) -> {

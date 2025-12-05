@@ -66,19 +66,19 @@ public class MekanismCompat implements ModCompat {
 			}
 
 			if (player instanceof ServerPlayer) {
-				IModule<?> jetpackUnit = IPlatformService.INSTANCE.INSTANCE.getModule(chestplate, JETPACK_UNIT.get());
+				IModule<?> jetpackUnit = IModuleHelper.INSTANCE.getModule(chestplate, JETPACK_UNIT.get());
 				if (jetpackUnit != null && jetpackUnit.isEnabled()) {
 					jetpackUnit.toggleEnabled(
-							IPlatformService.INSTANCE.INSTANCE.getModuleContainer(chestplate),
+                            IModuleHelper.INSTANCE.getModuleContainer(chestplate),
 							chestplate,
 							player,
 							Component.translatable("system.the_bumblezone.denied_mek_jetpack_module").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.RED));
 				}
 
-				IModule<?> gravUnit = IPlatformService.INSTANCE.INSTANCE.getModule(chestplate, GRAV_UNIT.get());
+				IModule<?> gravUnit = IModuleHelper.INSTANCE.getModule(chestplate, GRAV_UNIT.get());
 				if (gravUnit != null && gravUnit.isEnabled()) {
 					gravUnit.toggleEnabled(
-							IPlatformService.INSTANCE.INSTANCE.getModuleContainer(chestplate),
+                            IModuleHelper.INSTANCE.getModuleContainer(chestplate),
 							chestplate,
 							player,
 							Component.translatable("system.the_bumblezone.denied_mek_grav_module").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.RED));

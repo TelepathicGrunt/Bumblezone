@@ -29,8 +29,8 @@ dependencies {
     compileOnly "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"
     annotationProcessor "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"
 
-    compileOnly("earth.terrarium.athena:athena-neoforge-${rootProject.athena}") { transitive = false  }
-    compileOnly("com.teamresourceful.resourcefullib:resourcefullib-neoforge-${rootProject.resourcefullib}") { transitive = false  }
+    compileOnly("earth.terrarium.athena:athena-neoforge-${project.athena}") { transitive = false  }
+    compileOnly("com.teamresourceful.resourcefullib:resourcefullib-neoforge-${project.resourcefullib}") { transitive = false  }
 
     // COMPAT
     compileOnly("mezz.jei:jei-${project.jei_mc}-forge-api:${project.jei}") { transitive = false  }
