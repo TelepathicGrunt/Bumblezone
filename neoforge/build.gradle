@@ -61,20 +61,20 @@ dependencies {
     // runtimeOnly("curse.maven:spit-it-out-857141:4614678")
     // runtimeOnly("curse.maven:atlasviewer-633577:4597419")
 
-    compileOnly("curse.maven:mekanism-268560:${project.mekanism_file_id}") { transitive = false }
-    //compileOnly("mekanism:Mekanism:${project.mekanism}:api")
+    compileOnly("mekanism:Mekanism:${project.mekanism}:api")
 //    runtimeOnly("mekanism:Mekanism:${project.mekanism}")// core
 //    runtimeOnly("mekanism:Mekanism:${project.mekanism}:additions")// Mekanism: Additions
 //    runtimeOnly("mekanism:Mekanism:${project.mekanism}:generators")// Mekanism: Generators
 //    runtimeOnly("mekanism:Mekanism:${project.mekanism}:tools")// Mekanism: Tools
 
-    //runtimeOnly("mezz.jei:jei-${project.jei_mc}-neoforge:${project.jei}")
-    //runtimeOnly("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
+    compileOnly("mezz.jei:jei-${project.jei_mc}-neoforge:${project.jei}")
+    compileOnly("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
 
-    //runtimeOnly("dev.emi:emi-neoforge:${emi}")
+    compileOnly("dev.emi:emi-neoforge:${emi}:api") { transitive = false }
 
-    //runtimeOnly("me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config}")
-    //runtimeOnly("dev.architectury:architectury-neoforge:${project.architectury}")
+    compileOnly("me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei}") { transitive = false  }
+    compileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}")
+
     //runtimeOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}")
     compileOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}:api") { transitive = false }
 
