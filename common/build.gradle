@@ -28,17 +28,17 @@ dependencies {
     compileOnly "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"
     annotationProcessor "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"
 
-    runtimeOnly(compileOnly("earth.terrarium.athena:athena-common-${rootProject.athena}")) { transitive = false  }
-    implementation("com.teamresourceful.resourcefullib:resourcefullib-common-${rootProject.resourcefullib}") { transitive = false  }
+    runtimeOnly(compileOnly("earth.terrarium.athena:athena-common-${project.athena}")) { transitive = false  }
+    implementation("com.teamresourceful.resourcefullib:resourcefullib-common-${project.resourcefullib}") { transitive = false  }
 
     // COMPAT
-    compileOnly("mezz.jei:jei-${rootProject.jei_mc}-neoforge-api:${rootProject.jei}") { transitive = false  }
-    compileOnly("mezz.jei:jei-${rootProject.jei_mc}-common-api:${rootProject.jei}") { transitive = false  }
-    compileOnly("dev.emi:emi-xplat-mojmap:${rootProject.emi}:api") { transitive = false  }
-    compileOnly("me.shedaniel:RoughlyEnoughItems-api:${rootProject.rei}") { transitive = false  }
-    compileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${rootProject.rei}") { transitive = false  }
-    compileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}") { transitive = false  }
-    compileOnly("noobanidus.mods.lootr:lootr-common:${rootProject.lootr_version}") { transitive = false  }
+    compileOnly("mezz.jei:jei-${project.jei_mc}-neoforge-api:${project.jei}") { transitive = false  }
+    compileOnly("mezz.jei:jei-${project.jei_mc}-common-api:${project.jei}") { transitive = false  }
+    compileOnly("dev.emi:emi-xplat-mojmap:${project.emi}:api") { transitive = false  }
+    compileOnly("me.shedaniel:RoughlyEnoughItems-api:${project.rei}") { transitive = false  }
+    compileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}") { transitive = false  }
+    compileOnly("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config}") { transitive = false  }
+    compileOnly("noobanidus.mods.lootr:lootr-common:${project.lootr_version}") { transitive = false  }
 }
 
 neoForge {

@@ -39,9 +39,9 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-    modImplementation("maven.modrinth:midnightlib:${rootProject.midnightlib}")
-    modLocalRuntime(modCompileOnly(include("earth.terrarium.athena:athena-fabric-${rootProject.athena}")))
-    modLocalRuntime(modCompileOnly(include("com.teamresourceful.resourcefullib:resourcefullib-fabric-${rootProject.resourcefullib}")))
+    modImplementation("maven.modrinth:midnightlib:${project.midnightlib}")
+    modLocalRuntime(modCompileOnly(include("earth.terrarium.athena:athena-fabric-${project.athena}")))
+    modLocalRuntime(modCompileOnly(include("com.teamresourceful.resourcefullib:resourcefullib-fabric-${project.resourcefullib}")))
 
     // COMPAT
     modCompileOnly("com.terraformersmc:modmenu:${project.mod_menu_version}") {
@@ -51,13 +51,21 @@ dependencies {
         transitive = false
     }
 
-    modCompileOnly("noobanidus.mods.lootr:lootr-fabric:${rootProject.lootr_version}")
-    //modLocalRuntime("noobanidus.mods.lootr:lootr-fabric:${rootProject.lootr_version}")
+    modCompileOnly("noobanidus.mods.lootr:lootr-fabric:${project.lootr_version}")
+    //modLocalRuntime("noobanidus.mods.lootr:lootr-fabric:${project.lootr_version}")
 
-    modCompileOnly("dev.emi:trinkets:${rootProject.trinkets}") { transitive false }
-    modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
-    //modLocalRuntime("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
-    modCompileOnly("curse.maven:restricted_portals-228266:${rootProject.restricted_portals_file_id}")
+    modCompileOnly("dev.emi:trinkets:${project.trinkets}") { transitive false }
+    modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config}")
+    //modLocalRuntime("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config}")
+    modCompileOnly("curse.maven:restricted_portals-228266:${project.restricted_portals_file_id}")
+
+    modCompileOnly("mezz.jei:jei-${project.jei_mc}-fabric:${project.jei}")
+    modCompileOnly("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
+
+    modCompileOnly("dev.emi:emi-xplat-intermediary:${project.emi}:api")
+
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-fabric:${project.rei}") { transitive = false  }
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}")
 
 //    modLocalRuntime("com.telepathicgrunt:CommandStructures-Fabric:${project.commandstructures_fabric}")
 //    modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_fabric}")
@@ -67,7 +75,7 @@ publishMods {
     file = tasks.remapJar.archiveFile
     modLoaders.add("fabric")
 
-    File changeLog = rootProject.file("CHANGELOG.md")
+    File changeLog = project.file("CHANGELOG.md")
     String changeLogText = changeLog.exists() ? changeLog.text : ""
 
     def uploadDependenciesCf = [
