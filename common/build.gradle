@@ -1,5 +1,6 @@
 plugins {
     id 'net.neoforged.moddev'
+    id 'net.fabricmc.fabric-loom-companion'
 }
 
 // Vanilla depends on ASM 9.3, MDG makes that a 'strict' version constraint,
