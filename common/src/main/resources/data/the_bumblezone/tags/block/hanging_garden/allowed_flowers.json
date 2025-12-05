@@ -565,6 +565,10 @@
       "required": false
     },
     {
+      "id": "vinery:dark_cherry_sapling",
+      "required": false
+    },
+    {
       "id": "woodworks:flowering_azalea_leaf_pile",
       "required": false
     }

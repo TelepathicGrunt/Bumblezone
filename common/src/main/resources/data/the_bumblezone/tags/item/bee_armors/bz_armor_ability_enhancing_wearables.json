@@ -41,6 +41,10 @@
       "required": false
     },
     {
+      "id": "plushie_buddies:plushie_bee",
+      "required": false
+    },
+    {
       "id": "trophymanager:trophy",
       "required": false
     },

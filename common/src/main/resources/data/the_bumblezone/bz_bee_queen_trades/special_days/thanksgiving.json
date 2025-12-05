@@ -32,6 +32,15 @@
     },
     {
       "item": {
+        "id": "minecraft:pumpkin_pie",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 2,
+      "required": true
+    },
+    {
+      "item": {
         "id": "minecraft:rabbit_stew",
         "count": 1
       },
@@ -41,7 +50,115 @@
     },
     {
       "item": {
+        "id": "biomeswevegone:green_apple_pie",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 2,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "farmersdelight:apple_pie",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 2,
+      "required": false
+    },
+    {
+      "item": {
         "id": "farmersdelight:roast_chicken",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "moredelight:mashed_potatoes",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "moredelight:potato_salad",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "farm_and_charm:roasted_chicken",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "farm_and_charm:stuffed_chicken",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "farm_and_charm:potato_with_roast_meat",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "brewery:pork_knuckles",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "brewery:fried_chicken",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "brewery:half_chicken",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "brewery:mashed_potatoes",
+        "count": 1
+      },
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "item": {
+        "id": "brewery:potato_salad",
         "count": 1
       },
       "xp_reward": 0,
