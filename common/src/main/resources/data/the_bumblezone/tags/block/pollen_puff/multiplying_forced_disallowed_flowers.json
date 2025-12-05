@@ -50,6 +50,14 @@
       "required": false
     },
     {
+      "id": "eternal_starlight:withered_starlight_flower",
+      "required": false
+    },
+    {
+      "id": "eternal_starlight:withered_desert_amethysia",
+      "required": false
+    },
+    {
       "id": "expandeddelight:wild_asparagus",
       "required": false
     },
@@ -63,6 +71,42 @@
     },
     {
       "id": "extendedmushrooms:infested_flower",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:wild_beetroots",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:wild_barley",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:wild_lettuce",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:wild_emmer",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:wild_beetroots",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:wild_barley",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:wild_lettuce",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:wild_oat",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:wild_emmer",
       "required": false
     },
     {

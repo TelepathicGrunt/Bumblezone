@@ -188,6 +188,10 @@
       "required": false
     },
     {
+      "id": "biomeswevegone:green_tulip",
+      "required": false
+    },
+    {
       "id": "biomeswevegone:black_rose",
       "required": false
     },
@@ -224,6 +228,22 @@
       "required": false
     },
     {
+      "id": "eternal_starlight:conebloom",
+      "required": false
+    },
+    {
+      "id": "eternal_starlight:withered_starlight_flower",
+      "required": false
+    },
+    {
+      "id": "eternal_starlight:withered_desert_amethysia",
+      "required": false
+    },
+    {
+      "id": "eternal_starlight:swamp_rose",
+      "required": false
+    },
+    {
       "id": "expandeddelight:wild_asparagus",
       "required": false
     },
@@ -237,6 +257,26 @@
     },
     {
       "id": "extendedmushrooms:infested_flower",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:wild_beetroots",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:wild_barley",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:wild_lettuce",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:wild_oat",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:wild_emmer",
       "required": false
     },
     {
@@ -389,6 +429,10 @@
     },
     {
       "id": "many_flowers:zinnia",
+      "required": false
+    },
+    {
+      "id": "mynethersdelight:bullet_pepper",
       "required": false
     },
     {
@@ -549,6 +593,14 @@
     },
     {
       "id": "nature_expansion:yucca_plant_1",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:silverbush",
+      "required": false
+    },
+    {
+      "id": "occultism:otherflower",
       "required": false
     },
     {
