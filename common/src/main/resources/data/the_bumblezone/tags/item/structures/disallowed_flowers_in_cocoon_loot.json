@@ -5,6 +5,7 @@
     "minecraft:chorus_flower",
     "minecraft:nether_wart",
     "minecraft:wither_rose",
+    "minecraft:closed_eyeblossom",
     {
       "id": "betterarcheology:growth_totem",
       "required": false
@@ -375,10 +376,6 @@
     },
     {
       "id": "valleycraft:blue_soul_rose",
-      "required": false
-    },
-    {
-      "id": "vanillabackport:closed_eyeblossom",
       "required": false
     }
   ]

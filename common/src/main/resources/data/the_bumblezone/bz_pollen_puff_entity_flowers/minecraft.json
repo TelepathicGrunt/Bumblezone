@@ -82,6 +82,10 @@
           "weight": 2
         },
         {
+          "data": { "Name": "minecraft:open_eyeblossom" },
+          "weight": 1
+        },
+        {
           "data": { "Name": "minecraft:air" },
           "weight": 1
         }
