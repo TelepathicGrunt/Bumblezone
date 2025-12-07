@@ -236,12 +236,12 @@ public class NeoPlatformService implements PlatformService {
     
     @Override
     public boolean isDevEnvironment() {
-        return !FMLLoader.isProduction();
+        return !FMLLoader.getCurrent().isProduction();
     }
     
     @Override
     public boolean isClientEnvironment() {
-        return FMLLoader.getDist().isClient();
+        return FMLLoader.getCurrent().getDist().isClient();
     }
     
     @Override
