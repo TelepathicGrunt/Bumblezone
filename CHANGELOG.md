@@ -1,3 +1,10 @@
+### **(V.7.11.7 Changes) (1.21.1 Minecraft)**
+
+#### Structures:
+
+Fixed `disallowed_flowers_in_cocoon_loot` block tag being broken due to an invalid entry.
+
+
 ### **(V.7.11.6 Changes) (1.21.1 Minecraft)**
 
 #### Blocks:
