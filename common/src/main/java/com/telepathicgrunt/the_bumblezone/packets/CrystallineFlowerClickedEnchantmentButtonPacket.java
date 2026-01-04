@@ -6,17 +6,17 @@ import com.teamresourceful.resourcefullib.common.network.base.ServerboundPacketT
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.packets.handlers.CrystallineFlowerClickedEnchantmentButtonPacketHandleBody;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.function.Consumer;
 
-public record CrystallineFlowerClickedEnchantmentButtonPacket(int containerId, ResourceLocation clickedButton) implements Packet<CrystallineFlowerClickedEnchantmentButtonPacket> {
+public record CrystallineFlowerClickedEnchantmentButtonPacket(int containerId, Identifier clickedButton) implements Packet<CrystallineFlowerClickedEnchantmentButtonPacket> {
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower_clicked_enchantment_button_packet");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower_clicked_enchantment_button_packet");
     public static final ServerboundPacketType<CrystallineFlowerClickedEnchantmentButtonPacket> TYPE = new CrystallineFlowerClickedEnchantmentButtonPacket.Handler();
 
-    public static void sendToServer(int containIdIn, ResourceLocation ClickedButtonIn) {
+    public static void sendToServer(int containIdIn, Identifier ClickedButtonIn) {
         MessageHandler.DEFAULT_CHANNEL.sendToServer(new CrystallineFlowerClickedEnchantmentButtonPacket(containIdIn, ClickedButtonIn));
     }
 
@@ -30,12 +30,12 @@ public record CrystallineFlowerClickedEnchantmentButtonPacket(int containerId, R
         @Override
         public void encode(CrystallineFlowerClickedEnchantmentButtonPacket message, RegistryFriendlyByteBuf buffer) {
             buffer.writeInt(message.containerId);
-            buffer.writeResourceLocation(message.clickedButton);
+            buffer.writeIdentifier(message.clickedButton);
         }
 
         @Override
         public CrystallineFlowerClickedEnchantmentButtonPacket decode(RegistryFriendlyByteBuf buffer) {
-            return new CrystallineFlowerClickedEnchantmentButtonPacket(buffer.readInt(), buffer.readResourceLocation());
+            return new CrystallineFlowerClickedEnchantmentButtonPacket(buffer.readInt(), buffer.readIdentifier());
         }
 
         @Override
@@ -44,7 +44,7 @@ public record CrystallineFlowerClickedEnchantmentButtonPacket(int containerId, R
         }
 
         @Override
-        public ResourceLocation id() {
+        public Identifier id() {
             return ID;
         }
     }

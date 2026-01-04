@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.worldgen.dimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBiomeHeightRegistry;
 import net.minecraft.Util;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
@@ -36,7 +36,7 @@ public final class BiomeInfluencedNoiseSampler {
         }
 
         Biome biome = biomeSource.getNoiseBiome(x >> 2, 40, z >> 2, sampler).value();
-        ResourceLocation biomeRL = biomeRegistry.getKey(biome);
+        Identifier biomeRL = biomeRegistry.getKey(biome);
         BzBiomeHeightRegistry.BiomeTerrain centerBiomeInfo = BzBiomeHeightRegistry.BIOME_HEIGHT.get(biomeRL);
         if (centerBiomeInfo == null) {
             centerBiomeInfo = new BzBiomeHeightRegistry.BiomeTerrain(4, 1);
@@ -46,7 +46,7 @@ public final class BiomeInfluencedNoiseSampler {
         for(int xOffset = -RADIUS; xOffset <= RADIUS; ++xOffset) {
             for(int zOffset = -RADIUS; zOffset <= RADIUS; ++zOffset) {
                 Biome biome2 = biomeSource.getNoiseBiome((x >> 2) + xOffset, 40, (z >> 2) + zOffset, sampler).value();
-                ResourceLocation biomeRL2 = biomeRegistry.getKey(biome2);
+                Identifier biomeRL2 = biomeRegistry.getKey(biome2);
                 BzBiomeHeightRegistry.BiomeTerrain biomeTerrain = BzBiomeHeightRegistry.BIOME_HEIGHT.get(biomeRL2);
                 if (biomeTerrain == null) {
                     biomeTerrain = new BzBiomeHeightRegistry.BiomeTerrain(4, 1);

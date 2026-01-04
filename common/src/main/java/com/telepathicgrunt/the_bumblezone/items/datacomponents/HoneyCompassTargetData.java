@@ -9,7 +9,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
@@ -35,7 +35,7 @@ public record HoneyCompassTargetData(Optional<String> targetBlock, Optional<Stri
     }
 
     public Optional<Block> getStoredBlock() {
-        return targetBlock.flatMap(block -> BuiltInRegistries.BLOCK.getOptional(ResourceLocation.tryParse(block)));
+        return targetBlock.flatMap(block -> BuiltInRegistries.BLOCK.getOptional(Identifier.tryParse(block)));
     }
 
     public boolean isDifferent(Optional<String> targetBlock, Optional<String> targetStructureTag, Optional<BlockPos> targetPos, Optional<ResourceKey<Level>> targetDimension) {

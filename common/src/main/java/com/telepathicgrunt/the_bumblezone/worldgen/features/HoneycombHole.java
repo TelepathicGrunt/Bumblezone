@@ -8,7 +8,7 @@ import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.NbtFeatureCo
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -25,7 +25,7 @@ import java.util.Optional;
 
 public class HoneycombHole extends Feature<NbtFeatureConfig> {
 
-    private static final ResourceLocation EMPTY = ResourceLocation.fromNamespaceAndPath("minecraft", "empty");
+    private static final Identifier EMPTY = Identifier.fromNamespaceAndPath("minecraft", "empty");
 
     public HoneycombHole(Codec<NbtFeatureConfig> configFactory) {
         super(configFactory);
@@ -33,7 +33,7 @@ public class HoneycombHole extends Feature<NbtFeatureConfig> {
 
     @Override
     public boolean place(FeaturePlaceContext<NbtFeatureConfig> context) {
-        ResourceLocation nbtRL = GeneralUtils.getRandomEntry(context.config().nbtResourcelocationsAndWeights, context.random());
+        Identifier nbtRL = GeneralUtils.getRandomEntry(context.config().nbtResourcelocationsAndWeights, context.random());
 
         StructureTemplateManager structureManager = context.level().getLevel().getStructureManager();
         StructureTemplate template = structureManager.get(nbtRL).orElseThrow(() -> {

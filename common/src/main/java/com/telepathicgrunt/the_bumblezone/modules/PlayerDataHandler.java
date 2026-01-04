@@ -9,7 +9,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Bee;
@@ -50,7 +50,7 @@ public class PlayerDataHandler {
         if (event.source() == null) return;
         if (event.source().getEntity() instanceof ServerPlayer player && rootAdvancementDone(player)) {
             PlatformService.INSTANCE.getModule(player, ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
-                ResourceLocation id = EntityType.getKey(event.entity().getType());
+                Identifier id = EntityType.getKey(event.entity().getType());
                 if (id != null) {
                     BzCriterias.KILLED_COUNTER_TRIGGER.get().trigger(player, event.entity(), module);
                 }

@@ -23,7 +23,7 @@
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block": {
-          "resourcelocation": "the_bumblezone:carvable_wax",
+          "identifier": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {
             "carving": "uncarved"
@@ -35,7 +35,7 @@
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block": {
-          "resourcelocation": "the_bumblezone:carvable_wax",
+          "identifier": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {
             "carving": "wavy"
@@ -47,7 +47,7 @@
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block": {
-          "resourcelocation": "the_bumblezone:carvable_wax",
+          "identifier": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {
             "carving": "flower"
@@ -59,7 +59,7 @@
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block": {
-          "resourcelocation": "the_bumblezone:carvable_wax",
+          "identifier": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {
             "carving": "chiseled"
@@ -71,7 +71,7 @@
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block": {
-          "resourcelocation": "the_bumblezone:carvable_wax",
+          "identifier": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {
             "carving": "diamond"
@@ -83,7 +83,7 @@
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block": {
-          "resourcelocation": "the_bumblezone:carvable_wax",
+          "identifier": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {
             "carving": "bricks"
@@ -95,7 +95,7 @@
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block": {
-          "resourcelocation": "the_bumblezone:carvable_wax",
+          "identifier": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {
             "carving": "chains"
@@ -107,7 +107,7 @@
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block": {
-          "resourcelocation": "the_bumblezone:carvable_wax",
+          "identifier": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {
             "carving": "music"
@@ -119,7 +119,7 @@
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block": {
-          "resourcelocation": "the_bumblezone:carvable_wax",
+          "identifier": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {
             "carving": "grate"

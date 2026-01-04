@@ -17,7 +17,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
@@ -128,7 +128,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
         return new EssenceBlockEntity(blockPos, blockState);
     }
 
-    public abstract ResourceLocation getArenaNbt();
+    public abstract Identifier getArenaNbt();
 
     public abstract int getEventTimeFrame();
 
@@ -136,7 +136,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
 
     public abstract ServerEssenceEvent getServerEssenceEvent();
 
-    public abstract ResourceLocation getEssenceItemReward();
+    public abstract Identifier getEssenceItemReward();
 
     public abstract void awardPlayerWinStat(ServerPlayer serverPlayer);
 

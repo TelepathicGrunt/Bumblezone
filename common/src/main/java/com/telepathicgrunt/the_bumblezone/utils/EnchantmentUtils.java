@@ -9,7 +9,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -48,8 +48,8 @@ public class EnchantmentUtils {
 		return 1395L + sum(level - 30, 112, 9);
 	}
 
-	public static Map<ResourceLocation, EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(Level level, int enchantmentLevel, ItemStack itemStack, int xpTier) {
-		Map<ResourceLocation, EnchantmentInstance> map = new HashMap<>();
+	public static Map<Identifier, EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(Level level, int enchantmentLevel, ItemStack itemStack, int xpTier) {
+		Map<Identifier, EnchantmentInstance> map = new HashMap<>();
 		boolean bookFlag = itemStack.is(Items.BOOK) || itemStack.is(Items.ENCHANTED_BOOK);
 		boolean allowTreasure = xpTier == 7;
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(itemStack);
@@ -127,7 +127,7 @@ public class EnchantmentUtils {
 		return Math.max(1, Math.min(6, cost));
 	}
 
-	public static Holder<Enchantment> getEnchantmentHolder(ResourceLocation enchantmentRL, Level level) {
+	public static Holder<Enchantment> getEnchantmentHolder(Identifier enchantmentRL, Level level) {
 		return level.registryAccess().getOrThrow(Registries.ENCHANTMENT).value().get(enchantmentRL).orElse(null);
 	}
 

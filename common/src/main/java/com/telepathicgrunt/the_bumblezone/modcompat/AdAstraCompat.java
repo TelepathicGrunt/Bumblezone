@@ -4,7 +4,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -21,10 +21,10 @@ public class AdAstraCompat implements ModCompat {
 	private static Item JET_FEET = null;
 
 	public AdAstraCompat() {
-		JET_HELMET = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("ad_astra", "jet_suit_helmet"));
-		JET_CHEST = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("ad_astra", "jet_suit"));
-		JET_LEGS = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("ad_astra", "jet_suit_pants"));
-		JET_FEET = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("ad_astra", "jet_suit_boots"));
+		JET_HELMET = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("ad_astra", "jet_suit_helmet"));
+		JET_CHEST = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("ad_astra", "jet_suit"));
+		JET_LEGS = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("ad_astra", "jet_suit_pants"));
+		JET_FEET = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("ad_astra", "jet_suit_boots"));
 
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
 		ModChecker.adAstraPresent = true;

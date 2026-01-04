@@ -13,12 +13,12 @@ import com.telepathicgrunt.the_bumblezone.advancements.KilledCounterTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
 import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class BzCriterias {
-    public static final ResourceLocation QUEENS_DESIRE_ROOT_ADVANCEMENT = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "the_queens_desire/the_beginning");
-    public static final ResourceLocation QUEENS_DESIRE_FINAL_ADVANCEMENT = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "the_queens_desire/journeys_end");
-    public static final ResourceLocation IS_NEAR_BEEHIVE_ADVANCEMENT = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "teleportation/is_near_beehive");
+    public static final Identifier QUEENS_DESIRE_ROOT_ADVANCEMENT = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "the_queens_desire/the_beginning");
+    public static final Identifier QUEENS_DESIRE_FINAL_ADVANCEMENT = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "the_queens_desire/journeys_end");
+    public static final Identifier IS_NEAR_BEEHIVE_ADVANCEMENT = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "teleportation/is_near_beehive");
 
     public static final ResourcefulRegistry<CriterionTrigger<?>> CRITERION_TRIGGERS = ResourcefulRegistries.create(BuiltInRegistries.TRIGGER_TYPES, Bumblezone.MODID);
 

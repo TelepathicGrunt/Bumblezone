@@ -6,7 +6,7 @@
     "structure_y_offset": -4,
     "nbt_entries": [
       {
-        "resourcelocation": "the_bumblezone:tree_dungeon",
+        "identifier": "the_bumblezone:tree_dungeon",
         "weight": 1
       }
     ]

@@ -6,7 +6,7 @@
     "structure_y_offset": 0,
     "nbt_entries": [
       {
-        "resourcelocation": "the_bumblezone:hive_voyager",
+        "identifier": "the_bumblezone:hive_voyager",
         "weight": 1
       }
     ]

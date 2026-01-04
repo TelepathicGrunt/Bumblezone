@@ -11,10 +11,10 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class CosmicCrystalShieldRenderer extends RenderLayer<CosmicCrystalEntity, CosmicCrystalModel> {
-    private static final ResourceLocation SHIELD_LOCATION = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/cosmic_crystal_shield.png");
+    private static final Identifier SHIELD_LOCATION = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/cosmic_crystal_shield.png");
     private final CosmicCrystalModel model;
 
     public CosmicCrystalShieldRenderer(RenderLayerParent<CosmicCrystalEntity, CosmicCrystalModel> renderLayerParent, EntityModelSet entityModelSet) {
@@ -40,7 +40,7 @@ public class CosmicCrystalShieldRenderer extends RenderLayer<CosmicCrystalEntity
         return f * 0.02F;
     }
 
-    protected ResourceLocation getTextureLocation() {
+    protected Identifier getTextureLocation() {
         return SHIELD_LOCATION;
     }
 

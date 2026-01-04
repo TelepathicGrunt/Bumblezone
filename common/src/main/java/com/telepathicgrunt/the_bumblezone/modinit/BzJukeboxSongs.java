@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.JukeboxSong;
 
 public class BzJukeboxSongs {
@@ -22,6 +22,6 @@ public class BzJukeboxSongs {
     public static ResourceKey<JukeboxSong> BEENNA_BOX = create("beenna_box");
 
     private static ResourceKey<JukeboxSong> create(String string) {
-        return ResourceKey.create(Registries.JUKEBOX_SONG, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, string));
+        return ResourceKey.create(Registries.JUKEBOX_SONG, Identifier.fromNamespaceAndPath(Bumblezone.MODID, string));
     }
 }

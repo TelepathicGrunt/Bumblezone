@@ -9,7 +9,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.item.ItemStack;
@@ -23,9 +23,9 @@ import java.util.Optional;
 public final class NewLootInjectorApplier {
     private NewLootInjectorApplier() {}
 
-    public static final ResourceKey<LootTable> VANILLA_FISHING_LOOT_TABLE_RK = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("minecraft", "gameplay/fishing"));
-    public static final ResourceLocation BZ_DIMENSION_FISHING_LOOT_TABLE_RL = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "gameplay/fishing");
-    public static final ResourceLocation STINGER_DROP_LOOT_TABLE_RL = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "entities/bee_stinger_drops");
+    public static final ResourceKey<LootTable> VANILLA_FISHING_LOOT_TABLE_RK = ResourceKey.create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath("minecraft", "gameplay/fishing"));
+    public static final Identifier BZ_DIMENSION_FISHING_LOOT_TABLE_RL = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "gameplay/fishing");
+    public static final Identifier STINGER_DROP_LOOT_TABLE_RL = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "entities/bee_stinger_drops");
 
     public static boolean checkIfInjectBeeStingerLoot(LootContext context) {
         if (BzGeneralConfigs.beeLootInjection || BzGeneralConfigs.moddedBeeLootInjection) {
@@ -34,7 +34,7 @@ public final class NewLootInjectorApplier {
                     if (!((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).bumblezone$getParams()).getVisitedBzVisitedLootRL().contains(STINGER_DROP_LOOT_TABLE_RL) &&
                         !((EntityLootDropInterface)bee).thebumblezone_hasPerformedEntityDrops())
                     {
-                        ResourceLocation beeRL = BuiltInRegistries.ENTITY_TYPE.getKey(bee.getType());
+                        Identifier beeRL = BuiltInRegistries.ENTITY_TYPE.getKey(bee.getType());
                         return (BzGeneralConfigs.beeLootInjection && beeRL.getNamespace().equals("minecraft")) ||
                                 (BzGeneralConfigs.moddedBeeLootInjection && !beeRL.getNamespace().equals("minecraft"));
                     }
@@ -53,7 +53,7 @@ public final class NewLootInjectorApplier {
         return false;
     }
 
-    public static void injectLoot(LootContext context, List<ItemStack> originalLoot, ResourceLocation lootTableToPullFrom) {
+    public static void injectLoot(LootContext context, List<ItemStack> originalLoot, Identifier lootTableToPullFrom) {
         Optional<Holder.Reference<LootTable>> optionalLootTableReference = context.getResolver().getOrThrow(Registries.LOOT_TABLE).value().get(ResourceKey.create(Registries.LOOT_TABLE, lootTableToPullFrom));
         if (optionalLootTableReference.isEmpty()) {
             return;

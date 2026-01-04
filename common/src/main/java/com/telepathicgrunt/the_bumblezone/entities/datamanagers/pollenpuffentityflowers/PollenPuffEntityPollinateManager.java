@@ -11,7 +11,7 @@ import com.telepathicgrunt.the_bumblezone.utils.LenientUnboundedMapCodec;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -37,7 +37,7 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
     }
 
     public static final Codec<Map<EntityType<?>, List<EntryObject>>> CODEC =
-            new LenientUnboundedMapCodec<>(ResourceLocation.CODEC.comapFlatMap(r -> {
+            new LenientUnboundedMapCodec<>(Identifier.CODEC.comapFlatMap(r -> {
                 Optional<EntityType<?>> entityTypeOptional = BuiltInRegistries.ENTITY_TYPE.getOptional(r);
                 if (entityTypeOptional.isPresent()) {
                     return DataResult.success(entityTypeOptional.get());
@@ -56,7 +56,7 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> loader, ResourceManager manager, ProfilerFiller profiler) {
+    protected void apply(Map<Identifier, JsonElement> loader, ResourceManager manager, ProfilerFiller profiler) {
         mobToPlants.clear();
         loader.forEach((fileIdentifier, jsonElement) -> {
             try {

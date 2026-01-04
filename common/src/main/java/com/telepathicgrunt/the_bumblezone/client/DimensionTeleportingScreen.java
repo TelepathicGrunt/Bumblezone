@@ -12,11 +12,11 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class DimensionTeleportingScreen {
     private static final Component DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT = Component.translatable("system.the_bumblezone.entering_dimension");
-    private static final ResourceLocation BZ_BACKGROUND_LOCATION = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/dimension_teleporting_background.png");
+    private static final Identifier BZ_BACKGROUND_LOCATION = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/dimension_teleporting_background.png");
 
     public static void renderScreenAndText(ReceivingLevelScreen screen, GuiGraphics guiGraphics) {
         Tesselator tesselator = Tesselator.getInstance();

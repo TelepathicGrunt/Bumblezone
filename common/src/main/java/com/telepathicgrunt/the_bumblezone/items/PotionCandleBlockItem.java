@@ -9,7 +9,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -41,7 +41,7 @@ public class PotionCandleBlockItem extends BlockItem {
             int color = blockEntityTag.contains(PotionCandleBlockEntity.COLOR_TAG) ? blockEntityTag.getIntOr(PotionCandleBlockEntity.COLOR_TAG, PotionCandleBlockEntity.DEFAULT_COLOR) : PotionCandleBlockEntity.DEFAULT_COLOR;
             potionCandleBlockEntity.setColor(color);
 
-            ResourceLocation rl = ResourceLocation.tryParse(blockEntityTag.getStringOr(PotionCandleBlockEntity.STATUS_EFFECT_TAG, ""));
+            Identifier rl = Identifier.tryParse(blockEntityTag.getStringOr(PotionCandleBlockEntity.STATUS_EFFECT_TAG, ""));
             Optional<Holder.Reference<MobEffect>> optionalMobEffectReference = BuiltInRegistries.MOB_EFFECT.get(rl);
             optionalMobEffectReference.ifPresent(potionCandleBlockEntity::setMobEffect);
         }
@@ -54,7 +54,7 @@ public class PotionCandleBlockItem extends BlockItem {
         if (customData != null && !customData.isEmpty()) {
             CompoundTag blockEntityTag = customData.copyTag();
             if (blockEntityTag.contains(PotionCandleBlockEntity.STATUS_EFFECT_TAG)) {
-                ResourceLocation rl = ResourceLocation.tryParse(blockEntityTag.getString(PotionCandleBlockEntity.STATUS_EFFECT_TAG).orElse(""));
+                Identifier rl = Identifier.tryParse(blockEntityTag.getString(PotionCandleBlockEntity.STATUS_EFFECT_TAG).orElse(""));
                 Optional<MobEffect> mobEffect = BuiltInRegistries.MOB_EFFECT.getOptional(rl);
                 if (mobEffect.isPresent()) {
                     componentConsumer.accept(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.status_effect", mobEffect.get().getDisplayName())));

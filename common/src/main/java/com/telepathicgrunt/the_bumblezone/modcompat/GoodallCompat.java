@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -16,7 +16,7 @@ public class GoodallCompat implements ModCompat {
     private static Optional<Item> BOTTLED_BEE;
 
     public GoodallCompat() {
-        BOTTLED_BEE = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("goodall", "bottled_bee"));
+        BOTTLED_BEE = BuiltInRegistries.ITEM.getOptional(Identifier.fromNamespaceAndPath("goodall", "bottled_bee"));
 
         if (BOTTLED_BEE.isPresent() && BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock) {
             setupDispenserCompat(BOTTLED_BEE.get()); // adds compatibility with bottled bee in dispensers

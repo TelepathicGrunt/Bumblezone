@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.entities.neoforge;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
@@ -13,7 +13,7 @@ import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 public class DisableFlightAttribute {
-    public static final ResourceLocation DISABLE_FLIGHT_RL = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "disable_flight");
+    public static final Identifier DISABLE_FLIGHT_RL = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "disable_flight");
     public static final AttributeModifier DISABLE_FLIGHT = new AttributeModifier(
             DISABLE_FLIGHT_RL,
             -1D,

@@ -11,10 +11,10 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class RootminShieldRenderer extends RenderLayer<RootminEntity, RootminModel> {
-    private static final ResourceLocation SHIELD_LOCATION = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/rootmin_shield.png");
+    private static final Identifier SHIELD_LOCATION = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/rootmin_shield.png");
     private final RootminModel model;
 
     public RootminShieldRenderer(RenderLayerParent<RootminEntity, RootminModel> renderLayerParent, EntityModelSet entityModelSet) {
@@ -39,7 +39,7 @@ public class RootminShieldRenderer extends RenderLayer<RootminEntity, RootminMod
         return f * 0.02F;
     }
 
-    protected ResourceLocation getTextureLocation() {
+    protected Identifier getTextureLocation() {
         return SHIELD_LOCATION;
     }
 

@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.data.models.model.ModelLocationUtils;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -15,8 +15,8 @@ public class GlisteringHoneyCrystalModels {
 
     public static void setupModels() {
         ModelLoadingPlugin.register(pluginContext -> {
-            List<ResourceLocation> blockModelIds = IntStream.rangeClosed(1, 16).mapToObj(idx -> ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "block/glistering_honey_crystal/glistering_honey_crystal_" + idx)).toList();
-            ResourceLocation itemModelId = ModelLocationUtils.getModelLocation(BzItems.GLISTERING_HONEY_CRYSTAL.get());
+            List<Identifier> blockModelIds = IntStream.rangeClosed(1, 16).mapToObj(idx -> Identifier.fromNamespaceAndPath(Bumblezone.MODID, "block/glistering_honey_crystal/glistering_honey_crystal_" + idx)).toList();
+            Identifier itemModelId = ModelLocationUtils.getModelLocation(BzItems.GLISTERING_HONEY_CRYSTAL.get());
 
             // tell Minecraft to load the additional models
             blockModelIds.forEach(id -> pluginContext.addModels(id.withSuffix("_inside"), id.withSuffix("_outside")));
@@ -24,7 +24,7 @@ public class GlisteringHoneyCrystalModels {
             // swap base model for composite
             // also need to swap item model because it cannot resolve the parent otherwise
             pluginContext.modifyModelOnLoad().register(ModelModifier.OVERRIDE_PHASE, (model, context) -> {
-                ResourceLocation loadedModelId = context.resourceId();
+                Identifier loadedModelId = context.resourceId();
 
                 if (loadedModelId != null) {
                     if (itemModelId.equals(loadedModelId)) {
@@ -32,8 +32,8 @@ public class GlisteringHoneyCrystalModels {
                     }
 
                     if (blockModelIds.contains(loadedModelId)) {
-                        ResourceLocation insideModelId = loadedModelId.withSuffix("_inside");
-                        ResourceLocation outsideModelId = loadedModelId.withSuffix("_outside");
+                        Identifier insideModelId = loadedModelId.withSuffix("_inside");
+                        Identifier outsideModelId = loadedModelId.withSuffix("_outside");
                         if (model instanceof BlockModel blockModel) {
                             return new GlisteringHoneyCrystalUnbakedModel(blockModel, insideModelId, outsideModelId);
                         } else {

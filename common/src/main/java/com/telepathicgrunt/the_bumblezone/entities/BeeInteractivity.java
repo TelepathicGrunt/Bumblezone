@@ -15,7 +15,7 @@ import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -68,7 +68,7 @@ public class BeeInteractivity {
         if (target instanceof Bee beeEntity && !beeEntity.isDeadOrDying()) {
 
             ItemStack itemstack = playerEntity.getItemInHand(hand);
-            ResourceLocation itemRL = BuiltInRegistries.ITEM.getKey(itemstack.getItem());
+            Identifier itemRL = BuiltInRegistries.ITEM.getKey(itemstack.getItem());
 
             if (itemstack.is(BzItems.BEE_STINGER.get())) {
                 beeEntity.hasStung();

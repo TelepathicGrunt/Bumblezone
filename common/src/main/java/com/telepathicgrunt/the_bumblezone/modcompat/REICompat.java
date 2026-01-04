@@ -32,7 +32,7 @@ import me.shedaniel.rei.plugin.client.BuiltinClientPlugin;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.InteractionResult;
@@ -61,10 +61,10 @@ public class REICompat implements REIClientPlugin {
             addInfo(BzFluids.HONEY_FLUID.get());
         }
 
-        registry.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles"))
+        registry.getRecipeManager().byKey(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe.value(), registry, true));
 
-        registry.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax"))
+        registry.getRecipeManager().byKey(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe.value(), registry, false));
 
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades.isEmpty()) {

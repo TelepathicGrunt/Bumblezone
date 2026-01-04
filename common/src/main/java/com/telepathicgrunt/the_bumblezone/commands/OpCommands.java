@@ -21,7 +21,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.ResourceKeyArgument;
-import net.minecraft.commands.arguments.ResourceLocationArgument;
+import net.minecraft.commands.arguments.IdentifierArgument;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
@@ -30,7 +30,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
@@ -49,7 +49,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class OpCommands {
-    private static final ResourceKey<Registry<Registry<?>>> ROOT_REGISTRY_KEY = ResourceKey.createRegistryKey(ResourceLocation.withDefaultNamespace("root"));
+    private static final ResourceKey<Registry<Registry<?>>> ROOT_REGISTRY_KEY = ResourceKey.createRegistryKey(Identifier.withDefaultNamespace("root"));
     private static MinecraftServer currentMinecraftServer = null;
     private static Set<String> cachedSuggestion = new HashSet<>();
 
@@ -141,12 +141,12 @@ public class OpCommands {
                 .requires((permission) -> permission.hasPermission(2))
                 .then(Commands.argument("registry", ResourceKeyArgument.key(ROOT_REGISTRY_KEY))
                         .suggests((ctx, builder) -> SharedSuggestionProvider.suggestResource(ctx.getSource().registryAccess().listRegistries().map(HolderLookup.RegistryLookup::key).map(ResourceKey::location), builder))
-                .then(Commands.argument("tag", ResourceLocationArgument.id())
+                .then(Commands.argument("tag", IdentifierArgument.id())
                         .suggests(suggestFromRegistry(r -> r.getTags().map(HolderSet.Named::key).map(TagKey::location)::iterator, "registry", ROOT_REGISTRY_KEY))
                 .executes(cs -> {
                     final ResourceKey<? extends Registry<?>> registryKey = getResourceKey(cs, "registry", ROOT_REGISTRY_KEY).orElseThrow();
                     final Registry<?> registry = cs.getSource().getServer().registryAccess().lookupOrThrow(registryKey);
-                    final ResourceLocation tagLocation = ResourceLocationArgument.getId(cs, "tag");
+                    final Identifier tagLocation = IdentifierArgument.getId(cs, "tag");
                     final TagKey<?> tagKey = TagKey.create(cast(registryKey), tagLocation);
                     final Iterable<? extends Holder<?>> tag = registry.getTagOrEmpty(cast(tagKey));
 
@@ -294,13 +294,13 @@ public class OpCommands {
                         false));
                 case QUEENS_DESIRED_KILLED_ENTITY_COUNTER -> {
                     if (killedString != null) {
-                        ResourceLocation rl = ResourceLocation.tryParse(killedString);
+                        Identifier rl = Identifier.tryParse(killedString);
                         PlatformService.INSTANCE.getModule(targetPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> {
                             int killed = capability.mobsKilledTracker.getOrDefault(rl, 0);
                             String translationKey;
-                            if (rl.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "ender_dragon"))) {
+                            if (rl.equals(Identifier.fromNamespaceAndPath("minecraft", "ender_dragon"))) {
                                 translationKey = "command.the_bumblezone.queens_desired_killed_entity_counter_ender_dragon";
-                            } else if (rl.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "wither"))) {
+                            } else if (rl.equals(Identifier.fromNamespaceAndPath("minecraft", "wither"))) {
                                 translationKey = "command.the_bumblezone.queens_desired_killed_entity_counter_wither";
                             } else {
                                 translationKey = "command.the_bumblezone.queens_desired_killed_entity_counter";
@@ -352,7 +352,7 @@ public class OpCommands {
     }
 
     private static <T extends Registry<?>> SuggestionProvider<CommandSourceStack> suggestFromRegistry(
-            final Function<Registry<?>, Iterable<ResourceLocation>> namesFunction,
+            final Function<Registry<?>, Iterable<Identifier>> namesFunction,
             final String argumentString,
             final ResourceKey<Registry<T>> registryKey) {
         return (ctx, builder) -> getResourceKey(ctx, argumentString, registryKey)

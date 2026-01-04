@@ -13,7 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.effect.MobEffect;
@@ -252,7 +252,7 @@ public class PotionCandleBlockEntity extends BlockEntity {
 
         this.color = valueInput.getIntOr(COLOR_TAG, DEFAULT_COLOR);
         if (!valueInput.getStringOr(STATUS_EFFECT_TAG, "").trim().isEmpty()) {
-            this.mobEffect = BuiltInRegistries.MOB_EFFECT.get(ResourceLocation.tryParse(valueInput.getStringOr(STATUS_EFFECT_TAG, ""))).orElse(null);
+            this.mobEffect = BuiltInRegistries.MOB_EFFECT.get(Identifier.tryParse(valueInput.getStringOr(STATUS_EFFECT_TAG, ""))).orElse(null);
         }
         else {
             this.mobEffect = null;

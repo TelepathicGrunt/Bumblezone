@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntitySpawnEvent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -20,7 +20,7 @@ public class ModdedBeesBeesSpawning {
 			event.spawnType() == EntitySpawnReason.STRUCTURE)
 		{
 			Mob entity = event.entity();
-			ResourceLocation worldRL = entity.level().dimension().location();
+			Identifier worldRL = entity.level().dimension().location();
 
 			if (worldRL.equals(Bumblezone.MOD_DIMENSION_ID) && entity.getType() == EntityType.BEE) {
 

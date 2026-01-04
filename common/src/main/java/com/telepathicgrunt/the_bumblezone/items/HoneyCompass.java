@@ -19,7 +19,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -297,7 +297,7 @@ public class HoneyCompass extends Item {
         InteractionResult interactionResult = null;
         if (isFailed && targetStructureTag.isPresent()) {
             if (level instanceof ServerLevel serverLevel && serverLevel.getServer().getWorldData().worldGenOptions().generateStructures()) {
-                TagKey<Structure> structureTagKey = TagKey.create(Registries.STRUCTURE, ResourceLocation.tryParse(targetStructureTag.get()));
+                TagKey<Structure> structureTagKey = TagKey.create(Registries.STRUCTURE, Identifier.tryParse(targetStructureTag.get()));
                 Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().get(Registries.STRUCTURE).flatMap(registry -> registry.value().get(structureTagKey));
                 boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> !serverLevel.getChunkSource().getGeneratorState().getPlacementsForStructure(structureHolder).isEmpty());
                 if (structureExists) {

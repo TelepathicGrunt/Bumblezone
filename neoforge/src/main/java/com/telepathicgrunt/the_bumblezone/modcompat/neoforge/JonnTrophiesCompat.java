@@ -3,13 +3,13 @@ package com.telepathicgrunt.the_bumblezone.modcompat.neoforge;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.EnumSet;
 
 public class JonnTrophiesCompat implements ModCompat {
-	private static final ResourceLocation TROPHY_RL = ResourceLocation.fromNamespaceAndPath("trophymanager", "trophy");
+	private static final Identifier TROPHY_RL = Identifier.fromNamespaceAndPath("trophymanager", "trophy");
 
 	public JonnTrophiesCompat() {
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
@@ -43,11 +43,11 @@ public class JonnTrophiesCompat implements ModCompat {
 //		CompoundTag trophyEntityCompound = itemStack.getOrCreateTag().getCompound("TrophyEntity");
 //		String entityType = trophyEntityCompound.getString("entityType");
 //
-//		if (entityType.isEmpty() || !ResourceLocation.isValidResourceLocation(entityType)) {
+//		if (entityType.isEmpty() || !Identifier.isValidIdentifier(entityType)) {
 //			return false;
 //		}
 //
-//		ResourceLocation entityRL = ResourceLocation.fromNamespaceAndPath(entityType);
+//		Identifier entityRL = Identifier.fromNamespaceAndPath(entityType);
 //		return BeeAggression.isBeelikeEntityType(BuiltInRegistries.ENTITY_TYPE.get(entityRL));
 	}
 }

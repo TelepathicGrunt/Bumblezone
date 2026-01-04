@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom'
+    id 'net.fabricmc.fabric-loom'
 }
 
 repositories {
@@ -28,51 +28,48 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings(loom.layered {
-        it.officialMojangMappings()
-        it.parchment("org.parchmentmc.data:parchment-${project.parchment_minecraft_version}:${project.parchment_mappings_version}@zip")
-    })
+
     compileOnly(project.project(":common")) {
         transitive = false
     }
 
-    modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+    implementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-    modImplementation("maven.modrinth:midnightlib:${project.midnightlib}")
-    modLocalRuntime(modCompileOnly(include("earth.terrarium.athena:athena-fabric-${project.athena}")))
-    modLocalRuntime(modCompileOnly(include("com.teamresourceful.resourcefullib:resourcefullib-fabric-${project.resourcefullib}")))
+    implementation("maven.modrinth:midnightlib:${project.midnightlib}")
+    localRuntime(compileOnly(include("earth.terrarium.athena:athena-fabric-${project.athena}")))
+    localRuntime(compileOnly(include("com.teamresourceful.resourcefullib:resourcefullib-fabric-${project.resourcefullib}")))
 
     // COMPAT
-    modCompileOnly("com.terraformersmc:modmenu:${project.mod_menu_version}") {
+    compileOnly("com.terraformersmc:modmenu:${project.mod_menu_version}") {
         transitive = false
     }
-    modLocalRuntime("com.terraformersmc:modmenu:${project.mod_menu_version}") {
+    localRuntime("com.terraformersmc:modmenu:${project.mod_menu_version}") {
         transitive = false
     }
 
-    modCompileOnly("noobanidus.mods.lootr:lootr-fabric:${project.lootr_version}")
-    //modLocalRuntime("noobanidus.mods.lootr:lootr-fabric:${project.lootr_version}")
+    compileOnly("noobanidus.mods.lootr:lootr-fabric:${project.lootr_version}")
+    //localRuntime("noobanidus.mods.lootr:lootr-fabric:${project.lootr_version}")
 
-    modCompileOnly("dev.emi:trinkets:${project.trinkets}") { transitive false }
-    modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config}")
-    //modLocalRuntime("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config}")
-    modCompileOnly("curse.maven:restricted_portals-228266:${project.restricted_portals_file_id}")
+    //compileOnly("dev.emi:trinkets:${project.trinkets}") { transitive false }
+    compileOnly("me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config}") // TODO: switch to fabric version when they update
+    //localRuntime("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config}")
+    compileOnly("curse.maven:restricted_portals-228266:${project.restricted_portals_file_id}")
 
-    modCompileOnly("mezz.jei:jei-${project.jei_mc}-fabric:${project.jei}")
-    modCompileOnly("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
+    compileOnly("mezz.jei:jei-${project.jei_mc}-neoforge:${project.jei}") // TODO: switch to fabric version when they update
+    compileOnly("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
 
-    modCompileOnly("dev.emi:emi-xplat-intermediary:${project.emi}:api")
+    compileOnly("dev.emi:emi-neoforge:${project.emi}:api") // TODO: switch to fabric version when they update
 
-    modCompileOnly("me.shedaniel:RoughlyEnoughItems-fabric:${project.rei}") { transitive = false  }
-    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}")
+    compileOnly("me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei}") { transitive = false } // TODO: switch to fabric version when they update
+    compileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}")
 
-//    modLocalRuntime("com.telepathicgrunt:CommandStructures-Fabric:${project.commandstructures_fabric}")
-//    modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_fabric}")
+//    localRuntime("com.telepathicgrunt:CommandStructures-Fabric:${project.commandstructures_fabric}")
+//    localRuntime("com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_fabric}")
 }
 
 publishMods {
-    file = tasks.remapJar.archiveFile
+    file = tasks.jar.archiveFile
     modLoaders.add("fabric")
 
     File changeLog = project.file("CHANGELOG.md")

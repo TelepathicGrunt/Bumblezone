@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.neoforge.client;
 import com.telepathicgrunt.the_bumblezone.client.armor.ArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.items.BzArmor;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
@@ -24,7 +24,7 @@ public class BzArmorMixin extends ArmorItem {
     }
 
     @Override
-    public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
+    public @Nullable Identifier getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
         if (bz$armorModelProvider == null) {
             bz$armorModelProvider = ArmorModelProvider.get(stack.getItem());
         }

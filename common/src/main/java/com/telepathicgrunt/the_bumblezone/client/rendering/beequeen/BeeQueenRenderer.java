@@ -7,11 +7,11 @@ import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenModel> {
-    private static final ResourceLocation SKIN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/bee_queen.png");
-    private static final ResourceLocation ANGRY_SKIN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/bee_queen_angry.png");
+    private static final Identifier SKIN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/bee_queen.png");
+    private static final Identifier ANGRY_SKIN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/bee_queen_angry.png");
     private final ItemInHandRenderer itemRenderer;
 
     public BeeQueenRenderer(EntityRendererProvider.Context context) {
@@ -27,7 +27,7 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenModel>
     }
 
     @Override
-    public ResourceLocation getTextureLocation(BeeQueenEntity bee) {
+    public Identifier getTextureLocation(BeeQueenEntity bee) {
         return bee.isAngry() ? ANGRY_SKIN : SKIN;
     }
 }

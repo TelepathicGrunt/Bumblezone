@@ -28,7 +28,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -56,7 +56,7 @@ import java.util.Optional;
 
 public class ProductiveBeesCompat implements ModCompat {
 
-    private static final GeneralUtils.Lazy<List<ResourceLocation>> SPIDER_DUNGEON_HONEYCOMBS = new GeneralUtils.Lazy<>(() ->
+    private static final GeneralUtils.Lazy<List<Identifier>> SPIDER_DUNGEON_HONEYCOMBS = new GeneralUtils.Lazy<>(() ->
             BeeReloadListener.INSTANCE.getData().entrySet().stream().filter(e -> {
                 CompoundTag tag = e.getValue();
                 int primary = tag.getIntOr("primaryColor", 0);
@@ -67,7 +67,7 @@ public class ProductiveBeesCompat implements ModCompat {
                         colorsAreClose(GeneralUtils.colorToInt(34, 45, 0), primary, 150));
             }).map(Map.Entry::getKey).toList());
 
-    private static final GeneralUtils.Lazy<List<ResourceLocation>> BEE_DUNGEON_HONEYCOMBS = new GeneralUtils.Lazy<>(() ->
+    private static final GeneralUtils.Lazy<List<Identifier>> BEE_DUNGEON_HONEYCOMBS = new GeneralUtils.Lazy<>(() ->
             BeeReloadListener.INSTANCE.getData().entrySet().stream().filter(e -> {
                 CompoundTag tag = e.getValue();
                 return BzModCompatibilityConfigs.allowedCombsForDungeons.contains(e.getKey().toString()) &&
@@ -75,18 +75,18 @@ public class ProductiveBeesCompat implements ModCompat {
                         !SPIDER_DUNGEON_HONEYCOMBS.getOrFillFromInternal().contains(e.getKey());
             }).map(Map.Entry::getKey).toList());
 
-    private static final GeneralUtils.Lazy<List<ResourceLocation>> ALL_BEES = new GeneralUtils.Lazy<>(() ->
+    private static final GeneralUtils.Lazy<List<Identifier>> ALL_BEES = new GeneralUtils.Lazy<>(() ->
             BeeReloadListener.INSTANCE.getData().keySet().stream()
                     .filter(e -> BzModCompatibilityConfigs.allowedBees.contains(e.toString())).toList());
 
-    public static final TagKey<Block> SOLITARY_OVERWORLD_NESTS_TAG = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("productivebees", "solitary_overworld_nests"));
+    public static final TagKey<Block> SOLITARY_OVERWORLD_NESTS_TAG = TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("productivebees", "solitary_overworld_nests"));
 
     protected static Optional<Item> BEE_CAGE;
     protected static Optional<Item> STURDY_BEE_CAGE;
 
     public ProductiveBeesCompat() {
-        BEE_CAGE = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("productivebees", "bee_cage"));
-        STURDY_BEE_CAGE = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("productivebees", "sturdy_bee_cage"));
+        BEE_CAGE = BuiltInRegistries.ITEM.getOptional(Identifier.fromNamespaceAndPath("productivebees", "bee_cage"));
+        STURDY_BEE_CAGE = BuiltInRegistries.ITEM.getOptional(Identifier.fromNamespaceAndPath("productivebees", "sturdy_bee_cage"));
 
         if (BEE_CAGE.isPresent() && BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock) {
             setupDispenserCompat(BEE_CAGE.get()); // adds compatibility with bee cage in dispensers
@@ -98,7 +98,7 @@ public class ProductiveBeesCompat implements ModCompat {
 
         Bumblezone.MOD_COMPAT_DATAPACKS.add(addBuiltinDataPacks ->
                 addBuiltinDataPacks.add(
-                        ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "productive_bees_compat"),
+                        Identifier.fromNamespaceAndPath(Bumblezone.MODID, "productive_bees_compat"),
                         Component.literal("Bumblezone - Productive Bees Compat"),
                         BzAddBuiltinDataPacks.PackMode.FORCE_ENABLED
                 )
@@ -230,7 +230,7 @@ public class ProductiveBeesCompat implements ModCompat {
     @Override
     public OptionalBoolean validateCombType(CompoundTag tag) {
         if (tag.contains("type")) {
-            CompoundTag productiveBeesData = BeeReloadListener.INSTANCE.getData().get(ResourceLocation.tryParse(tag.getStringOr("type", "")));
+            CompoundTag productiveBeesData = BeeReloadListener.INSTANCE.getData().get(Identifier.tryParse(tag.getStringOr("type", "")));
             if (productiveBeesData != null && productiveBeesData.getBooleanOr("createComb" ,false)) {
                 return OptionalBoolean.TRUE;
             }

@@ -10,11 +10,11 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 public class BeeStingerRenderer extends EntityRenderer<BeeStingerEntity> {
-    public static final ResourceLocation BEE_STINGER_LOCATION = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/bee_stinger.png");
+    public static final Identifier BEE_STINGER_LOCATION = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/bee_stinger.png");
     private final BeeStingerModel model;
 
     public BeeStingerRenderer(EntityRendererProvider.Context context) {
@@ -34,7 +34,7 @@ public class BeeStingerRenderer extends EntityRenderer<BeeStingerEntity> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(BeeStingerEntity beeStingerEntity) {
+    public Identifier getTextureLocation(BeeStingerEntity beeStingerEntity) {
         return BEE_STINGER_LOCATION;
     }
 }

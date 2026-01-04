@@ -5,7 +5,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -18,7 +18,7 @@ import java.util.EnumSet;
 
 public class TwilightForestCompat implements ModCompat {
 	private static final String ENDER_BOW_ATTACHED_TAG = "twilightforest:ender";
-	private static final ResourceLocation ENDER_BOW_RL = ResourceLocation.fromNamespaceAndPath("twilightforest", "ender_bow");
+	private static final Identifier ENDER_BOW_RL = Identifier.fromNamespaceAndPath("twilightforest", "ender_bow");
 
 	public TwilightForestCompat() {
 		// Keep at end so it is only set to true if no exceptions was thrown during setup

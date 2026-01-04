@@ -4,12 +4,12 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiTexture;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class QueenRandomizerTradesEMICategory extends EmiRecipeCategory {
 
 	public QueenRandomizerTradesEMICategory() {
-		super(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "queen_color_randomizer_trades"), new EmiTexture(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/bee_queen_randomize_trades.png"), 0, 0, 16, 16, 16, 16, 16, 16));
+		super(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "queen_color_randomizer_trades"), new EmiTexture(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/bee_queen_randomize_trades.png"), 0, 0, 16, 16, 16, 16, 16, 16));
 	}
 
 	public Component getName() {

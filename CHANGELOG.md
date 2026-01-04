@@ -1,4 +1,4 @@
-### **(V.7.9.0 Changes) (1.21.10 Minecraft)**
+### **(V.7.9.0 Changes) (26.1.0 Minecraft)**
 
 #### Misc:
-Ported to 1.21.10
+Ported to 26.1.0

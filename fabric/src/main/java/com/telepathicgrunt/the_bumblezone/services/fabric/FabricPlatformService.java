@@ -29,7 +29,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -79,7 +79,7 @@ public class FabricPlatformService implements PlatformService {
                 .sized(size, size)
                 .clientTrackingRange(clientTrackingRange)
                 .updateInterval(updateInterval)
-                .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
     }
     
     @Override
@@ -89,7 +89,7 @@ public class FabricPlatformService implements PlatformService {
                 .sized(xzSize, ySize)
                 .clientTrackingRange(clientTrackingRange)
                 .updateInterval(updateInterval)
-                .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
     }
 
     @Override
@@ -100,7 +100,7 @@ public class FabricPlatformService implements PlatformService {
                 .eyeHeight(eyeHeight)
                 .clientTrackingRange(clientTrackingRange)
                 .updateInterval(updateInterval)
-                .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
     }
     
     @Override

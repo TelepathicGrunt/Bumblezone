@@ -7,7 +7,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
@@ -22,7 +22,7 @@ public class ReliquaryCompat implements ModCompat {
 	public static Optional<Holder.Reference<Item>> RENDING_GALE;
 
 	public ReliquaryCompat() {
-		RENDING_GALE = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("reliquary", "rending_gale"));
+		RENDING_GALE = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("reliquary", "rending_gale"));
 
 		IEventBus eventBus = NeoForge.EVENT_BUS;
 		eventBus.addListener(ReliquaryCompat::onRendingGaleItemUse);

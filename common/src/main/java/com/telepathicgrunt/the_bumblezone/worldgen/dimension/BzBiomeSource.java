@@ -22,7 +22,7 @@ import com.telepathicgrunt.the_bumblezone.worldgen.dimension.layer.vanilla.LazyA
 import com.telepathicgrunt.the_bumblezone.worldgen.dimension.layer.vanilla.ZoomLayer;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.biome.BiomeSource;
@@ -43,12 +43,12 @@ public class BzBiomeSource extends BiomeSource implements BiomeManager.NoiseBiom
                 Biome.LIST_CODEC.fieldOf("main_biomes").orElse(HolderSet.direct()).forGetter((biomeSource) -> biomeSource.mainBiomes))
             .apply(instance, instance.stable(BzBiomeSource::new)));
 
-    public static final ResourceLocation HIVE_WALL = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "hive_wall");
-    public static final ResourceLocation HIVE_PILLAR = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "hive_pillar");
-    public static final ResourceLocation SUGAR_WATER_FLOOR = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "sugar_water_floor");
-    public static final ResourceLocation POLLINATED_FIELDS = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "pollinated_fields");
-    public static final ResourceLocation POLLINATED_PILLAR = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "pollinated_pillar");
-    public static final ResourceLocation CRYSTAL_CANYON = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "crystal_canyon");
+    public static final Identifier HIVE_WALL = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "hive_wall");
+    public static final Identifier HIVE_PILLAR = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "hive_pillar");
+    public static final Identifier SUGAR_WATER_FLOOR = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "sugar_water_floor");
+    public static final Identifier POLLINATED_FIELDS = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "pollinated_fields");
+    public static final Identifier POLLINATED_PILLAR = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "pollinated_pillar");
+    public static final Identifier CRYSTAL_CANYON = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystal_canyon");
 
     private final long seed;
     private final Layer biomeSampler;

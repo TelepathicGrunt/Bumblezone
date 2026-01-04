@@ -22,7 +22,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.tags.TagKey;
@@ -127,7 +127,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, TradeCollection> loader, ResourceManager manager, ProfilerFiller profiler) {
+    protected void apply(Map<Identifier, TradeCollection> loader, ResourceManager manager, ProfilerFiller profiler) {
         rawTrades.clear();
         loader.forEach((fileIdentifier, tradeCollection) -> {
             validateResult(fileIdentifier, tradeCollection);
@@ -135,7 +135,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
         });
     }
 
-    private void validateResult(ResourceLocation fileIdentifier, TradeCollection tradeCollection) throws IllegalArgumentException {
+    private void validateResult(Identifier fileIdentifier, TradeCollection tradeCollection) throws IllegalArgumentException {
         if (tradeCollection.resultItems().isEmpty() && !tradeCollection.randomizerTrade()) {
             Bumblezone.LOGGER.error("Cannot have empty resultItems list if randomizerTrade is false. If resultItems field is present in file, check for typos or mistakes in file: {}", fileIdentifier);
         }
@@ -270,7 +270,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
 
     private static TradeWantEntry getInputTradeEntry(RawTradeInputEntry rawTradeInputEntry) {
         if (rawTradeInputEntry.entry.startsWith("#")) {
-            TagKey<Item> tagKey = TagKey.create(Registries.ITEM, ResourceLocation.tryParse(rawTradeInputEntry.entry.replace("#", "")));
+            TagKey<Item> tagKey = TagKey.create(Registries.ITEM, Identifier.tryParse(rawTradeInputEntry.entry.replace("#", "")));
             Optional<HolderSet.Named<Item>> tag = BuiltInRegistries.ITEM.get(tagKey);
             if (tag.isEmpty() && rawTradeInputEntry.required) {
                 Bumblezone.LOGGER.error("Trade input entry is set to required but " + rawTradeInputEntry.entry + " tag does not exist.");
@@ -280,7 +280,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
             }
         }
         else {
-            Optional<Holder.Reference<Item>> item = BuiltInRegistries.ITEM.get(ResourceKey.create(Registries.ITEM, ResourceLocation.tryParse(rawTradeInputEntry.entry)));
+            Optional<Holder.Reference<Item>> item = BuiltInRegistries.ITEM.get(ResourceKey.create(Registries.ITEM, Identifier.tryParse(rawTradeInputEntry.entry)));
             if (item.isEmpty() && rawTradeInputEntry.required) {
                 Bumblezone.LOGGER.error("Trade input entry is set to required but " + rawTradeInputEntry.entry + " item does not exist.");
             }
@@ -296,7 +296,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
 
         for (RawTradeOutputEntry rawTradeOutputEntry : rawTradeOutputEntries) {
             if (rawTradeOutputEntry.tag().isPresent()) {
-                TagKey<Item> tagKey = TagKey.create(Registries.ITEM, ResourceLocation.tryParse(rawTradeOutputEntry.tag().get().replace("#", "")));
+                TagKey<Item> tagKey = TagKey.create(Registries.ITEM, Identifier.tryParse(rawTradeOutputEntry.tag().get().replace("#", "")));
                 Optional<HolderSet.Named<Item>> tag = BuiltInRegistries.ITEM.get(tagKey);
                 if (tag.isEmpty()) {
                     if (rawTradeOutputEntry.required) {

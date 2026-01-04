@@ -326,7 +326,7 @@
     {
       "spawner_mob_entries": [
         {
-          "resourcelocation": "minecraft:endermite",
+          "identifier": "minecraft:endermite",
           "weight": 100
         }
       ],

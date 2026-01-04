@@ -3,7 +3,7 @@
     "processors": "the_bumblezone:honeycomb_hole_processors",
     "nbt_entries": [
       {
-        "resourcelocation": "the_bumblezone:honeycomb_hole",
+        "identifier": "the_bumblezone:honeycomb_hole",
         "weight": 1
       }
     ]

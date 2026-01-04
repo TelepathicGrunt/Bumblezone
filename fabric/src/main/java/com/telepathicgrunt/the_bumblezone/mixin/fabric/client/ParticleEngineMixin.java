@@ -8,7 +8,7 @@ import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,7 +26,7 @@ public abstract class ParticleEngineMixin {
 
     @Final
     @Shadow
-    private Map<ResourceLocation, ParticleEngine.MutableSpriteSet> spriteSets;
+    private Map<Identifier, ParticleEngine.MutableSpriteSet> spriteSets;
 
     @Final
     @Shadow

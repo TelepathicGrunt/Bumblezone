@@ -19,7 +19,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.EnchantmentTags;
@@ -52,7 +52,7 @@ public class BeeAggression {
      * Making the list can be expensive which is why we make it at game startup rather than every tick.
      */
     public static void setupBeeHatingList() {
-        for (ResourceLocation id : BuiltInRegistries.ENTITY_TYPE.keySet()) {
+        for (Identifier id : BuiltInRegistries.ENTITY_TYPE.keySet()) {
             String mobName = id.getPath();
             if(mobName.contains("bee") || mobName.contains("bumble_beast")) {
                 SET_OF_BEE_NAMED_ENTITIES.add(BuiltInRegistries.ENTITY_TYPE.get(id).get().value());

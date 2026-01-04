@@ -29,7 +29,7 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -94,7 +94,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     private boolean wasOnGround = false;
     public float flyingSpeed = 0.02F;
 
-    private static final ResourceLocation FRIENDSHIP_HEALTH_BOOST = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "friendship_health_boost");
+    private static final Identifier FRIENDSHIP_HEALTH_BOOST = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "friendship_health_boost");
     private static final int MAX_FRIENDSHIP_HEALTH_BOOST_AMOUNT = 20;
 
     public BeehemothEntity(EntityType<? extends BeehemothEntity> type, Level world) {
@@ -255,7 +255,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
             if (!doNothingWithCurrentHealth) {
                 attributeInstance.removeModifier(FRIENDSHIP_HEALTH_BOOST);
                 attributeInstance.addTransientModifier(new AttributeModifier(
-                        ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "friendship_health_boost"),
+                        Identifier.fromNamespaceAndPath(Bumblezone.MODID, "friendship_health_boost"),
                         healthBoost,
                         AttributeModifier.Operation.ADD_VALUE));
 
@@ -366,7 +366,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
-        ResourceLocation itemRL = BuiltInRegistries.ITEM.getKey(item);
+        Identifier itemRL = BuiltInRegistries.ITEM.getKey(item);
         if (this.level().isClientSide) {
             if (isTame() && isOwnedBy(player)) {
                 return InteractionResult.SUCCESS;

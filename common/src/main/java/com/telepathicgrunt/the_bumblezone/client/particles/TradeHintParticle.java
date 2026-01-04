@@ -20,7 +20,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
@@ -36,7 +36,7 @@ import java.util.List;
 public class TradeHintParticle extends Particle {
     public final static int TRADE_REWARD_CYCLE_TIME = 40;
     public final static double PARTICLE_Y_OFFSET = 4D;
-    public final static ResourceLocation SPEECH_BUBBLE_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "trade_hint/1");
+    public final static Identifier SPEECH_BUBBLE_TEXTURE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "trade_hint/1");
 
     private final RenderBuffers renderBuffers;
     private final ItemRenderer itemRenderer;

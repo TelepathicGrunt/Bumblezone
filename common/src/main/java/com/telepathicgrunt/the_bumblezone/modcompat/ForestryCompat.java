@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinDataPacks;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class ForestryCompat implements ModCompat {
 
@@ -11,7 +11,7 @@ public class ForestryCompat implements ModCompat {
 
         Bumblezone.MOD_COMPAT_DATAPACKS.add(addBuiltinDataPacks ->
             addBuiltinDataPacks.add(
-                ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "forestry_compat"),
+                Identifier.fromNamespaceAndPath(Bumblezone.MODID, "forestry_compat"),
                 Component.literal("Bumblezone - Forestry Compat"),
                 BzAddBuiltinDataPacks.PackMode.FORCE_ENABLED
             )

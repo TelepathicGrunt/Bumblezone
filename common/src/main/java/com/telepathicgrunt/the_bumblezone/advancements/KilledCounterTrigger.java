@@ -9,7 +9,7 @@ import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
@@ -32,7 +32,7 @@ public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTr
     public record TriggerInstance(
         Optional<ContextAwarePredicate> player,
         int targetCount,
-        ResourceLocation targetEntity,
+        Identifier targetEntity,
         boolean isTargetTag,
         boolean beeArmorRequired
     ) implements SimpleCriterionTrigger.SimpleInstance {
@@ -41,7 +41,7 @@ public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTr
                 RecordCodecBuilder.create(instance -> instance.group(
                         EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(KilledCounterTrigger.TriggerInstance::player),
                         ExtraCodecs.POSITIVE_INT.fieldOf("target_count").forGetter(KilledCounterTrigger.TriggerInstance::targetCount),
-                        ResourceLocation.CODEC.fieldOf("target_entity").forGetter(KilledCounterTrigger.TriggerInstance::targetEntity),
+                        Identifier.CODEC.fieldOf("target_entity").forGetter(KilledCounterTrigger.TriggerInstance::targetEntity),
                         Codec.BOOL.fieldOf("is_target_tag").orElse(false).forGetter(KilledCounterTrigger.TriggerInstance::isTargetTag),
                         Codec.BOOL.fieldOf("bee_armor_required").orElse(false).forGetter(KilledCounterTrigger.TriggerInstance::beeArmorRequired)
                 ).apply(instance, KilledCounterTrigger.TriggerInstance::new));

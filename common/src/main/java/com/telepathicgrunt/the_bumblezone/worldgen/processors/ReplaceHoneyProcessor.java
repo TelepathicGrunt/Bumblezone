@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -33,7 +33,7 @@ public class ReplaceHoneyProcessor extends StructureProcessor {
 
         BlockState structureState = structureBlockInfoWorld.state();
         if (!structureState.getFluidState().isEmpty() && structureState.getFluidState().is(BzTags.BZ_HONEY_FLUID) && !BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid.isEmpty() && cachedAlternativeFluid != Fluids.EMPTY) {
-            ResourceLocation newFluidRl = ResourceLocation.tryParse(BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid);
+            Identifier newFluidRl = Identifier.tryParse(BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid);
             Fluid newFluid = !BuiltInRegistries.FLUID.getKey(cachedAlternativeFluid).equals(newFluidRl) ? BuiltInRegistries.FLUID.get(newFluidRl).get().value() : cachedAlternativeFluid;
             if (newFluid != null) {
                 cachedAlternativeFluid = newFluid;

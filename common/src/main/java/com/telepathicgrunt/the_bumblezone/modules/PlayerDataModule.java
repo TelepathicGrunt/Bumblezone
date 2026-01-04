@@ -6,7 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class PlayerDataModule implements Module<PlayerDataModule> {
     public static final MapCodec<PlayerDataModule> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
@@ -25,11 +25,11 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
             Codec.INT.fieldOf("honeySlimeBred").forGetter(module -> module.honeySlimeBred),
             Codec.INT.fieldOf("beesFed").forGetter(module -> module.beesFed),
             Codec.INT.fieldOf("queenBeeTrade").forGetter(module -> module.queenBeeTrade),
-            Codec.unboundedMap(ResourceLocation.CODEC, Codec.INT).fieldOf("mobsKilledTracker")
+            Codec.unboundedMap(Identifier.CODEC, Codec.INT).fieldOf("mobsKilledTracker")
                     .xmap(Object2IntOpenHashMap::new, Object2IntOpenHashMap::new).forGetter(module -> module.mobsKilledTracker)
     ).apply(instance, PlayerDataModule::new));
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "player_data");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "player_data");
 
     public boolean isBeeEssenced;
     public boolean gottenWelcomed;
@@ -46,7 +46,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
     public int honeySlimeBred;
     public int beesFed;
     public int queenBeeTrade;
-    public final Object2IntOpenHashMap<ResourceLocation> mobsKilledTracker;
+    public final Object2IntOpenHashMap<Identifier> mobsKilledTracker;
 
     public PlayerDataModule(boolean isBeeEssenced,
                             boolean gottenWelcomed,
@@ -63,7 +63,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
                             int honeySlimeBred,
                             int beesFed,
                             int queenBeeTrade,
-                            Object2IntOpenHashMap<ResourceLocation> mobsKilledTracker) {
+                            Object2IntOpenHashMap<Identifier> mobsKilledTracker) {
         this.isBeeEssenced = isBeeEssenced;
         this.gottenWelcomed = gottenWelcomed;
         this.gottenWelcomedInDimension = gottenWelcomedInDimension;
@@ -123,7 +123,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
     }
 
     @Override
-    public ResourceLocation id() {
+    public Identifier id() {
         return ID;
     }
 }

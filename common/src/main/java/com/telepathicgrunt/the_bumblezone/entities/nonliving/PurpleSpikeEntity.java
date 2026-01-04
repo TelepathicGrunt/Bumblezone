@@ -13,7 +13,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -322,7 +322,7 @@ public class PurpleSpikeEntity extends Entity {
             NbtUtils.readBlockPos(compoundTag, "essenceControllerBlockPos").ifPresent(this::setEssenceControllerBlockPos);
         }
         if (compoundTag.contains("essenceControllerDimension")) {
-            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(compoundTag.getString("essenceControllerDimension"))));
+            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, Identifier.tryParse(compoundTag.getString("essenceControllerDimension"))));
         }
     }
 

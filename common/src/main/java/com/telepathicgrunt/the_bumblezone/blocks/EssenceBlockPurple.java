@@ -13,7 +13,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.MusicPacketFromServer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
@@ -61,8 +61,8 @@ public class EssenceBlockPurple extends EssenceBlock {
     }
 
     @Override
-    public ResourceLocation getArenaNbt() {
-        return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence/purple_arena");
+    public Identifier getArenaNbt() {
+        return Identifier.fromNamespaceAndPath(Bumblezone.MODID, "essence/purple_arena");
     }
 
     @Override
@@ -80,8 +80,8 @@ public class EssenceBlockPurple extends EssenceBlock {
     }
 
     @Override
-    public ResourceLocation getEssenceItemReward() {
-        return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "gameplay/rewards/purple_arena_victory");
+    public Identifier getEssenceItemReward() {
+        return Identifier.fromNamespaceAndPath(Bumblezone.MODID, "gameplay/rewards/purple_arena_victory");
     }
 
     @Override

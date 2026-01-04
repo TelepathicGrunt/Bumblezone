@@ -8,7 +8,7 @@ import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.NbtFeatureCo
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -23,7 +23,7 @@ import java.util.Optional;
 
 public class NbtFeature <T extends NbtFeatureConfig> extends Feature<T> {
 
-    private static final ResourceLocation EMPTY = ResourceLocation.fromNamespaceAndPath("minecraft", "empty");
+    private static final Identifier EMPTY = Identifier.fromNamespaceAndPath("minecraft", "empty");
 
     public NbtFeature(Codec<T> configFactory) {
         super(configFactory);
@@ -31,7 +31,7 @@ public class NbtFeature <T extends NbtFeatureConfig> extends Feature<T> {
 
     @Override
     public boolean place(FeaturePlaceContext<T> context) {
-        ResourceLocation nbtRL = GeneralUtils.getRandomEntry(context.config().nbtResourcelocationsAndWeights, context.random());
+        Identifier nbtRL = GeneralUtils.getRandomEntry(context.config().nbtResourcelocationsAndWeights, context.random());
 
         StructureTemplateManager structureManager = context.level().getLevel().getStructureManager();
         Optional<StructureTemplate> template = structureManager.get(nbtRL);

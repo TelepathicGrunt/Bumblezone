@@ -7,13 +7,13 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.packets.handlers.MobEffectClientSyncPacketHandleBody;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 
-public record MobEffectClientSyncPacket(int entityId, ResourceLocation effectRl, byte effectAmplifier, int effectDurationTicks, byte flags) implements Packet<MobEffectClientSyncPacket> {
+public record MobEffectClientSyncPacket(int entityId, Identifier effectRl, byte effectAmplifier, int effectDurationTicks, byte flags) implements Packet<MobEffectClientSyncPacket> {
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "mob_effect_client_sync");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "mob_effect_client_sync");
     public static final ClientboundPacketType<MobEffectClientSyncPacket> TYPE = new MobEffectClientSyncPacket.Handler();
 
     private static final int FLAG_AMBIENT = 1;
@@ -73,7 +73,7 @@ public record MobEffectClientSyncPacket(int entityId, ResourceLocation effectRl,
         @Override
         public void encode(MobEffectClientSyncPacket message, RegistryFriendlyByteBuf buffer) {
             buffer.writeVarInt(message.entityId);
-            buffer.writeResourceLocation(message.effectRl);
+            buffer.writeIdentifier(message.effectRl);
             buffer.writeByte(message.effectAmplifier);
             buffer.writeVarInt(message.effectDurationTicks);
             buffer.writeByte(message.flags);
@@ -83,7 +83,7 @@ public record MobEffectClientSyncPacket(int entityId, ResourceLocation effectRl,
         public MobEffectClientSyncPacket decode(RegistryFriendlyByteBuf buffer) {
             return new MobEffectClientSyncPacket(
                     buffer.readVarInt(),
-                    buffer.readResourceLocation(),
+                    buffer.readIdentifier(),
                     buffer.readByte(),
                     buffer.readVarInt(),
                     buffer.readByte()
@@ -96,7 +96,7 @@ public record MobEffectClientSyncPacket(int entityId, ResourceLocation effectRl,
         }
 
         @Override
-        public ResourceLocation id() {
+        public Identifier id() {
             return ID;
         }
     }

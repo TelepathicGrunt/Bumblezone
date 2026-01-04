@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
@@ -53,7 +53,7 @@ public class BzArmorMaterials {
             defenseMap.put(type, enumMap.get(type));
         }
 
-        List<ArmorMaterial.Layer> layers = List.of(new ArmorMaterial.Layer(ResourceLocation.tryParse(layerName)));
+        List<ArmorMaterial.Layer> layers = List.of(new ArmorMaterial.Layer(Identifier.tryParse(layerName)));
 
         return new ArmorMaterial(defenseMap, enchantmentValue, equipSound, repairIngredient, layers, toughness, knockback);
     }

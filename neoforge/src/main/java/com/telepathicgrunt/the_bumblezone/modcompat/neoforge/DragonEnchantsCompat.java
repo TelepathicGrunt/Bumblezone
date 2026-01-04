@@ -6,7 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -17,7 +17,7 @@ import java.util.EnumSet;
 
 public class DragonEnchantsCompat implements ModCompat {
 	private static final String END_STEP_ENCHANT_ATTACHED_TAG = "dragonenchants:end_step";
-	private static final ResourceLocation END_STEP_RL = ResourceLocation.fromNamespaceAndPath("dragonenchants", "end_step");
+	private static final Identifier END_STEP_RL = Identifier.fromNamespaceAndPath("dragonenchants", "end_step");
 
 	public DragonEnchantsCompat() {
 		// Keep at end so it is only set to true if no exceptions was thrown during setup

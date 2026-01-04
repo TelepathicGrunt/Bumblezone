@@ -14,7 +14,7 @@ import net.minecraft.core.QuartPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.Pools;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.block.JigsawBlock;
@@ -101,7 +101,7 @@ public class OptimizedJigsawManager {
             BiConsumer<StructurePiecesBuilder, List<PoolElementStructurePiece>> structureBoundsAdjuster,
             boolean ignoreBounds,
             LiquidSettings liquidSettings,
-            Optional<ResourceLocation> startJigsaw
+            Optional<Identifier> startJigsaw
     ) {
         // Get a random orientation for the starting piece
         WorldgenRandom random = new WorldgenRandom(new LegacyRandomSource(0L));
@@ -110,7 +110,7 @@ public class OptimizedJigsawManager {
         // Get starting pool
         StructureTemplatePool startPool = startPoolHolder.value();
         if(startPool.size() == 0) {
-            ResourceLocation structureID = context.registryAccess().getOrThrow(Registries.STRUCTURE).value().getKey(structureObject);
+            Identifier structureID = context.registryAccess().getOrThrow(Registries.STRUCTURE).value().getKey(structureObject);
             Bumblezone.LOGGER.warn("Bumblezone: Empty or nonexistent start pool in structure: {}  Crash is imminent", structureID);
             throw new RuntimeException("Bumblezone: Empty or nonexistent start pool in structure: " + structureID + " Crash is imminent");
         }
@@ -125,12 +125,12 @@ public class OptimizedJigsawManager {
         Rotation rotation = Rotation.getRandom(random);
         BlockPos trueStartPos = startPos;
         if (startJigsaw.isPresent()) {
-            ResourceLocation resourceLocation = startJigsaw.get();
-            Optional<BlockPos> optionalStartOffset = getRandomNamedJigsaw(startPieceBlueprint, resourceLocation, BlockPos.ZERO, rotation, context.structureTemplateManager(), random);
+            Identifier identifier = startJigsaw.get();
+            Optional<BlockPos> optionalStartOffset = getRandomNamedJigsaw(startPieceBlueprint, identifier, BlockPos.ZERO, rotation, context.structureTemplateManager(), random);
             if (optionalStartOffset.isEmpty()) {
                 Bumblezone.LOGGER.error(
                     "No starting jigsaw {} found in start pool {}",
-                    resourceLocation,
+                    identifier,
                     startPoolHolder.unwrapKey().map(resourceKey -> resourceKey.location().toString()).orElse("<unregistered>")
                 );
                 return Optional.empty();
@@ -232,7 +232,7 @@ public class OptimizedJigsawManager {
 
     private static Optional<BlockPos> getRandomNamedJigsaw(
             StructurePoolElement structurePoolElement,
-            ResourceLocation resourceLocation,
+            Identifier identifier,
             BlockPos blockPos,
             Rotation rotation,
             StructureTemplateManager structureTemplateManager,
@@ -242,10 +242,10 @@ public class OptimizedJigsawManager {
         Optional<BlockPos> optional = Optional.empty();
 
         for (StructureTemplate.JigsawBlockInfo structureBlockInfo : list) {
-            ResourceLocation resourceLocation2 = ResourceLocation.tryParse(
+            Identifier identifier2 = Identifier.tryParse(
                 Objects.requireNonNull(structureBlockInfo.info().nbt(), () -> structureBlockInfo + " nbt was null").getStringOr("name", "")
             );
-            if (resourceLocation.equals(resourceLocation2)) {
+            if (identifier.equals(identifier2)) {
                 optional = Optional.of(structureBlockInfo.info().pos());
                 break;
             }

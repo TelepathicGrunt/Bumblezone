@@ -28,8 +28,9 @@ public class FabricModChecker {
 
         String modid = "";
         try {
-            modid = "trinkets";
-            loadupModCompat(modid, () -> new TrinketsCompat());
+            // TODO: turn back on when trinkets updates
+//            modid = "trinkets";
+//            loadupModCompat(modid, () -> new TrinketsCompat());
 
             modid = "spectrumjetpacks";
             loadupModCompat(modid, () -> new SpectrumJetpackCompat());

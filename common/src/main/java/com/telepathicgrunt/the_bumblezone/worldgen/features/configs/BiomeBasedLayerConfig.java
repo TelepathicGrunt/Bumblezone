@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.worldgen.features.configs;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
@@ -15,24 +15,24 @@ public class BiomeBasedLayerConfig implements FeatureConfiguration {
             BlockState.CODEC.fieldOf("state").forGetter((config) -> config.state),
             BlockState.CODEC.optionalFieldOf("rare_state").forGetter((config) -> config.rareState),
             Codec.floatRange(0, 1).fieldOf("rare_state_chance").orElse(0F).forGetter((config) -> config.rareStateChance),
-            ResourceLocation.CODEC.optionalFieldOf("suspicious_block_loot").forGetter((config) -> config.suspiciousBlockLoot),
-            ResourceLocation.CODEC.fieldOf("biome_resourcelocation").forGetter((config) -> config.biomeRL)
+            Identifier.CODEC.optionalFieldOf("suspicious_block_loot").forGetter((config) -> config.suspiciousBlockLoot),
+            Identifier.CODEC.fieldOf("biome_identifier").forGetter((config) -> config.biomeRL)
         ).apply(instance, BiomeBasedLayerConfig::new));
 
     public final int height;
     public final BlockState state;
     public final Optional<BlockState> rareState;
     public final float rareStateChance;
-    public final Optional<ResourceLocation> suspiciousBlockLoot;
-    public final ResourceLocation biomeRL;
+    public final Optional<Identifier> suspiciousBlockLoot;
+    public final Identifier biomeRL;
 
     public BiomeBasedLayerConfig(
             int height,
             BlockState state,
             Optional<BlockState> rareState,
             float rareStateChance,
-            Optional<ResourceLocation> suspiciousBlockLoot,
-            ResourceLocation biomeRL)
+            Optional<Identifier> suspiciousBlockLoot,
+            Identifier biomeRL)
     {
         this.height = height;
         this.state = state;

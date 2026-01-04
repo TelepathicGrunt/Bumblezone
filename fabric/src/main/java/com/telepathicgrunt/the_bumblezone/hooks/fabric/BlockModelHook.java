@@ -1,13 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.hooks.fabric;
 
 import com.google.gson.JsonObject;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public interface BlockModelHook {
 
-    void bz$setModelData(ResourceLocation modelType, JsonObject data);
+    void bz$setModelData(Identifier modelType, JsonObject data);
 
-    ResourceLocation bz$getModelType();
+    Identifier bz$getModelType();
 
     JsonObject bz$getModelData();
 

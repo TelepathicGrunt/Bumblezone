@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,33 +26,33 @@ import java.util.function.Function;
 
 public class HoneyFluidClientProperties {
 
-    public static final ResourceLocation HONEY_FLUID_STILL_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "block/honey_fluid/still");
-    public static final ResourceLocation HONEY_FLUID_FLOWING_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "block/honey_fluid/flow");
-    public static final ResourceLocation HONEY_FLUID_FLOWING_DIAGONAL_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "block/honey_fluid/flow_diagonal");
+    public static final Identifier HONEY_FLUID_STILL_TEXTURE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "block/honey_fluid/still");
+    public static final Identifier HONEY_FLUID_FLOWING_TEXTURE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "block/honey_fluid/flow");
+    public static final Identifier HONEY_FLUID_FLOWING_DIAGONAL_TEXTURE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "block/honey_fluid/flow_diagonal");
 
     public static ClientFluidProperties create() {
         return new ClientFluidProperties() {
             @Override
-            public ResourceLocation still(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
+            public Identifier still(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
                 return HONEY_FLUID_STILL_TEXTURE;
             }
 
             @Override
-            public ResourceLocation flowing(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
+            public Identifier flowing(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
                 return HONEY_FLUID_FLOWING_TEXTURE;
             }
 
-            public ResourceLocation flowingDiagonal(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
+            public Identifier flowingDiagonal(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
                 return HONEY_FLUID_FLOWING_DIAGONAL_TEXTURE;
             }
 
             @Override
-            public ResourceLocation overlay(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
+            public Identifier overlay(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
                 return HONEY_FLUID_FLOWING_TEXTURE;
             }
 
             @Override
-            public ResourceLocation screenOverlay() {
+            public Identifier screenOverlay() {
                 return null;
             }
 
@@ -67,7 +67,7 @@ public class HoneyFluidClientProperties {
             }
 
             @Override
-            public boolean renderFluid(BlockPos pos, BlockAndTintGetter level, VertexConsumer vertexConsumer, BlockState blockState, FluidState fluidState, Function<ResourceLocation, TextureAtlasSprite> sprites) {
+            public boolean renderFluid(BlockPos pos, BlockAndTintGetter level, VertexConsumer vertexConsumer, BlockState blockState, FluidState fluidState, Function<Identifier, TextureAtlasSprite> sprites) {
                 TextureAtlasSprite[] textureAtlasSprites = new TextureAtlasSprite[] {
                         sprites.apply(this.still(level, pos, fluidState)),
                         sprites.apply(this.flowing(level, pos, fluidState)),

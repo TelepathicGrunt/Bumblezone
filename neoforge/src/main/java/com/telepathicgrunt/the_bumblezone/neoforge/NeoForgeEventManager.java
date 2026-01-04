@@ -51,7 +51,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
@@ -213,7 +213,7 @@ public class NeoForgeEventManager {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             BzAddBuiltinResourcePacks.EVENT.invoke(new BzAddBuiltinResourcePacks((id, displayName, mode) -> {
                 event.addPackFinders(
-                    ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "resourcepacks/" + id.getPath()),
+                    Identifier.fromNamespaceAndPath(id.getNamespace(), "resourcepacks/" + id.getPath()),
                     PackType.CLIENT_RESOURCES,
                     displayName,
                     PackSource.BUILT_IN,
@@ -226,7 +226,7 @@ public class NeoForgeEventManager {
         if (event.getPackType() == PackType.SERVER_DATA) {
             BzAddBuiltinDataPacks.EVENT.invoke(new BzAddBuiltinDataPacks((id, displayName, mode) -> {
                 event.addPackFinders(
-                        ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "datapacks/" + id.getPath()),
+                        Identifier.fromNamespaceAndPath(id.getNamespace(), "datapacks/" + id.getPath()),
                         PackType.SERVER_DATA,
                         displayName,
                         PackSource.BUILT_IN,

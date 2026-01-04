@@ -6,15 +6,15 @@ import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.packets.handlers.MusicPacketFromServerHandleBody;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
-public record MusicPacketFromServer(ResourceLocation musicRL, boolean play) implements Packet<MusicPacketFromServer> {
+public record MusicPacketFromServer(Identifier musicRL, boolean play) implements Packet<MusicPacketFromServer> {
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "music_packet_from_server");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "music_packet_from_server");
     public static final ClientboundPacketType<MusicPacketFromServer> TYPE = new MusicPacketFromServer.Handler();
 
-    public static void sendToClient(Player player, ResourceLocation musicRL, boolean play) {
+    public static void sendToClient(Player player, Identifier musicRL, boolean play) {
         MessageHandler.DEFAULT_CHANNEL.sendToPlayer(new MusicPacketFromServer(musicRL, play), player);
     }
 
@@ -27,13 +27,13 @@ public record MusicPacketFromServer(ResourceLocation musicRL, boolean play) impl
 
         @Override
         public void encode(MusicPacketFromServer message, RegistryFriendlyByteBuf buffer) {
-            buffer.writeResourceLocation(message.musicRL());
+            buffer.writeIdentifier(message.musicRL());
             buffer.writeBoolean(message.play());
         }
 
         @Override
         public MusicPacketFromServer decode(RegistryFriendlyByteBuf buffer) {
-            return new MusicPacketFromServer(buffer.readResourceLocation(), buffer.readBoolean());
+            return new MusicPacketFromServer(buffer.readIdentifier(), buffer.readBoolean());
         }
 
         @Override
@@ -42,7 +42,7 @@ public record MusicPacketFromServer(ResourceLocation musicRL, boolean play) impl
         }
 
         @Override
-        public ResourceLocation id() {
+        public Identifier id() {
             return ID;
         }
     }

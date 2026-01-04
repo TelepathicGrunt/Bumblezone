@@ -12,7 +12,7 @@ import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -34,7 +34,7 @@ public class BumblezoneAPI {
     /**
      * ID of the dimension for Bumblezone
      */
-    public static final ResourceLocation MOD_DIMENSION_ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, Bumblezone.MODID);
+    public static final Identifier MOD_DIMENSION_ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, Bumblezone.MODID);
 
     // Requiem mod uses this method
     /**

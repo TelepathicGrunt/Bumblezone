@@ -16,7 +16,7 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,8 +24,8 @@ import net.minecraft.world.item.ItemStack;
 
 public class BeeArmorModel extends HumanoidModel<LivingEntity> {
 
-    public static final ModelLayerLocation VARIANT_1_LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "bee_armor"), "bee_armor");
-    public static final ModelLayerLocation VARIANT_2_LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "bee_armor"), "bee_armor_2");
+    public static final ModelLayerLocation VARIANT_1_LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "bee_armor"), "bee_armor");
+    public static final ModelLayerLocation VARIANT_2_LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "bee_armor"), "bee_armor_2");
     protected final EquipmentSlot slot;
     public LivingEntity entityLiving;
     public final ModelPart leftWing;

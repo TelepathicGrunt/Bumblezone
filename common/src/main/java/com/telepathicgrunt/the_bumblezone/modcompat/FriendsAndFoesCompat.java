@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.item.Items;
 
@@ -18,7 +18,7 @@ public class FriendsAndFoesCompat implements ModCompat {
 
     public FriendsAndFoesCompat() {
         if(BzModCompatibilityConfigs.allowFriendsAndFoesBeekeeperTradesCompat) {
-            BEEKEEPER =  ResourceKey.create(Registries.VILLAGER_PROFESSION, ResourceLocation.fromNamespaceAndPath("friendsandfoes", "beekeeper"));
+            BEEKEEPER =  ResourceKey.create(Registries.VILLAGER_PROFESSION, Identifier.fromNamespaceAndPath("friendsandfoes", "beekeeper"));
             BzRegisterVillagerTradesEvent.EVENT.addListener(FriendsAndFoesCompat::setupFriendsAndFoesTrades);
         }
 

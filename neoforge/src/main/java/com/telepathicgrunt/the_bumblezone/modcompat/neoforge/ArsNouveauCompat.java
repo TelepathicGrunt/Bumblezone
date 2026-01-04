@@ -34,7 +34,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -53,8 +53,8 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 public class ArsNouveauCompat implements ModCompat {
-	private static final ResourceLocation SPELL_PROJ_RL = ResourceLocation.fromNamespaceAndPath("ars_nouveau", "spell_proj");
-	private static final ResourceLocation SPELL_FOLLOW_PROJ_RL = ResourceLocation.fromNamespaceAndPath("ars_nouveau", "follow_proj");
+	private static final Identifier SPELL_PROJ_RL = Identifier.fromNamespaceAndPath("ars_nouveau", "spell_proj");
+	private static final Identifier SPELL_FOLLOW_PROJ_RL = Identifier.fromNamespaceAndPath("ars_nouveau", "follow_proj");
 
 	protected static final Set<AbstractCastMethod> ALLOWED_CAST_METHODS = Sets.newHashSet(
 		MethodProjectile.INSTANCE,
@@ -191,7 +191,7 @@ public class ArsNouveauCompat implements ModCompat {
 	}
 
 	public InteractionResult isProjectileTeleportHandled(HitResult hitResult, Entity owner, Projectile projectile) {
-		ResourceLocation projectileRL = BuiltInRegistries.ENTITY_TYPE.getKey(projectile.getType());
+		Identifier projectileRL = BuiltInRegistries.ENTITY_TYPE.getKey(projectile.getType());
 		if (projectileRL != null && (projectileRL.equals(SPELL_PROJ_RL) || projectileRL.equals(SPELL_FOLLOW_PROJ_RL))) {
 			return InteractionResult.FAIL;
 		}

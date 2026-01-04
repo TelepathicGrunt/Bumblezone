@@ -6,7 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistrar;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Objects;
 
@@ -25,7 +25,7 @@ public class FabricModuleInitializer {
         });
     }
 
-    public static <A> void createPersistent(ResourceLocation id, MapCodec<A> codec, boolean copyOnDeath) {
+    public static <A> void createPersistent(Identifier id, MapCodec<A> codec, boolean copyOnDeath) {
         Objects.requireNonNull(id, "identifier cannot be null");
         Objects.requireNonNull(codec, "codec cannot be null");
 

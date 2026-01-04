@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.loot;
 
 import com.telepathicgrunt.the_bumblezone.loot.LootParamsBzVisitedLootInterface;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.storage.loot.LootParams;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -13,15 +13,15 @@ import java.util.Set;
 public class LootParamsMixin implements LootParamsBzVisitedLootInterface {
 
     @Unique
-    Set<ResourceLocation> bumblezone_visitedBzLootRLs = new HashSet<>();
+    Set<Identifier> bumblezone_visitedBzLootRLs = new HashSet<>();
 
     @Override
-    public Set<ResourceLocation> getVisitedBzVisitedLootRL() {
+    public Set<Identifier> getVisitedBzVisitedLootRL() {
         return bumblezone_visitedBzLootRLs;
     }
 
     @Override
-    public void addVisitedBzVisitedLootRL(ResourceLocation bzVisitedLootRL) {
+    public void addVisitedBzVisitedLootRL(Identifier bzVisitedLootRL) {
         bumblezone_visitedBzLootRLs.add(bzVisitedLootRL);
     }
 }

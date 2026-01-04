@@ -105,7 +105,7 @@ import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import com.telepathicgrunt.the_bumblezone.worldgen.dimension.BiomeRegistryHolder;
 import com.telepathicgrunt.the_bumblezone.worldgen.surfacerules.PollinatedSurfaceSource;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -120,7 +120,7 @@ public class Bumblezone {
     // -Dmixin.debug.export=true for mixin dump of transformed classes.
 
     public static final String MODID = "the_bumblezone";
-    public static final ResourceLocation MOD_DIMENSION_ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, Bumblezone.MODID);
+    public static final Identifier MOD_DIMENSION_ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, Bumblezone.MODID);
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public static void init() {
@@ -227,9 +227,9 @@ public class Bumblezone {
     }
 
     private static void registerDataSerializers(BzRegisterDataSerializersEvent event) {
-        event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "queen_pose"), BeeQueenEntity.QUEEN_POSE_SERIALIZER);
-        event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "rootmin_pose"), RootminEntity.ROOTMIN_POSE_SERIALIZER);
-        event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "cosmic_crystal_state"), CosmicCrystalEntity.COSMIC_CRYSTAL_STATE_SERIALIZER);
+        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "queen_pose"), BeeQueenEntity.QUEEN_POSE_SERIALIZER);
+        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "rootmin_pose"), RootminEntity.ROOTMIN_POSE_SERIALIZER);
+        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "cosmic_crystal_state"), CosmicCrystalEntity.COSMIC_CRYSTAL_STATE_SERIALIZER);
     }
 
     private static void onFinalSetup(final BzFinalSetupEvent event) {
@@ -237,10 +237,10 @@ public class Bumblezone {
     }
 
     public static void registerDatapackListener(final BzRegisterReloadListenerEvent event) {
-        event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "queens_trades"), QueensTradeManager.QUEENS_TRADE_MANAGER);
-        event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "pollen_puff"), PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
-        event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower"), CrystallineFlowerDataManager.CRYSTALLINE_FLOWER_DATA_MANAGER);
-        event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle"), PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER);
+        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "queens_trades"), QueensTradeManager.QUEENS_TRADE_MANAGER);
+        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "pollen_puff"), PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
+        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower"), CrystallineFlowerDataManager.CRYSTALLINE_FLOWER_DATA_MANAGER);
+        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle"), PotionCandleDataManager.POTION_CANDLE_DATA_MANAGER);
     }
 
     private static void serverAboutToStart(final BzServerGoingToStartEvent event) {
@@ -251,7 +251,7 @@ public class Bumblezone {
 
     private static void setupBuiltInResourcePack(final BzAddBuiltinResourcePacks event) {
         event.add(
-                ResourceLocation.fromNamespaceAndPath(MODID, "anti_tropophobia"),
+                Identifier.fromNamespaceAndPath(MODID, "anti_tropophobia"),
                 Component.literal("Bumblezone - Anti Trypophobia"),
                 BzAddBuiltinResourcePacks.PackMode.USER_CONTROLLED
         );

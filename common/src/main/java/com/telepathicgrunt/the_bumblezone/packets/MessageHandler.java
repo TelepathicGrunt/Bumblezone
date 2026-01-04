@@ -2,12 +2,12 @@ package com.telepathicgrunt.the_bumblezone.packets;
 
 import com.teamresourceful.resourcefullib.common.network.Network;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class MessageHandler {
 
     //setup channel to send packages through
-    public static final Network DEFAULT_CHANNEL = new Network(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "networking"), 1);
+    public static final Network DEFAULT_CHANNEL = new Network(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "networking"), 1);
 
     /*
      * Register the channel so it exists

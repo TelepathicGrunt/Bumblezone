@@ -8,14 +8,14 @@ import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzDatapackSyncEvent;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 
 import java.util.Objects;
 
 public record SyncBeehemothSpeedConfigFromServer(double newBeehemothSpeed) implements Packet<SyncBeehemothSpeedConfigFromServer> {
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "sync_beehemoth_speed_config_from_server");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "sync_beehemoth_speed_config_from_server");
     public static final ClientboundPacketType<SyncBeehemothSpeedConfigFromServer> TYPE = new SyncBeehemothSpeedConfigFromServer.Handler();
 
     public static void sendToClient(Entity entity, double beehemothSpeedConfigValue) {
@@ -49,7 +49,7 @@ public record SyncBeehemothSpeedConfigFromServer(double newBeehemothSpeed) imple
         }
 
         @Override
-        public ResourceLocation id() {
+        public Identifier id() {
             return ID;
         }
     }

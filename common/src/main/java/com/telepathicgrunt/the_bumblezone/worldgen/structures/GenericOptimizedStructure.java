@@ -9,7 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.QuartPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.CheckerboardColumnBiomeSource;
@@ -29,7 +29,7 @@ public class GenericOptimizedStructure extends Structure {
     public static final MapCodec<GenericOptimizedStructure> CODEC = RecordCodecBuilder.<GenericOptimizedStructure>mapCodec(instance ->
             instance.group(GenericOptimizedStructure.settingsCodec(instance),
                     StructureTemplatePool.CODEC.fieldOf("start_pool").forGetter(structure -> structure.startPool),
-                    ResourceLocation.CODEC.optionalFieldOf("start_jigsaw_name").forGetter(structure -> structure.startJigsawName),
+                    Identifier.CODEC.optionalFieldOf("start_jigsaw_name").forGetter(structure -> structure.startJigsawName),
                     Codec.intRange(0, 30).fieldOf("size").forGetter(structure -> structure.size),
                     HeightProvider.CODEC.fieldOf("start_height").forGetter(structure -> structure.startHeight),
                     Heightmap.Types.CODEC.optionalFieldOf("project_start_to_heightmap").forGetter(structure -> structure.projectStartToHeightmap),
@@ -41,7 +41,7 @@ public class GenericOptimizedStructure extends Structure {
             ).apply(instance, GenericOptimizedStructure::new));
 
     private final Holder<StructureTemplatePool> startPool;
-    private final Optional<ResourceLocation> startJigsawName;
+    private final Optional<Identifier> startJigsawName;
     private final int size;
     private final HeightProvider startHeight;
     private final Optional<Heightmap.Types> projectStartToHeightmap;
@@ -53,7 +53,7 @@ public class GenericOptimizedStructure extends Structure {
 
     public GenericOptimizedStructure(StructureSettings config,
                                      Holder<StructureTemplatePool> startPool,
-                                     Optional<ResourceLocation> startJigsawName,
+                                     Optional<Identifier> startJigsawName,
                                      int size,
                                      HeightProvider startHeight,
                                      Optional<Heightmap.Types> projectStartToHeightmap,

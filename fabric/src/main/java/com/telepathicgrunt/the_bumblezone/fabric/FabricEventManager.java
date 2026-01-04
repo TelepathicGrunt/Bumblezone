@@ -72,7 +72,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
@@ -125,7 +125,7 @@ public class FabricEventManager {
         BzAddBuiltinResourcePacks.EVENT.invoke(new BzAddBuiltinResourcePacks((id, displayName, mode) -> {
             ModContainer container = getModPack(id);
             ResourceManagerHelper.registerBuiltinResourcePack(
-                    ResourceLocation.fromNamespaceAndPath(container.getMetadata().getId(), id.getPath()),
+                    Identifier.fromNamespaceAndPath(container.getMetadata().getId(), id.getPath()),
                     container,
                     displayName,
                     toType(mode)
@@ -135,7 +135,7 @@ public class FabricEventManager {
         BzAddBuiltinDataPacks.EVENT.invoke(new BzAddBuiltinDataPacks((id, displayName, mode) -> {
             ModContainer container = getModPack(id);
             ResourceManagerHelperImpl.registerBuiltinResourcePack(
-                    ResourceLocation.fromNamespaceAndPath(container.getMetadata().getId(), id.getPath()),
+                    Identifier.fromNamespaceAndPath(container.getMetadata().getId(), id.getPath()),
                     "datapacks/" + id.getPath(),
                     container,
                     displayName,
@@ -219,9 +219,9 @@ public class FabricEventManager {
 
     public static void lateInit() {
         if (PlatformService.INSTANCE.isModLoaded("resourcefulbees") && BzModCompatibilityConfigs.spawnResourcefulBeesHoneycombVeins) {
-            BiomeModifications.create(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "resourceful_bees_compat"))
+            BiomeModifications.create(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "resourceful_bees_compat"))
                 .add(ModificationPhase.ADDITIONS,
-                    (context) -> context.hasTag(TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, Bumblezone.MODID))),
+                    (context) -> context.hasTag(TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(Bumblezone.MODID, Bumblezone.MODID))),
                     (context) -> {
                         for (Holder<PlacedFeature> placedFeatureHolder : getPlacedFeaturesByTag(context, BzTags.RESOURCEFUL_BEES_COMBS)) {
                             FeatureConfiguration featureConfiguration = placedFeatureHolder.value().feature().value().config();
@@ -234,7 +234,7 @@ public class FabricEventManager {
         }
     }
 
-    private static ModContainer getModPack(ResourceLocation pack) {
+    private static ModContainer getModPack(Identifier pack) {
         if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
             for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
                 if (mod.getMetadata().getId().startsWith("generated_") && mod.findPath("resourcepacks/" + pack.getPath()).isPresent()) {

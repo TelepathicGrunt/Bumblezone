@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 
 public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
-    private static final ResourceLocation SKIN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/rootmin.png");
+    private static final Identifier SKIN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/rootmin.png");
 
     public RootminRenderer(EntityRendererProvider.Context context) {
         super(context, new RootminModel(context.bakeLayer(RootminModel.LAYER_LOCATION)), 0.7F);
@@ -58,7 +58,7 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(RootminEntity rootminEntity) {
+    public Identifier getTextureLocation(RootminEntity rootminEntity) {
         return SKIN;
     }
 

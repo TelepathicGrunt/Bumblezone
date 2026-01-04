@@ -30,7 +30,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.item.Item;
@@ -76,15 +76,15 @@ public class JEIIntegration implements IModPlugin {
             List<CraftingRecipe> extraRecipes = FakePotionCandleRecipeCreator.constructFakeRecipes(potionCandleRecipe, oneRecipeOnly);
             List<RecipeHolder<CraftingRecipe>> holders = new ArrayList<>(extraRecipes.size());
             for (int i = 0; i < extraRecipes.size(); i++) {
-                holders.add(new RecipeHolder<>(ResourceLocation.fromNamespaceAndPath(baseRecipe.id().getNamespace(), baseRecipe.id().getPath() + "_" + i), extraRecipes.get(i)));
+                holders.add(new RecipeHolder<>(Identifier.fromNamespaceAndPath(baseRecipe.id().getNamespace(), baseRecipe.id().getPath() + "_" + i), extraRecipes.get(i)));
             }
             registration.addRecipes(RecipeTypes.CRAFTING, holders);
         }
     }
 
     @Override
-    public ResourceLocation getPluginUid() {
-        return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "jei_plugin");
+    public Identifier getPluginUid() {
+        return Identifier.fromNamespaceAndPath(Bumblezone.MODID, "jei_plugin");
     }
 
     @Override
@@ -100,10 +100,10 @@ public class JEIIntegration implements IModPlugin {
         if (level == null)
             return;
 
-        level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles"))
+        level.getRecipeManager().byKey(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registration, true));
 
-        level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax"))
+        level.getRecipeManager().byKey(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registration, false));
 
         List<JEIQueenTradesInfo> trades = new LinkedList<>();

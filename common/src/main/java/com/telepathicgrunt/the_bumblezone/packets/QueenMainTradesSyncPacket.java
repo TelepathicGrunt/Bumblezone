@@ -18,7 +18,7 @@ import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.random.WeightedList;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import java.util.List;
 public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedList<WeightedTradeResult>>> recipeViewerMainTrades) implements Packet<QueenMainTradesSyncPacket> {
     public static Gson gson = new GsonBuilder().create();
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "queen_main_trades_sync_packet");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "queen_main_trades_sync_packet");
     public static final ClientboundPacketType<QueenMainTradesSyncPacket> TYPE = new QueenMainTradesSyncPacket.Handler();
 
     public static void sendToClient(BzDatapackSyncEvent event) {
@@ -99,7 +99,7 @@ public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedLis
         }
 
         @Override
-        public ResourceLocation id() {
+        public Identifier id() {
             return ID;
         }
     }

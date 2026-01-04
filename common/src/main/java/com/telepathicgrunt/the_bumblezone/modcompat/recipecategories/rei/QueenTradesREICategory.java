@@ -10,7 +10,7 @@ import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.joml.Matrix4f;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class QueenTradesREICategory implements DisplayCategory<REIQueenTradesInf
 	private final Component localizedName;
 
 	public QueenTradesREICategory() {
-		this.icon = new QueenEggIconRenderer(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/bee_queen_trades.png"));
+		this.icon = new QueenEggIconRenderer(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/bee_queen_trades.png"));
 		this.localizedName = Component.translatable("the_bumblezone.recipe_viewers.bee_queen_trades");
 	}
 
@@ -61,19 +61,19 @@ public class QueenTradesREICategory implements DisplayCategory<REIQueenTradesInf
 		Rectangle bounds = origin.getBounds();
 		bounds.translate(4, 4);
 
-		widgets.add(Widgets.createTexturedWidget(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/queen_trades_layout.png"), new Rectangle(bounds.getX(), bounds.getY(), RECIPE_WIDTH, RECIPE_HEIGHT)));
+		widgets.add(Widgets.createTexturedWidget(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/queen_trades_layout.png"), new Rectangle(bounds.getX(), bounds.getY(), RECIPE_WIDTH, RECIPE_HEIGHT)));
 		widgets.add(Widgets.createSlot(new Rectangle(bounds.getX() + 5, bounds.getY() + 5, 18, 18)).entries(display.getInputEntries().get(0)).markInput().disableBackground());
 		widgets.add(Widgets.createSlot(new Rectangle(bounds.getX() + 63, bounds.getY() + 5, 18, 18)).entries(display.getOutputEntries().get(0)).markInput().disableBackground());
 
 		if (display.getInputTag() != null) {
 			widgets.add(Widgets.withTranslate(Widgets.createTexturedWidget(
-					ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/tag_icon.png"),
+					Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/tag_icon.png"),
 					new Rectangle(bounds.getX() + 11, bounds.getY() + 11, 16, 16),
 					0, 0, 16, 16), new Matrix4f().translate(0, 0, 301)));
 		}
 		if (display.getOutputTag() != null) {
 			widgets.add(Widgets.withTranslate(Widgets.createTexturedWidget(
-					ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/tag_icon.png"),
+					Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/tag_icon.png"),
 					new Rectangle(bounds.getX() + 69, bounds.getY() + 11, 16, 16),
 					0, 0, 16, 16), new Matrix4f().translate(0, 0, 301)));
 		}

@@ -29,7 +29,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.ProblemReporter;
@@ -49,22 +49,22 @@ import java.util.Map;
 import java.util.Optional;
 
 public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBriefcaseMenu> {
-    private static final ResourceLocation CONTAINER_BACKGROUND = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/background.png");
-    private static final ResourceLocation BEE_SLOT_BACKGROUND = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_slots.png");
-    private static final ResourceLocation GENERAL_ICONS = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/general_icons.png");
+    private static final Identifier CONTAINER_BACKGROUND = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/background.png");
+    private static final Identifier BEE_SLOT_BACKGROUND = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_slots.png");
+    private static final Identifier GENERAL_ICONS = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/general_icons.png");
 
 
-    private static final ResourceLocation BEE_VANILLA_ICON = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_vanilla.png");
-    private static final ResourceLocation BEE_BASE_ICON = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_base_layer.png");
-    private static final ResourceLocation BEE_PRIMARY_ICON = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_primary_layer.png");
-    private static final ResourceLocation BEE_SECONDARY_ICON = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_secondary_layer.png");
-    private static final ResourceLocation BEE_STINGER_ICON = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_stinger.png");
-    private static final ResourceLocation BEE_POLLEN_ICON = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_pollen.png");
-    private static final ResourceLocation BEE_BABY_BASE_ICON = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_baby_base_layer.png");
-    private static final ResourceLocation BEE_BABY_PRIMARY_ICON = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_baby_primary_layer.png");
-    private static final ResourceLocation BEE_BABY_SECONDARY_ICON = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_baby_secondary_layer.png");
-    private static final ResourceLocation BEE_BABY_STINGER_ICON = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_baby_stinger.png");
-    private static final ResourceLocation BEE_BABY_POLLEN_ICON = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_baby_pollen.png");
+    private static final Identifier BEE_VANILLA_ICON = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_vanilla.png");
+    private static final Identifier BEE_BASE_ICON = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_base_layer.png");
+    private static final Identifier BEE_PRIMARY_ICON = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_primary_layer.png");
+    private static final Identifier BEE_SECONDARY_ICON = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_secondary_layer.png");
+    private static final Identifier BEE_STINGER_ICON = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_stinger.png");
+    private static final Identifier BEE_POLLEN_ICON = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_pollen.png");
+    private static final Identifier BEE_BABY_BASE_ICON = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_baby_base_layer.png");
+    private static final Identifier BEE_BABY_PRIMARY_ICON = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_baby_primary_layer.png");
+    private static final Identifier BEE_BABY_SECONDARY_ICON = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_baby_secondary_layer.png");
+    private static final Identifier BEE_BABY_STINGER_ICON = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_baby_stinger.png");
+    private static final Identifier BEE_BABY_POLLEN_ICON = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_baby_pollen.png");
 
     private static final int NORMAL_PRIMARY_COLOR = 0xE59900;
     private static final int NORMAL_SECONDARY_COLOR = 0x231100;
@@ -198,7 +198,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     minecraft.getResourceManager(),
                     minecraft.getEntityModels(),
                     this.font));
-            ResourceLocation textureLocation = entityRenderer.getTextureLocation(bee);
+            Identifier textureLocation = entityRenderer.getTextureLocation(bee);
 
             int[] pixels = LegacyStuffWrapper.getPixels(minecraft.getResourceManager(), textureLocation);
             if (pixels == null || pixels.length == 0) {

@@ -11,13 +11,13 @@ import com.telepathicgrunt.the_bumblezone.enchantments.datacomponents.ParalyzeMa
 import com.telepathicgrunt.the_bumblezone.enchantments.datacomponents.PoisonMarker;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class BzEnchantments {
-    public static final ResourceLocation COMB_CUTTER = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "comb_cutter");
-    public static final ResourceLocation POTENT_POISON = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "potent_poison");
-    public static final ResourceLocation NEUROTOXINS = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "neurotoxins");
-    public static final ResourceLocation HIVE_LIFELINE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "hive_lifeline");
+    public static final Identifier COMB_CUTTER = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "comb_cutter");
+    public static final Identifier POTENT_POISON = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potent_poison");
+    public static final Identifier NEUROTOXINS = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "neurotoxins");
+    public static final Identifier HIVE_LIFELINE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "hive_lifeline");
 
     public static final ResourcefulRegistry<DataComponentType<?>> ENCHANTMENT_EFFECT_COMPONENT_TYPE = ResourcefulRegistries.create(BuiltInRegistries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, Bumblezone.MODID);
 

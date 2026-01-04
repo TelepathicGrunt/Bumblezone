@@ -13,7 +13,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -25,8 +25,8 @@ import org.joml.Vector3f;
 // CLIENT-SIDED
 public class PileOfPollenRenderer {
 
-    private static final ResourceLocation TEXTURE_POLLEN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/pile_of_pollen/pile_of_pollen.png");
-    private static final ResourceLocation TEXTURE_POLLEN_SUSPICIOUS = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/pile_of_pollen/pile_of_pollen_suspicious_1.png");
+    private static final Identifier TEXTURE_POLLEN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/pile_of_pollen/pile_of_pollen.png");
+    private static final Identifier TEXTURE_POLLEN_SUSPICIOUS = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/pile_of_pollen/pile_of_pollen_suspicious_1.png");
 
     public static boolean pileOfPollenOverlay(BzBlockRenderedOnScreenEvent event) {
         BlockState blockState = event.state();

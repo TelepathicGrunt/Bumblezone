@@ -2,12 +2,12 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'me.modmuss50.mod-publish-plugin' version '0.8.4' apply false
-    id 'net.neoforged.moddev' version '2.0.121' apply false
+    id 'net.neoforged.moddev' version '2.0.137' apply false
     id 'net.fabricmc.fabric-loom-companion' version '1.14.4' apply false
-    id 'fabric-loom' version '1.14-SNAPSHOT' apply false
+    id 'net.fabricmc.fabric-loom' version '1.14-SNAPSHOT' apply false
 }
 
-def javaVersion = 21
+def javaVersion = 25
 
 def ENV = System.getenv()
 version = mod_version
@@ -118,7 +118,7 @@ subprojects {
     }
 
     processResources {
-        filteringCharset "UTF-8"
+        filteringCharset = "UTF-8"
 
         def expandProps = [
                 "version"              : project.version,
@@ -203,8 +203,8 @@ subprojects {
                 maven {
                     url = uri("https://nexus.resourcefulbees.com/repository/telepathicgrunt/")
                     credentials {
-                        username ENV.MAVEN_USER
-                        password ENV.MAVEN_PASS
+                        username = ENV.MAVEN_USER
+                        password = ENV.MAVEN_PASS
                     }
                 }
             }
@@ -213,7 +213,7 @@ subprojects {
         publications {
             "mavenJava${project.name}"(MavenPublication) {
                 from components.java
-                artifactId "${project.mod_id}"
+                artifactId = "${project.mod_id}"
 
                 pom {
                     name = project.mod_name

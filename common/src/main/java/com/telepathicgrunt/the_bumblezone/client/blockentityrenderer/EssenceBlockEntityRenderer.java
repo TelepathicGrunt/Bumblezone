@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FastColor;
 import org.joml.Matrix4f;
 
@@ -29,8 +29,8 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 
 	private static final long RANDOM_SEED = 31100L;
 	private static final Random RANDOM = new Random(RANDOM_SEED);
-	public static final ResourceLocation BASE_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/essence/base_background.png");
-	public static final ResourceLocation BEE_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/essence/bee_icon_background.png");
+	public static final Identifier BASE_TEXTURE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/essence/base_background.png");
+	public static final Identifier BEE_TEXTURE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/essence/bee_icon_background.png");
 
 	public static final VertexFormat POSITION_COLOR_NORMAL = VertexFormat.builder()
 			.add("Position", VertexFormatElement.POSITION)

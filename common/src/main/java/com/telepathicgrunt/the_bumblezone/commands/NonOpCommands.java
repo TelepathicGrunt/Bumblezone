@@ -15,7 +15,7 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -193,13 +193,13 @@ public class NonOpCommands {
                 case QUEENS_DESIRED_KILLED_ENTITY_COUNTER -> {
                     if (killedString != null) {
                         PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> {
-                            ResourceLocation rl = ResourceLocation.tryParse(killedString);
+                            Identifier rl = Identifier.tryParse(killedString);
                             int killed = capability.mobsKilledTracker.getOrDefault(rl, 0);
                             String translationKey;
-                            if (rl.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "ender_dragon"))) {
+                            if (rl.equals(Identifier.fromNamespaceAndPath("minecraft", "ender_dragon"))) {
                                 translationKey = "command.the_bumblezone.queens_desired_killed_entity_counter_ender_dragon";
                             }
-                            else if (rl.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "wither"))) {
+                            else if (rl.equals(Identifier.fromNamespaceAndPath("minecraft", "wither"))) {
                                 translationKey = "command.the_bumblezone.queens_desired_killed_entity_counter_wither";
                             }
                             else {

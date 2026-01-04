@@ -6,7 +6,7 @@
     "structure_y_offset": 1,
     "nbt_entries": [
       {
-        "resourcelocation": "the_bumblezone:gear_column/cannon",
+        "identifier": "the_bumblezone:gear_column/cannon",
         "weight": 1
       }
     ]

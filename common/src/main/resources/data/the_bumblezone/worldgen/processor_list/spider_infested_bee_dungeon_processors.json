@@ -26,11 +26,11 @@
     {
       "spawner_mob_entries": [
         {
-          "resourcelocation": "minecraft:cave_spider",
+          "identifier": "minecraft:cave_spider",
           "weight": 25
         },
         {
-          "resourcelocation": "minecraft:spider",
+          "identifier": "minecraft:spider",
           "weight": 75
         }
       ],

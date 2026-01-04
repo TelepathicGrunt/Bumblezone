@@ -20,7 +20,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
@@ -34,8 +34,8 @@ import org.joml.Matrix4f;
 import java.util.HashSet;
 
 public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEntity, CosmicCrystalModel> {
-    private static final ResourceLocation SKIN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/cosmic_crystal.png");
-    private static final ResourceLocation LASER_LOCATION = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/cosmic_crystal_laser.png");
+    private static final Identifier SKIN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/cosmic_crystal.png");
+    private static final Identifier LASER_LOCATION = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/cosmic_crystal_laser.png");
 
     public CosmicCrystalRenderer(EntityRendererProvider.Context context) {
         super(context, new CosmicCrystalModel(context.bakeLayer(CosmicCrystalModel.LAYER_LOCATION)), 0.7F);
@@ -320,7 +320,7 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
     }
 
     @Override
-    public ResourceLocation getTextureLocation(CosmicCrystalEntity cosmicCrystalEntity) {
+    public Identifier getTextureLocation(CosmicCrystalEntity cosmicCrystalEntity) {
         return SKIN;
     }
 

@@ -12,7 +12,7 @@ import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -20,8 +20,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Matrix4f;
 
 public class FluidClientOverlay {
-    private static final ResourceLocation HONEY_TEXTURE_UNDERWATER = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/misc/honey_fluid_underwater.png");
-    private static final ResourceLocation ROYAL_JELLY_TEXTURE_UNDERWATER = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/misc/royal_jelly_fluid_underwater.png");
+    private static final Identifier HONEY_TEXTURE_UNDERWATER = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/misc/honey_fluid_underwater.png");
+    private static final Identifier ROYAL_JELLY_TEXTURE_UNDERWATER = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/misc/royal_jelly_fluid_underwater.png");
 
     public static boolean renderHoneyOverlay(Player clientPlayerEntity, PoseStack matrixStack) {
         BlockState state = clientPlayerEntity.level().getBlockState(BlockPos.containing(clientPlayerEntity.getEyePosition(1)));

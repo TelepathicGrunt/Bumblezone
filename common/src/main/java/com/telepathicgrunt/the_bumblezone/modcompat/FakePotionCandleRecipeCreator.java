@@ -7,7 +7,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -36,7 +36,7 @@ public class FakePotionCandleRecipeCreator {
         List<CraftingRecipe> extraRecipes = new ArrayList<>();
         Set<MobEffect> effects = new HashSet<>();
         List<Holder<Potion>> potions = new ArrayList<>();
-        for (ResourceLocation potionKey : BuiltInRegistries.POTION.keySet()) {
+        for (Identifier potionKey : BuiltInRegistries.POTION.keySet()) {
             Optional<Holder.Reference<Potion>> potion = BuiltInRegistries.POTION.get(potionKey);
             if (oneRecipeOnly && !potions.isEmpty()) {
                 break;

@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
@@ -26,7 +26,7 @@ public class PurpleSpikeRenderer<M extends EntityModel<PurpleSpikeEntity>>
         extends EntityRenderer<PurpleSpikeEntity>
         implements RenderLayerParent<PurpleSpikeEntity, M>
 {
-    private static final ResourceLocation SKIN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/purple_spike.png");
+    private static final Identifier SKIN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/purple_spike.png");
     protected final PurpleSpikeModel<PurpleSpikeEntity> model;
     protected final List<RenderLayer<PurpleSpikeEntity, M>> layers = Lists.newArrayList();
 
@@ -77,15 +77,15 @@ public class PurpleSpikeRenderer<M extends EntityModel<PurpleSpikeEntity>>
 
     @Nullable
     protected RenderType getRenderType(PurpleSpikeEntity ringEntity, boolean bl, boolean bl2, boolean bl3) {
-        ResourceLocation resourceLocation = this.getTextureLocation(ringEntity);
+        Identifier identifier = this.getTextureLocation(ringEntity);
         if (bl2) {
-            return RenderType.itemEntityTranslucentCull(resourceLocation);
+            return RenderType.itemEntityTranslucentCull(identifier);
         }
         if (bl) {
-            return this.model.renderType(resourceLocation);
+            return this.model.renderType(identifier);
         }
         if (bl3) {
-            return RenderType.outline(resourceLocation);
+            return RenderType.outline(identifier);
         }
         return null;
     }
@@ -95,7 +95,7 @@ public class PurpleSpikeRenderer<M extends EntityModel<PurpleSpikeEntity>>
     }
 
     @Override
-    public ResourceLocation getTextureLocation(PurpleSpikeEntity ringEntity) {
+    public Identifier getTextureLocation(PurpleSpikeEntity ringEntity) {
         return SKIN;
     }
 }

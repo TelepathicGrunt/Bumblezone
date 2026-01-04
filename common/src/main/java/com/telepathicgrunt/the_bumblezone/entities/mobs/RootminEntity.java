@@ -34,7 +34,7 @@ import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.OldUsersConverter;
@@ -174,7 +174,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    private BlockState getFlowerOrSetIfMissing(LevelAccessor level, BlockState state) {
       if (state == null && !level.isClientSide() && !this.checkedDefaultFlowerTag) {
          TagKey<Block> blockTag;
-         if (level.getBiomeManager().getNoiseBiomeAtPosition(this.blockPosition()).is(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "floral_meadow"))) {
+         if (level.getBiomeManager().getNoiseBiomeAtPosition(this.blockPosition()).is(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "floral_meadow"))) {
             blockTag = BzTags.ROOTMIN_FLORAL_MEADOW_FLOWERS;
          }
          else {
@@ -425,7 +425,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
          NbtUtils.readBlockPos(compoundTag, "essenceControllerBlockPos").ifPresent(this::setEssenceControllerBlockPos);
       }
       if (compoundTag.contains("essenceControllerDimension")) {
-         this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(compoundTag.getString("essenceControllerDimension"))));
+         this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, Identifier.tryParse(compoundTag.getString("essenceControllerDimension"))));
       }
 
       UUID uUID;

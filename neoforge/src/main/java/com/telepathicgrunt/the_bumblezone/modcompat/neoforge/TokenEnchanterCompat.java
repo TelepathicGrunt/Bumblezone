@@ -5,7 +5,7 @@ import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinDataPacks
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class TokenEnchanterCompat implements ModCompat {
 
@@ -13,7 +13,7 @@ public class TokenEnchanterCompat implements ModCompat {
 
         Bumblezone.MOD_COMPAT_DATAPACKS.add(addBuiltinDataPacks ->
                 addBuiltinDataPacks.add(
-                        ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "enchanted_token_compat"),
+                        Identifier.fromNamespaceAndPath(Bumblezone.MODID, "enchanted_token_compat"),
                         Component.literal("Bumblezone - Token Enchanter Compat"),
                         BzAddBuiltinDataPacks.PackMode.FORCE_ENABLED
                 )

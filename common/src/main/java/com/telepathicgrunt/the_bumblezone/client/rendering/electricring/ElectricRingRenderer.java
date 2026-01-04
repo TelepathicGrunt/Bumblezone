@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,9 +25,9 @@ public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
         extends EntityRenderer<ElectricRingEntity>
         implements RenderLayerParent<ElectricRingEntity, M>
 {
-    static final ResourceLocation SKIN_1 = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/electric_ring/electric_ring_1.png");
-    static final ResourceLocation SKIN_2 = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/electric_ring/electric_ring_2.png");
-    static final ResourceLocation SKIN_3 = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/electric_ring/electric_ring_3.png");
+    static final Identifier SKIN_1 = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/electric_ring/electric_ring_1.png");
+    static final Identifier SKIN_2 = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/electric_ring/electric_ring_2.png");
+    static final Identifier SKIN_3 = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/electric_ring/electric_ring_3.png");
     protected final ElectricRingModel<ElectricRingEntity> model;
     protected final List<RenderLayer<ElectricRingEntity, M>> layers = Lists.newArrayList();
 
@@ -96,12 +96,12 @@ public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
 
     @Nullable
     protected RenderType getRenderType(ElectricRingEntity ringEntity, boolean bodyVisible, boolean hidden, boolean glowing) {
-        ResourceLocation resourceLocation = this.getTextureLocation(ringEntity);
+        Identifier identifier = this.getTextureLocation(ringEntity);
         if (bodyVisible) {
-            return this.model.renderType(resourceLocation);
+            return this.model.renderType(identifier);
         }
         if (glowing) {
-            return RenderType.outline(resourceLocation);
+            return RenderType.outline(identifier);
         }
         return null;
     }
@@ -111,7 +111,7 @@ public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ElectricRingEntity ringEntity) {
+    public Identifier getTextureLocation(ElectricRingEntity ringEntity) {
         int interval = 3;
         int state = ringEntity.tickCount % (interval * 3);
 

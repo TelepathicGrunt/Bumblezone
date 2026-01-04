@@ -9,7 +9,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -42,35 +42,35 @@ public class SempiternalSanctumBehavior {
 
                     // Don't send message if player logs in while in structure.
                     if (serverPlayer.tickCount > 40) {
-                        ResourceLocation resourceLocation = serverPlayer.level().registryAccess()
+                        Identifier identifier = serverPlayer.level().registryAccess()
                                 .getOrThrow(Registries.STRUCTURE)
                                 .value()
                                 .getKey(detectedStructure.getStructure());
 
                         ChatFormatting color;
-                        if (resourceLocation == null) {
+                        if (identifier == null) {
                             return;
                         }
-                        else if (resourceLocation.getPath().contains("_red")) {
+                        else if (identifier.getPath().contains("_red")) {
                             color = ChatFormatting.RED;
                         }
-                        else if (resourceLocation.getPath().contains("_yellow")) {
+                        else if (identifier.getPath().contains("_yellow")) {
                             color = ChatFormatting.YELLOW;
                         }
-                        else if (resourceLocation.getPath().contains("_green")) {
+                        else if (identifier.getPath().contains("_green")) {
                             color = ChatFormatting.GREEN;
                         }
-                        else if (resourceLocation.getPath().contains("_blue")) {
+                        else if (identifier.getPath().contains("_blue")) {
                             color = ChatFormatting.BLUE;
                         }
-                        else if (resourceLocation.getPath().contains("_purple")) {
+                        else if (identifier.getPath().contains("_purple")) {
                             color = ChatFormatting.LIGHT_PURPLE;
                         }
                         else {
                             color = ChatFormatting.WHITE;
                         }
 
-                        Component message = Component.translatable("system.the_bumblezone." + resourceLocation.getPath())
+                        Component message = Component.translatable("system.the_bumblezone." + identifier.getPath())
                                 .withStyle(ChatFormatting.BOLD)
                                 .withStyle(color);
 

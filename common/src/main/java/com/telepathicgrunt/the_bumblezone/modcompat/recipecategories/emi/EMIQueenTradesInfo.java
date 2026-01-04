@@ -13,7 +13,7 @@ import dev.emi.emi.api.widget.TextureWidget;
 import dev.emi.emi.api.widget.WidgetHolder;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.Nullable;
@@ -30,9 +30,9 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 	private final int xpReward;
 	private final int weight;
 	private final int groupWeight;
-	private final ResourceLocation id;
+	private final Identifier id;
 
-	public EMIQueenTradesInfo(EmiIngredient input, TagKey<Item> inputTag, List<EmiStack> outputs, TagKey<Item> outputTag, int xp, int weight, int groupWeight, ResourceLocation id) {
+	public EMIQueenTradesInfo(EmiIngredient input, TagKey<Item> inputTag, List<EmiStack> outputs, TagKey<Item> outputTag, int xp, int weight, int groupWeight, Identifier id) {
 		super();
 		this.input = input;
 		this.inputTag = inputTag;
@@ -71,7 +71,7 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 	}
 
 	@Override
-	public @Nullable ResourceLocation getId() {
+	public @Nullable Identifier getId() {
 		return id;
 	}
 
@@ -97,7 +97,7 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 
 	@Override
 	public void addWidgets(WidgetHolder widgets) {
-		widgets.add(new TextureWidget(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/queen_trades_layout.png"), 0, 0, getDisplayWidth(), getDisplayHeight(), 0, 0));
+		widgets.add(new TextureWidget(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/queen_trades_layout.png"), 0, 0, getDisplayWidth(), getDisplayHeight(), 0, 0));
 
 		widgets.add(new SlotWidget(input, 5, 5));
 		widgets.add(new SlotWidget(visualOutputs, 63, 5).recipeContext(this));
@@ -105,10 +105,10 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 		widgets.add(new TextWidget(Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", getXpReward()).getVisualOrderText(), 100,  11, 0xFF404040, false));
 
 		if (this.getInputTag() != null) {
-			widgets.add(new TextureWidget(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/tag_icon.png"), 11, 11, 16, 16, 0, 0, 16, 16, 16, 16));
+			widgets.add(new TextureWidget(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/tag_icon.png"), 11, 11, 16, 16, 0, 0, 16, 16, 16, 16));
 		}
 		if (this.getOutputTag() != null) {
-			widgets.add(new TextureWidget(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/tag_icon.png"), 69, 11, 16, 16, 0, 0, 16, 16, 16, 16));
+			widgets.add(new TextureWidget(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/tag_icon.png"), 69, 11, 16, 16, 0, 0, 16, 16, 16, 16));
 		}
 
 		double percentValue = (double)(getWeight()) / (getGroupWeight()) * 100;

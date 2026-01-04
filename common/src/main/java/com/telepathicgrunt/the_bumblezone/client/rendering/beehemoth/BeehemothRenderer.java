@@ -9,11 +9,11 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.joml.Matrix4f;
 
 public class BeehemothRenderer extends MobRenderer<BeehemothEntity, BeehemothModel> {
-    private static final ResourceLocation SKIN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/beehemoth.png");
+    private static final Identifier SKIN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/beehemoth.png");
 
     public BeehemothRenderer(EntityRendererProvider.Context context) {
         super(context, new BeehemothModel(context.bakeLayer(BeehemothModel.LAYER_LOCATION)), 0.4F);
@@ -91,7 +91,7 @@ public class BeehemothRenderer extends MobRenderer<BeehemothEntity, BeehemothMod
     }
 
     @Override
-    public ResourceLocation getTextureLocation(BeehemothEntity bee) {
+    public Identifier getTextureLocation(BeehemothEntity bee) {
         return SKIN;
     }
 }

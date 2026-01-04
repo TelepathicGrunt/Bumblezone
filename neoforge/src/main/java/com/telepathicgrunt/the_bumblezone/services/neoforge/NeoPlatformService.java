@@ -18,7 +18,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
@@ -75,7 +75,7 @@ public class NeoPlatformService implements PlatformService {
                 .sized(size, size)
                 .clientTrackingRange(clientTrackingRange)
                 .updateInterval(updateInterval)
-                .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
     }
     
     @Override
@@ -85,7 +85,7 @@ public class NeoPlatformService implements PlatformService {
                 .sized(xzSize, ySize)
                 .clientTrackingRange(clientTrackingRange)
                 .updateInterval(updateInterval)
-                .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
     }
     
     @Override
@@ -96,7 +96,7 @@ public class NeoPlatformService implements PlatformService {
                 .eyeHeight(eyeHeight)
                 .clientTrackingRange(clientTrackingRange)
                 .updateInterval(updateInterval)
-                .build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
+                .build(ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, buildName)));
     }
     
     @Override

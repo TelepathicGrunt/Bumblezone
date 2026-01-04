@@ -6,14 +6,14 @@ import com.teamresourceful.resourcefullib.common.network.base.ServerboundPacketT
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.packets.handlers.BeehemothControlsPacketHandleBody;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.function.Consumer;
 
 public record BeehemothControlsPacket(byte upPressed, byte downPressed) implements Packet<BeehemothControlsPacket> {
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "beehemoth_controls");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "beehemoth_controls");
     public static final ServerboundPacketType<BeehemothControlsPacket> TYPE = new Handler();
 
     /**
@@ -49,7 +49,7 @@ public record BeehemothControlsPacket(byte upPressed, byte downPressed) implemen
         }
 
         @Override
-        public ResourceLocation id() {
+        public Identifier id() {
             return ID;
         }
     }

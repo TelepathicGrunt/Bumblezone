@@ -11,7 +11,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.ChannelAccess;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -40,19 +40,19 @@ public class MusicHandler {
         }
     }
 
-    private static final Map<ResourceLocation, MusicFader> MUSIC_FADERS = new HashMap<>();
+    private static final Map<Identifier, MusicFader> MUSIC_FADERS = new HashMap<>();
     private static SoundInstance ANGRY_BEE_MUSIC = null;
     private static SoundInstance SEMPITERNAL_SANCTUM_MUSIC = null;
     private static SoundInstance ESSENCE_EVENT_MUSIC = null;
-    private static final ResourceLocation BIOME_MUSIC = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "biome_music");
+    private static final Identifier BIOME_MUSIC = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "biome_music");
     public static boolean BUMBLEZONE_MUSIC_PLAYING = false;
 
     public static void tickMusicFader() {
         Minecraft minecraftClient = Minecraft.getInstance();
 
-        Iterator<Map.Entry<ResourceLocation, MusicFader>> iterator = MUSIC_FADERS.entrySet().iterator();
+        Iterator<Map.Entry<Identifier, MusicFader>> iterator = MUSIC_FADERS.entrySet().iterator();
         while (iterator.hasNext()) {
-            Map.Entry<ResourceLocation, MusicFader> entry = iterator.next();
+            Map.Entry<Identifier, MusicFader> entry = iterator.next();
             MusicFader musicFader = entry.getValue();
             if (musicFader.fadeIn) {
                 boolean success = musicFader.stopOtherMusic.test(minecraftClient);
@@ -124,18 +124,18 @@ public class MusicHandler {
     }
 
     // CLIENT-SIDED
-    public static void playStopSempiternalSanctumMusic(Player entity, ResourceLocation resourceLocation, boolean play) {
+    public static void playStopSempiternalSanctumMusic(Player entity, Identifier identifier, boolean play) {
 //        Minecraft minecraftClient = Minecraft.getInstance();
 //
 //        if (SEMPITERNAL_SANCTUM_MUSIC == null && ESSENCE_EVENT_MUSIC != null) {
 //            return;
 //        }
 //
-//        if (BzSounds.SEMPITERNAL_SANCTUM.get().getLocation().compareTo(resourceLocation) != 0 == play && SEMPITERNAL_SANCTUM_MUSIC != null) {
+//        if (BzSounds.SEMPITERNAL_SANCTUM.get().getLocation().compareTo(identifier) != 0 == play && SEMPITERNAL_SANCTUM_MUSIC != null) {
 //            BUMBLEZONE_MUSIC_PLAYING = false;
 //            addMusicFade(SEMPITERNAL_SANCTUM_MUSIC, 500, false, (m) -> false);
 //        }
-//        else if (BzSounds.SEMPITERNAL_SANCTUM.get().getLocation().compareTo(resourceLocation) == 0 && play && (SEMPITERNAL_SANCTUM_MUSIC == null || !isMusicPlaying(minecraftClient, SEMPITERNAL_SANCTUM_MUSIC))) {
+//        else if (BzSounds.SEMPITERNAL_SANCTUM.get().getLocation().compareTo(identifier) == 0 && play && (SEMPITERNAL_SANCTUM_MUSIC == null || !isMusicPlaying(minecraftClient, SEMPITERNAL_SANCTUM_MUSIC))) {
 //            if (ANGRY_BEE_MUSIC != null && isMusicPlaying(minecraftClient, ANGRY_BEE_MUSIC)) {
 //                return;
 //            }
@@ -164,9 +164,9 @@ public class MusicHandler {
 //        }
     }
 
-    public static void playStopEssenceEventMusic(Player entity, ResourceLocation resourceLocation, boolean play) {
+    public static void playStopEssenceEventMusic(Player entity, Identifier identifier, boolean play) {
 //        Minecraft minecraftClient = Minecraft.getInstance();
-//        SoundEvent soundEvent = minecraftClient.level.registryAccess().getOrThrow(Registries.SOUND_EVENT).value().get(resourceLocation).get().value();
+//        SoundEvent soundEvent = minecraftClient.level.registryAccess().getOrThrow(Registries.SOUND_EVENT).value().get(identifier).get().value();
 //        if (soundEvent == null || !GeneralUtils.isInTag(minecraftClient.level.registryAccess().getOrThrow(Registries.SOUND_EVENT).value(), BzTags.ESSENCE_EVENT_MUSIC, soundEvent)) {
 //            return;
 //        }

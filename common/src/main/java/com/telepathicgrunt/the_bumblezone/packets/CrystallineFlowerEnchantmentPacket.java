@@ -9,19 +9,19 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.menus.EnchantmentSkeleton;
 import com.telepathicgrunt.the_bumblezone.packets.handlers.CrystallineFlowerEnchantmentPacketHandleBody;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.List;
 
-public record CrystallineFlowerEnchantmentPacket(int containerId, List<EnchantmentSkeleton> enchantmentSkeletons, ResourceLocation selectedResourceLocation) implements Packet<CrystallineFlowerEnchantmentPacket> {
+public record CrystallineFlowerEnchantmentPacket(int containerId, List<EnchantmentSkeleton> enchantmentSkeletons, Identifier selectedIdentifier) implements Packet<CrystallineFlowerEnchantmentPacket> {
     public static final Gson GSON = new GsonBuilder().create();
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower_enchantment");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower_enchantment");
     public static final ClientboundPacketType<CrystallineFlowerEnchantmentPacket> TYPE = new CrystallineFlowerEnchantmentPacket.Handler();
 
-    public static void sendToClient(ServerPlayer player, int containerId, List<EnchantmentSkeleton> enchantmentSkeletons, ResourceLocation selectedResourceLocation) {
-        MessageHandler.DEFAULT_CHANNEL.sendToPlayer(new CrystallineFlowerEnchantmentPacket(containerId, enchantmentSkeletons, selectedResourceLocation), player);
+    public static void sendToClient(ServerPlayer player, int containerId, List<EnchantmentSkeleton> enchantmentSkeletons, Identifier selectedIdentifier) {
+        MessageHandler.DEFAULT_CHANNEL.sendToPlayer(new CrystallineFlowerEnchantmentPacket(containerId, enchantmentSkeletons, selectedIdentifier), player);
     }
     
     @Override
@@ -35,7 +35,7 @@ public record CrystallineFlowerEnchantmentPacket(int containerId, List<Enchantme
         public void encode(CrystallineFlowerEnchantmentPacket message, RegistryFriendlyByteBuf buffer) {
             buffer.writeInt(message.containerId());
             buffer.writeCollection(message.enchantmentSkeletons(), (buf, enchantmentSkeleton) -> buf.writeUtf(GSON.toJson(enchantmentSkeleton)));
-            buffer.writeResourceLocation(message.selectedResourceLocation);
+            buffer.writeIdentifier(message.selectedIdentifier);
         }
 
         @Override
@@ -43,7 +43,7 @@ public record CrystallineFlowerEnchantmentPacket(int containerId, List<Enchantme
             return new CrystallineFlowerEnchantmentPacket(
                     buffer.readInt(),
                     buffer.readList(buf -> GSON.fromJson(buf.readUtf(), EnchantmentSkeleton.class)),
-                    buffer.readResourceLocation());
+                    buffer.readIdentifier());
         }
 
         @Override
@@ -52,7 +52,7 @@ public record CrystallineFlowerEnchantmentPacket(int containerId, List<Enchantme
         }
 
         @Override
-        public ResourceLocation id() {
+        public Identifier id() {
             return ID;
         }
     }

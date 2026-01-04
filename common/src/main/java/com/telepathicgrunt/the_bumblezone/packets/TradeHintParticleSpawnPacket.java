@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.packets.handlers.TradeHintParticleSpawnPacketHandler;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public record TradeHintParticleSpawnPacket(int queenId, Item wantItem, List<ItemStack> rewardItemStacks) implements Packet<TradeHintParticleSpawnPacket> {
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "trade_hint_particle_spawn");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "trade_hint_particle_spawn");
     public static final ClientboundPacketType<TradeHintParticleSpawnPacket> TYPE = new TradeHintParticleSpawnPacket.Handler();
 
     public static void sendToClient(Entity queen, Item wantItem, List<ItemStack> rewardItems) {
@@ -34,7 +34,7 @@ public record TradeHintParticleSpawnPacket(int queenId, Item wantItem, List<Item
         @Override
         public void encode(TradeHintParticleSpawnPacket message, RegistryFriendlyByteBuf buffer) {
             buffer.writeInt(message.queenId());
-            buffer.writeResourceLocation(BuiltInRegistries.ITEM.getKey(message.wantItem));
+            buffer.writeIdentifier(BuiltInRegistries.ITEM.getKey(message.wantItem));
             buffer.writeInt(message.rewardItemStacks().size());
             for (ItemStack rewardItem : message.rewardItemStacks()) {
                 ItemStack.STREAM_CODEC.encode(buffer, rewardItem);
@@ -44,7 +44,7 @@ public record TradeHintParticleSpawnPacket(int queenId, Item wantItem, List<Item
         @Override
         public TradeHintParticleSpawnPacket decode(RegistryFriendlyByteBuf buffer) {
             int queenId = buffer.readInt();
-            Item wantItem = BuiltInRegistries.ITEM.get(buffer.readResourceLocation()).get().value();
+            Item wantItem = BuiltInRegistries.ITEM.get(buffer.readIdentifier()).get().value();
 
             int sizeOfRewards = buffer.readInt();
             List<ItemStack> rewardItems = new ArrayList<>(sizeOfRewards);
@@ -61,7 +61,7 @@ public record TradeHintParticleSpawnPacket(int queenId, Item wantItem, List<Item
         }
 
         @Override
-        public ResourceLocation id() {
+        public Identifier id() {
             return ID;
         }
     }

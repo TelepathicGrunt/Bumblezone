@@ -18,7 +18,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -207,7 +207,7 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
         super.onHitEntity(entityHitResult);
         Entity entity = entityHitResult.getEntity();
         EntityType<?> type = entity.getType();
-        ResourceLocation resourceLocation = BuiltInRegistries.ENTITY_TYPE.getKey(type);
+        Identifier identifier = BuiltInRegistries.ENTITY_TYPE.getKey(type);
         int damage = 1;
 
         if (entity instanceof DirtPelletEntity hitDirtPelletEntity) {
@@ -222,7 +222,7 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
             if (type.is(BzTags.DIRT_PELLET_EXTRA_DAMAGE)) {
                 damage = 6;
             }
-            else if (!resourceLocation.getNamespace().equals("minecraft") && !resourceLocation.getNamespace().equals(Bumblezone.MODID)) {
+            else if (!identifier.getNamespace().equals("minecraft") && !identifier.getNamespace().equals(Bumblezone.MODID)) {
                 if (entity instanceof FlyingMob || (entity instanceof Mob mob && mob.getMoveControl() instanceof FlyingMoveControl)) {
                     damage = 6;
                 }

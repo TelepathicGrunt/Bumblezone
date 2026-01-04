@@ -5,14 +5,14 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class LivingEntityDataModule implements Module<LivingEntityDataModule> {
     public static final MapCodec<LivingEntityDataModule> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             Codec.INT.fieldOf("missedParalysis").forGetter(module -> module.missedParalysis)
     ).apply(instance, LivingEntityDataModule::new));
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "living_entity_data");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "living_entity_data");
     private int missedParalysis;
 
     public LivingEntityDataModule(int missedParalysis) {
@@ -37,7 +37,7 @@ public class LivingEntityDataModule implements Module<LivingEntityDataModule> {
     }
 
     @Override
-    public ResourceLocation id() {
+    public Identifier id() {
         return ID;
     }
 }

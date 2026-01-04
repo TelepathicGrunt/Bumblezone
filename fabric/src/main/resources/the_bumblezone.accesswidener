@@ -1,4 +1,4 @@
-accessWidener   v2  named
+accessWidener   v2  official
 
 accessible class net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier
 accessible method net/minecraft/world/level/block/entity/BlockEntityType <init> (Lnet/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier;Ljava/util/Set;)V
@@ -23,9 +23,7 @@ accessible method net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator do
 accessible class net/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule
 accessible class net/minecraft/world/level/levelgen/SurfaceRules$Context
 
-accessible class net/minecraft/world/entity/animal/Bee$BeeWanderGoal
+#accessible class net/minecraft/world/entity/animal/Bee$BeeWanderGoal
 
 accessible class net/minecraft/client/gui/screens/MenuScreens$ScreenConstructor
-accessible class net/minecraft/client/renderer/RenderStateShard$TextureStateShard
 accessible class net/minecraft/client/particle/ParticleEngine$MutableSpriteSet
-accessible method net/minecraft/client/particle/SuspendedParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/client/particle/SpriteSet;DDD)V

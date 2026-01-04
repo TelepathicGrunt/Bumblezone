@@ -3,11 +3,11 @@ package com.telepathicgrunt.the_bumblezone.worldgen.dimension.layer;
 import com.telepathicgrunt.the_bumblezone.worldgen.dimension.BiomeRegistryHolder;
 import com.telepathicgrunt.the_bumblezone.worldgen.dimension.layer.vanilla.CastleTransformer;
 import com.telepathicgrunt.the_bumblezone.worldgen.dimension.layer.vanilla.Context;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Set;
 
-public record BzBiomeScaleLayer(Set<ResourceLocation> biomesToExpand) implements CastleTransformer {
+public record BzBiomeScaleLayer(Set<Identifier> biomesToExpand) implements CastleTransformer {
 
     @Override
     public int apply(Context context, int n, int e, int s, int w, int center) {

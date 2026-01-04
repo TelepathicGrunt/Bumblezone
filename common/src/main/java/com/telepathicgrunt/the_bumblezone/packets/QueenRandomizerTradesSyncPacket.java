@@ -14,7 +14,7 @@ import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
@@ -24,7 +24,7 @@ import java.util.Optional;
 
 public record QueenRandomizerTradesSyncPacket(List<RandomizeTradeRowInput> recipeViewerRandomizerTrades) implements Packet<QueenRandomizerTradesSyncPacket> {
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "queen_randomize_trades_sync_packet");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "queen_randomize_trades_sync_packet");
     public static final ClientboundPacketType<QueenRandomizerTradesSyncPacket> TYPE = new QueenRandomizerTradesSyncPacket.Handler();
 
     public static void sendToClient(BzDatapackSyncEvent event) {
@@ -53,7 +53,7 @@ public record QueenRandomizerTradesSyncPacket(List<RandomizeTradeRowInput> recip
 
             ListTag tagList = data.getList("randomize_trades").get();
             for (int i = 0; i < tagList.size(); i++) {
-                TagKey<Item> tagKey = TagKey.create(Registries.ITEM, ResourceLocation.tryParse(tagList.getString(i).orElse("")));
+                TagKey<Item> tagKey = TagKey.create(Registries.ITEM, Identifier.tryParse(tagList.getString(i).orElse("")));
                 RandomizeTradeRowInput wantEntry = new RandomizeTradeRowInput(Optional.of(tagKey));
                 parsedData.add(wantEntry);
             }
@@ -78,7 +78,7 @@ public record QueenRandomizerTradesSyncPacket(List<RandomizeTradeRowInput> recip
         }
 
         @Override
-        public ResourceLocation id() {
+        public Identifier id() {
             return ID;
         }
     }

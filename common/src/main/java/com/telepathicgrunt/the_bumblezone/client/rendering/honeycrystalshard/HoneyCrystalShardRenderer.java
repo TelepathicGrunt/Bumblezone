@@ -10,11 +10,11 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 public class HoneyCrystalShardRenderer extends EntityRenderer<HoneyCrystalShardEntity> {
-    public static final ResourceLocation HONEY_CRYSTAL_SHARD_LOCATION = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/honey_crystal_shard.png");
+    public static final Identifier HONEY_CRYSTAL_SHARD_LOCATION = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/honey_crystal_shard.png");
     private final HoneyCrystalShardModel model;
 
     public HoneyCrystalShardRenderer(EntityRendererProvider.Context context) {
@@ -34,7 +34,7 @@ public class HoneyCrystalShardRenderer extends EntityRenderer<HoneyCrystalShardE
     }
 
     @Override
-    public ResourceLocation getTextureLocation(HoneyCrystalShardEntity honeyCrystalShardEntity) {
+    public Identifier getTextureLocation(HoneyCrystalShardEntity honeyCrystalShardEntity) {
         return HONEY_CRYSTAL_SHARD_LOCATION;
     }
 }

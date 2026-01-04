@@ -14,7 +14,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -31,14 +31,14 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class MekanismCompat implements ModCompat {
-	final DeferredHolder<ModuleData<?>, ModuleData<?>> JETPACK_UNIT = DeferredHolder.create(MekanismAPI.MODULE_REGISTRY_NAME, ResourceLocation.fromNamespaceAndPath("mekanism", "jetpack_unit"));
-	final DeferredHolder<ModuleData<?>, ModuleData<?>> GRAV_UNIT = DeferredHolder.create(MekanismAPI.MODULE_REGISTRY_NAME, ResourceLocation.fromNamespaceAndPath("mekanism", "gravitational_modulating_unit"));
+	final DeferredHolder<ModuleData<?>, ModuleData<?>> JETPACK_UNIT = DeferredHolder.create(MekanismAPI.MODULE_REGISTRY_NAME, Identifier.fromNamespaceAndPath("mekanism", "jetpack_unit"));
+	final DeferredHolder<ModuleData<?>, ModuleData<?>> GRAV_UNIT = DeferredHolder.create(MekanismAPI.MODULE_REGISTRY_NAME, Identifier.fromNamespaceAndPath("mekanism", "gravitational_modulating_unit"));
 	public static Optional<Holder.Reference<Item>> JETPACK;
 	public static Optional<Holder.Reference<Item>> JETPACK_ARMORED;
 
 	public MekanismCompat() {
-		JETPACK = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("mekanism", "jetpack"));
-		JETPACK_ARMORED = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("mekanism", "jetpack_armored"));
+		JETPACK = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("mekanism", "jetpack"));
+		JETPACK_ARMORED = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("mekanism", "jetpack_armored"));
 
 		IEventBus forgeBus = NeoForge.EVENT_BUS;
 		forgeBus.addListener(MekanismCompat.Events::isMekaToolTeleporting);

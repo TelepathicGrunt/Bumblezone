@@ -15,7 +15,7 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,7 +24,7 @@ import net.minecraft.world.item.component.DyedItemColor;
 
 public class FlowerHeadwearModel extends HumanoidModel<LivingEntity> {
 
-    public static final ModelLayerLocation FLOWER_HEADWEAR_LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "flower_headwear"), "flower_headwear");
+    public static final ModelLayerLocation FLOWER_HEADWEAR_LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "flower_headwear"), "flower_headwear");
 
     protected final EquipmentSlot slot;
     public LivingEntity entityLiving;

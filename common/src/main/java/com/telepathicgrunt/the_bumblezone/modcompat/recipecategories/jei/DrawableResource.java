@@ -9,12 +9,12 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.joml.Matrix4f;
 
 public class DrawableResource implements IDrawableStatic {
 
-    private final ResourceLocation resourceLocation;
+    private final Identifier identifier;
     private final int textureWidth;
     private final int textureHeight;
 
@@ -27,8 +27,8 @@ public class DrawableResource implements IDrawableStatic {
     private final int paddingLeft;
     private final int paddingRight;
 
-    public DrawableResource(ResourceLocation resourceLocation, int u, int v, int width, int height, int paddingTop, int paddingBottom, int paddingLeft, int paddingRight, int textureWidth, int textureHeight) {
-        this.resourceLocation = resourceLocation;
+    public DrawableResource(Identifier identifier, int u, int v, int width, int height, int paddingTop, int paddingBottom, int paddingLeft, int paddingRight, int textureWidth, int textureHeight) {
+        this.identifier = identifier;
         this.textureWidth = textureWidth;
         this.textureHeight = textureHeight;
 
@@ -61,7 +61,7 @@ public class DrawableResource implements IDrawableStatic {
     @Override
     public void draw(GuiGraphics guiGraphics, int xOffset, int yOffset, int maskTop, int maskBottom, int maskLeft, int maskRight) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, this.resourceLocation);
+        RenderSystem.setShaderTexture(0, this.identifier);
 
         int x = xOffset + this.paddingLeft + maskLeft;
         int y = yOffset + this.paddingTop + maskTop;

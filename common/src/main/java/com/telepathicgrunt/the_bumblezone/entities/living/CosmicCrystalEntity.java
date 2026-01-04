@@ -29,7 +29,7 @@ import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -160,7 +160,7 @@ public class CosmicCrystalEntity extends LivingEntity {
             return null;
         }
 
-        return ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(dimensionString));
+        return ResourceKey.create(Registries.DIMENSION, Identifier.tryParse(dimensionString));
     }
 
     public void setEssenceControllerDimension(ResourceKey<Level> essenceControllerDimension) {
@@ -381,7 +381,7 @@ public class CosmicCrystalEntity extends LivingEntity {
             NbtUtils.readBlockPos(compoundTag, "essenceControllerBlockPos").ifPresent(this::setEssenceControllerBlockPos);
         }
         if (compoundTag.contains("essenceControllerDimension")) {
-            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(compoundTag.getString("essenceControllerDimension"))));
+            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, Identifier.tryParse(compoundTag.getString("essenceControllerDimension"))));
         }
         if (compoundTag.contains("prevCosmicCrystalState")) {
             this.setCosmicCrystalState(CosmicCrystalState.valueOf(compoundTag.getString("prevCosmicCrystalState")));

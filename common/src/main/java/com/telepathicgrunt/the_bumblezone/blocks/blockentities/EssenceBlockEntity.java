@@ -22,7 +22,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ProblemReporter;
@@ -156,8 +156,8 @@ public class EssenceBlockEntity extends BlockEntity {
         this.beaten = beaten;
     }
 
-    public ResourceLocation getSavedNbtLocation() {
-        return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence/saved_area/" +
+    public Identifier getSavedNbtLocation() {
+        return Identifier.fromNamespaceAndPath(Bumblezone.MODID, "essence/saved_area/" +
                 this.getBlockPos().getX() + "_" +
                 this.getBlockPos().getY() + "_" +
                 this.getBlockPos().getZ() + "_" +

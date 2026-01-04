@@ -5,17 +5,17 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.function.Function;
 
-public record GlisteringHoneyCrystalUnbakedModel(BlockModel mainModel, ResourceLocation insideModelId, ResourceLocation outsideModelId) implements UnbakedModel {
+public record GlisteringHoneyCrystalUnbakedModel(BlockModel mainModel, Identifier insideModelId, Identifier outsideModelId) implements UnbakedModel {
 
     @Override
-    public Collection<ResourceLocation> getDependencies() {
-        ImmutableSet.Builder<ResourceLocation> builder = ImmutableSet.builder();
+    public Collection<Identifier> getDependencies() {
+        ImmutableSet.Builder<Identifier> builder = ImmutableSet.builder();
         builder.addAll(mainModel.getDependencies());
         builder.add(insideModelId);
         builder.add(outsideModelId);
@@ -23,7 +23,7 @@ public record GlisteringHoneyCrystalUnbakedModel(BlockModel mainModel, ResourceL
     }
 
     @Override
-    public void resolveParents(Function<ResourceLocation, UnbakedModel> resolver) {
+    public void resolveParents(Function<Identifier, UnbakedModel> resolver) {
         mainModel.resolveParents(resolver);
     }
 

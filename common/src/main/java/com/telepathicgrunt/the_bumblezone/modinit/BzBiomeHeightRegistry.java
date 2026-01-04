@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.apache.logging.log4j.util.Supplier;
 
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import java.util.Map;
 public final class BzBiomeHeightRegistry {
     private BzBiomeHeightRegistry() {}
 
-    public static final ResourceKey<Registry<BiomeTerrain>> BIOME_HEIGHT_KEY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "biome_height"));
+    public static final ResourceKey<Registry<BiomeTerrain>> BIOME_HEIGHT_KEY = ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "biome_height"));
 //    public static final CustomRegistry<BiomeTerrain> BIOME_HEIGHT = ResourcefulRegistr.of(Bumblezone.MODID, BiomeTerrain.class, BIOME_HEIGHT_KEY, false, false, true);
 //
 //    public static final RegistryEntry<BiomeTerrain> HIVE_PILLAR = BIOME_HEIGHT.register("hive_pillar", () -> new BiomeTerrain(22f, 0.35f));
@@ -37,14 +37,14 @@ public final class BzBiomeHeightRegistry {
     public static final Supplier<BiomeTerrain> BUMBLING_BEEPARTMENTS = BIOME_HEIGHT.register("bumbling_beepartments", () -> new BiomeTerrain(18.5f, 0.225f));
 
     public static class TemporaryFakeBiomeRegistry {
-        private Map<ResourceLocation, BiomeTerrain> map = new HashMap<>();
+        private Map<Identifier, BiomeTerrain> map = new HashMap<>();
 
         public Supplier<BiomeTerrain> register(String id, Supplier<BiomeTerrain> supplier) {
-            map.put(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, id), supplier.get());
+            map.put(Identifier.fromNamespaceAndPath(Bumblezone.MODID, id), supplier.get());
             return supplier;
         }
 
-        public BiomeTerrain get(ResourceLocation location) {
+        public BiomeTerrain get(Identifier location) {
             return map.get(location);
         }
     }

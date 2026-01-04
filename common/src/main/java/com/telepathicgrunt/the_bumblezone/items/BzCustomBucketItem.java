@@ -15,7 +15,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -150,7 +150,7 @@ public class BzCustomBucketItem extends BzBucketItem {
                         Vec3 targetPos = hitResult != null ? hitResult.getLocation() : new Vec3(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
 
                         LootTable sugarWaterEvaporateLootTable = serverLevelAccessor.getLevel().getServer().reloadableRegistries()
-                                .getLootTable(ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "fluids/sugar_water_evaporates")));
+                                .getLootTable(ResourceKey.create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "fluids/sugar_water_evaporates")));
 
                         if (sugarWaterEvaporateLootTable != null) {
                             LootParams lootParams = new LootParams.Builder(serverLevelAccessor.getLevel())

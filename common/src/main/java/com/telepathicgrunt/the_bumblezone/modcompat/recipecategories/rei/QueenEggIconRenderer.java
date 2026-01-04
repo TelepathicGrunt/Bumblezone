@@ -10,14 +10,14 @@ import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.DisplayRenderer;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.joml.Matrix4f;
 
 public class QueenEggIconRenderer extends DisplayRenderer {
 
-	private final ResourceLocation texture;
+	private final Identifier texture;
 
-	public QueenEggIconRenderer(ResourceLocation texture) {
+	public QueenEggIconRenderer(Identifier texture) {
 		this.texture = texture;
 	}
 

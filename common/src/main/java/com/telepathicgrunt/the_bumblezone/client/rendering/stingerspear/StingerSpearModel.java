@@ -13,13 +13,13 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 // Made with Blockbench 4.1.3
 // Exported for Minecraft version 1.17 with Mojang mappings
 // Paste this class into your mod and generate all required imports
 public class StingerSpearModel extends Model {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "stinger_spear"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "stinger_spear"), "main");
     private final ModelPart root;
 
     public StingerSpearModel(ModelPart modelPart) {

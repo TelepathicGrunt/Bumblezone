@@ -22,7 +22,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -45,7 +45,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class CrystallineFlowerScreen extends AbstractContainerScreen<CrystallineFlowerMenu> {
-    private static final ResourceLocation CONTAINER_BACKGROUND = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/container/crystallized_flower.png");
+    private static final Identifier CONTAINER_BACKGROUND = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/container/crystallized_flower.png");
     private static final Pattern SPLIT_WITH_COMBINING_CHARS = Pattern.compile("(\\p{M}+|\\P{M}\\p{M}*)"); // {M} is any kind of 'mark' http://stackoverflow.com/questions/29110887/detect-any-combining-character-in-java/29111105
 
     private static final int MENU_HEIGHT = 126;
@@ -129,8 +129,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private int prevXpTier = 0;
     private boolean prevBookSlotEmpty = true;
 
-    public static Map<ResourceLocation, EnchantmentSkeleton> enchantmentsAvailable = new HashMap<>();
-    public static List<ResourceLocation> enchantmentsAvailableSortedList = new ArrayList<>();
+    public static Map<Identifier, EnchantmentSkeleton> enchantmentsAvailable = new HashMap<>();
+    public static List<Identifier> enchantmentsAvailableSortedList = new ArrayList<>();
     public static SORT_STATE sortState = SORT_STATE.ALPHABETICAL;
 
     public enum SORT_STATE {
@@ -187,12 +187,12 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                     return false;
                 }
 
-                ResourceLocation selectedEnchant = enchantmentsAvailableSortedList.get(selectedIndex);
+                Identifier selectedEnchant = enchantmentsAvailableSortedList.get(selectedIndex);
                 EnchantmentSkeleton enchantmentSkeleton = enchantmentsAvailable.get(selectedEnchant);
                 boolean isCurse = enchantmentSkeleton.isCurse;
                 boolean isTreasure = enchantmentSkeleton.isTreasure;
                 int row = enchantmentsAvailableSortedList.indexOf(selectedEnchant) - this.startIndex;
-                if (ResourceLocation.fromNamespaceAndPath(enchantmentSkeleton.namespace, enchantmentSkeleton.path).equals(this.menu.selectedEnchantment)) {
+                if (Identifier.fromNamespaceAndPath(enchantmentSkeleton.namespace, enchantmentSkeleton.path).equals(this.menu.selectedEnchantment)) {
                     RenderSystem.enableDepthTest();
                     guiGraphics.blit(CONTAINER_BACKGROUND, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SELECTED_U_TEXTURE, ENCHANTMENT_SELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
                     drawEnchantmentText(
@@ -225,7 +225,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                     return;
                 }
 
-                ResourceLocation selectedEnchant = enchantmentsAvailableSortedList.get(selectedIndex);
+                Identifier selectedEnchant = enchantmentsAvailableSortedList.get(selectedIndex);
                 EnchantmentSkeleton enchantmentEntry = enchantmentsAvailable.get(selectedEnchant);
                 boolean isCurse = enchantmentEntry.isCurse;
                 boolean isTreasure = enchantmentEntry.isTreasure;
@@ -822,16 +822,16 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         super.onClose();
     }
 
-    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByNamespace = Comparator.comparing(e -> e.getKey().getNamespace());
-    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByLang = Comparator.comparing(e ->
+    private static final Comparator<Map.Entry<Identifier, EnchantmentSkeleton>> compareByNamespace = Comparator.comparing(e -> e.getKey().getNamespace());
+    private static final Comparator<Map.Entry<Identifier, EnchantmentSkeleton>> compareByLang = Comparator.comparing(e ->
         Language.getInstance().getOrDefault(Util.makeDescriptionId("enchantment", e.getKey()), e.getKey().getPath().replace("_", " ")),
         String.CASE_INSENSITIVE_ORDER);
-    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByLevel = Comparator.comparingInt(e -> e.getValue().level);
-    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByTreasure = Comparator.comparing(e -> !(e.getValue().isTreasure && !e.getValue().isCurse)); // reverse it so treasures are first
-    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByCurse = Comparator.comparing(e -> !e.getValue().isCurse); // reverse it so curses are first
-    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByNamespaceAndLang = compareByNamespace.thenComparing(compareByLang);
-    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByLevelAndLang = compareByLevel.reversed().thenComparing(compareByLang);
-    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByTreasureCurseAndLang = compareByTreasure.thenComparing(compareByCurse).thenComparing(compareByLang);
+    private static final Comparator<Map.Entry<Identifier, EnchantmentSkeleton>> compareByLevel = Comparator.comparingInt(e -> e.getValue().level);
+    private static final Comparator<Map.Entry<Identifier, EnchantmentSkeleton>> compareByTreasure = Comparator.comparing(e -> !(e.getValue().isTreasure && !e.getValue().isCurse)); // reverse it so treasures are first
+    private static final Comparator<Map.Entry<Identifier, EnchantmentSkeleton>> compareByCurse = Comparator.comparing(e -> !e.getValue().isCurse); // reverse it so curses are first
+    private static final Comparator<Map.Entry<Identifier, EnchantmentSkeleton>> compareByNamespaceAndLang = compareByNamespace.thenComparing(compareByLang);
+    private static final Comparator<Map.Entry<Identifier, EnchantmentSkeleton>> compareByLevelAndLang = compareByLevel.reversed().thenComparing(compareByLang);
+    private static final Comparator<Map.Entry<Identifier, EnchantmentSkeleton>> compareByTreasureCurseAndLang = compareByTreasure.thenComparing(compareByCurse).thenComparing(compareByLang);
 
     public static void SortAndAssignAvailableEnchants() {
         enchantmentsAvailableSortedList = enchantmentsAvailable.entrySet().stream().sorted((e1, e2) -> {

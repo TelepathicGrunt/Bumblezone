@@ -49,7 +49,7 @@
     "depends": {
         "java": ">=${java_version}",
         "fabricloader": ">=${fabric_loader_version}",
-        "minecraft": ">=1.21.10",
+        "minecraft": ">=26.1-snapshot-1",
         "fabric": ">=0.100.6",
         "resourcefullib": ">=3.0.11",
         "midnightlib": "*"

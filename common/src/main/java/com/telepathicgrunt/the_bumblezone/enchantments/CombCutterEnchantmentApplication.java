@@ -9,7 +9,7 @@ import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
@@ -34,7 +34,7 @@ public class CombCutterEnchantmentApplication {
     public static Set<Block> getTargetBlocks() {
         return TARGET_BLOCKS.getOrCompute(() -> {
             Set<Block> validBlocks = new HashSet<>();
-            for (ResourceLocation key : BuiltInRegistries.BLOCK.keySet()) {
+            for (Identifier key : BuiltInRegistries.BLOCK.keySet()) {
                 String path = key.getPath();
                 if(path.contains("comb") || path.contains("luminescent_wax") || path.contains("ancient_wax")) {
                     validBlocks.add(BuiltInRegistries.BLOCK.get(key).get().value());
@@ -47,7 +47,7 @@ public class CombCutterEnchantmentApplication {
     public static Set<Block> getLesserTargetBlocks() {
         return LESSER_TARGET_BLOCKS.getOrCompute(() -> {
             Set<Block> validBlocks = new HashSet<>();
-            for (ResourceLocation key : BuiltInRegistries.BLOCK.keySet()) {
+            for (Identifier key : BuiltInRegistries.BLOCK.keySet()) {
                 String path = key.getPath();
                 Block block = BuiltInRegistries.BLOCK.get(key).get().value();
                 if (block instanceof BeehiveBlock || path.contains("hive") || path.contains("nest") || (path.contains("wax") && !path.contains("waxed"))) {

@@ -70,7 +70,7 @@
     {
       "spawner_mob_entries": [
         {
-          "resourcelocation": "minecraft:spider",
+          "identifier": "minecraft:spider",
           "weight": 100
         }
       ],

@@ -37,7 +37,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -713,9 +713,9 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
 
-    private static final ResourceLocation BEE_ESSENCE_ADVANCEMENT_RL = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence/bee_essence_infusion");
+    private static final Identifier BEE_ESSENCE_ADVANCEMENT_RL = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "essence/bee_essence_infusion");
 
-    private void resetAdvancementTree(ServerPlayer serverPlayer, ResourceLocation advancementRL) {
+    private void resetAdvancementTree(ServerPlayer serverPlayer, Identifier advancementRL) {
         AdvancementTree tree = serverPlayer.server.getAdvancements().tree();
         AdvancementHolder parentAdvancement = serverPlayer.server.getAdvancements().get(advancementRL);
         if (parentAdvancement == null) {

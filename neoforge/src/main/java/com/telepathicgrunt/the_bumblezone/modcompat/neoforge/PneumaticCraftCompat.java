@@ -8,7 +8,7 @@ import me.desht.pneumaticcraft.api.pneumatic_armor.BuiltinArmorUpgrades;
 import me.desht.pneumaticcraft.api.pneumatic_armor.ICommonArmorRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -21,7 +21,7 @@ public class PneumaticCraftCompat implements ModCompat {
 	public static Optional<Holder.Reference<Item>> PNEUMATIC_BOOTS;
 
 	public PneumaticCraftCompat() {
-		PNEUMATIC_BOOTS = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("pneumaticcraft", "pneumatic_boots"));
+		PNEUMATIC_BOOTS = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("pneumaticcraft", "pneumatic_boots"));
 
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
 		ModChecker.pneumaticCraftPresent = true;

@@ -6,7 +6,7 @@
     "structure_y_offset": 0,
     "nbt_entries": [
       {
-        "resourcelocation": "the_bumblezone:floaters/crashed",
+        "identifier": "the_bumblezone:floaters/crashed",
         "weight": 1
       }
     ]

@@ -6,14 +6,14 @@ import com.teamresourceful.resourcefullib.common.network.base.ServerboundPacketT
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.packets.handlers.BumbleBeeChestplateFlyingPacketHandleBody;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.function.Consumer;
 
 public record BumbleBeeChestplateFlyingPacket(byte isFlying) implements Packet<BumbleBeeChestplateFlyingPacket> {
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "bumblebee_chestplate_flying");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "bumblebee_chestplate_flying");
     public static final ServerboundPacketType<BumbleBeeChestplateFlyingPacket> TYPE = new BumbleBeeChestplateFlyingPacket.Handler();
 
     public static void sendToServer(boolean isFlying) {
@@ -43,7 +43,7 @@ public record BumbleBeeChestplateFlyingPacket(byte isFlying) implements Packet<B
         }
 
         @Override
-        public ResourceLocation id() {
+        public Identifier id() {
             return ID;
         }
     }

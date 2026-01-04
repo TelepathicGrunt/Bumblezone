@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,7 +24,7 @@ import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.item.DyeColor;
 
 public class RootminGrassRenderer extends RenderLayer<RootminEntity, RootminModel> {
-    private static final ResourceLocation GRASS = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/rootmin_grass.png");
+    private static final Identifier GRASS = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/rootmin_grass.png");
     private final RootminRenderer renderLayerParent;
 
     public RootminGrassRenderer(RootminRenderer renderLayerParent, EntityModelSet entityModelSet) {
@@ -95,7 +95,7 @@ public class RootminGrassRenderer extends RenderLayer<RootminEntity, RootminMode
         return f * 0.01F;
     }
 
-    protected ResourceLocation getTextureLocation() {
+    protected Identifier getTextureLocation() {
         return GRASS;
     }
 

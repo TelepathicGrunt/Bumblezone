@@ -1,12 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.loot;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Set;
 
 public interface LootParamsBzVisitedLootInterface {
 
-    Set<ResourceLocation> getVisitedBzVisitedLootRL();
+    Set<Identifier> getVisitedBzVisitedLootRL();
 
-    void addVisitedBzVisitedLootRL(ResourceLocation bzVisitedLootRL);
+    void addVisitedBzVisitedLootRL(Identifier bzVisitedLootRL);
 }

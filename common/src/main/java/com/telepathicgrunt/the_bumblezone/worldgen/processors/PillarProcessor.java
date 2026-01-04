@@ -9,7 +9,7 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.tags.BlockTags;
@@ -32,7 +32,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PillarProcessor extends StructureProcessor {
-    private static final ResourceLocation EMPTY_RL = ResourceLocation.fromNamespaceAndPath("minecraft", "empty");
+    private static final Identifier EMPTY_RL = Identifier.fromNamespaceAndPath("minecraft", "empty");
 
     public static final MapCodec<PillarProcessor> CODEC  = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             Codec.mapPair(BlockState.CODEC.fieldOf("trigger"), BlockState.CODEC.fieldOf("replacement"))
@@ -41,20 +41,20 @@ public class PillarProcessor extends StructureProcessor {
                             (map) -> map.entrySet().stream().map((entry) -> Pair.of(entry.getKey(), entry.getValue())).collect(Collectors.toList()))
                     .fieldOf("pillar_trigger_and_replacements")
                     .forGetter((processor) -> processor.pillarTriggerAndReplacementBlocks),
-            ResourceLocation.CODEC.optionalFieldOf("pillar_processor_list", EMPTY_RL).forGetter(processor -> processor.processorList),
+            Identifier.CODEC.optionalFieldOf("pillar_processor_list", EMPTY_RL).forGetter(processor -> processor.processorList),
             Direction.CODEC.optionalFieldOf("direction", Direction.DOWN).forGetter(processor -> processor.direction),
             IntProvider.codec(0, 1000).optionalFieldOf("pillar_length").forGetter(config -> config.pillarLength),
             Codec.BOOL.optionalFieldOf("forced_placement", false).forGetter(config -> config.forcePlacement))
     .apply(instance, instance.stable(PillarProcessor::new)));
 
     public final Map<BlockState, BlockState> pillarTriggerAndReplacementBlocks;
-    public final ResourceLocation processorList;
+    public final Identifier processorList;
     public final Direction direction;
     public final Optional<IntProvider> pillarLength;
     public final boolean forcePlacement;
 
     private PillarProcessor(Map<BlockState, BlockState> pillarTriggerAndReplacementBlocks,
-                            ResourceLocation processorList,
+                            Identifier processorList,
                             Direction direction,
                             Optional<IntProvider> pillarLength,
                             boolean forcePlacement)

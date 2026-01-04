@@ -23,10 +23,10 @@ public class KnowingEssenceStructureMessage {
     public static void inStructureMessage(Player player, GuiGraphics guiGraphics) {
         if (KnowingEssence.IsKnowingEssenceActive(player) && BzClientConfigs.knowingEssenceStructureNameClient) {
             ItemStack offHandItem = player.getOffhandItem();
-            String structureResourceLocationStrings = KnowingEssence.GetAllStructure(offHandItem);
-            if (!structureResourceLocationStrings.isEmpty()) {
+            String structureIdentifierStrings = KnowingEssence.GetAllStructure(offHandItem);
+            if (!structureIdentifierStrings.isEmpty()) {
                 Minecraft minecraft = Minecraft.getInstance();
-                String[] structEntries = structureResourceLocationStrings.split(" ");
+                String[] structEntries = structureIdentifierStrings.split(" ");
                 Component line1 = null;
                 Component line2 = null;
                 Component line3 = null;
@@ -116,8 +116,8 @@ public class KnowingEssenceStructureMessage {
         }
     }
 
-    private static String transformStructureToLangKey(String resourceLocation) {
-        return "structure." + resourceLocation.replace(":", ".");
+    private static String transformStructureToLangKey(String identifier) {
+        return "structure." + identifier.replace(":", ".");
     }
 
     public static void renderScrollingString(Minecraft minecraft, GuiGraphics guiGraphics, Component line1, Component line2, Component line3) {

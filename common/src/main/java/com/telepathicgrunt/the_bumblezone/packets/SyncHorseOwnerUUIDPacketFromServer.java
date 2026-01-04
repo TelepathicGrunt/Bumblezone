@@ -6,14 +6,14 @@ import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.packets.handlers.SyncHorseOwnerUUIDPacketFromServerHandleBody;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 
 import java.util.UUID;
 
 public record SyncHorseOwnerUUIDPacketFromServer(int horseId, UUID ownerUUID) implements Packet<SyncHorseOwnerUUIDPacketFromServer> {
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "sync_horse_owner_uuid_from_server");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "sync_horse_owner_uuid_from_server");
     public static final ClientboundPacketType<SyncHorseOwnerUUIDPacketFromServer> TYPE = new SyncHorseOwnerUUIDPacketFromServer.Handler();
 
     public static void sendToClient(Entity entity, int horseId, UUID ownerUUID) {
@@ -44,7 +44,7 @@ public record SyncHorseOwnerUUIDPacketFromServer(int horseId, UUID ownerUUID) im
         }
 
         @Override
-        public ResourceLocation id() {
+        public Identifier id() {
             return ID;
         }
     }

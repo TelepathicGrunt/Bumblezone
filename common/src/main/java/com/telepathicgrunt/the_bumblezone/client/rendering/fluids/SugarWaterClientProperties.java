@@ -6,37 +6,37 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.material.FluidState;
 import org.jetbrains.annotations.Nullable;
 
 public class SugarWaterClientProperties {
 
-    public static final ResourceLocation FLUID_STILL_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "block/sugar_water/still");
-    public static final ResourceLocation FLUID_FLOWING_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "block/sugar_water/flow");
-    public static final ResourceLocation FLUID_OVERLAY_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "block/sugar_water/overlay");
-    public static final ResourceLocation TEXTURE_UNDERWATER = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/misc/sugar_water_underwater.png");
+    public static final Identifier FLUID_STILL_TEXTURE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "block/sugar_water/still");
+    public static final Identifier FLUID_FLOWING_TEXTURE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "block/sugar_water/flow");
+    public static final Identifier FLUID_OVERLAY_TEXTURE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "block/sugar_water/overlay");
+    public static final Identifier TEXTURE_UNDERWATER = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/misc/sugar_water_underwater.png");
 
     public static ClientFluidProperties create() {
         return new ClientFluidProperties() {
             @Override
-            public ResourceLocation still(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
+            public Identifier still(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
                 return FLUID_STILL_TEXTURE;
             }
 
             @Override
-            public ResourceLocation flowing(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
+            public Identifier flowing(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
                 return FLUID_FLOWING_TEXTURE;
             }
 
             @Override
-            public ResourceLocation overlay(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
+            public Identifier overlay(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
                 return FLUID_OVERLAY_TEXTURE;
             }
 
             @Override
-            public ResourceLocation screenOverlay() {
+            public Identifier screenOverlay() {
                 return TEXTURE_UNDERWATER;
             }
 

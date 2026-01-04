@@ -10,7 +10,7 @@ import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Map;
@@ -29,12 +29,12 @@ public class TargetAdvancementDoneTrigger extends SimpleCriterionTrigger<TargetA
         super.trigger(serverPlayer, (trigger) -> trigger.matches(serverPlayer));
     }
 
-    public record TriggerInstance(Optional<ContextAwarePredicate> player, ResourceLocation targetAdvancement) implements SimpleCriterionTrigger.SimpleInstance {
+    public record TriggerInstance(Optional<ContextAwarePredicate> player, Identifier targetAdvancement) implements SimpleCriterionTrigger.SimpleInstance {
 
         public static final Codec<TargetAdvancementDoneTrigger.TriggerInstance> CODEC =
                 RecordCodecBuilder.create(instance -> instance.group(
                         EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TargetAdvancementDoneTrigger.TriggerInstance::player),
-                        ResourceLocation.CODEC.fieldOf("target_advancement").forGetter(TargetAdvancementDoneTrigger.TriggerInstance::targetAdvancement)
+                        Identifier.CODEC.fieldOf("target_advancement").forGetter(TargetAdvancementDoneTrigger.TriggerInstance::targetAdvancement)
                 ).apply(instance, TargetAdvancementDoneTrigger.TriggerInstance::new));
 
         public boolean matches(ServerPlayer serverPlayer) {

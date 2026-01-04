@@ -295,7 +295,7 @@
     {
       "spawner_mob_entries": [
         {
-          "resourcelocation": "minecraft:silverfish",
+          "identifier": "minecraft:silverfish",
           "weight": 100
         }
       ],

@@ -20,7 +20,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -168,7 +168,7 @@ public class EntityTeleportationHookup {
 
             ServerLevel serverWorld = worldKey == null ? null : minecraftServer.getLevel(worldKey);
             if (serverWorld == null) {
-                serverWorld = minecraftServer.getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(BzDimensionConfigs.defaultDimension)));
+                serverWorld = minecraftServer.getLevel(ResourceKey.create(Registries.DIMENSION, Identifier.tryParse(BzDimensionConfigs.defaultDimension)));
             }
             BzWorldSavedData.queueEntityToTeleport(livingEntity, serverWorld.dimension());
         }
@@ -383,7 +383,7 @@ public class EntityTeleportationHookup {
         }
 
         if (BzDimensionConfigs.onlyOverworldHivesTeleports) {
-            ResourceLocation defaultDimRL = ResourceLocation.tryParse(BzDimensionConfigs.defaultDimension);
+            Identifier defaultDimRL = Identifier.tryParse(BzDimensionConfigs.defaultDimension);
             ResourceKey<Level> worldKey = ResourceKey.create(Registries.DIMENSION, defaultDimRL);
             return level.dimension().equals(worldKey);
         }
@@ -517,7 +517,7 @@ public class EntityTeleportationHookup {
             if (capability.getNonBZDim().equals(Bumblezone.MOD_DIMENSION_ID) || BzDimensionConfigs.forceExitToOverworld) {
                 //Go to default dimension instead
                 //update stored dimension
-                capability.setNonBZDim(ResourceLocation.tryParse(BzDimensionConfigs.defaultDimension));
+                capability.setNonBZDim(Identifier.tryParse(BzDimensionConfigs.defaultDimension));
             }
         });
     }

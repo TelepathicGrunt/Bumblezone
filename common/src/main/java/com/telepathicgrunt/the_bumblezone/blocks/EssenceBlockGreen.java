@@ -14,7 +14,7 @@ import com.telepathicgrunt.the_bumblezone.packets.MusicPacketFromServer;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -69,8 +69,8 @@ public class EssenceBlockGreen extends EssenceBlock {
     }
 
     @Override
-    public ResourceLocation getArenaNbt() {
-        return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence/green_arena");
+    public Identifier getArenaNbt() {
+        return Identifier.fromNamespaceAndPath(Bumblezone.MODID, "essence/green_arena");
     }
 
     @Override
@@ -93,8 +93,8 @@ public class EssenceBlockGreen extends EssenceBlock {
     }
 
     @Override
-    public ResourceLocation getEssenceItemReward() {
-        return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "gameplay/rewards/green_arena_victory");
+    public Identifier getEssenceItemReward() {
+        return Identifier.fromNamespaceAndPath(Bumblezone.MODID, "gameplay/rewards/green_arena_victory");
     }
 
     @Override
@@ -286,7 +286,7 @@ public class EssenceBlockGreen extends EssenceBlock {
             if (livingEntityAttributeHealth != null) {
                 float extraHealth = ROOTMIN_HEALTH - rootminEntity.getMaxHealth();
                 livingEntityAttributeHealth.addPermanentModifier(new AttributeModifier(
-                        ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence_arena_health_boost"),
+                        Identifier.fromNamespaceAndPath(Bumblezone.MODID, "essence_arena_health_boost"),
                         extraHealth,
                         AttributeModifier.Operation.ADD_VALUE));
                 rootminEntity.heal(extraHealth + rootminEntity.getMaxHealth());
@@ -295,7 +295,7 @@ public class EssenceBlockGreen extends EssenceBlock {
             AttributeInstance knockbackResistanceAttribute = rootminEntity.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
             if (knockbackResistanceAttribute != null) {
                 knockbackResistanceAttribute.addPermanentModifier(new AttributeModifier(
-                        ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence_arena_knockback_resistance_boost"),
+                        Identifier.fromNamespaceAndPath(Bumblezone.MODID, "essence_arena_knockback_resistance_boost"),
                         0.25d,
                         AttributeModifier.Operation.ADD_VALUE));
             }

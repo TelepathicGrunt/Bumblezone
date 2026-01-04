@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modules.base.Module;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistrar;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.attachment.AttachmentType;
 
 import java.util.ArrayList;
@@ -68,5 +68,5 @@ public class NeoForgeModuleInitializer {
         return AttachmentType.builder(value.factory()).serialize(value.codec());
     }
 
-    private record ModuleRegistryValue<T extends Module<T>>(ResourceLocation id, MapCodec<T> codec, Supplier<T> factory) { }
+    private record ModuleRegistryValue<T extends Module<T>>(Identifier id, MapCodec<T> codec, Supplier<T> factory) { }
 }

@@ -7,7 +7,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
@@ -22,7 +22,7 @@ public class BloodMagicCompat implements ModCompat {
 	public static Optional<Holder.Reference<Item>> AIR_SIGIL;
 
 	public BloodMagicCompat() {
-		AIR_SIGIL = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("bloodmagic", "airsigil"));
+		AIR_SIGIL = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("bloodmagic", "airsigil"));
 
 		IEventBus eventBus = NeoForge.EVENT_BUS;
 		eventBus.addListener(BloodMagicCompat::onAirSigilItemUse);

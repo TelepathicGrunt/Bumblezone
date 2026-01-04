@@ -6,7 +6,7 @@
     "structure_y_offset": -8,
     "nbt_entries": [
       {
-        "resourcelocation": "the_bumblezone:ore_balloon",
+        "identifier": "the_bumblezone:ore_balloon",
         "weight": 1
       }
     ]

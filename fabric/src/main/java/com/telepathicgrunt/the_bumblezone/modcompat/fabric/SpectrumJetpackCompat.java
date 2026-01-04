@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat.fabric;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -15,7 +15,7 @@ public class SpectrumJetpackCompat implements ModCompat {
     private static TagKey<Item> SPECTRUM_JETPACKS;
 
     public SpectrumJetpackCompat() {
-        SPECTRUM_JETPACKS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("spectrumjetpacks", "jetpacks"));
+        SPECTRUM_JETPACKS = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("spectrumjetpacks", "jetpacks"));
 
        // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.createJetpackPresent = true;

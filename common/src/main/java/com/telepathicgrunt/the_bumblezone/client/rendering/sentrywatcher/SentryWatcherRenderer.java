@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.Nullable;
@@ -28,7 +28,7 @@ public class SentryWatcherRenderer<M extends EntityModel<SentryWatcherEntity>>
         extends EntityRenderer<SentryWatcherEntity>
         implements RenderLayerParent<SentryWatcherEntity, M>
 {
-    private static final ResourceLocation SKIN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/sentry_watcher.png");
+    private static final Identifier SKIN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/sentry_watcher.png");
     protected final SentryWatcherModel model;
     protected final List<RenderLayer<SentryWatcherEntity, M>> layers = Lists.newArrayList();
 
@@ -81,23 +81,23 @@ public class SentryWatcherRenderer<M extends EntityModel<SentryWatcherEntity>>
 
     @Nullable
     protected RenderType getRenderType(SentryWatcherEntity sentryWatcherEntity, boolean bodyVisible, boolean hidden, boolean glowing) {
-        ResourceLocation resourceLocation = this.getTextureLocation(sentryWatcherEntity);
+        Identifier identifier = this.getTextureLocation(sentryWatcherEntity);
         if (bodyVisible) {
-            return this.model.renderType(resourceLocation);
+            return this.model.renderType(identifier);
         }
         if (glowing) {
-            return RenderType.outline(resourceLocation);
+            return RenderType.outline(identifier);
         }
         return null;
     }
 
     @Override
-    public ResourceLocation getTextureLocation(SentryWatcherEntity sentryWatcherEntity) {
+    public Identifier getTextureLocation(SentryWatcherEntity sentryWatcherEntity) {
         return SKIN;
     }
 
     static class EyeLayerRenderer<T extends Entity, M extends EntityModel<T>> extends RenderLayer<T, M> {
-        private static final ResourceLocation EYES = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/sentry_watcher_eyes.png");
+        private static final Identifier EYES = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/sentry_watcher_eyes.png");
         private static final RenderType RENDER_TYPE_EYES = RenderType.eyes(EYES);
         protected SentryWatcherModel model;
 

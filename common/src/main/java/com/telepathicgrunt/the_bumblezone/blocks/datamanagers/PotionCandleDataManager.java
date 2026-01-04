@@ -8,7 +8,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.ExtraCodecs;
@@ -54,7 +54,7 @@ public class PotionCandleDataManager extends SimpleJsonResourceReloadListener<Po
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, EffectData> loader, ResourceManager manager, ProfilerFiller profiler) {
+    protected void apply(Map<Identifier, EffectData> loader, ResourceManager manager, ProfilerFiller profiler) {
         effectToOverrideStats.clear();
         loader.forEach((fileIdentifier, effectData) -> effectToOverrideStats.put(effectData.effectHolder().value(), effectData.overrideData()));
     }

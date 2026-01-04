@@ -9,7 +9,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.tags.TagKey;
@@ -55,7 +55,7 @@ public class CrystallineFlowerDataManager extends SimpleJsonResourceReloadListen
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, FlowerData> loader, ResourceManager manager, ProfilerFiller profiler) {
+    protected void apply(Map<Identifier, FlowerData> loader, ResourceManager manager, ProfilerFiller profiler) {
         itemToXp.clear();
         disallowConsume.clear();
         loader.forEach((fileIdentifier, flowerData) -> cachedFlowerData.add(flowerData));

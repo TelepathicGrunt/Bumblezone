@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -15,8 +15,8 @@ import java.util.EnumSet;
 import java.util.Optional;
 
 public class ForbiddenArcanusCompat implements ModCompat {
-    protected static final ResourceLocation BEE_BUCKET_RL = ResourceLocation.fromNamespaceAndPath("forbidden_arcanus", "edelwood_bee_bucket");
-    protected static final ResourceLocation EMPTY_BUCKET_RL = ResourceLocation.fromNamespaceAndPath("forbidden_arcanus", "edelwood_bucket");
+    protected static final Identifier BEE_BUCKET_RL = Identifier.fromNamespaceAndPath("forbidden_arcanus", "edelwood_bee_bucket");
+    protected static final Identifier EMPTY_BUCKET_RL = Identifier.fromNamespaceAndPath("forbidden_arcanus", "edelwood_bucket");
 
     public ForbiddenArcanusCompat() {
         Optional<Item> bucketBee = BuiltInRegistries.ITEM.getOptional(BEE_BUCKET_RL);

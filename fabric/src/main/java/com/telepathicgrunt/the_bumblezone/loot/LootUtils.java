@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.loot;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.storage.loot.LootTable;
 
@@ -21,14 +21,14 @@ public class LootUtils {
             return CACHED_IS_ENTITY_LOOT_TABLES.getBoolean(lootTable);
         }
 
-        ResourceLocation resourceLocation = minecraftServer
+        Identifier identifier = minecraftServer
                 .reloadableRegistries()
                 .lookup()
                 .getOrThrow(Registries.LOOT_TABLE)
                 .value()
                 .getKey(lootTable);
 
-        boolean isEntityLootTable = (resourceLocation == null ? "" : resourceLocation.getPath()).contains("entities/");
+        boolean isEntityLootTable = (identifier == null ? "" : identifier.getPath()).contains("entities/");
         CACHED_IS_ENTITY_LOOT_TABLES.put(lootTable, isEntityLootTable);
         return isEntityLootTable;
     }

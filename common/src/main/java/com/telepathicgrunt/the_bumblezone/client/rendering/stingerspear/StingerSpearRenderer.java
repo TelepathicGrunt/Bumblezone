@@ -10,11 +10,11 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 public class StingerSpearRenderer extends EntityRenderer<ThrownStingerSpearEntity> {
-    public static final ResourceLocation STINGER_SPEAR_LOCATION = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/stinger_spear.png");
+    public static final Identifier STINGER_SPEAR_LOCATION = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/stinger_spear.png");
     private final StingerSpearModel model;
 
     public StingerSpearRenderer(EntityRendererProvider.Context context) {
@@ -34,7 +34,7 @@ public class StingerSpearRenderer extends EntityRenderer<ThrownStingerSpearEntit
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ThrownStingerSpearEntity thrownStingerSpearEntity) {
+    public Identifier getTextureLocation(ThrownStingerSpearEntity thrownStingerSpearEntity) {
         return STINGER_SPEAR_LOCATION;
     }
 }

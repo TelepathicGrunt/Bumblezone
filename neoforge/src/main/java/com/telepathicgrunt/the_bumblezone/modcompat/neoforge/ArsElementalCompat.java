@@ -11,13 +11,13 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Set;
 
 public class ArsElementalCompat implements ModCompat {
-	private static final ResourceLocation SPELL_HOMING_PROJ_RL = ResourceLocation.fromNamespaceAndPath("ars_nouveau", "homing_spell_proj");
-	private static final ResourceLocation SPELL_CURVED_PROJ_RL = ResourceLocation.fromNamespaceAndPath("ars_nouveau", "arcing_spell_proj");
+	private static final Identifier SPELL_HOMING_PROJ_RL = Identifier.fromNamespaceAndPath("ars_nouveau", "homing_spell_proj");
+	private static final Identifier SPELL_CURVED_PROJ_RL = Identifier.fromNamespaceAndPath("ars_nouveau", "arcing_spell_proj");
 
 	private static final Set<AbstractCastMethod> ALLOWED_ELEMENTAL_CAST_METHODS = Sets.newHashSet(
 			MethodHomingProjectile.INSTANCE,
@@ -47,7 +47,7 @@ public class ArsElementalCompat implements ModCompat {
 		return false;
 	}
 
-	public static boolean isArsElementalProjectile(ResourceLocation projectileRL) {
+	public static boolean isArsElementalProjectile(Identifier projectileRL) {
 		if (projectileRL != null && (projectileRL.equals(SPELL_HOMING_PROJ_RL) || projectileRL.equals(SPELL_CURVED_PROJ_RL))) {
 			return true;
 		}

@@ -7,7 +7,7 @@ import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.platform.PlatformSoundType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 
 public class BzSounds {
@@ -111,6 +111,6 @@ public class BzSounds {
     );
 
     private static HolderRegistryEntry<SoundEvent> registerSoundEvent(String path) {
-        return SOUND_EVENTS.registerHolder(path, () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, path)));
+        return SOUND_EVENTS.registerHolder(path, () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Bumblezone.MODID, path)));
     }
 }

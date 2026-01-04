@@ -9,12 +9,12 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.SlimeOuterLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 public class HoneySlimeRendering extends MobRenderer<HoneySlimeEntity, SlimeModel<HoneySlimeEntity>> {
-    private static final ResourceLocation HONEY_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/honey_slime.png");
-    private static final ResourceLocation HONEYLESS_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/honey_slime_naked.png");
+    private static final Identifier HONEY_TEXTURE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/honey_slime.png");
+    private static final Identifier HONEYLESS_TEXTURE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/honey_slime_naked.png");
 
     public HoneySlimeRendering(EntityRendererProvider.Context context) {
         super(context, new SlimeModel<>(context.bakeLayer(ModelLayers.SLIME)), 0.25F);
@@ -40,7 +40,7 @@ public class HoneySlimeRendering extends MobRenderer<HoneySlimeEntity, SlimeMode
     }
 
     @Override
-    public ResourceLocation getTextureLocation(HoneySlimeEntity honeySlimeEntity) {
+    public Identifier getTextureLocation(HoneySlimeEntity honeySlimeEntity) {
         return honeySlimeEntity.isInHoney() ? HONEY_TEXTURE : HONEYLESS_TEXTURE;
     }
 }

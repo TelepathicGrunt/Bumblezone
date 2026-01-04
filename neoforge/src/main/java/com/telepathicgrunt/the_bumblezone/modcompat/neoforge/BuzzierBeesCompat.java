@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -18,7 +18,7 @@ import java.util.EnumSet;
 import java.util.Optional;
 
 public class BuzzierBeesCompat implements ModCompat {
-    private static final ResourceLocation BEE_BOTTLE_RL = ResourceLocation.fromNamespaceAndPath("buzzier_bees", "bee_bottle");
+    private static final Identifier BEE_BOTTLE_RL = Identifier.fromNamespaceAndPath("buzzier_bees", "bee_bottle");
 
     public BuzzierBeesCompat() {
         Optional<Item> bottledBee = BuiltInRegistries.ITEM.getOptional(BEE_BOTTLE_RL);
@@ -29,7 +29,7 @@ public class BuzzierBeesCompat implements ModCompat {
 
         Bumblezone.MOD_COMPAT_DATAPACKS.add(addBuiltinDataPacks ->
                 addBuiltinDataPacks.add(
-                        ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "buzzier_bees_compat"),
+                        Identifier.fromNamespaceAndPath(Bumblezone.MODID, "buzzier_bees_compat"),
                         Component.literal("Bumblezone - Buzzier Bees Compat"),
                         BzAddBuiltinDataPacks.PackMode.FORCE_ENABLED
                 )

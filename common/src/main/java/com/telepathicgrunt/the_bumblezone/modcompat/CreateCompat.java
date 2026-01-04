@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
@@ -13,7 +13,7 @@ public class CreateCompat implements ModCompat {
     private static Block LIMESTONE;
 
     public CreateCompat() {
-        LIMESTONE = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("create", "limestone"));
+        LIMESTONE = BuiltInRegistries.BLOCK.get(Identifier.fromNamespaceAndPath("create", "limestone"));
 
        // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.createPresent = true;

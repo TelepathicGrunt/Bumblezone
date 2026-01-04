@@ -6,34 +6,34 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Optional;
 
 public class EntityPosAndDimModule implements Module<EntityPosAndDimModule> {
     public static final MapCodec<EntityPosAndDimModule> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-            ResourceLocation.CODEC.fieldOf("nonBZDimension").orElse(ResourceLocation.tryParse(BzDimensionConfigs.defaultDimension)).forGetter(module -> module.nonBZDimension),
+            Identifier.CODEC.fieldOf("nonBZDimension").orElse(Identifier.tryParse(BzDimensionConfigs.defaultDimension)).forGetter(module -> module.nonBZDimension),
             Vec3.CODEC.optionalFieldOf("nonBZPosition").forGetter(module -> module.nonBZPosition)
     ).apply(instance, EntityPosAndDimModule::new));
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "entity_pos_and_dim");
-    private ResourceLocation nonBZDimension;
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "entity_pos_and_dim");
+    private Identifier nonBZDimension;
     private Optional<Vec3> nonBZPosition;
 
-    public EntityPosAndDimModule(ResourceLocation nonBZDimension, Optional<Vec3> nonBZPosition) {
+    public EntityPosAndDimModule(Identifier nonBZDimension, Optional<Vec3> nonBZPosition) {
         this.nonBZDimension = nonBZDimension;
         this.nonBZPosition = nonBZPosition;
     }
 
     public EntityPosAndDimModule() {
-        this.nonBZDimension = ResourceLocation.tryParse(BzDimensionConfigs.defaultDimension);
+        this.nonBZDimension = Identifier.tryParse(BzDimensionConfigs.defaultDimension);
         this.nonBZPosition = Optional.empty();
     }
 
-    public void setNonBZDim(ResourceLocation incomingDim) {
+    public void setNonBZDim(Identifier incomingDim) {
         if (incomingDim.equals(Bumblezone.MOD_DIMENSION_ID)) {
-            this.nonBZDimension = ResourceLocation.tryParse(BzDimensionConfigs.defaultDimension);
+            this.nonBZDimension = Identifier.tryParse(BzDimensionConfigs.defaultDimension);
             Bumblezone.LOGGER.error("Error: The non-bz dimension passed in to be stored was bz dimension. Please contact mod creator to let them know of this issue.");
         }
         else {
@@ -41,7 +41,7 @@ public class EntityPosAndDimModule implements Module<EntityPosAndDimModule> {
         }
     }
 
-    public ResourceLocation getNonBZDim() {
+    public Identifier getNonBZDim() {
         return nonBZDimension;
     }
 
@@ -63,7 +63,7 @@ public class EntityPosAndDimModule implements Module<EntityPosAndDimModule> {
     }
 
     @Override
-    public ResourceLocation id() {
+    public Identifier id() {
         return ID;
     }
 }
