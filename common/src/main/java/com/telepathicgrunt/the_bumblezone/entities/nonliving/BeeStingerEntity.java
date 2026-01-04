@@ -16,7 +16,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
@@ -37,12 +37,12 @@ public class BeeStingerEntity extends AbstractArrow {
 
     public void tick() {
         super.tick();
-        if (this.level().isClientSide) {
-            if (!this.inGround) {
+        if (this.level().isClientSide()) {
+            if (!this.isInGround()) {
                 this.makeParticle(4);
             }
         }
-        else if (this.inGround && this.inGroundTime != 0 && this.inGroundTime >= 600) {
+        else if (this.isInGround() && this.inGroundTime != 0 && this.inGroundTime >= 600) {
             this.level().broadcastEntityEvent(this, (byte)0);
         }
     }
@@ -68,7 +68,7 @@ public class BeeStingerEntity extends AbstractArrow {
 
     @Override
     protected void doPostHurtEffects(LivingEntity livingEntity) {
-        if (!livingEntity.getType().is(EntityTypeTags.UNDEAD)) {
+        if (!livingEntity.is(EntityTypeTags.UNDEAD)) {
             boolean isPoisoned = livingEntity.hasEffect(MobEffects.POISON);
             boolean isSlowed = livingEntity.hasEffect(MobEffects.SLOWNESS);
             boolean isWeakened = livingEntity.hasEffect(MobEffects.WEAKNESS);

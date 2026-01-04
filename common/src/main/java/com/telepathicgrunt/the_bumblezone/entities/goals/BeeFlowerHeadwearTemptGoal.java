@@ -5,7 +5,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.bee.Bee;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;

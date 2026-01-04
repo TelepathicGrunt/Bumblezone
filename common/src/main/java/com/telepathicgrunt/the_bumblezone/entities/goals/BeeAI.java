@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.Path;
 

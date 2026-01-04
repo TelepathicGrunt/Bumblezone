@@ -5,7 +5,7 @@ import com.telepathicgrunt.the_bumblezone.entities.mobs.VariantBeeEntity;
 import net.minecraft.client.renderer.entity.BeeRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.bee.Bee;
 
 public class VariantBeeRenderer extends BeeRenderer {
     private static final Identifier VANILLA_BEE_TEXTURE = Identifier.fromNamespaceAndPath("minecraft", "textures/entity/bee/bee.png");
