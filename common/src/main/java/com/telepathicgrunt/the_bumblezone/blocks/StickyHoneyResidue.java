@@ -10,7 +10,6 @@ import it.unimi.dsi.fastutil.objects.Object2ShortMap;
 import it.unimi.dsi.fastutil.objects.Object2ShortOpenHashMap;
 import it.unimi.dsi.fastutil.shorts.Short2ObjectArrayMap;
 import it.unimi.dsi.fastutil.shorts.Short2ObjectMap;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -22,6 +21,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.Util;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -87,7 +87,7 @@ public class StickyHoneyResidue extends Block {
     public StickyHoneyResidue() {
         this(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.TERRACOTTA_ORANGE)
-                .noCollission()
+                .noCollision()
                 .strength(6.0f, 0.0f)
                 .noOcclusion()
                 .replaceable()
@@ -188,15 +188,15 @@ public class StickyHoneyResidue extends Block {
      */
     @Deprecated
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
-        if (entity.getType().is(BzTags.STICKY_HONEY_RESIDUE_CANNOT_SLOW)) {
-            super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
+        if (entity.is(BzTags.STICKY_HONEY_RESIDUE_CANNOT_SLOW)) {
+            super.entityInside(blockState, level, blockPos, entity, effectApplier, isPrecise);
             return;
         }
 
         ItemStack beeLeggings = entity instanceof LivingEntity livingEntity ? HoneyBeeLeggings.getEntityBeeLegging(livingEntity) : ItemStack.EMPTY;
         if(!beeLeggings.isEmpty()) {
-            super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
+            super.entityInside(blockState, level, blockPos, entity, effectApplier, isPrecise);
             return;
         }
 
@@ -216,7 +216,7 @@ public class StickyHoneyResidue extends Block {
             }
         }
 
-        super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
+        super.entityInside(blockState, level, blockPos, entity, effectApplier, isPrecise);
     }
 
     /**
@@ -336,8 +336,8 @@ public class StickyHoneyResidue extends Block {
      * the power fed into comparator (1 - 4)
      */
     @Override
-    public int getAnalogOutputSignal(BlockState blockstate, Level world, BlockPos pos) {
-        return numberOfAttachments(blockstate);
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
+        return numberOfAttachments(state);
     }
 
 

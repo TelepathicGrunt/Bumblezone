@@ -170,7 +170,7 @@ public class BeeInteractivity {
 
 
     public static InteractionResult beeUnpollinating(Level world, Player playerEntity, InteractionHand hand, Bee beeEntity) {
-        if (beeEntity.getType().is(BzTags.POLLEN_PUFF_CAN_POLLINATE)) {
+        if (beeEntity.is(BzTags.POLLEN_PUFF_CAN_POLLINATE)) {
             ItemStack itemstack = playerEntity.getItemInHand(hand);
 
             // right clicking on pollinated bee with watery items will drops pollen puff in world

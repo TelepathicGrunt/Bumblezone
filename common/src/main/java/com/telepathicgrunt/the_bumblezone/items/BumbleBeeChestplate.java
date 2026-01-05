@@ -38,13 +38,6 @@ public class BumbleBeeChestplate extends BeeArmor {
     }
 
     @Override
-    public void verifyComponentsAfterLoad(ItemStack itemStack) {
-        if (itemStack.get(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get(), new BumbleBeeChestplateData());
-        }
-    }
-
-    @Override
     public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) {
         BumbleBeeChestplateData chestplateData = itemstack.getComponents().get(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get());
         if (chestplateData == null) {

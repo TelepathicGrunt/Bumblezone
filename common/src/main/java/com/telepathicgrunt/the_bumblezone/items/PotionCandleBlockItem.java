@@ -18,9 +18,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.component.TypedEntityData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,9 +38,9 @@ public class PotionCandleBlockItem extends BlockItem {
 
     @Override
     protected boolean updateCustomBlockEntityTag(BlockPos pos, Level level, Player player, ItemStack itemStack, BlockState state) {
-        CustomData customData = itemStack.get(DataComponents.BLOCK_ENTITY_DATA);
-        if (level.isClientSide() && customData != null && !customData.isEmpty() && level.getBlockEntity(pos) instanceof PotionCandleBlockEntity potionCandleBlockEntity) {
-            CompoundTag blockEntityTag = customData.copyTag();
+        TypedEntityData<@NotNull BlockEntityType<?>> customData = itemStack.get(DataComponents.BLOCK_ENTITY_DATA);
+        if (level.isClientSide() && customData != null && level.getBlockEntity(pos) instanceof PotionCandleBlockEntity potionCandleBlockEntity) {
+            CompoundTag blockEntityTag = customData.copyTagWithoutId();
 
             int color = blockEntityTag.contains(PotionCandleBlockEntity.COLOR_TAG) ? blockEntityTag.getIntOr(PotionCandleBlockEntity.COLOR_TAG, PotionCandleBlockEntity.DEFAULT_COLOR) : PotionCandleBlockEntity.DEFAULT_COLOR;
             potionCandleBlockEntity.setColor(color);
@@ -50,9 +54,9 @@ public class PotionCandleBlockItem extends BlockItem {
 
     @Override
     public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, TooltipDisplay tooltipDisplay, Consumer<Component> componentConsumer, TooltipFlag tooltipFlag) {
-        CustomData customData = itemStack.get(DataComponents.BLOCK_ENTITY_DATA);
-        if (customData != null && !customData.isEmpty()) {
-            CompoundTag blockEntityTag = customData.copyTag();
+        TypedEntityData<@Nullable BlockEntityType<?>> customData = itemStack.get(DataComponents.BLOCK_ENTITY_DATA);
+        if (customData != null) {
+            CompoundTag blockEntityTag = customData.copyTagWithoutId();
             if (blockEntityTag.contains(PotionCandleBlockEntity.STATUS_EFFECT_TAG)) {
                 Identifier rl = Identifier.tryParse(blockEntityTag.getString(PotionCandleBlockEntity.STATUS_EFFECT_TAG).orElse(""));
                 Optional<MobEffect> mobEffect = BuiltInRegistries.MOB_EFFECT.getOptional(rl);

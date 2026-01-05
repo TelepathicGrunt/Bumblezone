@@ -32,7 +32,7 @@ public class SugarWaterBlock extends LiquidBlock implements FluidGetter {
         super(baseFluid.still().get(), BlockBehaviour.Properties.of()
                 .mapColor(MapColor.WATER)
                 .liquid()
-                .noCollission()
+                .noCollision()
                 .strength(100.0F, 100.0F)
                 .speedFactor(0.95F)
                 .noLootTable()
@@ -100,14 +100,14 @@ public class SugarWaterBlock extends LiquidBlock implements FluidGetter {
      */
     @Deprecated
     @Override
-    public void entityInside(BlockState state, Level world, BlockPos position, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+    public void entityInside(BlockState state, Level world, BlockPos position, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (entity instanceof Bee beeEntity && !beeEntity.isDeadOrDying()) {
             if (beeEntity.hurtMarked) {
                 beeEntity.heal(1);
             }
         }
 
-        super.entityInside(state, world, position, entity, insideBlockEffectApplier);
+        super.entityInside(state, world, position, entity, effectApplier, isPrecise);
     }
 
     private void triggerMixEffects(Level world, BlockPos pos) {

@@ -38,7 +38,7 @@ public class SugarWaterBubbleColumnBlock extends BubbleColumnBlock {
         super(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.WATER)
                 .liquid()
-                .noCollission()
+                .noCollision()
                 .strength(100.0F, 100.0F)
                 .noLootTable()
                 .replaceable()
@@ -150,13 +150,13 @@ public class SugarWaterBubbleColumnBlock extends BubbleColumnBlock {
      */
     @Deprecated
     @Override
-    public void entityInside(BlockState state, Level world, BlockPos position, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+    public void entityInside(BlockState state, Level world, BlockPos position, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (entity instanceof Bee beeEntity && !beeEntity.isDeadOrDying()) {
             if (beeEntity.hurtMarked) {
                 beeEntity.heal(1);
             }
         }
 
-        super.entityInside(state, world, position, entity, insideBlockEffectApplier);
+        super.entityInside(state, world, position, entity, effectApplier, isPrecise);
     }
 }

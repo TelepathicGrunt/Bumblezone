@@ -28,6 +28,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.TypedEntityData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
@@ -60,6 +61,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -223,7 +225,7 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof PotionCandleBlockEntity potionCandleBlockEntity) {
             ItemStack itemStack = BzItems.POTION_CANDLE.get().getDefaultInstance();
-            potionCandleBlockEntity.saveToItem(itemStack, level.registryAccess());
+            potionCandleBlockEntity.saveToItem(itemStack, level.registryAccess()); // TODO: find equivalent
             ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, itemStack);
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);
@@ -239,7 +241,7 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return createTickerHelper(blockEntityType, BzBlockEntities.POTION_CANDLE.get(), level.isClientSide ? (a, b, c, d) -> {} : PotionCandleBlockEntity::serverTick);
+        return createTickerHelper(blockEntityType, BzBlockEntities.POTION_CANDLE.get(), level.isClientSide() ? (a, b, c, d) -> {} : PotionCandleBlockEntity::serverTick);
     }
 
     @Override
@@ -248,8 +250,8 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
-        return blockState.is(BzTags.CANDLES) && blockState.getValue(LIT) ? 5 : 0;
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
+        return state.is(BzTags.CANDLES) && state.getValue(LIT) ? 5 : 0;
     }
 
     private void resetTimingFields(Level level, BlockPos blockPos) {
@@ -261,9 +263,9 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
     }
 
     public static int getItemColor(ItemStack itemStack) {
-        CustomData customData = itemStack.get(DataComponents.BLOCK_ENTITY_DATA);
-        if (customData != null && !customData.isEmpty()) {
-            CompoundTag tag = customData.copyTag();
+        TypedEntityData<@NotNull BlockEntityType<?>> customData = itemStack.get(DataComponents.BLOCK_ENTITY_DATA);
+        if (customData != null) {
+            CompoundTag tag = customData.copyTagWithoutId();
             return tag.getInt(PotionCandleBlockEntity.COLOR_TAG).orElse(PotionCandleBlockEntity.DEFAULT_COLOR);
         }
         return PotionCandleBlockEntity.DEFAULT_COLOR;

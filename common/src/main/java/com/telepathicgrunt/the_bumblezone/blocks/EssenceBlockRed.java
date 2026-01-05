@@ -20,6 +20,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -28,7 +29,7 @@ import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.Rabbit;
+import net.minecraft.world.entity.animal.rabbit.Rabbit;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
@@ -133,8 +134,8 @@ public class EssenceBlockRed extends EssenceBlock {
                         UUID playerUUID = essenceBlockEntity.getPlayerInArena().get(serverLevel.getRandom().nextInt(essenceBlockEntity.getPlayerInArena().size()));
                         Player player = serverLevel.getPlayerByUUID(playerUUID);
 
-                        neutralMob.setRemainingPersistentAngerTime(Integer.MAX_VALUE);
-                        neutralMob.setPersistentAngerTarget(playerUUID);
+                        neutralMob.setTimeToRemainAngry(Integer.MAX_VALUE);
+                        neutralMob.setPersistentAngerTarget(EntityReference.of(playerUUID));
                         neutralMob.setTarget(player);
                     }
                     else if (entity instanceof Mob mob && !(mob.getTarget() instanceof Player)) {
@@ -271,8 +272,8 @@ public class EssenceBlockRed extends EssenceBlock {
                 }
 
                 if (entity instanceof NeutralMob neutralMob) {
-                    neutralMob.setRemainingPersistentAngerTime(Integer.MAX_VALUE);
-                    neutralMob.setPersistentAngerTarget(playerUUID);
+                    neutralMob.setTimeToRemainAngry(Integer.MAX_VALUE);
+                    neutralMob.setPersistentAngerTarget(EntityReference.of(playerUUID));
                     neutralMob.setTarget(serverPlayer);
                 }
                 else if (entity instanceof Mob mob) {

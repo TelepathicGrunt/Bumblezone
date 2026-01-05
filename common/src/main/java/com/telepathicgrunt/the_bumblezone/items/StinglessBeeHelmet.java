@@ -48,13 +48,6 @@ public class StinglessBeeHelmet extends BeeArmor {
     }
 
     @Override
-    public void verifyComponentsAfterLoad(ItemStack itemStack) {
-        if (itemStack.get(BzDataComponents.STINGLESS_BEE_HELMET_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.STINGLESS_BEE_HELMET_DATA.get(), new StinglessBeeHelmetData());
-        }
-    }
-
-    @Override
     public void bz$onArmorTick(ItemStack itemStack, Level level, Player player) {
         StinglessBeeHelmetData beeHelmetData = itemStack.get(BzDataComponents.STINGLESS_BEE_HELMET_DATA.get());
         boolean hasBeeRider = beeHelmetData.hasBeeRider();
@@ -151,8 +144,8 @@ public class StinglessBeeHelmet extends BeeArmor {
 
     private void ejectAllBeeRiders(Player player) {
         for (Entity passenger : player.getPassengers()) {
-            if ((passenger instanceof Bee && !passenger.getType().is(BzTags.STINGLESS_BEE_HELMET_DISALLOWED_PASSENGERS)) ||
-                    passenger.getType().is(BzTags.STINGLESS_BEE_HELMET_FORCED_ALLOWED_PASSENGERS))
+            if ((passenger instanceof Bee && !passenger.is(BzTags.STINGLESS_BEE_HELMET_DISALLOWED_PASSENGERS)) ||
+                    passenger.is(BzTags.STINGLESS_BEE_HELMET_FORCED_ALLOWED_PASSENGERS))
             {
                 passenger.stopRiding();
                 if (passenger instanceof Mob mob) {
@@ -183,8 +176,8 @@ public class StinglessBeeHelmet extends BeeArmor {
             playerEntity.getPassengers().isEmpty() &&
             !playerEntity.getCooldowns().isOnCooldown(itemStack))
         {
-            if ((entity instanceof Bee && !entity.getType().is(BzTags.STINGLESS_BEE_HELMET_DISALLOWED_PASSENGERS)) ||
-                entity.getType().is(BzTags.STINGLESS_BEE_HELMET_FORCED_ALLOWED_PASSENGERS))
+            if ((entity instanceof Bee && !entity.is(BzTags.STINGLESS_BEE_HELMET_DISALLOWED_PASSENGERS)) ||
+                entity.is(BzTags.STINGLESS_BEE_HELMET_FORCED_ALLOWED_PASSENGERS))
             {
                 entity.startRiding(playerEntity);
                 if (playerEntity instanceof ServerPlayer serverPlayer) {

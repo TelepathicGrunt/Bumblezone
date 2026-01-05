@@ -44,7 +44,7 @@ public class DenseBubbleBlock extends Block implements BucketPickup {
         this(Properties.of()
                 .mapColor(MapColor.WATER)
                 .liquid()
-                .noCollission()
+                .noCollision()
                 .strength(100.0F, 100.0F)
                 .noLootTable()
                 .replaceable()
@@ -90,7 +90,7 @@ public class DenseBubbleBlock extends Block implements BucketPickup {
 
     @Deprecated
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+    public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (entity instanceof LivingEntity livingEntity) {
             livingEntity.setAirSupply(Math.min(livingEntity.getMaxAirSupply(), livingEntity.getAirSupply() + 2));
         }
@@ -99,15 +99,24 @@ public class DenseBubbleBlock extends Block implements BucketPickup {
         double newUpwardSpeed = Math.min(0.075, vec3.y + 0.01);
         entity.setDeltaMovement(vec3.x, newUpwardSpeed, vec3.z);
 
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             ServerLevel serverLevel = (ServerLevel)level;
             BlockPos entityPos = entity.blockPosition();
             for (int i = 0; i < 2; ++i) {
-                serverLevel.sendParticles(ParticleTypes.BUBBLE, (double)entityPos.getX() + level.random.nextDouble(), entityPos.getY() + 0.5f + level.random.nextDouble(), (double)entityPos.getZ() + level.random.nextDouble(), 1, 0.0, 0.01, 0.0, 0.2);
+                serverLevel.sendParticles(
+                        ParticleTypes.BUBBLE,
+                        (double)entityPos.getX() + level.getRandom().nextDouble(),
+                        entityPos.getY() + 0.5f + level.getRandom().nextDouble(),
+                        (double)entityPos.getZ() + level.getRandom().nextDouble(),
+                        1,
+                        0.0,
+                        0.01,
+                        0.0,
+                        0.2);
             }
         }
 
-        super.entityInside(state, level, blockPos, entity, insideBlockEffectApplier);
+        super.entityInside(state, level, blockPos, entity, effectApplier, isPrecise);
     }
 
     @Override

@@ -297,7 +297,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 Entity entity = source.getEntity();
                 if (entity instanceof LivingEntity livingEntity &&
                     !livingEntity.isSpectator() &&
-                    !livingEntity.getType().is(BzTags.FORCED_BEE_CALM_AT) &&
+                    !livingEntity.is(BzTags.FORCED_BEE_CALM_AT) &&
                     !BeeAggression.isBeelikeEntity(livingEntity))
                 {
                     if (livingEntity instanceof Player player && (level().getDifficulty() == Difficulty.PEACEFUL || player.isCreative())) {

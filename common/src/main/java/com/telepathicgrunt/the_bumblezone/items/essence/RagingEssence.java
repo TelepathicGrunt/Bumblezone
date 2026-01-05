@@ -254,7 +254,7 @@ public class RagingEssence extends AbilityEssenceItem {
                 livingEntity.attackable() &&
                 !livingEntity.isDeadOrDying() &&
                 (entity instanceof Enemy ||
-                (entity instanceof NeutralMob neutralMob && neutralMob.getPersistentAngerTarget() == playerUUID));
+                (entity instanceof NeutralMob neutralMob && neutralMob.getPersistentAngerTarget() != null && neutralMob.getPersistentAngerTarget().getUUID() == playerUUID));
     }
 
     private static void resetRage(ItemStack stack, ServerPlayer serverPlayer) {

@@ -41,13 +41,6 @@ public class HoneyBeeLeggings extends BeeArmor {
     }
 
     @Override
-    public void verifyComponentsAfterLoad(ItemStack itemStack) {
-        if (itemStack.get(BzDataComponents.HONEY_BEE_LEGGINGS_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.HONEY_BEE_LEGGINGS_DATA.get(), new HoneyBeeLeggingsData());
-        }
-    }
-
-    @Override
     public void bz$onArmorTick(ItemStack itemstack, Level level, Player player) {
         if (player.isSpectator()) {
             return;

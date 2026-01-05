@@ -21,15 +21,8 @@ public class CrystallineFlowerBlockItem extends BzBlockItem {
                 .stacksTo(1)
                 .component(BzDataComponents.CRYSTALLINE_FLOWER_DATA.get(), new CrystallineFlowerData())
                 .rarity(Rarity.UNCOMMON),
-            fitInContainers,
-            useBlockName);
-    }
-
-    @Override
-    public void verifyComponentsAfterLoad(ItemStack itemStack) {
-        if (itemStack.get(BzDataComponents.CRYSTALLINE_FLOWER_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.CRYSTALLINE_FLOWER_DATA.get(), new CrystallineFlowerData());
-        }
+            fitInContainers
+        );
     }
 
     @Override

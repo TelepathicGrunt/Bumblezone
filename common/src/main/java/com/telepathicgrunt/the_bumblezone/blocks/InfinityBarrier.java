@@ -76,7 +76,7 @@ public class InfinityBarrier extends BaseEntityBlock implements BlockExtension {
 
     // Weakly push out any entity stuck inside
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (!(blockState.getBlock() instanceof InfinityBarrier)) {
             return;
         }

@@ -17,8 +17,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
-import net.minecraft.world.entity.vehicle.AbstractMinecart;
-import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.entity.vehicle.boat.Boat;
+import net.minecraft.world.entity.vehicle.minecart.AbstractMinecart;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -87,7 +87,7 @@ public class RoyalJellyBlock extends HalfTransparentBlock implements BlockExtens
     @Override
     public void fallOn(Level level, BlockState blockState, BlockPos blockPos, Entity entity, double fallDistance) {
         entity.playSound(BzSounds.ROYAL_JELLY_BLOCK_SLIDE.get(), 1.0F, 1.0F);
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             showJumpParticles((ServerLevel)level, entity);
         }
 
@@ -97,14 +97,14 @@ public class RoyalJellyBlock extends HalfTransparentBlock implements BlockExtens
     }
 
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (this.isSlidingDown(blockPos, entity)) {
             this.maybeDoSlideAchievement(entity, blockPos);
             this.doSlideMovement(entity);
             this.maybeDoSlideEffects(level, entity);
         }
 
-        super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
+        super.entityInside(blockState, level, blockPos, entity, effectApplier, isPrecise);
     }
 
     private boolean isSlidingDown(BlockPos blockPos, Entity entity) {
@@ -167,7 +167,7 @@ public class RoyalJellyBlock extends HalfTransparentBlock implements BlockExtens
                 entity.playSound(BzSounds.ROYAL_JELLY_BLOCK_SLIDE.get(), 1.0F, 1.0F);
             }
 
-            if (!level.isClientSide && level.getRandom().nextInt(5) == 0) {
+            if (!level.isClientSide() && level.getRandom().nextInt(5) == 0) {
                 showSlideParticles((ServerLevel)level, entity);
             }
         }

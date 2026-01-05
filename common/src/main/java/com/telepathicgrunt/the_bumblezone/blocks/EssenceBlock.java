@@ -158,7 +158,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
     }
 
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (!(blockState.getBlock() instanceof EssenceBlock essenceBlock)) {
             return;
         }
@@ -330,7 +330,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
 
     @Nullable
     protected static <T extends BlockEntity> BlockEntityTicker<T> createEssenceTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends EssenceBlockEntity> blockEntityType2) {
-        return level.isClientSide ? null : EssenceBlock.createTickerHelper(blockEntityType, blockEntityType2, EssenceBlockEntity::serverTick);
+        return level.isClientSide() ? null : EssenceBlock.createTickerHelper(blockEntityType, blockEntityType2, EssenceBlockEntity::serverTick);
     }
 
     @Override

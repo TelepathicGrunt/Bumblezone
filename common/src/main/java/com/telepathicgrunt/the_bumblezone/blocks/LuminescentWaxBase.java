@@ -30,7 +30,7 @@ public interface LuminescentWaxBase {
                 return;
             }
 
-            if (livingEntity.getType().is(BzTags.LUMINESCENT_WAX_IMMUNE_TO_EFFECTS)) {
+            if (livingEntity.is(BzTags.LUMINESCENT_WAX_IMMUNE_TO_EFFECTS)) {
                 return;
             }
 

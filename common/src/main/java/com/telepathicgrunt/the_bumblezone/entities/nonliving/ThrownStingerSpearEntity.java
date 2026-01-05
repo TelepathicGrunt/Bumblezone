@@ -26,7 +26,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -44,8 +44,14 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         super(entityType, level);
     }
 
-    public ThrownStingerSpearEntity(Level level, LivingEntity livingEntity, ItemStack ammo, ItemStack weaponItem) {
-        super(BzEntities.THROWN_STINGER_SPEAR_ENTITY.get(), livingEntity, level, ammo, weaponItem);
+    public ThrownStingerSpearEntity(Level level, LivingEntity livingEntity, ItemStack weaponItem) {
+        super(BzEntities.THROWN_STINGER_SPEAR_ENTITY.get(), livingEntity, level, weaponItem, null);
+        this.entityData.set(ID_LOYALTY, this.getLoyaltyFromItem(weaponItem));
+        this.entityData.set(ID_FOIL, weaponItem.hasFoil());
+    }
+
+    public ThrownStingerSpearEntity(Level level, double x, double y, double z, ItemStack weaponItem) {
+        super(BzEntities.THROWN_STINGER_SPEAR_ENTITY.get(), x, y, z, level, weaponItem, weaponItem);
         this.entityData.set(ID_LOYALTY, this.getLoyaltyFromItem(weaponItem));
         this.entityData.set(ID_FOIL, weaponItem.hasFoil());
     }
@@ -160,7 +166,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
                 BzCriterias.STINGER_SPEAR_POISONING_TRIGGER.get().trigger(serverPlayer);
             }
 
-            if (this.getOwner() instanceof LivingEntity ownerEntity && !victim.getType().is(BzTags.PARALYZED_IMMUNE)) {
+            if (this.getOwner() instanceof LivingEntity ownerEntity && !victim.is(BzTags.PARALYZED_IMMUNE)) {
                 Pair<ParalyzeMarker, Integer> neurotoxin = NeurotoxinsEnchantmentApplication.getNeurotoxinEnchantLevel(this.getPickupItemStackOrigin());
                 if (neurotoxin != null && neurotoxin.getSecond() > 0) {
                     this.getPickupItemStackOrigin().hurtAndBreak(neurotoxin.getFirst().durabilityDrainOnValidTargetHit(), ownerEntity, EquipmentSlot.MAINHAND);

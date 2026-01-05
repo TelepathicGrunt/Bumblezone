@@ -64,16 +64,6 @@ public class HoneyCrystalShield extends ShieldItem implements ItemExtension {
                 .rarity(Rarity.UNCOMMON));
     }
 
-    @Override
-    public void verifyComponentsAfterLoad(ItemStack itemStack) {
-        if (itemStack.get(BzDataComponents.HONEY_CRYSTAL_SHIELD_CURRENT_LEVEL_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.HONEY_CRYSTAL_SHIELD_CURRENT_LEVEL_DATA.get(), new HoneyCrystalShieldCurrentLevelData());
-        }
-        if (itemStack.get(BzDataComponents.HONEY_CRYSTAL_SHIELD_DEFINED_LEVELS_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.HONEY_CRYSTAL_SHIELD_DEFINED_LEVELS_DATA.get(), new HoneyCrystalShieldDefinedLevelsData(itemStack.getMaxDamage()));
-        }
-    }
-
     /**
      * Display the shield level (repair cost)
      */
@@ -185,7 +175,7 @@ public class HoneyCrystalShield extends ShieldItem implements ItemExtension {
     private static void damageShield(Player player, ItemStack shieldItem, int damage) {
         if (damage > 0 && player instanceof ServerPlayer serverPlayer) {
             shieldItem.hurtAndBreak(damage, serverPlayer.level(), serverPlayer, item -> {
-                serverPlayer.onEquippedItemBroken(item, LivingEntity.getSlotForHand(serverPlayer.getUsedItemHand()));
+                serverPlayer.onEquippedItemBroken(item, serverPlayer.getUsedItemHand().asEquipmentSlot());
                 serverPlayer.stopUsingItem(); // Neo: Fix MC-168573 ("After breaking a shield, the player's off-hand can't finish using some items")
             });
         }

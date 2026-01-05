@@ -7,9 +7,9 @@ import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAcces
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import net.minecraft.advancements.criterion.ContextAwarePredicate;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.SimpleCriterionTrigger;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -38,7 +38,7 @@ public class TargetAdvancementDoneTrigger extends SimpleCriterionTrigger<TargetA
                 ).apply(instance, TargetAdvancementDoneTrigger.TriggerInstance::new));
 
         public boolean matches(ServerPlayer serverPlayer) {
-            AdvancementHolder advancementHolder = serverPlayer.getServer().getAdvancements().get(targetAdvancement);
+            AdvancementHolder advancementHolder = serverPlayer.level().getServer().getAdvancements().get(targetAdvancement);
             Map<AdvancementHolder, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).bumblezone$getProgress();
             return advancementHolder != null &&
                     advancementsProgressMap.containsKey(advancementHolder) &&

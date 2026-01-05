@@ -25,7 +25,7 @@ public class ProjectileImpact {
             }
         }
 
-        if (projectile.getType().is(BzTags.TELEPORT_PROJECTILES) && projectile.getOwner() != null) {
+        if (projectile.is(BzTags.TELEPORT_PROJECTILES) && projectile.getOwner() != null) {
             if (event.hitResult() != null && event.hitResult() instanceof BlockHitResult blockHitResult) {
                 return EntityTeleportationHookup.runTeleportProjectileImpact(blockHitResult, projectile.getOwner(), projectile);
             }

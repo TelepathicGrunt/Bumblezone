@@ -18,10 +18,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.OwnableEntity;
-import net.minecraft.world.entity.animal.Fox;
+import net.minecraft.world.entity.animal.fox.Fox;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
@@ -150,33 +149,32 @@ public class KnowingEssence extends AbilityEssenceItem {
     private static final int NO_HIGHLIGHT = -1;
 
     public static int GetTeamColor(Entity entity, Player player) {
-        EntityType<?> entityType = entity.getType();
-        if (entityType.is(BzTags.KNOWING_ENTITY_PREVENT_HIGHLIGHTING)) {
+        if (entity.is(BzTags.KNOWING_ENTITY_PREVENT_HIGHLIGHTING)) {
             return NO_HIGHLIGHT;
         }
-        else if (entityType.is(BzTags.KNOWING_ENTITY_FORCED_WHITE_HIGHLIGHT)) {
+        else if (entity.is(BzTags.KNOWING_ENTITY_FORCED_WHITE_HIGHLIGHT)) {
             return WHITE;
         }
-        else if (entityType.is(BzTags.KNOWING_ENTITY_FORCED_PURPLE_HIGHLIGHT)) {
+        else if (entity.is(BzTags.KNOWING_ENTITY_FORCED_PURPLE_HIGHLIGHT)) {
             return PURPLE;
         }
-        else if (entityType.is(BzTags.KNOWING_ENTITY_FORCED_CYAN_HIGHLIGHT)) {
+        else if (entity.is(BzTags.KNOWING_ENTITY_FORCED_CYAN_HIGHLIGHT)) {
             return CYAN;
         }
-        else if (entityType.is(BzTags.KNOWING_ENTITY_FORCED_GREEN_HIGHLIGHT)) {
+        else if (entity.is(BzTags.KNOWING_ENTITY_FORCED_GREEN_HIGHLIGHT)) {
             return GREEN;
         }
-        else if (entityType.is(BzTags.KNOWING_ENTITY_FORCED_YELLOW_HIGHLIGHT)) {
+        else if (entity.is(BzTags.KNOWING_ENTITY_FORCED_YELLOW_HIGHLIGHT)) {
             return YELLOW;
         }
-        else if (entityType.is(BzTags.KNOWING_ENTITY_FORCED_ORANGE_HIGHLIGHT)) {
+        else if (entity.is(BzTags.KNOWING_ENTITY_FORCED_ORANGE_HIGHLIGHT)) {
             return ORANGE;
         }
-        else if (entityType.is(BzTags.KNOWING_ENTITY_FORCED_RED_HIGHLIGHT)) {
+        else if (entity.is(BzTags.KNOWING_ENTITY_FORCED_RED_HIGHLIGHT)) {
             return RED;
         }
 
-        if (entityType.is(BzTags.BOSSES)) {
+        if (entity.is(BzTags.BOSSES)) {
             if (BzClientConfigs.knowingEssenceHighlightBosses) {
                 return PURPLE;
             }

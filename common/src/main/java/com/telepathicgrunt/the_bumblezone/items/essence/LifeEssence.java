@@ -98,7 +98,7 @@ public class LifeEssence extends AbilityEssenceItem {
             healHealth(stack, serverPlayer, tamableAnimal);
             cureEntityOfEffects(stack, serverPlayer, tamableAnimal);
         }
-        else if (entity instanceof ServerPlayer serverPlayer2 && !serverPlayer.level().getServer().isPvpAllowed()) {
+        else if (entity instanceof ServerPlayer serverPlayer2 && !serverPlayer.level().isPvpAllowed()) {
             healHealth(stack, serverPlayer, serverPlayer2);
             cureEntityOfEffects(stack, serverPlayer, serverPlayer2);
         }
@@ -204,7 +204,7 @@ public class LifeEssence extends AbilityEssenceItem {
                 List<Block> saplings = GeneralUtils.convertHoldersetToList(BuiltInRegistries.BLOCK.get(BzTags.LIFE_DEAD_BUSH_REVIVES_TO));
                 saplings.removeIf(sapling -> GeneralUtils.isInTag(BuiltInRegistries.BLOCK, BzTags.LIFE_FORCE_DISALLOWED_DEAD_BUSH_REVIVES_TO, sapling));
                 if (saplings.size() > 0) {
-                    Block chosenSapling = saplings.get(level.random.nextInt(saplings.size()));
+                    Block chosenSapling = saplings.get(level.getRandom().nextInt(saplings.size()));
                     level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 2);
                     if (chosenSapling.defaultBlockState().canSurvive(level, blockPos)) {
                         level.setBlock(blockPos, chosenSapling.defaultBlockState(), 3);

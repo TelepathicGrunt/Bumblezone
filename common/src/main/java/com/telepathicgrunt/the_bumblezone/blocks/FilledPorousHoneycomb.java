@@ -114,7 +114,7 @@ public class FilledPorousHoneycomb extends Block {
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+    public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         beeHoneyTake(state, level, blockPos, entity);
     }
 
@@ -176,7 +176,7 @@ public class FilledPorousHoneycomb extends Block {
      * the power fed into comparator 1
      */
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         return 1;
     }
 

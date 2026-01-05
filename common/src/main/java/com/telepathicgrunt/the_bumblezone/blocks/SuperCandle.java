@@ -109,7 +109,7 @@ public interface SuperCandle {
                         player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
                     }
                     if (successfulLit && player instanceof ServerPlayer serverPlayer && !player.getAbilities().instabuild) {
-                        itemStack.hurtAndBreak(1, serverPlayer, LivingEntity.getSlotForHand(playerHand));
+                        itemStack.hurtAndBreak(1, serverPlayer, playerHand.asEquipmentSlot());
                     }
                 }
                 return true;

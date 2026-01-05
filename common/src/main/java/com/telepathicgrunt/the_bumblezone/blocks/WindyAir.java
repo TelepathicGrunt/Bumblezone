@@ -56,7 +56,7 @@ public class WindyAir extends ProperFacingBlock {
         this(Properties.of()
                 .strength(0.05f, 0)
                 .air()
-                .noCollission()
+                .noCollision()
                 .replaceable()
                 .noLootTable()
                 .noOcclusion()
@@ -110,13 +110,13 @@ public class WindyAir extends ProperFacingBlock {
     }
 
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (entity instanceof Player player) {
             if ((player.isCreative() && player.getAbilities().flying) || player.isSpectator()) {
                 return;
             }
         }
-        else if (entity.getType().is(BzTags.WINDY_AIR_IMMUNE)) {
+        else if (entity.is(BzTags.WINDY_AIR_IMMUNE)) {
             return;
         }
 

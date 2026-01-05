@@ -36,7 +36,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -53,6 +52,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.MapColor;
@@ -172,7 +172,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockState blockstate = this.defaultBlockState();
         FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
-        return blockstate.setValue(WATERLOGGED, fluidstate.getType().is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidstate.isSource());
+        return blockstate.setValue(WATERLOGGED, fluidstate.is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidstate.isSource());
     }
 
     @Override
@@ -246,7 +246,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
     @Override
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
-        if (blockState.getValue(WATERLOGGED) && serverLevel.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
+        if (blockState.getValue(WATERLOGGED) && serverLevel.getGameRules().get(GameRules.MOB_DROPS)) {
             BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
             if (blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
                 if (!honeyCocoonBlockEntity.isUnpackedLoottable() || blockState.getValue(IS_LOOT_CONTAINER)) {
@@ -288,7 +288,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
             GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()), false, true);
             return InteractionResult.SUCCESS;
         }
-        else if (world.isClientSide) {
+        else if (world.isClientSide()) {
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
                     BzSounds.HONEY_COCOON_OPEN.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 
@@ -332,7 +332,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
     @Override
     public boolean placeLiquid(LevelAccessor world, BlockPos blockPos, BlockState blockState, FluidState fluidState) {
-        if (!blockState.getValue(WATERLOGGED) && fluidState.getType().is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidState.isSource()) {
+        if (!blockState.getValue(WATERLOGGED) && fluidState.is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidState.isSource()) {
             if (!world.isClientSide()) {
                 world.setBlock(blockPos, blockState.setValue(WATERLOGGED, true), 3);
                 world.scheduleTick(blockPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(world));
@@ -440,6 +440,6 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
     @Nullable
     protected static <T extends BlockEntity> BlockEntityTicker<T> createCocoonTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends HoneyCocoonBlockEntity> blockEntityType2) {
-        return level.isClientSide ? null : HoneyCocoon.createTickerHelper(blockEntityType, blockEntityType2, HoneyCocoonBlockEntity::serverTick);
+        return level.isClientSide() ? null : HoneyCocoon.createTickerHelper(blockEntityType, blockEntityType2, HoneyCocoonBlockEntity::serverTick);
     }
 }

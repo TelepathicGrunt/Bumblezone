@@ -10,24 +10,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class BzBlockItem extends BlockItem {
     private final boolean fitInContainers;
-    private final boolean useBlockName;
     private final BlockState blockState;
 
     public BzBlockItem(BlockState blockState, Properties properties) {
         super(blockState.getBlock(), properties);
         this.blockState = blockState;
         this.fitInContainers = true;
-        this.useBlockName = true;
     }
 
-    public BzBlockItem(Block block, Properties properties) {
-        this(block, properties, true, true);
-    }
-
-    public BzBlockItem(Block block, Properties properties, boolean fitInContainers, boolean useBlockName) {
+    public BzBlockItem(Block block, Properties properties, boolean fitInContainers) {
         super(block, properties);
         this.fitInContainers = fitInContainers;
-        this.useBlockName = useBlockName;
         this.blockState = null;
     }
 

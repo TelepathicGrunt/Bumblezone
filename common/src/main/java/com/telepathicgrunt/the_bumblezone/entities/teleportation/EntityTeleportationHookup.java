@@ -235,9 +235,9 @@ public class EntityTeleportationHookup {
             boolean passedCheck = false;
 
             // Entity type check
-            if (hitEntity.getType().is(BzTags.TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_ANYWHERE) ||
-                hitEntity.getType().is(BzTags.TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_HIGH) ||
-                hitEntity.getType().is(BzTags.TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_LOW))
+            if (hitEntity.is(BzTags.TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_ANYWHERE) ||
+                hitEntity.is(BzTags.TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_HIGH) ||
+                hitEntity.is(BzTags.TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_LOW))
             {
                 Vec3 hitPos = hitResult.getLocation();
                 AABB boundBox = entityHitResult.getEntity().getBoundingBox();
@@ -247,10 +247,10 @@ public class EntityTeleportationHookup {
                 double minYThreshold = Integer.MIN_VALUE;
                 double maxYThreshold = Integer.MAX_VALUE;
 
-                if (hitEntity.getType().is(BzTags.TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_HIGH)) {
+                if (hitEntity.is(BzTags.TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_HIGH)) {
                     minYThreshold = entityBoundHeight / 2;
                 }
-                if (hitEntity.getType().is(BzTags.TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_HIGH)) {
+                if (hitEntity.is(BzTags.TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_HIGH)) {
                     maxYThreshold = entityBoundHeight / 2;
                 }
 

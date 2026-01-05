@@ -42,7 +42,7 @@ public class HiveLifelineEnchantmentApplication {
         }
 
         Entity attacker = event.source().getEntity();
-        if (attacker == null || attacker.getType().is(BzTags.HIVE_LIFELINE_CANNOT_TRIGGER_LIFELINE)) {
+        if (attacker == null || attacker.is(BzTags.HIVE_LIFELINE_CANNOT_TRIGGER_LIFELINE)) {
             return false;
         }
 
@@ -79,7 +79,7 @@ public class HiveLifelineEnchantmentApplication {
         entitiesNearby.sort(Comparator.comparingDouble(entity -> entity.position().distanceTo(player.position())));
 
         for (LivingEntity nearbyEntity : entitiesNearby) {
-            if (!nearbyEntity.getType().is(BzTags.HIVE_LIFELINE_TAKES_PLAYER_DAMAGE)) {
+            if (!nearbyEntity.is(BzTags.HIVE_LIFELINE_TAKES_PLAYER_DAMAGE)) {
                 continue;
             }
 

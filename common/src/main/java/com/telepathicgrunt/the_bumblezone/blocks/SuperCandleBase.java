@@ -159,7 +159,7 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
 
     @Override
     public void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
-        if (!level.isClientSide && projectile.isOnFire() && SuperCandle.canBeLit(level, state, hit.getBlockPos())) {
+        if (!level.isClientSide() && projectile.isOnFire() && SuperCandle.canBeLit(level, state, hit.getBlockPos())) {
             SuperCandleWick.setLit(level, level.getBlockState(hit.getBlockPos().above()), hit.getBlockPos().above(), true);
         }
     }
@@ -170,8 +170,8 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
-        return blockState.is(BzTags.CANDLES) && blockState.getValue(LIT) ? 5 : 0;
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
+        return state.is(BzTags.CANDLES) && state.getValue(LIT) ? 5 : 0;
     }
 
     @Override

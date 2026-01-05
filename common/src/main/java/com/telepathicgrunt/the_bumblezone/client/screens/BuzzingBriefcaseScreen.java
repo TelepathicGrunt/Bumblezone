@@ -479,7 +479,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     mouseY - (mainY + 33) >= 0.0D &&
                     mouseY - (mainY + 33) < 11.0D)
             {
-                if (beeState.beeEntity().getType().is(BzTags.BUZZING_BRIEFCASE_CAN_POLLINATE)) {
+                if (beeState.beeEntity().is(BzTags.BUZZING_BRIEFCASE_CAN_POLLINATE)) {
                     if (!beeState.beeEntity().hasNectar()) {
                         boolean hasPollenPuffItem = inventory.contains(BzItems.POLLEN_PUFF.get().getDefaultInstance());
                         if (hasPollenPuffItem) {
@@ -686,7 +686,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
 
     private static void renderPollenButton(GuiGraphics guiGraphics, int mouseX, int mouseY, boolean hasPollenPuff, int mainX, int mainY, BeeState beeState) {
         // Cannot pollinate
-        if (!beeState.beeEntity().getType().is(BzTags.BUZZING_BRIEFCASE_CAN_POLLINATE)) {
+        if (!beeState.beeEntity().is(BzTags.BUZZING_BRIEFCASE_CAN_POLLINATE)) {
             guiGraphics.blit(BEE_SLOT_BACKGROUND, mainX + 11, mainY + 33, 22, 22, 11, 11, 64, 64);
         }
         //cannot pollinate button
@@ -813,7 +813,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     mouseY - (mainY + 33) >= 0.0D &&
                     mouseY - (mainY + 33) < 11.0D)
             {
-                if (!bee.hasNectar() && bee.getType().is(BzTags.BUZZING_BRIEFCASE_CAN_POLLINATE)) {
+                if (!bee.hasNectar() && bee.is(BzTags.BUZZING_BRIEFCASE_CAN_POLLINATE)) {
                     sendButtonPressToMenu((beeIndex * BuzzingBriefcaseMenu.NUMBER_OF_BUTTONS) + BuzzingBriefcaseMenu.POLLEN_ID);
 
                     int pollenSlotIndex = inventory.findSlotMatchingItem(BzItems.POLLEN_PUFF.get().getDefaultInstance());

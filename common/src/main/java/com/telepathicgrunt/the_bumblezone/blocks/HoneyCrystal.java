@@ -7,12 +7,12 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.Util;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -173,7 +173,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
         for (Direction direction : context.getNearestLookingDirections()) {
             blockstate = blockstate.setValue(FACING, direction.getOpposite());
             if (blockstate.canSurvive(worldReader, blockpos)) {
-                return blockstate.setValue(WATERLOGGED, fluidstate.getType().is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidstate.isSource());
+                return blockstate.setValue(WATERLOGGED, fluidstate.is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidstate.isSource());
             }
         }
 
@@ -232,7 +232,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
 
     @Override
     public boolean placeLiquid(LevelAccessor world, BlockPos blockPos, BlockState blockState, FluidState fluidState) {
-        if (!blockState.getValue(WATERLOGGED) && fluidState.getType().is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidState.isSource()) {
+        if (!blockState.getValue(WATERLOGGED) && fluidState.is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluidState.isSource()) {
             if (!world.isClientSide()) {
                 world.setBlock(blockPos, blockState.setValue(WATERLOGGED, true), 3);
                 world.scheduleTick(blockPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(world));
@@ -262,10 +262,10 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
 
     @Override
     public void onProjectileHit(Level level, BlockState blockState, BlockHitResult blockHitResult, Projectile projectile) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             BlockPos blockPos = blockHitResult.getBlockPos();
-            level.playSound(null, blockPos, BzSounds.HONEY_CRYSTAL_BLOCK_HIT.get(), SoundSource.BLOCKS, 1.0F, 0.5F + level.random.nextFloat() * 1.2F);
-            level.playSound(null, blockPos, BzSounds.HONEY_CRYSTAL_BLOCK_CHIME.get(), SoundSource.BLOCKS, 1.0F, 0.5F + level.random.nextFloat() * 1.2F);
+            level.playSound(null, blockPos, BzSounds.HONEY_CRYSTAL_BLOCK_HIT.get(), SoundSource.BLOCKS, 1.0F, 0.5F + level.getRandom().nextFloat() * 1.2F);
+            level.playSound(null, blockPos, BzSounds.HONEY_CRYSTAL_BLOCK_CHIME.get(), SoundSource.BLOCKS, 1.0F, 0.5F + level.getRandom().nextFloat() * 1.2F);
         }
     }
 }

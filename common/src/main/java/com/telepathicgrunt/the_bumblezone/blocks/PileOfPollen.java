@@ -31,7 +31,7 @@ import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.bee.Bee;
-import net.minecraft.world.entity.animal.Panda;
+import net.minecraft.world.entity.animal.panda.Panda;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -90,7 +90,7 @@ public class PileOfPollen extends FallingBlock {
                 .isViewBlocking((blockState, world, blockPos) -> true)
                 .isSuffocating((blockState, blockGetter, blockPos) -> false)
                 .noOcclusion()
-                .noCollission()
+                .noCollision()
                 .strength(0.1F)
                 .replaceable()
                 .pushReaction(PushReaction.DESTROY)
@@ -241,8 +241,8 @@ public class PileOfPollen extends FallingBlock {
      * the power fed into comparator (1 - 8)
      */
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
-        return blockState.getValue(LAYERS);
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
+        return state.getValue(LAYERS);
     }
 
     @Override
@@ -282,7 +282,7 @@ public class PileOfPollen extends FallingBlock {
             newYDelta *= (0.7D - (slownessPower * 0.07D));
         }
 
-        if (!entity.getType().is(BzTags.PILE_OF_POLLEN_CANNOT_SLOW)) {
+        if (!entity.is(BzTags.PILE_OF_POLLEN_CANNOT_SLOW)) {
             entity.setDeltaMovement(new Vec3(
                     deltaMovement.x * speedReduction,
                     newYDelta,
@@ -298,7 +298,7 @@ public class PileOfPollen extends FallingBlock {
      * Slows all entities inside the block.
      */
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (!blockState.is(BzBlocks.PILE_OF_POLLEN.get())) {
             return;
         }
@@ -320,7 +320,7 @@ public class PileOfPollen extends FallingBlock {
                 level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
                 if(level.isClientSide()) {
                     for(int i = 0; i < blockState.getValue(LAYERS) * 30; i++) {
-                        spawnParticles(blockState, level, blockPos, level.random, true);
+                        spawnParticles(blockState, level, blockPos, level.getRandom(), true);
                     }
                 }
             }
@@ -336,7 +336,7 @@ public class PileOfPollen extends FallingBlock {
 
             if(level.isClientSide()) {
                 for(int i = 0; i < 50; i++) {
-                    spawnParticles(level, pollenPuffEntity.position(), level.random, 0.055D, 0.0075D, 0);
+                    spawnParticles(level, pollenPuffEntity.position(), level.getRandom(), 0.055D, 0.0075D, 0);
                 }
             }
         }
@@ -358,20 +358,20 @@ public class PileOfPollen extends FallingBlock {
             }
 
             // Need to multiply speed to avoid issues where tiny movement is seen as zero.
-            if(entitySpeed > 0.00001D && level.random.nextFloat() < chance) {
+            if(entitySpeed > 0.00001D && level.getRandom().nextFloat() < chance) {
                 int particleNumber = (int) (entitySpeed / 0.0045D);
                 int particleStrength = (entity instanceof ItemEntity) ? Math.min(10, particleNumber / 3) : Math.min(20, particleNumber);
 
                 if(level.isClientSide()) {
                     for(int i = 0; i < particleNumber; i++) {
-                        if(particleNumber > 5) spawnParticles(blockState, level, blockPos, level.random, true);
+                        if(particleNumber > 5) spawnParticles(blockState, level, blockPos, level.getRandom(), true);
 
                         spawnParticles(
                                 level,
                                 entity.position()
                                         .add(entity.getDeltaMovement().multiply(2D, 2D, 2D))
                                         .add(0, 0.75D, 0),
-                                level.random,
+                                level.getRandom(),
                                 0.006D * particleStrength,
                                 0.00075D * particleStrength,
                                 0.006D * particleStrength);
@@ -384,7 +384,7 @@ public class PileOfPollen extends FallingBlock {
                             entity.position()
                                     .add(entity.getDeltaMovement().multiply(2D, 2D, 2D))
                                     .add(0, 0.75D, 0),
-                            level.random,
+                            level.getRandom(),
                             0.006D * particleStrength,
                             0.00075D * particleStrength,
                             0.006D * particleStrength,
@@ -393,7 +393,7 @@ public class PileOfPollen extends FallingBlock {
             }
 
             // reduce pile of pollen to pollinate bee
-            if(entity instanceof Bee && !((Bee)entity).hasNectar() && entity.getType().is(BzTags.POLLEN_PUFF_CAN_POLLINATE)) {
+            if(entity instanceof Bee && !((Bee)entity).hasNectar() && entity.is(BzTags.POLLEN_PUFF_CAN_POLLINATE)) {
                 ((BeeEntityInvoker)entity).bumblezone$callSetHasNectar(true);
                 ((Bee)entity).resetTicksWithoutNectarSinceExitingHive();
                 if(layerValueMinusOne == 0) {
@@ -472,7 +472,7 @@ public class PileOfPollen extends FallingBlock {
         }
     }
 
-    public static void stackPollen(BlockState blockState, Level world, BlockPos blockPos, BlockState pollonToStack) {
+    public static void stackPollen(BlockState blockState, Level level, BlockPos blockPos, BlockState pollonToStack) {
         BlockState lastSetState = null;
         int initialLayerValue = blockState.getValue(LAYERS);
         int layersToAdd = pollonToStack.getValue(LAYERS);
@@ -481,25 +481,25 @@ public class PileOfPollen extends FallingBlock {
         if(initialLayerValue < 8) {
             int layerToMax = (8 - initialLayerValue);
             lastSetState = blockState.setValue(LAYERS, initialLayerValue + Math.min(layerToMax, layersToAdd));
-            world.setBlock(blockPos, lastSetState, 3);
+            level.setBlock(blockPos, lastSetState, 3);
             layersToAdd -= layerToMax;
         }
 
-        BlockState aboveState = world.getBlockState(blockPos.above());
+        BlockState aboveState = level.getBlockState(blockPos.above());
         if(layersToAdd > 0 && aboveState.is(BzBlocks.PILE_OF_POLLEN.get())) {
-            stackPollen(aboveState, world, blockPos.above(), blockState.setValue(LAYERS, layersToAdd));
+            stackPollen(aboveState, level, blockPos.above(), blockState.setValue(LAYERS, layersToAdd));
         }
         else {
             // Stack on top of this pile
             if(layersToAdd > 0 && (aboveState.isAir() || aboveState.is(BzTags.AIR_LIKE))) {
                 lastSetState = blockState.setValue(LAYERS, layersToAdd);
-                world.setBlock(blockPos.above(), blockState.setValue(LAYERS, layersToAdd), 3);
+                level.setBlock(blockPos.above(), blockState.setValue(LAYERS, layersToAdd), 3);
             }
 
             // Particles!
-            if(world.isClientSide() && lastSetState != null) {
+            if(level.isClientSide() && lastSetState != null) {
                 for(int i = 0; i < 40; i++) {
-                    spawnParticles(lastSetState, world, blockPos, world.random, true);
+                    spawnParticles(lastSetState, level, blockPos, level.getRandom(), true);
                 }
             }
         }

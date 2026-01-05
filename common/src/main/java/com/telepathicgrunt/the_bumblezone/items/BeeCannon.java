@@ -20,6 +20,7 @@ import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -57,13 +58,6 @@ public class BeeCannon extends Item implements ItemExtension {
                 .enchantable(1)
                 .repairable(BzTags.BEE_CANNON_REPAIR_ITEMS)
                 .component(BzDataComponents.BEE_CANNON_DATA.get(), CustomData.EMPTY));
-    }
-
-    @Override
-    public void verifyComponentsAfterLoad(ItemStack itemStack) {
-        if (itemStack.get(BzDataComponents.BEE_CANNON_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.BEE_CANNON_DATA.get(), CustomData.EMPTY);
-        }
     }
 
     @Override
@@ -120,8 +114,8 @@ public class BeeCannon extends Item implements ItemExtension {
                         entityHitResult.getEntity() instanceof LivingEntity targetEntity
                         && !(targetEntity instanceof Bee))
                     {
-                        neutralMob.setRemainingPersistentAngerTime(60);
-                        neutralMob.setPersistentAngerTarget(targetEntity.getUUID());
+                        neutralMob.setTimeToRemainAngry(60);
+                        neutralMob.setPersistentAngerTarget(EntityReference.of(targetEntity));
                         if (bee instanceof Bee trueBee) {
                             trueBee.setTarget(targetEntity);
                         }
@@ -158,7 +152,7 @@ public class BeeCannon extends Item implements ItemExtension {
         if (playerEntity.level().isClientSide() ||
             !(entity instanceof Bee bee) ||
             bee.isAngry() ||
-            bee.getType().is(BzTags.CANNON_BEES_DISALLOWED_BEE) ||
+            bee.is(BzTags.CANNON_BEES_DISALLOWED_BEE) ||
             playerEntity.getCooldowns().isOnCooldown(beeCannon))
         {
             return InteractionResult.PASS;

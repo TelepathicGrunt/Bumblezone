@@ -46,22 +46,6 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
         this.abilityUseAmount = abilityUseAmount;
     }
 
-    @Override
-    public void verifyComponentsAfterLoad(ItemStack itemStack) {
-        if (itemStack.get(BzDataComponents.ABILITY_ESSENCE_ABILITY_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.ABILITY_ESSENCE_ABILITY_DATA.get(), new AbilityEssenceAbilityData());
-        }
-        if (itemStack.get(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get(), new AbilityEssenceCooldownData());
-        }
-        if (itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get(), new AbilityEssenceActivityData());
-        }
-        if (itemStack.get(BzDataComponents.ABILITY_ESSENCE_LAST_CHARGE_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.ABILITY_ESSENCE_LAST_CHARGE_DATA.get(), new AbilityEssenceLastChargeData());
-        }
-    }
-
     public abstract int getColor();
 
     public int getCooldownTickLength() {

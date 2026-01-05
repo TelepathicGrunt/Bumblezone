@@ -56,7 +56,7 @@ public class HeavyAir extends Block {
         this(Properties.of()
                 .strength(0.05f, 0)
                 .air()
-                .noCollission()
+                .noCollision()
                 .replaceable()
                 .noLootTable()
                 .noOcclusion()
@@ -98,8 +98,8 @@ public class HeavyAir extends Block {
     }
 
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
-        if (entity.getType().is(BzTags.HEAVY_AIR_IMMUNE) || entity instanceof Projectile) {
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
+        if (entity.is(BzTags.HEAVY_AIR_IMMUNE) || entity instanceof Projectile) {
             return;
         }
 

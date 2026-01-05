@@ -12,6 +12,7 @@ import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import com.telepathicgrunt.the_bumblezone.utils.TriState;
 import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -27,7 +28,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TridentItem;
@@ -70,15 +72,13 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
         if (livingEntity instanceof Player player) {
             int remainingDuration = this.getUseDuration(itemStack, player) - currentDuration;
             if (remainingDuration >= 10) {
-                if (!level.isClientSide) {
-                    itemStack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(livingEntity.getUsedItemHand()));
-                    ThrownStingerSpearEntity thrownStingerSpear = new ThrownStingerSpearEntity(level, player, itemStack, itemStack);
-                    thrownStingerSpear.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 3.0F, 1.0F);
+                if (level instanceof ServerLevel serverLevel) {
+                    itemStack.hurtWithoutBreaking(1, player);
+                    ThrownStingerSpearEntity thrownStingerSpear = Projectile.spawnProjectileFromRotation(ThrownStingerSpearEntity::new, serverLevel, itemStack, player, 0.0F, 3.0F, 1.0F);
                     if (player.getAbilities().instabuild) {
                         thrownStingerSpear.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
                     }
 
-                    level.addFreshEntity(thrownStingerSpear);
                     level.playSound(null, thrownStingerSpear, BzSounds.STINGER_SPEAR_THROW.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
                     if (!player.getAbilities().instabuild) {
                         player.getInventory().removeItem(itemStack);
@@ -109,7 +109,7 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
     public void hurtEnemy(ItemStack itemStack, LivingEntity victim, LivingEntity user) {
         int durabilityDecrease = 1;
 
-        if (!victim.getType().is(EntityTypeTags.UNDEAD)) {
+        if (!victim.is(EntityTypeTags.UNDEAD)) {
             boolean potentPoisonApplied = PotentPoisonEnchantmentApplication.doPostAttackBoostedPoison(itemStack, victim);
             if (!potentPoisonApplied) {
                 victim.addEffect(new MobEffectInstance(
@@ -125,7 +125,7 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
                 BzCriterias.STINGER_SPEAR_POISONING_TRIGGER.get().trigger(serverPlayer);
             }
 
-            if (!victim.getType().is(BzTags.PARALYZED_IMMUNE)) {
+            if (!victim.is(BzTags.PARALYZED_IMMUNE)) {
                 Pair<ParalyzeMarker, Integer> neurotoxin = NeurotoxinsEnchantmentApplication.getNeurotoxinEnchantLevel(itemStack);
                 if (neurotoxin != null && neurotoxin.getSecond() > 0) {
                     durabilityDecrease = neurotoxin.getFirst().durabilityDrainOnValidTargetHit();

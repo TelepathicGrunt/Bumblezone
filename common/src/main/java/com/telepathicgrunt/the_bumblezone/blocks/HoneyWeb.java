@@ -9,7 +9,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -20,6 +19,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.Util;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -73,7 +73,7 @@ public class HoneyWeb extends Block {
                 .mapColor(MapColor.TERRACOTTA_ORANGE)
                 .forceSolidOn()
                 .noOcclusion()
-                .noCollission()
+                .noCollision()
                 .requiresCorrectToolForDrops()
                 .strength(4.0F)
                 .pushReaction(PushReaction.DESTROY));
@@ -144,9 +144,9 @@ public class HoneyWeb extends Block {
     }
 
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
-        if (entity.getType().is(BzTags.HONEY_WEB_CANNOT_SLOW)) {
-            super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
+        if (entity.is(BzTags.HONEY_WEB_CANNOT_SLOW)) {
+            super.entityInside(blockState, level, blockPos, entity, effectApplier, isPrecise);
             return;
         }
 
@@ -191,7 +191,7 @@ public class HoneyWeb extends Block {
                 }
             }
         }
-        super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
+        super.entityInside(blockState, level, blockPos, entity, effectApplier, isPrecise);
     }
 
     @Override

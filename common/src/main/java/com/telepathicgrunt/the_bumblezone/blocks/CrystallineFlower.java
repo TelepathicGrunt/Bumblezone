@@ -39,7 +39,6 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -49,6 +48,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.redstone.Orientation;
@@ -80,7 +80,7 @@ public class CrystallineFlower extends BaseEntityBlock {
         this(Properties.of()
                 .mapColor(MapColor.TERRACOTTA_YELLOW)
                 .lightLevel((blockState) -> blockState.getValue(FLOWER) ? 7 : 0)
-                .noCollission()
+                .noCollision()
                 .noOcclusion()
                 .strength(0.4F, 0.01F)
                 .pushReaction(PushReaction.DESTROY)
@@ -120,7 +120,7 @@ public class CrystallineFlower extends BaseEntityBlock {
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         VoxelShape voxelShape = getShape(state, level, pos, null).move(pos.getX(), pos.getY(), pos.getZ());
         if (!Shapes.joinIsNotEmpty(voxelShape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND) || level.isClientSide()) {
             return;
@@ -146,7 +146,7 @@ public class CrystallineFlower extends BaseEntityBlock {
                         !livingEntity.wasExperienceConsumed() &&
                         !((LivingEntityAccessor)livingEntity).bumblezone$callIsAlwaysExperienceDropper() &&
                         livingEntity.shouldDropExperience() &&
-                        serverLevel.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT))
+                        serverLevel.getGameRules().get(GameRules.MOB_DROPS))
                     {
                         BlockEntity blockEntity = serverLevel.getBlockEntity(pos);
                         if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity && !crystallineFlowerBlockEntity.isMaxTier()) {
@@ -189,7 +189,7 @@ public class CrystallineFlower extends BaseEntityBlock {
                 }
 
                 if (level instanceof ServerLevel serverLevel) {
-                    spawnConsumeParticles(serverLevel, itemEntity.position(), level.random, (consumedItemCount / 3) + 5);
+                    spawnConsumeParticles(serverLevel, itemEntity.position(), level.getRandom(), (consumedItemCount / 3) + 5);
                 }
             }
         }
@@ -212,7 +212,7 @@ public class CrystallineFlower extends BaseEntityBlock {
                 }
 
                 if (level instanceof ServerLevel serverLevel) {
-                    spawnConsumeParticles(serverLevel, experienceOrb.position(), level.random, 3);
+                    spawnConsumeParticles(serverLevel, experienceOrb.position(), level.getRandom(), 3);
                 }
             }
         }
@@ -228,7 +228,7 @@ public class CrystallineFlower extends BaseEntityBlock {
                 crystallineFlowerMenu.crystallineFlowerBlockEntity != null &&
                 crystallineFlowerMenu.crystallineFlowerBlockEntity.getUUID().equals(crystallineFlowerBlockEntity.getUUID())))
             {
-                if (level.isClientSide) {
+                if (level.isClientSide()) {
                     return InteractionResult.SUCCESS;
                 }
 
@@ -310,7 +310,7 @@ public class CrystallineFlower extends BaseEntityBlock {
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         int flowerBlockBelow = flowerHeightBelow(level, pos);
         BlockPos bottomPos = pos.below(flowerBlockBelow);
         BlockEntity blockEntity = level.getBlockEntity(bottomPos);

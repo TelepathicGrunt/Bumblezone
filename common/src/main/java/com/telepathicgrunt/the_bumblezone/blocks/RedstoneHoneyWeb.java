@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -11,6 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.Util;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -53,7 +53,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
                 .mapColor(MapColor.TERRACOTTA_RED)
                 .forceSolidOn()
                 .lightLevel(blockState -> (blockState.getValue(POWER) + 9) / 10)
-                .noCollission()
+                .noCollision()
                 .requiresCorrectToolForDrops()
                 .strength(4.0F)
                 .pushReaction(PushReaction.DESTROY));
@@ -80,8 +80,8 @@ public class RedstoneHoneyWeb extends HoneyWeb {
     }
 
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
-        super.entityInside(blockState,level, blockPos, entity, insideBlockEffectApplier);
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
+        super.entityInside(blockState,level, blockPos, entity, effectApplier, isPrecise);
         VoxelShape shape = this.shapeByIndex[this.getAABBIndex(blockState)];
         shape = shape.move(blockPos.getX(), blockPos.getY(), blockPos.getZ());
         if (Shapes.joinIsNotEmpty(shape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND)) {
@@ -126,7 +126,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
 
     @Override
     public void onPlace(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState1, boolean pushed) {
-        if (!blockState1.is(blockState.getBlock()) && !level.isClientSide) {
+        if (!blockState1.is(blockState.getBlock()) && !level.isClientSide()) {
             this.updatePowerStrength(level, blockState, blockPos);
 
             for(Direction direction : Direction.Plane.VERTICAL) {
@@ -139,7 +139,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
     protected void affectNeighborsAfterRemoval(BlockState blockState, ServerLevel level, BlockPos blockPos, boolean pushed) {
         if (!pushed) {
             super.affectNeighborsAfterRemoval(blockState, level, blockPos, false);
-            if (!level.isClientSide) {
+            if (!level.isClientSide()) {
                 for (Direction direction : Direction.values()) {
                     level.updateNeighborsAt(blockPos.relative(direction), this);
                 }
@@ -149,7 +149,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
 
     @Override
     public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, @Nullable Orientation orientation, boolean b) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             if(blockState.is(this) && blockState.getValue(POWER) != 15) {
                 this.updatePowerStrength(level, blockState, blockPos);
             }

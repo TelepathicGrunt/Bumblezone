@@ -51,7 +51,7 @@ public class RootminHurtByTargetGoal extends TargetGoal {
                     return false;
                 }
 
-                if (livingEntity.getType().is(BzTags.ROOTMIN_FORCED_DO_NOT_TARGET)) {
+                if (livingEntity.is(BzTags.ROOTMIN_FORCED_DO_NOT_TARGET)) {
                     return false;
                 }
 

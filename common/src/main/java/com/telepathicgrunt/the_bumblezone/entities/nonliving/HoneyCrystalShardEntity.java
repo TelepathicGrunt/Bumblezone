@@ -14,7 +14,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -35,12 +35,12 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
 
     public void tick() {
         super.tick();
-        if (this.level().isClientSide) {
-            if (!this.inGround && this.level().getGameTime() % 5 == this.random.nextInt(3)) {
+        if (this.level().isClientSide()) {
+            if (!this.isInGround() && this.level().getGameTime() % 5 == this.random.nextInt(3)) {
                 this.makeParticle(1);
             }
         }
-        else if (this.inGround && this.inGroundTime != 0 && this.inGroundTime >= 600) {
+        else if (this.isInGround() && this.inGroundTime != 0 && this.inGroundTime >= 600) {
             this.level().broadcastEntityEvent(this, (byte)0);
         }
     }

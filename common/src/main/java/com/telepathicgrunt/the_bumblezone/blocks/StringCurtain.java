@@ -127,8 +127,8 @@ public class StringCurtain extends Block {
                 return getShape(state, worldIn, pos, context);
             }
 
-            if ((entity instanceof Bee || entity.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
-                !entity.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING))
+            if ((entity instanceof Bee || entity.is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
+                !entity.is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING))
             {
                 if (state.is(BzTags.STRING_CURTAINS)) {
                     return getShape(state, worldIn, pos, context);
@@ -144,7 +144,7 @@ public class StringCurtain extends Block {
     }
 
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         boolean entityShouldBePushed = shouldBlockOffEntity(entity);
         if (entityShouldBePushed) {
             if (!entity.hasControllingPassenger() &&
@@ -203,7 +203,7 @@ public class StringCurtain extends Block {
             }
         }
 
-        super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
+        super.entityInside(blockState, level, blockPos, entity, effectApplier, isPrecise);
     }
 
     @Override
@@ -262,7 +262,7 @@ public class StringCurtain extends Block {
 
     @Override
     public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, @Nullable Orientation orientation, boolean bl) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             if (!blockState.canSurvive(level, blockPos)) {
                 level.destroyBlock(blockPos, true);
             }
@@ -390,7 +390,7 @@ public class StringCurtain extends Block {
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         int comparatorPower = 0;
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos().set(pos);
         BlockState currentState = level.getBlockState(mutableBlockPos.move(Direction.DOWN));
@@ -416,8 +416,8 @@ public class StringCurtain extends Block {
 
     public static boolean shouldBlockOffEntity(Entity mob) {
         boolean shouldBlockPathfinding =
-                (mob instanceof Bee || mob.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
-                    !mob.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING);
+                (mob instanceof Bee || mob.is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
+                    !mob.is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING);
 
         if (!shouldBlockPathfinding && !ModChecker.HOST_BEE_COMPATS.isEmpty()) {
             for (ModCompat compat : ModChecker.HOST_BEE_COMPATS) {

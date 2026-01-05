@@ -559,7 +559,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                List<Entity> list = this.level().getEntities(this, this.getBoundingBox(), EntitySelector.pushableBy(this));
 
                for (Entity entity : list) {
-                  if (!entity.getType().is(BzTags.SENTRY_WATCHER_CANNOT_DAMAGE)) {
+                  if (!entity.is(BzTags.SENTRY_WATCHER_CANNOT_DAMAGE)) {
                      entity.hurt(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE, this), 1);
                      if (entity instanceof LivingEntity livingEntity) {
                         float oldHealth = livingEntity.getHealth();
@@ -708,10 +708,10 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    }
 
    private boolean canSeeEntity(Entity entity) {
-      if (entity.getType().is(BzTags.SENTRY_WATCHER_FORCED_NEVER_ACTIVATES_WHEN_SEEN) || entity.isSpectator()) {
+      if (entity.is(BzTags.SENTRY_WATCHER_FORCED_NEVER_ACTIVATES_WHEN_SEEN) || entity.isSpectator()) {
          return false;
       }
-      else if (entity.getType().is(BzTags.SENTRY_WATCHER_ACTIVATES_WHEN_SEEN)) {
+      else if (entity.is(BzTags.SENTRY_WATCHER_ACTIVATES_WHEN_SEEN)) {
          return true;
       }
       else if (entity instanceof Player player && (player.isCreative() || player.getUUID().equals(this.getOwner().orElse(null)))) {
@@ -875,7 +875,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             }
             entity.setPos(pushToSpot);
 
-            if (!this.level().isClientSide() && !entity.getType().is(BzTags.SENTRY_WATCHER_CANNOT_DAMAGE)) {
+            if (!this.level().isClientSide() && !entity.is(BzTags.SENTRY_WATCHER_CANNOT_DAMAGE)) {
                float damageMultiplier = 30;
                if (entity instanceof ServerPlayer serverPlayer && EssenceOfTheBees.hasEssence(serverPlayer)) {
                   damageMultiplier = 16;

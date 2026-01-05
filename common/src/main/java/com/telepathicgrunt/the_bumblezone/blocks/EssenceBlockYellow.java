@@ -26,6 +26,7 @@ import net.minecraft.world.BossEvent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -34,7 +35,7 @@ import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.Rabbit;
+import net.minecraft.world.entity.animal.rabbit.Rabbit;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
@@ -345,8 +346,8 @@ public class EssenceBlockYellow extends EssenceBlock {
                 }
 
                 if (entity instanceof NeutralMob neutralMob) {
-                    neutralMob.setRemainingPersistentAngerTime(Integer.MAX_VALUE);
-                    neutralMob.setPersistentAngerTarget(playerUUID);
+                    neutralMob.setTimeToRemainAngry(Integer.MAX_VALUE);
+                    neutralMob.setPersistentAngerTarget(EntityReference.of(playerUUID));
                     neutralMob.setTarget(serverPlayer);
                 }
                 else if (entity instanceof Mob mob) {

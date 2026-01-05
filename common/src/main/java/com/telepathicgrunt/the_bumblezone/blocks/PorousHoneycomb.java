@@ -54,7 +54,7 @@ public class PorousHoneycomb extends Block {
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+    public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         beeHoneyFill(state, level, blockPos, entity);
     }
 

@@ -40,7 +40,7 @@ public interface AncientWaxBase {
                 return;
             }
 
-            if (livingEntity.getType().is(BzTags.ANCIENT_WAX_IMMUNE_TO_EFFECTS)) {
+            if (livingEntity.is(BzTags.ANCIENT_WAX_IMMUNE_TO_EFFECTS)) {
                 return;
             }
 
@@ -104,7 +104,7 @@ public interface AncientWaxBase {
                     BzCriterias.CARVE_WAX_TRIGGER.get().trigger(serverPlayer, blockPos);
 
                     if (!serverPlayer.getAbilities().instabuild) {
-                        itemStack.hurtAndBreak(1, serverPlayer, LivingEntity.getSlotForHand(playerHand));
+                        itemStack.hurtAndBreak(1, serverPlayer, playerHand.asEquipmentSlot());
                     }
                 }
 

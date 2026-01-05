@@ -46,7 +46,7 @@ public class HoneyFluidBlock extends LiquidBlock implements FluidGetter {
         super(baseFluid.still().get(), BlockBehaviour.Properties.of()
                 .mapColor(MapColor.TERRACOTTA_ORANGE)
                 .liquid()
-                .noCollission()
+                .noCollision()
                 .strength(100.0F, 100.0F)
                 .speedFactor(0.15F)
                 .noLootTable()
@@ -179,7 +179,7 @@ public class HoneyFluidBlock extends LiquidBlock implements FluidGetter {
      * Heal bees if they are damaged or create honey source if pollinated
      */
     @Override
-    public void entityInside(BlockState state, Level world, BlockPos position, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+    public void entityInside(BlockState state, Level world, BlockPos position, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         double verticalSpeedDeltaLimit = 0.01D;
         if (entity instanceof Bee beeEntity && !beeEntity.isDeadOrDying()) {
             if (beeEntity.getHealth() < beeEntity.getMaxHealth() && PlatformService.INSTANCE.isEyesInNoFluid(entity)) {
@@ -206,7 +206,7 @@ public class HoneyFluidBlock extends LiquidBlock implements FluidGetter {
                     true));
         }
 
-        super.entityInside(state, world, position, entity, insideBlockEffectApplier);
+        super.entityInside(state, world, position, entity, effectApplier, isPrecise);
     }
 
     private void triggerMixEffects(Level world, BlockPos pos) {

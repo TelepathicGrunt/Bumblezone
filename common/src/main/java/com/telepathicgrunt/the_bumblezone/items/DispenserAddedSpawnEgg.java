@@ -20,8 +20,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.TypedEntityData;
 import net.minecraft.world.level.block.DispenserBlock;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +36,7 @@ public class DispenserAddedSpawnEgg extends SpawnEggItem {
     private final Supplier<? extends EntityType<? extends Mob>> entityType;
 
     public DispenserAddedSpawnEgg(Supplier<? extends EntityType<? extends Mob>> typeIn, Item.Properties properties) {
-        super(null, properties);
+        super(properties);
         this.entityType = typeIn;
 
         setupDispenserBehavior();
@@ -48,7 +50,7 @@ public class DispenserAddedSpawnEgg extends SpawnEggItem {
                 new DefaultDispenseItemBehavior() {
                     public ItemStack execute(@NotNull BlockSource source, @NotNull ItemStack stack) {
                         Direction direction = source.state().getValue(DispenserBlock.FACING);
-                        EntityType<?> entitytype = ((SpawnEggItem)stack.getItem()).getType(source.level().registryAccess(), stack);
+                        EntityType<?> entitytype = ((SpawnEggItem)stack.getItem()).getType(stack);
                         entitytype.spawn(source.level(), stack, null, source.pos().relative(direction), EntitySpawnReason.DISPENSER, direction != Direction.UP, false);
                         stack.shrink(1);
                         return stack;
@@ -57,11 +59,10 @@ public class DispenserAddedSpawnEgg extends SpawnEggItem {
     }
 
     @Override
-    public EntityType<?> getType(HolderLookup.Provider provider, ItemStack itemStack) {
-        CustomData customData = itemStack.getOrDefault(DataComponents.ENTITY_DATA, CustomData.EMPTY);
-        return !customData.isEmpty() ? customData.read(ENTITY_TYPE_FIELD_CODEC).result().orElse(this.entityType.get()) : this.entityType.get();
+    public @Nullable EntityType<?> getType(ItemStack itemStack) {
+        TypedEntityData<EntityType<?>> entityData = itemStack.get(DataComponents.ENTITY_DATA);
+        return entityData != null ? entityData.type() : this.entityType.get();
     }
-
 
     public static void onSetup(BzSetupEvent event) {
         var spawnEggMap = SpawnEggItemAccessor.bumblezone$getIdMap();

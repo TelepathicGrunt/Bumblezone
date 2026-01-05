@@ -22,6 +22,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.redstone.ExperimentalRedstoneUtils;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.joml.Vector3f;
@@ -37,7 +39,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         this(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.TERRACOTTA_RED)
                 .lightLevel(blockState -> blockState.getValue(POWERED) ? 1 : 0)
-                .noCollission()
+                .noCollision()
                 .strength(6.0f, 0.0f)
                 .noOcclusion()
                 .replaceable()
@@ -75,9 +77,9 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      */
     @Deprecated
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         updateState(level, blockPos, blockState, 0);
-        super.entityInside(blockState, level, blockPos, entity, insideBlockEffectApplier);
+        super.entityInside(blockState, level, blockPos, entity, effectApplier, isPrecise);
     }
 
     protected int getTickRate() {
@@ -121,7 +123,6 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
             BlockState newBlockstate = this.setRedstoneStrength(oldBlockstate, newPower);
             world.setBlock(pos, newBlockstate, 2);
             this.updateNeighbors(oldBlockstate, world, pos);
-            world.onBlockStateChange(pos, oldBlockstate, newBlockstate);
         }
 
         if (flag1) {
@@ -148,12 +149,14 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         this.updateTarget(world, pos, state);
     }
 
-    protected void updateTarget(Level world, BlockPos pos, BlockState blockstate) {
+    protected void updateTarget(Level level, BlockPos pos, BlockState blockstate) {
+        Orientation orientation = ExperimentalRedstoneUtils.initialOrientation(level, null, Direction.UP);
+
         for (Direction direction : Direction.values()) {
             if (blockstate.getValue(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(direction))) {
                 BlockPos blockPos = pos.relative(direction);
-                world.neighborChanged(blockPos, this, pos);
-                world.updateNeighborsAtExceptFromFacing(blockPos, this, direction);
+                level.neighborChanged(blockPos, this, orientation.withFront(direction));
+                level.updateNeighborsAtExceptFromFacing(blockPos, this, direction, orientation.withFront(direction));
             }
         }
     }

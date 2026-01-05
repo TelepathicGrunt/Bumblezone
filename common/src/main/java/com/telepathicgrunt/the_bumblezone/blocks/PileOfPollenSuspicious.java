@@ -24,7 +24,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Panda;
+import net.minecraft.world.entity.animal.panda.Panda;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -80,7 +80,7 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
                 .isViewBlocking((blockState, world, blockPos) -> true)
                 .isSuffocating((blockState, blockGetter, blockPos) -> false)
                 .noOcclusion()
-                .noCollission()
+                .noCollision()
                 .strength(0.1F)
                 .pushReaction(PushReaction.DESTROY)
                 .sound(SoundType.SNOW));
@@ -235,7 +235,7 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
      * Slows all entities inside the block.
      */
     @Override
-    public void entityInside(BlockState blockState, Level world, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+    public void entityInside(BlockState blockState, Level world, BlockPos blockPos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (!blockState.is(BzBlocks.PILE_OF_POLLEN_SUSPICIOUS.get())) {
             return;
         }
@@ -257,20 +257,20 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
             }
 
             // Need to multiply speed to avoid issues where tiny movement is seen as zero.
-            if(entitySpeed > 0.00001D && world.random.nextFloat() < chance) {
+            if(entitySpeed > 0.00001D && world.getRandom().nextFloat() < chance) {
                 int particleNumber = (int) (entitySpeed / 0.0045D);
                 int particleStrength = (entity instanceof ItemEntity) ? Math.min(10, particleNumber / 3) : Math.min(20, particleNumber);
 
                 if(world.isClientSide()) {
                     for(int i = 0; i < particleNumber; i++) {
-                        if(particleNumber > 5) spawnParticles(blockState, world, blockPos, world.random, true);
+                        if(particleNumber > 5) spawnParticles(blockState, world, blockPos, world.getRandom(), true);
 
                         spawnParticles(
                                 world,
                                 entity.position()
                                         .add(entity.getDeltaMovement().multiply(2D, 2D, 2D))
                                         .add(0, 0.75D, 0),
-                                world.random,
+                                world.getRandom(),
                                 0.006D * particleStrength,
                                 0.00075D * particleStrength,
                                 0.006D * particleStrength);
@@ -283,7 +283,7 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
                             entity.position()
                                     .add(entity.getDeltaMovement().multiply(2D, 2D, 2D))
                                     .add(0, 0.75D, 0),
-                            world.random,
+                            world.getRandom(),
                             0.006D * particleStrength,
                             0.00075D * particleStrength,
                             0.006D * particleStrength,

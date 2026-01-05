@@ -18,8 +18,8 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ProjectileWeaponItem;
@@ -45,13 +45,6 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
                 .repairable(BzTags.CRYSTAL_CANNON_REPAIR_ITEMS)
                 .component(BzDataComponents.CRYSTAL_CANNON_DATA.get(), new CrystalCannonData())
                 .rarity(Rarity.UNCOMMON));
-    }
-
-    @Override
-    public void verifyComponentsAfterLoad(ItemStack itemStack) {
-        if (itemStack.get(BzDataComponents.CRYSTAL_CANNON_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.CRYSTAL_CANNON_DATA.get(), new CrystalCannonData());
-        }
     }
 
     @Override

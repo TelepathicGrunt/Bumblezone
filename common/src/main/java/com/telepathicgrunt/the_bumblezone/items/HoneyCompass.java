@@ -60,19 +60,6 @@ public class HoneyCompass extends Item {
     }
 
     @Override
-    public void verifyComponentsAfterLoad(ItemStack itemStack) {
-        if (itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.HONEY_COMPASS_BASE_DATA.get(), new HoneyCompassBaseData());
-        }
-        if (itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.HONEY_COMPASS_STATE_DATA.get(), new HoneyCompassStateData());
-        }
-        if (itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get(), new HoneyCompassTargetData());
-        }
-    }
-
-    @Override
     public boolean isFoil(ItemStack itemStack) {
         HoneyCompassStateData honeyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
         return honeyCompassStateData.locked() || super.isFoil(itemStack);
@@ -180,7 +167,7 @@ public class HoneyCompass extends Item {
 
     @Override
     public void inventoryTick(ItemStack itemStack, ServerLevel level, Entity entity, EquipmentSlot equipmentSlot) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             HoneyCompassStateData honeyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
             boolean locked = honeyCompassStateData.locked();
             Optional<UUID> searchId = honeyCompassStateData.searchId();

@@ -59,7 +59,7 @@ public class CalmingEssence extends AbilityEssenceItem {
                 serverPlayer.getStats().setValue(serverPlayer, Stats.CUSTOM.get(Stats.TIME_SINCE_REST), 0);
 
                 for (Entity entity : level.getEntities(serverPlayer, serverPlayer.getBoundingBox().inflate(60))) {
-                    if (entity.getType().is(BzTags.CALMING_ALLOW_ANGER_THROUGH)) {
+                    if (entity.is(BzTags.CALMING_ALLOW_ANGER_THROUGH)) {
                         continue;
                     }
 
@@ -67,7 +67,7 @@ public class CalmingEssence extends AbilityEssenceItem {
                         mob.setTarget(null);
                     }
 
-                    if (entity instanceof NeutralMob neutralMob && neutralMob.getPersistentAngerTarget() == serverPlayer.getUUID()) {
+                    if (entity instanceof NeutralMob neutralMob && neutralMob.getPersistentAngerTarget() != null && neutralMob.getPersistentAngerTarget().getUUID() == serverPlayer.getUUID()) {
                         neutralMob.stopBeingAngry();
                     }
 

@@ -78,7 +78,7 @@ public class LuminescentWaxCornerNode extends RotationFacingBlock implements Lum
                 BzCriterias.CARVE_WAX_TRIGGER.get().trigger(serverPlayer, position);
 
                 if (!serverPlayer.getAbilities().instabuild) {
-                    itemStack.hurtAndBreak(1, serverPlayer, LivingEntity.getSlotForHand(playerHand));
+                    itemStack.hurtAndBreak(1, serverPlayer, playerHand.asEquipmentSlot());
                 }
             }
 

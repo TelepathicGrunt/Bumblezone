@@ -185,6 +185,6 @@ public class PotionOfBeesCompat implements ModCompat {
         world.setBlockAndUpdate(position,
             BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
                 .setValue(BlockStateProperties.FACING, state.getValue(BlockStateProperties.FACING))
-                .setValue(HoneycombBrood.STAGE, 3 - world.random.nextInt(world.random.nextInt(world.random.nextInt(4) + 1) + 1)));
+                .setValue(HoneycombBrood.STAGE, 3 - world.getRandom().nextInt(world.getRandom().nextInt(world.getRandom().nextInt(4) + 1) + 1)));
     }
 }

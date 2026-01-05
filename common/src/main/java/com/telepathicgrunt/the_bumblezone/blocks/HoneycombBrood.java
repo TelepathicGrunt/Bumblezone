@@ -43,7 +43,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -54,6 +53,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -307,7 +307,7 @@ public class HoneycombBrood extends ProperFacingBlock {
      */
     @Override
     public BlockState playerWillDestroy(Level world, BlockPos position, BlockState state, Player playerEntity) {
-        if (world instanceof ServerLevel serverLevel && serverLevel.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
+        if (world instanceof ServerLevel serverLevel && serverLevel.getGameRules().get(GameRules.MOB_DROPS)) {
             if (EnchantmentHelper.hasTag(playerEntity.getMainHandItem(), EnchantmentTags.PREVENTS_BEE_SPAWNS_WHEN_MINING)) {
                 BlockState blockState = world.getBlockState(position);
                 int stage = blockState.getValue(STAGE);
@@ -328,7 +328,7 @@ public class HoneycombBrood extends ProperFacingBlock {
         BlockState frontState = level.getBlockState(blockpos);
         if (stage == 3 && frontState.getFluidState().isEmpty() &&
             !frontState.isCollisionShapeFullBlock(level, position) &&
-            level.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING))
+            level.getGameRules().get(GameRules.SPAWN_MOBS))
         {
             Mob beeMob = EntityType.BEE.create(level, EntitySpawnReason.TRIGGERED);
             beeMob.setBaby(true);
@@ -345,11 +345,11 @@ public class HoneycombBrood extends ProperFacingBlock {
     }
 
     private static void spawnMob(Level world, BlockPos.MutableBlockPos blockpos, Mob beeMob, Mob entity) {
-        if (entity == null || world.isClientSide()) return;
+        if (entity == null || !(world instanceof ServerLevel serverLevel)) return;
         entity.snapTo(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, beeMob.getRandom().nextFloat() * 360.0F, 0.0F);
-        entity.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(BlockPos.containing(beeMob.position())), EntitySpawnReason.TRIGGERED, null);
+        entity.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(BlockPos.containing(beeMob.position())), EntitySpawnReason.TRIGGERED, null);
 
-        PlatformService.INSTANCE.finalizeSpawn(entity, (ServerLevelAccessor) world, null, EntitySpawnReason.SPAWNER);
+        PlatformService.INSTANCE.finalizeSpawn(entity, serverLevel, null, EntitySpawnReason.SPAWNER);
         world.addFreshEntity(entity);
     }
 
@@ -367,8 +367,8 @@ public class HoneycombBrood extends ProperFacingBlock {
      * the power fed into comparator (1 - 4)
      */
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
-        return blockState.getValue(STAGE) + 1;
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
+        return state.getValue(STAGE) + 1;
     }
 
 

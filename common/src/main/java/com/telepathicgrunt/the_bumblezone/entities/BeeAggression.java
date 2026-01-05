@@ -221,11 +221,11 @@ public class BeeAggression {
             !mobEntity.isNoAi() &&
             (!(entity instanceof OwnableEntity ownableEntity) || ownableEntity.getOwnerReference() == null))
         {
-            if (mobEntity.getType().is(BzTags.FORCED_BEE_CALM_AT)) {
+            if (mobEntity.is(BzTags.FORCED_BEE_CALM_AT)) {
                 return false;
             }
 
-            if (mobEntity.getType().is(BzTags.FORCED_BEE_ANGRY_AT)) {
+            if (mobEntity.is(BzTags.FORCED_BEE_ANGRY_AT)) {
                 return true;
             }
 

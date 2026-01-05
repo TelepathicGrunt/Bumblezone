@@ -73,7 +73,7 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
                 .mapColor(MapColor.COLOR_BLACK)
                 .lightLevel((blockState) -> blockState.getValue(LIT) ? (isSoul ? SOUL_LIGHT_LEVEL : NORMAL_LIGHT_LEVEL) : 0)
                 .replaceable()
-                .noCollission()
+                .noCollision()
                 .noLootTable());
     }
 
@@ -180,9 +180,9 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (!state.getValue(LIT) && entity instanceof Projectile projectile) {
-            if (!level.isClientSide && projectile.isOnFire() && SuperCandle.canBeLit(level, state, pos.below())) {
+            if (!level.isClientSide() && projectile.isOnFire() && SuperCandle.canBeLit(level, state, pos.below())) {
                 boolean litWick = SuperCandleWick.setLit(level, level.getBlockState(pos), pos, true);
                 if (litWick && projectile.getOwner() instanceof ServerPlayer serverPlayer) {
                     BlockEntity blockEntity = level.getBlockEntity(pos.below());
@@ -217,7 +217,7 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
                 }
             }
         }
-        super.entityInside(state, level, pos, entity, insideBlockEffectApplier);
+        super.entityInside(state, level, pos, entity, effectApplier, isPrecise);
     }
 
     // passed in position should be the spot directly below the wick
@@ -313,8 +313,8 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
-        if (blockState.is(BzTags.CANDLE_WICKS) && blockState.getValue(LIT)) {
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
+        if (state.is(BzTags.CANDLE_WICKS) && state.getValue(LIT)) {
             if (isSoul) {
                 return 3;
             }

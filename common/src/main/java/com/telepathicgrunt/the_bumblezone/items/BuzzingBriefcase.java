@@ -23,6 +23,7 @@ import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -57,13 +58,6 @@ public class BuzzingBriefcase extends Item {
         super(properties
                 .stacksTo(1)
                 .component(BzDataComponents.BUZZING_BRIEFCASE_DATA.get(), CustomData.EMPTY));
-    }
-
-    @Override
-    public void verifyComponentsAfterLoad(ItemStack itemStack) {
-        if (itemStack.get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.BUZZING_BRIEFCASE_DATA.get(), CustomData.EMPTY);
-        }
     }
 
     @Override
@@ -125,8 +119,8 @@ public class BuzzingBriefcase extends Item {
             for (Entity entity : releasedBees) {
                 if (entity instanceof NeutralMob neutralMob && !isVictimBeelike) {
                     neutralMob.setTarget(victim);
-                    neutralMob.setRemainingPersistentAngerTime(400); // 20 seconds
-                    neutralMob.setPersistentAngerTarget(victim.getUUID());
+                    neutralMob.setPersistentAngerTarget(EntityReference.of(victim));
+                    neutralMob.setTimeToRemainAngry(400); // 20 seconds
                 }
             }
 
@@ -140,7 +134,7 @@ public class BuzzingBriefcase extends Item {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack beeCannon, Player player, LivingEntity entity, InteractionHand playerHand) {
-        if (!(entity instanceof Bee bee) || bee.getType().is(BzTags.BUZZING_BRIEFCASE_DISALLOWED_BEE) || entity.isDeadOrDying()) {
+        if (!(entity instanceof Bee bee) || bee.is(BzTags.BUZZING_BRIEFCASE_DISALLOWED_BEE) || entity.isDeadOrDying()) {
             return InteractionResult.PASS;
         }
 
@@ -163,7 +157,7 @@ public class BuzzingBriefcase extends Item {
                 BzCriterias.BUZZING_BRIEFCASE_FULL_TRIGGER.get().trigger(serverPlayer);
             }
 
-            CompoundTag cannonTag = briefcaseItem.get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()).getUnsafe();
+            CompoundTag cannonTag = briefcaseItem.get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()).copyTag();
             int variantBeesCaught = cannonTag.getIntOr(TAG_VARANT_BEES, 0);
             if (player instanceof ServerPlayer serverPlayer && variantBeesCaught > 0) {
                 BzCriterias.VARIANT_BEE_BRIEFCASE_CAPTURE_TRIGGER.get().trigger(serverPlayer, variantBeesCaught);

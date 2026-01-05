@@ -159,8 +159,8 @@ public class ContinuityEssence extends AbilityEssenceItem {
     private static void respawn(ItemStack stack, ContinuityEssence continuityEssence, ServerPlayer serverPlayer, MinecraftServer server, DamageSource damageSource) {
         ResourceKey<Level> oldDimension = serverPlayer.level().dimension();
         BlockPos oldPosition = serverPlayer.blockPosition();
-        ResourceKey<Level> respawnDimension = serverPlayer.getRespawnConfig() != null ? serverPlayer.getRespawnConfig().dimension() : Level.OVERWORLD;
-        BlockPos respawningLinkedPosition = serverPlayer.getRespawnConfig() != null ? serverPlayer.getRespawnConfig().pos() : server.overworld().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, BlockPos.ZERO);
+        ResourceKey<Level> respawnDimension = serverPlayer.getRespawnConfig() != null ? serverPlayer.getRespawnConfig().respawnData().dimension() : Level.OVERWORLD;
+        BlockPos respawningLinkedPosition = serverPlayer.getRespawnConfig() != null ? serverPlayer.getRespawnConfig().respawnData().pos() : server.overworld().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, BlockPos.ZERO);
 
         ServerLevel desiredDestination = server.getLevel(respawnDimension);
         Optional<Vec3> optionalRespawnPoint = desiredDestination != null ?
@@ -183,8 +183,8 @@ public class ContinuityEssence extends AbilityEssenceItem {
             isRespawnAnchor = blockState.is(Blocks.RESPAWN_ANCHOR);
         }
         else {
-            playerRespawnPosition = finalDestination.getSharedSpawnPos().getCenter();
-            playerRespawnBlockPos = finalDestination.getSharedSpawnPos();
+            playerRespawnPosition = finalDestination.getRespawnData().pos().getCenter();
+            playerRespawnBlockPos = finalDestination.getRespawnData().pos();
 
             isRespawnAnchor = false;
         }
@@ -222,7 +222,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
                     oldPosition.getX(),
                     oldPosition.getY(),
                     oldPosition.getZ(),
-                    oldDimension.location().toString(),
+                    oldDimension.identifier().toString(),
                     getDeathMessage(finalDestination, damageSource, serverPlayer))));
         }
         else {
@@ -232,7 +232,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
                     oldPosition.getX(),
                     oldPosition.getY(),
                     oldPosition.getZ(),
-                    oldDimension.location().toString(),
+                    oldDimension.identifier().toString(),
                     causer.getName(),
                     getDeathMessage(finalDestination, damageSource, serverPlayer))));
         }

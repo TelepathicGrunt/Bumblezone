@@ -951,7 +951,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    }
 
    public boolean canTarget(LivingEntity livingEntity) {
-      if (livingEntity.getType().is(BzTags.ROOTMIN_FORCED_DO_NOT_TARGET)) {
+      if (livingEntity.is(BzTags.ROOTMIN_FORCED_DO_NOT_TARGET)) {
          return false;
       }
 
@@ -961,7 +961,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
          }
       }
 
-      boolean canTarget = BeeAggression.doesBeesHateEntity(livingEntity) || livingEntity.getType().is(BzTags.ROOTMIN_TARGETS);
+      boolean canTarget = BeeAggression.doesBeesHateEntity(livingEntity) || livingEntity.is(BzTags.ROOTMIN_TARGETS);
 
       if (canTarget && livingEntity instanceof Player player) {
          if (this.isOwnedBy(player)) {

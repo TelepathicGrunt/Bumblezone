@@ -22,6 +22,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -135,11 +136,11 @@ public class BzCustomBucketItem extends BzBucketItem {
             if (!canPlaceFluid) {
                 return hitResult != null && this.emptyContents(player, level, hitResult.getBlockPos().relative(hitResult.getDirection()), null);
             }
-            else if (level.dimensionType().ultraWarm() && this.info.properties().canExtinguish()) {
+            else if (level.environmentAttributes().getValue(EnvironmentAttributes.WATER_EVAPORATES, pos) && this.info.properties().canExtinguish()) {
                 double x = pos.getX();
                 double y = pos.getY();
                 double z = pos.getZ();
-                level.playSound(player, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (level.random.nextFloat() - level.random.nextFloat()) * 0.8F);
+                level.playSound(player, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.8F);
 
                 for(int l = 0; l < 8; ++l) {
                     level.addParticle(ParticleTypes.LARGE_SMOKE, x + Math.random(), y + Math.random(), z + Math.random(), 0.0D, 0.0D, 0.0D);
@@ -184,7 +185,7 @@ public class BzCustomBucketItem extends BzBucketItem {
                 return true;
             }
             else {
-                if (!level.isClientSide && canBucketPlace && blockState.getFluidState().isEmpty()) {
+                if (!level.isClientSide() && canBucketPlace && blockState.getFluidState().isEmpty()) {
                     level.destroyBlock(pos, true);
                 }
 

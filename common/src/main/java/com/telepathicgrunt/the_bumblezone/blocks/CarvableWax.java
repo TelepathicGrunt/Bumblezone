@@ -176,7 +176,7 @@ public class CarvableWax extends ProperFacingBlock {
                 BzCriterias.CARVE_WAX_TRIGGER.get().trigger(serverPlayer, position);
 
                 if (!serverPlayer.getAbilities().instabuild) {
-                    itemStack.hurtAndBreak(1, serverPlayer, LivingEntity.getSlotForHand(playerHand));
+                    itemStack.hurtAndBreak(1, serverPlayer, playerHand.asEquipmentSlot());
                 }
             }
 
@@ -198,7 +198,7 @@ public class CarvableWax extends ProperFacingBlock {
      * the power fed into comparator
      */
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
-        return Math.min(blockState.getValue(CARVING).ordinal(), 15);
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
+        return Math.min(state.getValue(CARVING).ordinal(), 15);
     }
 }
