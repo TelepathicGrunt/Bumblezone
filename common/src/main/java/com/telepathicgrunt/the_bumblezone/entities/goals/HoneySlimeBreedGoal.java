@@ -15,7 +15,7 @@ public class HoneySlimeBreedGoal extends Goal {
     private static final TargetingConditions TARGETING_CONDITIONS = (TargetingConditions.forCombat()).range(8.0D).ignoreLineOfSight();
     protected final HoneySlimeEntity slime;
     private final Class<? extends Animal> mateClass;
-    protected final Level world;
+    protected final ServerLevel level;
     protected Animal nearbyMate;
     private int spawnBabyDelay;
 
@@ -25,7 +25,7 @@ public class HoneySlimeBreedGoal extends Goal {
 
     public HoneySlimeBreedGoal(HoneySlimeEntity honeySlimeEntity, double speedIn, Class<? extends Animal> mateClass) {
         this.slime = honeySlimeEntity;
-        this.world = honeySlimeEntity.level();
+        this.level = getServerLevel(honeySlimeEntity);
         this.mateClass = mateClass;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
@@ -79,7 +79,7 @@ public class HoneySlimeBreedGoal extends Goal {
      * valid mate found.
      */
     private Animal getNearbyMate() {
-        List<? extends Animal> list = this.world.getNearbyEntities(this.mateClass, TARGETING_CONDITIONS, this.slime, this.slime.getBoundingBox().inflate(8.0D));
+        List<? extends Animal> list = this.level.getNearbyEntities(this.mateClass, TARGETING_CONDITIONS, this.slime, this.slime.getBoundingBox().inflate(8.0D));
         double d0 = Double.MAX_VALUE;
         Animal animalentity = null;
 
@@ -97,6 +97,6 @@ public class HoneySlimeBreedGoal extends Goal {
      * Spawns a baby animal of the same type.
      */
     protected void spawnBaby() {
-        this.slime.spawnChildFromBreeding((ServerLevel)this.world, this.nearbyMate);
+        this.slime.spawnChildFromBreeding((ServerLevel)this.level, this.nearbyMate);
     }
 }

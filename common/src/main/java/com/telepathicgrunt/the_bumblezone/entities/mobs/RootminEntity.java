@@ -17,6 +17,7 @@ import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import com.telepathicgrunt.the_bumblezone.items.FlowerHeadwearHelmet;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -598,7 +599,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    // Add homing missile dirt
    public void shootHomingDirt(LivingEntity livingEntity, float speedMultiplier) {
       if (!this.level().isClientSide()) {
-         DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this);
+         DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this, BzItems.DIRT_PELLET.get().getDefaultInstance());
 
          if (this.getEssenceController() != null) {
             pelletEntity.setEventBased(true);
@@ -632,7 +633,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
       if (!this.level().isClientSide()) {
          for (int currentProjectile = 0; currentProjectile < totalProjectiles; currentProjectile++) {
             Vec3 viewVector = this.getViewVector(1.0F);
-            DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this);
+            DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this, BzItems.DIRT_PELLET.get().getDefaultInstance()));
             pelletEntity.setPos(pelletEntity.position().add(viewVector.x(), 0, viewVector.z()));
 
             if (this.getEssenceController() != null) {
@@ -789,7 +790,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
       super.aiStep();
 
       if (this.isAlive() && (this.getRootminPose() == RootminState.WALK || this.getRootminPose() == RootminState.RUN)) {
-         Vec3 frontPos = this.position().add(Vec3.atLowerCornerOf(this.getDirection().getNormal()));
+         Vec3 frontPos = this.position().add(Vec3.atLowerCornerOf(this.getDirection().getUnitVec3i()));
          List<RootminEntity> list = this.level().getEntitiesOfClass(
                  RootminEntity.class,
                  this.getBoundingBox().inflate(0.3),

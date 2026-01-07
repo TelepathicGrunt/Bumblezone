@@ -331,7 +331,7 @@ public class ElectricRingEntity extends Entity {
         this.syncPacketPositionCodec(d, e, f);
         this.setId(clientboundAddEntityPacket.getId());
         this.setUUID(clientboundAddEntityPacket.getUUID());
-        this.absMoveTo(d, e, f, g, h);
-        this.setDeltaMovement(clientboundAddEntityPacket.getXa(), clientboundAddEntityPacket.getYa(), clientboundAddEntityPacket.getZa());
+        this.absSnapTo(d, e, f, g, h);
+        this.setDeltaMovement(clientboundAddEntityPacket.getX(), clientboundAddEntityPacket.getY(), clientboundAddEntityPacket.getZ());
     }
 }

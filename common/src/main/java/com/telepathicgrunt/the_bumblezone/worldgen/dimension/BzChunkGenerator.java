@@ -197,11 +197,30 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
     @Override
     public void addDebugScreenInfo(List<String> strings, RandomState randomState, BlockPos blockPos) {
-        DecimalFormat decimalformat = new DecimalFormat("0.000");
-        NoiseRouter noiserouter = randomState.router();
-        DensityFunction.SinglePointContext densityfunction$singlepointcontext = new DensityFunction.SinglePointContext(blockPos.getX(), blockPos.getY(), blockPos.getZ());
-        double d0 = noiserouter.ridges().compute(densityfunction$singlepointcontext);
-        strings.add("NoiseRouter T: " + decimalformat.format(noiserouter.temperature().compute(densityfunction$singlepointcontext)) + " V: " + decimalformat.format(noiserouter.vegetation().compute(densityfunction$singlepointcontext)) + " C: " + decimalformat.format(noiserouter.continents().compute(densityfunction$singlepointcontext)) + " E: " + decimalformat.format(noiserouter.erosion().compute(densityfunction$singlepointcontext)) + " D: " + decimalformat.format(noiserouter.depth().compute(densityfunction$singlepointcontext)) + " W: " + decimalformat.format(d0) + " PV: " + decimalformat.format(NoiseRouterData.peaksAndValleys((float)d0)) + " AS: " + decimalformat.format(noiserouter.initialDensityWithoutJaggedness().compute(densityfunction$singlepointcontext)) + " N: " + decimalformat.format(noiserouter.finalDensity().compute(densityfunction$singlepointcontext)));
+        DecimalFormat format = new DecimalFormat("0.000");
+        NoiseRouter router = randomState.router();
+        DensityFunction.SinglePointContext context = new DensityFunction.SinglePointContext(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+        double weirdness = router.ridges().compute(context);
+        strings.add(
+                "NoiseRouter T: "
+                        + format.format(router.temperature().compute(context))
+                        + " V: "
+                        + format.format(router.vegetation().compute(context))
+                        + " C: "
+                        + format.format(router.continents().compute(context))
+                        + " E: "
+                        + format.format(router.erosion().compute(context))
+                        + " D: "
+                        + format.format(router.depth().compute(context))
+                        + " W: "
+                        + format.format(weirdness)
+                        + " PV: "
+                        + format.format(NoiseRouterData.peaksAndValleys((float)weirdness))
+                        + " PS: "
+                        + format.format(router.preliminarySurfaceLevel().compute(context))
+                        + " N: "
+                        + format.format(router.finalDensity().compute(context))
+        );
     }
 
     protected OptionalInt iterateNoiseColumn(LevelHeightAccessor levelHeightAccessor, RandomState randomState, int x, int z, MutableObject<NoiseColumn> mutableObject, Predicate<BlockState> blockStatePredicate) {

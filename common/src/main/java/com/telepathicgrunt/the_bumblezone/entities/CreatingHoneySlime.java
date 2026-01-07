@@ -33,9 +33,9 @@ public class CreatingHoneySlime {
             }
 
             if(!world.isClientSide()) {
-                HoneySlimeEntity honeySlimeMob = BzEntities.HONEY_SLIME.get().create(world);
+                HoneySlimeEntity honeySlimeMob = BzEntities.HONEY_SLIME.get().create(world, EntitySpawnReason.CONVERSION);
 
-                honeySlimeMob.moveTo(
+                honeySlimeMob.snapTo(
                         target.getX(),
                         target.getY(),
                         target.getZ(),
@@ -43,7 +43,7 @@ public class CreatingHoneySlime {
                         target.getXRot());
 
                 honeySlimeMob.setBaby(slimeSize == 1);
-                honeySlimeMob.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(BlockPos.containing(honeySlimeMob.position())), EntitySpawnReason.TRIGGERED, null);
+                honeySlimeMob.finalizeSpawn((ServerLevelAccessor) world, ((ServerLevelAccessor) world).getCurrentDifficultyAt(BlockPos.containing(honeySlimeMob.position())), EntitySpawnReason.CONVERSION, null);
                 // spawn honey slime
                 world.addFreshEntity(honeySlimeMob);
 

@@ -598,7 +598,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          }
       }
       else if (!this.hasNoAI() && this.tickCount % 10 == 0 && this.getYRot() == this.getTargetFacing().toYRot()) {
-         Vec3 offset = Vec3.atLowerCornerOf(Rotation.CLOCKWISE_90.rotate(this.getTargetFacing()).getNormal()).scale(0.5D);
+         Vec3 offset = Vec3.atLowerCornerOf(Rotation.CLOCKWISE_90.rotate(this.getTargetFacing()).getUnitVec3i()).scale(0.5D);
          if (!scanAndBeginActivationIfEnemyFound(offset)) {
             scanAndBeginActivationIfEnemyFound(offset.scale(-1));
          }
@@ -614,7 +614,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
    private boolean scanAndBeginActivationIfEnemyFound(Vec3 offset) {
       Vec3 eyePosition = this.getEyePosition().add(offset);
-      Vec3 finalPos = eyePosition.add(Vec3.atLowerCornerOf(this.getTargetFacing().getNormal().multiply(SIGHT_RANGE)));
+      Vec3 finalPos = eyePosition.add(Vec3.atLowerCornerOf(this.getTargetFacing().getUnitVec3i().multiply(SIGHT_RANGE)));
       AABB boundsForChecking = this.getBoundingBox().inflate(SIGHT_RANGE);
 
       EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(
@@ -634,7 +634,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          return true;
       }
       else {
-         finalPos = this.position().add(0, 0.1d, 0).add(Vec3.atLowerCornerOf(this.getTargetFacing().getNormal().multiply(SIGHT_RANGE)));
+         finalPos = this.position().add(0, 0.1d, 0).add(Vec3.atLowerCornerOf(this.getTargetFacing().getUnitVec3i().multiply(SIGHT_RANGE)));
          boundsForChecking = this.getBoundingBox().inflate(SIGHT_RANGE);
 
          EntityHitResult entityHitResult2 = ProjectileUtil.getEntityHitResult(

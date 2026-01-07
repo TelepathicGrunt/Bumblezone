@@ -2,6 +2,8 @@ package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.items.FlowerHeadwearHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -35,7 +37,8 @@ public class BeeFlowerHeadwearTemptGoal extends Goal {
             return false;
         }
 
-        this.followEntity = this.mob.level().getNearestEntity(
+        this.followEntity = GeneralUtils.getNearestEntity(
+            (ServerLevel) this.mob.level(),
             LivingEntity.class,
             TEMP_TARGETING,
             this.mob,
@@ -48,7 +51,7 @@ public class BeeFlowerHeadwearTemptGoal extends Goal {
         return this.followEntity != null;
     }
 
-    private static boolean shouldFollow(LivingEntity livingEntity) {
+    private static boolean shouldFollow(LivingEntity livingEntity, ServerLevel serverLevel) {
         if (livingEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.holder())) {
             return false;
         }

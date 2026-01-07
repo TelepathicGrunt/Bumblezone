@@ -131,7 +131,7 @@ public class OptimizedJigsawManager {
                 Bumblezone.LOGGER.error(
                     "No starting jigsaw {} found in start pool {}",
                     identifier,
-                    startPoolHolder.unwrapKey().map(resourceKey -> resourceKey.location().toString()).orElse("<unregistered>")
+                    startPoolHolder.unwrapKey().map(resourceKey -> resourceKey.identifier().toString()).orElse("<unregistered>")
                 );
                 return Optional.empty();
             }

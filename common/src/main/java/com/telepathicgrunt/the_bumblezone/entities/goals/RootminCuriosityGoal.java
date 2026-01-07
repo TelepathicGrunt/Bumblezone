@@ -49,7 +49,7 @@ public class RootminCuriosityGoal extends Goal {
         }
 
         double seeRange = this.mob.getAttributeValue(Attributes.FOLLOW_RANGE);
-        this.inspect = this.mob.level().getNearestEntity(this.mob.level().getEntitiesOfClass(
+        this.inspect = getServerLevel(this.mob).getNearestEntity(this.mob.level().getEntitiesOfClass(
                         LivingEntity.class,
                         this.getTargetSearchArea(seeRange),
                         livingEntity -> BeeArmor.getBeeThemedWearablesCount(livingEntity) > 0 || !FlowerHeadwearHelmet.getFlowerHeadwear(livingEntity).isEmpty()),

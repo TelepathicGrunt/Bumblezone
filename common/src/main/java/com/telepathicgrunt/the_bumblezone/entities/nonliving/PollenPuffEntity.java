@@ -64,12 +64,12 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         super(entityType, world);
     }
 
-    public PollenPuffEntity(Level world, LivingEntity livingEntity) {
-        super(BzEntities.POLLEN_PUFF_ENTITY.get(), livingEntity, world);
+    public PollenPuffEntity(Level level, LivingEntity livingEntity, ItemStack itemStack) {
+        super(BzEntities.POLLEN_PUFF_ENTITY.get(), livingEntity, level, itemStack);
     }
 
-    public PollenPuffEntity(Level world, double x, double y, double z) {
-        super(BzEntities.POLLEN_PUFF_ENTITY.get(), x, y, z, world);
+    public PollenPuffEntity(Level level, double x, double y, double z, ItemStack itemStack) {
+        super(BzEntities.POLLEN_PUFF_ENTITY.get(), x, y, z, level, itemStack);
     }
 
     public void consumed() {

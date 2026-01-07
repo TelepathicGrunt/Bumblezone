@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.EntityPosAndDimModule;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -252,7 +253,7 @@ public class EntityTeleportationBackend {
             Optional<EntityPosAndDimModule> lazyOptional = PlatformService.INSTANCE.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM);
             if(lazyOptional.isPresent()) {
                 EntityPosAndDimModule capability = lazyOptional.orElseThrow(RuntimeException::new);
-                capability.setNonBZDim(entity.level().dimension().location());
+                capability.setNonBZDim(entity.level().dimension().identifier());
                 capability.setNonBZPos(Optional.of(entity.position()));
             }
             else {

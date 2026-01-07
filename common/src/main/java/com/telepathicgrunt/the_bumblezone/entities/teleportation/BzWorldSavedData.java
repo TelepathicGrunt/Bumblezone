@@ -4,8 +4,8 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -24,10 +24,12 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.TicketType;
+import net.minecraft.server.players.PlayerList;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -64,11 +66,6 @@ public class BzWorldSavedData extends SavedData {
 		}
 
 		return SERVER_WIDE;
-	}
-
-	@Override
-	public CompoundTag save(CompoundTag data, HolderLookup.Provider provider) {
-		return null;
 	}
 
 	public static void queueEntityToTeleport(Entity entity, ResourceKey<Level> destination) {
@@ -193,7 +190,7 @@ public class BzWorldSavedData extends SavedData {
 	public static void enteringBumblezone(Entity entity, Vec3 destinationPosFound, Set<Entity> teleportedEntities) {
 		//Note, the player does not hold the previous dimension oddly enough.
 		if (!entity.level().isClientSide()) {
-			MinecraftServer minecraftServer = entity.getServer(); // the server itself
+			MinecraftServer minecraftServer = entity.level().getServer(); // the server itself
 			ServerLevel bumblezoneWorld = minecraftServer.getLevel(BzDimension.BZ_WORLD_KEY);
 			BlockPos blockPos = BlockPos.containing(destinationPosFound);
 
@@ -235,7 +232,7 @@ public class BzWorldSavedData extends SavedData {
 
 			PlatformService.INSTANCE.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
 				capability.setNonBZPos(Optional.of(entity.position()));
-				capability.setNonBZDim(entity.level().dimension().location());
+				capability.setNonBZDim(entity.level().dimension().identifier());
 
 				// Prevent crash due to mojang bug that makes mod's json dimensions not exist upload first creation of world on server. A restart fixes this.
 				if (bumblezoneWorld == null) {
@@ -299,7 +296,7 @@ public class BzWorldSavedData extends SavedData {
 		if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
 			PlatformService.INSTANCE.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
 				capability.setNonBZPos(Optional.of(entity.position()));
-				capability.setNonBZDim(entity.level().dimension().location());
+				capability.setNonBZDim(entity.level().dimension().identifier());
 			});
 		}
 
@@ -310,14 +307,16 @@ public class BzWorldSavedData extends SavedData {
 			}
 
 			if (PlatformService.INSTANCE.isDimensionAllowed(serverPlayer, destination.dimension())) {
-				serverPlayer.connection.send(new ClientboundRespawnPacket(new CommonPlayerSpawnInfo(destination.dimensionTypeRegistration(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), serverPlayer.getLastDeathLocation(), serverPlayer.getPortalCooldown()), (byte)3));
-				serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y + 0.1f, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
+                PlayerList playerList = serverPlayer.level().getServer().getPlayerList();
+
+				serverPlayer.connection.send(new ClientboundRespawnPacket(serverPlayer.createCommonSpawnInfo(destination), (byte)3));
+				serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y + 0.1f, destinationPosition.z, Set.of(), serverPlayer.getYRot(), serverPlayer.getXRot(), true);
 				serverPlayer.connection.send(new ClientboundChangeDifficultyPacket(destination.getDifficulty(), destination.getLevelData().isDifficultyLocked()));
 				serverPlayer.connection.send(new ClientboundSetExperiencePacket(serverPlayer.experienceProgress, serverPlayer.totalExperience, serverPlayer.experienceLevel));
 				serverPlayer.connection.send(new ClientboundPlayerAbilitiesPacket(serverPlayer.getAbilities()));
-				serverPlayer.server.getPlayerList().sendActivePlayerEffects(serverPlayer);
-				serverPlayer.server.getPlayerList().sendLevelInfo(serverPlayer, destination);
-				serverPlayer.server.getPlayerList().sendPlayerPermissionLevel(serverPlayer);
+				playerList.sendActivePlayerEffects(serverPlayer);
+				playerList.sendLevelInfo(serverPlayer, destination);
+				playerList.sendPlayerPermissionLevel(serverPlayer);
 				serverPlayer.setPortalCooldown(100);
 				serverPlayer.addEffect(new MobEffectInstance(
 						MobEffects.SLOW_FALLING,
@@ -326,7 +325,7 @@ public class BzWorldSavedData extends SavedData {
 						false,
 						false,
 						false));
-				serverPlayer.server.getPlayerList().sendAllPlayerInfo(serverPlayer);
+                playerList.sendAllPlayerInfo(serverPlayer);
 				teleportedEntity = destination.getPlayerByUUID(serverPlayer.getUUID());
 			}
 			else {
@@ -335,12 +334,12 @@ public class BzWorldSavedData extends SavedData {
 		}
 		else {
 			Entity newEntity = entity;
-			newEntity = newEntity.getType().create(destination);
+			newEntity = newEntity.getType().create(destination, EntitySpawnReason.DIMENSION_TRAVEL);
 			if (newEntity == null) {
 				return;
 			}
 			newEntity.restoreFrom(entity);
-			newEntity.moveTo(destinationPosition.x, destinationPosition.y, destinationPosition.z, entity.getYRot(), entity.getXRot());
+			newEntity.snapTo(destinationPosition.x, destinationPosition.y, destinationPosition.z, entity.getYRot(), entity.getXRot());
 			newEntity.setPortalCooldown(100);
 			destination.addDuringTeleport(newEntity);
 			teleportedEntity = newEntity;
@@ -352,7 +351,9 @@ public class BzWorldSavedData extends SavedData {
 
 		if(teleportedEntity != null) {
 			ChunkPos chunkpos = new ChunkPos(BlockPos.containing(destinationPosition.x, destinationPosition.y, destinationPosition.z));
-			destination.getChunkSource().addRegionTicket(TicketType.POST_TELEPORT, chunkpos, 1, entity.getId());
+
+            // TODO: verify if this temporarily loads chunks or if it is forced load forever (which would cause memory leak)
+            destination.getChunkSource().addTicketWithRadius(TicketType.PORTAL, chunkpos, 1);
 
 			if(vehicle != null) {
 				teleportedEntity.startRiding(vehicle);

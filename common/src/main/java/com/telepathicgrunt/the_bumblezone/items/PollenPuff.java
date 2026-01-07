@@ -26,18 +26,18 @@ public class PollenPuff extends Item implements ProjectileItem {
 
     @Override
     public InteractionResult use(Level world, Player playerEntity, InteractionHand hand) {
-        ItemStack itemstack = playerEntity.getItemInHand(hand);
+        ItemStack itemStack = playerEntity.getItemInHand(hand);
 
         if (!world.isClientSide()) {
             world.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), BzSounds.POLLEN_PUFF_THROW.get(), SoundSource.PLAYERS, 0.5F, 0.4F / (playerEntity.getRandom().nextFloat() * 0.4F + 0.8F));
-                PollenPuffEntity pollenPuffEntity = new PollenPuffEntity(world, playerEntity);
-                pollenPuffEntity.setItem(itemstack);
+                PollenPuffEntity pollenPuffEntity = new PollenPuffEntity(world, playerEntity, itemStack);
+                pollenPuffEntity.setItem(itemStack);
                 pollenPuffEntity.shootFromRotation(playerEntity, playerEntity.getXRot(), playerEntity.getYRot(), 0.0F, 1.5F, 1.0F);
                 world.addFreshEntity(pollenPuffEntity);
 
             playerEntity.awardStat(Stats.ITEM_USED.get(this));
             if (!playerEntity.isCreative()) {
-                itemstack.shrink(1);
+                itemStack.shrink(1);
             }
         }
 
@@ -65,7 +65,7 @@ public class PollenPuff extends Item implements ProjectileItem {
 
     @Override
     public Projectile asProjectile(Level level, Position position, ItemStack itemStack, Direction direction) {
-        PollenPuffEntity pollenPuffEntity = new PollenPuffEntity(level, position.x(), position.y(), position.z());
+        PollenPuffEntity pollenPuffEntity = new PollenPuffEntity(level, position.x(), position.y(), position.z(), itemStack);
         pollenPuffEntity.setItem(itemStack);
         return pollenPuffEntity;
     }

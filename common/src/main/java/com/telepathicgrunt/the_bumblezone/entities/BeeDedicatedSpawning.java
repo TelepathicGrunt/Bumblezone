@@ -3,8 +3,8 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -72,11 +72,11 @@ public final class BeeDedicatedSpawning {
         return BEE_SET;
     }
 
-    public static void specialSpawnBees(ServerLevel world) {
+    public static void specialSpawnBees(ServerLevel level) {
         int despawnDistance = 80;
         int entityCountChange = 0;
         Set<Bee> allWildBees = getAllWildBees();
-        List<ServerPlayer> serverPlayers = world.players();
+        List<ServerPlayer> serverPlayers = level.players();
 
         // Remove all wild bees too far from a player.
         for (Bee wildBee : allWildBees) {
@@ -108,7 +108,7 @@ public final class BeeDedicatedSpawning {
                 }
 
                 int nearbyBees = 0;
-                for (Entity entity : world.getEntities(serverPlayer, serverPlayer.getBoundingBox().inflate(despawnDistance, despawnDistance, despawnDistance))) {
+                for (Entity entity : level.getEntities(serverPlayer, serverPlayer.getBoundingBox().inflate(despawnDistance, despawnDistance, despawnDistance))) {
                     if (entity instanceof Bee) {
                         nearbyBees++;
                     }
@@ -117,20 +117,20 @@ public final class BeeDedicatedSpawning {
                 for (int i = nearbyBees; i <= beesPerPlayer; i++) {
                     BlockPos newBeePos = GeneralUtils.getRandomBlockposWithinRange(serverPlayer, 45, 20);
 
-                    if (!world.shouldTickBlocksAt(newBeePos) || !world.getBlockState(newBeePos).isAir()) {
+                    if (!level.shouldTickBlocksAt(newBeePos) || !level.getBlockState(newBeePos).isAir()) {
                         continue;
                     }
 
-                    Bee newBee = (BzGeneralConfigs.variantBeeTypes.size() > 0 && world.getRandom().nextFloat() < BzGeneralConfigs.variantBeeAfterWorldgenSpawnRate) ?
-                            BzEntities.VARIANT_BEE.get().create(world) : EntityType.BEE.create(world);
+                    Bee newBee = (BzGeneralConfigs.variantBeeTypes.size() > 0 && level.getRandom().nextFloat() < BzGeneralConfigs.variantBeeAfterWorldgenSpawnRate) ?
+                            BzEntities.VARIANT_BEE.get().create(level, EntitySpawnReason.NATURAL) : EntityType.BEE.create(level, EntitySpawnReason.NATURAL);
 
                     newBee.setPos(Vec3.atCenterOf(newBeePos));
                     newBee.setDeltaMovement(new Vec3(0, 1D, 0));
                     newBee.setSpeed(0);
-                    newBee.finalizeSpawn(world, world.getCurrentDifficultyAt(newBee.blockPosition()), EntitySpawnReason.NATURAL, null);
+                    newBee.finalizeSpawn(level, level.getCurrentDifficultyAt(newBee.blockPosition()), EntitySpawnReason.NATURAL, null);
 
-                    PlatformService.INSTANCE.finalizeSpawn(newBee, world, null, EntitySpawnReason.NATURAL);
-                    world.addFreshEntity(newBee);
+                    PlatformService.INSTANCE.finalizeSpawn(newBee, level, null, EntitySpawnReason.NATURAL);
+                    level.addFreshEntity(newBee);
                     entityCountChange++;
                 }
             }

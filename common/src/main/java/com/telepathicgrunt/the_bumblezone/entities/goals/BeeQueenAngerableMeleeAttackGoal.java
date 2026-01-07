@@ -46,7 +46,7 @@ public class BeeQueenAngerableMeleeAttackGoal extends Goal {
         if (distance <= attackReachSqr1 && this.ticksUntilNextAttack <= 0) {
             this.resetAttackCooldown();
             this.mob.swing(InteractionHand.MAIN_HAND);
-            this.mob.doHurtTarget(target);
+            this.mob.doHurtTarget(getServerLevel(this.mob), target);
             this.mob.spawnAngryParticles(4);
             this.mob.setQueenPose(BeeQueenState.ATTACKING);
         }

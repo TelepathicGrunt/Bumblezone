@@ -1,10 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 
@@ -16,7 +18,7 @@ public class BeeQueenAlwaysLookAtPlayerGoal extends Goal {
     protected final float lookDistance;
     private final boolean onlyHorizontal;
     protected final Class<? extends LivingEntity> lookAtType;
-    protected final TargetingConditions lookAtContext;
+    protected TargetingConditions lookAtContext;
 
     public BeeQueenAlwaysLookAtPlayerGoal(Mob mob, Class<? extends LivingEntity> lookAtType, float lookDistance) {
         this(mob, lookAtType, lookDistance, false);
@@ -29,7 +31,7 @@ public class BeeQueenAlwaysLookAtPlayerGoal extends Goal {
         this.onlyHorizontal = onlyHorizontal;
         this.setFlags(EnumSet.of(Flag.LOOK));
         if (lookAtType == Player.class) {
-            this.lookAtContext = TargetingConditions.forNonCombat().range(lookDistance).selector((livingEntity) -> EntitySelector.notRiding(mob).test(livingEntity));
+            this.lookAtContext = TargetingConditions.forNonCombat().range(lookDistance).selector((livingEntity, _) -> EntitySelector.notRiding(mob).test(livingEntity));
         }
         else {
             this.lookAtContext = TargetingConditions.forNonCombat().range(lookDistance);
@@ -41,11 +43,20 @@ public class BeeQueenAlwaysLookAtPlayerGoal extends Goal {
             this.lookAt = this.mob.getTarget();
         }
 
+        ServerLevel level = getServerLevel(this.mob);
         if (this.lookAtType == Player.class) {
-            this.lookAt = this.mob.level().getNearestPlayer(this.lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
-        }
-        else {
-            this.lookAt = this.mob.level().getNearestEntity(this.mob.level().getEntitiesOfClass(this.lookAtType, this.mob.getBoundingBox().inflate(this.lookDistance, 3.0D, this.lookDistance), (livingEntity) -> true), this.lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
+            this.lookAt = level.getNearestPlayer(this.lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
+        } else {
+            this.lookAt = level.getNearestEntity(
+                this.mob
+                    .level()
+                    .getEntitiesOfClass(this.lookAtType, this.mob.getBoundingBox().inflate(this.lookDistance, 3.0, this.lookDistance), _ -> true),
+                this.lookAtContext,
+                this.mob,
+                this.mob.getX(),
+                this.mob.getEyeY(),
+                this.mob.getZ()
+            );
         }
 
         return this.lookAt != null;

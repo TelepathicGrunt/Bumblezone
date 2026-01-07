@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveController;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
@@ -34,7 +35,8 @@ public class HoneySlimeTemptGoal extends Goal {
             return false;
         }
         else {
-            this.closestPlayer = this.slime.level().getNearestPlayer(ENTITY_PREDICATE, this.slime);
+            this.closestPlayer = getServerLevel(this.slime)
+                    .getNearestPlayer(ENTITY_PREDICATE.range(this.slime.getAttributeValue(Attributes.TEMPT_RANGE)), this.slime);
             if (this.closestPlayer == null) {
                 return false;
             }

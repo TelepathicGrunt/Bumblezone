@@ -1,10 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.dimension;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBiomeHeightRegistry;
-import net.minecraft.Util;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Util;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
@@ -52,10 +52,10 @@ public final class BiomeInfluencedNoiseSampler {
                     biomeTerrain = new BzBiomeHeightRegistry.BiomeTerrain(4, 1);
                 }
 
-                float biomeDepth = biomeTerrain.depth;
+                float biomeDepth = biomeTerrain.depth();
                 float weight = BIOME_WEIGHT_TABLE[xOffset + RADIUS + (zOffset + RADIUS) * ((RADIUS * 2) + 1)];
-                if(biomeDepth != centerBiomeInfo.depth) {
-                    biomeDepth = Mth.lerp(centerBiomeInfo.weightModifier, biomeDepth, centerBiomeInfo.depth);
+                if(biomeDepth != centerBiomeInfo.depth()) {
+                    biomeDepth = Mth.lerp(centerBiomeInfo.weightModifier(), biomeDepth, centerBiomeInfo.depth());
                 }
 
                 totalHeight += (biomeDepth * weight);

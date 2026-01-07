@@ -23,7 +23,7 @@ public class BeehemothFlyingStillGoal extends Goal {
         if (!this.mob.isTame()) {
             return false;
         }
-        else if (this.mob.isInWaterOrBubble()) {
+        else if (this.mob.isInWater()) {
             return false;
         }
         else {

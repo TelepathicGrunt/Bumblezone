@@ -8,7 +8,9 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.EntityPosAndDimModule;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.core.BlockPos;
@@ -27,6 +29,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.village.poi.PoiManager;
 import net.minecraft.world.entity.ai.village.poi.PoiRecord;
@@ -61,7 +64,7 @@ public class EntityTeleportationHookup {
             (serverLevel.getGameTime() + serverPlayer.getUUID().getLeastSignificantBits()) % 100 == 0 &&
             !serverLevel.dimension().equals(BzDimension.BZ_WORLD_KEY))
         {
-            AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements().get(BzCriterias.IS_NEAR_BEEHIVE_ADVANCEMENT);
+            AdvancementHolder advancementHolder = serverPlayer.level().getServer().getAdvancements().get(BzCriterias.IS_NEAR_BEEHIVE_ADVANCEMENT);
             if (advancementHolder == null) {
                 return;
             }
@@ -104,8 +107,8 @@ public class EntityTeleportationHookup {
                     }
 
                     if (livingEntity.getY() < -4) {
-                        livingEntity.moveTo(livingEntity.getX(), -4, livingEntity.getZ());
-                        livingEntity.absMoveTo(livingEntity.getX(), -4, livingEntity.getZ());
+                        livingEntity.snapTo(livingEntity.getX(), -4, livingEntity.getZ());
+                        livingEntity.absSnapTo(livingEntity.getX(), -4, livingEntity.getZ());
                         livingEntity.setDeltaMovement(0, 0, 0);
                         if (!livingEntity.level().isClientSide()) {
                             livingEntity.addEffect(new MobEffectInstance(
@@ -131,8 +134,8 @@ public class EntityTeleportationHookup {
                     }
 
                     if (livingEntity.getY() > 257) {
-                        livingEntity.moveTo(livingEntity.getX(), 257, livingEntity.getZ());
-                        livingEntity.absMoveTo(livingEntity.getX(), 257, livingEntity.getZ());
+                        livingEntity.snapTo(livingEntity.getX(), 257, livingEntity.getZ());
+                        livingEntity.absSnapTo(livingEntity.getX(), 257, livingEntity.getZ());
                     }
 
                     if (!livingEntity.level().isClientSide()) {
@@ -147,7 +150,7 @@ public class EntityTeleportationHookup {
     public static void teleportOutOfBz(LivingEntity livingEntity) {
         if (!livingEntity.level().isClientSide()) {
             checkAndCorrectStoredDimension(livingEntity);
-            MinecraftServer minecraftServer = livingEntity.getServer(); // the server itself
+            MinecraftServer minecraftServer = livingEntity.level().getServer(); // the server itself
             ResourceKey<Level> worldKey = null;
 
             if (livingEntity.getControllingPassenger() == null) {
@@ -263,10 +266,12 @@ public class EntityTeleportationHookup {
 
             if (hitEntity instanceof LivingEntity livingEntity) {
                 // Held item check
-                for (ItemStack stack : livingEntity.getHandSlots()) {
-                    if (stack == null) {
-                        continue;
-                    }
+                List<EquipmentSlot> handSlots = List.of(
+                    EquipmentSlot.MAINHAND,
+                    EquipmentSlot.OFFHAND
+                );
+                for (EquipmentSlot equipmentSlot : handSlots) {
+                    ItemStack stack = livingEntity.getItemBySlot(equipmentSlot);
                     if (stack.is(BzTags.TARGET_WITH_HELD_ITEM_HIT_BY_TELEPORT_PROJECTILE)) {
                         passedCheck = true;
                         break;
@@ -274,9 +279,18 @@ public class EntityTeleportationHookup {
                 }
 
                 // Armor item check
-                for (ItemStack stack : livingEntity.getArmorSlots()) {
-                    if (stack != null && stack.is(BzTags.TARGET_ARMOR_HIT_BY_TELEPORT_PROJECTILE)) {
+                List<EquipmentSlot> armorSlots = List.of(
+                    EquipmentSlot.HEAD,
+                    EquipmentSlot.CHEST,
+                    EquipmentSlot.LEGS,
+                    EquipmentSlot.FEET,
+                    EquipmentSlot.BODY
+                );
+                for (EquipmentSlot equipmentSlot : armorSlots) {
+                    ItemStack stack = livingEntity.getItemBySlot(equipmentSlot);
+                    if (stack.is(BzTags.TARGET_ARMOR_HIT_BY_TELEPORT_PROJECTILE)) {
                         passedCheck = true;
+                        break;
                     }
                 }
             }

@@ -35,6 +35,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.RandomizableContainer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -72,6 +73,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BitSetDiscreteVoxelShape;
 import net.minecraft.world.phys.shapes.DiscreteVoxelShape;
@@ -1031,6 +1033,56 @@ public class GeneralUtils {
         }
         return newState;
     }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+
+    public static <T extends LivingEntity> T getNearestEntity(
+            ServerLevel serverLevel,
+            Class<? extends T> entityClazz,
+            TargetingConditions conditions,
+            @javax.annotation.Nullable LivingEntity target,
+            double x,
+            double y,
+            double z,
+            AABB boundingBox
+    ) {
+        return GeneralUtils.getNearestEntity(
+                serverLevel,
+                serverLevel.getEntitiesOfClass(entityClazz, boundingBox, _ -> true),
+                conditions,
+                target,
+                x,
+                y,
+                z);
+    }
+
+    public static <T extends LivingEntity> T getNearestEntity(
+            ServerLevel serverLevel,
+            List<? extends T> entities,
+            TargetingConditions predicate,
+            LivingEntity target,
+            double x,
+            double y,
+            double z
+    ) {
+        double best = -1.0;
+        T result = null;
+
+        for (T entity : entities) {
+            if (predicate.test(serverLevel, target, entity)) {
+                double dist = entity.distanceToSqr(x, y, z);
+                if (best == -1.0 || dist < best) {
+                    best = dist;
+                    result = entity;
+                }
+            }
+        }
+
+        return result;
+    }
+
+
 
     /////////////////////////////////////////////////////////////////////////////////
 

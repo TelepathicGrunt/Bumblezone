@@ -27,11 +27,13 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
@@ -53,19 +55,19 @@ import java.util.UUID;
 public class DirtPelletEntity extends ThrowableItemProjectile {
     private boolean eventBased = false;
     private Entity homingTarget = null;
-    private static final EntityDataAccessor<Optional<UUID>> DATA_HOMING_TARGET_UUID = SynchedEntityData.defineId(DirtPelletEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    private static final EntityDataAccessor<Optional<EntityReference<LivingEntity>>> DATA_HOMING_TARGET_UUID = SynchedEntityData.defineId(DirtPelletEntity.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
     private static final EntityDataAccessor<Boolean> DATA_IS_HOMING = SynchedEntityData.defineId(DirtPelletEntity.class, EntityDataSerializers.BOOLEAN);
 
     public DirtPelletEntity(EntityType<? extends DirtPelletEntity> entityType, Level world) {
         super(entityType, world);
     }
 
-    public DirtPelletEntity(Level world, LivingEntity livingEntity) {
-        super(BzEntities.DIRT_PELLET_ENTITY.get(), livingEntity, world);
+    public DirtPelletEntity(Level level, LivingEntity livingEntity, ItemStack itemStack) {
+        super(BzEntities.DIRT_PELLET_ENTITY.get(), livingEntity, level, itemStack);
     }
 
-    public DirtPelletEntity(Level world, double x, double y, double z) {
-        super(BzEntities.DIRT_PELLET_ENTITY.get(), x, y, z, world);
+    public DirtPelletEntity(Level level, double x, double y, double z, ItemStack itemStack) {
+        super(BzEntities.DIRT_PELLET_ENTITY.get(), x, y, z, level, itemStack);
     }
 
     @Override
@@ -91,12 +93,12 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
         this.entityData.set(DATA_IS_HOMING, homing);
     }
 
-    public UUID getHomingTargetUUID() {
-        return this.entityData.get(DATA_HOMING_TARGET_UUID).orElse(null);
+    public Optional<EntityReference<LivingEntity>> getHomingTargetUUID() {
+        return this.entityData.get(DATA_HOMING_TARGET_UUID);
     }
 
     public void setHomingTargetUUID(UUID homingTargetUUID) {
-        this.entityData.set(DATA_HOMING_TARGET_UUID, Optional.of(homingTargetUUID));
+        this.entityData.set(DATA_HOMING_TARGET_UUID, Optional.of(EntityReference.of(homingTargetUUID)));
     }
 
     @Override
@@ -122,10 +124,10 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
 
     @Override
     public void tick() {
-        if (this.isHoming() && this.homingTarget == null && this.getHomingTargetUUID() != null) {
+        if (this.isHoming() && this.homingTarget == null && this.getHomingTargetUUID().isPresent()) {
             // Hit method will set it to rootmin.
             // This is for initial creation which is always targeting player.
-            Player player = this.level().getPlayerByUUID(this.getHomingTargetUUID());
+            Player player = this.level().getPlayerByUUID(this.getHomingTargetUUID().get().getUUID());
             if (player != null) {
                 this.homingTarget = player;
             }
@@ -210,19 +212,19 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
         int damage = 1;
 
         if (entity instanceof DirtPelletEntity hitDirtPelletEntity) {
-            if (!this.level().isClientSide) {
+            if (!this.level().isClientSide()) {
                 hitDirtPelletEntity.level().broadcastEntityEvent(this, (byte)3);
                 hitDirtPelletEntity.level().playSound(null, this.blockPosition(), BzSounds.DIRT_PELLET_HIT.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
                 hitDirtPelletEntity.discard();
             }
         }
 
-        if (!type.is(BzTags.DIRT_PELLET_FORCE_NO_EXTRA_DAMAGE)) {
-            if (type.is(BzTags.DIRT_PELLET_EXTRA_DAMAGE)) {
+        if (!entity.is(BzTags.DIRT_PELLET_FORCE_NO_EXTRA_DAMAGE)) {
+            if (entity.is(BzTags.DIRT_PELLET_EXTRA_DAMAGE)) {
                 damage = 6;
             }
             else if (!identifier.getNamespace().equals("minecraft") && !identifier.getNamespace().equals(Bumblezone.MODID)) {
-                if (entity instanceof FlyingMob || (entity instanceof Mob mob && mob.getMoveControl() instanceof FlyingMoveControl)) {
+                if (entity instanceof FlyingAnimal || (entity instanceof Mob mob && mob.getMoveControl() instanceof FlyingMoveControl)) {
                     damage = 6;
                 }
             }

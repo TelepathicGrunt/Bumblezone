@@ -83,7 +83,7 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 
 	private void renderSide(EssenceBlockEntity blockEntity, Matrix4f model, VertexConsumer vertexConsumer, float x1, float x2, float y1, float y2, float z1, float z2, float z3, float z4, float red, float green, float blue, Direction direction) {
 		if (blockEntity.shouldDrawSide(direction)) {
-			Vec3i normal = direction.getNormal();
+			Vec3i normal = direction.getUnitVec3i();
 			addPortalVertex(vertexConsumer, model, x1, y1, z1, red, green, blue, normal);
 			addPortalVertex(vertexConsumer, model, x2, y1, z2, red, green, blue, normal);
 			addPortalVertex(vertexConsumer, model, x2, y2, z3, red, green, blue, normal);

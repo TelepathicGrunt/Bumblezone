@@ -6,8 +6,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
-import net.minecraft.util.random.Weight;
-import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -15,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class WeightedTradeResult implements WeightedEntry {
+public class WeightedTradeResult {
     public static final Codec<WeightedTradeResult> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
             TagKey.codec(Registries.ITEM).optionalFieldOf("t").forGetter(e -> e.tagKey),
             ItemStack.CODEC.listOf().optionalFieldOf("w").forGetter(e -> e.items),
@@ -54,9 +52,8 @@ public class WeightedTradeResult implements WeightedEntry {
         this.weight = weight;
     }
 
-    @Override
-    public Weight getWeight() {
-        return Weight.of(weight);
+    public int getWeight() {
+        return weight;
     }
 
     public int getTotalWeight() {
@@ -70,7 +67,7 @@ public class WeightedTradeResult implements WeightedEntry {
     public List<ItemStack> getItems() {
         List<ItemStack> itemsToReturn = new ArrayList<>();
         if (tagKey != null && tagKey.isPresent()) {
-            itemsToReturn = tagKey.map(BuiltInRegistries.ITEM::getOrCreateTag).get().stream().map(v -> {
+            itemsToReturn = tagKey.map(BuiltInRegistries.ITEM::get).get().get().stream().map(v -> {
                 ItemStack stack = v.value().getDefaultInstance();
                 stack.grow(this.count);
                 return stack;

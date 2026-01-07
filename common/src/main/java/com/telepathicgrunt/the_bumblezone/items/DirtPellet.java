@@ -22,18 +22,18 @@ public class DirtPellet extends Item implements ProjectileItem {
 
     @Override
     public InteractionResult use(Level world, Player playerEntity, InteractionHand hand) {
-        ItemStack itemstack = playerEntity.getItemInHand(hand);
+        ItemStack itemStack = playerEntity.getItemInHand(hand);
 
         if (!world.isClientSide()) {
             world.playSound(null, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), BzSounds.DIRT_PELLET_THROW.get(), SoundSource.PLAYERS, 0.5F, 0.4F / (playerEntity.getRandom().nextFloat() * 0.4F + 0.8F));
-                DirtPelletEntity pelletEntity = new DirtPelletEntity(world, playerEntity);
-                pelletEntity.setItem(itemstack);
+                DirtPelletEntity pelletEntity = new DirtPelletEntity(world, playerEntity, itemStack);
+                pelletEntity.setItem(itemStack);
                 pelletEntity.shootFromRotation(playerEntity, playerEntity.getXRot(), playerEntity.getYRot(), 0.0F, 1.5F, 1.0F);
                 world.addFreshEntity(pelletEntity);
 
             playerEntity.awardStat(Stats.ITEM_USED.get(this));
             if (!playerEntity.isCreative()) {
-                itemstack.shrink(1);
+                itemStack.shrink(1);
             }
         }
 
@@ -42,7 +42,7 @@ public class DirtPellet extends Item implements ProjectileItem {
 
     @Override
     public Projectile asProjectile(Level level, Position position, ItemStack itemStack, Direction direction) {
-        DirtPelletEntity dirtPelletEntity = new DirtPelletEntity(level, position.x(), position.y(), position.z());
+        DirtPelletEntity dirtPelletEntity = new DirtPelletEntity(level, position.x(), position.y(), position.z(), itemStack);
         dirtPelletEntity.setItem(itemStack);
         return dirtPelletEntity;
     }

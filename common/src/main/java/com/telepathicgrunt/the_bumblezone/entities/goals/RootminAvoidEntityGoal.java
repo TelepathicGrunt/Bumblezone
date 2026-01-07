@@ -47,7 +47,7 @@ public class RootminAvoidEntityGoal extends Goal {
         this.predicateOnAvoidEntity = predicate2;
         this.pathNav = pathfinderMob.getNavigation();
         this.setFlags(EnumSet.of(Goal.Flag.MOVE));
-        this.avoidEntityTargeting = TargetingConditions.forCombat().range(range).selector(predicate2.and(predicate));
+        this.avoidEntityTargeting = TargetingConditions.forCombat().range(range).selector((target, level) -> predicateOnAvoidEntity.test(target) && avoidPredicate.test(target));
     }
 
     @Override
@@ -73,15 +73,15 @@ public class RootminAvoidEntityGoal extends Goal {
             }
         }
         else {
-            this.toAvoid = this.mob.level().getNearestEntity(this.mob.level().getEntitiesOfClass(
-                            LivingEntity.class,
-                            this.mob.getBoundingBox().inflate(this.maxDist, 3.0, this.maxDist),
-                            livingEntity -> livingEntity.is(this.avoidTag)),
-                    this.avoidEntityTargeting,
-                    this.mob,
-                    this.mob.getX(),
-                    this.mob.getY(),
-                    this.mob.getZ());
+            this.toAvoid = getServerLevel(this.mob)
+                    .getNearestEntity(
+                            this.mob.level().getEntitiesOfClass(LivingEntity.class, this.mob.getBoundingBox().inflate(this.maxDist, 3.0, this.maxDist), _ -> true),
+                            this.avoidEntityTargeting,
+                            this.mob,
+                            this.mob.getX(),
+                            this.mob.getY(),
+                            this.mob.getZ()
+                    );
         }
 
         if (this.toAvoid == null) {

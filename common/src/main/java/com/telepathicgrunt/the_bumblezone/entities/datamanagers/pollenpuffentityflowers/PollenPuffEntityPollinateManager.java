@@ -6,14 +6,16 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.BzNbtPredicate;
 import com.telepathicgrunt.the_bumblezone.utils.LenientUnboundedMapCodec;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformService.INSTANCE;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -24,9 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.telepathicgrunt.the_bumblezone.Bumblezone.GSON;
-
-public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadListener {
+public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadListener<JsonElement> {
     public static final PollenPuffEntityPollinateManager POLLEN_PUFF_ENTITY_POLLINATE_MANAGER = new PollenPuffEntityPollinateManager();
 
     public record EntryObject(BzNbtPredicate nbtPredicate, WeightedStateProvider weightedStateProvider) {
@@ -52,7 +52,7 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
     public final Map<EntityType<?>, List<EntryObject>> mobToPlants = new Object2ObjectArrayMap<>();
 
     public PollenPuffEntityPollinateManager() {
-        super(GSON, "bz_pollen_puff_entity_flowers");
+        super(ExtraCodecs.JSON, FileToIdConverter.json("bz_pollen_puff_entity_flowers"));
     }
 
     @Override

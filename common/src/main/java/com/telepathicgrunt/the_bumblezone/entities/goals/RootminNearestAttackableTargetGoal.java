@@ -31,7 +31,7 @@ public class RootminNearestAttackableTargetGoal  extends TargetGoal {
         super(mob, mustSee, false);
         this.randomInterval = reducedTickDelay(randomInterval);
         this.setFlags(EnumSet.of(Goal.Flag.TARGET));
-        this.targetConditions = TargetingConditions.forCombat().range(this.getFollowDistance()).selector(targetPredicate);
+        this.targetConditions = TargetingConditions.forCombat().range(this.getFollowDistance()).selector((entity, level) -> targetPredicate.test(entity));
     }
 
     @Override
@@ -53,7 +53,7 @@ public class RootminNearestAttackableTargetGoal  extends TargetGoal {
     protected void findTarget() {
         if (this.mob instanceof RootminEntity rootminEntity) {
             AABB searchBounds = this.getTargetSearchArea(this.getFollowDistance());
-            this.target = this.mob.level().getNearestEntity(
+            this.target = getServerLevel(this.mob).getNearestEntity(
                     this.mob.level().getEntitiesOfClass(
                             LivingEntity.class,
                             searchBounds,

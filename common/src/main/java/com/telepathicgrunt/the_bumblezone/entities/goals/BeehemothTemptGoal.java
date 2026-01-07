@@ -1,8 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
@@ -25,14 +27,14 @@ public class BeehemothTemptGoal extends Goal {
         this.speedModifier = speedModifier;
         this.temptItemTag = temptItemTag;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
-        this.targetingConditions = TEMP_TARGETING.copy().selector(entity -> this.mob.getOwner() == entity).selector(this::shouldFollow);
+        this.targetingConditions = TEMP_TARGETING.copy().selector((entity, _) -> this.mob.getOwner() == entity).selector(this::shouldFollow);
     }
 
     @Override
     public boolean canUse() {
         if(mob.isTame()) {
             LivingEntity owner = this.mob.getOwner();
-            if (owner instanceof Player ownerPlayer && ownerPlayer.isAlive() && ownerPlayer.level() == mob.level() && shouldFollow(ownerPlayer)) {
+            if (owner instanceof Player ownerPlayer && ownerPlayer.isAlive() && ownerPlayer.level() == this.mob.level() && shouldFollow(ownerPlayer, getServerLevel(this.mob))) {
                 this.player = ownerPlayer;
                 this.mob.setInSittingPose(false);
                 return true;
@@ -40,12 +42,13 @@ public class BeehemothTemptGoal extends Goal {
             return false;
         }
         else {
-            this.player = this.mob.level().getNearestPlayer(this.targetingConditions, this.mob);
+            this.player = getServerLevel(this.mob)
+                    .getNearestPlayer(this.targetingConditions.range(this.mob.getAttributeValue(Attributes.TEMPT_RANGE)), this.mob);
             return this.player != null;
         }
     }
 
-    private boolean shouldFollow(LivingEntity livingEntity) {
+    private boolean shouldFollow(LivingEntity livingEntity, ServerLevel serverLevel) {
         return livingEntity.getMainHandItem().is(this.temptItemTag) || livingEntity.getOffhandItem().is(this.temptItemTag);
     }
 

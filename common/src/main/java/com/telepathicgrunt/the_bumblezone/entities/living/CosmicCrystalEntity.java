@@ -62,13 +62,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -84,6 +83,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+// TODO: All entities
 public class CosmicCrystalEntity extends LivingEntity {
     public static final EntityDataSerializer<CosmicCrystalState> COSMIC_CRYSTAL_STATE_SERIALIZER = EntityDataSerializer.forValueType(CosmicCrystalState.STREAM_CODEC);
     private static final EntityDataAccessor<CosmicCrystalState> COSMIC_CRYSTAL_STATE = SynchedEntityData.defineId(CosmicCrystalEntity.class, COSMIC_CRYSTAL_STATE_SERIALIZER);

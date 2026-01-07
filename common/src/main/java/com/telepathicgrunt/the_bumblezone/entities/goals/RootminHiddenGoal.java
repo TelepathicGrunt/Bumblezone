@@ -43,7 +43,7 @@ public class RootminHiddenGoal extends Goal {
         if (!this.mob.isPassenger()) {
             float lookAngle = this.mob.getYRot();
             Direction direction = Direction.fromYRot(lookAngle);
-            Vec3 lookVec = Vec3.atLowerCornerOf(direction.getNormal()).add(this.mob.position());
+            Vec3 lookVec = Vec3.atLowerCornerOf(direction.getUnitVec3i()).add(this.mob.position());
             this.mob.getLookControl().setLookAt(lookVec.x(), lookVec.y(), lookVec.z(), 60, 0);
             this.mob.setYRot(direction.toYRot());
         }

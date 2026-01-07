@@ -18,7 +18,7 @@ public class BiomeRegistryHolder {
         if (id == -1) {
             return EMPTY_RL;
         }
-        return BIOME_REGISTRY.get(id).get().key().location();
+        return BIOME_REGISTRY.get(id).get().key().identifier();
     }
 
     public static int convertToID(Identifier biome) {
