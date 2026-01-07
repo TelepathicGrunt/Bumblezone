@@ -85,8 +85,9 @@ public class ModChecker {
 			modid = "goodall";
 			loadupModCompat(modid, () -> new GoodallCompat());
 
-			modid = "backpacked";
-			loadupModCompat(modid, () -> new BackpackedCompat());
+            // TODO: re-enable when Backpacked updates
+//			modid = "backpacked";
+//			loadupModCompat(modid, () -> new BackpackedCompat());
 
 			modid = "ad_astra";
 			loadupModCompat(modid, () -> new AdAstraCompat());
