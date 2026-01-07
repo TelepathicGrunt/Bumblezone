@@ -78,8 +78,6 @@ public class BzModCompatibilityConfigs {
 			"productivebees:zombie"
 	);
 
-	public static boolean allowFriendsAndFoesBeekeeperTradesCompat = true;
-
 	public static boolean allowBeeBottleRevivingEmptyBroodBlock = true;
 
 	public static boolean allowBeeBucketRevivingEmptyBroodBlock = true;
@@ -87,8 +85,6 @@ public class BzModCompatibilityConfigs {
 	public static boolean allowPotionOfBeesRevivingEmptyBroodBlock = true;
 
 	public static boolean allowGoodallBottledBeesRevivingEmptyBroodBlock = true;
-
-	public static boolean allowBeekeeperTradesCompat = true;
 
 	public static boolean allowLootrCompat = true;
 

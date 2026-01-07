@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
-public class BackpackedCompat implements ModCompat {
+// TODO: re-enable when Backpacked updates
+//public class BackpackedCompat implements ModCompat {
 //	public BackpackedCompat() {
 //		// Keep at end so it is only set to true if no exceptions was thrown during setup
 //		ModChecker.backpackedPresent = true;
@@ -13,4 +14,4 @@ public class BackpackedCompat implements ModCompat {
 //
 //		return true;
 //	}
-}
+//}

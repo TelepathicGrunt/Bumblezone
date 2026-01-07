@@ -302,20 +302,10 @@ public class BzConfig extends MidnightConfig {
 
 
     @Comment
-    public static Comment musicDiscComment;
-
-    @Entry
-    public static boolean allowWanderingTraderMusicDiscsTrades = true;
-
-
-    @Comment
     public static Comment modCompatComment;
 
     @Entry
     public static String alternativeFluidToReplaceHoneyFluid = "";
-
-    @Entry
-    public static boolean allowFriendsAndFoesBeekeeperTradesCompat = true;
 
     @Entry
     public static boolean allowGoodallBottledBeesRevivingEmptyBroodBlock = true;
@@ -493,7 +483,6 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.beeStingerBrewingRecipe = beeStingerBrewingRecipe;
         BzGeneralConfigs.beeSoupBrewingRecipe = beeSoupBrewingRecipe;
         BzGeneralConfigs.nearbyBeesPerPlayerInBz = nearbyBeesPerPlayerInBz;
-        BzGeneralConfigs.allowWanderingTraderMusicDiscsTrades = allowWanderingTraderMusicDiscsTrades;
         BzGeneralConfigs.repeatableEssenceEvents = repeatableEssenceEvents;
         BzGeneralConfigs.blueArenaBubblesMechanic = blueArenaBubblesMechanic;
         BzGeneralConfigs.blueArenaTimeFrameInTicks = blueArenaTimeFrameInTicks;
@@ -519,7 +508,6 @@ public class BzConfig extends MidnightConfig {
 
         //Compat
         BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid = alternativeFluidToReplaceHoneyFluid;
-        BzModCompatibilityConfigs.allowFriendsAndFoesBeekeeperTradesCompat = allowFriendsAndFoesBeekeeperTradesCompat;
         BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock = allowGoodallBottledBeesRevivingEmptyBroodBlock;
         BzModCompatibilityConfigs.allowLootrCompat = allowLootrCompat;
         BzModCompatibilityConfigs.allowCreateLimestoneForHoneyLavaCompat = allowCreateLimestoneForHoneyLavaCompat;

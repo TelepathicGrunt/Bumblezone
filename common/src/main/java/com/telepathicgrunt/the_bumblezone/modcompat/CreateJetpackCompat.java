@@ -17,7 +17,7 @@ public class CreateJetpackCompat implements ModCompat {
     private static Item JETPACK;
 
     public CreateJetpackCompat() {
-        JETPACK = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("create_jetpack", "jetpack"));
+        JETPACK = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("create_jetpack", "jetpack")).get().value();
 
        // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.createJetpackPresent = true;
@@ -33,7 +33,7 @@ public class CreateJetpackCompat implements ModCompat {
         if (JETPACK != null && entity instanceof Player player) {
             ItemStack jetpack = player.getItemBySlot(EquipmentSlot.CHEST);
             if (jetpack.is(JETPACK)) {
-                if (!player.getCooldowns().isOnCooldown(jetpack.getItem())) {
+                if (!player.getCooldowns().isOnCooldown(jetpack)) {
                     if (player instanceof ServerPlayer serverPlayer) {
                         serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
                                 .withStyle(ChatFormatting.ITALIC)
@@ -41,7 +41,7 @@ public class CreateJetpackCompat implements ModCompat {
                     }
                 }
 
-                player.getCooldowns().addCooldown(jetpack.getItem(), 40);
+                player.getCooldowns().addCooldown(jetpack, 40);
             }
         }
     }

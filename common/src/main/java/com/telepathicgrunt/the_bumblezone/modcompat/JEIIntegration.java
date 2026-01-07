@@ -100,16 +100,15 @@ public class JEIIntegration implements IModPlugin {
             addInfo(registration, BzFluids.HONEY_FLUID.get());
         }
 
-        Level level = GeneralUtilsClient.getClientLevel();
-        if (level == null)
-            return;
-
-        // TODO: replace with new code as suspect this is now server side
-        level.getRecipeManager().byKey(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles"))
-                .ifPresent(recipe -> registerExtraRecipes(recipe, registration, true));
-
-        level.getRecipeManager().byKey(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax"))
-                .ifPresent(recipe -> registerExtraRecipes(recipe, registration, false));
+        // TODO: replace with code that uses neo and fabric's recipe sync events
+        /// OnDatapackSyncEvent -> tell the event which RecipeTypes you need synced (if this is a crafting recipe then JEI already syncs it, don't worry)
+        /// RecipesReceivedEvent -> take the RecipeMap, stick it in a static field in your client stuff
+        /// then in your JEI stuff you just grab whatever from that recipemap
+//        .byKey(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles"))
+//                .ifPresent(recipe -> registerExtraRecipes(recipe, registration, true));
+//
+//        .byKey(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax"))
+//                .ifPresent(recipe -> registerExtraRecipes(recipe, registration, false));
 
         List<JEIQueenTradesInfo> trades = new LinkedList<>();
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades.isEmpty()) {

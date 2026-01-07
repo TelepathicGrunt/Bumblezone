@@ -16,7 +16,6 @@ import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantmentApp
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.PlayerInteractivity;
-import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.entities.datamanagers.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.entities.datamanagers.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
@@ -32,7 +31,6 @@ import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityHurtEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntitySpawnEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTravelingToDimensionEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzProjectileHitEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.BzRegisterWanderingTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.item.BzRegisterBrewingRecipeEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinDataPacks;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinResourcePacks;
@@ -150,7 +148,6 @@ public class Bumblezone {
         BzPlayerBreakSpeedEvent.EVENT.addListener(CombCutterEnchantmentApplication::attemptFasterMining);
         PlayerDataHandler.initEvents();
         BzPlayerGrantAdvancementEvent.EVENT.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
-        BzRegisterWanderingTradesEvent.EVENT.addListener(WanderingTrades::addWanderingTrades);
         BzTagsUpdatedEvent.EVENT.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
         BzTagsUpdatedEvent.EVENT.addListener(CrystallineFlowerDataManager.CRYSTALLINE_FLOWER_DATA_MANAGER::resolveFlowerData);
         BzServerGoingToStopEvent.EVENT.addListener(ThreadExecutor::handleServerStoppingEvent);

@@ -1,0 +1,13 @@
+{
+  "gives": {
+    "id": "the_bumblezone:music_disc_beenna_box",
+    "count": 1
+  },
+  "wants": {
+    "id": "minecraft:emerald",
+    "count": 20
+  },
+  "reputation_discount": 0.05,
+  "xp": 1,
+  "max_uses": 1
+}

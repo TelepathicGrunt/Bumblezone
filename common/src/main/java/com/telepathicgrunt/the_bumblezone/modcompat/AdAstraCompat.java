@@ -21,10 +21,10 @@ public class AdAstraCompat implements ModCompat {
 	private static Item JET_FEET = null;
 
 	public AdAstraCompat() {
-		JET_HELMET = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("ad_astra", "jet_suit_helmet"));
-		JET_CHEST = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("ad_astra", "jet_suit"));
-		JET_LEGS = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("ad_astra", "jet_suit_pants"));
-		JET_FEET = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("ad_astra", "jet_suit_boots"));
+		JET_HELMET = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("ad_astra", "jet_suit_helmet")).get().value();
+		JET_CHEST = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("ad_astra", "jet_suit")).get().value();
+		JET_LEGS = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("ad_astra", "jet_suit_pants")).get().value();
+		JET_FEET = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("ad_astra", "jet_suit_boots")).get().value();
 
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
 		ModChecker.adAstraPresent = true;
@@ -44,7 +44,7 @@ public class AdAstraCompat implements ModCompat {
 				hasItemEquipped(player, EquipmentSlot.FEET, JET_FEET))
 			{
 				ItemStack jetpackSuit = player.getItemBySlot(EquipmentSlot.CHEST);
-				if (!player.getCooldowns().isOnCooldown(jetpackSuit.getItem())) {
+				if (!player.getCooldowns().isOnCooldown(jetpackSuit)) {
 					if (player instanceof ServerPlayer serverPlayer) {
 						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
 								.withStyle(ChatFormatting.ITALIC)
@@ -52,7 +52,7 @@ public class AdAstraCompat implements ModCompat {
 					}
 				}
 
-				player.getCooldowns().addCooldown(jetpackSuit.getItem(), 40);
+				player.getCooldowns().addCooldown(jetpackSuit, 40);
 			}
 		}
 	}

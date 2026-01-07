@@ -34,8 +34,6 @@ public class BzModCompatibilityConfig {
 	public static ModConfigSpec.ConfigValue<List<? extends String>> allowedCombsForDungeons;
 	public static ModConfigSpec.ConfigValue<List<? extends String>> allowedBees;
 
-	public static ModConfigSpec.BooleanValue allowFriendsAndFoesBeekeeperTradesCompat;
-
 	public static ModConfigSpec.BooleanValue allowBeeBottleRevivingEmptyBroodBlock;
 
 	public static ModConfigSpec.BooleanValue allowBeeBucketRevivingEmptyBroodBlock;
@@ -43,8 +41,6 @@ public class BzModCompatibilityConfig {
 	public static ModConfigSpec.BooleanValue allowPotionOfBeesRevivingEmptyBroodBlock;
 
 	public static ModConfigSpec.BooleanValue allowGoodallBottledBeesRevivingEmptyBroodBlock;
-
-	public static ModConfigSpec.BooleanValue allowBeekeeperTradesCompat;
 
 	public static ModConfigSpec.BooleanValue allowLootrCompat;
 
@@ -279,16 +275,6 @@ public class BzModCompatibilityConfig {
 
 		builder.pop();
 
-		builder.translation("the_bumblezone.configuration.friendsandfoescompat").push("Friends and Foes Compat");
-
-		allowFriendsAndFoesBeekeeperTradesCompat = builder
-				.comment("----------------------------\n",
-						" Adds Bumblezone items to Friends and Foes's Beekeeper trades!\n")
-				.translation("the_bumblezone.configuration.allowfriendsandfoesbeekeepertradescompat")
-				.define("allowFriendsAndFoesBeekeeperTradesCompat", true);
-
-		builder.pop();
-
 		builder.translation("the_bumblezone.configuration.buzzierbeescompat").push("Buzzier Bees Compat");
 
 		allowBeeBottleRevivingEmptyBroodBlock = builder
@@ -333,18 +319,6 @@ public class BzModCompatibilityConfig {
 
 		builder.pop();
 
-
-		builder.translation("the_bumblezone.configuration.beekeepercompat").push("Beekeeper Compat");
-
-		allowBeekeeperTradesCompat = builder
-				.comment("----------------------------\n",
-						" Adds Bumblezone items to Beekeeper mod's Beekeeper trades!\n")
-				.translation("the_bumblezone.configuration.allowbeekeepertradescompat")
-				.define("allowBeekeeperTradesCompat", true);
-
-		builder.pop();
-
-
 		builder.translation("the_bumblezone.configuration.lootrcompat").push("Lootr Compat");
 
 		allowLootrCompat = builder
@@ -371,10 +345,6 @@ public class BzModCompatibilityConfig {
 		BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid = alternativeFluidToReplaceHoneyFluid.get();
 
 		BzModCompatibilityConfigs.allowPotionOfBeesRevivingEmptyBroodBlock = allowPotionOfBeesRevivingEmptyBroodBlock.get();
-
-		BzModCompatibilityConfigs.allowBeekeeperTradesCompat = allowBeekeeperTradesCompat.get();
-
-		BzModCompatibilityConfigs.allowFriendsAndFoesBeekeeperTradesCompat = allowFriendsAndFoesBeekeeperTradesCompat.get();
 
 		BzModCompatibilityConfigs.spawnTropicraftBeesMob = spawnTropicraftBeesMob.get();
 		BzModCompatibilityConfigs.spawnrateOfTropicraftBeesMobs = spawnrateOfTropicraftBeesMobs.get();

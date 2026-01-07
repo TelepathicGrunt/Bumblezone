@@ -5,8 +5,6 @@ import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.events.block.BzBlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityDeathEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.BzRegisterVillagerTradesEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.BzRegisterWanderingTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.item.BzRegisterBrewingRecipeEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinDataPacks;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinResourcePacks;
@@ -32,8 +30,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.services.fabric.FabricPlatformService;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
@@ -42,14 +38,11 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
@@ -62,7 +55,6 @@ import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.impl.resource.loader.ResourceManagerHelperImpl;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -75,19 +67,17 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Util;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
-import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
@@ -96,7 +86,6 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.phys.BlockHitResult;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -165,11 +154,6 @@ public class FabricEventManager {
         ServerLifecycleEvents.SERVER_STOPPING.register((minecraftServer) -> {
             BzServerGoingToStopEvent.EVENT.invoke(BzServerGoingToStopEvent.INSTANCE);
             FabricPlatformService.currentMinecraftServer = null;
-        });
-
-        ServerWorldEvents.LOAD.register((server, level) -> {
-            setupWanderingTrades();
-            setupVillagerTrades();
         });
 
         BzRegisterFlammabilityEvent.EVENT.invoke(new BzRegisterFlammabilityEvent(FlammableBlockRegistry.getDefaultInstance()::add));
@@ -263,37 +247,6 @@ public class FabricEventManager {
             case ENABLED_BY_DEFAULT -> ResourcePackActivationType.DEFAULT_ENABLED;
             case FORCE_ENABLED -> ResourcePackActivationType.ALWAYS_ENABLED;
         };
-    }
-
-    private static void setupWanderingTrades() {
-        var trades = VillagerTrades.WANDERING_TRADER_TRADES;
-        List<VillagerTrades.ItemListing> basic = Arrays.stream(trades.get(1).getLeft()).collect(Collectors.toList());
-        List<VillagerTrades.ItemListing> rare = Arrays.stream(trades.get(2).getLeft()).collect(Collectors.toList());
-        BzRegisterWanderingTradesEvent.EVENT.invoke(new BzRegisterWanderingTradesEvent(basic::add, rare::add));
-        trades.set(0, Pair.of(basic.toArray(new VillagerTrades.ItemListing[0]), 1));
-        trades.set(1, Pair.of(rare.toArray(new VillagerTrades.ItemListing[0]), 2));
-        //TODO: check if above is correct modification
-    }
-
-    private static void setupVillagerTrades() {
-        var trades = VillagerTrades.TRADES;
-        for (var profession : BuiltInRegistries.VILLAGER_PROFESSION.registryKeySet()) {
-            if (profession == null) continue;
-            Int2ObjectMap<VillagerTrades.ItemListing[]> profTrades = trades.computeIfAbsent(profession, key -> new Int2ObjectOpenHashMap<>());
-            Int2ObjectMap<List<VillagerTrades.ItemListing>> listings = new Int2ObjectOpenHashMap<>();
-            for (int i = 1; i <= 5; i++) {
-                if (profTrades.containsKey(i)) {
-                    List<VillagerTrades.ItemListing> list = Arrays.stream(profTrades.get(i)).collect(Collectors.toList());
-                    listings.put(i, list);
-                } else {
-                    listings.put(i, new ArrayList<>());
-                }
-            }
-            BzRegisterVillagerTradesEvent.EVENT.invoke(new BzRegisterVillagerTradesEvent(profession, (i, listing) -> listings.get(i.intValue()).add(listing)));
-            for (int i = 1; i <= 5; i++) {
-                profTrades.put(i, listings.get(i).toArray(new VillagerTrades.ItemListing[0]));
-            }
-        }
     }
 
     private static Iterable<Holder<PlacedFeature>> getPlacedFeaturesByTag(BiomeModificationContext context, TagKey<PlacedFeature> placedFeatureTagKey) {

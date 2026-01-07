@@ -14,8 +14,6 @@ import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityHurtEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntitySpawnEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzEntityTravelingToDimensionEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BzProjectileHitEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.BzRegisterVillagerTradesEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.BzRegisterWanderingTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.item.BzRegisterBrewingRecipeEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinDataPacks;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzAddBuiltinResourcePacks;
@@ -50,8 +48,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
@@ -98,12 +96,10 @@ import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-import net.neoforged.neoforge.event.village.VillagerTradesEvent;
-import net.neoforged.neoforge.event.village.WandererTradesEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
-import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.RegisterEvent;
+import net.neoforged.neoforge.transfer.item.WorldlyContainerWrapper;
 
 public class NeoForgeEventManager {
     public static void init(IEventBus modEventBus, IEventBus eventBus) {
@@ -119,8 +115,6 @@ public class NeoForgeEventManager {
         eventBus.addListener(NeoForgeEventManager::onBabySpawn);
         eventBus.addListener(NeoForgeEventManager::onServerStarting);
         eventBus.addListener(NeoForgeEventManager::onServerStopping);
-        eventBus.addListener(NeoForgeEventManager::onAddVillagerTrades);
-        eventBus.addListener(NeoForgeEventManager::onWanderingTrades);
         eventBus.addListener(NeoForgeEventManager::onRegisterCommand);
         eventBus.addListener(NeoForgeEventManager::onRegisterBrewingRecipies);
         eventBus.addListener(NeoForgeEventManager::onProjectileHit);
@@ -246,14 +240,6 @@ public class NeoForgeEventManager {
 
     private static void onRegisterAttributes(EntityAttributeCreationEvent event) {
         BzRegisterEntityAttributesEvent.EVENT.invoke(new BzRegisterEntityAttributesEvent((entity, builder) -> event.put(entity, builder.build())));
-    }
-
-    private static void onAddVillagerTrades(VillagerTradesEvent event) {
-        BzRegisterVillagerTradesEvent.EVENT.invoke(new BzRegisterVillagerTradesEvent(event.getType(), (i, listing) -> event.getTrades().get(i.intValue()).add(listing)));
-    }
-
-    private static void onWanderingTrades(WandererTradesEvent event) {
-        BzRegisterWanderingTradesEvent.EVENT.invoke(new BzRegisterWanderingTradesEvent(event.getGenericTrades()::add, event.getRareTrades()::add));
     }
 
     private static void onRegisterCommand(RegisterCommandsEvent event) {
@@ -431,7 +417,7 @@ public class NeoForgeEventManager {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 BzBlockEntities.HONEY_COCOON.get(),
-                (honeyCocoon, side) -> new SidedInvWrapper(honeyCocoon, Direction.UP));
+                (honeyCocoon, side) -> new WorldlyContainerWrapper(honeyCocoon, Direction.UP));
 
         event.registerItem(
                 Capabilities.FluidHandler.ITEM,

@@ -35,7 +35,6 @@ public class BzGeneralConfig {
     public static ModConfigSpec.BooleanValue beeQueenSpecialDayTrades;
     public static ModConfigSpec.BooleanValue beeQueenRespawning;
     public static ModConfigSpec.BooleanValue beeQueenGroundPickup;
-    public static ModConfigSpec.BooleanValue allowWanderingTraderMusicDiscsTrades;
     public static ModConfigSpec.BooleanValue crystallineFlowerConsumeItemEntities;
     public static ModConfigSpec.BooleanValue crystallineFlowerConsumeExperienceOrbEntities;
     public static ModConfigSpec.BooleanValue crystallineFlowerConsumeItemUI;
@@ -348,16 +347,6 @@ public class BzGeneralConfig {
 
         builder.pop();
 
-        builder.translation("the_bumblezone.configuration.musicdiscsoptions").push("Music Disc Options");
-
-        allowWanderingTraderMusicDiscsTrades = builder
-                .comment("----------------------------\n",
-                        " Whether Wandering Traders can have a rare trade for Bumblezone Music Discs.\n")
-                .translation("the_bumblezone.configuration.allowwanderingtradermusicdiscstrades")
-                .define("allowWanderingTraderMusicDiscsTrades", true);
-
-        builder.pop();
-
         builder.translation("the_bumblezone.configuration.essenceoptions").push("Essence Item And Events Options");
 
         repeatableEssenceEvents = builder
@@ -535,7 +524,6 @@ public class BzGeneralConfig {
         BzGeneralConfigs.beeQueenSpecialDayTrades = beeQueenSpecialDayTrades.get();
         BzGeneralConfigs.beeQueenRespawning = beeQueenRespawning.get();
         BzGeneralConfigs.beeQueenGroundPickup = beeQueenGroundPickup.get();
-        BzGeneralConfigs.allowWanderingTraderMusicDiscsTrades = allowWanderingTraderMusicDiscsTrades.get();
         BzGeneralConfigs.crystallineFlowerConsumeItemEntities = crystallineFlowerConsumeItemEntities.get();
         BzGeneralConfigs.crystallineFlowerConsumeExperienceOrbEntities = crystallineFlowerConsumeExperienceOrbEntities.get();
         BzGeneralConfigs.crystallineFlowerConsumeItemUI = crystallineFlowerConsumeItemUI.get();

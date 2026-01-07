@@ -13,7 +13,7 @@ public class CreateCompat implements ModCompat {
     private static Block LIMESTONE;
 
     public CreateCompat() {
-        LIMESTONE = BuiltInRegistries.BLOCK.get(Identifier.fromNamespaceAndPath("create", "limestone"));
+        LIMESTONE = BuiltInRegistries.BLOCK.get(Identifier.fromNamespaceAndPath("create", "limestone")).get().value();
 
        // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.createPresent = true;

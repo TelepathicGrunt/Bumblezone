@@ -30,8 +30,6 @@ public class ModChecker {
 	public static boolean resourcefulBeesPresent = false;
 	public static boolean buzzierBeesPresent = false;
 	public static boolean forbiddenArcanusPresent = false;
-	public static boolean friendsAndFoesPresent = false;
-	public static boolean beekeeperPresent = false;
 	public static boolean potionOfBeesPresent = false;
 	public static boolean twilightForestPresent = false;
 	public static boolean dragonEnchantsPresent = false;
@@ -73,17 +71,15 @@ public class ModChecker {
 		String modid = "";
 		try {
 
-			modid = "friendsandfoes";
-			loadupModCompat(modid, () -> new FriendsAndFoesCompat());
-
 			modid = "resourcefulbees";
 			loadupModCompat(modid, () -> new ResourcefulBeesCompat());
 
 			modid = "twilightforest";
 			loadupModCompat(modid, () -> new TwilightForestCompat());
 
-			modid = "goodall";
-			loadupModCompat(modid, () -> new GoodallCompat());
+            // TODO: re-enable when Goodall updates
+//			modid = "goodall";
+//			loadupModCompat(modid, () -> new GoodallCompat());
 
             // TODO: re-enable when Backpacked updates
 //			modid = "backpacked";

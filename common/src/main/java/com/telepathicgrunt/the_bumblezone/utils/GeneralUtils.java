@@ -11,8 +11,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.DefaultedRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.core.FrontAndTop;
 import net.minecraft.core.Holder;
@@ -29,6 +29,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.Util;
 import net.minecraft.world.Clearable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.RandomizableContainer;
@@ -131,6 +132,7 @@ public class GeneralUtils {
                 entity.getZ() + (entity.getRandom().nextInt(maxRadius) + minRadius) * (entity.getRandom().nextBoolean() ? 1 : -1));
         return newBeePos;
     }
+
 
     ////////////////
 
@@ -299,9 +301,9 @@ public class GeneralUtils {
                     blockPos.getZ() + 0.5D,
                     itemToSpawn);
             itemEntity.setDeltaMovement(new Vec3(
-                    serverLevel.random.nextGaussian() * randomXZSpeed,
+                    serverLevel.getRandom().nextGaussian() * randomXZSpeed,
                     ySpeed,
-                    serverLevel.random.nextGaussian() * randomXZSpeed));
+                    serverLevel.getRandom().nextGaussian() * randomXZSpeed));
             itemEntity.setDefaultPickUpDelay();
             serverLevel.addFreshEntity(itemEntity);
         }
@@ -335,6 +337,10 @@ public class GeneralUtils {
 
     public static <B, T extends B> boolean isInTag(Registry<B> registry, TagKey<B> key, T value) {
         return registry.get(registry.getId(value)).orElseThrow().is(key);
+    }
+
+    public static boolean isInTag(DefaultedRegistry<Item> item, TagKey<Item> itemSpecialDedicatedCompat, Optional<Holder.Reference<Item>> itemReference) {
+        return isInTag(item, itemSpecialDedicatedCompat, itemReference.get().value());
     }
 
     /**

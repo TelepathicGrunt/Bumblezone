@@ -43,7 +43,6 @@ public class BzGeneralConfigs {
     public static boolean beeQueenRespawning = true;
     public static boolean beeQueenGroundPickup = true;
     public static boolean superCandlesBurnsMobs = true;
-    public static boolean allowWanderingTraderMusicDiscsTrades = true;
     public static boolean crystallineFlowerConsumeItemEntities = true;
     public static boolean crystallineFlowerConsumeExperienceOrbEntities = true;
     public static boolean crystallineFlowerConsumeItemUI = true;

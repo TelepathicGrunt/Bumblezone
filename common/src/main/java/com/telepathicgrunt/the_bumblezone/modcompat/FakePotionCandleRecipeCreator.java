@@ -65,17 +65,15 @@ public class FakePotionCandleRecipeCreator {
     }
 
     private static void addRecipeIfValid(List<CraftingRecipe> extraRecipes, ShapedRecipe recipe) {
-        if (!recipe.getResultItem(RegistryAccess.EMPTY).isEmpty()) {
-            extraRecipes.add(recipe);
-        }
+        extraRecipes.add(recipe);
     }
 
     private static ShapedRecipe getFakeShapedRecipe(PotionCandleRecipe recipe, Holder<Potion> potion, ItemStack potionItem) {
         ItemStack potionStack = PotionContents.createItemStack(potionItem.getItem(), potion);
 
-        List<Ingredient> fakedShapedIngredientsMutable = new ArrayList<>();
+        List<Optional<Ingredient>> fakedShapedIngredientsMutable = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
-            fakedShapedIngredientsMutable.add(Ingredient.EMPTY);
+            fakedShapedIngredientsMutable.add(Optional.empty());
         }
 
         int currentShapedIndex = 0;
@@ -87,7 +85,7 @@ public class FakePotionCandleRecipeCreator {
                 }
 
                 Ingredient ingredient = recipe.getShapedRecipeItems().get(currentShapedIndex);
-                fakedShapedIngredientsMutable.set(x + (z * 3), ingredient);
+                fakedShapedIngredientsMutable.set(x + (z * 3), Optional.of(ingredient));
                 currentShapedIndex++;
             }
         }
@@ -95,19 +93,19 @@ public class FakePotionCandleRecipeCreator {
         int currentShapelessIndex = 0;
         int shapelessRecipeSize = recipe.getShapelessRecipeItems().size();
         for (int i = 0; i < 9; i++) {
-            Ingredient ingredient = fakedShapedIngredientsMutable.get(i);
+            Optional<Ingredient> ingredient = fakedShapedIngredientsMutable.get(i);
             if (ingredient.isEmpty()) {
                 if (currentShapelessIndex >= shapelessRecipeSize) {
-                    fakedShapedIngredientsMutable.set(i, Ingredient.of(potionStack));
+                    fakedShapedIngredientsMutable.set(i, Optional.of(Ingredient.of(potionStack.getItem())));
                     break;
                 }
 
-                fakedShapedIngredientsMutable.set(i, recipe.getShapelessRecipeItems().get(currentShapelessIndex));
+                fakedShapedIngredientsMutable.set(i, Optional.of(recipe.getShapelessRecipeItems().get(currentShapelessIndex)));
                 currentShapelessIndex++;
             }
         }
 
-        NonNullList<Ingredient> fakedShapedIngredients = NonNullList.create();
+        NonNullList<Optional<Ingredient>> fakedShapedIngredients = NonNullList.create();
         fakedShapedIngredients.addAll(fakedShapedIngredientsMutable);
 
         return new ShapedRecipe(
