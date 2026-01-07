@@ -30,9 +30,6 @@
         "modmenu": [
             "com.telepathicgrunt.the_bumblezone.configs.fabric.ModMenuCompat"
         ],
-        "emi": [
-            "com.telepathicgrunt.the_bumblezone.modcompat.EMICompat"
-        ],
         "rei_client": [
             "com.telepathicgrunt.the_bumblezone.modcompat.REICompat"
         ],
