@@ -1,16 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.BufferUploader;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
-import org.joml.Matrix4f;
 
 public class DrawableResource implements IDrawableStatic {
 
@@ -60,24 +53,11 @@ public class DrawableResource implements IDrawableStatic {
 
     @Override
     public void draw(GuiGraphics guiGraphics, int xOffset, int yOffset, int maskTop, int maskBottom, int maskLeft, int maskRight) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, this.identifier);
-
         int x = xOffset + this.paddingLeft + maskLeft;
         int y = yOffset + this.paddingTop + maskTop;
-        int u = this.u + maskLeft;
-        int v = this.v + maskTop;
         int width = this.width - maskRight - maskLeft;
         int height = this.height - maskBottom - maskTop;
-        float f = 1.0F / this.textureWidth;
-        float f1 = 1.0F / this.textureHeight;
-        BufferBuilder bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        Matrix4f matrix = guiGraphics.pose().last().pose();
-        bufferbuilder.addVertex(matrix, x, y + height, 0).setUv(u * f, (v + (float) height) * f1);
-        bufferbuilder.addVertex(matrix, x + width, y + height, 0).setUv((u + (float) width) * f, (v + (float) height) * f1);
-        bufferbuilder.addVertex(matrix, x + width, y, 0).setUv((u + (float) width) * f, v * f1);
-        bufferbuilder.addVertex(matrix, x, y, 0).setUv(u * f, v * f1);
-        BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.identifier, x, y, width, height);
     }
 }
 

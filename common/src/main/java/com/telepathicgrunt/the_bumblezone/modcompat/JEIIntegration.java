@@ -24,14 +24,18 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IPlatformFluidHelper;
-import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.recipe.types.IRecipeType;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -50,8 +54,8 @@ import java.util.Map;
 @JeiPlugin
 public class JEIIntegration implements IModPlugin {
 
-    public static final RecipeType<JEIQueenTradesInfo> QUEEN_TRADES = RecipeType.create(Bumblezone.MODID, "queen_trades", JEIQueenTradesInfo.class);
-    public static final RecipeType<JEIQueenRandomizerTradesInfo> QUEEN_RANDOMIZE_TRADES = RecipeType.create(Bumblezone.MODID, "queen_color_randomizer_trades", JEIQueenRandomizerTradesInfo.class);
+    public static final IRecipeType<JEIQueenTradesInfo> QUEEN_TRADES = IRecipeType.create(Bumblezone.MODID, "queen_trades", JEIQueenTradesInfo.class);
+    public static final IRecipeType<JEIQueenRandomizerTradesInfo> QUEEN_RANDOMIZE_TRADES = IRecipeType.create(Bumblezone.MODID, "queen_color_randomizer_trades", JEIQueenRandomizerTradesInfo.class);
 
     private static void addInfo(IRecipeRegistration registration, Item item) {
         registration.addIngredientInfo(
@@ -76,7 +80,7 @@ public class JEIIntegration implements IModPlugin {
             List<CraftingRecipe> extraRecipes = FakePotionCandleRecipeCreator.constructFakeRecipes(potionCandleRecipe, oneRecipeOnly);
             List<RecipeHolder<CraftingRecipe>> holders = new ArrayList<>(extraRecipes.size());
             for (int i = 0; i < extraRecipes.size(); i++) {
-                holders.add(new RecipeHolder<>(Identifier.fromNamespaceAndPath(baseRecipe.id().getNamespace(), baseRecipe.id().getPath() + "_" + i), extraRecipes.get(i)));
+                holders.add(new RecipeHolder<>(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(baseRecipe.id().identifier().getNamespace(), baseRecipe.id().identifier().getPath() + "_" + i)), extraRecipes.get(i)));
             }
             registration.addRecipes(RecipeTypes.CRAFTING, holders);
         }
@@ -100,6 +104,7 @@ public class JEIIntegration implements IModPlugin {
         if (level == null)
             return;
 
+        // TODO: replace with new code as suspect this is now server side
         level.getRecipeManager().byKey(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registration, true));
 
@@ -109,7 +114,7 @@ public class JEIIntegration implements IModPlugin {
         List<JEIQueenTradesInfo> trades = new LinkedList<>();
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades.isEmpty()) {
             for (Pair<MainTradeRowInput, WeightedList<WeightedTradeResult>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades) {
-                for (WeightedTradeResult weightedTradeResult : trade.getSecond().unwrap()) {
+                for (Weighted<WeightedTradeResult> weightedTradeResult : trade.getSecond().unwrap()) {
                     trades.add(new JEIQueenTradesInfo(trade.getFirst(), weightedTradeResult));
                 }
             }
@@ -124,8 +129,9 @@ public class JEIIntegration implements IModPlugin {
                 TagKey<Item> itemTagKey = tradeEntry.tagKey().get();
                 TagData tagData = cacheJeiData.getOrDefault(itemTagKey, null);
                 if (tagData == null) {
+                    HolderSet.Named<Item> tagItems = BuiltInRegistries.ITEM.get(itemTagKey).get();
                     List<ItemStack> randomizeStack = tradeEntry.getWantItems().stream().map(e -> e.value().getDefaultInstance()).toList();
-                    tagData = new TagData(randomizeStack.size(), randomizeStack, Ingredient.of(itemTagKey));
+                    tagData = new TagData(randomizeStack.size(), randomizeStack, Ingredient.of(tagItems));
                     cacheJeiData.put(itemTagKey, tagData);
                 }
 
@@ -168,7 +174,7 @@ public class JEIIntegration implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(BzItems.BEE_QUEEN_SPAWN_EGG.get().getDefaultInstance(), QUEEN_TRADES);
-        registration.addRecipeCatalyst(BzItems.BEE_QUEEN_SPAWN_EGG.get().getDefaultInstance(), QUEEN_RANDOMIZE_TRADES);
+        registration.addCraftingStation(QUEEN_TRADES, BzItems.BEE_QUEEN_SPAWN_EGG.get().getDefaultInstance());
+        registration.addCraftingStation(QUEEN_RANDOMIZE_TRADES, BzItems.BEE_QUEEN_SPAWN_EGG.get().getDefaultInstance());
     }
 }
