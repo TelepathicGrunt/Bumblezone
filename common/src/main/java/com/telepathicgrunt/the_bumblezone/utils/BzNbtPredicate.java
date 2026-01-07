@@ -23,7 +23,7 @@ public record BzNbtPredicate(CompoundTag tag) {
     public static final Codec<BzNbtPredicate> CODEC = CompoundTag.CODEC.xmap(BzNbtPredicate::new, BzNbtPredicate::tag);
 
     public boolean matches(ItemStack pStack) {
-        return this == ANY || this.matches(pStack.getComponents().getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe());
+        return this == ANY || this.matches(pStack.getComponents().getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag());
     }
 
     public boolean matches(Entity pEntity) {

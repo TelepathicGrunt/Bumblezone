@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAcces
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
@@ -130,7 +131,7 @@ public class PlayerDataHandler {
     }
 
     public static boolean rootAdvancementDone(ServerPlayer serverPlayer) {
-        AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements().get(BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT);
+        AdvancementHolder advancementHolder = serverPlayer.level().getServer().getAdvancements().get(BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT);
         if (advancementHolder == null) {
             return false;
         }

@@ -103,7 +103,7 @@ public class EnchantmentUtils {
 		return getEnchantmentTierCost(
 				enchantmentInstance.level(),
 				enchantmentInstance.enchantment().value().getMinCost(
-						enchantmentInstance.enchantment().unwrapKey().get().location().getNamespace().equals("minecraft") ?
+						enchantmentInstance.enchantment().unwrapKey().get().identifier().getNamespace().equals("minecraft") ?
 						Math.max(enchantmentInstance.level(), 2) : enchantmentInstance.level()),
 				enchantmentInstance.enchantment().is(EnchantmentTags.TREASURE),
 				enchantmentInstance.enchantment().is(EnchantmentTags.CURSE));
