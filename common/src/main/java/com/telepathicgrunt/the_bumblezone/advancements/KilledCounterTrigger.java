@@ -47,7 +47,7 @@ public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTr
         public boolean matches(ServerPlayer serverPlayer, Entity currentEntity, PlayerDataModule module) {
             boolean entityMatch;
             if (this.isTargetTag) {
-                entityMatch = currentEntity.getType().is(TagKey.create(Registries.ENTITY_TYPE, this.targetEntity));
+                entityMatch = currentEntity.is(TagKey.create(Registries.ENTITY_TYPE, this.targetEntity));
             }
             else {
                 entityMatch = BuiltInRegistries.ENTITY_TYPE.getKey(currentEntity.getType()).equals(this.targetEntity);

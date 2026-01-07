@@ -6,7 +6,6 @@ import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlower
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
@@ -15,7 +14,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
@@ -30,8 +28,8 @@ public class DropContainerLoot extends LootItemConditionalFunction {
     }
 
     @Override
-    public LootItemFunctionType getType() {
-        return BzLootFunctionTypes.DROP_CONTAINER_ITEMS.get();
+    public MapCodec<DropContainerLoot> codec() {
+        return CODEC;
     }
 
     @Override

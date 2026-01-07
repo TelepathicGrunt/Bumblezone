@@ -10,7 +10,6 @@ import com.telepathicgrunt.the_bumblezone.items.datacomponents.HoneyCompassState
 import com.telepathicgrunt.the_bumblezone.items.datacomponents.HoneyCompassTargetData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -23,7 +22,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
@@ -58,8 +56,8 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
     }
 
     @Override
-    public LootItemFunctionType getType() {
-        return BzLootFunctionTypes.HONEY_COMPASS_LOCATE_STRUCTURE.get();
+    public MapCodec<HoneyCompassLocateStructure> codec() {
+        return CODEC;
     }
 
     @Override

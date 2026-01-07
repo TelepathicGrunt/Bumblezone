@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.bee.Bee;
@@ -54,7 +55,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
                 if(bee.getTarget() == livingEntity && !bee.isNoAi()) {
                     bee.setTarget(null);
                     bee.setPersistentAngerTarget(null);
-                    bee.setRemainingPersistentAngerTime(0);
+                    bee.setTimeToRemainAngry(0);
                 }
             }
         }
@@ -105,9 +106,9 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
             }
 
             bee.setTarget(entity);
-            bee.setPersistentAngerTarget(uuid);
+            bee.setPersistentAngerTarget(EntityReference.of(uuid));
             if(entity == null) {
-                bee.setRemainingPersistentAngerTime(0);
+                bee.setTimeToRemainAngry(0);
             }
         }
     }

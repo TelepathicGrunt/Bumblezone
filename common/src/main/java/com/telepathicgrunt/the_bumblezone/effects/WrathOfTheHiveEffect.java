@@ -17,6 +17,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -209,10 +210,10 @@ public class WrathOfTheHiveEffect extends MobEffect {
             }
             else {
                 if(bee instanceof NeutralMob) {
-                    ((NeutralMob)bee).setRemainingPersistentAngerTime(40);
+                    ((NeutralMob)bee).setTimeToRemainAngry(40);
 
                     if (bee.getTarget() == null || bee.getTarget().isDeadOrDying()) {
-                        ((NeutralMob)bee).setPersistentAngerTarget(livingEntity.getUUID());
+                        ((NeutralMob)bee).setPersistentAngerTarget(EntityReference.of(livingEntity));
                     }
                 }
 
@@ -257,7 +258,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
             if(bee.getTarget() == livingEntity) {
                 bee.setTarget(null);
                 bee.setAggressive(false);
-                bee.setRemainingPersistentAngerTime(0);
+                bee.setTimeToRemainAngry(0);
                 bee.removeEffect(MobEffects.STRENGTH);
                 bee.removeEffect(MobEffects.SPEED);
                 bee.removeEffect(MobEffects.ABSORPTION);
@@ -267,7 +268,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
 
     // Don't remove wrath effect from mobs that bees are to always be angry at (bears, non-bee insects)
     public static void effectRemoval(LivingEntity entity, MobEffectInstance mobEffectInstance) {
-        if (entity.level().isClientSide || mobEffectInstance.getEffect() != BzEffects.WRATH_OF_THE_HIVE.holder()) {
+        if (entity.level().isClientSide() || mobEffectInstance.getEffect() != BzEffects.WRATH_OF_THE_HIVE.holder()) {
             return;
         }
 

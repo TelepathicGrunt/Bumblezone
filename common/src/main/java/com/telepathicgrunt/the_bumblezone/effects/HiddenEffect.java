@@ -69,7 +69,7 @@ public class HiddenEffect extends BzEffect {
                 if(bee.getTarget() == livingEntity) {
                     bee.setTarget(null);
                     bee.setPersistentAngerTarget(null);
-                    bee.setRemainingPersistentAngerTime(0);
+                    bee.setTimeToRemainAngry(0);
                 }
             }
         }

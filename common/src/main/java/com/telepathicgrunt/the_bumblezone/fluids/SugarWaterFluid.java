@@ -13,18 +13,15 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.SugarCaneBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -32,6 +29,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -256,7 +254,7 @@ public abstract class SugarWaterFluid extends BzFluid {
 
         @Override
         protected boolean canConvertToSource(ServerLevel level) {
-            return level.getGameRules().getBoolean(GameRules.RULE_WATER_SOURCE_CONVERSION);
+            return level.getGameRules().get(GameRules.WATER_SOURCE_CONVERSION);
         }
     }
 
@@ -278,7 +276,7 @@ public abstract class SugarWaterFluid extends BzFluid {
 
         @Override
         protected boolean canConvertToSource(ServerLevel level) {
-            return level.getGameRules().getBoolean(GameRules.RULE_WATER_SOURCE_CONVERSION);
+            return level.getGameRules().get(GameRules.WATER_SOURCE_CONVERSION);
         }
     }
 }

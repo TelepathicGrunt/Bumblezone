@@ -159,7 +159,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
 
     @Override
     protected void doPostHurtEffects(LivingEntity victim) {
-       if (!victim.getType().is(EntityTypeTags.UNDEAD)) {
+       if (!victim.is(EntityTypeTags.UNDEAD)) {
            PotentPoisonEnchantmentApplication.doPostAttackBoostedPoison(this.getPickupItemStackOrigin(), victim);
 
             if (this.getOwner() instanceof ServerPlayer serverPlayer) {

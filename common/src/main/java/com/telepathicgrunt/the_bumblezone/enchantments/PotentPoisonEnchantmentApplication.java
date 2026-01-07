@@ -17,7 +17,7 @@ public class PotentPoisonEnchantmentApplication {
     }
 
     public static void doPostAttack(ItemStack enchantedItem, LivingEntity victim) {
-        if (!victim.getType().is(EntityTypeTags.UNDEAD)) {
+        if (!victim.is(EntityTypeTags.UNDEAD)) {
             Pair<PoisonMarker, Integer> enchantmentAndLevel = PotentPoisonEnchantmentApplication.getPotentPoisonEnchant(enchantedItem);
             if (enchantmentAndLevel == null || enchantmentAndLevel.getSecond() <= 0) {
                 return;
@@ -41,7 +41,7 @@ public class PotentPoisonEnchantmentApplication {
         }
 
         PoisonMarker poisonMarker = enchantmentAndLevel.getFirst();
-        if (!victim.getType().is(EntityTypeTags.UNDEAD)) {
+        if (!victim.is(EntityTypeTags.UNDEAD)) {
             victim.addEffect(new MobEffectInstance(
                     MobEffects.POISON,
                     100 + (poisonMarker.bonusDurationAmount() * ((enchantmentAndLevel.getSecond() + 1) / poisonMarker.enchantLevelIntervalForBonusDuration())), // 200, 300, 300 duration

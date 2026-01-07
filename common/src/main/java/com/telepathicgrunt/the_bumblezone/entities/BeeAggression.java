@@ -231,7 +231,7 @@ public class BeeAggression {
 
             //must be a bear or insect animal with no wrath of the hive effect on
             return SET_OF_BEE_HATED_NAMED_ENTITIES.contains(entity.getType()) ||
-                    (!SET_OF_BEE_NAMED_ENTITIES.contains(entity.getType()) && mobEntity.getType().is(EntityTypeTags.ARTHROPOD));
+                    (!SET_OF_BEE_NAMED_ENTITIES.contains(entity.getType()) && mobEntity.is(EntityTypeTags.ARTHROPOD));
         }
 
         return false;

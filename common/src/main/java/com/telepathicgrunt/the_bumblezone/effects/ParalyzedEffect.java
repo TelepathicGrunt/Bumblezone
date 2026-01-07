@@ -36,7 +36,7 @@ public class ParalyzedEffect extends MobEffect {
 
     @Override
     public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity livingEntity, int amplifier) {
-        if (livingEntity.getType().is(EntityTypeTags.UNDEAD) || livingEntity.is(BzTags.PARALYZED_IMMUNE)) {
+        if (livingEntity.is(EntityTypeTags.UNDEAD) || livingEntity.is(BzTags.PARALYZED_IMMUNE)) {
             return false;
         }
 
@@ -66,7 +66,7 @@ public class ParalyzedEffect extends MobEffect {
 
     // Make sure client removes effect when done.
     public static void effectRemoval(LivingEntity entity, MobEffectInstance mobEffectInstance) {
-        if (entity.level().isClientSide || mobEffectInstance.getEffect() != BzEffects.PARALYZED.holder()) {
+        if (entity.level().isClientSide() || mobEffectInstance.getEffect() != BzEffects.PARALYZED.holder()) {
             return;
         }
 

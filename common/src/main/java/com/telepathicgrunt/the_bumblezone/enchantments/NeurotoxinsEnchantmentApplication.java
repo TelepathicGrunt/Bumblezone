@@ -20,7 +20,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
@@ -34,7 +34,7 @@ public class NeurotoxinsEnchantmentApplication {
     }
 
     public static void entityHurtEvent(BzEntityAttackedEvent event) {
-        if (event.entity() == null || event.entity().level().isClientSide() || event.entity().getType().is(EntityTypeTags.UNDEAD)) {
+        if (event.entity() == null || event.entity().level().isClientSide() || event.entity().is(EntityTypeTags.UNDEAD)) {
             return;
         }
 

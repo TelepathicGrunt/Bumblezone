@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
-import net.minecraft.Util;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
@@ -18,6 +17,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Util;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.Arrays;
@@ -51,7 +51,7 @@ public class NonOpCommands {
         String entityArg = "entity_to_check";
 
         LiteralCommandNode<CommandSourceStack> source = commandEvent.dispatcher().register(Commands.literal(commandString)
-                .requires((permission) -> permission.hasPermission(0))
+                .requires(Commands.hasPermission(Commands.LEVEL_ALL))
                 .then(Commands.argument(dataArg, StringArgumentType.string())
                 .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(methodSuggestions(ctx), sb))
                 .executes(cs -> {
@@ -64,7 +64,7 @@ public class NonOpCommands {
 
 
         LiteralCommandNode<CommandSourceStack> source2 = commandEvent.dispatcher().register(Commands.literal(commandString)
-                .requires((permission) -> permission.hasPermission(0))
+                .requires(Commands.hasPermission(Commands.LEVEL_ALL))
                 .then(Commands.literal(DATA_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name().toLowerCase(Locale.ROOT))
                 .then(Commands.argument(entityArg, StringArgumentType.string())
                 .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(killedSuggestions(ctx), sb))

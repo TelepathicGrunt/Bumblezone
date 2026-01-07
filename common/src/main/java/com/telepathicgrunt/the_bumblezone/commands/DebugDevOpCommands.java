@@ -30,7 +30,7 @@ public class DebugDevOpCommands {
         String entityArg = "entity_to_check";
 
         LiteralCommandNode<CommandSourceStack> source = commandDispatcher.register(Commands.literal(commandCooldownString)
-                .requires((permission) -> permission.hasPermission(2))
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .then(Commands.argument(entityArg, EntityArgument.players())
                 .then(Commands.argument(cooldownTimeArg, IntegerArgumentType.integer())
                 .executes(cs -> {

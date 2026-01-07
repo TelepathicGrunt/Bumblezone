@@ -173,7 +173,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                     EnchantmentInstance oldEnchantSelected = oldAvailableEnchantments.get(selectedEnchantment);
                     selectedEnchantment = null;
 
-                    setupResultSlot(oldEnchantSelected.enchantment().unwrapKey().get().location());
+                    setupResultSlot(oldEnchantSelected.enchantment().unwrapKey().get().identifier());
                     broadcastChanges();
                     crystallineFlowerBlockEntity.setBookSlotItems(bookSlot.getItem());
                     crystallineFlowerBlockEntity.syncPillar();
@@ -614,7 +614,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             if (player instanceof ServerPlayer serverPlayer) {
                 List<EnchantmentSkeleton> availableEnchantmentsSkeletons =
                         availableEnchantments.values().stream().map(e -> {
-                            Identifier identifier = e.enchantment().unwrapKey().get().location();
+                            Identifier identifier = e.enchantment().unwrapKey().get().identifier();
                             return new EnchantmentSkeleton(
                                     identifier.getPath(),
                                     identifier.getNamespace(),

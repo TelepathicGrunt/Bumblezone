@@ -14,7 +14,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
-import net.minecraft.Util;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -34,6 +33,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Util;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -85,7 +85,7 @@ public class OpCommands {
         String entityArg = "entity_to_check";
 
         LiteralCommandNode<CommandSourceStack> source = commandDispatcher.register(Commands.literal(commandWriteString)
-            .requires((permission) -> permission.hasPermission(2))
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
             .then(Commands.argument(dataArg, StringArgumentType.string())
             .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(methodBooleanWriteSuggestions(ctx), sb))
             .then(Commands.argument("targets", EntityArgument.players())
@@ -99,7 +99,7 @@ public class OpCommands {
         commandDispatcher.register(Commands.literal(commandWriteString).redirect(source));
 
         LiteralCommandNode<CommandSourceStack> source2 = commandDispatcher.register(Commands.literal(commandReadString)
-            .requires((permission) -> permission.hasPermission(2))
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
             .then(Commands.argument(dataArg, StringArgumentType.string())
             .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(methodReadSuggestions(ctx), sb))
             .then(Commands.argument("targets", EntityArgument.players())
@@ -113,7 +113,7 @@ public class OpCommands {
 
 
         LiteralCommandNode<CommandSourceStack> source3 = commandDispatcher.register(Commands.literal(commandReadString)
-            .requires((permission) -> permission.hasPermission(2))
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
             .then(Commands.literal(DATA_READ_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name().toLowerCase(Locale.ROOT))
             .then(Commands.argument("targets", EntityArgument.players())
             .then(Commands.argument(entityArg, StringArgumentType.string())
@@ -127,7 +127,7 @@ public class OpCommands {
         commandDispatcher.register(Commands.literal(commandReadString).redirect(source3));
 
         LiteralCommandNode<CommandSourceStack> source4 = commandDispatcher.register(Commands.literal(commandTeleportString)
-            .requires((permission) -> permission.hasPermission(2))
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
             .then(Commands.argument("targets", EntityArgument.entities())
             .executes(cs -> {
                 runTeleportMethod(cs.getSource(), EntityArgument.getEntities(cs, "targets"), cs);
@@ -138,9 +138,9 @@ public class OpCommands {
         commandDispatcher.register(Commands.literal(commandTeleportString).redirect(source4));
 
         LiteralCommandNode<CommandSourceStack> source5 = commandDispatcher.register(Commands.literal(commandTagLogOutputString)
-                .requires((permission) -> permission.hasPermission(2))
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .then(Commands.argument("registry", ResourceKeyArgument.key(ROOT_REGISTRY_KEY))
-                        .suggests((ctx, builder) -> SharedSuggestionProvider.suggestResource(ctx.getSource().registryAccess().listRegistries().map(HolderLookup.RegistryLookup::key).map(ResourceKey::location), builder))
+                        .suggests((ctx, builder) -> SharedSuggestionProvider.suggestResource(ctx.getSource().registryAccess().listRegistries().map(HolderLookup.RegistryLookup::key).map(ResourceKey::identifier), builder))
                 .then(Commands.argument("tag", IdentifierArgument.id())
                         .suggests(suggestFromRegistry(r -> r.getTags().map(HolderSet.Named::key).map(TagKey::location)::iterator, "registry", ROOT_REGISTRY_KEY))
                 .executes(cs -> {
@@ -155,7 +155,7 @@ public class OpCommands {
                     stringBuilder.append("\n{");
                     for (final Holder<?> holder : tag) {
                         stringBuilder.append("\n\t\"");
-                        stringBuilder.append(holder.unwrapKey().get().location());
+                        stringBuilder.append(holder.unwrapKey().get().identifier());
                         stringBuilder.append("\",");
                     }
                     stringBuilder.append("\n}\n");
