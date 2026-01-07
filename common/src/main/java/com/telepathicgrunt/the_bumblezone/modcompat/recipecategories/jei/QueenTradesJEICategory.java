@@ -22,7 +22,6 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
     public static final int RECIPE_WIDTH = 124;
     public static final int RECIPE_HEIGHT = 28;
 
-    // TODO: check if background is needed
     private final IDrawable background;
     private final IDrawable icon;
     private final Component localizedName;
@@ -68,6 +67,7 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
 
     @Override
     public void draw(JEIQueenTradesInfo recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        this.background.draw(guiGraphics);
         guiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", recipe.reward.value().xpReward), 100, 11, 0xFF808080, false);
 
         double percentValue = ((double)(recipe.reward.value().weight) / recipe.reward.value().getTotalWeight()) * 100D;

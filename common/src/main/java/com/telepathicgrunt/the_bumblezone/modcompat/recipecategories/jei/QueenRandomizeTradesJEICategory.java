@@ -21,7 +21,6 @@ public class QueenRandomizeTradesJEICategory implements IRecipeCategory<JEIQueen
     public static final int RECIPE_WIDTH = 136;
     public static final int RECIPE_HEIGHT = 28;
 
-    // TODO: check if background is needed
     private final IDrawable background;
     private final IDrawable icon;
     private final Component localizedName;
@@ -67,6 +66,7 @@ public class QueenRandomizeTradesJEICategory implements IRecipeCategory<JEIQueen
 
     @Override
     public void draw(JEIQueenRandomizerTradesInfo recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        this.background.draw(guiGraphics);
         guiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_colors", recipe.tagSize()), 86, 10, 0xFF808080, false);
 
         if (recipe.tagInAndOut() != null) {
