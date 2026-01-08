@@ -131,7 +131,7 @@ publishMods {
     if (project.hasProperty('curseforge_id_neoforge')) {
         curseforge('CurseforgeNeo') {
             accessToken = providers.environmentVariable('CURSEFORGEKEY')
-            projectId = project.findProperty('curseforge_id')
+            projectId = project.findProperty('curseforge_id_neoforge')
             minecraftVersions.add(project.minecraft_version)
             changelog = changeLogText
 
@@ -148,7 +148,7 @@ publishMods {
     if (project.hasProperty('modrinth_id_neoforge')) {
         modrinth('modrinthNeo') {
             accessToken = accessToken = providers.environmentVariable('MODRINTH_TOKEN')
-            projectId = project.findProperty('modrinth_id')
+            projectId = project.findProperty('modrinth_id_neoforge')
             minecraftVersions.add(project.minecraft_version)
             changelog = changeLogText
 
