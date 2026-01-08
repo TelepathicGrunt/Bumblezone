@@ -72,7 +72,7 @@ public class EssenceBlockWhite extends EssenceBlock {
 
     @Override
     public void performUniqueArenaTick(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity) {
-        if (essenceBlockEntity.getPlayerInArena().size() == 0) {
+        if (essenceBlockEntity.getPlayerInArena().isEmpty()) {
             return;
         }
 
@@ -82,7 +82,7 @@ public class EssenceBlockWhite extends EssenceBlock {
 
         List<EssenceBlockEntity.EventEntities> eventEntitiesInArena = essenceBlockEntity.getEventEntitiesInArena();
         int totalCrystals = eventEntitiesInArena.size();
-        int totalhealth = 0;
+        float totalhealth = 0;
         float totalMaxHealth = 6 * BzGeneralConfigs.cosmicCrystalHealth;
         boolean respawnedACrystal = false;
 
@@ -216,7 +216,7 @@ public class EssenceBlockWhite extends EssenceBlock {
         essenceBlockEntity.getEventBar().setProgress(totalhealth / totalMaxHealth);
     }
 
-    private Entity SpawnNewCrystal(ServerLevel serverLevel, BlockPos blockPos, EssenceBlockEntity essenceBlockEntity, int orbitOffset, float difficultyBoost, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
+    private void SpawnNewCrystal(ServerLevel serverLevel, BlockPos blockPos, EssenceBlockEntity essenceBlockEntity, int orbitOffset, float difficultyBoost, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
         CosmicCrystalEntity entity = BzEntities.COSMIC_CRYSTAL_ENTITY.get().spawn(serverLevel, blockPos, MobSpawnType.TRIGGERED);
         if (entity != null) {
             entity.addTag("the_bumblezone.white_essence_arena");
@@ -227,7 +227,6 @@ public class EssenceBlockWhite extends EssenceBlock {
             entity.setDifficultyBoost(difficultyBoost);
             eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
         }
-        return entity;
     }
 
     public void crystalKilled(CosmicCrystalEntity cosmicCrystalEntity, EssenceBlockEntity essenceBlockEntity) {

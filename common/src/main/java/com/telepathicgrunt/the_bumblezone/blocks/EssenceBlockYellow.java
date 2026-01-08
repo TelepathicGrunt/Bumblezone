@@ -93,7 +93,7 @@ public class EssenceBlockYellow extends EssenceBlock {
 
     @Override
     public void performUniqueArenaTick(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity) {
-        if (essenceBlockEntity.getPlayerInArena().size() == 0) return;
+        if (essenceBlockEntity.getPlayerInArena().isEmpty()) return;
 
         int ringsPassed = essenceBlockEntity.getExtraEventTrackingProgress();
         List<EssenceBlockEntity.EventEntities> eventEntitiesInArena = essenceBlockEntity.getEventEntitiesInArena();
@@ -167,18 +167,18 @@ public class EssenceBlockYellow extends EssenceBlock {
         int y = (-(arenaSize.getY() / 2) + 1);
         int z = (arenaSize.getZ() / 2) - 5;
 
-        if (currentRingsPassed / RINGS_TO_PASS >= 0.5) {
+        if ((float) currentRingsPassed / RINGS_TO_PASS >= 0.5F) {
             float randomChosen = random.nextFloat();
             if (randomChosen < 0.3) {
                 randomChosen = 0;
             }
             else {
-                randomChosen = (((randomChosen * 0.4F) + 0.55F) * ((currentRingsPassed * 12) / RINGS_TO_PASS));
+                randomChosen = (((randomChosen * 0.4F) + 0.55F) * ((currentRingsPassed * 12F) / RINGS_TO_PASS));
             }
             y = (int) Math.min(y + randomChosen, (arenaSize.getY() / 2f) - 3);
         }
         else {
-            y = (int) Math.min(y + (random.nextFloat() * ((currentRingsPassed * 12) / RINGS_TO_PASS)), (arenaSize.getY() / 2f) - 3);
+            y = (int) Math.min(y + (random.nextFloat() * ((currentRingsPassed * 12F) / RINGS_TO_PASS)), (arenaSize.getY() / 2f) - 3);
         }
 
         switch (currentRingsPassed % 4) {
