@@ -155,7 +155,7 @@ public class EssenceBlockGreen extends EssenceBlock {
             if (entity == null ||
                 !(entity instanceof RootminEntity rootminEntity && rootminEntity.getEssenceController().equals(essenceBlockEntity.getUUID())))
             {
-                eventEntitiesInArena.remove(0);
+                eventEntitiesInArena.removeFirst();
                 return;
             }
 
