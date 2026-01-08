@@ -134,7 +134,7 @@ public class EssenceBlockBlue extends EssenceBlock {
 
         handleGiantBubbles(serverLevel, blockPos);
 
-        float newProgress = entitiesKilled / ENTITIES_TO_KILL;
+        float newProgress = (float) entitiesKilled / ENTITIES_TO_KILL;
         essenceBlockEntity.getEventBar().setProgress(1 - newProgress);
         essenceBlockEntity.setExtraEventTrackingProgress(entitiesKilled);
         if (entitiesKilled == ENTITIES_TO_KILL) {

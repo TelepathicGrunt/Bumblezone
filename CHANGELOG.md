@@ -1,11 +1,17 @@
-### **(V.7.11.7 Changes) (1.21.1 Minecraft)**
+### **(V.7.11.8 Changes) (1.20.1 Minecraft)**
+
+#### Structures:
+Fixed Red, Blue, and Yellow Essence Arena progress bars not showing actual progress.
+
+
+### **(V.7.11.7 Changes) (1.20.1 Minecraft)**
 
 #### Structures:
 
 Fixed `disallowed_flowers_in_cocoon_loot` block tag being broken due to an invalid entry.
 
 
-### **(V.7.11.6 Changes) (1.21.1 Minecraft)**
+### **(V.7.11.6 Changes) (1.20.1 Minecraft)**
 
 #### Blocks:
 
@@ -40,7 +46,7 @@ Slightly adjusted the look of one Bumblezone chestplate.
 Added missing icon for Bumbling Beepartments biome in Emi Ores.
 
 
-### **(V.7.11.5 Changes) (1.21.1 Minecraft)**
+### **(V.7.11.5 Changes) (1.20.1 Minecraft)**
 
 #### Structures:
 
