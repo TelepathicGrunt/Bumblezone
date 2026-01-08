@@ -1,8 +1,17 @@
+### **(V.7.11.8 Changes) (1.21.1 Minecraft)**
+
+#### Structures:
+Fixed Red, Blue, and Yellow Essence Arena progress bars not showing actual progress.
+
+
 ### **(V.7.11.7 Changes) (1.21.1 Minecraft)**
 
 #### Blocks:
 
 Crystalline Flower can be placed on a few more mod's crystal-looking full blocks.
+
+Crystalline Flower handles untranslated enchantments that have slashes in name a bit better now.
+ Specifically mods whose enchantment descriptions doesn't follow `<registrytype>.<namespace>.<path>` standard properly.
 
 #### Entities:
 

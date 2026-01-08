@@ -466,6 +466,11 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
         String originalNameOutput = translatedEnchantmentName.toString();
         if (originalNameOutput.contains("enchantment.")) {
+            if (path.contains("/")) {
+                String[] slashPaths = path.split("/");
+                path = slashPaths[slashPaths.length - 1];
+            }
+
             translatedEnchantmentName = new StringBuilder(Arrays.stream(path
                     .split("_"))
                     .map(word -> word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1).toLowerCase(Locale.ROOT))
@@ -610,7 +615,13 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                     enchantment.%s.%s""".formatted(enchantment.namespace, enchantment.path));
 
                 if (translatedEnchantmentName.contains("enchantment.")) {
-                    translatedEnchantmentName = Arrays.stream(enchantment.path
+                    String path = enchantment.path;
+                    if (path.contains("/")) {
+                        String[] slashPaths = path.split("/");
+                        path = slashPaths[slashPaths.length - 1];
+                    }
+
+                    translatedEnchantmentName = Arrays.stream(path
                             .split("_"))
                             .map(word -> word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1).toLowerCase(Locale.ROOT))
                             .collect(Collectors.joining(" "));

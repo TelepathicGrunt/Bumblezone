@@ -175,7 +175,7 @@ public class EssenceBlockYellow extends EssenceBlock {
             }
         }
 
-        float newProgress = ringsPassed / RINGS_TO_PASS;
+        float newProgress = (float)ringsPassed / RINGS_TO_PASS;
         essenceBlockEntity.getEventBar().setProgress(1 - newProgress);
         essenceBlockEntity.setExtraEventTrackingProgress(ringsPassed);
         if (ringsPassed == RINGS_TO_PASS) {
@@ -399,7 +399,7 @@ public class EssenceBlockYellow extends EssenceBlock {
         }
 
         ringsPassed++;
-        float newProgress = ringsPassed / RINGS_TO_PASS;
+        float newProgress = (float) ringsPassed / RINGS_TO_PASS;
         essenceBlockEntity.getEventBar().setProgress(1 - newProgress);
         essenceBlockEntity.setExtraEventTrackingProgress(ringsPassed);
     }
