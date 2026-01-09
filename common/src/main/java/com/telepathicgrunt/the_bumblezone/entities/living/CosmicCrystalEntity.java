@@ -7,9 +7,12 @@ import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
@@ -18,6 +21,7 @@ import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -38,6 +42,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.debug.DebugSubscriptions;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.effect.MobEffect;
@@ -46,10 +51,12 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Pose;
@@ -62,26 +69,35 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.EntityGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gamerules.GameRules;
+import net.minecraft.world.level.portal.TeleportTransition;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 // TODO: All entities
 public class CosmicCrystalEntity extends LivingEntity {
@@ -96,17 +112,16 @@ public class CosmicCrystalEntity extends LivingEntity {
     private static final EntityDataAccessor<Float> DIFFICULTY_BOOST = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Boolean> COLLIDED = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> SECOND_PHASE = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Optional<UUID>> ESSENCE_CONTROLLER_UUID = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    private static final EntityDataAccessor<Optional<UUID>> ESSENCE_CONTROLLER_UUID = SynchedEntityData.defineId(CosmicCrystalEntity.class, BzEntities.UUID_ENTITY_DATA_SERIALIZER);
     private static final EntityDataAccessor<Optional<BlockPos>> ESSENCE_CONTROLLER_BLOCK_POS = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
     private static final EntityDataAccessor<String> ESSENCE_CONTROLLER_DIMENSION = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Boolean> SHIELD = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.BOOLEAN);
     private static final Vec3 UP_VECT = new Vec3(0, 1, 0);
     private static final Vec3 POSITIVE_X_VECT = new Vec3(1, 0, 0);
     public static final int MAX_RANGE = 30;
-    protected static final TargetingConditions TARGETING_CONDITIONS = TargetingConditions.forCombat().range(MAX_RANGE).selector(livingEntity -> !(livingEntity instanceof CosmicCrystalEntity) && livingEntity.attackable());
+    protected static final TargetingConditions TARGETING_CONDITIONS = TargetingConditions.forCombat().range(MAX_RANGE).selector((livingEntity, _) -> !(livingEntity instanceof CosmicCrystalEntity) && livingEntity.attackable());
 
     public final AnimationState idleAnimationState = new AnimationState();
-    private final NonNullList<ItemStack> armorItems = NonNullList.withSize(0, ItemStack.EMPTY);
 
     private UUID targetEntityUUID = null;
     private Entity targetEntity = null;
@@ -125,7 +140,6 @@ public class CosmicCrystalEntity extends LivingEntity {
     public CosmicCrystalEntity(EntityType<? extends CosmicCrystalEntity> entityType, Level level) {
         super(entityType, level);
         this.idleAnimationState.start(this.tickCount);
-        this.noCulling = true;
     }
 
     public static AttributeSupplier.Builder getAttributeBuilder() {
@@ -164,7 +178,7 @@ public class CosmicCrystalEntity extends LivingEntity {
     }
 
     public void setEssenceControllerDimension(ResourceKey<Level> essenceControllerDimension) {
-        this.entityData.set(ESSENCE_CONTROLLER_DIMENSION, essenceControllerDimension.location().toString());
+        this.entityData.set(ESSENCE_CONTROLLER_DIMENSION, essenceControllerDimension.identifier().toString());
     }
 
     public int getOrbitOffsetDegrees() {
@@ -371,102 +385,67 @@ public class CosmicCrystalEntity extends LivingEntity {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compoundTag) {
-        super.readAdditionalSaveData(compoundTag);
+    protected void addAdditionalSaveData(ValueOutput output) {
+        super.addAdditionalSaveData(output);
 
-        if (compoundTag.contains("essenceController")) {
-            this.setEssenceController(compoundTag.getUUID("essenceController"));
+        if (this.getEssenceController() != null) {
+            output.store("essenceController", UUIDUtil.CODEC, this.getEssenceController());
         }
-        if (compoundTag.contains("essenceControllerBlockPos")) {
-            NbtUtils.readBlockPos(compoundTag, "essenceControllerBlockPos").ifPresent(this::setEssenceControllerBlockPos);
+        if (this.getEssenceControllerBlockPos() != null) {
+            output.store("essenceControllerBlockPos", BlockPos.CODEC, this.getEssenceControllerBlockPos());
         }
-        if (compoundTag.contains("essenceControllerDimension")) {
-            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, Identifier.tryParse(compoundTag.getString("essenceControllerDimension"))));
-        }
-        if (compoundTag.contains("prevCosmicCrystalState")) {
-            this.setCosmicCrystalState(CosmicCrystalState.valueOf(compoundTag.getString("prevCosmicCrystalState")));
-        }
-        if (compoundTag.contains("cosmicCrystalState")) {
-            this.setCosmicCrystalState(CosmicCrystalState.valueOf(compoundTag.getString("cosmicCrystalState")));
+        if (this.getEssenceControllerDimension() != null) {
+            output.store("essenceControllerDimension", Identifier.CODEC, this.getEssenceControllerDimension().identifier());
         }
 
-        this.setInitialRotationAnimationTimespan(compoundTag.getInt("initialRotationAnimationTimespan"));
-        this.setStateTimespan(compoundTag.getInt("stateTimespan"));
-        this.setLaserStartDelay(compoundTag.getInt("laserStartDelay"));
-        this.setLaserFireStartTime(compoundTag.getInt("laserFireStartTime"));
-        this.setSecondPhase(compoundTag.getBoolean("secondPhase"));
-        this.setCollided(compoundTag.getBoolean("collided"));
-        this.setOrbitOffsetDegrees(compoundTag.getInt("orbitOffsetDegrees"));
+        output.putString("cosmicCrystalState", this.getCosmicCrystalState().name());
+        output.putInt("initialRotationAnimationTimespan", this.getInitialRotationAnimationTimespan());
+        output.putInt("stateTimespan", this.getStateTimespan());
+        output.putInt("laserStartDelay", this.getLaserStartDelay());
+        output.putInt("laserFireStartTime", this.getLaserFireStartTime());
+        output.putBoolean("secondPhase", this.getSecondPhase());
+        output.putBoolean("collided", this.getCollided());
+        output.putInt("orbitOffsetDegrees", this.getOrbitOffsetDegrees());
+        output.putFloat("difficultyBoost", this.getDifficultyBoost());
 
-        if (compoundTag.contains("difficultyBoost")) {
-            this.setDifficultyBoost(compoundTag.getFloat("difficultyBoost"));
-        }
+        output.putInt("currentStateTimeTick", this.currentStateTimeTick);
+        output.putInt("animationTimeTick", this.animationTimeTick);
+        output.putInt("prevAnimationTick", this.prevAnimationTick);
 
-        this.currentStateTimeTick = compoundTag.getInt("currentStateTimeTick");
-        this.setSyncedCurrentStateTimeTick(this.currentStateTimeTick);
+        output.store("targetEntityUUID", UUIDUtil.CODEC, this.targetEntityUUID);
+        output.store("prevLookAngle", Vec3.CODEC, this.prevLookAngle);
 
-        this.animationTimeTick = compoundTag.getInt("animationTimeTick");
-        this.prevAnimationTick = compoundTag.getInt("prevAnimationTick");
-
-        if (compoundTag.contains("targetEntityUUID")) {
-            this.targetEntityUUID = compoundTag.getUUID("targetEntityUUID");
-        }
-
-        if (compoundTag.contains("prevLookAngle")) {
-            CompoundTag vectTag = compoundTag.getCompound("prevLookAngle");
-            this.prevLookAngle = new Vec3(vectTag.getDouble("x"), vectTag.getDouble("y"), vectTag.getDouble("z"));
-        }
-
-        this.noAI = compoundTag.getBoolean("NoAI") || compoundTag.getBoolean("noAI") || compoundTag.getBoolean("noAi");
+        output.putBoolean("NoAI", this.noAI);
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compoundTag) {
-        super.addAdditionalSaveData(compoundTag);
+    protected void readAdditionalSaveData(ValueInput input) {
+        super.readAdditionalSaveData(input);
 
-        if (this.getEssenceController() != null) {
-            compoundTag.putUUID("essenceController", this.getEssenceController());
-        }
-        if (this.getEssenceControllerBlockPos() != null) {
-            compoundTag.put("essenceControllerBlockPos", NbtUtils.writeBlockPos(this.getEssenceControllerBlockPos()));
-        }
-        if (this.getEssenceControllerDimension() != null) {
-            compoundTag.putString("essenceControllerDimension", this.getEssenceControllerDimension().location().toString());
-        }
+        this.setEssenceController(input.read("essenceController", UUIDUtil.CODEC).orElse(null));
+        input.read("essenceControllerBlockPos", BlockPos.CODEC).ifPresent(this::setEssenceControllerBlockPos);
+        input.read("essenceControllerDimension", Identifier.CODEC).ifPresent(dim -> this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, dim)));
+        this.setCosmicCrystalState(CosmicCrystalState.valueOf(input.getStringOr("prevCosmicCrystalState", CosmicCrystalState.NORMAL.name())));
+        this.setCosmicCrystalState(CosmicCrystalState.valueOf(input.getStringOr("cosmicCrystalState", CosmicCrystalState.NORMAL.name())));
 
-        compoundTag.putString("cosmicCrystalState", this.getCosmicCrystalState().name());
-        compoundTag.putInt("initialRotationAnimationTimespan", this.getInitialRotationAnimationTimespan());
-        compoundTag.putInt("stateTimespan", this.getStateTimespan());
-        compoundTag.putInt("laserStartDelay", this.getLaserStartDelay());
-        compoundTag.putInt("laserFireStartTime", this.getLaserFireStartTime());
-        compoundTag.putBoolean("secondPhase", this.getSecondPhase());
-        compoundTag.putBoolean("collided", this.getCollided());
-        compoundTag.putInt("orbitOffsetDegrees", this.getOrbitOffsetDegrees());
-        compoundTag.putFloat("difficultyBoost", this.getDifficultyBoost());
+        this.setInitialRotationAnimationTimespan(input.getIntOr("initialRotationAnimationTimespan", 0));
+        this.setStateTimespan(input.getIntOr("stateTimespan", 0));
+        this.setLaserStartDelay(input.getIntOr("laserStartDelay", 0));
+        this.setLaserFireStartTime(input.getIntOr("laserFireStartTime", 0));
+        this.setSecondPhase(input.getBooleanOr("secondPhase", false));
+        this.setCollided(input.getBooleanOr("collided", false));
+        this.setOrbitOffsetDegrees(input.getIntOr("orbitOffsetDegrees", 0));
+        this.setDifficultyBoost(input.getFloatOr("difficultyBoost", 0));
 
-        compoundTag.putInt("currentStateTimeTick", this.currentStateTimeTick);
-        compoundTag.putInt("animationTimeTick", this.animationTimeTick);
-        compoundTag.putInt("prevAnimationTick", this.prevAnimationTick);
+        this.currentStateTimeTick = input.getIntOr("currentStateTimeTick", 0);
+        this.setSyncedCurrentStateTimeTick(this.currentStateTimeTick);
 
-        if (this.targetEntityUUID != null) {
-            compoundTag.putUUID("targetEntityUUID", this.targetEntityUUID);
-        }
+        this.animationTimeTick = input.getIntOr("animationTimeTick", 0);
+        this.prevAnimationTick = input.getIntOr("prevAnimationTick", 0);
 
-        CompoundTag vectTag = new CompoundTag();
-        vectTag.putDouble("x", this.prevLookAngle.x());
-        vectTag.putDouble("y", this.prevLookAngle.y());
-        vectTag.putDouble("z", this.prevLookAngle.z());
-        compoundTag.put("prevLookAngle", vectTag);
-
-        if (compoundTag.contains("noAi")) {
-            compoundTag.putBoolean("noAi", this.noAI);
-        }
-        else if (compoundTag.contains("noAI")) {
-            compoundTag.putBoolean("noAI", this.noAI);
-        }
-        else {
-            compoundTag.putBoolean("NoAI", this.noAI);
-        }
+        this.targetEntityUUID = input.read("targetEntityUUID", UUIDUtil.CODEC).orElse(null);
+        this.prevLookAngle = input.read("prevLookAngle", Vec3.CODEC).orElse(Vec3.ZERO);
+        this.noAI = input.getBooleanOr("NoAI", false);
     }
 
     public static boolean isOrFromHorizontalState(CosmicCrystalState cosmicCrystalState) {
@@ -836,15 +815,17 @@ public class CosmicCrystalEntity extends LivingEntity {
                         }
                     }
                     else {
-                        this.targetEntity = this.level().getNearestEntity(LivingEntity.class, TARGETING_CONDITIONS, this, this.getX(), this.getY(), this.getZ(), this.getBoundingBox().inflate(MAX_RANGE));
-                        if (this.targetEntity != null) {
-                            this.setTargetEntityUUID(this.targetEntity.getUUID());
+                        if (this.level() instanceof ServerLevel serverLevel) {
+                            this.targetEntity = serverLevel.getNearestEntity(LivingEntity.class, TARGETING_CONDITIONS, this, this.getX(), this.getY(), this.getZ(), this.getBoundingBox().inflate(MAX_RANGE));
+                            if (this.targetEntity != null) {
+                                this.setTargetEntityUUID(this.targetEntity.getUUID());
 
-                            if (this.getCosmicCrystalState() == CosmicCrystalState.HORIZONTAL_LASER) {
-                                this.prevTargetPosition = this.position();
-                            }
-                            else if (this.getCosmicCrystalState() != CosmicCrystalState.SWEEP_LASER) {
-                                this.prevTargetPosition = this.targetEntity.position();
+                                if (this.getCosmicCrystalState() == CosmicCrystalState.HORIZONTAL_LASER) {
+                                    this.prevTargetPosition = this.position();
+                                }
+                                else if (this.getCosmicCrystalState() != CosmicCrystalState.SWEEP_LASER) {
+                                    this.prevTargetPosition = this.targetEntity.position();
+                                }
                             }
                         }
                     }
@@ -854,19 +835,19 @@ public class CosmicCrystalEntity extends LivingEntity {
     }
 
     private void laserBreakBlocks() {
-        if (!this.level().isClientSide() && this.isLaserFiring()) {
-            HitResult hitResult = ProjectileUtil.getHitResultOnViewVector(this, (entity) -> true, 50);
+        if (this.level() instanceof ServerLevel serverLevel && this.isLaserFiring()) {
+            HitResult hitResult = ProjectileUtil.getHitResultOnViewVector(this, (_) -> true, 50);
 
             if (hitResult instanceof BlockHitResult blockHitResult) {
-               BlockState state = this.level().getBlockState(blockHitResult.getBlockPos());
+               BlockState state = serverLevel.getBlockState(blockHitResult.getBlockPos());
                if (state.getBlock().getExplosionResistance() < 1500 && !state.is(BlockTags.WITHER_IMMUNE) && this.getRemovalReason() == null) {
-                   this.level().destroyBlock(blockHitResult.getBlockPos(), true);
+                   serverLevel.destroyBlock(blockHitResult.getBlockPos(), true);
                }
             }
             else if (hitResult instanceof EntityHitResult entityHitResult) {
                 Entity entity = entityHitResult.getEntity();
                 if (entity instanceof ItemEntity itemEntity) {
-                    itemEntity.hurt(this.level().damageSources().source(BzDamageSources.COSMIC_CRYSTAL_TYPE, this), 10);
+                    itemEntity.hurt(serverLevel.damageSources().source(BzDamageSources.COSMIC_CRYSTAL_TYPE, this, this), 10);
                 }
                 else if (entity instanceof Projectile projectile) {
                     projectile.remove(RemovalReason.KILLED);
@@ -876,8 +857,8 @@ public class CosmicCrystalEntity extends LivingEntity {
                 }
             }
 
-            if (this.level().getGameTime() % 10 == 0) {
-                this.level().playSound(
+            if (serverLevel.getGameTime() % 10 == 0) {
+                serverLevel.playSound(
                         this,
                         this.blockPosition(),
                         BzSounds.COSMIC_CRYSTAL_ENTITY_LASER.get(),
@@ -885,7 +866,7 @@ public class CosmicCrystalEntity extends LivingEntity {
                         1.2f,
                         1);
 
-                this.level().playSound(
+                serverLevel.playSound(
                         this,
                         BlockPos.containing(hitResult.getLocation()),
                         BzSounds.COSMIC_CRYSTAL_ENTITY_LASER.get(),
@@ -1079,11 +1060,10 @@ public class CosmicCrystalEntity extends LivingEntity {
             this.stopRiding();
         }
 
-        this.walkDistO = this.walkDist;
         this.xRotO = this.getXRot();
         this.yRotO = this.getYRot();
 
-        if (this.level().isClientSide) {
+        if (this.level().isClientSide()) {
             this.clearFire();
         }
         else if (this.getRemainingFireTicks() > 0) {
@@ -1105,7 +1085,7 @@ public class CosmicCrystalEntity extends LivingEntity {
             this.setRemainingFireTicks(-1);
         }
 
-        if (!this.level().isClientSide && this.getTicksFrozen() > 0) {
+        if (!this.level().isClientSide() && this.getTicksFrozen() > 0) {
             if (this.wasInPowderSnow && !this.isInPowderSnow && this.canFreeze()) {
                 this.setTicksFrozen(39);
             }
@@ -1134,8 +1114,8 @@ public class CosmicCrystalEntity extends LivingEntity {
         if (this.invulnerableTime > 0) {
             --this.invulnerableTime;
         }
-        if (this.lastHurtByPlayerTime > 0) {
-            --this.lastHurtByPlayerTime;
+        if (this.lastHurtByPlayerMemoryTime > 0) {
+            --this.lastHurtByPlayerMemoryTime;
         }
         else {
             this.lastHurtByPlayer = null;
@@ -1151,7 +1131,6 @@ public class CosmicCrystalEntity extends LivingEntity {
                 this.setLastHurtByMob(null);
             }
         }
-        this.animStepO = this.animStep;
         this.yBodyRotO = this.yBodyRot;
         this.yHeadRotO = this.yHeadRot;
         this.yRotO = this.getYRot();
@@ -1202,7 +1181,7 @@ public class CosmicCrystalEntity extends LivingEntity {
 
         this.tickEffects();
 
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             this.setSharedFlagOnFire(this.getRemainingFireTicks() > 0);
         }
 
@@ -1211,7 +1190,7 @@ public class CosmicCrystalEntity extends LivingEntity {
 
     @Override
     public void travel(Vec3 vec3) {
-        if (this.isControlledByLocalInstance()) {
+        if (this.isEffectiveAi()) {
             double d = 0.08;
             boolean bl = this.getDeltaMovement().y <= 0.0;
             if (bl && this.hasEffect(MobEffects.SLOW_FALLING)) {
@@ -1223,7 +1202,7 @@ public class CosmicCrystalEntity extends LivingEntity {
             Vec3 vec37 = this.handleRelativeFrictionAndCalculateMovement(vec3, p);
 
             double q = vec37.y;
-            if (!this.level().isClientSide || this.level().hasChunkAt(blockPos)) {
+            if (!this.level().isClientSide() || this.level().hasChunkAt(blockPos)) {
                 if (!this.isNoGravity()) {
                     q -= d;
                 }
@@ -1288,43 +1267,80 @@ public class CosmicCrystalEntity extends LivingEntity {
     }
 
     @Override
-    protected void checkInsideBlocks() {
-        AABB aABB = this.getBoundingBox();
-        BlockPos blockPos = BlockPos.containing(aABB.minX + 1.0E-7, aABB.minY + 1.0E-7, aABB.minZ + 1.0E-7);
-        BlockPos blockPos2 = BlockPos.containing(aABB.maxX - 1.0E-7, aABB.maxY - 1.0E-7, aABB.maxZ - 1.0E-7);
-        if (this.level().hasChunksAt(blockPos, blockPos2)) {
-            BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-            for (int i = blockPos.getX(); i <= blockPos2.getX(); ++i) {
-                for (int j = blockPos.getY(); j <= blockPos2.getY(); ++j) {
-                    for (int k = blockPos.getZ(); k <= blockPos2.getZ(); ++k) {
-                        mutableBlockPos.set(i, j, k);
-                        BlockState blockState = this.level().getBlockState(mutableBlockPos);
-                        if (!this.level().isClientSide() &&
-                            !blockState.isAir() &&
-                            !blockState.getCollisionShape(this.level(), mutableBlockPos).isEmpty() &&
-                            blockState.getBlock().getExplosionResistance() < 1500 &&
-                            !blockState.is(BlockTags.WITHER_IMMUNE))
+    protected int checkInsideBlocks(
+            Vec3 from,
+            Vec3 to,
+            InsideBlockEffectApplier.StepBasedCollector effectCollector,
+            LongSet visitedBlocks,
+            int maxMovementIterations
+    ) {
+
+        AABB deflatedBoundingBoxAtTarget = this.makeBoundingBox(to).deflate(1.0E-5F);
+        boolean movedFar = from.distanceToSqr(to) > Mth.square(0.9999900000002526);
+        AtomicInteger iterations = new AtomicInteger();
+        BlockGetter.forEachBlockIntersectedBetween(
+                from,
+                to,
+                deflatedBoundingBoxAtTarget,
+                (blockIntersection, iteration) -> {
+                    if (!this.isAlive()) {
+                        return false;
+                    } else if (iteration >= maxMovementIterations) {
+                        return false;
+                    } else {
+                        iterations.set(iteration);
+                        BlockState state = this.level().getBlockState(blockIntersection);
+
+                        if (state.isAir()) {
+                            return true;
+                        }
+                        else if (!this.level().isClientSide() &&
+                                !state.getCollisionShape(this.level(), blockIntersection).isEmpty() &&
+                                state.getBlock().getExplosionResistance() < 1500 &&
+                                !state.is(BlockTags.WITHER_IMMUNE))
                         {
                             if (this.getRemovalReason() == null) {
-                                this.level().destroyBlock(mutableBlockPos, true);
+                                this.level().destroyBlock(blockIntersection, true);
                             }
+                            return true;
                         }
                         else {
-                            try {
-                                blockState.entityInside(this.level(), mutableBlockPos, this);
-                                this.onInsideBlock(blockState);
-                            }
-                            catch (Throwable throwable) {
-                                CrashReport crashReport = CrashReport.forThrowable(throwable, "Colliding entity with block");
-                                CrashReportCategory crashReportCategory = crashReport.addCategory("Block being collided with");
-                                CrashReportCategory.populateBlockDetails(crashReportCategory, this.level(), mutableBlockPos, blockState);
-                                throw new ReportedException(crashReport);
+                            VoxelShape intersectShape = state.getEntityInsideCollisionShape(this.level(), blockIntersection, this);
+                            boolean insideBlock = intersectShape == Shapes.block()
+                                    || this.collidedWithShapeMovingFrom(from, to, intersectShape.move(new Vec3(blockIntersection)).toAabbs());
+                            boolean insideFluid = this.collidedWithFluid(state.getFluidState(), blockIntersection, from, to);
+                            if ((insideBlock || insideFluid) && visitedBlocks.add(blockIntersection.asLong())) {
+                                if (insideBlock) {
+                                    try {
+                                        boolean isPrecise = movedFar || deflatedBoundingBoxAtTarget.intersects(blockIntersection);
+                                        effectCollector.advanceStep(iteration);
+                                        state.entityInside(this.level(), blockIntersection, this, effectCollector, isPrecise);
+                                        this.onInsideBlock(state);
+                                    } catch (Throwable var20) {
+                                        CrashReport report = CrashReport.forThrowable(var20, "Colliding entity with block");
+                                        CrashReportCategory category = report.addCategory("Block being collided with");
+                                        CrashReportCategory.populateBlockDetails(category, this.level(), blockIntersection, state);
+                                        CrashReportCategory entityCategory = report.addCategory("Entity being checked for collision");
+                                        this.fillCrashReportCategory(entityCategory);
+                                        throw new ReportedException(report);
+                                    }
+                                }
+
+                                if (insideFluid) {
+                                    effectCollector.advanceStep(iteration);
+                                    state.getFluidState().entityInside(this.level(), blockIntersection, this, effectCollector);
+                                }
+
+                                return true;
+                            } else {
+                                return true;
                             }
                         }
                     }
                 }
-            }
-        }
+
+        );
+        return iterations.get() + 1;
     }
 
     private void destroyTouchingBlocks() {
@@ -1364,14 +1380,14 @@ public class CosmicCrystalEntity extends LivingEntity {
 
     @Override
     protected void pushEntities() {
-        if (this.level().isClientSide()) {
+        if (!(this.level() instanceof ServerLevel serverLevel)) {
             this.level().getEntities(EntityTypeTest.forClass(Player.class), this.getBoundingBox(), EntitySelector.pushableBy(this)).forEach(this::doPush);
             return;
         }
-        List<Entity> list = this.level().getEntities(this, this.getBoundingBox(), EntitySelector.pushableBy(this));
+        List<Entity> list = serverLevel.getEntities(this, this.getBoundingBox(), EntitySelector.pushableBy(this));
         if (!list.isEmpty()) {
             int entityIndex;
-            int maxCrammingLimit = this.level().getGameRules().getInt(GameRules.RULE_MAX_ENTITY_CRAMMING);
+            int maxCrammingLimit = serverLevel.getGameRules().get(GameRules.MAX_ENTITY_CRAMMING);
             if (maxCrammingLimit > 0 && list.size() > maxCrammingLimit - 1 && this.random.nextInt(4) == 0) {
                 entityIndex = 0;
                 for (Entity entity : list) {
@@ -1388,7 +1404,7 @@ public class CosmicCrystalEntity extends LivingEntity {
                     if (physicalHurtAttack(livingEntity)) continue;
 
                     Vec3 center = livingEntity.getBoundingBox().getCenter();
-                    ((ServerLevel)this.level()).sendParticles(
+                    serverLevel.sendParticles(
                             ParticleTypes.END_ROD,
                             center.x() + this.random.nextGaussian() / 5,
                             center.y() + this.random.nextGaussian() / 2.5,
@@ -1413,28 +1429,20 @@ public class CosmicCrystalEntity extends LivingEntity {
     }
 
     @Override
-    protected void onEffectRemoved(MobEffectInstance mobEffectInstance) {
-        super.onEffectRemoved(mobEffectInstance);
-        if (this.level() instanceof ServerLevel serverLevel) {
-            serverLevel.players().forEach(p -> p.connection.send(new ClientboundRemoveMobEffectPacket(this.getId(), mobEffectInstance.getEffect())));
-        }
-    }
-
-    @Override
     public boolean canBeAffected(MobEffectInstance mobEffectInstance) {
         return mobEffectInstance.getEffect() != MobEffects.REGENERATION &&
-                mobEffectInstance.getEffect() != MobEffects.HEAL &&
+                mobEffectInstance.getEffect() != MobEffects.INSTANT_HEALTH &&
                 mobEffectInstance.getEffect() != MobEffects.ABSORPTION;
     }
 
     @Override
-    public void kill() {
+    public void kill(ServerLevel serverLevel) {
         this.setHealth(0);
         this.die(this.damageSources().genericKill());
     }
 
     @Override
-    public boolean hurt(DamageSource damageSource, float damageAmount) {
+    public boolean hurtServer(ServerLevel serverLevel, DamageSource damageSource, float damageAmount) {
         if (damageAmount >= 30) {
             damageAmount = 2;
         }
@@ -1446,10 +1454,7 @@ public class CosmicCrystalEntity extends LivingEntity {
         }
 
         Entity entity2;
-        if (this.isInvulnerableTo(damageSource)) {
-            return false;
-        }
-        if (this.level().isClientSide) {
+        if (this.isInvulnerableTo(serverLevel, damageSource)) {
             return false;
         }
         if (damageSource.getEntity() instanceof CosmicCrystalEntity ||
@@ -1463,7 +1468,7 @@ public class CosmicCrystalEntity extends LivingEntity {
         if (damageSource.is(DamageTypeTags.IS_FIRE) && this.hasEffect(MobEffects.FIRE_RESISTANCE)) {
             return false;
         }
-        if (this.isSleeping() && !this.level().isClientSide) {
+        if (this.isSleeping()) {
             this.stopSleeping();
         }
         this.noActionTime = 0;
@@ -1476,7 +1481,7 @@ public class CosmicCrystalEntity extends LivingEntity {
         else {
             this.lastHurt = damageAmount;
             this.invulnerableTime = 10;
-            this.actuallyHurt(damageSource, damageAmount);
+            this.actuallyHurt(serverLevel, damageSource, damageAmount);
             this.hurtTime = this.hurtDuration = 10;
         }
 
@@ -1493,13 +1498,13 @@ public class CosmicCrystalEntity extends LivingEntity {
             }
 
             if (entity2 instanceof Player player) {
-                this.lastHurtByPlayerTime = 100;
-                this.lastHurtByPlayer = player;
+                this.lastHurtByPlayerMemoryTime = 100;
+                this.lastHurtByPlayer = EntityReference.of(player);
             }
             else if (entity2 instanceof TamableAnimal tamableAnimal && tamableAnimal.isTame()) {
-                this.lastHurtByPlayerTime = 100;
+                this.lastHurtByPlayerMemoryTime = 100;
                 LivingEntity livingEntity = tamableAnimal.getOwner();
-                this.lastHurtByPlayer = livingEntity instanceof Player ? (Player)livingEntity : null;
+                this.lastHurtByPlayer = livingEntity instanceof Player player ? EntityReference.of(player) : null;
             }
         }
 
@@ -1549,20 +1554,20 @@ public class CosmicCrystalEntity extends LivingEntity {
     }
 
     @Override
-    protected void actuallyHurt(DamageSource damageSource, float damage) {
-        if (!this.isInvulnerableTo(damageSource)) {
-            float var9 = Math.max(damage, 0.0F);
-            float h = damage - var9;
+    protected void actuallyHurt(ServerLevel serverLevel, DamageSource damageSource, float damage) {
+        if (!this.isInvulnerableTo(serverLevel, damageSource)) {
+            float nonNegativeDamage = Math.max(damage, 0.0F);
+            float h = damage - nonNegativeDamage;
             if (h > 0.0F && h < 3.4028235E37F) {
-                Entity var6 = damageSource.getEntity();
-                if (var6 instanceof ServerPlayer serverPlayer) {
+                Entity damageSourceEntity = damageSource.getEntity();
+                if (damageSourceEntity instanceof ServerPlayer serverPlayer) {
                     serverPlayer.awardStat(Stats.DAMAGE_DEALT_ABSORBED, Math.round(h * 10.0F));
                 }
             }
 
-            if (var9 != 0.0F) {
-                this.getCombatTracker().recordDamage(damageSource, var9);
-                this.setHealth(this.getHealth() - var9);
+            if (nonNegativeDamage != 0.0F) {
+                this.getCombatTracker().recordDamage(damageSource, nonNegativeDamage);
+                this.setHealth(this.getHealth() - nonNegativeDamage);
                 this.gameEvent(GameEvent.ENTITY_DAMAGE);
             }
         }
@@ -1578,16 +1583,11 @@ public class CosmicCrystalEntity extends LivingEntity {
     }
 
     @Override
-    protected void dropExperience(Entity entity) {}
+    protected void dropExperience(ServerLevel level, Entity entity) {}
 
     @Override
     public HumanoidArm getMainArm() {
         return null;
-    }
-
-    @Override
-    public Iterable<ItemStack> getArmorSlots() {
-        return armorItems;
     }
 
     @Override
@@ -1601,11 +1601,6 @@ public class CosmicCrystalEntity extends LivingEntity {
     @Override
     public boolean shouldShowName() {
         return false;
-    }
-
-    @Override
-    public boolean canDisableShield() {
-        return true;
     }
 
     @Override
@@ -1642,16 +1637,16 @@ public class CosmicCrystalEntity extends LivingEntity {
     }
 
     @Override
-    public boolean canChangeDimensions(Level fromLevel, Level toLevel) {
-        return super.canChangeDimensions(fromLevel, toLevel) && this.getEssenceController() == null;
+    public boolean canTeleport(Level fromLevel, Level toLevel) {
+        return super.canTeleport(fromLevel, toLevel) && this.getEssenceController() == null;
     }
 
     @Override
-    public Entity changeDimension(DimensionTransition dimensionTransition) {
+    public Entity teleport(TeleportTransition teleportTransition) {
         if (this.getEssenceController() != null) {
             return this;
         }
-        return super.changeDimension(dimensionTransition);
+        return super.teleport(teleportTransition);
     }
 
     private boolean laserHurtAttack(LivingEntity livingEntity) {
@@ -1674,7 +1669,7 @@ public class CosmicCrystalEntity extends LivingEntity {
             damageAmount = maxHealth / 4;
         }
 
-        livingEntity.hurt(this.level().damageSources().source(BzDamageSources.COSMIC_CRYSTAL_TYPE, this), damageAmount);
+        livingEntity.hurt(this.level().damageSources().source(BzDamageSources.COSMIC_CRYSTAL_TYPE, this, this), damageAmount);
         return false;
     }
 
@@ -1702,7 +1697,7 @@ public class CosmicCrystalEntity extends LivingEntity {
             damageAmount = maxHealth / 6;
         }
 
-        livingEntity.hurt(this.level().damageSources().source(BzDamageSources.COSMIC_CRYSTAL_TYPE, this), damageAmount);
+        livingEntity.hurt(this.level().damageSources().source(BzDamageSources.COSMIC_CRYSTAL_TYPE, this, this), damageAmount);
         this.lastPhysicalHit = this.currentStateTimeTick;
 
         for (Holder<MobEffect> mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
@@ -1719,13 +1714,13 @@ public class CosmicCrystalEntity extends LivingEntity {
     public void heal(float f) {}
 
     @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
+    public boolean isInvulnerableTo(ServerLevel serverLevel, DamageSource damageSource) {
         DamageSources sources = this.level().damageSources();
         if (this.getShield() && damageSource != sources.fellOutOfWorld() && damageSource != sources.outOfBorder()) {
             return true;
         }
 
-        return super.isInvulnerableTo(damageSource);
+        return super.isInvulnerableTo(serverLevel, damageSource);
     }
 
     @Override

@@ -110,7 +110,7 @@ public class EssenceBlockRed extends EssenceBlock {
 
     @Override
     public void performUniqueArenaTick(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity) {
-        if (essenceBlockEntity.getPlayerInArena().size() == 0) return;
+        if (essenceBlockEntity.getPlayerInArena().isEmpty()) return;
 
         int entitiesKilled = essenceBlockEntity.getExtraEventTrackingProgress();
         List<EssenceBlockEntity.EventEntities> eventEntitiesInArena = essenceBlockEntity.getEventEntitiesInArena();
@@ -157,7 +157,7 @@ public class EssenceBlockRed extends EssenceBlock {
             }
         }
 
-        float newProgress = entitiesKilled / ENTITIES_TO_KILL;
+        float newProgress = (float) entitiesKilled / ENTITIES_TO_KILL;
         essenceBlockEntity.getEventBar().setProgress(1 - newProgress);
         essenceBlockEntity.setExtraEventTrackingProgress(entitiesKilled);
         if (entitiesKilled == ENTITIES_TO_KILL) {
@@ -220,7 +220,7 @@ public class EssenceBlockRed extends EssenceBlock {
                 }
 
                 float timeProgress = 1 - (essenceBlockEntity.getEventTimer() / (float) ((EssenceBlock)blockState.getBlock()).getEventTimeFrame());
-                float enemyProgress = essenceBlockEntity.getExtraEventTrackingProgress() / ENTITIES_TO_KILL;
+                float enemyProgress = (float) essenceBlockEntity.getExtraEventTrackingProgress() / ENTITIES_TO_KILL;
                 float progressDiff = (float) (Math.pow(enemyProgress - timeProgress + 1, 2) - 1);
                 if (progressDiff > 0.06) {
                     progressDiff = (float) (Math.pow((enemyProgress - timeProgress) * 2 + 0.5, 5));

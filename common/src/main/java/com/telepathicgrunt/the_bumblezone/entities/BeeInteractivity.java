@@ -200,7 +200,10 @@ public class BeeInteractivity {
         return InteractionResult.PASS;
     }
 
-    public static boolean calmAndSpawnHearts(ServerLevel serverLevel, Player playerEntity, LivingEntity beeEntity, float calmChance, int hearts) {
+    public static boolean calmAndSpawnHearts(Level level, Player playerEntity, LivingEntity beeEntity, float calmChance, int hearts) {
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return false;
+        }
         RandomSource random = playerEntity.getRandom();
         boolean calmed = random.nextFloat() < calmChance;
         boolean removedWrath = false;

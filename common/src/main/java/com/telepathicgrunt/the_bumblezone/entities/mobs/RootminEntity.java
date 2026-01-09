@@ -22,9 +22,11 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -52,12 +54,12 @@ import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityAttachment;
 import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.Pose;
@@ -65,26 +67,25 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
-import net.minecraft.world.level.block.PowderSnowBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.pathfinder.Path;
-import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.portal.TeleportTransition;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
@@ -106,7 +107,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    public static final EntityDataSerializer<RootminState> ROOTMIN_POSE_SERIALIZER = EntityDataSerializer.forValueType(RootminState.STREAM_CODEC);
    private static final EntityDataAccessor<RootminState> ROOTMIN_POSE = SynchedEntityData.defineId(RootminEntity.class, ROOTMIN_POSE_SERIALIZER);
    private static final EntityDataAccessor<Boolean> ROOTMIN_SHIELD = SynchedEntityData.defineId(RootminEntity.class, EntityDataSerializers.BOOLEAN);
-   protected static final EntityDataAccessor<Optional<UUID>> OWNER_UUID = SynchedEntityData.defineId(RootminEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+   protected static final EntityDataAccessor<Optional<EntityReference<LivingEntity>>> OWNER_UUID = SynchedEntityData.defineId(RootminEntity.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
 
    public final AnimationState idleAnimationState = new AnimationState();
    public final AnimationState angryAnimationState = new AnimationState();
@@ -183,7 +184,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
          }
 
          List<Block> blockList = BuiltInRegistries.BLOCK
-                 .getTag(blockTag)
+                 .get(blockTag)
                  .map(holders -> holders
                          .stream()
                          .map(Holder::value)
@@ -246,12 +247,12 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
 
    @Nullable
    @Override
-   public UUID getOwnerUUID() {
+   public EntityReference<LivingEntity> getOwnerReference() {
       return this.entityData.get(OWNER_UUID).orElse(null);
    }
 
    public void setOwnerUUID(@Nullable UUID uUID) {
-      this.entityData.set(OWNER_UUID, Optional.ofNullable(uUID));
+      this.entityData.set(OWNER_UUID, Optional.ofNullable(uUID == null ? null : EntityReference.of(uUID)));
    }
 
    public void runAngry() {
@@ -331,10 +332,10 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
       this.getNavigation().stop();
 
       if (destination != null && this.position().subtract(destination).length() < 1) {
-         this.moveTo(destination);
+         this.snapTo(destination);
       }
       else {
-         this.moveTo(Vec3.atCenterOf(this.blockPosition()));
+         this.snapTo(Vec3.atCenterOf(this.blockPosition()));
       }
       this.setDeltaMovement(Vec3.ZERO);
    }
@@ -364,83 +365,56 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    }
 
    @Override
-   public void addAdditionalSaveData(CompoundTag compoundTag) {
-      super.addAdditionalSaveData(compoundTag);
-      BlockState blockState = this.getFlowerBlock();
-      if (blockState != null) {
-         compoundTag.put("flowerBlock", NbtUtils.writeBlockState(blockState));
-      }
-      compoundTag.putBoolean("hidden", this.isHidden);
-      compoundTag.putInt("delayTillIdle", this.delayTillIdle);
-      compoundTag.putString("animationState", this.getRootminPose().name());
-      if (this.superHatedPlayer != null) {
-         compoundTag.putUUID("superHatedPlayer", this.superHatedPlayer);
-      }
-      if (this.getEssenceController() != null) {
-         compoundTag.putUUID("essenceController", this.getEssenceController());
-      }
-      if (this.getEssenceControllerBlockPos() != null) {
-         compoundTag.put("essenceControllerBlockPos", NbtUtils.writeBlockPos(this.getEssenceControllerBlockPos()));
-      }
-      if (this.getEssenceControllerDimension() != null) {
-         compoundTag.putString("essenceControllerDimension", this.getEssenceControllerDimension().location().toString());
-      }
-      if (this.getOwnerUUID() != null) {
-         compoundTag.putUUID("Owner", this.getOwnerUUID());
-      }
+   protected void addAdditionalSaveData(ValueOutput output) {
+       super.addAdditionalSaveData(output);
+       BlockState blockState = this.getFlowerBlock();
+       if (blockState != null) {
+           output.store("flowerBlock", BlockState.CODEC, blockState);
+       }
+       output.putBoolean("hidden", this.isHidden);
+       output.putInt("delayTillIdle", this.delayTillIdle);
+       output.putString("animationState", this.getRootminPose().name());
+       if (this.superHatedPlayer != null) {
+           output.store("superHatedPlayer", UUIDUtil.CODEC, this.superHatedPlayer);
+       }
+       if (this.getEssenceController() != null) {
+           output.store("essenceController", UUIDUtil.CODEC, this.getEssenceController());
+       }
+       if (this.getEssenceControllerBlockPos() != null) {
+           output.store("essenceControllerBlockPos", BlockPos.CODEC, this.getEssenceControllerBlockPos());
+       }
+       if (this.getEssenceControllerDimension() != null) {
+           output.store("essenceControllerDimension", Identifier.CODEC, this.getEssenceControllerDimension().identifier());
+       }
+       if (this.getOwnerReference() != null) {
+           output.store("Owner", UUIDUtil.CODEC, this.getOwnerReference().getUUID());
+       }
    }
 
    @Override
-   public void readAdditionalSaveData(CompoundTag compoundTag) {
-      super.readAdditionalSaveData(compoundTag);
-      BlockState blockState = null;
-      if (compoundTag.contains("flowerBlock", 10) &&
-              (blockState = NbtUtils.readBlockState(this.level().holderLookup(Registries.BLOCK),
-                      compoundTag.getCompound("flowerBlock"))).isAir()) {
-         blockState = null;
-      }
+   protected void readAdditionalSaveData(ValueInput input) {
+      super.readAdditionalSaveData(input);
+      BlockState blockState = input.read("flowerBlock", BlockState.CODEC).orElse(null);
 
-      if (blockState == null) {
+      if (blockState == null || blockState.isAir()) {
          this.getFlowerBlock();
       } else {
          this.setFlowerBlock(blockState);
       }
 
-      this.isHidden = compoundTag.getBoolean("hidden");
-      this.delayTillIdle = compoundTag.getInt("delayTillIdle");
-      if (compoundTag.contains("superHatedPlayer")) {
-         this.superHatedPlayer = compoundTag.getUUID("superHatedPlayer");
-      }
+      this.isHidden = input.getBooleanOr("hidden", false);
+      this.delayTillIdle = input.getIntOr("delayTillIdle", 0);
+      this.superHatedPlayer = input.read("superHatedPlayer", UUIDUtil.CODEC).orElse(null);
       if (this.isHidden) {
          this.setRootminPose(RootminState.ENTITY_TO_BLOCK);
       } else {
-         if (compoundTag.contains("animationState")) {
-            this.setRootminPose(RootminState.valueOf(compoundTag.getString("animationState")));
-         }
+          this.setRootminPose(RootminState.valueOf(input.getStringOr("animationState", RootminState.NONE.name())));
       }
 
-      if (compoundTag.contains("essenceController")) {
-         this.setEssenceController(compoundTag.getUUID("essenceController"));
-      }
-      if (compoundTag.contains("essenceControllerBlockPos")) {
-         NbtUtils.readBlockPos(compoundTag, "essenceControllerBlockPos").ifPresent(this::setEssenceControllerBlockPos);
-      }
-      if (compoundTag.contains("essenceControllerDimension")) {
-         this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, Identifier.tryParse(compoundTag.getString("essenceControllerDimension"))));
-      }
-
-      UUID uUID;
-      if (compoundTag.hasUUID("Owner")) {
-         uUID = compoundTag.getUUID("Owner");
-      }
-      else {
-         String string = compoundTag.getString("Owner");
-         uUID = OldUsersConverter.convertMobOwnerIfNecessary(this.getServer(), string);
-      }
-
-      if (uUID != null) {
-         this.setOwnerUUID(uUID);
-      }
+      this.setEssenceController(input.read("essenceController", UUIDUtil.CODEC).orElse(null));
+      input.read("essenceControllerBlockPos", BlockPos.CODEC).ifPresent(this::setEssenceControllerBlockPos);
+      input.read("essenceControllerDimension", Identifier.CODEC).ifPresent(dim -> this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, dim)));
+      input.read("Owner", UUIDUtil.CODEC).ifPresent(this::setOwnerUUID);
    }
 
    @Override
@@ -553,14 +527,14 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
               !blockState.is(BzTags.ROOTMIN_FORCED_DISALLOWED_FLOWERS) &&
               (this.getFlowerBlock() == null || this.getFlowerBlock() != blockState))
          {
-            if (!this.level().isClientSide()) {
+            if (this.level() instanceof ServerLevel serverLevel) {
                if (!instantBuild && this.getFlowerBlock() != null) {
                   ItemStack itemStack = new ItemStack(Items.DIAMOND_PICKAXE);
-                  itemStack.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.SILK_TOUCH, this.level()), 1);
-                  LootParams.Builder builder = new LootParams.Builder((ServerLevel) this.level()).withParameter(LootContextParams.ORIGIN, this.position()).withParameter(LootContextParams.TOOL, itemStack).withOptionalParameter(LootContextParams.THIS_ENTITY, this);
+                  itemStack.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.SILK_TOUCH, serverLevel), 1);
+                  LootParams.Builder builder = new LootParams.Builder(serverLevel).withParameter(LootContextParams.ORIGIN, this.position()).withParameter(LootContextParams.TOOL, itemStack).withOptionalParameter(LootContextParams.THIS_ENTITY, this);
                   List<ItemStack> flowerDrops = this.getFlowerBlock().getDrops(builder);
                   for (ItemStack flowerDrop : flowerDrops) {
-                     this.spawnAtLocation(flowerDrop, 1.0f);
+                     this.spawnAtLocation(serverLevel, flowerDrop, 1.0f);
                   }
                }
 
@@ -633,7 +607,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
       if (!this.level().isClientSide()) {
          for (int currentProjectile = 0; currentProjectile < totalProjectiles; currentProjectile++) {
             Vec3 viewVector = this.getViewVector(1.0F);
-            DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this, BzItems.DIRT_PELLET.get().getDefaultInstance()));
+            DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this, BzItems.DIRT_PELLET.get().getDefaultInstance());
             pelletEntity.setPos(pelletEntity.position().add(viewVector.x(), 0, viewVector.z()));
 
             if (this.getEssenceController() != null) {
@@ -675,7 +649,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    }
 
    @Override
-   public boolean isInvulnerableTo(DamageSource damageSource) {
+   public boolean isInvulnerableTo(ServerLevel serverLevel, DamageSource damageSource) {
       if (this.getRootminShield()) {
          return true;
       }
@@ -683,20 +657,22 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
       if (this.getEssenceController() != null) {
          if (damageSource.getDirectEntity() instanceof DirtPelletEntity dirtPelletEntity) {
             if (dirtPelletEntity.isEventBased()) {
-               return super.isInvulnerableTo(damageSource);
-            } else if (dirtPelletEntity.getOwner() instanceof ServerPlayer serverPlayer &&
+               return super.isInvulnerableTo(serverLevel, damageSource);
+            }
+            else if (dirtPelletEntity.getOwner() instanceof ServerPlayer serverPlayer &&
                     EssenceOfTheBees.hasEssence(serverPlayer) &&
                     this.getRootminPose() != RootminState.ANGRY &&
                     this.getRootminPose() != RootminState.CURSE &&
                     this.getRootminPose() != RootminState.SHOCK &&
-                    this.hurtTime == 0) {
-               return super.isInvulnerableTo(damageSource);
+                    this.hurtTime == 0)
+            {
+               return super.isInvulnerableTo(serverLevel, damageSource);
             }
          }
          return true;
       }
 
-      return super.isInvulnerableTo(damageSource);
+      return super.isInvulnerableTo(serverLevel, damageSource);
    }
 
    @Override
@@ -772,10 +748,11 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
                  this.yHeadRotO % 90 != 0 &&
                  this.yHeadRot % 90 != 0 &&
                  this.yBodyRotO % 90 != 0 &&
-                 this.yBodyRot % 90 != 0) {
+                 this.yBodyRot % 90 != 0)
+         {
             if (!this.isPassenger()) {
                Vec3 lookDirection = this.getLookAngle();
-               float closestDir = Direction.getNearest(lookDirection.x(), lookDirection.y(), lookDirection.z()).toYRot();
+               float closestDir = Direction.getApproximateNearest(lookDirection).toYRot();
                this.yHeadRotO = closestDir;
                this.yHeadRot = closestDir;
                this.yBodyRotO = closestDir;
@@ -806,7 +783,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    }
 
    @Override
-   protected void customServerAiStep() {
+   protected void customServerAiStep(ServerLevel serverLevel) {
       if (this.exposedTimer > 0) {
          this.exposedTimer--;
       }
@@ -838,7 +815,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    protected void dropAllDeathLoot(ServerLevel level, DamageSource damageSource) {
       BlockState flower = this.getFlowerBlock();
       Entity sourceEntity = damageSource.getEntity() == null ? this : damageSource.getEntity();
-      if (flower != null && level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
+      if (flower != null && level.getGameRules().get(GameRules.MOB_DROPS)) {
          ItemStack itemStack = new ItemStack(Items.DIAMOND_PICKAXE);
          itemStack.enchant(EnchantmentUtils.getEnchantmentHolder(Enchantments.SILK_TOUCH, level), 1);
          LootParams.Builder builder = new LootParams.Builder((ServerLevel) this.level())
@@ -847,14 +824,14 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
                  .withOptionalParameter(LootContextParams.THIS_ENTITY, sourceEntity);
          List<ItemStack> flowerDrops = flower.getDrops(builder);
          for (ItemStack flowerDrop : flowerDrops) {
-            this.spawnAtLocation(flowerDrop, 0.5f);
+            this.spawnAtLocation(level, flowerDrop, 0.5f);
          }
       }
       super.dropAllDeathLoot(level, damageSource);
    }
 
    @Override
-   public boolean canBeCollidedWith() {
+   public boolean canBeCollidedWith(@org.jspecify.annotations.Nullable Entity other) {
       return this.getRootminPose() == RootminState.ENTITY_TO_BLOCK && !this.isDeadOrDying();
    }
 
@@ -883,20 +860,20 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
       double y = this.getY();
       double z = this.getZ();
       super.refreshDimensions();
-      this.absMoveTo(x, y, z);
+      this.absSnapTo(x, y, z);
    }
 
    @Override
-   public boolean canChangeDimensions(Level fromLevel, Level toLevel) {
-      return super.canChangeDimensions(fromLevel, toLevel) && this.getEssenceController() == null;
+   public boolean canTeleport(Level fromLevel, Level toLevel) {
+      return super.canTeleport(fromLevel, toLevel) && this.getEssenceController() == null;
    }
 
    @Override
-   public Entity changeDimension(DimensionTransition dimensionTransition) {
+   public Entity teleport(TeleportTransition teleportTransition) {
       if (this.getEssenceController() != null) {
          return this;
       }
-      return super.changeDimension(dimensionTransition);
+      return super.teleport(teleportTransition);
    }
 
    @Override
@@ -905,9 +882,10 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    }
 
    @Override
-   protected boolean shouldDropLoot() {
-      return this.getEssenceController() == null ||
-              (this.getLastDamageSource() != null && this.getLastDamageSource().getDirectEntity() instanceof DirtPelletEntity);
+   protected boolean shouldDropLoot(ServerLevel level) {
+      return level.getGameRules().get(GameRules.MOB_DROPS) &&
+              (this.getEssenceController() == null ||
+              (this.getLastDamageSource() != null && this.getLastDamageSource().getDirectEntity() instanceof DirtPelletEntity));
    }
 
    @Override
@@ -956,10 +934,11 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
          return false;
       }
 
-      if (this.getOwnerUUID() != null) {
-         if (livingEntity.getType().getCategory() == MobCategory.MONSTER && !(livingEntity instanceof OwnableEntity ownableEntity && this.getOwnerUUID().equals(ownableEntity.getOwnerUUID()))) {
-            return true;
-         }
+      if (this.getOwnerReference() != null &&
+          livingEntity.getType().getCategory() == MobCategory.MONSTER &&
+          !(livingEntity instanceof OwnableEntity && this.getOwnerReference().matches(livingEntity)))
+      {
+        return true;
       }
 
       boolean canTarget = BeeAggression.doesBeesHateEntity(livingEntity) || livingEntity.is(BzTags.ROOTMIN_TARGETS);
@@ -1002,22 +981,6 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
       }
 
       return super.getTeam();
-   }
-
-   @Override
-   public boolean isAlliedTo(Entity entity) {
-      if (this.getOwner() != null) {
-         LivingEntity livingEntity = this.getOwner();
-         if (entity == livingEntity) {
-            return true;
-         }
-
-         if (livingEntity != null) {
-            return livingEntity.isAlliedTo(entity);
-         }
-      }
-
-      return super.isAlliedTo(entity);
    }
 
    @Override

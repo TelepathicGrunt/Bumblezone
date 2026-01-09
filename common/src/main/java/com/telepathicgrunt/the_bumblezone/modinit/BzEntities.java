@@ -21,13 +21,19 @@ import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearE
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterEntityAttributesEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterSpawnPlacementsEvent;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.level.levelgen.Heightmap;
+
+import java.util.Optional;
+import java.util.UUID;
 
 public class BzEntities {
     public static final ResourcefulRegistry<EntityType<?>> ENTITIES = ResourcefulRegistries.create(BuiltInRegistries.ENTITY_TYPE, Bumblezone.MODID);
@@ -46,6 +52,8 @@ public class BzEntities {
     public static final RegistryEntry<EntityType<ElectricRingEntity>> ELECTRIC_RING_ENTITY = ENTITIES.register("electric_ring_entity", () -> PlatformService.INSTANCE.createEntityType(ElectricRingEntity::new, MobCategory.MISC, 3F, 3F, 1.5F, 4, 20, "electric_ring_entity"));
     public static final RegistryEntry<EntityType<PurpleSpikeEntity>> PURPLE_SPIKE_ENTITY = ENTITIES.register("purple_spike_entity", () -> PlatformService.INSTANCE.createEntityType(PurpleSpikeEntity::new, MobCategory.MISC, 1F, 1F, 0F, 4, 20, "purple_spike_entity"));
     public static final RegistryEntry<EntityType<CosmicCrystalEntity>> COSMIC_CRYSTAL_ENTITY = ENTITIES.register("cosmic_crystal_entity", () -> PlatformService.INSTANCE.createEntityType(CosmicCrystalEntity::new, MobCategory.MISC, 1F, 2f, 1f, 8, 3, "cosmic_crystal_entity"));
+
+    public static final EntityDataSerializer<Optional<UUID>> UUID_ENTITY_DATA_SERIALIZER = EntityDataSerializer.forValueType(UUIDUtil.STREAM_CODEC.apply(ByteBufCodecs::optional));
 
     public static void registerEntitySpawnRestrictions(BzRegisterSpawnPlacementsEvent event) {
         event.register(HONEY_SLIME.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);

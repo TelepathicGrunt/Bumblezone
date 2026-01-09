@@ -31,7 +31,6 @@ import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.AdvancementTree;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
@@ -44,6 +43,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
+import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.Difficulty;
@@ -56,6 +56,7 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
@@ -72,18 +73,21 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Snowball;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.Snowball;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gamerules.GameRules;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -103,10 +107,10 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     public static final EntityDataSerializer<BeeQueenState> QUEEN_POSE_SERIALIZER = EntityDataSerializer.forValueType(BeeQueenState.STREAM_CODEC);
     private static final EntityDataAccessor<Integer> THROWCOOLDOWN = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> BEESPAWNCOOLDOWN = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> REMAINING_ANGER_TIME = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Long> ANGER_END_TIME = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.LONG);
     private static final EntityDataAccessor<BeeQueenState> QUEEN_POSE = SynchedEntityData.defineId(BeeQueenEntity.class, QUEEN_POSE_SERIALIZER);
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(60, 120);
-    private UUID persistentAngerTarget;
+    private EntityReference<LivingEntity> persistentAngerTarget;
     private int underWaterTicks;
     private int poseTicks;
     private int tradeHintCooldown = 0;
@@ -121,7 +125,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(THROWCOOLDOWN, 0);
-        builder.define(REMAINING_ANGER_TIME, 0);
+        builder.define(ANGER_END_TIME, 0L);
         builder.define(BEESPAWNCOOLDOWN, 0);
         builder.define(QUEEN_POSE, BeeQueenState.NONE);
     }
@@ -162,20 +166,20 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        tag.putInt("throwcooldown", getThrowCooldown());
-        tag.putInt("beespawncooldown", getBeeSpawnCooldown());
-        this.addPersistentAngerSaveData(tag);
+    public void addAdditionalSaveData(ValueOutput output) {
+        super.addAdditionalSaveData(output);
+        output.putInt("throwcooldown", getThrowCooldown());
+        output.putInt("beespawncooldown", getBeeSpawnCooldown());
+        this.addPersistentAngerSaveData(output);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-        setThrowCooldown(tag.getInt("throwcooldown"));
-        setBeeSpawnCooldown(tag.getInt("beespawncooldown"));
+    public void readAdditionalSaveData(ValueInput input) {
+        super.readAdditionalSaveData(input);
+        setThrowCooldown(input.getIntOr("throwcooldown", 0));
+        setBeeSpawnCooldown(input.getIntOr("beespawncooldown", 0));
 
-        this.readPersistentAngerSaveData(this.level(), tag);
+        this.readPersistentAngerSaveData(this.level(), input);
     }
 
     @Override
@@ -252,11 +256,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
+    public boolean isInvulnerableTo(ServerLevel serverLevel, DamageSource damageSource) {
         if (damageSource == level().damageSources().sweetBerryBush()) {
             return true;
         }
-        return super.isInvulnerableTo(damageSource);
+        return super.isInvulnerableTo(serverLevel, damageSource);
     }
 
     @Override
@@ -268,7 +272,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
         if (source.getDirectEntity() instanceof Snowball snowball &&
             snowball.getType() == EntityType.SNOWBALL &&
             QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.containsKey(Items.SNOWBALL))
@@ -284,7 +288,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             }
             return false;
         }
-        else if (isInvulnerableTo(source)) {
+        else if (isInvulnerableTo(serverLevel, source)) {
             return false;
         }
         else if (isOnPortalCooldown() && source == level().damageSources().inWall()) {
@@ -302,7 +306,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 {
                     if (livingEntity instanceof Player player && (level().getDifficulty() == Difficulty.PEACEFUL || player.isCreative())) {
                         spawnAngryParticles(6);
-                        return super.hurt(source, amount);
+                        return super.hurtServer(serverLevel, source, amount);
                     }
 
                     if ((livingEntity.level().dimension().equals(BzDimension.BZ_WORLD_KEY) ||
@@ -319,17 +323,17 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     }
 
                     this.startPersistentAngerTimer();
-                    this.setPersistentAngerTarget(livingEntity.getUUID());
+                    this.setPersistentAngerTarget(EntityReference.of(livingEntity));
                     this.setTarget(livingEntity);
                 }
             }
 
             spawnAngryParticles(6);
-            return super.hurt(source, amount);
+            return super.hurtServer(serverLevel, source, amount);
         }
     }
 
-    protected void customServerAiStep() {
+    protected void customServerAiStep(ServerLevel level) {
         if (this.isUnderWater()) {
             ++this.underWaterTicks;
         }
@@ -338,12 +342,10 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
 
         if (this.underWaterTicks > 100) {
-            this.hurt(level().damageSources().drown(), 3.0F);
+            this.hurtServer(level, level.damageSources().drown(), 3.0F);
         }
 
-        if (!this.level().isClientSide) {
-            this.updatePersistentAnger((ServerLevel) this.level(), false);
-        }
+        this.updatePersistentAnger(level, false);
     }
 
     @Override
@@ -390,26 +392,26 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 }
             }
 
-            if (!this.level().isClientSide()) {
+            if (this.level() instanceof ServerLevel serverLevel) {
                 // Check for if holiday trades are available every hour
                 if (BzGeneralConfigs.beeQueenSpecialDayTrades &&
                     (this.tickCount == 1 || (this.tickCount + this.getUUID().getLeastSignificantBits()) % 72000L == 0))
                 {
                     Optional<List<Item>> specialDayItem = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItem();
                     List<Item> allowedSpecialDayTradeItems = specialDayItem.orElse(new ArrayList<>()).stream()
-                            .filter(i -> i.isEnabled(level().enabledFeatures()))
+                            .filter(i -> i.isEnabled(serverLevel.enabledFeatures()))
                             .toList();
                     setIsSpecialDay(!allowedSpecialDayTradeItems.isEmpty());
                 }
 
                 // Check if player is looking at queen every 2 seconds
                 if (this.tradeHintCooldown == 0 && (this.tickCount + this.getUUID().getLeastSignificantBits()) % 40L == 0) {
-                    List<Player> nearbyPlayers = this.level().getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(10));
+                    List<Player> nearbyPlayers = serverLevel.getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(10));
 
                     for (Player player : nearbyPlayers) {
                         if (isLookingAtMeClose(player)) {
                             Item wantItem = null;
-                            List<WeightedTradeResult> tradeResults = null;
+                            List<Weighted<WeightedTradeResult>> tradeResults = null;
 
                             if (getIsSpecialDay()) {
                                 Optional<List<Item>> specialDayItem = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItem();
@@ -435,8 +437,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                             int maximumRewardsToShowAtATime = 5;
                             List<ItemStack> allRewardItems = new ArrayList<>();
                             List<ItemStack> slicedRewardItems;
-                            for (WeightedTradeResult weightedTradeResult : tradeResults) {
-                                allRewardItems.addAll(weightedTradeResult.getItems());
+                            for (Weighted<WeightedTradeResult> weightedTradeResult : tradeResults) {
+                                allRewardItems.addAll(weightedTradeResult.value().getItems());
                             }
                             Collections.shuffle(allRewardItems);
                             slicedRewardItems = allRewardItems.subList(0, Math.min(maximumRewardsToShowAtATime, allRewardItems.size()));
@@ -463,23 +465,24 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         int beeCooldown = this.getBeeSpawnCooldown();
         if (beeCooldown <= 0 &&
             !this.isImmobile() &&
-            this.level().getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING))
+            this.level() instanceof ServerLevel serverLevel &&
+            serverLevel.getGameRules().get(GameRules.SPAWN_MOBS))
         {
             this.setBeeSpawnCooldown(this.random.nextInt(50) + 75);
 
             // Grab a nearby air materialposition a bit away
             BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(this, 5, 0);
-            if (!this.level().getBlockState(spawnBlockPos).isAir()) {
+            if (!serverLevel.getBlockState(spawnBlockPos).isAir()) {
                 return;
             }
 
-            Bee bee = EntityType.BEE.create(this.level());
+            Bee bee = EntityType.BEE.create(serverLevel, EntitySpawnReason.TRIGGERED);
             if (bee == null) return;
-            ((NeutralMob) bee).setRemainingPersistentAngerTime(this.getRemainingPersistentAngerTime());
-            ((NeutralMob) bee).setPersistentAngerTarget(this.getPersistentAngerTarget());
+            bee.setPersistentAngerEndTime(this.getPersistentAngerEndTime());
+            bee.setPersistentAngerTarget(this.getPersistentAngerTarget());
             bee.setTarget(this.getTarget());
 
-            bee.absMoveTo(
+            bee.absSnapTo(
                     spawnBlockPos.getX() + 0.5D,
                     spawnBlockPos.getY() + 0.5D,
                     spawnBlockPos.getZ() + 0.5D,
@@ -487,8 +490,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     0.0F);
 
             bee.finalizeSpawn(
-                    (ServerLevel) this.level(),
-                    this.level().getCurrentDifficultyAt(spawnBlockPos),
+                    serverLevel,
+                    serverLevel.getCurrentDifficultyAt(spawnBlockPos),
                     EntitySpawnReason.TRIGGERED,
                     null);
 
@@ -500,7 +503,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     false,
                     false));
 
-            this.level().addFreshEntity(bee);
+            serverLevel.addFreshEntity(bee);
             this.spawnAngryParticles(6);
             setQueenPose(BeeQueenState.ATTACKING);
         }
@@ -716,8 +719,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     private static final Identifier BEE_ESSENCE_ADVANCEMENT_RL = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "essence/bee_essence_infusion");
 
     private void resetAdvancementTree(ServerPlayer serverPlayer, Identifier advancementRL) {
-        AdvancementTree tree = serverPlayer.server.getAdvancements().tree();
-        AdvancementHolder parentAdvancement = serverPlayer.server.getAdvancements().get(advancementRL);
+        AdvancementTree tree = serverPlayer.level().getServer().getAdvancements().tree();
+        AdvancementHolder parentAdvancement = serverPlayer.level().getServer().getAdvancements().get(advancementRL);
         if (parentAdvancement == null) {
             return;
         }
@@ -726,7 +729,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             return;
         }
 
-        AdvancementHolder beeEssenceAdvancementHolder = serverPlayer.server.getAdvancements().get(BEE_ESSENCE_ADVANCEMENT_RL);
+        AdvancementHolder beeEssenceAdvancementHolder = serverPlayer.level().getServer().getAdvancements().get(BEE_ESSENCE_ADVANCEMENT_RL);
         Iterable<AdvancementNode> advancements = advancementParentNode.children();
         for (AdvancementNode advancementChildNode : advancements) {
             if (advancementChildNode.holder().equals(beeEssenceAdvancementHolder)) {
@@ -742,7 +745,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     private static boolean finalbeeQueenAdvancementDone(ServerPlayer serverPlayer) {
-        AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements().get(BzCriterias.QUEENS_DESIRE_FINAL_ADVANCEMENT);
+        AdvancementHolder advancementHolder = serverPlayer.level().getServer().getAdvancements().get(BzCriterias.QUEENS_DESIRE_FINAL_ADVANCEMENT);
         if (advancementHolder == null) {
             return false;
         }
@@ -848,7 +851,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel serverWorld, AgeableMob ageableEntity) {
-        Bee bee = EntityType.BEE.create(serverWorld);
+        Bee bee = EntityType.BEE.create(serverWorld, EntitySpawnReason.BREEDING);
         bee.setBaby(true);
         return bee;
     }
@@ -880,28 +883,28 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     @Override
-    public int getRemainingPersistentAngerTime() {
-        return this.entityData.get(REMAINING_ANGER_TIME);
+    public long getPersistentAngerEndTime() {
+        return this.entityData.get(ANGER_END_TIME);
     }
 
     @Override
-    public void setRemainingPersistentAngerTime(int remainingPersistentAngerTime) {
-        this.entityData.set(REMAINING_ANGER_TIME, remainingPersistentAngerTime);
+    public void setPersistentAngerEndTime(long endTime) {
+        this.entityData.set(ANGER_END_TIME, endTime);
     }
 
     @Override
-    public UUID getPersistentAngerTarget() {
+    public @Nullable EntityReference<LivingEntity> getPersistentAngerTarget() {
         return this.persistentAngerTarget;
     }
 
     @Override
-    public void setPersistentAngerTarget(UUID uuid) {
-        this.persistentAngerTarget = uuid;
+    public void setPersistentAngerTarget(@Nullable EntityReference<LivingEntity> persistentAngerTarget) {
+        this.persistentAngerTarget = persistentAngerTarget;
     }
 
     @Override
     public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random));
+        this.setTimeToRemainAngry(PERSISTENT_ANGER_TIME.sample(this.random));
     }
 
     @Override

@@ -10,6 +10,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
 import net.minecraft.world.entity.animal.Animal;
@@ -17,6 +18,8 @@ import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 
 public class VariantBeeEntity extends Bee {
@@ -61,15 +64,15 @@ public class VariantBeeEntity extends Bee {
    }
 
    @Override
-   public void addAdditionalSaveData(CompoundTag compoundTag) {
-      super.addAdditionalSaveData(compoundTag);
-      compoundTag.putString(VARIANT_TAG, this.getVariant());
+   protected void addAdditionalSaveData(ValueOutput output) {
+      super.addAdditionalSaveData(output);
+       output.putString(VARIANT_TAG, this.getVariant());
    }
 
    @Override
-   public void readAdditionalSaveData(CompoundTag compoundTag) {
-      super.readAdditionalSaveData(compoundTag);
-      setVariant(compoundTag.getString(VARIANT_TAG));
+   protected void readAdditionalSaveData(ValueInput input) {
+      super.readAdditionalSaveData(input);
+      setVariant(input.getStringOr(VARIANT_TAG, ""));
    }
 
    @Override
@@ -84,7 +87,7 @@ public class VariantBeeEntity extends Bee {
    @Override
    public Bee getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
       if (ageableMob instanceof VariantBeeEntity variantBeeEntity) {
-         VariantBeeEntity babyBee = BzEntities.VARIANT_BEE.get().create(serverLevel);
+         VariantBeeEntity babyBee = BzEntities.VARIANT_BEE.get().create(serverLevel, EntitySpawnReason.BREEDING);
 
          if (babyBee != null) {
             babyBee.setVariant(this.random.nextBoolean() ? variantBeeEntity.getVariant() : this.getVariant());
@@ -94,17 +97,17 @@ public class VariantBeeEntity extends Bee {
       }
       else if (ageableMob instanceof Bee) {
          if (this.random.nextBoolean()) {
-            VariantBeeEntity babyBee = BzEntities.VARIANT_BEE.get().create(serverLevel);
+            VariantBeeEntity babyBee = BzEntities.VARIANT_BEE.get().create(serverLevel, EntitySpawnReason.BREEDING);
             if (babyBee != null) {
                babyBee.setVariant(this.getVariant());
             }
             return babyBee;
          }
 
-         return EntityType.BEE.create(serverLevel);
+         return EntityType.BEE.create(serverLevel, EntitySpawnReason.BREEDING);
       }
       else {
-         return BzEntities.VARIANT_BEE.get().create(serverLevel);
+         return BzEntities.VARIANT_BEE.get().create(serverLevel, EntitySpawnReason.BREEDING);
       }
    }
 
@@ -117,11 +120,11 @@ public class VariantBeeEntity extends Bee {
    }
 
    @Override
-   public boolean isInvulnerableTo(DamageSource damageSource) {
+   public boolean isInvulnerableTo(ServerLevel serverLevel, DamageSource damageSource) {
       if (damageSource == level().damageSources().sweetBerryBush()) {
          return true;
       }
-      return super.isInvulnerableTo(damageSource);
+      return super.isInvulnerableTo(serverLevel, damageSource);
    }
 
    @Override

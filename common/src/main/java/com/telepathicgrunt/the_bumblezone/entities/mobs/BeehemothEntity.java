@@ -20,6 +20,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.SyncBeehemothSpeedConfigFromServer;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -46,11 +47,11 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.PlayerRideable;
-import net.minecraft.world.entity.Saddleable;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -66,18 +67,21 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
-public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Saddleable, PlayerRideable {
+public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, PlayerRideable {
 
     public static boolean beehemothSpeedConfigChanged = false;
     public static double beehemothSpeedConfigValue = BzGeneralConfigs.beehemothSpeed;
@@ -145,19 +149,19 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        tag.putBoolean("saddled", isSaddled());
-        tag.putBoolean("queen", isQueen());
-        tag.putInt("friendship", getFriendship());
+    public void addAdditionalSaveData(ValueOutput output) {
+        super.addAdditionalSaveData(output);
+        output.putBoolean("saddled", isSaddled());
+        output.putBoolean("queen", isQueen());
+        output.putInt("friendship", getFriendship());
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-        setSaddled(tag.getBoolean("saddled"));
-        setQueen(tag.contains("queen") && tag.getBoolean("queen"));
-        setFriendship(tag.getInt("friendship"));
+    public void readAdditionalSaveData(ValueInput input) {
+        super.readAdditionalSaveData(input);
+        setSaddled(input.getBooleanOr("saddled", false));
+        setQueen(input.getBooleanOr("queen", false));
+        setFriendship(input.getIntOr("friendship", 0));
     }
 
     @Override
@@ -180,16 +184,18 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     @Override
-    public boolean isSaddleable() {
-        return this.isAlive() && !this.isBaby() && this.isTame();
+    public boolean canUseSlot(EquipmentSlot slot) {
+        return slot != EquipmentSlot.SADDLE ? super.canUseSlot(slot) : this.isAlive() && !this.isBaby() && this.isTame();
     }
 
     @Override
-    public void equipSaddle(ItemStack saddle, SoundSource soundSource) {
-        this.entityData.set(SADDLED, true);
-        if (soundSource != null) {
-            this.level().playSound(null, this, SoundEvents.HORSE_SADDLE, soundSource, 0.5F, 1.0F);
-        }
+    protected boolean canDispenserEquipIntoSlot(EquipmentSlot slot) {
+        return (slot == EquipmentSlot.BODY || slot == EquipmentSlot.SADDLE) && this.isTame() || super.canDispenserEquipIntoSlot(slot);
+    }
+
+    @Override
+    protected Holder<SoundEvent> getEquipSound(EquipmentSlot slot, ItemStack stack, Equippable equippable) {
+        return slot == EquipmentSlot.SADDLE ? SoundEvents.HORSE_SADDLE : super.getEquipSound(slot, stack, equippable);
     }
 
     public void setSaddled(boolean saddled) {
@@ -279,16 +285,16 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
-        if (damageSource == level().damageSources().sweetBerryBush()) {
+    public boolean isInvulnerableTo(ServerLevel level, DamageSource damageSource) {
+        if (damageSource == level.damageSources().sweetBerryBush()) {
             return true;
         }
-        return super.isInvulnerableTo(damageSource);
+        return super.isInvulnerableTo(level, damageSource);
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
-        if (isInvulnerableTo(source)) {
+    public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
+        if (isInvulnerableTo(level, source)) {
             return false;
         }
         else if(isOnPortalCooldown() && source == level().damageSources().inWall()) {
@@ -299,14 +305,22 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         else {
             Entity entity = source.getEntity();
             if (!this.isNoAi()) {
-                if (!BzGeneralConfigs.beehemothFriendlyFire && entity != null && entity.getUUID().equals(getOwnerUUID())) {
+                if (!BzGeneralConfigs.beehemothFriendlyFire &&
+                    entity != null &&
+                    getOwnerReference() != null &&
+                    entity.getUUID().equals(getOwnerReference().getUUID()))
+                {
                     return false;
                 }
 
                 setOrderedToSit(false);
 
                 if (source.type() != level().damageSources().inWall().type()) {
-                    if (entity != null && entity.getUUID().equals(getOwnerUUID()) && this.isTame()) {
+                    if (entity != null &&
+                        getOwnerReference() != null &&
+                        entity.getUUID().equals(getOwnerReference().getUUID()) &&
+                        this.isTame())
+                    {
                         addFriendship((int) (-3 * amount));
                     }
 
@@ -338,10 +352,9 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
             }
 
             spawnMadParticles();
-            return super.hurt(source, amount);
+            return super.hurtServer(level, source, amount);
         }
     }
-
 
     public static boolean checkMobSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor iWorld, EntitySpawnReason spawnReason, BlockPos blockPos, RandomSource random) {
         return true;
@@ -367,7 +380,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
         Identifier itemRL = BuiltInRegistries.ITEM.getKey(item);
-        if (this.level().isClientSide) {
+        if (this.level().isClientSide()) {
             if (isTame() && isOwnedBy(player)) {
                 return InteractionResult.SUCCESS;
             } 
@@ -448,12 +461,12 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                     }
 
                     if (!isVehicle() && !player.isSecondaryUseActive()) {
-                        if (!this.level().isClientSide) {
+                        if (!this.level().isClientSide()) {
                             player.startRiding(this);
                             setOrderedToSit(false);
                         }
 
-                        return InteractionResult.sidedSuccess(this.level().isClientSide);
+                        return InteractionResult.SUCCESS_SERVER;
                     }
                 }
             }
@@ -551,7 +564,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
             double currentSpeed = getDeltaMovement().length();
             if(currentSpeed > 0.000001D &&
                 this.getRandom().nextFloat() < 0.0085D &&
-                passenger.getUUID().equals(getOwnerUUID()))
+                getOwnerReference() != null &&
+                passenger.getUUID().equals(getOwnerReference().getUUID()))
             {
                 addFriendship(1);
             }
@@ -758,7 +772,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                     verticalSpeed += 0.5f;
                 }
 
-                if (this.isControlledByLocalInstance()) {
+                if (this.getControllingPassenger() instanceof Player player ? player.isLocalPlayer() : this.isEffectiveAi()) {
                     this.flyingSpeed = (float) currentSpeed;
                     this.setSpeed(this.getFlyingSpeed());
                     Vec3 moveDir = new Vec3(strafeSpeed, verticalSpeed, forwardSpeed);
@@ -769,7 +783,6 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 }
 
                 this.calculateEntityAnimation(false);
-                this.tryCheckInsideBlocks();
             }
             else {
                 super.travel(moveVector);
