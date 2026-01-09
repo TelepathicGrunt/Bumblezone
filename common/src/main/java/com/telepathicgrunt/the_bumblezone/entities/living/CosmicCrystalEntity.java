@@ -425,6 +425,7 @@ public class CosmicCrystalEntity extends LivingEntity {
         this.setEssenceController(input.read("essenceController", UUIDUtil.CODEC).orElse(null));
         input.read("essenceControllerBlockPos", BlockPos.CODEC).ifPresent(this::setEssenceControllerBlockPos);
         input.read("essenceControllerDimension", Identifier.CODEC).ifPresent(dim -> this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, dim)));
+
         this.setCosmicCrystalState(CosmicCrystalState.valueOf(input.getStringOr("prevCosmicCrystalState", CosmicCrystalState.NORMAL.name())));
         this.setCosmicCrystalState(CosmicCrystalState.valueOf(input.getStringOr("cosmicCrystalState", CosmicCrystalState.NORMAL.name())));
 

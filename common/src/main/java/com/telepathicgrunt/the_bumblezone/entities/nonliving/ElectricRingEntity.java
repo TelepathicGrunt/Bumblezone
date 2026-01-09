@@ -4,23 +4,25 @@ import com.telepathicgrunt.the_bumblezone.blocks.EssenceBlockYellow;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.portal.TeleportTransition;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.UUID;
@@ -223,6 +225,11 @@ public class ElectricRingEntity extends Entity {
         super.playerTouch(player);
     }
 
+    @Override
+    public boolean hurtServer(ServerLevel level, DamageSource source, float damage) {
+        return false;
+    }
+
     private boolean intersectedPassed(Player player, double ringRadiusSq, Vec3 centerOfRing, Vec3 playerPosToCheck) {
         Vec3 playerPoint = playerPosToCheck.subtract(centerOfRing);
 
@@ -268,12 +275,12 @@ public class ElectricRingEntity extends Entity {
     }
 
     @Override
-    public boolean canChangeDimensions(Level fromLevel, Level toLevel) {
+    public boolean canTeleport(Level fromLevel, Level toLevel) {
         return false;
     }
 
     @Override
-    public Entity changeDimension(DimensionTransition dimensionTransition) {
+    public Entity teleport(TeleportTransition teleportTransition) {
         return this;
     }
 
@@ -288,36 +295,28 @@ public class ElectricRingEntity extends Entity {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compoundTag) {
-        if (compoundTag.contains("disappearingTime")) {
-            this.disappearingTime = compoundTag.getInt("disappearingTime");
-        }
-        this.setDisappearingMarker(compoundTag.getBoolean("disappearingMarker"));
+    protected void readAdditionalSaveData(ValueInput input) {
+        this.disappearingTime = input.getIntOr("disappearingTime", 0);
+        this.setDisappearingMarker(input.getBooleanOr("disappearingMarker", false));
 
-        if (compoundTag.contains("essenceController")) {
-            this.setEssenceController(compoundTag.getUUID("essenceController"));
-        }
-        if (compoundTag.contains("essenceControllerBlockPos")) {
-            NbtUtils.readBlockPos(compoundTag, "essenceControllerBlockPos").ifPresent(this::setEssenceControllerBlockPos);
-        }
-        if (compoundTag.contains("essenceControllerDimension")) {
-            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, Identifier.tryParse(compoundTag.getString("essenceControllerDimension"))));
-        }
+        this.setEssenceController(input.read("essenceController", UUIDUtil.CODEC).orElse(null));
+        input.read("essenceControllerBlockPos", BlockPos.CODEC).ifPresent(this::setEssenceControllerBlockPos);
+        input.read("essenceControllerDimension", Identifier.CODEC).ifPresent(dim -> this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, dim)));
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag compoundTag) {
-        compoundTag.putInt("disappearingTime", this.disappearingTime);
-        compoundTag.putBoolean("disappearingMarker", this.getDisappearingMarker());
+    protected void addAdditionalSaveData(ValueOutput output) {
+        output.putInt("disappearingTime", this.disappearingTime);
+        output.putBoolean("disappearingMarker", this.getDisappearingMarker());
 
         if (this.getEssenceController() != null) {
-            compoundTag.putUUID("essenceController", this.getEssenceController());
+            output.store("essenceController", UUIDUtil.CODEC, this.getEssenceController());
         }
         if (this.getEssenceControllerBlockPos() != null) {
-            compoundTag.put("essenceControllerBlockPos", NbtUtils.writeBlockPos(this.getEssenceControllerBlockPos()));
+            output.store("essenceControllerBlockPos", BlockPos.CODEC, this.getEssenceControllerBlockPos());
         }
         if (this.getEssenceControllerDimension() != null) {
-            compoundTag.putString("essenceControllerDimension", this.getEssenceControllerDimension().location().toString());
+            output.putString("essenceControllerDimension", this.getEssenceControllerDimension().identifier().toString());
         }
     }
 

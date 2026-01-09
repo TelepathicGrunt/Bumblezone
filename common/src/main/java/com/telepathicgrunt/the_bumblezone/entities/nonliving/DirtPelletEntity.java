@@ -14,7 +14,6 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -36,17 +35,21 @@ import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector2d;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -358,7 +361,7 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
     @Override
     protected void onHit(HitResult hitResult) {
         super.onHit(hitResult);
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             this.level().broadcastEntityEvent(this, (byte)3);
             this.level().playSound(null, this.blockPosition(), BzSounds.DIRT_PELLET_HIT.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
             this.discard();
@@ -377,42 +380,34 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
     }
 
     @Override
-    public boolean hurt(DamageSource damageSource, float f) {
-        if (this.isInvulnerableTo(damageSource)) {
-            return false;
-        }
+    public boolean deflect(ProjectileDeflection deflection, @Nullable Entity deflectingEntity, @Nullable EntityReference<Entity> newOwner, boolean byAttack) {
+        deflection.deflect(this, deflectingEntity, this.random);
+        if (!this.level().isClientSide()) {
 
-        this.markHurt();
-        Entity entity = damageSource.getEntity();
-        if (entity != null) {
-            if (!this.level().isClientSide) {
-                Vec3 vec3 = entity.getLookAngle();
-                this.setDeltaMovement(vec3);
-
-                if (this.isHoming() && this.getOwner() != null) {
-                    this.setHomingTargetUUID(this.getOwner().getUUID());
-                    this.homingTarget = this.getOwner();
-                }
-                else {
-                    this.setHoming(false);
-                }
-
-                this.setOwner(entity);
+            if (this.isHoming() && this.getOwner() != null) {
+                this.setHomingTargetUUID(this.getOwner().getUUID());
+                this.homingTarget = this.getOwner();
             }
-            return true;
+            else {
+                this.setHoming(false);
+            }
+
+            this.setOwner(newOwner);
+            this.onDeflection(byAttack);
         }
-        return false;
+
+        return true;
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compoundTag) {
-        super.addAdditionalSaveData(compoundTag);
-        compoundTag.putBoolean("isEvent", this.isEventBased());
+    protected void addAdditionalSaveData(ValueOutput output) {
+        super.addAdditionalSaveData(output);
+        output.putBoolean("isEvent", this.isEventBased());
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compoundTag) {
-        super.readAdditionalSaveData(compoundTag);
-        this.setEventBased(compoundTag.getBoolean("isEvent"));
+    protected void readAdditionalSaveData(ValueInput input) {
+        super.readAdditionalSaveData(input);
+        this.setEventBased(input.getBooleanOr("isEvent", false));
     }
 }

@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -14,7 +15,9 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -23,7 +26,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.portal.TeleportTransition;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.HashSet;
@@ -179,7 +184,7 @@ public class PurpleSpikeEntity extends Entity {
                                 damageAmount = maxHealth / 10;
                             }
 
-                            livingEntity.hurt(this.level().damageSources().source(BzDamageSources.SPIKE_TYPE, this), damageAmount);
+                            livingEntity.hurt(this.level().damageSources().source(BzDamageSources.SPIKE_TYPE, this, this), damageAmount);
 
                             for (Holder<MobEffect> mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
                                 if (mobEffect.value().isBeneficial()) {
@@ -199,7 +204,7 @@ public class PurpleSpikeEntity extends Entity {
                         this.makeParticle(1, true);
                     }
                     else if (!(entity instanceof ItemEntity)) {
-                        entity.hurt(this.level().damageSources().source(BzDamageSources.SPIKE_TYPE, this), 1);
+                        entity.hurt(this.level().damageSources().source(BzDamageSources.SPIKE_TYPE, this, this), 1);
                         this.makeParticle(1, true);
                     }
                 }
@@ -291,12 +296,12 @@ public class PurpleSpikeEntity extends Entity {
     }
 
     @Override
-    public boolean canChangeDimensions(Level fromLevel, Level toLevel) {
+    public boolean canTeleport(Level fromLevel, Level toLevel) {
         return false;
     }
 
     @Override
-    public Entity changeDimension(DimensionTransition dimensionTransition) {
+    public Entity teleport(TeleportTransition dimensionTransition) {
         return this;
     }
 
@@ -306,39 +311,38 @@ public class PurpleSpikeEntity extends Entity {
     }
 
     @Override
+    public boolean hurtServer(ServerLevel level, DamageSource source, float damage) {
+        return false;
+    }
+
+    @Override
     public boolean shouldRender(double x, double y, double z) {
         return this.hasSpike() || this.hasSpikeCharge();
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compoundTag) {
-        this.setSpikeTimer(compoundTag.getInt("spike_timer"));
-        this.setSpikeChargeTimer(compoundTag.getInt("spike_charge_timer"));
+    protected void readAdditionalSaveData(ValueInput input) {
+        this.setSpikeTimer(input.getIntOr("spike_timer", 0));
+        this.setSpikeChargeTimer(input.getIntOr("spike_charge_timer", 0));
 
-        if (compoundTag.contains("essenceController")) {
-            this.setEssenceController(compoundTag.getUUID("essenceController"));
-        }
-        if (compoundTag.contains("essenceControllerBlockPos")) {
-            NbtUtils.readBlockPos(compoundTag, "essenceControllerBlockPos").ifPresent(this::setEssenceControllerBlockPos);
-        }
-        if (compoundTag.contains("essenceControllerDimension")) {
-            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, Identifier.tryParse(compoundTag.getString("essenceControllerDimension"))));
-        }
+        this.setEssenceController(input.read("essenceController", UUIDUtil.CODEC).orElse(null));
+        input.read("essenceControllerBlockPos", BlockPos.CODEC).ifPresent(this::setEssenceControllerBlockPos);
+        input.read("essenceControllerDimension", Identifier.CODEC).ifPresent(dim -> this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, dim)));
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag compoundTag) {
-        compoundTag.putInt("spike_timer", this.getSpikeTimer());
-        compoundTag.putInt("spike_charge_timer", this.getSpikeChargeTimer());
+    protected void addAdditionalSaveData(ValueOutput output) {
+        output.putInt("spike_timer", this.getSpikeTimer());
+        output.putInt("spike_charge_timer", this.getSpikeChargeTimer());
 
         if (this.getEssenceController() != null) {
-            compoundTag.putUUID("essenceController", this.getEssenceController());
+            output.store("essenceController", UUIDUtil.CODEC, this.getEssenceController());
         }
         if (this.getEssenceControllerBlockPos() != null) {
-            compoundTag.put("essenceControllerBlockPos", NbtUtils.writeBlockPos(this.getEssenceControllerBlockPos()));
+            output.store("essenceControllerBlockPos", BlockPos.CODEC, this.getEssenceControllerBlockPos());
         }
         if (this.getEssenceControllerDimension() != null) {
-            compoundTag.putString("essenceControllerDimension", this.getEssenceControllerDimension().location().toString());
+            output.store("essenceControllerDimension", Identifier.CODEC, this.getEssenceControllerDimension().identifier());
         }
     }
 }

@@ -30,6 +30,8 @@ import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -229,18 +231,18 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compoundTag) {
-        super.readAdditionalSaveData(compoundTag);
-        dealtDamage = compoundTag.getBoolean("DealtDamage");
+    protected void readAdditionalSaveData(ValueInput input) {
+        super.readAdditionalSaveData(input);
+        this.dealtDamage = input.getBooleanOr("DealtDamage", false);
         this.entityData.set(ID_LOYALTY, this.getLoyaltyFromItem(this.getWeaponItem()));
-        this.entityData.set(ID_FOIL, compoundTag.getBoolean("IsFoil"));
+        this.entityData.set(ID_FOIL, input.getBooleanOr("IsFoil", false));
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compoundTag) {
-        super.addAdditionalSaveData(compoundTag);
-        compoundTag.putBoolean("DealtDamage", dealtDamage);
-        compoundTag.putBoolean("IsFoil", isFoil());
+    protected void addAdditionalSaveData(ValueOutput output) {
+        super.addAdditionalSaveData(output);
+        output.putBoolean("DealtDamage", dealtDamage);
+        output.putBoolean("IsFoil", isFoil());
     }
 
     @Override
