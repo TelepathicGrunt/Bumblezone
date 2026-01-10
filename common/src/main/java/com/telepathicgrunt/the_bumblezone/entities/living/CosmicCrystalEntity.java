@@ -91,7 +91,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
-// TODO: All entities
 public class CosmicCrystalEntity extends LivingEntity {
     public static final EntityDataSerializer<CosmicCrystalState> COSMIC_CRYSTAL_STATE_SERIALIZER = EntityDataSerializer.forValueType(CosmicCrystalState.STREAM_CODEC);
     private static final EntityDataAccessor<CosmicCrystalState> COSMIC_CRYSTAL_STATE = SynchedEntityData.defineId(CosmicCrystalEntity.class, COSMIC_CRYSTAL_STATE_SERIALIZER);

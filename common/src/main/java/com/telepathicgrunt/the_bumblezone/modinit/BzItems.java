@@ -24,6 +24,7 @@ import com.telepathicgrunt.the_bumblezone.items.DirtPellet;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.items.FlowerHeadwearHelmet;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
+import com.telepathicgrunt.the_bumblezone.items.HoneyCocoonBlockItem;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCompass;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShards;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
@@ -105,8 +106,8 @@ public class BzItems {
     public static final RegistryEntry<Item> LUMINESCENT_WAX_NODE_GREEN = ITEMS.register("luminescent_wax_node_green", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_NODE_GREEN.get(), new Item.Properties()));
     public static final RegistryEntry<Item> LUMINESCENT_WAX_NODE_YELLOW = ITEMS.register("luminescent_wax_node_yellow", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_NODE_YELLOW.get(), new Item.Properties()));
     public static final RegistryEntry<Item> LUMINESCENT_WAX_NODE_WHITE = ITEMS.register("luminescent_wax_node_white", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_NODE_WHITE.get(), new Item.Properties()));
-    public static final RegistryEntry<Item> HONEY_COCOON = ITEMS.register("honey_cocoon", () -> new BzBlockItem(BzBlocks.HONEY_COCOON.get(), new Item.Properties(), false));
-    public static final RegistryEntry<Item> CRYSTALLINE_FLOWER = ITEMS.register("crystalline_flower", () -> new CrystallineFlowerBlockItem(BzBlocks.CRYSTALLINE_FLOWER.get(), new Item.Properties(), true, true));
+    public static final RegistryEntry<Item> HONEY_COCOON = ITEMS.register("honey_cocoon", () -> new HoneyCocoonBlockItem(BzBlocks.HONEY_COCOON.get(), new Item.Properties(), false));
+    public static final RegistryEntry<Item> CRYSTALLINE_FLOWER = ITEMS.register("crystalline_flower", () -> new CrystallineFlowerBlockItem(BzBlocks.CRYSTALLINE_FLOWER.get(), new Item.Properties(), true));
     public static final RegistryEntry<Item> PILE_OF_POLLEN = ITEMS.register("pile_of_pollen", () -> new BzBlockItem(BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, 8), new Item.Properties()));
     public static final RegistryEntry<Item> PILE_OF_POLLEN_SUSPICIOUS = ITEMS.register("pile_of_pollen_suspicious", () -> new BlockItem(BzBlocks.PILE_OF_POLLEN_SUSPICIOUS.get(), new Item.Properties()));
     public static final RegistryEntry<Item> SUGAR_INFUSED_STONE = ITEMS.register("sugar_infused_stone", () -> new BlockItem(BzBlocks.SUGAR_INFUSED_STONE.get(), new Item.Properties()));

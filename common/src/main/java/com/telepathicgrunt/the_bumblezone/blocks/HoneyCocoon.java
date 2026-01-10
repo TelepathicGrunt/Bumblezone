@@ -16,6 +16,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -363,30 +364,6 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
         super.playerDestroy(level, player, pos, state, blockEntity, itemStack);
     }
-
-    // TODO: move to item
-//    @Override
-//    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag) {
-//        super.appendHoverText(itemStack, tooltipContext, list, tooltipFlag);
-//        if (itemStack.has(DataComponents.CONTAINER_LOOT)) {
-//            return;
-//        }
-//
-//        int i = 0;
-//        int j = 0;
-//
-//        for(ItemStack itemStack2 : itemStack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).nonEmptyItems()) {
-//            ++j;
-//            if (i <= 4) {
-//                ++i;
-//                list.add(Component.translatable("container.the_bumblezone.honey_cocoon.item_count", itemStack2.getHoverName(), itemStack2.getCount()));
-//            }
-//        }
-//
-//        if (j - i > 0) {
-//            list.add(Component.translatable("container.the_bumblezone.honey_cocoon.more", j - i).withStyle(ChatFormatting.ITALIC));
-//        }
-//    }
 
     @Override
     protected boolean isPathfindable(BlockState blockState, PathComputationType pathComputationType) {

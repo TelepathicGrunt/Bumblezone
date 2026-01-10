@@ -224,7 +224,7 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof PotionCandleBlockEntity potionCandleBlockEntity) {
             ItemStack itemStack = BzItems.POTION_CANDLE.get().getDefaultInstance();
-            potionCandleBlockEntity.saveToItem(itemStack, level.registryAccess()); // TODO: find equivalent
+            itemStack.applyComponents(potionCandleBlockEntity.collectComponents());
             ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, itemStack);
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);

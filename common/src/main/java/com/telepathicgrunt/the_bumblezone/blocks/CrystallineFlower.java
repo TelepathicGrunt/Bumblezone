@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlower
 import com.telepathicgrunt.the_bumblezone.blocks.datamanagers.CrystallineFlowerDataManager;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.CrystallineFlowerData;
 import com.telepathicgrunt.the_bumblezone.menus.CrystallineFlowerMenu;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.ExperienceOrbInvoker;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
@@ -19,6 +20,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -36,7 +38,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -423,17 +427,6 @@ public class CrystallineFlower extends BaseEntityBlock {
                         finalCrystallineFlowerBlockEntity
                 ), CONTAINER_TITLE);
     }
-
-    // TODO: move to item
-//    @Override
-//    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag flag) {
-//        super.appendHoverText(itemStack, tooltipContext, tooltip, flag);
-//        CrystallineFlowerData flowerData = itemStack.getOrDefault(BzDataComponents.CRYSTALLINE_FLOWER_DATA.get(), new CrystallineFlowerData());
-//        if (flowerData.uuid().compareTo(CrystallineFlowerData.DEFAULT_UUID) != 0 && flowerData.tier() != 0) {
-//            tooltip.add(Component.translatable("item.the_bumblezone.crystalline_flower_info_1", flowerData.tier()).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.ITALIC));
-//            tooltip.add(Component.translatable("item.the_bumblezone.crystalline_flower_info_2", flowerData.experience()).withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
-//        }
-//    }
 
     private void spawnConsumeParticles(Level world, Vec3 position, RandomSource random, int particleCount) {
         ((ServerLevel)world).sendParticles(ParticleTypes.HAPPY_VILLAGER,
