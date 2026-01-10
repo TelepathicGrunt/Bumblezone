@@ -25,14 +25,18 @@ import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemAttackBlockE
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.fabric.fabricapi.BiomeModificationContextImplMixin;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.datamanager.PotionCandleRecipeSyncData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.services.fabric.FabricPlatformService;
+import mezz.jei.common.Internal;
 import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
+import net.fabricmc.fabric.api.client.recipe.v1.sync.ClientRecipeSynchronizedEvent;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
@@ -44,6 +48,7 @@ import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.fabric.api.recipe.v1.sync.RecipeSynchronization;
 import net.fabricmc.fabric.api.registry.FabricPotionBrewingBuilder;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
@@ -173,6 +178,11 @@ public class FabricEventManager {
 
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, _) ->
                 BzDatapackSyncEvent.EVENT.invoke(new BzDatapackSyncEvent(player)));
+
+        ClientRecipeSynchronizedEvent.EVENT.register((_, synchronizedRecipes) -> {
+            PotionCandleRecipeSyncData.POTION_CANDLE_FROM_SUPER_CANDLES = synchronizedRecipes.get(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles")));
+            PotionCandleRecipeSyncData.POTION_CANDLE_FROM_STRING_AND_CARVABLE_WAX = synchronizedRecipes.get(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax")));
+        });
 
         AttackBlockCallback.EVENT.register(FabricEventManager::onItemAttackBlock);
         UseBlockCallback.EVENT.register(FabricEventManager::onItemUseOnBlock);

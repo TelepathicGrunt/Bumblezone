@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.neoforge;
 
 import com.google.common.util.concurrent.AtomicDouble;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.neoforge.BzGeneralConfig;
 import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.entities.neoforge.DisableFlightAttribute;
@@ -48,6 +49,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -336,7 +338,8 @@ public class NeoForgeEventManager {
     }
 
     private static void onRecipesReceived(RecipesReceivedEvent event) {
-        PotionCandleRecipeSyncData.recipeMap = event.getRecipeMap();
+        PotionCandleRecipeSyncData.POTION_CANDLE_FROM_SUPER_CANDLES = event.getRecipeMap().byKey(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles")));
+        PotionCandleRecipeSyncData.POTION_CANDLE_FROM_STRING_AND_CARVABLE_WAX = event.getRecipeMap().byKey(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax")));
     }
 
     private static void onEntityVisibility(LivingEvent.LivingVisibilityEvent event) {

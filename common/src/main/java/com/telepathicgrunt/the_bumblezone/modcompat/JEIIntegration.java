@@ -100,15 +100,12 @@ public class JEIIntegration implements IModPlugin {
             addInfo(registration, BzFluids.HONEY_FLUID.get());
         }
 
-        // TODO: Only works on neo. See if JEI can give us recipe map for multiloader ease
-        RecipeHolder<?> recipe1 = PotionCandleRecipeSyncData.recipeMap.byKey(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles")));
-        if (recipe1 != null) {
-            registerExtraRecipes(recipe1, registration, true);
+        if (PotionCandleRecipeSyncData.POTION_CANDLE_FROM_SUPER_CANDLES != null) {
+            registerExtraRecipes(PotionCandleRecipeSyncData.POTION_CANDLE_FROM_SUPER_CANDLES, registration, true);
         }
 
-        RecipeHolder<?> recipe2 = PotionCandleRecipeSyncData.recipeMap.byKey(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax")));
-        if (recipe2 != null) {
-            registerExtraRecipes(recipe2, registration, false);
+        if (PotionCandleRecipeSyncData.POTION_CANDLE_FROM_STRING_AND_CARVABLE_WAX != null) {
+            registerExtraRecipes(PotionCandleRecipeSyncData.POTION_CANDLE_FROM_STRING_AND_CARVABLE_WAX, registration, false);
         }
 
         List<JEIQueenTradesInfo> trades = new LinkedList<>();
