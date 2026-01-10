@@ -333,8 +333,6 @@ public class NeoForgeEventManager {
                 event.getPlayerList().getPlayers().forEach(player -> BzDatapackSyncEvent.EVENT.invoke(new BzDatapackSyncEvent(player)));
             }
         }
-
-        event.sendRecipes(RecipeType.CRAFTING);
     }
 
     private static void onRecipesReceived(RecipesReceivedEvent event) {

@@ -100,6 +100,7 @@ public class JEIIntegration implements IModPlugin {
             addInfo(registration, BzFluids.HONEY_FLUID.get());
         }
 
+        // TODO: Only works on neo. See if JEI can give us recipe map for multiloader ease
         RecipeHolder<?> recipe1 = PotionCandleRecipeSyncData.recipeMap.byKey(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles")));
         if (recipe1 != null) {
             registerExtraRecipes(recipe1, registration, true);

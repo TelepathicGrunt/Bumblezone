@@ -27,7 +27,6 @@ import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseOnBlockEv
 import com.telepathicgrunt.the_bumblezone.mixin.fabric.fabricapi.BiomeModificationContextImplMixin;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.services.fabric.FabricPlatformService;
@@ -45,7 +44,6 @@ import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.fabricmc.fabric.api.recipe.v1.sync.RecipeSynchronization;
 import net.fabricmc.fabric.api.registry.FabricPotionBrewingBuilder;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
@@ -175,8 +173,6 @@ public class FabricEventManager {
 
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, _) ->
                 BzDatapackSyncEvent.EVENT.invoke(new BzDatapackSyncEvent(player)));
-
-        RecipeSynchronization.synchronizeRecipeSerializer(BzRecipes.POTION_CANDLE_RECIPE.get());
 
         AttackBlockCallback.EVENT.register(FabricEventManager::onItemAttackBlock);
         UseBlockCallback.EVENT.register(FabricEventManager::onItemUseOnBlock);
