@@ -38,7 +38,6 @@ import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.fluids.neoforge.BzFluidBottlesWrapper;
-import com.telepathicgrunt.the_bumblezone.fluids.neoforge.BzFluidBucketWrapper;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.neoforge.blocks.FireBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.neoforge.NeoForgeModChecker;
@@ -98,6 +97,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.RegisterEvent;
+import net.neoforged.neoforge.transfer.fluid.BucketResourceHandler;
 import net.neoforged.neoforge.transfer.item.WorldlyContainerWrapper;
 
 public class NeoForgeEventManager {
@@ -420,17 +420,17 @@ public class NeoForgeEventManager {
 
         event.registerItem(
                 Capabilities.Fluid.ITEM,
-                BzFluidBucketWrapper::new,
+                (_, itemAccess) -> new BucketResourceHandler(itemAccess),
                 BzItems.HONEY_BUCKET.get());
 
         event.registerItem(
                 Capabilities.Fluid.ITEM,
-                BzFluidBucketWrapper::new,
+                (_, itemAccess) -> new BucketResourceHandler(itemAccess),
                 BzItems.ROYAL_JELLY_BUCKET.get());
 
         event.registerItem(
                 Capabilities.Fluid.ITEM,
-                BzFluidBucketWrapper::new,
+                (_, itemAccess) -> new BucketResourceHandler(itemAccess),
                 BzItems.SUGAR_WATER_BUCKET.get());
 
         event.registerItem(
