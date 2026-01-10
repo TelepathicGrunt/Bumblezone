@@ -27,7 +27,7 @@ public class GlassBottleUseMixin {
                                                           Player user,
                                                           InteractionHand hand,
                                                           CallbackInfoReturnable<InteractionResult> cir,
-                                                          @Local(ordinal = 0) BlockPos blockPos)
+                                                          @Local(name = "pos") BlockPos blockPos)
     {
         ItemStack returnStack = GlassBottleBehavior.useBottleOnSugarWater(((BottleItem)(Object)this), world, user, hand, blockPos);
         if (!returnStack.isEmpty()) {

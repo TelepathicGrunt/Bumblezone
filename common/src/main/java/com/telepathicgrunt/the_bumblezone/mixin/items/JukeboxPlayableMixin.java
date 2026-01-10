@@ -21,7 +21,7 @@ public class JukeboxPlayableMixin {
      */
     @Inject(method = "addToTooltip(Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/function/Consumer;Lnet/minecraft/world/item/TooltipFlag;Lnet/minecraft/core/component/DataComponentGetter;)V",
             at = @At(value = "RETURN"))
-    private void bumblezone$showDownloadLinkForrMusicDisc(Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag tooltipFlag, DataComponentGetter dataComponentGetter, CallbackInfo ci) {
+    private void bumblezone$showDownloadLinkForMusicDisc(Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag tooltipFlag, DataComponentGetter dataComponentGetter, CallbackInfo ci) {
         BzMusicDiscsDownloadLinkTooltip.appendDownloadLinkText((JukeboxPlayable) (Object)this, context, tooltipAdder, tooltipFlag);
     }
 }

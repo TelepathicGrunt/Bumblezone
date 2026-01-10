@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.events.entity;
 
 import com.telepathicgrunt.the_bumblezone.events.base.CancellableEventHandler;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.LevelAccessor;
 
 public record BzEntitySpawnEvent(Mob entity, LevelAccessor level, boolean isBaby, EntitySpawnReason spawnType) {

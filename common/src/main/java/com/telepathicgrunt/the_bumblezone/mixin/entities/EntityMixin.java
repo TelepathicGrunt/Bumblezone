@@ -54,7 +54,7 @@ public abstract class EntityMixin implements EntityLootDropInterface {
     @ModifyReturnValue(method = "getVehicleAttachmentPoint(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/phys/Vec3;",
             at = @At(value = "RETURN"),
             require = 0)
-    private Vec3 bumblezone$beeRidingOffset(Vec3 original, @Local(index = 0, argsOnly = true) Entity vehicle) {
+    private Vec3 bumblezone$beeRidingOffset(Vec3 original, @Local(argsOnly = true) Entity vehicle) {
         return StinglessBeeHelmet.beeRidingOffset(original, vehicle, ((Entity)(Object)this));
     }
 

@@ -76,7 +76,7 @@ public abstract class LivingEntityMixin extends Entity {
     private void bumblezone$fixHeadHandParalyzedRot(CallbackInfo ci) {
         if (this.isImmobile() && ParalyzedEffect.isParalyzed((LivingEntity)(Object)this)) {
             this.yHeadRot = this.getYRot();
-            if (this.level().isClientSide) {
+            if (this.level().isClientSide()) {
                 LocalPlayerParalyzedHandFix.handleArms((LivingEntity) (Object) this);
             }
         }

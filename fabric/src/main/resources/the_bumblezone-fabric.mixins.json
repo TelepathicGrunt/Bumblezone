@@ -11,7 +11,6 @@
     "client.GuiMixin",
     "client.KeyboardHandlerMixin",
     "client.KeyMappingAccessor",
-    "client.ParticleEngineMixin",
     "client.PlayerTickClientMixin",
     "client.ReceivingLevelScreenMixin",
     "client.ScreenEffectRendererMixin",

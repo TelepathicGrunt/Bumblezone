@@ -11,8 +11,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import org.apache.commons.lang3.NotImplementedException;
-import org.jetbrains.annotations.Contract;
 
 import java.util.EnumSet;
 

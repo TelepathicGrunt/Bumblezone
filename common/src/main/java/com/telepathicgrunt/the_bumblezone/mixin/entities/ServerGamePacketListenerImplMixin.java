@@ -17,7 +17,7 @@ public class ServerGamePacketListenerImplMixin {
 
     @ModifyExpressionValue(method = "handleMoveVehicle(Lnet/minecraft/network/protocol/game/ServerboundMoveVehiclePacket;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;isSingleplayerOwner()Z"))
-    private boolean bumblezone$expandFlightSpeedCheckForBeehemoth(boolean original, @Local(ordinal = 9) double o, @Local(ordinal = 10) double p) {
+    private boolean bumblezone$expandFlightSpeedCheckForBeehemoth(boolean original, @Local(ordinal = 9) double o, @Local(name = "movedDist") double p) {
         if (!original && player.getRootVehicle() instanceof BeehemothEntity && p - o <= 300) {
             return true; // Do not send speed packet
         }

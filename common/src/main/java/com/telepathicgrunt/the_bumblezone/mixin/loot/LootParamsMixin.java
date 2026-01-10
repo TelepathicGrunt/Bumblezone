@@ -16,12 +16,12 @@ public class LootParamsMixin implements LootParamsBzVisitedLootInterface {
     Set<Identifier> bumblezone_visitedBzLootRLs = new HashSet<>();
 
     @Override
-    public Set<Identifier> getVisitedBzVisitedLootRL() {
+    public Set<Identifier> theBumblezone$getVisitedLootRL() {
         return bumblezone_visitedBzLootRLs;
     }
 
     @Override
-    public void addVisitedBzVisitedLootRL(Identifier bzVisitedLootRL) {
+    public void theBumblezone$addVisitedLootRL(Identifier bzVisitedLootRL) {
         bumblezone_visitedBzLootRLs.add(bzVisitedLootRL);
     }
 }

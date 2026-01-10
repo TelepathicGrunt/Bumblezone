@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidProperties;
-import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.SugarWaterClientProperties;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.pathfinder.PathType;

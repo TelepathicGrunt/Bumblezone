@@ -16,7 +16,7 @@ public abstract class LaterLivingEntityMixin {
             return false;
         }
 
-        if (this instanceof TemporaryPlayerData temporaryPlayerData && temporaryPlayerData.bumblezonePlayerInHeavyAir()) {
+        if (this instanceof TemporaryPlayerData temporaryPlayerData && temporaryPlayerData.theBumblezone$PlayerInHeavyAir()) {
             return false;
         }
 

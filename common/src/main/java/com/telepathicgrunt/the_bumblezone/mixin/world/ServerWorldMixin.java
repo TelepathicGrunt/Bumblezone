@@ -7,18 +7,15 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.storage.WritableLevelData;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.function.Supplier;
 
 @Mixin(ServerLevel.class)
 public abstract class ServerWorldMixin extends Level {
@@ -38,13 +35,13 @@ public abstract class ServerWorldMixin extends Level {
 			at = @At(value = "HEAD")
 	)
 	private void bumblezone$countBzDimEntities(CallbackInfo ci) {
-		if(dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)){
+		if(dimension().identifier().equals(Bumblezone.MOD_DIMENSION_ID)){
 			bumblezone$counter++;
 			if(bumblezone$counter % bumblezone$updateInterval == 0){
 				bumblezone$counter = 0;
 				ServerLevel serverLevel = (ServerLevel) (Object) this;
 				BeeDedicatedSpawning.updateEntityCount(serverLevel);
-				if(BzGeneralConfigs.specialBeeSpawning && serverLevel.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING)) {
+				if(BzGeneralConfigs.specialBeeSpawning && serverLevel.getGameRules().get(GameRules.SPAWN_MOBS)) {
 					BeeDedicatedSpawning.specialSpawnBees(serverLevel);
 				}
 			}

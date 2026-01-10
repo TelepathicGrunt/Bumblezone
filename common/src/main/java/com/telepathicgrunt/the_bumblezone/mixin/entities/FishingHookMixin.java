@@ -10,7 +10,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
@@ -41,9 +40,9 @@ public abstract class FishingHookMixin extends Entity {
 
     @ModifyReceiver(method = "catchingFish(Lnet/minecraft/core/BlockPos;)V",
             at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/world/level/block/Block;)Z"),
+                    target = "Lnet/minecraft/world/level/block/state/BlockState;is(Ljava/lang/Object;)Z"),
             require = 0)
-    private BlockState bumblezone$showSplashInSugarWater(BlockState receiverBlock, Block checker) {
+    private BlockState bumblezone$showSplashInSugarWater(BlockState receiverBlock, Object checker) {
         if(checker == Blocks.WATER &&
             (receiverBlock.is(BzFluids.SUGAR_WATER_BLOCK.get()) ||
             receiverBlock.is(BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK.get())))

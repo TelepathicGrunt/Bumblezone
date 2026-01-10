@@ -1,10 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks.datamanagers;
 
-import com.google.gson.JsonElement;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.FileToIdConverter;
@@ -17,8 +14,6 @@ import net.minecraft.world.effect.MobEffect;
 
 import java.util.Map;
 import java.util.Optional;
-
-import static com.telepathicgrunt.the_bumblezone.Bumblezone.GSON;
 
 public class PotionCandleDataManager extends SimpleJsonResourceReloadListener<PotionCandleDataManager.EffectData> {
     private static final FileToIdConverter ASSET_LISTER = FileToIdConverter.json("bz_potion_candle_data");

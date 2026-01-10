@@ -51,8 +51,8 @@ public abstract class PlayerTimeInAirMixin extends LivingEntity implements Tempo
     }
 
     @Override
-    public int bumblezonePlayerTickOffGroundInHeavyAir() { return bumblezone$ticksOffGroundInHeavyAir; }
+    public int theBumblezone$PlayerTickOffGroundInHeavyAir() { return bumblezone$ticksOffGroundInHeavyAir; }
 
     @Override
-    public boolean bumblezonePlayerInHeavyAir() { return bumblezone$InHeavyAir; }
+    public boolean theBumblezone$PlayerInHeavyAir() { return bumblezone$InHeavyAir; }
 }

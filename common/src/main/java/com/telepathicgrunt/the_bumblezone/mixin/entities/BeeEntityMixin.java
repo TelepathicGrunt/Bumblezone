@@ -44,7 +44,7 @@ public abstract class BeeEntityMixin extends Entity {
      * @reason make bees not drown in honey fluid
      */
     @Inject(method = "customServerAiStep(Lnet/minecraft/server/level/ServerLevel;)V",
-            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/entity/animal/Bee;isInWater()Z", shift = At.Shift.AFTER),
+            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/entity/animal/bee/Bee;isInWater()Z", shift = At.Shift.AFTER),
             require = 0)
     private void bumblezone$honeyFluidNotDrown(CallbackInfo ci) {
         if(this.underWaterTicks >= 10 && this.fluidHeight.getOrDefault(BzTags.SPECIAL_HONEY_LIKE, 0) > 0) {
