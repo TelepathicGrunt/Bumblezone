@@ -12,6 +12,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.JEIQuee
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.JEIQueenTradesInfo;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.QueenRandomizeTradesJEICategory;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.QueenTradesJEICategory;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.datamanager.PotionCandleRecipeSyncData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCreativeTabs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -43,6 +44,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -98,15 +100,15 @@ public class JEIIntegration implements IModPlugin {
             addInfo(registration, BzFluids.HONEY_FLUID.get());
         }
 
-        // TODO: replace with code that uses neo and fabric's recipe sync events
-        /// OnDatapackSyncEvent -> tell the event which RecipeTypes you need synced (if this is a crafting recipe then JEI already syncs it, don't worry)
-        /// RecipesReceivedEvent -> take the RecipeMap, stick it in a static field in your client stuff
-        /// then in your JEI stuff you just grab whatever from that recipemap
-//        .byKey(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles"))
-//                .ifPresent(recipe -> registerExtraRecipes(recipe, registration, true));
-//
-//        .byKey(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax"))
-//                .ifPresent(recipe -> registerExtraRecipes(recipe, registration, false));
+        RecipeHolder<?> recipe1 = PotionCandleRecipeSyncData.recipeMap.byKey(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles")));
+        if (recipe1 != null) {
+            registerExtraRecipes(recipe1, registration, true);
+        }
+
+        RecipeHolder<?> recipe2 = PotionCandleRecipeSyncData.recipeMap.byKey(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax")));
+        if (recipe2 != null) {
+            registerExtraRecipes(recipe2, registration, false);
+        }
 
         List<JEIQueenTradesInfo> trades = new LinkedList<>();
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades.isEmpty()) {

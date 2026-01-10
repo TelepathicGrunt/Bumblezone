@@ -41,10 +41,12 @@ import com.telepathicgrunt.the_bumblezone.fluids.neoforge.BzFluidBottlesWrapper;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.neoforge.blocks.FireBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.neoforge.NeoForgeModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.datamanager.PotionCandleRecipeSyncData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -59,6 +61,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
@@ -66,6 +69,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
@@ -130,6 +134,7 @@ public class NeoForgeEventManager {
         eventBus.addListener(NeoForgeEventManager::onLevelTickPost);
         eventBus.addListener(NeoForgeEventManager::onAddReloadListeners);
         eventBus.addListener(NeoForgeEventManager::onDatapackSync);
+        eventBus.addListener(NeoForgeEventManager::onRecipesReceived);
         eventBus.addListener(NeoForgeEventManager::onEntityAttacked);
         eventBus.addListener(EventPriority.HIGH, NeoForgeEventManager::onEntityAttackedHigh);
         eventBus.addListener(NeoForgeEventManager::onEntityDeath);
@@ -328,6 +333,12 @@ public class NeoForgeEventManager {
                 event.getPlayerList().getPlayers().forEach(player -> BzDatapackSyncEvent.EVENT.invoke(new BzDatapackSyncEvent(player)));
             }
         }
+
+        event.sendRecipes(RecipeType.CRAFTING);
+    }
+
+    private static void onRecipesReceived(RecipesReceivedEvent event) {
+        PotionCandleRecipeSyncData.recipeMap = event.getRecipeMap();
     }
 
     private static void onEntityVisibility(LivingEvent.LivingVisibilityEvent event) {
