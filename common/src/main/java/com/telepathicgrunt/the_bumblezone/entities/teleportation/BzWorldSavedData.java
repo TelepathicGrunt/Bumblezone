@@ -18,8 +18,12 @@ import net.minecraft.network.protocol.game.ClientboundRespawnPacket;
 import net.minecraft.network.protocol.game.ClientboundSetExperiencePacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ChunkLevel;
+import net.minecraft.server.level.DistanceManager;
+import net.minecraft.server.level.FullChunkStatus;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.Ticket;
 import net.minecraft.server.level.TicketType;
 import net.minecraft.server.players.PlayerList;
 import net.minecraft.world.InteractionHand;
@@ -347,9 +351,7 @@ public class BzWorldSavedData extends SavedData {
 
 		if(teleportedEntity != null) {
 			ChunkPos chunkpos = new ChunkPos(BlockPos.containing(destinationPosition.x, destinationPosition.y, destinationPosition.z));
-
-            // TODO: verify if this temporarily loads chunks or if it is forced load forever (which would cause memory leak)
-            destination.getChunkSource().addTicketWithRadius(TicketType.PORTAL, chunkpos, 1);
+            destination.getChunkSource().addTicket(new Ticket(TicketType.PLAYER_LOADING, ChunkLevel.byStatus(FullChunkStatus.ENTITY_TICKING)), chunkpos);
 
 			if(vehicle != null) {
 				teleportedEntity.startRiding(vehicle);

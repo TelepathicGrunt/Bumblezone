@@ -20,23 +20,4 @@ public abstract class ServerPlayerMixin {
         ThronePillarBehavior.applyFatigueAndSpawningBeeQueen(serverPlayer);
         SempiternalSanctumBehavior.runStructureMessagesAndFatigue(serverPlayer);
     }
-
-    //TODO: restore advancement functionality
-//    @Inject(method = "triggerRecipeCrafted(Lnet/minecraft/world/item/crafting/RecipeHolder;Ljava/util/List;)V",
-//            at = @At(value = "HEAD"),
-//            locals = LocalCapture.CAPTURE_FAILHARD)
-//    private void bumblezone$hookToRecipeCrafting(RecipeHolder<?> recipeHolder, List<ItemStack> list, CallbackInfo ci) {
-//        ServerPlayer serverPlayer = (ServerPlayer)(Object)this;
-//        ItemStack createdItem = recipeHolder.value().getResultItem(serverPlayer.level().registryAccess());
-//
-//        if (createdItem.getItem() instanceof BlockItem blockItem &&
-//                blockItem.getBlock() instanceof BeehiveBlock &&
-//                PlayerDataHandler.rootAdvancementDone(serverPlayer))
-//        {
-//            PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
-//                module.craftedBeehives++;
-//                BzCriterias.BEEHIVE_CRAFTED_TRIGGER.get().trigger(serverPlayer, module.craftedBeehives);
-//            });
-//        }
-//    }
 }
