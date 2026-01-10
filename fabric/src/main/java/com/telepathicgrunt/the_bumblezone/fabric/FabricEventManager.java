@@ -34,6 +34,7 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -43,16 +44,17 @@ import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.fabric.api.registry.FabricPotionBrewingBuilder;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
+import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
+import net.fabricmc.fabric.api.resource.v1.pack.PackActivationType;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.EmptyItemFluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
-import net.fabricmc.fabric.impl.resource.loader.ResourceManagerHelperImpl;
+import net.fabricmc.fabric.impl.resource.ResourceLoaderImpl;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.core.BlockPos;
@@ -63,8 +65,8 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Util;
@@ -87,12 +89,8 @@ import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguratio
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.phys.BlockHitResult;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.IdentityHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class FabricEventManager {
 
@@ -113,7 +111,7 @@ public class FabricEventManager {
     public static void init() {
         BzAddBuiltinResourcePacks.EVENT.invoke(new BzAddBuiltinResourcePacks((id, displayName, mode) -> {
             ModContainer container = getModPack(id);
-            ResourceManagerHelper.registerBuiltinResourcePack(
+            ResourceLoader.registerBuiltinPack(
                     Identifier.fromNamespaceAndPath(container.getMetadata().getId(), id.getPath()),
                     container,
                     displayName,
@@ -123,7 +121,7 @@ public class FabricEventManager {
 
         BzAddBuiltinDataPacks.EVENT.invoke(new BzAddBuiltinDataPacks((id, displayName, mode) -> {
             ModContainer container = getModPack(id);
-            ResourceManagerHelperImpl.registerBuiltinResourcePack(
+            ResourceLoaderImpl.registerBuiltinPack(
                     Identifier.fromNamespaceAndPath(container.getMetadata().getId(), id.getPath()),
                     "datapacks/" + id.getPath(),
                     container,
@@ -132,7 +130,7 @@ public class FabricEventManager {
             );
         }));
 
-        ItemGroupEvents.MODIFY_ENTRIES_ALL.register((tab, entries) ->
+        CreativeModeTabEvents.MODIFY_OUTPUT_ALL.register((tab, entries) ->
                 BzAddCreativeTabEntriesEvent.EVENT.invoke(new BzAddCreativeTabEntriesEvent(
                         TYPES.getOrDefault(BuiltInRegistries.CREATIVE_MODE_TAB.getResourceKey(tab).orElse(null), BzAddCreativeTabEntriesEvent.Type.CUSTOM),
                         tab,
@@ -145,7 +143,7 @@ public class FabricEventManager {
 
         BzRegisterDataSerializersEvent.EVENT.invoke(new BzRegisterDataSerializersEvent((id, serializer) -> EntityDataSerializers.registerSerializer(serializer)));
 
-        ServerTickEvents.END_WORLD_TICK.register(BzWorldSavedData::tick);
+        ServerTickEvents.END_LEVEL_TICK.register(BzWorldSavedData::tick);
 
         ServerLifecycleEvents.SERVER_STARTING.register((minecraftServer) -> {
             BzServerGoingToStartEvent.EVENT.invoke(new BzServerGoingToStartEvent(minecraftServer));
@@ -158,8 +156,10 @@ public class FabricEventManager {
 
         BzRegisterFlammabilityEvent.EVENT.invoke(new BzRegisterFlammabilityEvent(FlammableBlockRegistry.getDefaultInstance()::add));
 
-        BzRegisterReloadListenerEvent.EVENT.invoke(new BzRegisterReloadListenerEvent((id, listener) ->
-                ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricReloadListener(id, listener))));
+        BzRegisterReloadListenerEvent.EVENT.invoke(new BzRegisterReloadListenerEvent((id, listener) -> {
+            ResourceLoader.get(PackType.SERVER_DATA).registerReloadListener(id, listener);
+        }));
+
         BzRegisterSpawnPlacementsEvent.EVENT.invoke(new BzRegisterSpawnPlacementsEvent(FabricEventManager::registerPlacement));
         CommonLifecycleEvents.TAGS_LOADED.register((registryAccess, client) ->
                 BzTagsUpdatedEvent.EVENT.invoke(new BzTagsUpdatedEvent(registryAccess, client)));
@@ -169,9 +169,9 @@ public class FabricEventManager {
                 BzRegisterCommandsEvent.EVENT.invoke(new BzRegisterCommandsEvent(dispatcher, environment, context)));
 
         BzRegisterBrewingRecipeEvent.EVENT.invoke(new BzRegisterBrewingRecipeEvent((input, item, output) ->
-            FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> builder.registerPotionRecipe(input, Ingredient.of(item), output))));
+            FabricPotionBrewingBuilder.BUILD.register(builder -> builder.registerPotionRecipe(input, Ingredient.of(item), output))));
 
-        ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) ->
+        ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, _) ->
                 BzDatapackSyncEvent.EVENT.invoke(new BzDatapackSyncEvent(player)));
 
         AttackBlockCallback.EVENT.register(FabricEventManager::onItemAttackBlock);
@@ -233,19 +233,19 @@ public class FabricEventManager {
         SpawnPlacements.register(type, placement.spawn(), placement.height(), placement.predicate());
     }
 
-    private static ResourcePackActivationType toType(BzAddBuiltinResourcePacks.PackMode mode) {
+    private static PackActivationType toType(BzAddBuiltinResourcePacks.PackMode mode) {
         return switch (mode) {
-            case USER_CONTROLLED -> ResourcePackActivationType.NORMAL;
-            case ENABLED_BY_DEFAULT -> ResourcePackActivationType.DEFAULT_ENABLED;
-            case FORCE_ENABLED -> ResourcePackActivationType.ALWAYS_ENABLED;
+            case USER_CONTROLLED -> PackActivationType.NORMAL;
+            case ENABLED_BY_DEFAULT -> PackActivationType.DEFAULT_ENABLED;
+            case FORCE_ENABLED -> PackActivationType.ALWAYS_ENABLED;
         };
     }
 
-    private static ResourcePackActivationType toType(BzAddBuiltinDataPacks.PackMode mode) {
+    private static PackActivationType toType(BzAddBuiltinDataPacks.PackMode mode) {
         return switch (mode) {
-            case USER_CONTROLLED -> ResourcePackActivationType.NORMAL;
-            case ENABLED_BY_DEFAULT -> ResourcePackActivationType.DEFAULT_ENABLED;
-            case FORCE_ENABLED -> ResourcePackActivationType.ALWAYS_ENABLED;
+            case USER_CONTROLLED -> PackActivationType.NORMAL;
+            case ENABLED_BY_DEFAULT -> PackActivationType.DEFAULT_ENABLED;
+            case FORCE_ENABLED -> PackActivationType.ALWAYS_ENABLED;
         };
     }
 

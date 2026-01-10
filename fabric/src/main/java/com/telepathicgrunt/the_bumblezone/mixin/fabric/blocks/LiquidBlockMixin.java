@@ -25,7 +25,7 @@ public class LiquidBlockMixin {
                                                          BlockPos blockPos,
                                                          BlockState blockState,
                                                          CallbackInfoReturnable<Boolean> cir,
-                                                         @Local(ordinal = 1) BlockPos blockPos2)
+                                                         @Local(name = "neighbourPos") BlockPos blockPos2)
     {
         if (level.getFluidState(blockPos2).is(BzTags.SUGAR_WATER_FLUID)) {
             Block block = level.getFluidState(blockPos).isSource() ? Blocks.OBSIDIAN : BzBlocks.SUGAR_INFUSED_COBBLESTONE.get();

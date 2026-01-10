@@ -21,6 +21,7 @@ public class BzArrowItemMixin extends ArrowItem {
         throw new RuntimeException();
     }
 
+    // No unique or prefix so this applies the neo method
     public boolean isInfinite(ItemStack stack, ItemStack bow, Player player) {
         OptionalBoolean infiniteResult = bz$isInfinite(stack, bow, player);
         if (infiniteResult.isPresent()) {

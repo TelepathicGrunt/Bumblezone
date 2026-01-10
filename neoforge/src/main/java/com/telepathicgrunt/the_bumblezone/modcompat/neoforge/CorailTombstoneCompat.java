@@ -8,11 +8,10 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.StructureManager;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -37,7 +36,7 @@ public class CorailTombstoneCompat implements ModCompat {
             if (ModChecker.corailTombstonePresent &&
                 !event.getDrops().isEmpty() &&
                 event.getEntity() instanceof ServerPlayer serverPlayer &&
-                !serverPlayer.isFakePlayer() && !serverPlayer.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY))
+                !serverPlayer.isFakePlayer() && !serverPlayer.level().getGameRules().get(GameRules.KEEP_INVENTORY))
             {
                 if (serverPlayer.level().dimension().equals(BzDimension.BZ_WORLD_KEY)) {
 

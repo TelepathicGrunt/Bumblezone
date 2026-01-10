@@ -24,7 +24,7 @@ public class PatrolSpawnerMixin {
                                          RandomSource randomSource,
                                          boolean bl,
                                          CallbackInfoReturnable<Boolean> cir,
-                                         @Local(ordinal = 0) PatrollingMonster patrollingMonster)
+                                         @Local(name = "mob") PatrollingMonster patrollingMonster)
     {
         if (BzEntitySpawnEvent.EVENT.invoke(new BzEntitySpawnEvent(patrollingMonster, serverLevel, patrollingMonster.isBaby(), EntitySpawnReason.PATROL))) {
             cir.setReturnValue(false);

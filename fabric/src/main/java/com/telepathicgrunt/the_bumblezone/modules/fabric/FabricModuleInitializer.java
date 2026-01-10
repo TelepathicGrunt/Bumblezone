@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.modules.fabric;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistrar;

@@ -21,9 +21,6 @@ public abstract class FloatGoalMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Mob;getFluidHeight(Lnet/minecraft/tags/TagKey;)D"))
     private double bumblezone$fluidFloating(double originalFluidHeight) {
         double newFluidHeight = mob.getFluidHeight(BzTags.SPECIAL_HONEY_LIKE);
-        if (newFluidHeight > originalFluidHeight) {
-            return newFluidHeight;
-        }
-        return originalFluidHeight;
+        return Math.max(newFluidHeight, originalFluidHeight);
     }
 }

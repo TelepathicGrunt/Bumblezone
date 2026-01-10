@@ -106,8 +106,8 @@ public abstract class EntityMixin implements BzEntityHooks {
     }
 
     @Inject(method = "updateFluidOnEyes",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/material/FluidState;getTags()Ljava/util/stream/Stream;"))
-    public void bumblezone$onSetFluidInEyes_fabric(CallbackInfo ci, @Local(ordinal = 0) FluidState fluidState)
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/material/FluidState;tags()Ljava/util/stream/Stream;"))
+    public void bumblezone$onSetFluidInEyes_fabric(CallbackInfo ci, @Local(name = "fluidState") FluidState fluidState)
     {
         bz$eyeFluidState = fluidState;
     }

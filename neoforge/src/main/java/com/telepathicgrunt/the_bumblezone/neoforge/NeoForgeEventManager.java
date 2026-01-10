@@ -321,7 +321,7 @@ public class NeoForgeEventManager {
     }
 
     private static void onDatapackSync(OnDatapackSyncEvent event) {
-        if (FMLEnvironment.dist.isDedicatedServer()) {
+        if (FMLEnvironment.getDist().isDedicatedServer()) {
             if (event.getPlayer() != null) {
                 BzDatapackSyncEvent.EVENT.invoke(new BzDatapackSyncEvent(event.getPlayer()));
             }
@@ -415,38 +415,39 @@ public class NeoForgeEventManager {
 
     public static void registerBumblezoneCapProviders(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
-                Capabilities.ItemHandler.BLOCK,
+                Capabilities.Item.BLOCK,
                 BzBlockEntities.HONEY_COCOON.get(),
                 (honeyCocoon, side) -> new WorldlyContainerWrapper(honeyCocoon, Direction.UP));
 
+        // TODO: Adapt to new neo api
         event.registerItem(
-                Capabilities.FluidHandler.ITEM,
+                Capabilities.Fluid.ITEM,
                 (stack, ctx) -> new BzFluidBucketWrapper(stack),
                 BzItems.HONEY_BUCKET.get());
 
         event.registerItem(
-                Capabilities.FluidHandler.ITEM,
+                Capabilities.Fluid.ITEM,
                 (stack, ctx) -> new BzFluidBucketWrapper(stack),
                 BzItems.ROYAL_JELLY_BUCKET.get());
 
         event.registerItem(
-                Capabilities.FluidHandler.ITEM,
+                Capabilities.Fluid.ITEM,
                 (stack, ctx) -> new BzFluidBucketWrapper(stack),
                 BzItems.SUGAR_WATER_BUCKET.get());
 
         event.registerItem(
-                Capabilities.FluidHandler.ITEM,
+                Capabilities.Fluid.ITEM,
                 (stack, ctx) -> new BzFluidBottlesWrapper(stack, BzFluids.ROYAL_JELLY_FLUID.get()),
                 BzItems.ROYAL_JELLY_BOTTLE.get());
 
         event.registerItem(
-                Capabilities.FluidHandler.ITEM,
+                Capabilities.Fluid.ITEM,
                 (stack, ctx) -> new BzFluidBottlesWrapper(stack, BzFluids.SUGAR_WATER_FLUID.get()),
                 BzItems.SUGAR_WATER_BOTTLE.get());
 
         if (BzGeneralConfig.bzHoneyFluidFromHoneyBottles.get()) {
             event.registerItem(
-                    Capabilities.FluidHandler.ITEM,
+                    Capabilities.Fluid.ITEM,
                     (stack, ctx) -> new BzFluidBottlesWrapper(stack, BzFluids.HONEY_FLUID.get()),
                     Items.HONEY_BOTTLE);
         }

@@ -8,5 +8,5 @@ import net.minecraft.client.KeyMapping;
 public interface ClientPlatformService {
     ClientPlatformService INSTANCE = GeneralUtils.loadService(ClientPlatformService.class);
 
-    KeyMapping createKey(String display, BeehemothControls.KeyConflict conflict, InputConstants.Key key, String category);
+    KeyMapping createKey(String display, BeehemothControls.KeyConflict conflict, InputConstants.Key key, KeyMapping.Category category);
 }

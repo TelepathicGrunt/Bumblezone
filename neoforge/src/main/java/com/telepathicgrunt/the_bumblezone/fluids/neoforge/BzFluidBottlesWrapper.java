@@ -6,6 +6,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 
+// TODO: adapt to new neo api
 public class BzFluidBottlesWrapper implements IFluidHandlerItem {
     /**
      * The number of fluid units that a bottle represents.

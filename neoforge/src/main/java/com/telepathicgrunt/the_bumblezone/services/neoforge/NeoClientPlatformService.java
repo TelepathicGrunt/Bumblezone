@@ -8,7 +8,7 @@ import net.neoforged.neoforge.client.settings.IKeyConflictContext;
 
 public class NeoClientPlatformService implements ClientPlatformService {
     @Override
-    public KeyMapping createKey(String display, BeehemothControls.KeyConflict conflict, InputConstants.Key key, String category) {
+    public KeyMapping createKey(String display, BeehemothControls.KeyConflict conflict, InputConstants.Key key, KeyMapping.Category category) {
         return new KeyMapping(display, new ForgeConflict(conflict), key, category);
     }
 

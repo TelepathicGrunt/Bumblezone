@@ -9,6 +9,7 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 
+// TODO: adapt to new neo api
 public class BzFluidBucketWrapper implements IFluidHandlerItem {
     protected ItemStack container;
 

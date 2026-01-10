@@ -8,7 +8,7 @@ import net.minecraft.client.KeyMapping;
 
 public class FabricClientPlatformService implements ClientPlatformService {
     @Override
-    public KeyMapping createKey(String display, BeehemothControls.KeyConflict conflict, InputConstants.Key key, String category) {
+    public KeyMapping createKey(String display, BeehemothControls.KeyConflict conflict, InputConstants.Key key, KeyMapping.Category category) {
         KeyMapping oldMapping = KeyMappingAccessor.bumblezone$getMAP().get(key);
         KeyMapping keyMapping = new KeyMapping(display, key.getValue(), category);
         KeyMappingAccessor.bumblezone$getMAP().put(key, oldMapping);

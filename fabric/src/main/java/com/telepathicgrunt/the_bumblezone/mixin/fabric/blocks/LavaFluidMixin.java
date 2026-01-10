@@ -18,7 +18,7 @@ public class LavaFluidMixin {
             require = 0,
             index = 1)
     private BlockState thebumblezone_sugarWaterLavaInteraction2(BlockState blockState,
-                                                                @Local(ordinal = 1) FluidState fluidState2)
+                                                                @Local(name = "fluidState") FluidState fluidState2)
     {
         if (fluidState2.is(BzTags.SUGAR_WATER_FLUID)) {
             return BzBlocks.SUGAR_INFUSED_STONE.get().defaultBlockState();

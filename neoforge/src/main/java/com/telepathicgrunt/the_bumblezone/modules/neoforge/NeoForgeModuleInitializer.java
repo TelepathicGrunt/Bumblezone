@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.modules.neoforge;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.neoforge.BzAttachmentTypes;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;

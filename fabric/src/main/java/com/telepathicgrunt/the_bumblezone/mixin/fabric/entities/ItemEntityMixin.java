@@ -16,7 +16,7 @@ public class ItemEntityMixin {
     @Inject(method = "playerTouch",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;take(Lnet/minecraft/world/entity/Entity;I)V")
     )
-    private void bumelzone$onPlayerTouch(Player player, CallbackInfo ci, @Local(ordinal = 0) ItemStack stack) {
+    private void bumelzone$onPlayerTouch(Player player, CallbackInfo ci, @Local(name = "itemStack") ItemStack stack) {
         BzPlayerPickupItemEvent.EVENT.invoke(new BzPlayerPickupItemEvent(player, stack.copy()));
     }
 }

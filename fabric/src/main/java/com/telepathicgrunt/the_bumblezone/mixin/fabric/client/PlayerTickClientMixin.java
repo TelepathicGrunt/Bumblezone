@@ -1,8 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.client;
 
 import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
-import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
-import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;

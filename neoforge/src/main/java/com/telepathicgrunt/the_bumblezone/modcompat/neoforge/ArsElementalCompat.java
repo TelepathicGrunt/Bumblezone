@@ -4,7 +4,6 @@ import alexthw.ars_elemental.common.glyphs.EffectConjureTerrain;
 import alexthw.ars_elemental.common.glyphs.MethodArcProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import com.google.common.collect.Sets;
-import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
 import com.hollingsworth.arsnouveau.api.spell.AbstractCastMethod;
 import com.hollingsworth.arsnouveau.api.spell.AbstractEffect;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;

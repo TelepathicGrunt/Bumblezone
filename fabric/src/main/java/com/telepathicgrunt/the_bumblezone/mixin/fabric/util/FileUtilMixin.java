@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.util;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import net.minecraft.FileUtil;
+import net.minecraft.util.FileUtil;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -16,7 +16,7 @@ public abstract class FileUtilMixin {
     private static final Pattern RESERVED_WINDOWS_FILENAMES_BUMBLEZONE = Pattern.compile(".*\\.|(?:CON|PRN|AUX|NUL|CLOCK\\$|CONIN\\$|CONOUT\\$|(?:COM|LPT)[¹²³0-9])(?:\\..*)?", Pattern.CASE_INSENSITIVE);
 
     @ModifyExpressionValue(method = "isPathPartPortable(Ljava/lang/String;)Z",
-            at = @At(value = "FIELD", target = "net/minecraft/FileUtil.RESERVED_WINDOWS_FILENAMES:Ljava/util/regex/Pattern;", opcode = Opcodes.GETSTATIC, ordinal = 0))
+            at = @At(value = "FIELD", target = "net/minecraft/util/FileUtil.RESERVED_WINDOWS_FILENAMES:Ljava/util/regex/Pattern;", opcode = Opcodes.GETSTATIC, ordinal = 0))
     private static Pattern bumblezone$fixMC268617(Pattern original) {
         return RESERVED_WINDOWS_FILENAMES_BUMBLEZONE;
     }

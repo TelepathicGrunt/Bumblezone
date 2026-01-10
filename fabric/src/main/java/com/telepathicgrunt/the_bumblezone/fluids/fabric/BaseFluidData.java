@@ -10,6 +10,7 @@ import net.minecraft.world.level.material.FlowingFluid;
 
 import java.util.function.Supplier;
 
+// TODO: fix when Resourcefullib updates
 public class BaseFluidData implements FluidData {
 
     private Supplier<? extends FlowingFluid> stillFluid;
