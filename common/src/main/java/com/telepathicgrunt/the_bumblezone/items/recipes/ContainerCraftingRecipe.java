@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items.recipes;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
@@ -9,8 +8,8 @@ import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -18,9 +17,12 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import org.jspecify.annotations.Nullable;
 
+import java.util.List;
 import java.util.Map;
 
 import static java.util.Map.entry;
@@ -29,7 +31,11 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
     private final String group;
     private final CraftingBookCategory category;
     private final ItemStack result;
-    private final NonNullList<Ingredient> ingredients;
+    private final List<Ingredient> ingredients;
+
+    @Nullable
+    private PlacementInfo placementInfo;
+
     public static final Map<Item, Item> HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET = Map.ofEntries(
             entry(Items.POWDER_SNOW_BUCKET, Items.BUCKET),
             entry(Items.AXOLOTL_BUCKET, Items.BUCKET),
@@ -47,20 +53,29 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
             entry(Items.EXPERIENCE_BOTTLE, Items.GLASS_BOTTLE)
     );
 
-    public ContainerCraftingRecipe(String groupIn, CraftingBookCategory craftingBookCategory, ItemStack recipeOutputIn, NonNullList<Ingredient> recipeItemsIn) {
-        this.group = groupIn;
-        this.category = craftingBookCategory;
-        this.result = recipeOutputIn;
-        this.ingredients = recipeItemsIn;
+    public ContainerCraftingRecipe(String group, CraftingBookCategory category, ItemStack result, List<Ingredient> ingredients) {
+        this.group = group;
+        this.category = category;
+        this.result = result;
+        this.ingredients = ingredients;
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<ContainerCraftingRecipe> getSerializer() {
         return BzRecipes.CONTAINER_CRAFTING_RECIPE.get();
     }
 
     @Override
-    public String getGroup() {
+    public PlacementInfo placementInfo() {
+        if (this.placementInfo == null) {
+            this.placementInfo = PlacementInfo.create(this.ingredients);
+        }
+
+        return this.placementInfo;
+    }
+
+    @Override
+    public String group() {
         return this.group;
     }
 
@@ -70,36 +85,19 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
     }
 
     @Override
-    public ItemStack getResultItem(HolderLookup.Provider provider) {
-        return this.result;
-    }
-
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return this.ingredients;
-    }
-
-    @Override
-    public boolean matches(CraftingInput craftingInput, Level level) {
-        StackedContents stackedContents = new StackedContents();
-        int i = 0;
-        for (int j = 0; j < craftingInput.size(); ++j) {
-            ItemStack itemStack = craftingInput.getItem(j);
-            if (itemStack.isEmpty()) continue;
-            ++i;
-            stackedContents.accountStack(itemStack, 1);
+    public boolean matches(CraftingInput input, Level level) {
+        if (input.ingredientCount() != this.ingredients.size()) {
+            return false;
+        } else {
+            return input.size() == 1 && this.ingredients.size() == 1
+                    ? this.ingredients.getFirst().test(input.getItem(0))
+                    : input.stackedContents().canCraft(this, null);
         }
-        return i == this.ingredients.size() && stackedContents.canCraft(this, null);
     }
 
     @Override
     public ItemStack assemble(CraftingInput recipeInput, HolderLookup.Provider provider) {
         return this.result.copy();
-    }
-
-    @Override
-    public boolean canCraftInDimensions(int i, int j) {
-        return i * j >= this.ingredients.size();
     }
 
     @Override
@@ -137,20 +135,22 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
 
     public static class Serializer implements RecipeSerializer<ContainerCraftingRecipe> {
         private static final MapCodec<ContainerCraftingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                Codec.STRING.fieldOf("group").forGetter(shapelessRecipe -> shapelessRecipe.group),
-                CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(shapelessRecipe -> shapelessRecipe.category),
-                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(shapelessRecipe -> shapelessRecipe.result),
-                Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(list -> {
-                    Ingredient[] ingredients = list.toArray(Ingredient[]::new);
-                    if (ingredients.length == 0) {
-                        return DataResult.error(() -> "No ingredients for shapeless recipe");
-                    }
-                    return DataResult.success(NonNullList.of(Ingredient.EMPTY, ingredients));
-                }, DataResult::success).forGetter(shapelessRecipe -> shapelessRecipe.ingredients)
+                Codec.STRING.optionalFieldOf("group", "").forGetter(o -> o.group),
+                CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(o -> o.category),
+                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(o -> o.result),
+                Ingredient.CODEC.listOf(1, 9).fieldOf("ingredients").forGetter(o -> o.ingredients)
         ).apply(instance, ContainerCraftingRecipe::new));
 
-        public static final StreamCodec<RegistryFriendlyByteBuf, ContainerCraftingRecipe> STREAM_CODEC = StreamCodec.of(
-                ContainerCraftingRecipe.Serializer::toNetwork, ContainerCraftingRecipe.Serializer::fromNetwork
+        public static final StreamCodec<RegistryFriendlyByteBuf, ContainerCraftingRecipe> STREAM_CODEC = StreamCodec.composite(
+                ByteBufCodecs.STRING_UTF8,
+                r -> r.group,
+                CraftingBookCategory.STREAM_CODEC,
+                r -> r.category,
+                ItemStack.STREAM_CODEC,
+                r -> r.result,
+                Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()),
+                r -> r.ingredients,
+                ContainerCraftingRecipe::new
         );
 
         @Override
@@ -161,32 +161,6 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
         @Override
         public StreamCodec<RegistryFriendlyByteBuf, ContainerCraftingRecipe> streamCodec() {
             return STREAM_CODEC;
-        }
-
-        public static ContainerCraftingRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-            String s = buffer.readUtf(32767);
-            CraftingBookCategory craftingBookCategory = buffer.readEnum(CraftingBookCategory.class);
-            int i = buffer.readVarInt();
-            NonNullList<Ingredient> defaultedList = NonNullList.withSize(i, Ingredient.EMPTY);
-
-            for (int j = 0; j < defaultedList.size(); ++j) {
-                defaultedList.set(j, Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
-            }
-
-            ItemStack itemstack = ItemStack.STREAM_CODEC.decode(buffer);
-            return new ContainerCraftingRecipe(s, craftingBookCategory, itemstack, defaultedList);
-        }
-
-        public static void toNetwork(RegistryFriendlyByteBuf buffer, ContainerCraftingRecipe recipe) {
-            buffer.writeUtf(recipe.group);
-            buffer.writeEnum(recipe.category());
-            buffer.writeVarInt(recipe.getIngredients().size());
-
-            for (Ingredient ingredient : recipe.getIngredients()) {
-                Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
-            }
-
-            ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
         }
     }
 }

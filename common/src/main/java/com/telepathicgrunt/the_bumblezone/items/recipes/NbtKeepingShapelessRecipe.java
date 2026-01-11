@@ -9,7 +9,9 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.Item;
@@ -17,62 +19,45 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
+import org.jspecify.annotations.Nullable;
+
+import java.util.List;
 
 public class NbtKeepingShapelessRecipe implements CraftingRecipe {
 
     private final String group;
     private final CraftingBookCategory category;
     private final ItemStack result;
-    private final NonNullList<Ingredient> ingredients;
+    private final List<Ingredient> ingredients;
     private final Item itemToKeepNbtOf;
 
-    public NbtKeepingShapelessRecipe(String string, CraftingBookCategory craftingBookCategory, ItemStack itemStack, NonNullList<Ingredient> nonNullList, Item itemToKeepNbtOf) {
-        this.group = string;
-        this.category = craftingBookCategory;
-        this.result = itemStack;
-        this.ingredients = nonNullList;
+    @Nullable
+    private PlacementInfo placementInfo;
+
+    public NbtKeepingShapelessRecipe(String group, CraftingBookCategory category, ItemStack result, List<Ingredient> ingredients, Item itemToKeepNbtOf) {
+        this.group = group;
+        this.category = category;
+        this.result = result;
+        this.ingredients = ingredients;
         this.itemToKeepNbtOf = itemToKeepNbtOf;
     }
 
     @Override
-    public String getGroup() {
-        return this.group;
-    }
-
-    @Override
-    public CraftingBookCategory category() {
-        return this.category;
-    }
-
-    @Override
-    public ItemStack getResultItem(HolderLookup.Provider provider) {
-        return this.result;
-    }
-
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return this.ingredients;
-    }
-
-    @Override
-    public boolean matches(CraftingInput craftingContainer, Level level) {
-        StackedContents stackedContents = new StackedContents();
-        int i = 0;
-        for (int j = 0; j < craftingContainer.size(); ++j) {
-            ItemStack itemStack = craftingContainer.getItem(j);
-            if (itemStack.isEmpty()) continue;
-            ++i;
-            stackedContents.accountStack(itemStack, 1);
+    public boolean matches(CraftingInput input, Level level) {
+        if (input.ingredientCount() != this.ingredients.size()) {
+            return false;
         }
-        return i == this.ingredients.size() && stackedContents.canCraft(this, null);
-    }
-
-    @Override
-    public boolean canCraftInDimensions(int i, int j) {
-        return i * j >= this.ingredients.size();
+        else {
+            return input.size() == 1 && this.ingredients.size() == 1
+                    ? this.ingredients.getFirst().test(input.getItem(0))
+                    : input.stackedContents().canCraft(this, null);
+        }
     }
 
     @Override
@@ -89,27 +74,45 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<NbtKeepingShapelessRecipe> getSerializer() {
         return BzRecipes.NBT_KEEPING_SHAPELESS_RECIPE.get();
+    }
+
+    @Override
+    public CraftingBookCategory category() {
+        return this.category;
+    }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        if (this.placementInfo == null) {
+            this.placementInfo = PlacementInfo.create(this.ingredients);
+        }
+
+        return this.placementInfo;
     }
 
     public static class Serializer implements RecipeSerializer<NbtKeepingShapelessRecipe> {
         private static final MapCodec<NbtKeepingShapelessRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                Codec.STRING.fieldOf("group").forGetter(shapelessRecipe -> shapelessRecipe.group),
-                CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(shapelessRecipe -> shapelessRecipe.category),
-                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(shapelessRecipe -> shapelessRecipe.result),
-                Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(list -> {
-                    Ingredient[] ingredients = list.toArray(Ingredient[]::new);
-                    if (ingredients.length == 0) {
-                        return DataResult.error(() -> "No ingredients for shapeless recipe");
-                    }
-                    return DataResult.success(NonNullList.of(Ingredient.EMPTY, ingredients));
-                }, DataResult::success).forGetter(shapelessRecipe -> shapelessRecipe.ingredients),
-                BuiltInRegistries.ITEM.byNameCodec().fieldOf("keep_nbt_of").forGetter(shapelessRecipe -> shapelessRecipe.itemToKeepNbtOf)
+                Codec.STRING.optionalFieldOf("group", "").forGetter(o -> o.group),
+                CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(o -> o.category),
+                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(o -> o.result),
+                Ingredient.CODEC.listOf(1, 9).fieldOf("ingredients").forGetter(o -> o.ingredients),
+                BuiltInRegistries.ITEM.byNameCodec().fieldOf("keep_nbt_of").forGetter(o -> o.itemToKeepNbtOf)
         ).apply(instance, NbtKeepingShapelessRecipe::new));
 
-        public static final StreamCodec<RegistryFriendlyByteBuf, NbtKeepingShapelessRecipe> STREAM_CODEC = StreamCodec.of(
-                NbtKeepingShapelessRecipe.Serializer::toNetwork, NbtKeepingShapelessRecipe.Serializer::fromNetwork
+        public static final StreamCodec<RegistryFriendlyByteBuf, NbtKeepingShapelessRecipe> STREAM_CODEC = StreamCodec.composite(
+                ByteBufCodecs.STRING_UTF8,
+                r -> r.group,
+                CraftingBookCategory.STREAM_CODEC,
+                r -> r.category,
+                ItemStack.STREAM_CODEC,
+                r -> r.result,
+                Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()),
+                r -> r.ingredients,
+                ByteBufCodecs.registry(Registries.ITEM),
+                r -> r.itemToKeepNbtOf,
+                NbtKeepingShapelessRecipe::new
         );
 
         @Override
@@ -120,28 +123,6 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
         @Override
         public StreamCodec<RegistryFriendlyByteBuf, NbtKeepingShapelessRecipe> streamCodec() {
             return STREAM_CODEC;
-        }
-
-        public static NbtKeepingShapelessRecipe fromNetwork(RegistryFriendlyByteBuf friendlyByteBuf) {
-            String string = friendlyByteBuf.readUtf();
-            CraftingBookCategory craftingBookCategory = friendlyByteBuf.readEnum(CraftingBookCategory.class);
-            int ingredientCount = friendlyByteBuf.readVarInt();
-            NonNullList<Ingredient> ingredientNonNullList = NonNullList.withSize(ingredientCount, Ingredient.EMPTY);
-            ingredientNonNullList.replaceAll(ignored -> Ingredient.CONTENTS_STREAM_CODEC.decode(friendlyByteBuf));
-            ItemStack itemStack = ItemStack.STREAM_CODEC.decode(friendlyByteBuf);
-            Item item = ItemStack.STREAM_CODEC.decode(friendlyByteBuf).getItem();
-            return new NbtKeepingShapelessRecipe(string, craftingBookCategory, itemStack, ingredientNonNullList, item);
-        }
-
-        public static void toNetwork(RegistryFriendlyByteBuf friendlyByteBuf, NbtKeepingShapelessRecipe shapelessRecipe) {
-            friendlyByteBuf.writeUtf(shapelessRecipe.getGroup());
-            friendlyByteBuf.writeEnum(shapelessRecipe.category());
-            friendlyByteBuf.writeVarInt(shapelessRecipe.getIngredients().size());
-            for (Ingredient ingredient : shapelessRecipe.getIngredients()) {
-                Ingredient.CONTENTS_STREAM_CODEC.encode(friendlyByteBuf, ingredient);
-            }
-            ItemStack.STREAM_CODEC.encode(friendlyByteBuf, shapelessRecipe.getResultItem(RegistryAccess.EMPTY));
-            ItemStack.STREAM_CODEC.encode(friendlyByteBuf, shapelessRecipe.itemToKeepNbtOf.getDefaultInstance());
         }
     }
 }
