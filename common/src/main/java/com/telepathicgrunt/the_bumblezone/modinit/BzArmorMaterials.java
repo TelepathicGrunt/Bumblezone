@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
+import com.google.common.collect.Maps;
 import com.teamresourceful.resourcefullib.common.registry.HolderRegistryEntry;
 import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistries;
 import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
@@ -9,51 +10,33 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Util;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.EquipmentAssets;
 
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class BzArmorMaterials {
-    public static final ResourcefulRegistry<ArmorMaterial> ARMOR_MATERIAL = ResourcefulRegistries.create(BuiltInRegistries.ARMOR_MATERIAL, Bumblezone.MODID);
+    public static ArmorMaterial BEE_MATERIAL = new ArmorMaterial(
+            24,
+            makeDefense(1, 3, 4, 2, 4),
+            25,
+            SoundEvents.ARMOR_EQUIP_LEATHER,
+            0.5F,
+            0.0F,
+            BzTags.BEE_ARMOR_REPAIR_ITEMS,
+            EquipmentAssets.LEATHER
+    );
 
-    public static final HolderRegistryEntry<ArmorMaterial> BEE_MATERIAL = ARMOR_MATERIAL.registerHolder(
-            "bee_material", () -> createArmorMaterial(
-                    "bee_material",
-                    Util.make(new EnumMap<>(ArmorItem.Type.class), enumMap -> {
-                        enumMap.put(ArmorItem.Type.BOOTS, 1);
-                        enumMap.put(ArmorItem.Type.LEGGINGS, 3);
-                        enumMap.put(ArmorItem.Type.CHESTPLATE, 4);
-                        enumMap.put(ArmorItem.Type.HELMET, 2);
-                        enumMap.put(ArmorItem.Type.BODY, 4);
-                    }),
-                    25,
-                    SoundEvents.ARMOR_EQUIP_LEATHER,
-                    0.5F,
-                    0.0F,
-                    () -> Ingredient.of(BzTags.BEE_ARMOR_REPAIR_ITEMS)));
-
-
-    private static ArmorMaterial createArmorMaterial(
-            String layerName,
-            EnumMap<ArmorItem.Type, Integer> enumMap,
-            int enchantmentValue,
-            Holder<SoundEvent> equipSound,
-            float toughness,
-            float knockback,
-            Supplier<Ingredient> repairIngredient
-    ) {
-        EnumMap<ArmorItem.Type, Integer> defenseMap = new EnumMap<>(ArmorItem.Type.class);
-
-        for(ArmorItem.Type type : ArmorItem.Type.values()) {
-            defenseMap.put(type, enumMap.get(type));
-        }
-
-        List<ArmorMaterial.Layer> layers = List.of(new ArmorMaterial.Layer(Identifier.tryParse(layerName)));
-
-        return new ArmorMaterial(defenseMap, enchantmentValue, equipSound, repairIngredient, layers, toughness, knockback);
+    private static Map<ArmorType, Integer> makeDefense(int boots, int legs, int chest, int helm, int body) {
+        return Maps.newEnumMap(
+                Map.of(ArmorType.BOOTS, boots, ArmorType.LEGGINGS, legs, ArmorType.CHESTPLATE, chest, ArmorType.HELMET, helm, ArmorType.BODY, body)
+        );
     }
 }

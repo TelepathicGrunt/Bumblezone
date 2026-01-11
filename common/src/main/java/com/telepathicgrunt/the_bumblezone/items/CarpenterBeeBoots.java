@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.items.datacomponents.CarpenterBeeBootsHangingData;
 import com.telepathicgrunt.the_bumblezone.items.datacomponents.CarpenterBeeBootsMiningData;
+import com.telepathicgrunt.the_bumblezone.modinit.BzArmorMaterials;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -25,6 +26,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -37,10 +39,10 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
     public CarpenterBeeBoots(Properties properties, int variant) {
         super(properties
                 .stacksTo(1)
-                .durability(312)
                 .repairable(BzTags.BEE_ARMOR_REPAIR_ITEMS)
                 .component(BzDataComponents.CARPENTER_BEE_BOOTS_MINING_DATA.get(), new CarpenterBeeBootsMiningData())
                 .component(BzDataComponents.CARPENTER_BEE_BOOTS_HANGING_DATA.get(), new CarpenterBeeBootsHangingData())
+                .humanoidArmor(BzArmorMaterials.BEE_MATERIAL, ArmorType.BOOTS)
                 .rarity(Rarity.UNCOMMON),
             variant,
             false);

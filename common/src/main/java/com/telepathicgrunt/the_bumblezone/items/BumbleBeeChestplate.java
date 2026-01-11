@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.client.LivingEntityFlyingSoundInstance
 import com.telepathicgrunt.the_bumblezone.items.datacomponents.BumbleBeeChestplateData;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.gameplay.ServerGamePacketListenerImplAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzArmorMaterials;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -29,9 +31,9 @@ public class BumbleBeeChestplate extends BeeArmor {
     public BumbleBeeChestplate(Properties properties, boolean transTexture, int variant) {
         super(properties
                 .stacksTo(1)
-                .durability(384)
                 .repairable(BzTags.BEE_ARMOR_REPAIR_ITEMS)
                 .component(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get(), new BumbleBeeChestplateData())
+                .humanoidArmor(BzArmorMaterials.BEE_MATERIAL, ArmorType.CHESTPLATE)
                 .rarity(Rarity.UNCOMMON),
             variant,
             transTexture);

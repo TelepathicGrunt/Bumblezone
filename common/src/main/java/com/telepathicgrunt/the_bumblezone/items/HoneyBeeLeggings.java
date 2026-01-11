@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.items.datacomponents.HoneyBeeLeggingsData;
 import com.telepathicgrunt.the_bumblezone.mixin.effects.MobEffectInstanceAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzArmorMaterials;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
@@ -22,6 +23,7 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -32,9 +34,9 @@ public class HoneyBeeLeggings extends BeeArmor {
     public HoneyBeeLeggings(Properties properties, int variant) {
         super(properties
                 .stacksTo(1)
-                .durability(360)
                 .repairable(BzTags.BEE_ARMOR_REPAIR_ITEMS)
                 .component(BzDataComponents.HONEY_BEE_LEGGINGS_DATA.get(), new HoneyBeeLeggingsData())
+                .humanoidArmor(BzArmorMaterials.BEE_MATERIAL, ArmorType.LEGGINGS)
                 .rarity(Rarity.UNCOMMON),
             variant,
             false);

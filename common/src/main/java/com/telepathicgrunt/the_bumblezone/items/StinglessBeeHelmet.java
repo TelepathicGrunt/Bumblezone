@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.items.datacomponents.StinglessBeeHelmetData;
 import com.telepathicgrunt.the_bumblezone.mixin.effects.MobEffectInstanceAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzArmorMaterials;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -26,6 +27,8 @@ import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.equipment.ArmorMaterials;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -41,8 +44,9 @@ public class StinglessBeeHelmet extends BeeArmor {
         super(properties
                 .stacksTo(1)
                 .repairable(BzTags.BEE_ARMOR_REPAIR_ITEMS)
-                .rarity(Rarity.UNCOMMON).durability(264)
-                .component(BzDataComponents.STINGLESS_BEE_HELMET_DATA.get(), new StinglessBeeHelmetData()),
+                .component(BzDataComponents.STINGLESS_BEE_HELMET_DATA.get(), new StinglessBeeHelmetData())
+                .humanoidArmor(BzArmorMaterials.BEE_MATERIAL, ArmorType.HELMET)
+                .rarity(Rarity.UNCOMMON),
             variant,
             false);
     }
