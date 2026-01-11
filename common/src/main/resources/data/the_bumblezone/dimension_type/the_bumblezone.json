@@ -1,19 +1,37 @@
 {
-  "effects": "the_bumblezone:dimension_special_effects",
-  "ultrawarm": false,
-  "natural": true,
+  "attributes": {
+    "minecraft:gameplay/bed_rule": {
+      "can_set_spawn": "always",
+      "can_sleep": "always",
+      "explodes": false,
+      "error_message": {
+        "translate": "block.minecraft.bed.no_sleep"
+      }
+    },
+    "minecraft:gameplay/can_start_raid": false,
+    "minecraft:gameplay/fast_lava": false,
+    "minecraft:gameplay/piglins_zombify": false,
+    "minecraft:gameplay/respawn_anchor_works": false,
+    "minecraft:gameplay/sky_light_level": 0.0,
+    "minecraft:gameplay/snow_golem_melts": true,
+    "minecraft:gameplay/water_evaporates": false,
+    "minecraft:visual/ambient_light_color": "#0a0a0a",
+    "minecraft:visual/fog_end_distance": 150.0,
+    "minecraft:visual/fog_start_distance": 80.0,
+    "minecraft:visual/sky_light_color": "#ffc000",
+    "minecraft:visual/sky_light_factor": 0.0
+  },
   "ambient_light": 0.15,
+  "cardinal_light": "nether",
   "has_skylight": false,
   "has_ceiling": true,
+  "skybox": "none",
   "infiniburn": "#minecraft:infiniburn_overworld",
   "logical_height" : 256,
   "height" : 256,
   "min_y": 0,
-  "has_raids" : false,
-  "respawn_anchor_works": false,
-  "bed_works" : true,
-  "fixed_time" : 6000,
-  "piglin_safe" : true,
+  "has_fixed_time" : false,
+  "timelines": "#minecraft:in_overworld",
   "coordinate_scale": 4.0,
   "monster_spawn_block_light_limit": 12,
   "monster_spawn_light_level": 11

@@ -15,28 +15,23 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Consumer;
 
-public class BzDimensionSpecialEffects extends DimensionSpecialEffects {
-    public BzDimensionSpecialEffects() {
-        super(SkyType.NONE, false, false);
+public class BzDimensionSpecialEffects {
+
+    // TODO: Hook up to dimension rendering
+    public static Vec3 getBrightnessDependentFogColor(Vec3 color, float sunHeight) {
+        return BzDimensionSpecialEffects.getFogColor().scale(0.003921568627451); // Divide by 255 to make values between 0 and 1
     }
 
-    @Override
-    public Vec3 getBrightnessDependentFogColor(Vec3 color, float sunHeight) {
-        return getFogColor().scale(0.003921568627451); // Divide by 255 to make values between 0 and 1
-    }
-
-    @Override
-    public boolean isFoggyAt(int camX, int camY) {
+    public static boolean isFoggyAt(int camX, int camY) {
         return BzDimensionConfigs.enableDimensionFog;
     }
-
 
     public static float REDDISH_FOG_TINT = 0;
 
     /**
      * Returns fog color based on if player has wrath effect or not
      */
-    public Vec3 getFogColor() {
+    public static Vec3 getFogColor() {
         float colorFactor = 0.75f;
         /*
          * The sky will be turned to midnight when brightness is below 50. This lets us get the

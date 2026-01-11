@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
+    "the_bumblezone:cosmic_crystal",
+    "the_bumblezone:sentry_watcher_crushing",
     "the_bumblezone:dirt_pellet",
     "the_bumblezone:event_dirt_pellet"
   ]
