@@ -70,14 +70,14 @@ public class EntityTeleportationHookup {
                 return;
             }
 
-            List<PoiRecord> poiInRange = serverLevel.getPoiManager().getInSquare(
+            List<PoiRecord> poiInRange = serverLevel.getPoiManager().getInRange(
                     (pointOfInterestType) -> pointOfInterestType.is(BzTags.IS_NEAR_BEEHIVE_ADVANCEMENT_TRIGGER_POI),
                     serverPlayer.blockPosition(),
-                    3,
+                    5,
                     PoiManager.Occupancy.ANY
                 ).toList();
 
-            if (poiInRange.size() > 0) {
+            if (!poiInRange.isEmpty()) {
                 BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.trigger(serverPlayer);
 
                 if (BzDimensionConfigs.enableInitialWelcomeMessage) {
