@@ -4,6 +4,8 @@
 Made the Bumblezone welcome message trigger properly when near Beehives for first time.
  Before, it was not checking in a sphere radius around player but as a infinite height column around player.
 
+Fixed some advancement English translations (thanks to MaslovKK)
+
 
 ### **(V.7.11.8 Changes) (1.21.1 Minecraft)**
 
