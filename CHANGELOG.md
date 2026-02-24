@@ -1,3 +1,10 @@
+### **(V.7.11.10 Changes) (1.20.1 Minecraft)**
+
+#### Mod Compat:
+Fixed Supplementaries Jar and Cage able to capture certain Bumblezone entities that should 
+ not be capturable and allow them to now capture Beehemoth, Honey Slime, and more.
+
+
 ### **(V.7.11.9 Changes) (1.20.1 Minecraft)**
 
 #### Advancements:
