@@ -1,3 +1,10 @@
+### **(V.7.11.10 Changes) (1.21.1 Minecraft)**
+
+#### Mod Compat:
+Added missing `c:capturing_not_supported` and `c:teleporting_not_supported` to have better compat 
+ with other mods to prevent certain Bumblezone entities from being captured or moved.
+
+
 ### **(V.7.11.9 Changes) (1.21.1 Minecraft)**
 
 #### Advancements:
