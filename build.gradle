@@ -15,6 +15,14 @@ group = mod_group_id
 
 allprojects {
     repositories {
+        maven {
+            name = "Maven for PR #2988" // https://github.com/neoforged/NeoForge/pull/2988
+            url = uri("https://prmaven.neoforged.net/NeoForge/pr2988")
+            content {
+                includeModule("net.neoforged", "neoforge")
+                includeModule("net.neoforged", "testframework")
+            }
+        }
         exclusiveContent {
             forRepository {
                 maven {
