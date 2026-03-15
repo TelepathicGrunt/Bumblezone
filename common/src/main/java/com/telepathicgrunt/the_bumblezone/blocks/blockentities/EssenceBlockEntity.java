@@ -82,14 +82,14 @@ public class EssenceBlockEntity extends BlockEntity {
     protected EssenceBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
         if (blockState.getBlock() instanceof EssenceBlock essenceBlock) {
-            eventBar = essenceBlock.getServerEssenceEvent();
+            eventBar = essenceBlock.getServerEssenceEvent(this.getLevel().getRandom());
         }
     }
 
     public EssenceBlockEntity(BlockPos blockPos, BlockState blockState) {
         this(BzBlockEntities.ESSENCE_BLOCK.get(), blockPos, blockState);
         if (blockState.getBlock() instanceof EssenceBlock essenceBlock) {
-            eventBar = essenceBlock.getServerEssenceEvent();
+            eventBar = essenceBlock.getServerEssenceEvent(this.getLevel().getRandom());
         }
     }
 

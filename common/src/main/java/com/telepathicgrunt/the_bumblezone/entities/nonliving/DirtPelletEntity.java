@@ -39,6 +39,7 @@ import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -112,8 +113,8 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
     private ParticleOptions getParticle() {
         ItemStack itemStack = this.getItem();
         return itemStack.isEmpty() ?
-                new ItemParticleOption(ParticleTypes.ITEM, this.getDefaultItem().getDefaultInstance()) :
-                new ItemParticleOption(ParticleTypes.ITEM, itemStack);
+                new ItemParticleOption(ParticleTypes.ITEM, ItemStackTemplate.fromNonEmptyStack(this.getDefaultItem().getDefaultInstance())) :
+                new ItemParticleOption(ParticleTypes.ITEM, ItemStackTemplate.fromNonEmptyStack(itemStack));
     }
 
     protected ParticleOptions getTrailParticle() {

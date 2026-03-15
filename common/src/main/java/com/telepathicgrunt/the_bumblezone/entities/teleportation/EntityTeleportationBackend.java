@@ -211,7 +211,7 @@ public class EntityTeleportationBackend {
     }
 
     private static ChunkAccess getChunkForSpot(Level world, ChunkAccess chunkAccess, BlockPos blockPos) {
-        if (chunkAccess == null || chunkAccess.getPos().x != blockPos.getX() >> 4 || chunkAccess.getPos().z != blockPos.getZ() >> 4) {
+        if (chunkAccess == null || chunkAccess.getPos().x() != blockPos.getX() >> 4 || chunkAccess.getPos().z() != blockPos.getZ() >> 4) {
             return world.getChunk(blockPos);
         }
         return chunkAccess;

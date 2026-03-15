@@ -18,6 +18,7 @@ import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import com.telepathicgrunt.the_bumblezone.utils.LevellessWeightedStateProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -175,7 +176,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             }
         }
         else {
-            WeightedStateProvider possiblePlants = PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.getPossiblePlants(entity);
+            LevellessWeightedStateProvider possiblePlants = PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.getPossiblePlants(entity);
             if (possiblePlants != null && GeneralUtils.isPermissionAllowedAtSpot(this.level(), this.getOwner(), BlockPos.containing(entityRayTraceResult.getLocation()), true)) {
                 boolean spawnedBlock = spawnPlants(entity.blockPosition(), possiblePlants::getState);
 

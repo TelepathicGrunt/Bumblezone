@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -15,7 +16,7 @@ public record RandomizeTradeRowInput(Optional<TagKey<Item>> tagKey) {
             TagKey.codec(Registries.ITEM).optionalFieldOf("tagkey").forGetter(e -> e.tagKey)
     ).apply(instance, instance.stable(RandomizeTradeRowInput::new)));
 
-    public HolderSet<Item> getWantItems() {
-        return tagKey.map(BuiltInRegistries.ITEM::getOrCreateTag).orElse(null);
+    public HolderSet.Named<Item> getWantItems() {
+        return tagKey.flatMap(BuiltInRegistries.ITEM::get).orElse(null);
     }
 }

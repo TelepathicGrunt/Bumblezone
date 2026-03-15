@@ -84,8 +84,9 @@ public class EssenceBlockGreen extends EssenceBlock {
     }
 
     @Override
-    public ServerEssenceEvent getServerEssenceEvent() {
+    public ServerEssenceEvent getServerEssenceEvent(RandomSource random) {
         return (ServerEssenceEvent) new ServerEssenceEvent(
+                Mth.createInsecureUUID(random),
                 "essence.the_bumblezone.green_essence_event",
                 BossEvent.BossBarColor.GREEN,
                 BossEvent.BossBarOverlay.NOTCHED_6

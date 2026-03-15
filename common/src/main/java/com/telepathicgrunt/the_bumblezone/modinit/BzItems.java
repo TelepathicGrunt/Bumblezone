@@ -43,6 +43,7 @@ import com.telepathicgrunt.the_bumblezone.items.essence.LifeEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.RadianceEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.RagingEssence;
 import net.minecraft.core.cauldron.CauldronInteraction;
+import net.minecraft.core.cauldron.CauldronInteractions;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
@@ -179,14 +180,14 @@ public class BzItems {
     public static final RegistryEntry<Item> HONEY_BEE_LEGGINGS_2 = ITEMS.register("honey_bee_leggings_2", () -> new HoneyBeeLeggings(new Item.Properties(), 2));
     public static final RegistryEntry<Item> CARPENTER_BEE_BOOTS_1 = ITEMS.register("carpenter_bee_boots_1", () -> new CarpenterBeeBoots(new Item.Properties(), 1));
     public static final RegistryEntry<Item> CARPENTER_BEE_BOOTS_2 = ITEMS.register("carpenter_bee_boots_2", () -> new CarpenterBeeBoots(new Item.Properties(), 2));
-    public static final RegistryEntry<Item> BANNER_PATTERN_BEE = ITEMS.register("banner_pattern_bee", () -> new BzBannerPatterns(new Item.Properties().component(DataComponents.PROVIDES_BANNER_PATTERNS, BzTags.PATTERN_ITEM_BEE)));
-    public static final RegistryEntry<Item> BANNER_PATTERN_HONEYCOMBS = ITEMS.register("banner_pattern_honeycombs", () -> new BzBannerPatterns(new Item.Properties().component(DataComponents.PROVIDES_BANNER_PATTERNS, BzTags.PATTERN_ITEM_HONEYCOMBS)));
-    public static final RegistryEntry<Item> BANNER_PATTERN_SWORDS = ITEMS.register("banner_pattern_swords", () -> new BzBannerPatterns(new Item.Properties().component(DataComponents.PROVIDES_BANNER_PATTERNS, BzTags.PATTERN_ITEM_SWORDS)));
-    public static final RegistryEntry<Item> BANNER_PATTERN_SUN = ITEMS.register("banner_pattern_sun", () -> new BzBannerPatterns(new Item.Properties().component(DataComponents.PROVIDES_BANNER_PATTERNS, BzTags.PATTERN_ITEM_SUN)));
-    public static final RegistryEntry<Item> BANNER_PATTERN_PLUSES = ITEMS.register("banner_pattern_pluses", () -> new BzBannerPatterns(new Item.Properties().component(DataComponents.PROVIDES_BANNER_PATTERNS, BzTags.PATTERN_ITEM_PLUSES)));
-    public static final RegistryEntry<Item> BANNER_PATTERN_EYES = ITEMS.register("banner_pattern_eyes", () -> new BzBannerPatterns(new Item.Properties().component(DataComponents.PROVIDES_BANNER_PATTERNS, BzTags.PATTERN_ITEM_EYES)));
-    public static final RegistryEntry<Item> BANNER_PATTERN_PEACE = ITEMS.register("banner_pattern_peace", () -> new BzBannerPatterns(new Item.Properties().component(DataComponents.PROVIDES_BANNER_PATTERNS, BzTags.PATTERN_ITEM_PEACE)));
-    public static final RegistryEntry<Item> BANNER_PATTERN_ARROWS = ITEMS.register("banner_pattern_arrows", () -> new BzBannerPatterns(new Item.Properties().component(DataComponents.PROVIDES_BANNER_PATTERNS, BzTags.PATTERN_ITEM_ARROWS)));
+    public static final RegistryEntry<Item> BANNER_PATTERN_BEE = ITEMS.register("banner_pattern_bee", () -> new BzBannerPatterns(new Item.Properties().delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(BzTags.PATTERN_ITEM_BEE))));
+    public static final RegistryEntry<Item> BANNER_PATTERN_HONEYCOMBS = ITEMS.register("banner_pattern_honeycombs", () -> new BzBannerPatterns(new Item.Properties().delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(BzTags.PATTERN_ITEM_HONEYCOMBS))));
+    public static final RegistryEntry<Item> BANNER_PATTERN_SWORDS = ITEMS.register("banner_pattern_swords", () -> new BzBannerPatterns(new Item.Properties().delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(BzTags.PATTERN_ITEM_SWORDS))));
+    public static final RegistryEntry<Item> BANNER_PATTERN_SUN = ITEMS.register("banner_pattern_sun", () -> new BzBannerPatterns(new Item.Properties().delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(BzTags.PATTERN_ITEM_SUN))));
+    public static final RegistryEntry<Item> BANNER_PATTERN_PLUSES = ITEMS.register("banner_pattern_pluses", () -> new BzBannerPatterns(new Item.Properties().delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(BzTags.PATTERN_ITEM_PLUSES))));
+    public static final RegistryEntry<Item> BANNER_PATTERN_EYES = ITEMS.register("banner_pattern_eyes", () -> new BzBannerPatterns(new Item.Properties().delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(BzTags.PATTERN_ITEM_EYES))));
+    public static final RegistryEntry<Item> BANNER_PATTERN_PEACE = ITEMS.register("banner_pattern_peace", () -> new BzBannerPatterns(new Item.Properties().delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(BzTags.PATTERN_ITEM_PEACE))));
+    public static final RegistryEntry<Item> BANNER_PATTERN_ARROWS = ITEMS.register("banner_pattern_arrows", () -> new BzBannerPatterns(new Item.Properties().delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(BzTags.PATTERN_ITEM_ARROWS))));
     public static final RegistryEntry<Item> MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = ITEMS.register("music_disc_flight_of_the_bumblebee_rimsky_korsakov", () -> new BzMusicDiscs((new Item.Properties()).jukeboxPlayable(BzJukeboxSongs.FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV)));
     public static final RegistryEntry<Item> MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = ITEMS.register("music_disc_honey_bee_rat_faced_boy", () -> new BzMusicDiscs((new Item.Properties()).jukeboxPlayable(BzJukeboxSongs.HONEY_BEE_RAT_FACED_BOY)));
     public static final RegistryEntry<Item> MUSIC_DISC_RIVERS_OF_HONEY_MOSERAO = ITEMS.register("music_disc_rivers_of_honey_moserao", () -> new BzMusicDiscs((new Item.Properties()).jukeboxPlayable(BzJukeboxSongs.RIVERS_OF_HONEY_MOSERAO)));
@@ -214,7 +215,7 @@ public class BzItems {
     public static final RegistryEntry<Item> ESSENCE_CONTINUITY = ITEMS.register("essence_continuity", () -> new ContinuityEssence(new Item.Properties()));
 
     public static void setupCauldronCompat() {
-        CauldronInteraction.WATER.map().put(BzItems.FLOWER_HEADWEAR.get(), CauldronInteraction::dyedItemIteration);
+        CauldronInteractions.WATER.put(BzItems.FLOWER_HEADWEAR.get(), CauldronInteractions::dyedItemIteration);
     }
 
     public static void setupDispenserBehaviors() {

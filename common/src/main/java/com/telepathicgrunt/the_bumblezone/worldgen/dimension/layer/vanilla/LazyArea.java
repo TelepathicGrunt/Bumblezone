@@ -17,7 +17,7 @@ public class LazyArea implements Area {
 
     @Override
     public int get(int x, int z) {
-        long longPos = ChunkPos.asLong(x, z);
+        long longPos = ChunkPos.hash(x, z);
         synchronized(this.cache) {
             int cachedBiomeInt = this.cache.get(longPos);
             if (cachedBiomeInt != Integer.MIN_VALUE) {

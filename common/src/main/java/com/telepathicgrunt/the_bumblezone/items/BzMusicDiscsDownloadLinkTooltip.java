@@ -37,7 +37,7 @@ public class BzMusicDiscsDownloadLinkTooltip {
     public static void AddSong(Item item) {
         JukeboxPlayable jukeboxPlayable = item.components().get(DataComponents.JUKEBOX_PLAYABLE);
         if (jukeboxPlayable != null) {
-            SONG_WITH_DOWNLOAD_LINKS.put(jukeboxPlayable.song().key(), item.getDescriptionId() + ".download");
+            SONG_WITH_DOWNLOAD_LINKS.put(jukeboxPlayable.song().unwrapKey(), item.getDescriptionId() + ".download");
         }
         else {
             Bumblezone.LOGGER.error("Unable to setup song download link data for {}", item);
@@ -45,18 +45,19 @@ public class BzMusicDiscsDownloadLinkTooltip {
     }
 
     public static void appendDownloadLinkText(JukeboxPlayable jukeboxPlayable, Item.TooltipContext tooltipContext, Consumer<Component> consumer, TooltipFlag tooltipFlag) {
-        if (SONG_WITH_DOWNLOAD_LINKS.containsKey(jukeboxPlayable.song().key())) {
+        if (SONG_WITH_DOWNLOAD_LINKS.containsKey(jukeboxPlayable.song().unwrapKey())) {
             if (tooltipContext.registries() != null) {
                 Optional<Integer> songDescLength = jukeboxPlayable
                         .song()
-                        .unwrap(tooltipContext.registries())
-                        .map(holder -> holder.value().description().getString().length());
+                        .unwrap()
+                        .right()
+                        .map(holder -> holder.description().getString().length());
 
                 int length = songDescLength.orElse(20);
 
                 List<MutableComponent> componentList = GeneralUtilsClient.autoWrappedTooltip(
                         length,
-                        SONG_WITH_DOWNLOAD_LINKS.get(jukeboxPlayable.song().key()));
+                        SONG_WITH_DOWNLOAD_LINKS.get(jukeboxPlayable.song().unwrapKey()));
 
                 componentList.forEach(component -> consumer.accept(
                         component.withStyle(tooltipFlag.isAdvanced() ? ChatFormatting.DARK_PURPLE : ChatFormatting.DARK_GRAY)

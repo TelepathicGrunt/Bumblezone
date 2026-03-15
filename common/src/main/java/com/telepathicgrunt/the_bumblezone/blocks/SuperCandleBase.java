@@ -182,7 +182,7 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
     @Override
     public PathType bz$getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob) {
         if (state.hasProperty(LIT) && state.getValue(LIT)) {
-            return PathType.DAMAGE_FIRE;
+            return PathType.FIRE;
         }
         return null;
     }

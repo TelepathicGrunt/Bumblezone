@@ -344,7 +344,7 @@ public class StickyHoneyResidue extends Block {
      * This block is full of holes and can let light through
      */
     @Override
-    public int getLightBlock(BlockState state) {
+    public int getLightDampening(BlockState state) {
         return 1;
     }
 

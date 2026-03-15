@@ -15,6 +15,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -65,8 +67,9 @@ public class EssenceBlockWhite extends EssenceBlock {
     }
 
     @Override
-    public ServerEssenceEvent getServerEssenceEvent() {
+    public ServerEssenceEvent getServerEssenceEvent(RandomSource random) {
         return (ServerEssenceEvent) new ServerEssenceEvent(
+                Mth.createInsecureUUID(random),
                 "essence.the_bumblezone.white_essence_event",
                 BossEvent.BossBarColor.WHITE,
                 BossEvent.BossBarOverlay.NOTCHED_6

@@ -73,7 +73,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
         this(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.TERRACOTTA_YELLOW)
                 .instrument(NoteBlockInstrument.HAT)
-                .lightLevel((blockState) -> 1)
+                .lightLevel((_) -> 1)
                 .strength(0.3F, 0.3f)
                 .sound(BzSounds.HONEY_CRYSTALS_TYPE)
                 .noOcclusion()
@@ -221,7 +221,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
      * This block is translucent and can let some light through
      */
     @Override
-    public int getLightBlock(BlockState state) {
+    public int getLightDampening(BlockState blockState) {
         return 1;
     }
 

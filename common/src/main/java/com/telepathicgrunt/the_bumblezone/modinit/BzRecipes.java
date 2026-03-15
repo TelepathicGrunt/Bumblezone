@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.events.item.BzRegisterBrewingRecipeEvent;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
-import com.telepathicgrunt.the_bumblezone.items.recipes.ItemStackSmeltingRecipe;
 import com.telepathicgrunt.the_bumblezone.items.recipes.NbtKeepingShapelessRecipe;
 import com.telepathicgrunt.the_bumblezone.items.recipes.PotionCandleRecipe;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -20,10 +19,9 @@ public class BzRecipes {
     public static final ResourcefulRegistry<RecipeSerializer<?>> RECIPES = ResourcefulRegistries.create(BuiltInRegistries.RECIPE_SERIALIZER, Bumblezone.MODID);
 
     //Recipe
-    public static final RegistryEntry<RecipeSerializer<ContainerCraftingRecipe>> CONTAINER_CRAFTING_RECIPE = RECIPES.register("container_shapeless_recipe_bz", ContainerCraftingRecipe.Serializer::new);
-    public static final RegistryEntry<RecipeSerializer<PotionCandleRecipe>> POTION_CANDLE_RECIPE = RECIPES.register("potion_candle_recipe", PotionCandleRecipe.Serializer::new);
-    public static final RegistryEntry<RecipeSerializer<NbtKeepingShapelessRecipe>> NBT_KEEPING_SHAPELESS_RECIPE = RECIPES.register("nbt_keeping_shapeless_recipe", NbtKeepingShapelessRecipe.Serializer::new);
-    public static final RegistryEntry<RecipeSerializer<ItemStackSmeltingRecipe>> ITEMSTACK_SMELTING_RECIPE = RECIPES.register("itemstack_smelting_recipe", ItemStackSmeltingRecipe.ItemStackSmeltingRecipeSerializer::new);
+    public static final RegistryEntry<RecipeSerializer<ContainerCraftingRecipe>> CONTAINER_CRAFTING_RECIPE = RECIPES.register("container_shapeless_recipe_bz", () -> ContainerCraftingRecipe.SERIALIZER);
+    public static final RegistryEntry<RecipeSerializer<PotionCandleRecipe>> POTION_CANDLE_RECIPE = RECIPES.register("potion_candle_recipe", () -> PotionCandleRecipe.SERIALIZER);
+    public static final RegistryEntry<RecipeSerializer<NbtKeepingShapelessRecipe>> NBT_KEEPING_SHAPELESS_RECIPE = RECIPES.register("nbt_keeping_shapeless_recipe", () -> NbtKeepingShapelessRecipe.SERIALIZER);
 
     public static void registerBrewingStandRecipes(BzRegisterBrewingRecipeEvent event) {
         if (BzGeneralConfigs.glisteringHoneyBrewingRecipe) {

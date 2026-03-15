@@ -48,14 +48,6 @@ public class KnowingEssence extends AbilityEssenceItem {
     }
 
     @Override
-    public void verifyComponentsAfterLoad(ItemStack itemStack) {
-        if (itemStack.get(BzDataComponents.KNOWING_ESSENCE_STRUCTURE_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.KNOWING_ESSENCE_STRUCTURE_DATA.get(), new KnowingEssenceStructureData());
-        }
-        super.verifyComponentsAfterLoad(itemStack);
-    }
-
-    @Override
     public int getColor() {
         return 0xF021FF;
     }

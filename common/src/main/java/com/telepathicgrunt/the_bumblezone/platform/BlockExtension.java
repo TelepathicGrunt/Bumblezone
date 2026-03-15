@@ -17,7 +17,7 @@ public interface BlockExtension {
 
 
     default PathType bz$getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob) {
-        return state.getBlock() == Blocks.LAVA ? PathType.LAVA : state.getBlock() == Blocks.FIRE ? PathType.DAMAGE_FIRE : null;
+        return state.getBlock() == Blocks.LAVA ? PathType.LAVA : state.getBlock() == Blocks.FIRE ? PathType.FIRE : null;
     }
 
     default boolean bz$isStickyBlock(BlockState state) {

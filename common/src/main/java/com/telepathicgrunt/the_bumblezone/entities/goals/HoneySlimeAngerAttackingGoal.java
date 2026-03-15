@@ -19,7 +19,7 @@ public class HoneySlimeAngerAttackingGoal extends TargetGoal {
     public boolean canUse() {
         LivingEntity livingEntity = this.slime.getTarget();
         if (livingEntity == null) {
-            this.slime.setRemainingPersistentAngerTime(0);
+            this.slime.setPersistentAngerEndTime(0);
             return false;
         }
         return true;

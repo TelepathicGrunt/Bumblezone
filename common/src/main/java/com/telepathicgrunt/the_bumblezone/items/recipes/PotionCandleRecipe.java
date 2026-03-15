@@ -24,8 +24,10 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.TypedEntityData;
+import net.minecraft.world.item.crafting.BannerDuplicateRecipe;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -56,7 +58,6 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     private final int maxLevelCap;
 
     public PotionCandleRecipe(
-            CraftingBookCategory category,
             String group,
             ItemStack result,
             ShapedRecipePattern pattern,
@@ -67,7 +68,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             boolean allowLingeringPotions,
             int maxLevelCap)
     {
-        super(category);
+        super();
         this.group = group;
         this.result = result;
         this.maxAllowedPotions = maxAllowedPotions;
@@ -108,7 +109,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingInput craftingInput, HolderLookup.Provider provider) {
+    public ItemStack assemble(CraftingInput craftingInput) {
         MobEffect chosenEffect;
         List<MobEffect> effects = new ArrayList<>();
         AtomicInteger maxDuration = new AtomicInteger();
@@ -151,7 +152,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         balanceMainStats(chosenEffect, maxDuration, effectLevel, potionEffectsFound);
         effectLevel.set(Math.min(effectLevel.get(), this.maxLevelCap));
 
-        return createTaggedPotionCandle(chosenEffect, maxDuration, effectLevel, splashCount, lingerCount, this.result.copy());
+        return createTaggedPotionCandle(chosenEffect, maxDuration, effectLevel, splashCount, lingerCount, this.result.copy()).create();
     }
 
     public static void balanceMainStats(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger effectLevel, AtomicInteger potionEffectsFound) {
@@ -177,12 +178,12 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         }
     }
 
-    public static ItemStack createTaggedPotionCandle(MobEffect chosenEffect,
-                                                     AtomicInteger maxDuration,
-                                                     AtomicInteger effectLevel,
-                                                     int splashCount,
-                                                     int lingerCount,
-                                                     ItemStack resultStack)
+    public static ItemStackTemplate createTaggedPotionCandle(MobEffect chosenEffect,
+                                                             AtomicInteger maxDuration,
+                                                             AtomicInteger effectLevel,
+                                                             int splashCount,
+                                                             int lingerCount,
+                                                             ItemStack resultStack)
     {
         TypedEntityData<BlockEntityType<?>> blockEntityTypeTypedEntityData = resultStack.get(DataComponents.BLOCK_ENTITY_DATA);
         CompoundTag blockEntityTag = blockEntityTypeTypedEntityData == null ? new CompoundTag() : blockEntityTypeTypedEntityData.copyTagWithoutId();
@@ -207,7 +208,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         }
 
         resultStack.set(DataComponents.BLOCK_ENTITY_DATA, TypedEntityData.of(blockEntityTypeTypedEntityData == null ? BzBlockEntities.POTION_CANDLE.get() : blockEntityTypeTypedEntityData.type(), blockEntityTag));
-        return resultStack;
+        return ItemStackTemplate.fromNonEmptyStack(resultStack);
     }
 
     private static void setLingerTime(MobEffect chosenEffect, int lingerCount, CompoundTag blockEntityTag, int baseLingerTime, int effectLevel) {
@@ -323,68 +324,54 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         return potionCount > 0 && GeneralUtils.listMatches(secondaryIngredientsFound, this.shapelessRecipeItems);
     }
 
+    private static final MapCodec<PotionCandleRecipe> CODEC = RecordCodecBuilder.mapCodec(
+        r -> r.group(
+            Codec.STRING.optionalFieldOf("group", "").forGetter(o -> o.group),
+            ItemStack.CODEC.fieldOf("result").forGetter(o -> o.result),
+            ShapedRecipePattern.MAP_CODEC.forGetter(o -> o.pattern),
+            Ingredient.CODEC.listOf().fieldOf("shapelessExtraIngredients").forGetter(shapelessRecipe -> shapelessRecipe.shapelessRecipeItems),
+            Codec.intRange(1, 6).fieldOf("maxAllowedPotions").forGetter(potionRecipe -> potionRecipe.maxAllowedPotions),
+            Codec.BOOL.fieldOf("allowNormalPotions").forGetter(potionRecipe -> potionRecipe.allowNormalPotions),
+            Codec.BOOL.fieldOf("allowSplashPotions").forGetter(potionRecipe -> potionRecipe.allowSplashPotions),
+            Codec.BOOL.fieldOf("allowLingeringPotions").forGetter(potionRecipe -> potionRecipe.allowLingeringPotions),
+            Codec.intRange(1, 1000000).fieldOf("maxLevelCap").forGetter(potionRecipe -> potionRecipe.maxLevelCap)
+        )
+        .apply(r, PotionCandleRecipe::new)
+    );
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, PotionCandleRecipe> STREAM_CODEC = StreamCodec.of(
+            PotionCandleRecipe::toNetwork, PotionCandleRecipe::fromNetwork
+    );
+
+    public static PotionCandleRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
+        String group = buffer.readUtf();
+        ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
+        ShapedRecipePattern pattern = ShapedRecipePattern.STREAM_CODEC.decode(buffer);
+        List<Ingredient> shapelessRecipe = Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buffer);
+        int maxPotionRead = buffer.readVarInt();
+        boolean allowNormalPotionsRead = buffer.readBoolean();
+        boolean allowSplashPotionsRead = buffer.readBoolean();
+        boolean allowLingeringPotionsRead = buffer.readBoolean();
+        int maxLevelRead = buffer.readVarInt();
+        return new PotionCandleRecipe(group, result, pattern, shapelessRecipe, maxPotionRead, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
+    }
+
+    public static void toNetwork(RegistryFriendlyByteBuf buffer, PotionCandleRecipe recipe) {
+        buffer.writeUtf(recipe.group);
+        ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
+        ShapedRecipePattern.STREAM_CODEC.encode(buffer, recipe.pattern);
+        Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).encode(buffer, recipe.shapelessRecipeItems);
+        buffer.writeVarInt(recipe.maxAllowedPotions);
+        buffer.writeBoolean(recipe.allowNormalPotions);
+        buffer.writeBoolean(recipe.allowSplashPotions);
+        buffer.writeBoolean(recipe.allowLingeringPotions);
+        buffer.writeVarInt(recipe.maxLevelCap);
+    }
+
+    public static final RecipeSerializer<PotionCandleRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
+
     @Override
     public RecipeSerializer<PotionCandleRecipe> getSerializer() {
         return BzRecipes.POTION_CANDLE_RECIPE.get();
-    }
-
-    public static class Serializer implements RecipeSerializer<PotionCandleRecipe> {
-
-        private static final MapCodec<PotionCandleRecipe> CODEC = RecordCodecBuilder.mapCodec(
-            r -> r.group(
-                CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(CustomRecipe::category),
-                Codec.STRING.optionalFieldOf("group", "").forGetter(o -> o.group),
-                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(o -> o.result),
-                ShapedRecipePattern.MAP_CODEC.forGetter(o -> o.pattern),
-                Ingredient.CODEC.listOf().fieldOf("shapelessExtraIngredients").forGetter(shapelessRecipe -> shapelessRecipe.shapelessRecipeItems),
-                Codec.intRange(1, 6).fieldOf("maxAllowedPotions").forGetter(potionRecipe -> potionRecipe.maxAllowedPotions),
-                Codec.BOOL.fieldOf("allowNormalPotions").forGetter(potionRecipe -> potionRecipe.allowNormalPotions),
-                Codec.BOOL.fieldOf("allowSplashPotions").forGetter(potionRecipe -> potionRecipe.allowSplashPotions),
-                Codec.BOOL.fieldOf("allowLingeringPotions").forGetter(potionRecipe -> potionRecipe.allowLingeringPotions),
-                Codec.intRange(1, 1000000).fieldOf("maxLevelCap").forGetter(potionRecipe -> potionRecipe.maxLevelCap)
-            )
-            .apply(r, PotionCandleRecipe::new)
-        );
-
-        public static final StreamCodec<RegistryFriendlyByteBuf, PotionCandleRecipe> STREAM_CODEC = StreamCodec.of(
-                PotionCandleRecipe.Serializer::toNetwork, PotionCandleRecipe.Serializer::fromNetwork
-        );
-
-        @Override
-        public MapCodec<PotionCandleRecipe> codec() {
-            return CODEC;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, PotionCandleRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
-
-        public static PotionCandleRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-            CraftingBookCategory category = buffer.readEnum(CraftingBookCategory.class);
-            String group = buffer.readUtf();
-            ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
-            ShapedRecipePattern pattern = ShapedRecipePattern.STREAM_CODEC.decode(buffer);
-            List<Ingredient> shapelessRecipe = Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buffer);
-            int maxPotionRead = buffer.readVarInt();
-            boolean allowNormalPotionsRead = buffer.readBoolean();
-            boolean allowSplashPotionsRead = buffer.readBoolean();
-            boolean allowLingeringPotionsRead = buffer.readBoolean();
-            int maxLevelRead = buffer.readVarInt();
-            return new PotionCandleRecipe(category, group, result, pattern, shapelessRecipe, maxPotionRead, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
-        }
-
-        public static void toNetwork(RegistryFriendlyByteBuf buffer, PotionCandleRecipe recipe) {
-            buffer.writeEnum(recipe.category());
-            buffer.writeUtf(recipe.group);
-            ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
-            ShapedRecipePattern.STREAM_CODEC.encode(buffer, recipe.pattern);
-            Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).encode(buffer, recipe.shapelessRecipeItems);
-            buffer.writeVarInt(recipe.maxAllowedPotions);
-            buffer.writeBoolean(recipe.allowNormalPotions);
-            buffer.writeBoolean(recipe.allowSplashPotions);
-            buffer.writeBoolean(recipe.allowLingeringPotions);
-            buffer.writeVarInt(recipe.maxLevelCap);
-        }
     }
 }

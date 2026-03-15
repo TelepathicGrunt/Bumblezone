@@ -320,44 +320,6 @@ public class SentryWatcherEntity extends Entity implements Enemy {
     }
 
     @Override
-    public boolean updateFluidHeightAndDoFluidPushing(TagKey<Fluid> tagKey, double d) {
-        if (this.touchingUnloadedChunk()) {
-            return false;
-        }
-        else {
-            AABB aABB = this.getBoundingBox().deflate(0.001);
-            int i = Mth.floor(aABB.minX);
-            int j = Mth.ceil(aABB.maxX);
-            int k = Mth.floor(aABB.minY);
-            int l = Mth.ceil(aABB.maxY);
-            int m = Mth.floor(aABB.minZ);
-            int n = Mth.ceil(aABB.maxZ);
-            double e = 0.0;
-            boolean bl2 = false;
-            BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-
-            for (int p = i; p < j; ++p) {
-                for (int q = k; q < l; ++q) {
-                    for (int r = m; r < n; ++r) {
-                        mutableBlockPos.set(p, q, r);
-                        FluidState fluidState = this.level().getFluidState(mutableBlockPos);
-                        if (fluidState.is(tagKey)) {
-                            double f = (float) q + fluidState.getHeight(this.level(), mutableBlockPos);
-                            if (f >= aABB.minY) {
-                                bl2 = true;
-                                e = Math.max(f - aABB.minY, e);
-                            }
-                        }
-                    }
-                }
-            }
-
-            this.fluidHeight.put(tagKey, e);
-            return bl2;
-        }
-    }
-
-    @Override
     public boolean canCollideWith(Entity entity) {
         if (entity instanceof RootminEntity rootminEntity && rootminEntity.getRootminPose() == RootminState.ENTITY_TO_BLOCK) {
             return false;
@@ -367,7 +329,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
     }
 
     @Override
-    public InteractionResult interact(Player player, InteractionHand interactionHand) {
+    public InteractionResult interact(Player player, InteractionHand interactionHand, Vec3 location) {
         if (player != null &&
                 interactionHand == InteractionHand.MAIN_HAND &&
                 this.getOwner() != null &&

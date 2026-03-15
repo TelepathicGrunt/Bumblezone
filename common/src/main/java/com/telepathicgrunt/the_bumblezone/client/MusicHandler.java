@@ -187,8 +187,8 @@ public class MusicHandler {
     }
 
     private static void addMusicFade(SoundInstance soundInstance, int counterStart, boolean fadeIn, Predicate<Minecraft> stopOtherMusic) {
-        if (MUSIC_FADERS.containsKey(soundInstance.getLocation())) {
-            MusicFader musicFader = MUSIC_FADERS.get(soundInstance.getLocation());
+        if (MUSIC_FADERS.containsKey(soundInstance.getIdentifier())) {
+            MusicFader musicFader = MUSIC_FADERS.get(soundInstance.getIdentifier());
             boolean originalFadeIn = musicFader.fadeIn;
             if (originalFadeIn != fadeIn) {
                 musicFader.fadeIn = fadeIn;
@@ -196,7 +196,7 @@ public class MusicHandler {
             }
         }
         else {
-            MUSIC_FADERS.put(soundInstance.getLocation(), new MusicFader(soundInstance, stopOtherMusic, counterStart, fadeIn));
+            MUSIC_FADERS.put(soundInstance.getIdentifier(), new MusicFader(soundInstance, stopOtherMusic, counterStart, fadeIn));
         }
     }
 

@@ -29,7 +29,7 @@ public class UniquifyIfHasItems extends LootItemConditionalFunction {
     @Override
     public ItemStack run(ItemStack itemStack, LootContext lootContext) {
         ItemContainerContents itemContainerContents = itemStack.get(DataComponents.CONTAINER);
-        if (itemContainerContents == null || itemContainerContents.nonEmptyStream().findAny().isEmpty()) {
+        if (itemContainerContents == null || itemContainerContents.allItemsCopyStream().findAny().isEmpty()) {
             return itemStack;
         }
 

@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.BzNbtPredicate;
 import com.telepathicgrunt.the_bumblezone.utils.LenientUnboundedMapCodec;
+import com.telepathicgrunt.the_bumblezone.utils.LevellessWeightedStateProvider;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.FileToIdConverter;
@@ -29,10 +30,10 @@ import java.util.Optional;
 public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadListener<JsonElement> {
     public static final PollenPuffEntityPollinateManager POLLEN_PUFF_ENTITY_POLLINATE_MANAGER = new PollenPuffEntityPollinateManager();
 
-    public record EntryObject(BzNbtPredicate nbtPredicate, WeightedStateProvider weightedStateProvider) {
+    public record EntryObject(BzNbtPredicate nbtPredicate, LevellessWeightedStateProvider weightedStateProvider) {
         public static final Codec<EntryObject> ENTRY_CODEC = RecordCodecBuilder.create((instance) -> instance.group(
                 BzNbtPredicate.CODEC.fieldOf("nbt_match").orElse(BzNbtPredicate.ANY).forGetter(config -> config.nbtPredicate),
-                WeightedStateProvider.CODEC.fieldOf("plants_to_spawn").forGetter(config -> config.weightedStateProvider)
+                LevellessWeightedStateProvider.CODEC.fieldOf("plants_to_spawn").forGetter(config -> config.weightedStateProvider)
         ).apply(instance, instance.stable(EntryObject::new)));
     }
 
@@ -85,7 +86,7 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
         });
     }
 
-    public WeightedStateProvider getPossiblePlants(Entity entity) {
+    public LevellessWeightedStateProvider getPossiblePlants(Entity entity) {
         if (this.mobToPlants.containsKey(entity.getType())) {
             for (EntryObject entryObject : mobToPlants.get(entity.getType())) {
                 if (entryObject.nbtPredicate().matches(entity)) {

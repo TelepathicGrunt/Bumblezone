@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "category": "blocks",
   "group": "the_bumblezone:carvable_wax",
-  "ingredient": {
-    "item": "the_bumblezone:beehive_beeswax"
-  },
+  "ingredient": "the_bumblezone:beehive_beeswax",
   "result": {
     "id": "the_bumblezone:carvable_wax",
     "count": 1

@@ -1,8 +1,6 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "the_bumblezone:ancient_wax_compound_eyes"
-  },
+  "ingredient": "the_bumblezone:ancient_wax_compound_eyes",
   "result": {
     "id": "the_bumblezone:ancient_wax_compound_eyes_slab",
     "count": 2

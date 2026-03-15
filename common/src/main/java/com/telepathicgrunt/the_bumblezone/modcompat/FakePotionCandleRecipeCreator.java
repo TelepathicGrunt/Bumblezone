@@ -10,14 +10,17 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.LingeringPotionItem;
 import net.minecraft.world.item.SplashPotionItem;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
 
@@ -84,8 +87,8 @@ public class FakePotionCandleRecipeCreator {
                     continue;
                 }
 
-                Ingredient ingredient = recipe.getShapedRecipeItems().get(currentShapedIndex);
-                fakedShapedIngredientsMutable.set(x + (z * 3), Optional.of(ingredient));
+                Optional<Ingredient> ingredient = recipe.getShapedRecipeItems().get(currentShapedIndex);
+                fakedShapedIngredientsMutable.set(x + (z * 3), ingredient);
                 currentShapedIndex++;
             }
         }
@@ -109,14 +112,14 @@ public class FakePotionCandleRecipeCreator {
         fakedShapedIngredients.addAll(fakedShapedIngredientsMutable);
 
         return new ShapedRecipe(
-                "the_bumblezone:potion_candle",
-                CraftingBookCategory.MISC,
+                new Recipe.CommonInfo(false),
+                new CraftingRecipe.CraftingBookInfo(CraftingBookCategory.MISC, "the_bumblezone:potion_candle"),
                 new ShapedRecipePattern(3, 3, fakedShapedIngredients, Optional.empty()),
                 createResultStack(recipe, potionStack)
         );
     }
 
-    private static ItemStack createResultStack(PotionCandleRecipe recipe, ItemStack potionStack) {
+    private static ItemStackTemplate createResultStack(PotionCandleRecipe recipe, ItemStack potionStack) {
         List<MobEffect> effects = new ArrayList<>();
         AtomicInteger maxDuration = new AtomicInteger();
         AtomicInteger effectLevel = new AtomicInteger();
@@ -130,13 +133,13 @@ public class FakePotionCandleRecipeCreator {
         });
 
         if (effects.isEmpty()) {
-            return ItemStack.EMPTY;
+            return null;
         }
 
         HashSet<MobEffect> setPicker = new HashSet<>(effects);
         MobEffect chosenEffect = setPicker.stream().toList().get(new Random().nextInt(setPicker.size()));
         if (chosenEffect == null) {
-            return ItemStack.EMPTY;
+            return null;
         }
 
         PotionCandleRecipe.balanceMainStats(chosenEffect, maxDuration, effectLevel, potionEffectsFound);
@@ -148,6 +151,6 @@ public class FakePotionCandleRecipeCreator {
                 effectLevel,
                 potionStack.getItem() instanceof SplashPotionItem ? 1 : 0,
                 potionStack.getItem() instanceof LingeringPotionItem ? 1 : 0,
-                recipe.getResultItem(RegistryAccess.EMPTY).getCount());
+                recipe.assemble(CraftingInput.EMPTY));
     }
 }

@@ -8,30 +8,34 @@ import com.telepathicgrunt.the_bumblezone.events.client.BzKeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.packets.BeehemothControlsPacket;
 import com.telepathicgrunt.the_bumblezone.services.ClientPlatformService;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.resources.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 public class BeehemothControls {
+    public static final KeyMapping.Category CATEGORY =
+            KeyMapping.Category.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "key.categories." + Bumblezone.MODID));
+
     public static final KeyMapping KEY_BIND_BEEHEMOTH_DOWN = ClientPlatformService.INSTANCE.createKey(
     "key." + Bumblezone.MODID + ".beehemoth_down",
             BeehemothKeyContext.BEEHEMOTH_KEY_CONTEXT,
             InputConstants.Type.KEYSYM.getOrCreate(GLFW.GLFW_KEY_CAPS_LOCK),
-            "key.categories." + Bumblezone.MODID
+            CATEGORY
     );
 
     public static final KeyMapping KEY_BIND_BEEHEMOTH_UP = ClientPlatformService.INSTANCE.createKey(
     "key." + Bumblezone.MODID + ".beehemoth_up",
             BeehemothKeyContext.BEEHEMOTH_KEY_CONTEXT,
             InputConstants.Type.KEYSYM.getOrCreate(GLFW.GLFW_KEY_SPACE),
-            "key.categories." + Bumblezone.MODID
+            CATEGORY
     );
 
     public static void keyInput(BzKeyInputEvent event) {
         if (GeneralUtilsClient.getClientPlayer() != null &&
             GeneralUtilsClient.getClientPlayer().getVehicle() instanceof BeehemothEntity beehemothEntity)
         {
-            boolean upKeyAction = KEY_BIND_BEEHEMOTH_UP.matches(event.key(), event.scancode());
-            boolean downKeyAction = KEY_BIND_BEEHEMOTH_DOWN.matches(event.key(), event.scancode());
-            int keyAction = event.action();
+            boolean upKeyAction = KEY_BIND_BEEHEMOTH_UP.matches(event.keyEvent());
+            boolean downKeyAction = KEY_BIND_BEEHEMOTH_DOWN.matches(event.keyEvent());
+            int keyAction = event.keyEvent().input();
 
             if ((upKeyAction || downKeyAction) && keyAction != 2) {
                 BeehemothControlsPacket.sendToServer(

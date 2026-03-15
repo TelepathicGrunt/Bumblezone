@@ -18,6 +18,7 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import org.jspecify.annotations.Nullable;
@@ -28,8 +29,8 @@ import java.util.Map;
 import static java.util.Map.entry;
 
 public class ContainerCraftingRecipe implements CraftingRecipe {
-    private final String group;
-    private final CraftingBookCategory category;
+    protected final Recipe.CommonInfo commonInfo;
+    protected final CraftingRecipe.CraftingBookInfo bookInfo;
     private final ItemStack result;
     private final List<Ingredient> ingredients;
 
@@ -53,16 +54,11 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
             entry(Items.EXPERIENCE_BOTTLE, Items.GLASS_BOTTLE)
     );
 
-    public ContainerCraftingRecipe(String group, CraftingBookCategory category, ItemStack result, List<Ingredient> ingredients) {
-        this.group = group;
-        this.category = category;
+    public ContainerCraftingRecipe(Recipe.CommonInfo commonInfo, CraftingRecipe.CraftingBookInfo bookInfo, ItemStack result, List<Ingredient> ingredients) {
+        this.commonInfo = commonInfo;
+        this.bookInfo = bookInfo;
         this.result = result;
         this.ingredients = ingredients;
-    }
-
-    @Override
-    public RecipeSerializer<ContainerCraftingRecipe> getSerializer() {
-        return BzRecipes.CONTAINER_CRAFTING_RECIPE.get();
     }
 
     @Override
@@ -75,13 +71,13 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
     }
 
     @Override
-    public String group() {
-        return this.group;
+    public final String group() {
+        return this.bookInfo.group();
     }
 
     @Override
-    public CraftingBookCategory category() {
-        return this.category;
+    public final CraftingBookCategory category() {
+        return this.bookInfo.category();
     }
 
     @Override
@@ -96,8 +92,13 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingInput recipeInput, HolderLookup.Provider provider) {
+    public ItemStack assemble(CraftingInput recipeInput) {
         return this.result.copy();
+    }
+
+    @Override
+    public boolean showNotification() {
+        return this.commonInfo.showNotification();
     }
 
     @Override
@@ -133,34 +134,29 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
         return remainingInv;
     }
 
-    public static class Serializer implements RecipeSerializer<ContainerCraftingRecipe> {
-        private static final MapCodec<ContainerCraftingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                Codec.STRING.optionalFieldOf("group", "").forGetter(o -> o.group),
-                CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(o -> o.category),
-                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(o -> o.result),
-                Ingredient.CODEC.listOf(1, 9).fieldOf("ingredients").forGetter(o -> o.ingredients)
-        ).apply(instance, ContainerCraftingRecipe::new));
+    private static final MapCodec<ContainerCraftingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Recipe.CommonInfo.MAP_CODEC.forGetter(o -> o.commonInfo),
+            CraftingRecipe.CraftingBookInfo.MAP_CODEC.forGetter(o -> o.bookInfo),
+            ItemStack.CODEC.fieldOf("result").forGetter(o -> o.result),
+            Ingredient.CODEC.listOf(1, 9).fieldOf("ingredients").forGetter(o -> o.ingredients)
+    ).apply(instance, ContainerCraftingRecipe::new));
 
-        public static final StreamCodec<RegistryFriendlyByteBuf, ContainerCraftingRecipe> STREAM_CODEC = StreamCodec.composite(
-                ByteBufCodecs.STRING_UTF8,
-                r -> r.group,
-                CraftingBookCategory.STREAM_CODEC,
-                r -> r.category,
-                ItemStack.STREAM_CODEC,
-                r -> r.result,
-                Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()),
-                r -> r.ingredients,
-                ContainerCraftingRecipe::new
-        );
+    public static final StreamCodec<RegistryFriendlyByteBuf, ContainerCraftingRecipe> STREAM_CODEC = StreamCodec.composite(
+            Recipe.CommonInfo.STREAM_CODEC,
+            o -> o.commonInfo,
+            CraftingRecipe.CraftingBookInfo.STREAM_CODEC,
+            o -> o.bookInfo,
+            ItemStack.STREAM_CODEC,
+            r -> r.result,
+            Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()),
+            r -> r.ingredients,
+            ContainerCraftingRecipe::new
+    );
 
-        @Override
-        public MapCodec<ContainerCraftingRecipe> codec() {
-            return CODEC;
-        }
+    public static final RecipeSerializer<ContainerCraftingRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, ContainerCraftingRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
+    @Override
+    public RecipeSerializer<ContainerCraftingRecipe> getSerializer() {
+        return BzRecipes.CONTAINER_CRAFTING_RECIPE.get();
     }
 }

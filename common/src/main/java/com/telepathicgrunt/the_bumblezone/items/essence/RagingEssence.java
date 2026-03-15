@@ -54,20 +54,6 @@ public class RagingEssence extends AbilityEssenceItem {
     }
 
     @Override
-    public void verifyComponentsAfterLoad(ItemStack itemStack) {
-        if (itemStack.get(BzDataComponents.RAGING_ESSENCE_STATE_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.RAGING_ESSENCE_STATE_DATA.get(), new RagingEssenceStateData());
-        }
-        if (itemStack.get(BzDataComponents.RAGING_ESSENCE_CURRENT_TARGET_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.RAGING_ESSENCE_CURRENT_TARGET_DATA.get(), new RagingEssenceCurrentTargetData());
-        }
-        if (itemStack.get(BzDataComponents.RAGING_ESSENCE_TIMER_DATA.get()) == null) {
-            itemStack.set(BzDataComponents.RAGING_ESSENCE_TIMER_DATA.get(), new RagingEssenceTimerData());
-        }
-        super.verifyComponentsAfterLoad(itemStack);
-    }
-
-    @Override
     public int getColor() {
         return 0xFF2B2B;
     }

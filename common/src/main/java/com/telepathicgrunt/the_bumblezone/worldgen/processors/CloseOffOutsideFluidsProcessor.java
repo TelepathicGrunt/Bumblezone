@@ -40,7 +40,7 @@ public class CloseOffOutsideFluidsProcessor extends StructureProcessor {
                 if (Direction.DOWN == direction) continue;
 
                 sidePos.set(worldPos).move(direction);
-                if (cachedChunk.getPos().x != sidePos.getX() >> 4 || cachedChunk.getPos().z != sidePos.getZ() >> 4) {
+                if (cachedChunk.getPos().x() != sidePos.getX() >> 4 || cachedChunk.getPos().z() != sidePos.getZ() >> 4) {
                     cachedChunk = levelReader.getChunk(sidePos);
                 }
 

@@ -3,9 +3,9 @@ package com.telepathicgrunt.the_bumblezone.worldgen.dimension.layer.vanilla;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.worldgen.dimension.BiomeRegistryHolder;
 import net.minecraft.SharedConstants;
-import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.Util;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 
@@ -28,7 +28,7 @@ public class Layer {
             else {
                 // Spawn ocean if we can't resolve the biome from the layers.
                 ResourceKey<Biome> backupBiomeKey = Biomes.OCEAN;
-                Bumblezone.LOGGER.warn("Unknown biome id: ${}. Will spawn ${} instead.", resultBiomeID, backupBiomeKey.location());
+                Bumblezone.LOGGER.warn("Unknown biome id: ${}. Will spawn ${} instead.", resultBiomeID, backupBiomeKey.identifier());
                 return BiomeRegistryHolder.BIOME_REGISTRY.getOrThrow(backupBiomeKey);
             }
         }

@@ -194,7 +194,6 @@ public class Bumblezone {
         BzSubPredicates.SUB_PREDICATES.init();
         BzBlockEntities.BLOCK_ENTITIES.init();
         BzCriterias.CRITERION_TRIGGERS.init();
-        BzArmorMaterials.ARMOR_MATERIAL.init();
         BzPlacements.PLACEMENT_MODIFIER.init();
         BzProcessors.STRUCTURE_PROCESSOR.init();
         BzCreativeTabs.CREATIVE_MODE_TABS.init();
@@ -242,7 +241,7 @@ public class Bumblezone {
     }
 
     private static void serverAboutToStart(final BzServerGoingToStartEvent event) {
-        PollinatedSurfaceSource.RandomLayerStateRule.initNoise(event.getServer().getWorldData().worldGenOptions().seed());
+        PollinatedSurfaceSource.RandomLayerStateRule.initNoise(event.getServer().getWorldGenSettings().options().seed());
         BiomeRegistryHolder.setupBiomeRegistry(event.getServer());
         ThreadExecutor.setupExecutorService();
     }

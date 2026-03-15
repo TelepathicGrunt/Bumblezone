@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+//TODO: Likely needs to be redone as Spawn Eggs changes greatly
 public class DispenserAddedSpawnEgg extends SpawnEggItem {
     private static final MapCodec<EntityType<?>> ENTITY_TYPE_FIELD_CODEC = BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("id");
 
@@ -40,7 +41,7 @@ public class DispenserAddedSpawnEgg extends SpawnEggItem {
     }
 
     protected void setupDispenserBehavior() {
-        // Have to manually add dispenser behavior due to forge item registry event running too late.
+        // Have to manually add dispenser behavior due to neoforge item registry event running too late.
         DispenserBlock.registerBehavior(
                 this,
                 new DefaultDispenseItemBehavior() {
@@ -52,12 +53,6 @@ public class DispenserAddedSpawnEgg extends SpawnEggItem {
                         return stack;
                     }
                 });
-    }
-
-    @Override
-    public @Nullable EntityType<?> getType(ItemStack itemStack) {
-        TypedEntityData<EntityType<?>> entityData = itemStack.get(DataComponents.ENTITY_DATA);
-        return entityData != null ? entityData.type() : this.entityType.get();
     }
 
     public static void onSetup(BzSetupEvent event) {

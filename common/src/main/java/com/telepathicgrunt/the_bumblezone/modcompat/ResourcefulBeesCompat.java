@@ -97,8 +97,8 @@ public class ResourcefulBeesCompat implements ModCompat {
         Mob entity = event.entity();
         LevelAccessor world = event.level();
 
-        Registry<EntityType<?>> entityTypes = world.registryAccess().registryOrThrow(Registries.ENTITY_TYPE);
-        Optional<HolderSet.Named<EntityType<?>>> optionalNamed = entityTypes.getTag(
+        Registry<EntityType<?>> entityTypes = world.registryAccess().lookupOrThrow(Registries.ENTITY_TYPE);
+        Optional<HolderSet.Named<EntityType<?>>> optionalNamed = entityTypes.get(
                 event.spawnType() == EntitySpawnReason.CHUNK_GENERATION ?
                         SPAWNABLE_FROM_CHUNK_CREATION_TAG :
                         SPAWNABLE_FROM_BROOD_BLOCK_TAG);
@@ -113,10 +113,10 @@ public class ResourcefulBeesCompat implements ModCompat {
         }
 
         EntityType<?> rbBeeType = holders.get(entity.getRandom().nextInt(holders.size())).value();
-        Entity rbBeeUnchecked = rbBeeType.create(entity.level());
+        Entity rbBeeUnchecked = rbBeeType.create(entity.level(), event.spawnType());
 
         if (rbBeeUnchecked instanceof Bee rbBee) {
-            rbBee.moveTo(
+            rbBee.snapTo(
                     entity.getX(),
                     entity.getY(),
                     entity.getZ(),
@@ -127,7 +127,7 @@ public class ResourcefulBeesCompat implements ModCompat {
 
             rbBee.finalizeSpawn(
                     (ServerLevelAccessor) world,
-                    world.getCurrentDifficultyAt(rbBee.blockPosition()),
+                    ((ServerLevelAccessor) world).getCurrentDifficultyAt(rbBee.blockPosition()),
                     event.spawnType(),
                     null);
 
@@ -156,8 +156,8 @@ public class ResourcefulBeesCompat implements ModCompat {
 
     private static StructureTemplate.StructureBlockInfo getRandomCombFromTag(BlockPos worldPos, RandomSource random, LevelReader worldView, TagKey<Block> spawnsInBeeDungeonsTag) {
         if (worldView instanceof CommonLevelAccessor world) {
-            Registry<Block> blockRegistry = world.registryAccess().registryOrThrow(Registries.BLOCK);
-            Optional<HolderSet.Named<Block>> optionalNamed = blockRegistry.getTag(spawnsInBeeDungeonsTag);
+            Registry<Block> blockRegistry = world.registryAccess().lookupOrThrow(Registries.BLOCK);
+            Optional<HolderSet.Named<Block>> optionalNamed = blockRegistry.get(spawnsInBeeDungeonsTag);
             if (optionalNamed.isEmpty()) return null;
 
             List<Block> holders = GeneralUtils.convertHoldersetToList(optionalNamed);

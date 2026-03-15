@@ -6,6 +6,7 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SimpleAnimatedParticle;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 
 public class VoiceParticle extends SimpleAnimatedParticle {
     VoiceParticle(ClientLevel level, double x, double y, double z, double lifetime, SpriteSet sprites) {
@@ -30,7 +31,7 @@ public class VoiceParticle extends SimpleAnimatedParticle {
             this.sprites = sprites;
         }
 
-        public Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, RandomSource random) {
             return new VoiceParticle(level, x, y, z, xSpeed, this.sprites);
         }
     }

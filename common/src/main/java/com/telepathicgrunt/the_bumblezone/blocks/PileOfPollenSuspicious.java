@@ -183,10 +183,10 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
     @Override
     public boolean canSurvive(BlockState blockState, LevelReader world, BlockPos blockPos) {
         BlockState blockstate = world.getBlockState(blockPos.below());
-        if(blockstate.is(BlockTags.SNOW_LAYER_CANNOT_SURVIVE_ON) || !world.getBlockState(blockPos).getFluidState().isEmpty()) {
+        if((blockstate.is(BlockTags.CANNOT_SUPPORT_SNOW_LAYER) && !blockstate.is(BlockTags.SUPPORT_OVERRIDE_SNOW_LAYER)) || !world.getBlockState(blockPos).getFluidState().isEmpty()) {
             return false;
         }
-        else if(blockstate.isAir() || blockstate.is(BzTags.POLLEN_BLOCKS) || blockstate.is(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON)) {
+        else if(blockstate.isAir() || blockstate.is(BzTags.POLLEN_BLOCKS) || (blockstate.is(BlockTags.CANNOT_SUPPORT_SNOW_LAYER) && !blockstate.is(BlockTags.SUPPORT_OVERRIDE_SNOW_LAYER))) {
             return true;
         }
         else {

@@ -45,7 +45,7 @@ public class TradeHintParticle extends Particle {
     private int life;
     private float pastAnimationProgress;
 
-    public TradeHintParticle(ItemRenderer itemRenderer, RenderBuffers arg2, ClientLevel arg3, Entity queen, Item tradeWantItem, List<ItemStack> tradeRewardItems) {
+    public TradeHintParticle(s itemRenderer, RenderBuffers arg2, ClientLevel arg3, Entity queen, Item tradeWantItem, List<ItemStack> tradeRewardItems) {
         super(arg3, queen.getX(), queen.getY() + PARTICLE_Y_OFFSET, queen.getZ(), 0, 0, 0);
         this.renderBuffers = arg2;
         this.tradeWantItem = tradeWantItem;

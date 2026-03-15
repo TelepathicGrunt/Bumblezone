@@ -88,8 +88,9 @@ public class EssenceBlockYellow extends EssenceBlock {
     }
 
     @Override
-    public ServerEssenceEvent getServerEssenceEvent() {
+    public ServerEssenceEvent getServerEssenceEvent(RandomSource random) {
         return (ServerEssenceEvent) new ServerEssenceEvent(
+                Mth.createInsecureUUID(random),
                 "essence.the_bumblezone.yellow_essence_event",
                 BossEvent.BossBarColor.YELLOW,
                 BossEvent.BossBarOverlay.PROGRESS

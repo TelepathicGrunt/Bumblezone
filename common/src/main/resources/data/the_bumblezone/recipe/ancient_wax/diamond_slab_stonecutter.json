@@ -1,8 +1,6 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "the_bumblezone:ancient_wax_diamond"
-  },
+  "ingredient": "the_bumblezone:ancient_wax_diamond",
   "result": {
     "id": "the_bumblezone:ancient_wax_diamond_slab",
     "count": 2

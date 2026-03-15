@@ -18,6 +18,8 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityReference;
@@ -80,8 +82,9 @@ public class EssenceBlockRed extends EssenceBlock {
     }
 
     @Override
-    public ServerEssenceEvent getServerEssenceEvent() {
+    public ServerEssenceEvent getServerEssenceEvent(RandomSource random) {
         return (ServerEssenceEvent) new ServerEssenceEvent(
+                Mth.createInsecureUUID(random),
                 "essence.the_bumblezone.red_essence_event",
                 BossEvent.BossBarColor.RED,
                 BossEvent.BossBarOverlay.NOTCHED_20

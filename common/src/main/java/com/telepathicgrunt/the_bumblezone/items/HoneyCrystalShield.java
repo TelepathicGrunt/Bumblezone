@@ -46,14 +46,14 @@ public class HoneyCrystalShield extends ShieldItem implements ItemExtension {
                 .durability(40)
                 .component(BzDataComponents.HONEY_CRYSTAL_SHIELD_DEFINED_LEVELS_DATA.get(), new HoneyCrystalShieldDefinedLevelsData(40))
                 .component(BzDataComponents.HONEY_CRYSTAL_SHIELD_CURRENT_LEVEL_DATA.get(), new HoneyCrystalShieldCurrentLevelData())
-               .component(
+                .delayedComponent(
                         DataComponents.BLOCKS_ATTACKS,
-                        new BlocksAttacks(
+                        context -> new BlocksAttacks(
                                 0.25F,
                                 1.0F,
                                 List.of(new BlocksAttacks.DamageReduction(90.0F, Optional.empty(), 0.0F, 1.0F)),
                                 new BlocksAttacks.ItemDamageFunction(3.0F, 1.0F, 1.0F),
-                                Optional.of(DamageTypeTags.BYPASSES_SHIELD),
+                                Optional.of(context.getOrThrow(DamageTypeTags.BYPASSES_SHIELD)),
                                 Optional.of(SoundEvents.SHIELD_BLOCK),
                                 Optional.of(SoundEvents.SHIELD_BREAK)
                         )

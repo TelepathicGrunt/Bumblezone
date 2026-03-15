@@ -4,6 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.component.TooltipDisplay;
@@ -26,11 +27,11 @@ public class HoneyCocoonBlockItem extends BzBlockItem {
         int i = 0;
         int j = 0;
 
-        for(ItemStack itemStack2 : itemStack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).nonEmptyItems()) {
+        for(ItemStackTemplate itemStack2 : itemStack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).nonEmptyItems()) {
             ++j;
             if (i <= 4) {
                 ++i;
-                builder.accept(Component.translatable("container.the_bumblezone.honey_cocoon.item_count", itemStack2.getHoverName(), itemStack2.getCount()));
+                builder.accept(Component.translatable("container.the_bumblezone.honey_cocoon.item_count", itemStack2.create().getHoverName(), itemStack2.count()));
             }
         }
 

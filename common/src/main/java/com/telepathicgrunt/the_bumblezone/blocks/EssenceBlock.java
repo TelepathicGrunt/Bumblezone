@@ -134,7 +134,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
 
     public abstract void performUniqueArenaTick(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity);
 
-    public abstract ServerEssenceEvent getServerEssenceEvent();
+    public abstract ServerEssenceEvent getServerEssenceEvent(RandomSource random);
 
     public abstract Identifier getEssenceItemReward();
 

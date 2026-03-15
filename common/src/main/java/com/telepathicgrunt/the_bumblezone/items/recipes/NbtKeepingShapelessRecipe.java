@@ -22,6 +22,7 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
@@ -31,8 +32,8 @@ import java.util.List;
 
 public class NbtKeepingShapelessRecipe implements CraftingRecipe {
 
-    private final String group;
-    private final CraftingBookCategory category;
+    protected final Recipe.CommonInfo commonInfo;
+    protected final CraftingRecipe.CraftingBookInfo bookInfo;
     private final ItemStack result;
     private final List<Ingredient> ingredients;
     private final Item itemToKeepNbtOf;
@@ -40,9 +41,9 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
     @Nullable
     private PlacementInfo placementInfo;
 
-    public NbtKeepingShapelessRecipe(String group, CraftingBookCategory category, ItemStack result, List<Ingredient> ingredients, Item itemToKeepNbtOf) {
-        this.group = group;
-        this.category = category;
+    public NbtKeepingShapelessRecipe(Recipe.CommonInfo commonInfo, CraftingRecipe.CraftingBookInfo bookInfo, ItemStack result, List<Ingredient> ingredients, Item itemToKeepNbtOf) {
+        this.commonInfo = commonInfo;
+        this.bookInfo = bookInfo;
         this.result = result;
         this.ingredients = ingredients;
         this.itemToKeepNbtOf = itemToKeepNbtOf;
@@ -61,7 +62,7 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingInput craftingContainer, HolderLookup.Provider provider) {
+    public ItemStack assemble(CraftingInput craftingContainer) {
         ItemStack resultItem = this.result.copy();
         for (ItemStack input : craftingContainer.items()) {
             if (input.is(this.itemToKeepNbtOf)) {
@@ -74,13 +75,18 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
     }
 
     @Override
-    public RecipeSerializer<NbtKeepingShapelessRecipe> getSerializer() {
-        return BzRecipes.NBT_KEEPING_SHAPELESS_RECIPE.get();
+    public final String group() {
+        return this.bookInfo.group();
     }
 
     @Override
-    public CraftingBookCategory category() {
-        return this.category;
+    public final CraftingBookCategory category() {
+        return this.bookInfo.category();
+    }
+
+    @Override
+    public boolean showNotification() {
+        return this.commonInfo.showNotification();
     }
 
     @Override
@@ -92,37 +98,33 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
         return this.placementInfo;
     }
 
-    public static class Serializer implements RecipeSerializer<NbtKeepingShapelessRecipe> {
-        private static final MapCodec<NbtKeepingShapelessRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                Codec.STRING.optionalFieldOf("group", "").forGetter(o -> o.group),
-                CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(o -> o.category),
-                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(o -> o.result),
-                Ingredient.CODEC.listOf(1, 9).fieldOf("ingredients").forGetter(o -> o.ingredients),
-                BuiltInRegistries.ITEM.byNameCodec().fieldOf("keep_nbt_of").forGetter(o -> o.itemToKeepNbtOf)
-        ).apply(instance, NbtKeepingShapelessRecipe::new));
+    private static final MapCodec<NbtKeepingShapelessRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Recipe.CommonInfo.MAP_CODEC.forGetter(o -> o.commonInfo),
+            CraftingRecipe.CraftingBookInfo.MAP_CODEC.forGetter(o -> o.bookInfo),
+            ItemStack.CODEC.fieldOf("result").forGetter(o -> o.result),
+            Ingredient.CODEC.listOf(1, 9).fieldOf("ingredients").forGetter(o -> o.ingredients),
+            BuiltInRegistries.ITEM.byNameCodec().fieldOf("keep_nbt_of").forGetter(o -> o.itemToKeepNbtOf)
+    ).apply(instance, NbtKeepingShapelessRecipe::new));
 
-        public static final StreamCodec<RegistryFriendlyByteBuf, NbtKeepingShapelessRecipe> STREAM_CODEC = StreamCodec.composite(
-                ByteBufCodecs.STRING_UTF8,
-                r -> r.group,
-                CraftingBookCategory.STREAM_CODEC,
-                r -> r.category,
-                ItemStack.STREAM_CODEC,
-                r -> r.result,
-                Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()),
-                r -> r.ingredients,
-                ByteBufCodecs.registry(Registries.ITEM),
-                r -> r.itemToKeepNbtOf,
-                NbtKeepingShapelessRecipe::new
-        );
+    public static final StreamCodec<RegistryFriendlyByteBuf, NbtKeepingShapelessRecipe> STREAM_CODEC = StreamCodec.composite(
+            Recipe.CommonInfo.STREAM_CODEC,
+            o -> o.commonInfo,
+            CraftingRecipe.CraftingBookInfo.STREAM_CODEC,
+            o -> o.bookInfo,
+            ItemStack.STREAM_CODEC,
+            r -> r.result,
+            Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()),
+            r -> r.ingredients,
+            ByteBufCodecs.registry(Registries.ITEM),
+            r -> r.itemToKeepNbtOf,
+            NbtKeepingShapelessRecipe::new
+    );
 
-        @Override
-        public MapCodec<NbtKeepingShapelessRecipe> codec() {
-            return CODEC;
-        }
+    public static final RecipeSerializer<NbtKeepingShapelessRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, NbtKeepingShapelessRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
+    @Override
+    public RecipeSerializer<NbtKeepingShapelessRecipe> getSerializer() {
+        return BzRecipes.NBT_KEEPING_SHAPELESS_RECIPE.get();
     }
+
 }
