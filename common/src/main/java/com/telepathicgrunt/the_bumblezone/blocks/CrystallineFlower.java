@@ -241,7 +241,7 @@ public class CrystallineFlower extends BaseEntityBlock {
                 return InteractionResult.CONSUME;
             }
             else if (player instanceof ServerPlayer serverPlayer) {
-                serverPlayer.displayClientMessage(OCCUPIED_CRYSTALLINE_FLOWER_TEXT, true);
+                serverPlayer.sendOverlayMessage(OCCUPIED_CRYSTALLINE_FLOWER_TEXT);
             }
         }
 

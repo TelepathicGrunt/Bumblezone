@@ -95,8 +95,8 @@ public class GenericOptimizedStructure extends Structure {
             }
             sectionY = QuartPos.fromBlock(sectionY);
 
-            for (int curChunkX = chunkpos.x - validBiomeRange; curChunkX <= chunkpos.x + validBiomeRange; curChunkX++) {
-                for (int curChunkZ = chunkpos.z - validBiomeRange; curChunkZ <= chunkpos.z + validBiomeRange; curChunkZ++) {
+            for (int curChunkX = chunkpos.x() - validBiomeRange; curChunkX <= chunkpos.x() + validBiomeRange; curChunkX++) {
+                for (int curChunkZ = chunkpos.z() - validBiomeRange; curChunkZ <= chunkpos.z() + validBiomeRange; curChunkZ++) {
                     Holder<Biome> biome = context.biomeSource().getNoiseBiome(QuartPos.fromSection(curChunkX), sectionY, QuartPos.fromSection(curChunkZ), context.randomState().sampler());
                     if (!context.validBiome().test(biome)) {
                         return Optional.empty();

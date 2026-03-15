@@ -115,7 +115,7 @@ public class BzWorldSavedData extends SavedData {
 					ResourceKey<Level> destinationKey = entry.getDestination();
 					if (destinationKey.equals(BzDimension.BZ_WORLD_KEY)) {
 						if (entry.getEntity() instanceof ServerPlayer serverPlayer) {
-							serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.teleporting_into_bz"), true);
+							serverPlayer.sendOverlayMessage(Component.translatable("system.the_bumblezone.teleporting_into_bz"));
 						}
 
 						ThreadExecutor.dimensionDestinationSearch(world.getServer(), () -> {
@@ -132,7 +132,7 @@ public class BzWorldSavedData extends SavedData {
 					}
 					else {
 						if (entry.getEntity() instanceof ServerPlayer serverPlayer) {
-							serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.teleporting_out_of_bz"), true);
+							serverPlayer.sendOverlayMessage(Component.translatable("system.the_bumblezone.teleporting_out_of_bz"));
 						}
 
 						ThreadExecutor.dimensionDestinationSearch(world.getServer(), () -> {
@@ -175,7 +175,7 @@ public class BzWorldSavedData extends SavedData {
 					else {
 						teleportedEntities.add(entity);
 						if (entity instanceof ServerPlayer serverPlayer) {
-							serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.failed_teleporting"), false);
+							serverPlayer.sendSystemMessage(Component.translatable("system.the_bumblezone.failed_teleporting"));
 							Bumblezone.LOGGER.error("Bumblezone: Failed to teleport entity. Aborting teleportation. Please retry. Entity: {}-{} Pos: {} Destination: {}", entity.getClass().getSimpleName(), entity.getName(), entity.position(), destinationKey);
 						}
 					}
@@ -223,7 +223,7 @@ public class BzWorldSavedData extends SavedData {
 						PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(playerData -> {
 							if (!playerData.gottenWelcomedInDimension) {
 								playerData.gottenWelcomedInDimension = true;
-								serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
+								serverPlayer.sendSystemMessage(Component.translatable("system.the_bumblezone.advancement_hint"));
 							}
 						});
 					}));
@@ -239,7 +239,7 @@ public class BzWorldSavedData extends SavedData {
 					if (entity instanceof ServerPlayer playerEntity) {
 						Bumblezone.LOGGER.info("Bumblezone: Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: https://bugs.mojang.com/browse/MC-195468. A restart will fix this.");
 						MutableComponent message = Component.translatable("system.the_bumblezone.missing_dimension", Component.translatable("system.the_bumblezone.missing_dimension_link").withStyle(ChatFormatting.RED));
-						playerEntity.displayClientMessage(message, false);
+						playerEntity.sendSystemMessage(message);
 					}
 					teleportedEntities.add(entity);
 					return;
@@ -350,7 +350,7 @@ public class BzWorldSavedData extends SavedData {
 		teleportedEntities.add(entity);
 
 		if(teleportedEntity != null) {
-			ChunkPos chunkpos = new ChunkPos(BlockPos.containing(destinationPosition.x, destinationPosition.y, destinationPosition.z));
+			ChunkPos chunkpos = ChunkPos.containing(BlockPos.containing(destinationPosition.x, destinationPosition.y, destinationPosition.z));
             destination.getChunkSource().addTicket(new Ticket(TicketType.PLAYER_LOADING, ChunkLevel.byStatus(FullChunkStatus.ENTITY_TICKING)), chunkpos);
 
 			if(vehicle != null) {

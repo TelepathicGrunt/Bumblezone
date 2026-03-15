@@ -59,7 +59,7 @@ public class CorailTombstoneCompat implements ModCompat {
                             serverPlayer.level().addFreshEntity(itemEntity);
                         }
 
-                        serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.corail_tombstone_drop_compat").withStyle(ChatFormatting.GOLD), false);
+                        serverPlayer.sendSystemMessage(Component.translatable("system.the_bumblezone.corail_tombstone_drop_compat").withStyle(ChatFormatting.GOLD));
 
                         // clear the collection to prevent a grave to spawn
                         event.getDrops().clear();

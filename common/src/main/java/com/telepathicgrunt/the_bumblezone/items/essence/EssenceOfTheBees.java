@@ -40,7 +40,7 @@ public class EssenceOfTheBees extends Item {
         if (livingEntity instanceof ServerPlayer serverPlayer) {
             if (hasEssence(serverPlayer)) {
                 Component message = Component.translatable("item.the_bumblezone.essence_of_the_bees.already_essenced").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD);
-                serverPlayer.displayClientMessage(message, true);
+                serverPlayer.sendOverlayMessage(message);
                 return itemStack;
             }
 

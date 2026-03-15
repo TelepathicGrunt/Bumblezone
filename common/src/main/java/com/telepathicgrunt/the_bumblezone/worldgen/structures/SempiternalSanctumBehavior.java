@@ -74,7 +74,7 @@ public class SempiternalSanctumBehavior {
                                 .withStyle(ChatFormatting.BOLD)
                                 .withStyle(color);
 
-                        serverPlayer.displayClientMessage(message, true);
+                        serverPlayer.sendOverlayMessage(message);
                     }
                 }
 
@@ -84,7 +84,7 @@ public class SempiternalSanctumBehavior {
                 MobEffectInstance effect = serverPlayer.getEffect(MobEffects.MINING_FATIGUE);
                 if (effect == null || effect.getAmplifier() <= 2) {
                     Component message = Component.translatable("system.the_bumblezone.no_essence").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
-                    serverPlayer.displayClientMessage(message, true);
+                    serverPlayer.sendOverlayMessage(message);
                     serverPlayer.addEffect(new MobEffectInstance(
                             MobEffects.MINING_FATIGUE,
                             800,

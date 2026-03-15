@@ -103,7 +103,7 @@ public class BeeAggression {
             if(!player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder())) {
                 if (!EssenceOfTheBees.hasEssence(player) && player.level().getDifficulty() != Difficulty.PEACEFUL) {
                     Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
-                    player.displayClientMessage(message, true);
+                    player.sendOverlayMessage(message);
 
                     player.addEffect(new MobEffectInstance(
                             BzEffects.WRATH_OF_THE_HIVE.holder(),
@@ -298,7 +298,7 @@ public class BeeAggression {
             if (!serverPlayer.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder())) {
                 if (!serverPlayer.hasEffect(BzEffects.WRATH_OF_THE_HIVE.holder())) {
                     Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
-                    serverPlayer.displayClientMessage(message, true);
+                    serverPlayer.sendOverlayMessage(message);
                 }
 
                 serverPlayer.addEffect(new MobEffectInstance(

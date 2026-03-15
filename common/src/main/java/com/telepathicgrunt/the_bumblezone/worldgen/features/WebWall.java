@@ -37,7 +37,7 @@ public class WebWall extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        BlockPos blockPos = new ChunkPos(context.origin()).getMiddleBlockPosition(context.origin().getY());
+        BlockPos blockPos = ChunkPos.containing(context.origin()).getMiddleBlockPosition(context.origin().getY());
 
         UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(context.level());
         if (bulkSectionAccess.getBlockState(blockPos).is(Blocks.CAVE_AIR)) {

@@ -85,7 +85,7 @@ public class KnowingEssence extends AbilityEssenceItem {
                 if (BzGeneralConfigs.knowingEssenceStructureNameServer) {
                     StructureManager structureManager = ((ServerLevel)level).structureManager();
 
-                    List<StructureStart> structureStarts = structureManager.startsForStructure(new ChunkPos(serverPlayer.blockPosition()), s -> true);
+                    List<StructureStart> structureStarts = structureManager.startsForStructure(ChunkPos.containing(serverPlayer.blockPosition()), s -> true);
                     List<Structure> structures = new ArrayList<>();
 
                     Registry<Structure> structureRegistry = level.registryAccess().getOrThrow(Registries.STRUCTURE).value();

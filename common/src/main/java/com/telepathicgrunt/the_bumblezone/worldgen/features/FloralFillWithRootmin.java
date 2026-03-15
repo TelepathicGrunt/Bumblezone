@@ -44,7 +44,7 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
         FloralFillWithRootminConfig config = context.config();
 
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-        BlockPos chunkCornerPos = new ChunkPos(context.origin()).getWorldPosition().above(context.origin().getY());
+        BlockPos chunkCornerPos = ChunkPos.containing(context.origin()).getWorldPosition().above(context.origin().getY());
 
         Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.get(config.flowerTag);
         List<Block> blockList = GeneralUtils.convertHoldersetToList(optionalBlocks);

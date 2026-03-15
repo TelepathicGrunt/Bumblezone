@@ -816,8 +816,8 @@ public class GeneralUtils {
         );
 
         // Get all the chunks in range
-        for (int xOffset = minChunkPos.x; xOffset <= maxChunkPos.x; xOffset++) {
-            for (int zOffset = minChunkPos.z; zOffset <= maxChunkPos.z; zOffset++) {
+        for (int xOffset = minChunkPos.x(); xOffset <= maxChunkPos.x(); xOffset++) {
+            for (int zOffset = minChunkPos.z(); zOffset <= maxChunkPos.z(); zOffset++) {
                 ChunkAccess chunk = level.getChunk(xOffset, zOffset);
 
                 // Find and store all matches
@@ -849,9 +849,9 @@ public class GeneralUtils {
 
                 // Set to origin corner of chunk section
                 mutableSectionWorldOrigin.set(
-                        SectionPos.sectionToBlockCoord(chunk.getPos().x),
+                        SectionPos.sectionToBlockCoord(chunk.getPos().x()),
                         sectionWorldY,
-                        SectionPos.sectionToBlockCoord(chunk.getPos().z));
+                        SectionPos.sectionToBlockCoord(chunk.getPos().z()));
 
                 for (int yOffset = 0; yOffset < 16; yOffset++) {
                     for (int zOffset = 0; zOffset < 16; zOffset++) {
@@ -928,7 +928,7 @@ public class GeneralUtils {
 
     public static void fillStartsForStructure(LevelReader level, StructureManager structureManager, Structure structure, LongSet references, Consumer<StructureStart> consumer) {
         for (long ref : references) {
-            SectionPos sectionPos = SectionPos.of(new ChunkPos(ref), level.getMinSectionY());
+            SectionPos sectionPos = SectionPos.of(ChunkPos.unpack(ref), level.getMinSectionY());
             if (!level.hasChunk(sectionPos.x(), sectionPos.z())) {
                 continue;
             }

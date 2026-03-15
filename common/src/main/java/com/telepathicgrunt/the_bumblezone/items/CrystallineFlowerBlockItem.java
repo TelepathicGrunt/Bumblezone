@@ -42,7 +42,7 @@ public class CrystallineFlowerBlockItem extends BzBlockItem {
                 if (obstructions.stream().anyMatch(b -> b)) {
                     if (blockPlaceContext.getPlayer() instanceof ServerPlayer serverPlayer) {
                         Component message = Component.translatable("item.the_bumblezone.crystalline_flower_cannot_place").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
-                        serverPlayer.displayClientMessage(message, true);
+                        serverPlayer.sendOverlayMessage(message);
                     }
 
                     return null;

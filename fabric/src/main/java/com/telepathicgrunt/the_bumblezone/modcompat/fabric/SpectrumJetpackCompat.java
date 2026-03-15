@@ -38,9 +38,9 @@ public class SpectrumJetpackCompat implements ModCompat {
 //                    for (Tuple<SlotReference, ItemStack> itemStackTuple : trinketComponentEquipped) {
 //                        if (!player.getCooldowns().isOnCooldown(itemStackTuple.getB().getItem())) {
 //                            if (player instanceof ServerPlayer serverPlayer) {
-//                                serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
+//                                serverPlayer.sendOverlayMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
 //                                        .withStyle(ChatFormatting.ITALIC)
-//                                        .withStyle(ChatFormatting.RED), true);
+//                                        .withStyle(ChatFormatting.RED));
 //                            }
 //                        }
 //

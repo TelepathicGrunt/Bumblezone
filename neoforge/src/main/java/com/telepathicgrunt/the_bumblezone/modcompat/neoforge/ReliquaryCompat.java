@@ -36,9 +36,9 @@ public class ReliquaryCompat implements ModCompat {
 			Entity entity = event.getEntity();
 			if (entity != null && HeavyAir.isInHeavyAir(entity.level(), entity.getBoundingBox())) {
 				if (entity instanceof ServerPlayer serverPlayer) {
-					serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_magic")
+					serverPlayer.sendOverlayMessage(Component.translatable("system.the_bumblezone.denied_magic")
 							.withStyle(ChatFormatting.ITALIC)
-							.withStyle(ChatFormatting.RED), true);
+							.withStyle(ChatFormatting.RED));
 
 				}
 

@@ -87,7 +87,7 @@ public class EntityTeleportationHookup {
                     PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(playerData -> {
                         if (!playerData.gottenWelcomed) {
                             playerData.gottenWelcomed = true;
-                            serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
+                            serverPlayer.sendSystemMessage(Component.translatable("system.the_bumblezone.advancement_hint"));
                         }
                     });
                 }
@@ -426,7 +426,7 @@ public class EntityTeleportationHookup {
                 //failed. Block below isn't the required block
                 Bumblezone.LOGGER.error("Bumblezone: The attempt to teleport to Bumblezone failed due to not having a block from the following block tag below the hive: the_bumblezone:required_blocks_under_hive_to_teleport");
                 Component message = Component.translatable("system.the_bumblezone.require_hive_blocks_failed");
-                serverPlayer.displayClientMessage(message, true);
+                serverPlayer.sendOverlayMessage(message);
             }
         }
         else {
@@ -500,7 +500,7 @@ public class EntityTeleportationHookup {
                             //failed. Block below isn't the required block
                             Bumblezone.LOGGER.info("Bumblezone: The attempt to teleport to Bumblezone failed due to not having a block from the following block tag below the hive: the_bumblezone:required_blocks_under_hive_to_teleport");
                             Component message = Component.translatable("system.the_bumblezone.require_hive_blocks_failed");
-                            playerEntity.displayClientMessage(message, true);
+                            playerEntity.sendOverlayMessage(message);
                         }
                         return;
                     }

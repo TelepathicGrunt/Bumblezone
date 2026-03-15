@@ -60,9 +60,9 @@ public class MekanismCompat implements ModCompat {
 			{
 				if (!player.getCooldowns().isOnCooldown(chestplate)) {
 					if (player instanceof ServerPlayer serverPlayer) {
-						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
+						serverPlayer.sendOverlayMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
 								.withStyle(ChatFormatting.ITALIC)
-								.withStyle(ChatFormatting.RED), true);
+								.withStyle(ChatFormatting.RED));
 					}
 				}
 

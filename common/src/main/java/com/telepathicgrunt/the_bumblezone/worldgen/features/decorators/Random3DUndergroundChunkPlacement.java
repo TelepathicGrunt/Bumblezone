@@ -7,6 +7,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
@@ -18,7 +19,7 @@ import java.util.stream.Stream;
 public class Random3DUndergroundChunkPlacement extends RepeatingPlacement {
 
     private final IntProvider count;
-    public static final MapCodec<Random3DUndergroundChunkPlacement> CODEC = IntProvider.codec(0, 100000)
+    public static final MapCodec<Random3DUndergroundChunkPlacement> CODEC = IntProviders.codec(0, 100000)
             .fieldOf("count").xmap(Random3DUndergroundChunkPlacement::new, placement -> placement.count);
 
     private Random3DUndergroundChunkPlacement(IntProvider intProvider) {

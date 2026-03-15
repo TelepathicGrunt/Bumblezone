@@ -31,7 +31,7 @@ public class StickyHoneyResidueFeature extends Feature<NoneFeatureConfiguration>
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
 
-        ChunkPos currentChunkPos = new ChunkPos(context.origin());
+        ChunkPos currentChunkPos = ChunkPos.containing(context.origin());
         BlockState originalBlockstate = context.level().getBlockState(context.origin());
 
         if (originalBlockstate.isAir() && !originalBlockstate.is(BzTags.AIR_LIKE)) {
@@ -42,7 +42,7 @@ public class StickyHoneyResidueFeature extends Feature<NoneFeatureConfiguration>
                 BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
                 for(Direction side : Direction.Plane.HORIZONTAL) {
                     mutableBlockPos.set(context.origin()).move(side);
-                    if(!(new ChunkPos(mutableBlockPos).equals(currentChunkPos))) {
+                    if(!(ChunkPos.containing(mutableBlockPos).equals(currentChunkPos))) {
                         honeyResidue = honeyResidue.setValue(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(side), false);
                     }
                 }

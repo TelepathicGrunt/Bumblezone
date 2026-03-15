@@ -594,7 +594,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         if (!capability.receivedEssencePrize) {
                             spawnReward(forwardVect, sideVect, ESSENCE_DROP, ItemStack.EMPTY, serverPlayer.getUUID());
                             capability.receivedEssencePrize = true;
-                            serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                            serverPlayer.sendSystemMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD));
                         }
                     });
                 }
@@ -623,18 +623,18 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
                         spawnReward(forwardVect, sideVect, ESSENCE_DROP, ItemStack.EMPTY, serverPlayer.getUUID());
                         capability.receivedEssencePrize = true;
-                        serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                        serverPlayer.sendSystemMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD));
                     }
                     else {
                         long timeDiff = this.level().getGameTime() - capability.tradeResetPrimedTime;
                         if (timeDiff < 200 && timeDiff > 10) {
                             resetAdvancementTree(serverPlayer, BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT);
                             capability.resetAllTrackerStats();
-                            serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.reset_advancements").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                            serverPlayer.sendSystemMessage(Component.translatable("entity.the_bumblezone.bee_queen.reset_advancements").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD));
                         }
                         else {
                             capability.tradeResetPrimedTime = this.level().getGameTime();
-                            serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.advancements_warning").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                            serverPlayer.sendSystemMessage(Component.translatable("entity.the_bumblezone.bee_queen.advancements_warning").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD));
                         }
                     }
                 });
@@ -702,7 +702,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                                 Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
                                 spawnReward(forwardVect, sideVect, ESSENCE_DROP, ItemStack.EMPTY, serverPlayer.getUUID());
                                 capability.receivedEssencePrize = true;
-                                serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                                serverPlayer.sendSystemMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD));
                             }
                         });
                     }
@@ -764,7 +764,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             if (playerUUID != null) {
                 Player player = level().getPlayerByUUID(playerUUID);
                 if (player != null) {
-                    player.displayClientMessage(Component.translatable(specialDaysEntry.specialMessage()).withStyle(specialDaysEntry.textColor()), true);
+                    player.sendOverlayMessage(Component.translatable(specialDaysEntry.specialMessage()).withStyle(specialDaysEntry.textColor()));
                 }
             }
         }

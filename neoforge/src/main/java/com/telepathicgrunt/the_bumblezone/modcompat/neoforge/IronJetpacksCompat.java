@@ -33,17 +33,17 @@ public class IronJetpacksCompat implements ModCompat {
 					JetpackUtils.toggleEngine(jetpack);
 
 					if (player instanceof ServerPlayer serverPlayer) {
-						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
+						serverPlayer.sendOverlayMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
 								.withStyle(ChatFormatting.ITALIC)
-								.withStyle(ChatFormatting.RED), true);
+								.withStyle(ChatFormatting.RED));
 					}
 				}
 
 				if (!player.getCooldowns().isOnCooldown(jetpack)) {
 					if (player instanceof ServerPlayer serverPlayer) {
-						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
+						serverPlayer.sendOverlayMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
 								.withStyle(ChatFormatting.ITALIC)
-								.withStyle(ChatFormatting.RED), true);
+								.withStyle(ChatFormatting.RED));
 					}
 				}
 

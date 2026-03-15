@@ -306,7 +306,7 @@ public class StringCurtain extends Block {
                 return InteractionResult.SUCCESS;
             }
             else if (itemStack.is(BzTags.STRING_CURTAINS_ITEMS)) {
-                playerEntity.displayClientMessage(Component.translatable("block.the_bumblezone.string_curtain.extending_clarification").withStyle(ChatFormatting.WHITE), true);
+                playerEntity.sendOverlayMessage(Component.translatable("block.the_bumblezone.string_curtain.extending_clarification").withStyle(ChatFormatting.WHITE));
                 return InteractionResult.FAIL;
             }
         }

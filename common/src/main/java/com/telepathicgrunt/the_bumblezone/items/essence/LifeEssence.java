@@ -132,7 +132,7 @@ public class LifeEssence extends AbilityEssenceItem {
 
         BlockPos playerPos = serverPlayer.blockPosition();
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-        ChunkPos currentCachedChunkPos = new ChunkPos(playerPos);
+        ChunkPos currentCachedChunkPos = ChunkPos.containing(playerPos);
         LevelChunk cachedChunk = null;
 
         int minX = playerPos.getX() - radius;
@@ -149,11 +149,11 @@ public class LifeEssence extends AbilityEssenceItem {
             for (int z = minZ; z <= maxZ; z++) {
 
                 if (cachedChunk == null ||
-                    currentCachedChunkPos.x != SectionPos.blockToSectionCoord(x) ||
-                    currentCachedChunkPos.z != SectionPos.blockToSectionCoord(z))
+                    currentCachedChunkPos.x() != SectionPos.blockToSectionCoord(x) ||
+                    currentCachedChunkPos.z() != SectionPos.blockToSectionCoord(z))
                 {
                     currentCachedChunkPos = new ChunkPos(SectionPos.blockToSectionCoord(x), SectionPos.blockToSectionCoord(z));
-                    cachedChunk = level.getChunk(currentCachedChunkPos.x, currentCachedChunkPos.z);
+                    cachedChunk = level.getChunk(currentCachedChunkPos.x(), currentCachedChunkPos.z());
                 }
 
                 foundValidZChunkSection = false;

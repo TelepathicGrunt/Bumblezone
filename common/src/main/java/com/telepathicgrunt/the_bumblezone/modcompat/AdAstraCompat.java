@@ -46,9 +46,9 @@ public class AdAstraCompat implements ModCompat {
 				ItemStack jetpackSuit = player.getItemBySlot(EquipmentSlot.CHEST);
 				if (!player.getCooldowns().isOnCooldown(jetpackSuit)) {
 					if (player instanceof ServerPlayer serverPlayer) {
-						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
+						serverPlayer.sendOverlayMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
 								.withStyle(ChatFormatting.ITALIC)
-								.withStyle(ChatFormatting.RED), true);
+								.withStyle(ChatFormatting.RED));
 					}
 				}
 

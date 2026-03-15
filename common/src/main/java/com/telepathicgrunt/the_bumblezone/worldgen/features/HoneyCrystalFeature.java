@@ -29,7 +29,7 @@ public class HoneyCrystalFeature extends Feature<HoneyCrystalFeatureConfig> {
         BlockPos.MutableBlockPos blockpos$Mutable = new BlockPos.MutableBlockPos().set(context.origin());
         BlockState originalBlockstate = context.level().getBlockState(blockpos$Mutable);
         BlockState blockstate;
-        ChunkPos currentChunkPos = new ChunkPos(blockpos$Mutable);
+        ChunkPos currentChunkPos = ChunkPos.containing(blockpos$Mutable);
 
         if (originalBlockstate.getBlock() == Blocks.CAVE_AIR ||
             (context.config().exposed && originalBlockstate.isAir() && !originalBlockstate.is(BzTags.AIR_LIKE)) ||
@@ -64,7 +64,7 @@ public class HoneyCrystalFeature extends Feature<HoneyCrystalFeatureConfig> {
                         //avoid placing crystal on block in other chunk as the cave hasn't carved it yet.
                         Direction directionProp = result.getValue(HoneyCrystal.FACING);
                         blockpos$Mutable.move(directionProp.getOpposite());
-                        if (blockpos$Mutable.getX() >> 4 != currentChunkPos.x || blockpos$Mutable.getZ() >> 4 != currentChunkPos.z) {
+                        if (blockpos$Mutable.getX() >> 4 != currentChunkPos.x() || blockpos$Mutable.getZ() >> 4 != currentChunkPos.z()) {
                             return false; // facing side chunk. cancel spawn
                         }
                         blockpos$Mutable.move(directionProp); // move back

@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.client.rendering.essence;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
@@ -16,9 +15,7 @@ import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -71,7 +68,7 @@ public class KnowingEssenceLootBlockOutlining {
         Player player = GeneralUtilsClient.getClientPlayer();
         if (KnowingEssence.IsKnowingEssenceActive(player)) {
             Level level = player.level();
-            Vec3 cameraPos = camera.getPosition();
+            Vec3 cameraPos = camera.position();
 
             scanChunks(cameraPos, level);
 
@@ -89,12 +86,12 @@ public class KnowingEssenceLootBlockOutlining {
             targetScanTime = currentTime + targetScanTimeIncrement;
 
             BlockPos worldSpot = BlockPos.containing(cameraPos);
-            ChunkPos centerChunkPos = new ChunkPos(worldSpot);
+            ChunkPos centerChunkPos = ChunkPos.containing(worldSpot);
             int currentChunk = 0;
             HashSet<Long> copySet = new HashSet<>(CACHED_CHUNK_POS);
             for (int x = -chunkRadius; x <= chunkRadius; x++) {
                 for (int z = -chunkRadius; z <= chunkRadius; z++) {
-                    long chunkPosLong = ChunkPos.asLong(x + centerChunkPos.x, z + centerChunkPos.z);
+                    long chunkPosLong = ChunkPos.hash(x + centerChunkPos.x(), z + centerChunkPos.z());
                     copySet.remove(chunkPosLong);
 
                     currentChunk++;
@@ -102,7 +99,7 @@ public class KnowingEssenceLootBlockOutlining {
                         continue;
                     }
 
-                    LevelChunk chunk = level.getChunk(x + centerChunkPos.x, z + centerChunkPos.z);
+                    LevelChunk chunk = level.getChunk(x + centerChunkPos.x(), z + centerChunkPos.z());
 
                     // Reset cached data
                     CACHED_CHUNK_DATA.put(chunkPosLong, new CachedChunkData(new ObjectArrayList<>()));
@@ -198,9 +195,9 @@ public class KnowingEssenceLootBlockOutlining {
                                 CACHED_TARGET_BLOCKS.add(block);
 
                                 BlockPos lootBlockPos = new BlockPos(
-                                        sectionX + (chunk.getPos().x << 4),
+                                        sectionX + (chunk.getPos().x() << 4),
                                         minSectionY + sectionY,
-                                        sectionZ +  (chunk.getPos().z << 4));
+                                        sectionZ +  (chunk.getPos().z() << 4));
 
                                 int colorInt = block.defaultMapColor().col;
                                 int red = FastColor.ARGB32.red(colorInt);

@@ -55,7 +55,7 @@ public class PollinatedStreamStructure extends Structure {
     }
 
     public Optional<Structure.GenerationStub> findGenerationPoint(Structure.GenerationContext context) {
-        WorldgenRandom positionedRandom = new WorldgenRandom(new LegacyRandomSource(context.seed() + (context.chunkPos().x * (context.chunkPos().z * 17L))));
+        WorldgenRandom positionedRandom = new WorldgenRandom(new LegacyRandomSource(context.seed() + (context.chunkPos().x() * (context.chunkPos().z() * 17L))));
         int x = context.chunkPos().getMinBlockX();
         int z = context.chunkPos().getMinBlockZ();
         BlockPos centerPos = new BlockPos(x, positionedRandom.nextInt(45) + 10, z);

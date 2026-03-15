@@ -179,9 +179,8 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                 if (entity instanceof ServerPlayer serverPlayer) {
                     BlockEntity blockEntity = level.getBlockEntity(blockPos);
                     if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity && essenceBlockEntity.getPlayerInArena().isEmpty()) {
-                        serverPlayer.displayClientMessage(
-                                Component.translatable("essence.the_bumblezone.missing_essence_effect").withStyle(ChatFormatting.RED),
-                                true);
+                        serverPlayer.sendOverlayMessage(
+                                Component.translatable("essence.the_bumblezone.missing_essence_effect").withStyle(ChatFormatting.RED));
                     }
                 }
 
@@ -262,8 +261,8 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
 
                         for (int x = -1; x <= 1; x++) {
                             for (int z = -1; z <= 1; z++) {
-                                ChunkPos chunkPos = new ChunkPos(blockPos);
-                                serverLevel.getChunk(chunkPos.x + x, chunkPos.z + z).setInhabitedTime(1512000);
+                                ChunkPos chunkPos = ChunkPos.containing(blockPos);
+                                serverLevel.getChunk(chunkPos.x() + x, chunkPos.z() + z).setInhabitedTime(1512000);
                             }
                         }
                     }

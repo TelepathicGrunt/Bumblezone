@@ -45,13 +45,13 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
         setSeed(context.level().getSeed());
         BlockPos.MutableBlockPos mutableBlockPos = context.origin().mutable();
         BlockPos.MutableBlockPos mutableBlockPosForChunk = new BlockPos.MutableBlockPos();
-        ChunkPos chunkPos = new ChunkPos(mutableBlockPos);
+        ChunkPos chunkPos = ChunkPos.containing(mutableBlockPos);
         Biome targetBiome = context.level().registryAccess().getOrThrow(Registries.BIOME).value().getValue(context.config().biomeRL);
 
         UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(context.level());
         for (int xOffset = -1; xOffset <= 1; xOffset++) {
             for (int zOffset = -1; zOffset <= 1; zOffset++) {
-                ChunkPos currentChunkPos = new ChunkPos(chunkPos.x + xOffset, chunkPos.z + zOffset);
+                ChunkPos currentChunkPos = new ChunkPos(chunkPos.x() + xOffset, chunkPos.z() + zOffset);
                 mutableBlockPosForChunk.set(currentChunkPos.getWorldPosition());
                 ChunkAccess cachedChunk = context.level().getChunk(currentChunkPos.getWorldPosition());
 

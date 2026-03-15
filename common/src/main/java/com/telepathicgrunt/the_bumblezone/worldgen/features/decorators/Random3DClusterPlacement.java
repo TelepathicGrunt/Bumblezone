@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
@@ -24,8 +25,8 @@ public class Random3DClusterPlacement extends RepeatingPlacement {
     private final boolean allowUnderwater;
 
     public static final MapCodec<Random3DClusterPlacement> CODEC = RecordCodecBuilder.mapCodec((configInstance) -> configInstance.group(
-            IntProvider.codec(0, 100000).fieldOf("count").forGetter(nbtFeatureConfig -> nbtFeatureConfig.count),
-            IntProvider.codec(0, 256).optionalFieldOf("height_range").forGetter(nbtFeatureConfig -> nbtFeatureConfig.range),
+            IntProviders.codec(0, 100000).fieldOf("count").forGetter(nbtFeatureConfig -> nbtFeatureConfig.count),
+            IntProviders.codec(0, 256).optionalFieldOf("height_range").forGetter(nbtFeatureConfig -> nbtFeatureConfig.range),
             Codec.BOOL.fieldOf("allow_underwater").forGetter(nbtFeatureConfig -> nbtFeatureConfig.allowUnderwater)
     ).apply(configInstance, Random3DClusterPlacement::new));
 

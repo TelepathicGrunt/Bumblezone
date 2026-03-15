@@ -65,7 +65,7 @@ public class SentryWatcherSpawnEgg extends Item {
                         Entity entity = entitytype.spawn(source.level(), stack, null, source.pos().relative(direction), EntitySpawnReason.DISPENSER, direction != Direction.UP, false);
                         if (entity instanceof SentryWatcherEntity sentryWatcherEntity) {
                             sentryWatcherEntity.setTargetFacing(direction);
-                            sentryWatcherEntity.setOwner(Optional.of(DISPENSER_OWNER_UUID));
+                            sentryWatcherEntity.setOwner(DISPENSER_OWNER_UUID);
                         }
 
                         stack.shrink(1);
@@ -92,7 +92,7 @@ public class SentryWatcherSpawnEgg extends Item {
             if (blockState.is(Blocks.SPAWNER)) {
                 if (!player.getAbilities().instabuild) {
                     if (player instanceof ServerPlayer) {
-                        player.displayClientMessage(Component.translatable("system.the_bumblezone.sentry_watcher_egg_spawner_hint").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), true);
+                        player.sendOverlayMessage(Component.translatable("system.the_bumblezone.sentry_watcher_egg_spawner_hint").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD));
                     }
                     return InteractionResult.FAIL;
                 }
@@ -132,9 +132,9 @@ public class SentryWatcherSpawnEgg extends Item {
                         BzCriterias.SENTRY_WATCHER_SPAWN_EGG_USED_TRIGGER.get().trigger(serverPlayer);
                     }
 
-                    sentryWatcherEntity.setOwner(Optional.of(player.getUUID()));
+                    sentryWatcherEntity.setOwner(player.getUUID());
                     if (player instanceof ServerPlayer) {
-                        player.displayClientMessage(Component.translatable("system.the_bumblezone.sentry_watcher_egg_removal_hint").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), true);
+                        player.sendOverlayMessage(Component.translatable("system.the_bumblezone.sentry_watcher_egg_removal_hint").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD));
                     }
                 }
 
@@ -175,9 +175,9 @@ public class SentryWatcherSpawnEgg extends Item {
                         }
 
                         if (!player.getAbilities().instabuild) {
-                            sentryWatcherEntity.setOwner(Optional.of(player.getUUID()));
+                            sentryWatcherEntity.setOwner(player.getUUID());
                             if (player instanceof ServerPlayer) {
-                                player.displayClientMessage(Component.translatable("system.the_bumblezone.sentry_watcher_egg_removal_hint").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), true);
+                                player.sendOverlayMessage(Component.translatable("system.the_bumblezone.sentry_watcher_egg_removal_hint").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD));
                             }
                         }
                     }

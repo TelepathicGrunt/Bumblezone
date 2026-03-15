@@ -96,7 +96,7 @@ public class FilledPorousHoneycomb extends Block {
                     world.getDifficulty() != Difficulty.PEACEFUL)
                 {
                     Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
-                    serverPlayer.displayClientMessage(message, true);
+                    serverPlayer.sendOverlayMessage(message);
 
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
                     playerEntity.addEffect(new MobEffectInstance(mobEffects.get(BzEffects.WRATH_OF_THE_HIVE.getId()).get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles, true));

@@ -14,6 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -34,8 +35,8 @@ public class ChiseledBookshelfProcessor extends StructureProcessor {
 
     public static final MapCodec<ChiseledBookshelfProcessor> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             RegistryCodecs.homogeneousList(Registries.ENCHANTMENT).optionalFieldOf("allowed_book_enchantments").forGetter(config -> config.allowedBookEnchantments),
-            IntProvider.codec(0, 6).optionalFieldOf("number_of_books").forGetter(config -> config.numberOfBooks),
-            IntProvider.codec(0, 6).optionalFieldOf("number_of_enchanted").forGetter(config -> config.numberOfEnchanted)
+            IntProviders.codec(0, 6).optionalFieldOf("number_of_books").forGetter(config -> config.numberOfBooks),
+            IntProviders.codec(0, 6).optionalFieldOf("number_of_enchanted").forGetter(config -> config.numberOfEnchanted)
     ).apply(instance, instance.stable(ChiseledBookshelfProcessor::new)));
 
     public final Optional<HolderSet<Enchantment>> allowedBookEnchantments;

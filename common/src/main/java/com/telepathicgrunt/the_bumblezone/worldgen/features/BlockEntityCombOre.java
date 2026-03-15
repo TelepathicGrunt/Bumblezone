@@ -113,7 +113,7 @@ public class BlockEntityCombOre extends Feature<NbtOreConfiguration> {
 
 		// get the world's cache or make one if map doesnt exist.
 		ResourceKey<Level> worldKey = world.getLevel().dimension();
-		Map<Long, ChunkAccess> worldStorage = CACHED_CHUNKS_ALL_WORLDS.computeIfAbsent(worldKey, k -> new WeakHashMap<>());
+		Map<Long, ChunkAccess> worldStorage = CACHED_CHUNKS_ALL_WORLDS.computeIfAbsent(worldKey, _ -> new WeakHashMap<>());
 
 		// shrink cache if it is too large to clear out old chunk refs no longer needed.
 		if(worldStorage.size() > 9){

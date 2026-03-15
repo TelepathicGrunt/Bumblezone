@@ -41,7 +41,7 @@ public class GlassBottleBehavior {
 
         if (currentFluidState.is(BzTags.ROYAL_JELLY_FLUID) && currentFluidState.isSource()) {
             Component message = Component.translatable("system.the_bumblezone.royal_jelly_bottle.cannot_take_from_source_block").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.LIGHT_PURPLE);
-            playerEntity.displayClientMessage(message, true);
+            playerEntity.sendOverlayMessage(message);
             return false;
         }
 

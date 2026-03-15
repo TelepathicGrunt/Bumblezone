@@ -295,7 +295,7 @@ public class HoneyCompass extends Item {
                     interactionResult = InteractionResult.SUCCESS_SERVER.heldItemTransformedTo(itemStack);
                 }
                 else {
-                    player.displayClientMessage(Component.translatable("item.the_bumblezone.honey_compass_structure_wrong_dimension"), true);
+                    player.sendOverlayMessage(Component.translatable("item.the_bumblezone.honey_compass_structure_wrong_dimension"));
                     interactionResult = InteractionResult.PASS;
                 }
             }
@@ -334,7 +334,7 @@ public class HoneyCompass extends Item {
                 interactionResult = InteractionResult.SUCCESS.heldItemTransformedTo(itemStack);
             }
             else {
-                player.displayClientMessage(Component.translatable("item.the_bumblezone.honey_compass_structure_wrong_dimension"), true);
+                player.sendOverlayMessage(Component.translatable("item.the_bumblezone.honey_compass_structure_wrong_dimension"));
                 interactionResult = InteractionResult.PASS;
             }
         }
@@ -373,7 +373,7 @@ public class HoneyCompass extends Item {
 
         if (structurePos == null) {
             serverPlayer.swing(interactionHand);
-            serverPlayer.displayClientMessage(Component.translatable("item.the_bumblezone.honey_compass_structure_failed"), false);
+            serverPlayer.sendSystemMessage(Component.translatable("item.the_bumblezone.honey_compass_structure_failed"));
             return;
         }
 
@@ -396,7 +396,7 @@ public class HoneyCompass extends Item {
             }
             else {
                 isFailed = false;
-                serverPlayer.displayClientMessage(Component.translatable("item.the_bumblezone.honey_compass_structure_creative").withStyle(ChatFormatting.YELLOW), true);
+                serverPlayer.sendOverlayMessage(Component.translatable("item.the_bumblezone.honey_compass_structure_creative").withStyle(ChatFormatting.YELLOW));
             }
 
             HoneyCompassStateData newHoneyCompassStateData = newCompass.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
