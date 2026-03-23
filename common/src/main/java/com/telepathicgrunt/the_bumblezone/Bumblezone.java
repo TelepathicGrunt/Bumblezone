@@ -252,6 +252,12 @@ public class Bumblezone {
                 Component.literal("Bumblezone - Anti Trypophobia"),
                 BzAddBuiltinResourcePacks.PackMode.USER_CONTROLLED
         );
+
+        event.add(
+                new ResourceLocation(MODID, "shader_emissive"),
+                Component.literal("Bumblezone - Shader Emissive"),
+                AddBuiltinResourcePacks.PackMode.USER_CONTROLLED
+        );
     }
 
     public static final List<Consumer<BzAddBuiltinDataPacks>> MOD_COMPAT_DATAPACKS = new ArrayList<>();
