@@ -257,9 +257,9 @@ public class Bumblezone {
         );
 
         event.add(
-                new ResourceLocation(MODID, "shader_emissive"),
+                ResourceLocation.fromNamespaceAndPath(MODID, "shader_emissive"),
                 Component.literal("Bumblezone - Shader Emissive"),
-                AddBuiltinResourcePacks.PackMode.USER_CONTROLLED
+                BzAddBuiltinResourcePacks.PackMode.USER_CONTROLLED
         );
     }
 
