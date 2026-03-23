@@ -1,0 +1,181 @@
+{
+  "Enable" : true,
+  "LightBlock": [
+    {
+      "block": "the_bumblezone:essence_block_blue",
+      "r": 55, "g": 185, "b": 250, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:essence_block_green",
+      "r": 90, "g": 250, "b": 50, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:essence_block_purple",
+      "r": 145, "g": 55, "b": 250, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:essence_block_red",
+      "r": 250, "g": 50, "b": 50, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:essence_block_white",
+      "r": 250, "g": 250, "b": 250, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:essence_block_yellow",
+      "r": 250, "g": 230, "b": 0, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_channel_blue",
+      "r": 55, "g": 185, "b": 250, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_channel_green",
+      "r": 90, "g": 250, "b": 50, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_channel_purple",
+      "r": 145, "g": 55, "b": 250, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_channel_red",
+      "r": 250, "g": 50, "b": 50, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_channel_white",
+      "r": 250, "g": 250, "b": 250, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_channel_yellow",
+      "r": 250, "g": 230, "b": 0, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_corner_blue",
+      "r": 55, "g": 185, "b": 250, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_corner_green",
+      "r": 90, "g": 250, "b": 50, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_corner_purple",
+      "r": 145, "g": 55, "b": 250, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_corner_red",
+      "r": 250, "g": 50, "b": 50, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_corner_white",
+      "r": 250, "g": 250, "b": 250, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_corner_yellow",
+      "r": 250, "g": 230, "b": 0, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_node_blue",
+      "r": 55, "g": 185, "b": 250, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_node_green",
+      "r": 90, "g": 250, "b": 50, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_node_purple",
+      "r": 145, "g": 55, "b": 250, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_node_red",
+      "r": 250, "g": 50, "b": 50, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_node_white",
+      "r": 250, "g": 250, "b": 250, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:luminescent_wax_node_yellow",
+      "r": 250, "g": 230, "b": 0, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:crystalline_flower",
+      "state": {
+        "flower": true
+      },
+      "r": 215, "g": 125, "b": 0, "a": 255,
+      "radius": 7
+    },
+    {
+      "block": "the_bumblezone:super_candle_wick",
+      "state": {
+        "lit": true
+      },
+      "r": 255, "g": 220, "b": 160, "a": 255,
+      "radius": 15
+    },
+    {
+      "block": "the_bumblezone:super_candle_wick_soul",
+      "state": {
+        "lit": true
+      },
+      "r": 115, "g": 170, "b": 250, "a": 255,
+      "radius": 14
+    }
+  ],
+  "Bloom": [
+    {
+      "block": "the_bumblezone:essence_block_blue"
+    },
+    {
+      "block": "the_bumblezone:essence_block_green"
+    },
+    {
+      "block": "the_bumblezone:essence_block_purple"
+    },
+    {
+      "block": "the_bumblezone:essence_block_red"
+    },
+    {
+      "block": "the_bumblezone:essence_block_white"
+    },
+    {
+      "block": "the_bumblezone:essence_block_yellow"
+    },
+    {
+      "block": "the_bumblezone:super_candle_wick",
+      "state": {
+    	"lit": true
+      }
+    },
+    {
+      "block": "the_bumblezone:super_candle_wick_soul",
+      "state": {
+    	"lit": true
+      }
+    }
+  ]
+}
