@@ -1,0 +1,7 @@
+{
+  "name": "luminescent_wax_corner_purple",
+  "glsl": "luminescent_wax_corner_purple.glsl",
+  "mat0": ["the_bumblezone:luminescent_wax_corner_purple"],
+  "color": "the_bumblezone:luminescent_wax_corner_purple",
+  "held_lighting": true
+}

@@ -1,0 +1,7 @@
+{
+  "name": "luminescent_wax_channel_purple",
+  "glsl": "luminescent_wax_channel_purple.glsl",
+  "mat0": ["the_bumblezone:luminescent_wax_channel_purple"],
+  "color": "the_bumblezone:luminescent_wax_channel_purple",
+  "held_lighting": true
+}

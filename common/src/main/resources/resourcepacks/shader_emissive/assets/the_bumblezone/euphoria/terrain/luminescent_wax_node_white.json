@@ -1,0 +1,7 @@
+{
+  "name": "luminescent_wax_node_white",
+  "glsl": "luminescent_wax_node_white.glsl",
+  "mat0": ["the_bumblezone:luminescent_wax_node_white"],
+  "color": "the_bumblezone:luminescent_wax_node_white",
+  "held_lighting": true
+}

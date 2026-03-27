@@ -1,0 +1,1 @@
+emission = color.r > 0.4 ? 2 * pow2(color.r) : 0.0;

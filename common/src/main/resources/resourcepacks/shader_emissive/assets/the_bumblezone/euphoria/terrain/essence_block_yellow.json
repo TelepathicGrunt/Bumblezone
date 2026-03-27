@@ -1,0 +1,7 @@
+{
+  "name": "essence_block_yellow",
+  "glsl": "essence_block_yellow.glsl",
+  "mat0": ["the_bumblezone:essence_block_yellow"],
+  "color": "the_bumblezone:essence_block_yellow",
+  "held_lighting": true
+}

@@ -1,0 +1,7 @@
+{
+  "name": "luminescent_wax_corner_yellow",
+  "glsl": "luminescent_wax_corner_yellow.glsl",
+  "mat0": ["the_bumblezone:luminescent_wax_corner_yellow"],
+  "color": "the_bumblezone:luminescent_wax_corner_yellow",
+  "held_lighting": true
+}

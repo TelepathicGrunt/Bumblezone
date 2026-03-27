@@ -1,0 +1,1 @@
+emission = (color.r + color.g + color.b) > 2 ? 2 * pow2((color.r + color.g + color.b) / 3) : 0.0;
