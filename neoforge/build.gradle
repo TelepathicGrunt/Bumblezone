@@ -142,11 +142,6 @@ publishMods {
 neoForge {
     version = project.neoforge_version
 
-    parchment {
-        minecraftVersion = project.parchment_minecraft_version
-        mappingsVersion = project.parchment_mappings_version
-    }
-
     def atFile = project(":common").file("src/main/resources/META-INF/accesstransformer.cfg")
     if (atFile.exists()) {
         accessTransformers {

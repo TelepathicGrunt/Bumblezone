@@ -6,22 +6,22 @@ repositories {
     exclusiveContent {
         forRepository {
             maven {
-                name = "ParchmentMC"
-                url = "https://maven.parchmentmc.org"
-            }
-        }
-        filter {
-            includeGroupAndSubgroups("org.parchmentmc")
-        }
-    }
-    exclusiveContent {
-        forRepository {
-            maven {
                 url = "https://maven.terraformersmc.com/releases"
             }
         }
         filter {
             includeGroupAndSubgroups("com.terraformersmc")
+        }
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "MidnightDust"
+                url = "https://maven.midnightdust.eu/releases"
+            }
+        }
+        filter {
+            includeGroupAndSubgroups("eu.midnightdust")
         }
     }
 }
@@ -36,7 +36,7 @@ dependencies {
     implementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-    implementation("maven.modrinth:midnightlib:${project.midnightlib}")
+    implementation("eu.midnightdust:midnightlib:${project.midnightlib}")
     localRuntime(compileOnly(include("earth.terrarium.athena:athena-fabric-${project.athena}")))
     localRuntime(compileOnly(include("com.teamresourceful.resourcefullib:resourcefullib-fabric-${project.resourcefullib}")))
 

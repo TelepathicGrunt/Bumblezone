@@ -46,11 +46,6 @@ dependencies {
 neoForge {
     neoFormVersion = project.neoform_version
 
-    parchment {
-        minecraftVersion = project.parchment_minecraft_version
-        mappingsVersion = project.parchment_mappings_version
-    }
-
     def atFile = file("src/main/resources/META-INF/accesstransformer.cfg")
     if (atFile.exists()) {
         accessTransformers {
