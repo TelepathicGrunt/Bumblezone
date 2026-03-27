@@ -1,0 +1,7 @@
+{
+  "name": "crystalline_flower",
+  "glsl": "crystalline_flower.glsl",
+  "mat0": ["the_bumblezone:crystalline_flower"],
+  "color": "the_bumblezone:crystalline_flower",
+  "held_lighting": true
+}

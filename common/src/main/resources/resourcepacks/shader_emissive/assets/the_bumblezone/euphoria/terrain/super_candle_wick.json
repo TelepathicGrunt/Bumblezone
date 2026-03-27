@@ -1,0 +1,7 @@
+{
+  "name": "super_candle_wick",
+  "glsl": "super_candle_wick.glsl",
+  "mat0": ["the_bumblezone:super_candle_wick"],
+  "color": "the_bumblezone:super_candle_wick",
+  "held_lighting": true
+}

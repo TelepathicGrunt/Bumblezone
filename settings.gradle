@@ -12,6 +12,13 @@ pluginManagement {
     }
 }
 
+gradle.lifecycle.beforeProject {
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+        options.compilerArgs << "-Xmaxerrs" << "10000"
+    }
+}
+
 include("common")
 include("fabric")
 include("fabric-base")

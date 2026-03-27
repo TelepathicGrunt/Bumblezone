@@ -1,0 +1,7 @@
+{
+  "name": "infinity_barrier",
+  "glsl": "infinity_barrier.glsl",
+  "mat0": ["the_bumblezone:infinity_barrier"],
+  "color": "the_bumblezone:infinity_barrier",
+  "held_lighting": true
+}
