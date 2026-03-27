@@ -1,7 +1,6 @@
 {
     "pack": {
         "description": "The Bumblezone - Shader Emissive",
-        "pack_format": 26,
-        "supported_formats": [1, 101]
+        "pack_format": 15
     }
 }
