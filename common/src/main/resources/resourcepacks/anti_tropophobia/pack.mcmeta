@@ -2,6 +2,6 @@
     "pack": {
         "description": "The Bumblezone - Anti Trypophobia",
         "pack_format": 26,
-        "supported_formats": [0, 1000000]
+        "supported_formats": [1, 101]
     }
 }

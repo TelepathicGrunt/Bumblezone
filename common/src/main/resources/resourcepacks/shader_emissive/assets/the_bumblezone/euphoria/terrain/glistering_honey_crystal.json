@@ -1,0 +1,7 @@
+{
+  "name": "glistering_honey_crystal",
+  "glsl": "glistering_honey_crystal.glsl",
+  "mat0": ["the_bumblezone:glistering_honey_crystal"],
+  "color": "the_bumblezone:glistering_honey_crystal",
+  "held_lighting": true
+}

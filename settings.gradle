@@ -10,6 +10,13 @@ plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
 }
 
+gradle.lifecycle.beforeProject {
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+        options.compilerArgs << "-Xmaxerrs" << "10000"
+    }
+}
+
 rootProject.name = 'TheBumblezone'
 
 include 'common', 'fabric', 'neoforge'
