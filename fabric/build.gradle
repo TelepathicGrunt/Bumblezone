@@ -72,7 +72,7 @@ publishMods {
     file = tasks.jar.archiveFile
     modLoaders.add("fabric")
 
-    File changeLog = project.file("CHANGELOG.md")
+    File changeLog = rootProject.file("CHANGELOG.md")
     String changeLogText = changeLog.exists() ? changeLog.text : ""
 
     def uploadDependenciesCf = [

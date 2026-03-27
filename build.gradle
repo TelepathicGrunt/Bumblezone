@@ -257,7 +257,7 @@ subprojects {
     publishMods {
         type = STABLE
 
-        displayName = "${project.mod_name} v${project.mod_version} (${project.minecraft_version} ${project.name.capitalize()})"
+        displayName = "${project.mod_name} v${rootProject.mod_version} (${rootProject.minecraft_version} MC ${name.capitalize()})"
         version = project.version
 
         def changeLogFile = project.file("CHANGELOG.md")
