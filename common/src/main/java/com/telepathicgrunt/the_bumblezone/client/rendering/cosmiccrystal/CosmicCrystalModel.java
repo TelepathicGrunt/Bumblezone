@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -17,8 +18,13 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 public class CosmicCrystalModel extends HierarchicalModel<CosmicCrystalEntity> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Bumblezone.MODID, "cosmic_crystal"), "main");
+    private final Map<String, Optional<ModelPart>> descendantNameCache = new HashMap<>();
 
     private final ModelPart root;
     private final ModelPart body;
@@ -32,6 +38,14 @@ public class CosmicCrystalModel extends HierarchicalModel<CosmicCrystalEntity> {
         this.body = root.getChild("body");
         this.spikes = root.getChild("laser").getChild("spikes");
         this.charging = root.getChild("laser").getChild("charging");
+
+        GeneralUtilsClient.getAllPartsFromRoot(this.root())
+                .forEach(entry -> this.descendantNameCache.put(entry.getKey(), Optional.of(entry.getValue())));
+    }
+
+    @Override
+    public ModelPart root() {
+        return this.root;
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -91,7 +105,7 @@ public class CosmicCrystalModel extends HierarchicalModel<CosmicCrystalEntity> {
     @Override
     public void setupAnim(CosmicCrystalEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.body.visible = true;
-        this.body.getAllParts().forEach(ModelPart::resetPose);
+        this.descendantNameCache.values().forEach(optional -> optional.ifPresent(ModelPart::resetPose));
 
         boolean isLaserState = CosmicCrystalEntity.isLaserState(entity.getCosmicCrystalState());
 
@@ -128,7 +142,7 @@ public class CosmicCrystalModel extends HierarchicalModel<CosmicCrystalEntity> {
     }
 
     @Override
-    public ModelPart root() {
-        return this.root;
+    public Optional<ModelPart> getAnyDescendantWithName(String name) {
+        return this.descendantNameCache.getOrDefault(name, Optional.empty());
     }
 }

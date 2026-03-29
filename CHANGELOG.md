@@ -1,4 +1,11 @@
-### **(V.7.10.0 Changes) (1.20.1 Minecraft)**
+### **(V.7.10.1 Changes) (1.20.1 Minecraft)*
+
+#### Entities:
+Optimized model part gathering code for Rootmins, Bee Queen, and Cosmic Crystal Entity. 
+ Biggest benefit is Floral Meadows with tons of Rootmins will not smash the memory as much as before with super high memory allocation rates.
+
+
+### **(V.7.10.0 Changes) (1.20.1 Minecraft)*
 
 #### Mod Compat:
 Created an internal resourcepack called "Bumblezone - Shader Emissive". 
