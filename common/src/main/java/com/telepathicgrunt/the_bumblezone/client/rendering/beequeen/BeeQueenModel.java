@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.client.rendering.beequeen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -15,12 +16,25 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 public class BeeQueenModel extends HierarchicalModel<BeeQueenEntity> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "bee_queen"), "main");
     private final ModelPart root;
+    private final Map<String, Optional<ModelPart>> descendantNameCache = new HashMap<>();
 
     public BeeQueenModel(ModelPart root) {
         this.root = root.getChild("root");
+
+        GeneralUtilsClient.getAllPartsFromRoot(this.root())
+                .forEach(entry -> this.descendantNameCache.put(entry.getKey(), Optional.of(entry.getValue())));
+    }
+
+    @Override
+    public ModelPart root() {
+        return this.root;
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -83,7 +97,7 @@ public class BeeQueenModel extends HierarchicalModel<BeeQueenEntity> {
 
     @Override
     public void setupAnim(BeeQueenEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.root().getAllParts().forEach(ModelPart::resetPose);
+        this.descendantNameCache.values().forEach(optional -> optional.ifPresent(ModelPart::resetPose));
         this.animate(entity.attackAnimationState, BeeQueenAnimations.BEE_QUEEN_ATTACK, ageInTicks);
         this.animate(entity.idleAnimationState, BeeQueenAnimations.BEE_QUEEN_IDLE, ageInTicks * (entity.isAngry() ? 2 : 1));
         this.animate(entity.itemThrownAnimationState, BeeQueenAnimations.BEE_QUEEN_ITEM_THROW, ageInTicks);
@@ -99,7 +113,7 @@ public class BeeQueenModel extends HierarchicalModel<BeeQueenEntity> {
     }
 
     @Override
-    public ModelPart root() {
-        return this.root;
+    public Optional<ModelPart> getAnyDescendantWithName(String name) {
+        return this.descendantNameCache.getOrDefault(name, Optional.empty());
     }
 }

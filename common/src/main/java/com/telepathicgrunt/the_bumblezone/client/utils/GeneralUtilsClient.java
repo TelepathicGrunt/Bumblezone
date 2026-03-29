@@ -1,9 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.client.utils;
 
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
@@ -14,6 +16,8 @@ import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
 public class GeneralUtilsClient {
 
@@ -88,5 +92,21 @@ public class GeneralUtilsClient {
     public static boolean isAdvancedToolTipActive() {
         Minecraft minecraft = Minecraft.getInstance();
         return minecraft != null && minecraft.options.advancedItemTooltips;
+    }
+
+    //////////////////////////////////////
+
+    public static Stream<Map.Entry<String, ModelPart>> getAllPartsFromRoot(ModelPart root) {
+        return Stream.concat(
+            Stream.of(Map.entry("root", root)),
+            root.children.entrySet().stream().flatMap(GeneralUtilsClient::getAllParts)
+        );
+    }
+
+    private static Stream<Map.Entry<String, ModelPart>> getAllParts(Map.Entry<String, ModelPart> entry) {
+        return Stream.concat(
+            Stream.of(entry),
+            entry.getValue().children.entrySet().stream().flatMap(GeneralUtilsClient::getAllParts)
+        );
     }
 }

@@ -19,6 +19,8 @@ accessible method net/minecraft/world/damagesource/DamageSources source (Lnet/mi
 accessible method net/minecraft/world/damagesource/DamageSources source (Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;
 accessible method net/minecraft/world/damagesource/DamageSources source (Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;
 
+accessible field net/minecraft/client/model/geom/ModelPart children Ljava/util/Map;
+
 accessible class net/minecraft/client/renderer/FogRenderer$FogData
 
 accessible field net/minecraft/client/renderer/RenderStateShard NO_CULL Lnet/minecraft/client/renderer/RenderStateShard$CullStateShard;

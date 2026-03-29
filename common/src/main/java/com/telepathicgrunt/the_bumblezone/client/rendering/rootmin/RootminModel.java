@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.client.rendering.rootmin;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -15,12 +16,20 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 public class RootminModel extends HierarchicalModel<RootminEntity> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "rootmin"), "main");
     private final ModelPart root;
+    private final Map<String, Optional<ModelPart>> descendantNameCache = new HashMap<>();
 
     public RootminModel(ModelPart root) {
         this.root = root.getChild("root");
+
+        GeneralUtilsClient.getAllPartsFromRoot(this.root())
+            .forEach(entry -> this.descendantNameCache.put(entry.getKey(), Optional.of(entry.getValue())));
     }
 
     @Override
@@ -72,7 +81,7 @@ public class RootminModel extends HierarchicalModel<RootminEntity> {
 
     @Override
     public void setupAnim(RootminEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.root().getAllParts().forEach(ModelPart::resetPose);
+        this.descendantNameCache.values().forEach(optional -> optional.ifPresent(ModelPart::resetPose));
         this.animate(entity.idleAnimationState, RootminAnimations.IDLE, ageInTicks);
         this.animate(entity.angryAnimationState, RootminAnimations.ANGRY, ageInTicks);
         this.animate(entity.curiousAnimationState, RootminAnimations.CURIOUS, ageInTicks);
@@ -91,4 +100,8 @@ public class RootminModel extends HierarchicalModel<RootminEntity> {
         root.render(poseStack, vertexConsumer, packedLight, packedOverlay, packedColor);
     }
 
+    @Override
+    public Optional<ModelPart> getAnyDescendantWithName(String name) {
+        return this.descendantNameCache.getOrDefault(name, Optional.empty());
+    }
 }
