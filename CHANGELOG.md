@@ -1,3 +1,10 @@
+### **(V.7.10.2 Changes) (1.20.1 Minecraft)*
+
+#### Entities:
+Added a Bee Queen trade to exchange Banner Patterns for Experience Bottles.
+ This uses the `c:loom_patterns` item tag so add other mod's Banner Patterns to there.
+
+
 ### **(V.7.10.1 Changes) (1.20.1 Minecraft)*
 
 #### Entities:
