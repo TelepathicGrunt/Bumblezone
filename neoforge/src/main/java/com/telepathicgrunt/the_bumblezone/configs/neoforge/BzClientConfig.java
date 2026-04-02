@@ -18,6 +18,7 @@ public class BzClientConfig {
     public static ModConfigSpec.BooleanValue disableEssenceBlockShaders;
     public static ModConfigSpec.BooleanValue showBeesOnGuiAllYearRound;
     public static ModConfigSpec.BooleanValue showBeesOnGuiOnAprilFools;
+    public static ModConfigSpec.BooleanValue maximumBeesOnGui;
     public static ModConfigSpec.BooleanValue knowingEssenceHighlightBosses;
     public static ModConfigSpec.BooleanValue knowingEssenceHighlightMonsters;
     public static ModConfigSpec.BooleanValue knowingEssenceHighlightTamed;
@@ -245,6 +246,12 @@ public class BzClientConfig {
                 .translation("the_bumblezone.configuration.showbeesonguionaprilfools")
                 .define("showBeesOnGuiOnAprilFools", true);
 
+        maximumBeesOnGui = builder
+                .comment("----------------------------\n",
+                        " 10000 bees for your GUIs!")
+                .translation("the_bumblezone.configuration.maximumbeesongui")
+                .define("maximumBeesOnGui", false);
+
         builder.pop();
     }
 
@@ -260,6 +267,7 @@ public class BzClientConfig {
         BzClientConfigs.disableEssenceBlockShaders = disableEssenceBlockShaders.get();
         BzClientConfigs.showBeesOnGuiAllYearRound = showBeesOnGuiAllYearRound.get();
         BzClientConfigs.showBeesOnGuiOnAprilFools = showBeesOnGuiOnAprilFools.get();
+        BzClientConfigs.maximumBeesOnGui = maximumBeesOnGui.get();
         BzClientConfigs.knowingEssenceHighlightBosses = knowingEssenceHighlightBosses.get();
         BzClientConfigs.knowingEssenceHighlightMonsters = knowingEssenceHighlightMonsters.get();
         BzClientConfigs.knowingEssenceHighlightTamed = knowingEssenceHighlightTamed.get();
