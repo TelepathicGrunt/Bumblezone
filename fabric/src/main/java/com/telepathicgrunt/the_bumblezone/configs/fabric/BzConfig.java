@@ -399,6 +399,16 @@ public class BzConfig extends MidnightConfig {
     public static float essenceItemHUDVisualEffectSpeed = 1;
 
 
+    @Comment
+    public static Comment sillyClientComment;
+
+    @Entry
+    public static boolean showBeesOnGuiAllYearRound = false;
+
+    @Entry
+    public static boolean showBeesOnGuiOnAprilFools = true;
+
+
     @ApiStatus.Internal
     public static void setup() {
         MidnightConfig.init(Bumblezone.MODID, BzConfig.class);
@@ -535,6 +545,7 @@ public class BzConfig extends MidnightConfig {
         BzClientConfigs.radianceEssenceArmorDurabilityYCoord = radianceEssenceArmorDurabilityYCoord;
         BzClientConfigs.essenceItemHUDVisualEffectLayers = essenceItemHUDVisualEffectLayers;
         BzClientConfigs.essenceItemHUDVisualEffectSpeed = essenceItemHUDVisualEffectSpeed;
+        BzClientConfigs.showBeesOnGuiAllYearRound = showBeesOnGuiAllYearRound;
+        BzClientConfigs.showBeesOnGuiOnAprilFools = showBeesOnGuiOnAprilFools;
     }
-
 }

@@ -99,6 +99,7 @@
     "client.ClientLevelMixin",
     "client.ClientPacketListenerMixin",
     "client.EntityRenderersAccessor",
+    "client.GameRendererMixin",
     "client.LevelRendererMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
