@@ -17,11 +17,14 @@ public class GuiBees {
 
     public static final List<BeeSpriteState> beeSpriteStates = new ArrayList<>();
     public static float timePassedWhileGuiIsOpened = 0;
+    public static long initialTimeStart = 0;
+    public static long lastTime = -2;
     public static boolean showGuiBeesToday = false;
     public static boolean dateCheckCached = false;
 
     public static void initDateCheck() {
-        if (dateCheckCached) {
+        // Allow bypass of cache if all days is turned on and we had cached false.
+        if (dateCheckCached && !(!showGuiBeesToday && BzClientConfigs.showBeesOnGuiAllYearRound)) {
             return;
         }
 
@@ -36,6 +39,10 @@ public class GuiBees {
             }
         }
 
+        if (!dateCheckCached) {
+            initialTimeStart = System.currentTimeMillis();
+        }
+
         dateCheckCached = true;
     }
 
@@ -46,10 +53,16 @@ public class GuiBees {
         }
     }
 
-    public static void renderBees(Screen screen, GuiGraphics guiGraphics, int mouseX, int mouseY, float realTimeDeltaPartialTick) {
+    public static void renderBees(Screen screen, GuiGraphics guiGraphics, int mouseX, int mouseY, float deltaPastLastTick) {
         if (screen == null || Minecraft.getInstance().player == null) {
             return;
         }
+
+        long currentTime = System.currentTimeMillis() - initialTimeStart;
+        if (lastTime == -2) {
+            lastTime = currentTime;
+        }
+        float realTimeDeltaPartialTick = (currentTime - lastTime) / 45f;
 
         guiGraphics.pose().pushPose();
         guiGraphics.pose().translate(0.0F, 0.0F, 9000.0F);
@@ -91,7 +104,8 @@ public class GuiBees {
         }
         guiGraphics.pose().popPose();
 
-        if (timePassedWhileGuiIsOpened > 500 && beeSpriteStates.size() < 100 && beeSpriteStates.size() < (int)((timePassedWhileGuiIsOpened - 500) / 75)) {
+        //if (timePassedWhileGuiIsOpened > 500 && beeSpriteStates.size() < 100 && beeSpriteStates.size() < (int)((timePassedWhileGuiIsOpened - 500) / 75)) {
+        if (beeSpriteStates.size() < 100 && beeSpriteStates.size() < (int)(timePassedWhileGuiIsOpened / 50)) {
             BeeSpriteState beeSpriteState = new BeeSpriteState();
             beeSpriteState.xCord = Math.random() > 0.5f ? -16 : guiGraphics.guiWidth() + 16;
             beeSpriteState.yCord = (float) (guiGraphics.guiHeight() * Math.random() * 0.8f) + (guiGraphics.guiHeight() * 0.05f);
@@ -103,6 +117,7 @@ public class GuiBees {
         }
 
         timePassedWhileGuiIsOpened += realTimeDeltaPartialTick;
+        lastTime = currentTime;
     }
 
 
@@ -119,8 +134,8 @@ public class GuiBees {
 
         public float creationTimestamp = 0;
 
-        private static final ResourceLocation BEE_SPRITE_WINGS_DOWN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/bee_icon_wings_down.png");
-        private static final ResourceLocation BEE_SPRITE_WINGS_UP = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/bee_icon_wings_up.png");
+        private static final ResourceLocation BEE_SPRITE_WINGS_DOWN = new ResourceLocation(Bumblezone.MODID, "textures/gui/april_fools/bee_icon_wings_down.png");
+        private static final ResourceLocation BEE_SPRITE_WINGS_UP = new ResourceLocation(Bumblezone.MODID, "textures/gui/april_fools/bee_icon_wings_up.png");
 
         public static ResourceLocation GetBeeSprite(BeeSpriteState beeSpriteState) {
             return ((timePassedWhileGuiIsOpened - beeSpriteState.spriteAnimationOffset) % 3) > 1.5f ? BEE_SPRITE_WINGS_UP : BEE_SPRITE_WINGS_DOWN;

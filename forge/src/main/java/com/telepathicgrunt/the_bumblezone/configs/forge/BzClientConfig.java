@@ -190,6 +190,22 @@ public class BzClientConfig {
 
         builder.pop();
 
+        builder.translation("the_bumblezone.configuration.sillystuff").push("Silly Stuff configs");
+
+        showBeesOnGuiAllYearRound = builder
+                .comment("----------------------------\n",
+                        " For when you want the joy of bees always!")
+                .translation("the_bumblezone.configuration.showbeesonguiallyearround")
+                .define("showBeesOnGuiAllYearRound", false);
+
+        showBeesOnGuiOnAprilFools = builder
+                .comment("----------------------------\n",
+                        " For when you want the joy of bees always!")
+                .translation("the_bumblezone.configuration.showbeesonguionaprilfools")
+                .define("showBeesOnGuiOnAprilFools", true);
+
+        builder.pop();
+
         playWrathOfHiveEffectMusic = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " If on, Flight of the Bumblebee by Rimsky Korsakov will play when you have Wrath of the Hive effect on.\n")
@@ -216,24 +232,6 @@ public class BzClientConfig {
                         """)
                 .translation("the_bumblezone.config.disableessenceblockshaders")
                 .define("disableEssenceBlockShaders", false);
-
-        builder.pop();
-
-        builder.translation("the_bumblezone.configuration.sillystuff").push("Silly Stuff configs");
-
-        showBeesOnGuiAllYearRound = builder
-                .comment("----------------------------\n",
-                        " For when you want the joy of bees always!")
-                .translation("the_bumblezone.configuration.showbeesonguiallyearround")
-                .define("showBeesOnGuiAllYearRound", false);
-
-        showBeesOnGuiOnAprilFools = builder
-                .comment("----------------------------\n",
-                        " For when you want the joy of bees always!")
-                .translation("the_bumblezone.configuration.showbeesonguionaprilfools")
-                .define("showBeesOnGuiOnAprilFools", true);
-
-        builder.pop();
     }
 
     public static void copyToCommon() {
