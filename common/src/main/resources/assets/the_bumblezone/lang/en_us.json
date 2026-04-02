@@ -1283,6 +1283,7 @@
   "the_bumblezone.midnightconfig.sillyClientComment": "§o§6    Silly Configs",
   "the_bumblezone.midnightconfig.showBeesOnGuiAllYearRound": "Gui Bees All Year Round",
   "the_bumblezone.midnightconfig.showBeesOnGuiOnAprilFools": "Gui Bees On April Fools",
+  "the_bumblezone.midnightconfig.maximumBeesOnGui": "Maximum Number of Gui Bees",
   "the_bumblezone.midnightconfig.essenceComment": "§o§6    Essence Configs",
   "the_bumblezone.midnightconfig.keepEssenceOfTheBeesOnRespawning": "Keep Bee Essence On Respawning",
   "the_bumblezone.midnightconfig.repeatableEssenceEvents": "Can Repeat Essence Event After Winning",

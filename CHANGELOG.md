@@ -6,7 +6,7 @@ Added a Bee Queen trade to exchange Banner Patterns for Experience Bottles.
 
 #### Gui:
 Added an April Fool's joke for future years, where bees can appear on any in-world gui.
- This is controlled by two configs: showBeesOnGuiAllYearRound and showBeesOnGuiOnAprilFools
+ This is controlled by three configs: showBeesOnGuiAllYearRound, showBeesOnGuiOnAprilFools, and maximumBeesOnGui
  You can activate these gui bees 24/7 with the year round config!
 
 

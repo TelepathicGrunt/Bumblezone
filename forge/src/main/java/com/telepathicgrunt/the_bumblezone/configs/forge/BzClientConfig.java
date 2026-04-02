@@ -33,6 +33,7 @@ public class BzClientConfig {
     public static ForgeConfigSpec.DoubleValue essenceItemHUDVisualEffectSpeed;
     public static ForgeConfigSpec.BooleanValue showBeesOnGuiAllYearRound;
     public static ForgeConfigSpec.BooleanValue showBeesOnGuiOnAprilFools;
+    public static ForgeConfigSpec.BooleanValue maximumBeesOnGui;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -204,6 +205,12 @@ public class BzClientConfig {
                 .translation("the_bumblezone.configuration.showbeesonguionaprilfools")
                 .define("showBeesOnGuiOnAprilFools", true);
 
+        maximumBeesOnGui = builder
+                .comment("----------------------------\n",
+                        " 10000 bees for your GUIs!")
+                .translation("the_bumblezone.configuration.maximumbeesongui")
+                .define("maximumBeesOnGui", false);
+
         builder.pop();
 
         playWrathOfHiveEffectMusic = builder
@@ -245,6 +252,7 @@ public class BzClientConfig {
         BzClientConfigs.disableEssenceBlockShaders = disableEssenceBlockShaders.get();
         BzClientConfigs.showBeesOnGuiAllYearRound = showBeesOnGuiAllYearRound.get();
         BzClientConfigs.showBeesOnGuiOnAprilFools = showBeesOnGuiOnAprilFools.get();
+        BzClientConfigs.maximumBeesOnGui = maximumBeesOnGui.get();
         BzClientConfigs.knowingEssenceHighlightBosses = knowingEssenceHighlightBosses.get();
         BzClientConfigs.knowingEssenceHighlightMonsters = knowingEssenceHighlightMonsters.get();
         BzClientConfigs.knowingEssenceHighlightTamed = knowingEssenceHighlightTamed.get();

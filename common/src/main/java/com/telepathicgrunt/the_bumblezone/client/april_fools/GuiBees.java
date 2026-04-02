@@ -121,7 +121,16 @@ public class GuiBees {
         }
         guiGraphics.pose().popPose();
 
-        if (timePassedWhileGuiIsOpened > 500 && beeSpriteStates.size() < 100 && beeSpriteStates.size() < (int)((timePassedWhileGuiIsOpened - 500) / 85)) {
+        int currentBeeAmount = beeSpriteStates.size();
+
+        boolean normalCapCheck = timePassedWhileGuiIsOpened > 500 &&
+                currentBeeAmount < 100 &&
+                currentBeeAmount < (int)((timePassedWhileGuiIsOpened - 500) / 85);
+        boolean crazyHighCapCheck = BzClientConfigs.maximumBeesOnGui &&
+                timePassedWhileGuiIsOpened > 200 &&
+                currentBeeAmount < 10000;
+
+        if (normalCapCheck || crazyHighCapCheck) {
             BeeSpriteState beeSpriteState = new BeeSpriteState();
             beeSpriteState.xCord = Math.random() > 0.5f ? -16 : guiGraphics.guiWidth() + 16;
             beeSpriteState.yCord = (float) (guiGraphics.guiHeight() * Math.random() * 0.8f) + (guiGraphics.guiHeight() * 0.05f);
