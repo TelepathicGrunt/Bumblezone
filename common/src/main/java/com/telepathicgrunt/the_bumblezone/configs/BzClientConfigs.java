@@ -23,4 +23,6 @@ public class BzClientConfigs {
     public static int radianceEssenceArmorDurabilityYCoord = 16;
     public static int essenceItemHUDVisualEffectLayers = 3;
     public static float essenceItemHUDVisualEffectSpeed = 1;
+    public static boolean showBeesOnGuiAllYearRound = false;
+    public static boolean showBeesOnGuiOnAprilFools = true;
 }
