@@ -21,7 +21,8 @@ public class GuiBees {
     public static boolean dateCheckCached = false;
 
     public static void initDateCheck() {
-        if (dateCheckCached) {
+        // Allow bypass of cache if all days is turned on and we had cached false.
+        if (dateCheckCached && !(!showGuiBeesToday && BzClientConfigs.showBeesOnGuiAllYearRound)) {
             return;
         }
 
