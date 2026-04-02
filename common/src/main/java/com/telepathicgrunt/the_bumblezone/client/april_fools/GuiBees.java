@@ -3,10 +3,12 @@ package com.telepathicgrunt.the_bumblezone.client.april_fools;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.MouseHandler;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import org.lwjgl.glfw.GLFW;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -85,10 +87,25 @@ public class GuiBees {
             float xDiffToMouse = beeSpriteState.xCord - mouseX;
             float yDiffToMouse = beeSpriteState.yCord - mouseY;
             float exactDistanceToMouse = (float) Math.sqrt(xDiffToMouse * xDiffToMouse + yDiffToMouse * yDiffToMouse);
-            float mouseDisThreshold = 50f;
-            float pushStrength = (float) Math.pow(Math.max(mouseDisThreshold - exactDistanceToMouse, 0), 1.4f);
-            beeSpriteState.xVelocity += pushStrength * (xDiffToMouse / mouseDisThreshold) / 500f;
-            beeSpriteState.yVelocity += pushStrength * (yDiffToMouse / mouseDisThreshold) / 500f;
+
+            if (GLFW.glfwGetMouseButton(Minecraft.getInstance().getWindow().getWindow(), 0) == 1 && exactDistanceToMouse < 10) {
+                beeSpriteState.angry = true;
+            }
+
+            if (beeSpriteState.angry) {
+                float mouseDisThreshold = 500f;
+                float pushStrength = (float) Math.pow(Math.max(mouseDisThreshold - exactDistanceToMouse, 0), 1.4f);
+                float xAccel = pushStrength * (-xDiffToMouse / mouseDisThreshold) / 2000f;
+                float yAccel = pushStrength * (-yDiffToMouse / mouseDisThreshold) / 2000f;
+                beeSpriteState.xVelocity += Math.signum(xAccel) != Math.signum(beeSpriteState.xVelocity) ? xAccel * 2f : xAccel;
+                beeSpriteState.yVelocity += Math.signum(yAccel) != Math.signum(beeSpriteState.yVelocity) ? yAccel * 2f : yAccel;
+            }
+            else {
+                float mouseDisThreshold = 50f;
+                float pushStrength = (float) Math.pow(Math.max(mouseDisThreshold - exactDistanceToMouse, 0), 1.4f);
+                beeSpriteState.xVelocity += pushStrength * (xDiffToMouse / mouseDisThreshold) / 500f;
+                beeSpriteState.yVelocity += pushStrength * (yDiffToMouse / mouseDisThreshold) / 500f;
+            }
         }
         guiGraphics.pose().popPose();
 
@@ -120,10 +137,18 @@ public class GuiBees {
 
         public float creationTimestamp = 0;
 
+        public boolean angry = false;
+
         private static final ResourceLocation BEE_SPRITE_WINGS_DOWN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/bee_icon_wings_down.png");
         private static final ResourceLocation BEE_SPRITE_WINGS_UP = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/bee_icon_wings_up.png");
+        private static final ResourceLocation ANGRY_BEE_SPRITE_WINGS_DOWN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/angry_bee_icon_wings_down.png");
+        private static final ResourceLocation ANGRY_BEE_SPRITE_WINGS_UP = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/angry_bee_icon_wings_up.png");
 
         public static ResourceLocation GetBeeSprite(BeeSpriteState beeSpriteState) {
+            if (beeSpriteState.angry) {
+                return ((timePassedWhileGuiIsOpened - beeSpriteState.spriteAnimationOffset) % 2) > 1f ? ANGRY_BEE_SPRITE_WINGS_UP : ANGRY_BEE_SPRITE_WINGS_DOWN;
+            }
+
             return ((timePassedWhileGuiIsOpened - beeSpriteState.spriteAnimationOffset) % 3) > 1.5f ? BEE_SPRITE_WINGS_UP : BEE_SPRITE_WINGS_DOWN;
         }
     }
