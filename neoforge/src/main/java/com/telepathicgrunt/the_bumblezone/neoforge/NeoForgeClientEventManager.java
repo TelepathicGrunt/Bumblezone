@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.neoforge;
 
 import com.teamresourceful.resourcefullib.common.registry.RegistryEntry;
-import com.telepathicgrunt.the_bumblezone.client.DimensionTeleportingScreen;
+import com.telepathicgrunt.the_bumblezone.client.screens.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.client.armor.ArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.neoforge.DimensionFog;
 import com.telepathicgrunt.the_bumblezone.client.neoforge.NeoforgeArmorProviders;
