@@ -109,7 +109,7 @@ public class GuiBees {
         }
         guiGraphics.pose().popPose();
 
-        if (timePassedWhileGuiIsOpened > 500 && beeSpriteStates.size() < 100 && beeSpriteStates.size() < (int)((timePassedWhileGuiIsOpened - 500) / 75)) {
+        if (timePassedWhileGuiIsOpened > 500 && beeSpriteStates.size() < 100 && beeSpriteStates.size() < (int)((timePassedWhileGuiIsOpened - 500) / 85)) {
             BeeSpriteState beeSpriteState = new BeeSpriteState();
             beeSpriteState.xCord = Math.random() > 0.5f ? -16 : guiGraphics.guiWidth() + 16;
             beeSpriteState.yCord = (float) (guiGraphics.guiHeight() * Math.random() * 0.8f) + (guiGraphics.guiHeight() * 0.05f);
