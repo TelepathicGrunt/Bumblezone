@@ -418,6 +418,9 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean showBeesOnGuiOnAprilFools = true;
 
+    @Entry
+    public static boolean maximumBeesOnGui = false;
+
 
     @ApiStatus.Internal
     public static void setup() {
@@ -559,5 +562,6 @@ public class BzConfig extends MidnightConfig {
         BzClientConfigs.essenceItemHUDVisualEffectSpeed = essenceItemHUDVisualEffectSpeed;
         BzClientConfigs.showBeesOnGuiAllYearRound = showBeesOnGuiAllYearRound;
         BzClientConfigs.showBeesOnGuiOnAprilFools = showBeesOnGuiOnAprilFools;
+        BzClientConfigs.maximumBeesOnGui = maximumBeesOnGui;
     }
 }

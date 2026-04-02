@@ -1283,6 +1283,7 @@
   "the_bumblezone.midnightconfig.sillyClientComment": "§o§6    Silly Configs",
   "the_bumblezone.midnightconfig.showBeesOnGuiAllYearRound": "Gui Bees All Year Round",
   "the_bumblezone.midnightconfig.showBeesOnGuiOnAprilFools": "Gui Bees On April Fools",
+  "the_bumblezone.midnightconfig.maximumBeesOnGui": "Maximum Number of Gui Bees",
   "the_bumblezone.midnightconfig.essenceComment": "§o§6    Essence Configs",
   "the_bumblezone.midnightconfig.repeatableEssenceEvents": "Can Repeat Essence Event After Winning",
   "the_bumblezone.midnightconfig.blueArenaBubblesMechanic": "Blue Arena Bubbles Mechanic",
@@ -1383,6 +1384,8 @@
   "the_bumblezone.configuration.showbeesonguiallyearround.tooltip": "For when you want the joy of bees always!",
   "the_bumblezone.configuration.showbeesonguionaprilfools": "Gui Bees On April Fools",
   "the_bumblezone.configuration.showbeesonguionaprilfools.tooltip": "For when you want the silliness of bees!",
+  "the_bumblezone.configuration.maximumbeesongui": "Gui Bees On April Fools",
+  "the_bumblezone.configuration.maximumbeesongui.tooltip": "10000 bees for your GUIs!",
 
   "the_bumblezone.configuration.wrathofthehiveoptions": "Wrath of the Hive",
   "the_bumblezone.configuration.beesaggressionoptions": "Bees Aggression",

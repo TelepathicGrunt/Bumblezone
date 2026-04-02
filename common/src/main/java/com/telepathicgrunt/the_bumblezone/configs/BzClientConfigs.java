@@ -25,4 +25,5 @@ public class BzClientConfigs {
     public static float essenceItemHUDVisualEffectSpeed = 1;
     public static boolean showBeesOnGuiAllYearRound = false;
     public static boolean showBeesOnGuiOnAprilFools = true;
+    public static boolean maximumBeesOnGui = false;
 }
