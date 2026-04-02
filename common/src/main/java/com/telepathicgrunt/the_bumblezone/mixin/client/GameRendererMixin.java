@@ -3,7 +3,9 @@ package com.telepathicgrunt.the_bumblezone.mixin.client;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.april_fools.GuiBees;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,6 +23,10 @@ public abstract class GameRendererMixin {
         GuiBees.initDateCheck();
         // If player turns off both configs in-game while gui bees are present, turn off right away.
         if (GuiBees.showGuiBeesToday && (BzClientConfigs.showBeesOnGuiOnAprilFools || BzClientConfigs.showBeesOnGuiAllYearRound)) {
+            GuiBees.guiClosed(((GameRenderer)(Object)this).getMinecraft().screen);
+        }
+        // For setting up for Bumblezone's teleporting screen.
+        else if (GeneralUtilsClient.getClientPlayer() != null && GeneralUtilsClient.getClientPlayer().level().dimension() == BzDimension.BZ_WORLD_KEY) {
             GuiBees.guiClosed(((GameRenderer)(Object)this).getMinecraft().screen);
         }
     }
@@ -41,6 +47,9 @@ public abstract class GameRendererMixin {
     {
         // If player turns off both configs in-game while gui bees are present, turn off right away.
         if (GuiBees.showGuiBeesToday && (BzClientConfigs.showBeesOnGuiOnAprilFools || BzClientConfigs.showBeesOnGuiAllYearRound)) {
+            GuiBees.renderBees(((GameRenderer)(Object)this).getMinecraft().screen, guiGraphics, mouseX, mouseY, deltaPastLastTick);
+        }
+        else if (GeneralUtilsClient.getClientPlayer() != null && GeneralUtilsClient.getClientPlayer().level().dimension() == BzDimension.BZ_WORLD_KEY) {
             GuiBees.renderBees(((GameRenderer)(Object)this).getMinecraft().screen, guiGraphics, mouseX, mouseY, deltaPastLastTick);
         }
     }
