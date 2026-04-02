@@ -1,10 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.client.april_fools;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MouseHandler;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -43,16 +46,25 @@ public class GuiBees {
     }
 
     public static void guiClosed(Screen screen) {
-        if (timePassedWhileGuiIsOpened > 0 && screen == null && Minecraft.getInstance().player != null) {
+        if (timePassedWhileGuiIsOpened > 0 && screen == null && GeneralUtilsClient.getClientPlayer() != null) {
             timePassedWhileGuiIsOpened = 0;
             beeSpriteStates.clear();
         }
     }
 
     public static void renderBees(Screen screen, GuiGraphics guiGraphics, int mouseX, int mouseY, float realTimeDeltaPartialTick) {
-        if (screen == null || Minecraft.getInstance().player == null) {
+        if (screen == null || GeneralUtilsClient.getClientPlayer() == null) {
             return;
         }
+
+        boolean isOnTeleportingToBumblezoneScreen = screen instanceof ReceivingLevelScreen &&
+                GeneralUtilsClient.getClientPlayer().level().dimension() == BzDimension.BZ_WORLD_KEY;
+
+        long currentTime = System.currentTimeMillis() - initialTimeStart;
+        if (lastTime == -2) {
+            lastTime = currentTime;
+        }
+        float realTimeDeltaPartialTick = (currentTime - lastTime) / 45f;
 
         guiGraphics.pose().pushPose();
         guiGraphics.pose().translate(0.0F, 0.0F, 9000.0F);
@@ -117,8 +129,11 @@ public class GuiBees {
         boolean crazyHighCapCheck = BzClientConfigs.maximumBeesOnGui &&
                 timePassedWhileGuiIsOpened > 200 &&
                 currentBeeAmount < 10000;
+        boolean teleportScreenCapCheck = isOnTeleportingToBumblezoneScreen &&
+                currentBeeAmount < 25 &&
+                currentBeeAmount < (int)(timePassedWhileGuiIsOpened / 65) + 2;
 
-        if (normalCapCheck || crazyHighCapCheck) {
+        if (normalCapCheck || crazyHighCapCheck || teleportScreenCapCheck) {
             BeeSpriteState beeSpriteState = new BeeSpriteState();
             beeSpriteState.xCord = Math.random() > 0.5f ? -16 : guiGraphics.guiWidth() + 16;
             beeSpriteState.yCord = (float) (guiGraphics.guiHeight() * Math.random() * 0.8f) + (guiGraphics.guiHeight() * 0.05f);
