@@ -31,6 +31,8 @@ public class BzClientConfig {
     public static ForgeConfigSpec.IntValue radianceEssenceArmorDurabilityYCoord;
     public static ForgeConfigSpec.IntValue essenceItemHUDVisualEffectLayers;
     public static ForgeConfigSpec.DoubleValue essenceItemHUDVisualEffectSpeed;
+    public static ForgeConfigSpec.BooleanValue showBeesOnGuiAllYearRound;
+    public static ForgeConfigSpec.BooleanValue showBeesOnGuiOnAprilFools;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -214,6 +216,24 @@ public class BzClientConfig {
                         """)
                 .translation("the_bumblezone.config.disableessenceblockshaders")
                 .define("disableEssenceBlockShaders", false);
+
+        builder.pop();
+
+        builder.translation("the_bumblezone.configuration.sillystuff").push("Silly Stuff configs");
+
+        showBeesOnGuiAllYearRound = builder
+                .comment("----------------------------\n",
+                        " For when you want the joy of bees always!")
+                .translation("the_bumblezone.configuration.showbeesonguiallyearround")
+                .define("showBeesOnGuiAllYearRound", false);
+
+        showBeesOnGuiOnAprilFools = builder
+                .comment("----------------------------\n",
+                        " For when you want the joy of bees always!")
+                .translation("the_bumblezone.configuration.showbeesonguionaprilfools")
+                .define("showBeesOnGuiOnAprilFools", true);
+
+        builder.pop();
     }
 
     public static void copyToCommon() {
@@ -225,6 +245,8 @@ public class BzClientConfig {
         BzClientConfigs.showBeeQueenSpeechBubble = showBeeQueenSpeechBubble.get();
         BzClientConfigs.playSempiternalSanctumMusic = playSempiternalSanctumMusic.get();
         BzClientConfigs.disableEssenceBlockShaders = disableEssenceBlockShaders.get();
+        BzClientConfigs.showBeesOnGuiAllYearRound = showBeesOnGuiAllYearRound.get();
+        BzClientConfigs.showBeesOnGuiOnAprilFools = showBeesOnGuiOnAprilFools.get();
         BzClientConfigs.knowingEssenceHighlightBosses = knowingEssenceHighlightBosses.get();
         BzClientConfigs.knowingEssenceHighlightMonsters = knowingEssenceHighlightMonsters.get();
         BzClientConfigs.knowingEssenceHighlightTamed = knowingEssenceHighlightTamed.get();

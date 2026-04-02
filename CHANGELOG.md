@@ -4,6 +4,11 @@
 Added a Bee Queen trade to exchange Banner Patterns for Experience Bottles.
  This uses the `c:loom_patterns` item tag so add other mod's Banner Patterns to there.
 
+#### Gui:
+Added an April Fool's joke for future years, where bees can appear on any in-world gui.
+ This is controlled by two configs: showBeesOnGuiAllYearRound and showBeesOnGuiOnAprilFools
+ You can activate these gui bees 24/7 with the year round config!
+
 
 ### **(V.7.10.1 Changes) (1.20.1 Minecraft)*
 
