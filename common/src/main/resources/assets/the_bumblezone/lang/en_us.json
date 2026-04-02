@@ -1382,7 +1382,7 @@
   "the_bumblezone.configuration.showbeesonguiallyearround.tooltip": "For when you want the joy of bees always!",
   "the_bumblezone.configuration.showbeesonguionaprilfools": "Gui Bees On April Fools",
   "the_bumblezone.configuration.showbeesonguionaprilfools.tooltip": "For when you want the silliness of bees!",
-  "the_bumblezone.configuration.maximumbeesongui": "Gui Bees On April Fools",
+  "the_bumblezone.configuration.maximumbeesongui": "Maximum Number of Gui Bees",
   "the_bumblezone.configuration.maximumbeesongui.tooltip": "10000 bees for your GUIs!",
 
   "the_bumblezone.configuration.wrathofthehiveoptions": "Wrath of the Hive",

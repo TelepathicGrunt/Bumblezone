@@ -1,11 +1,10 @@
-package com.telepathicgrunt.the_bumblezone.client.april_fools;
+package com.telepathicgrunt.the_bumblezone.client.screens;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.MouseHandler;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -19,11 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GuiBees {
-
-    public static final List<BeeSpriteState> beeSpriteStates = new ArrayList<>();
-    public static float timePassedWhileGuiIsOpened = 0;
-    public static boolean showGuiBeesToday = false;
-    public static boolean dateCheckCached = false;
+    private static final List<BeeSpriteState> beeSpriteStates = new ArrayList<>();
+    private static float timePassedWhileGuiIsOpened = 0;
+    private static boolean showGuiBeesToday = false;
+    private static boolean dateCheckCached = false;
 
     public static void initDateCheck() {
         // Allow bypass of cache if all days is turned on and we had cached false.
@@ -45,6 +43,16 @@ public class GuiBees {
         dateCheckCached = true;
     }
 
+    public static boolean isGuiBeeAllowedByConfig() {
+        return GuiBees.showGuiBeesToday && (BzClientConfigs.showBeesOnGuiOnAprilFools || BzClientConfigs.showBeesOnGuiAllYearRound);
+    }
+
+    public static boolean isPlayerInDimensionTeleportScreen(Screen screen) {
+        return screen instanceof ReceivingLevelScreen &&
+            GeneralUtilsClient.getClientPlayer() != null &&
+            GeneralUtilsClient.getClientPlayer().level().dimension() == BzDimension.BZ_WORLD_KEY;
+    }
+
     public static void guiClosed(Screen screen) {
         if (timePassedWhileGuiIsOpened > 0 && screen == null && GeneralUtilsClient.getClientPlayer() != null) {
             timePassedWhileGuiIsOpened = 0;
@@ -52,19 +60,14 @@ public class GuiBees {
         }
     }
 
-    public static void renderBees(Screen screen, GuiGraphics guiGraphics, int mouseX, int mouseY, float realTimeDeltaPartialTick) {
+    public static void renderBees(Screen screen, boolean onBzDimTeleportScreen, GuiGraphics guiGraphics, int mouseX, int mouseY, float realTimeDeltaPartialTick) {
         if (screen == null || GeneralUtilsClient.getClientPlayer() == null) {
             return;
         }
 
-        boolean isOnTeleportingToBumblezoneScreen = screen instanceof ReceivingLevelScreen &&
-                GeneralUtilsClient.getClientPlayer().level().dimension() == BzDimension.BZ_WORLD_KEY;
-
-        long currentTime = System.currentTimeMillis() - initialTimeStart;
-        if (lastTime == -2) {
-            lastTime = currentTime;
+        if (!onBzDimTeleportScreen && !isGuiBeeAllowedByConfig()) {
+            return;
         }
-        float realTimeDeltaPartialTick = (currentTime - lastTime) / 45f;
 
         guiGraphics.pose().pushPose();
         guiGraphics.pose().translate(0.0F, 0.0F, 9000.0F);
@@ -129,7 +132,7 @@ public class GuiBees {
         boolean crazyHighCapCheck = BzClientConfigs.maximumBeesOnGui &&
                 timePassedWhileGuiIsOpened > 200 &&
                 currentBeeAmount < 10000;
-        boolean teleportScreenCapCheck = isOnTeleportingToBumblezoneScreen &&
+        boolean teleportScreenCapCheck = onBzDimTeleportScreen &&
                 currentBeeAmount < 25 &&
                 currentBeeAmount < (int)(timePassedWhileGuiIsOpened / 65) + 2;
 
@@ -148,7 +151,7 @@ public class GuiBees {
     }
 
 
-    public static class BeeSpriteState {
+    private static class BeeSpriteState {
         public float xCord = Integer.MIN_VALUE;
 
         public float yCord = Integer.MIN_VALUE;
@@ -168,7 +171,7 @@ public class GuiBees {
         private static final ResourceLocation ANGRY_BEE_SPRITE_WINGS_DOWN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/angry_bee_icon_wings_down.png");
         private static final ResourceLocation ANGRY_BEE_SPRITE_WINGS_UP = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/angry_bee_icon_wings_up.png");
 
-        public static ResourceLocation GetBeeSprite(BeeSpriteState beeSpriteState) {
+        private static ResourceLocation GetBeeSprite(BeeSpriteState beeSpriteState) {
             if (beeSpriteState.angry) {
                 return ((timePassedWhileGuiIsOpened - beeSpriteState.spriteAnimationOffset) % 2) > 1f ? ANGRY_BEE_SPRITE_WINGS_UP : ANGRY_BEE_SPRITE_WINGS_DOWN;
             }
