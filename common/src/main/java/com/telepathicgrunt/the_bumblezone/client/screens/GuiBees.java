@@ -67,7 +67,7 @@ public class GuiBees {
         }
     }
 
-    public static void renderBees(Screen screen, boolean onBzDimTeleportScreen, GuiGraphics guiGraphics, int mouseX, int mouseY, float realTimeDeltaPartialTick) {
+    public static void renderBees(Screen screen, boolean onBzDimTeleportScreen, GuiGraphics guiGraphics, int mouseX, int mouseY, float deltaPastLastTick) {
         if (screen == null || GeneralUtilsClient.getClientPlayer() == null) {
             return;
         }
@@ -75,6 +75,12 @@ public class GuiBees {
         if (!onBzDimTeleportScreen && !isGuiBeeAllowedByConfig()) {
             return;
         }
+
+        long currentTime = System.currentTimeMillis() - initialTimeStart;
+        if (lastTime == -2) {
+            lastTime = currentTime;
+        }
+        float realTimeDeltaPartialTick = (currentTime - lastTime) / 45f;
 
         guiGraphics.pose().pushPose();
         guiGraphics.pose().translate(0.0F, 0.0F, 9000.0F);
