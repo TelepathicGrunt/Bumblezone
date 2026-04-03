@@ -1,3 +1,9 @@
+### **(V.7.13.1 Changes) (1.21.1 Minecraft)**
+
+#### Blocks:
+Reduced some Z-fighting with large distances viewing Sticky Honey Residue and Sticky Honey Redstone.
+
+
 ### **(V.7.13.0 Changes) (1.21.1 Minecraft)**
 
 #### Entities:
