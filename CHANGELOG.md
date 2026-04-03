@@ -3,6 +3,11 @@
 #### Blocks:
 Reduced some Z-fighting with large distances viewing Sticky Honey Residue and Sticky Honey Redstone.
 
+#### Configs:
+(Fabric): Added missing English translation for variantBeeAfterWorlgenSpawnRate config option.
+
+Added restrictBeesOnGuiToBzDimension config option for those who want gui bees on all screens only when in Bumblezone dimension.
+
 
 ### **(V.7.11.0 Changes) (1.20.1 Minecraft)*
 

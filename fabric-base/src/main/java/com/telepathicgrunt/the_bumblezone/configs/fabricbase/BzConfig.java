@@ -446,6 +446,9 @@ public class BzConfig extends MidnightConfig {
     public static boolean showBeesOnGuiOnAprilFools = true;
 
     @Entry
+    public static boolean restrictBeesOnGuiToBzDimension = false;
+
+    @Entry
     public static boolean maximumBeesOnGui = false;
 
 
@@ -598,6 +601,7 @@ public class BzConfig extends MidnightConfig {
         BzClientConfigs.essenceItemHUDVisualEffectSpeed = essenceItemHUDVisualEffectSpeed;
         BzClientConfigs.showBeesOnGuiAllYearRound = showBeesOnGuiAllYearRound;
         BzClientConfigs.showBeesOnGuiOnAprilFools = showBeesOnGuiOnAprilFools;
+        BzClientConfigs.restrictBeesOnGuiToBzDimension = restrictBeesOnGuiToBzDimension;
         BzClientConfigs.maximumBeesOnGui = maximumBeesOnGui;
     }
 }

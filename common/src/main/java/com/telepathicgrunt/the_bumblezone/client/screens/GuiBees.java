@@ -28,14 +28,16 @@ public class GuiBees {
 
     public static void initDateCheck() {
         // Allow bypass of cache if all days is turned on and we had cached false.
-        if (dateCheckCached && !(!showGuiBeesToday && BzClientConfigs.showBeesOnGuiAllYearRound)) {
+        if (!showGuiBeesToday && BzClientConfigs.showBeesOnGuiAllYearRound) {
+            showGuiBeesToday = true;
             return;
         }
 
-        if (BzClientConfigs.showBeesOnGuiAllYearRound) {
-            showGuiBeesToday = true;
+        if (dateCheckCached) {
+            return;
         }
-        else if (BzClientConfigs.showBeesOnGuiOnAprilFools) {
+
+        if (BzClientConfigs.showBeesOnGuiOnAprilFools) {
             LocalDate dateNow = LocalDate.now();
             LocalDate aprilFirst = LocalDate.of(dateNow.getYear(), Month.APRIL, 1);
             if (aprilFirst.isEqual(dateNow)) {
@@ -55,8 +57,11 @@ public class GuiBees {
     }
 
     public static boolean isPlayerInDimensionTeleportScreen(Screen screen) {
-        return screen instanceof ReceivingLevelScreen &&
-            GeneralUtilsClient.getClientPlayer() != null &&
+        return screen instanceof ReceivingLevelScreen && isPlayerInDimension();
+    }
+
+    public static boolean isPlayerInDimension() {
+        return GeneralUtilsClient.getClientPlayer() != null &&
             GeneralUtilsClient.getClientPlayer().level().dimension() == BzDimension.BZ_WORLD_KEY;
     }
 
@@ -72,7 +77,8 @@ public class GuiBees {
             return;
         }
 
-        if (!onBzDimTeleportScreen && !isGuiBeeAllowedByConfig()) {
+        if ((!onBzDimTeleportScreen && !isGuiBeeAllowedByConfig()) || (BzClientConfigs.restrictBeesOnGuiToBzDimension && !isPlayerInDimension()))
+        {
             return;
         }
 
