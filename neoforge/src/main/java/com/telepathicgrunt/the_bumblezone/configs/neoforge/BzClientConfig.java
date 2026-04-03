@@ -18,6 +18,7 @@ public class BzClientConfig {
     public static ModConfigSpec.BooleanValue disableEssenceBlockShaders;
     public static ModConfigSpec.BooleanValue showBeesOnGuiAllYearRound;
     public static ModConfigSpec.BooleanValue showBeesOnGuiOnAprilFools;
+    public static ModConfigSpec.BooleanValue restrictBeesOnGuiToBzDimension;
     public static ModConfigSpec.BooleanValue maximumBeesOnGui;
     public static ModConfigSpec.BooleanValue knowingEssenceHighlightBosses;
     public static ModConfigSpec.BooleanValue knowingEssenceHighlightMonsters;
@@ -242,9 +243,15 @@ public class BzClientConfig {
 
         showBeesOnGuiOnAprilFools = builder
                 .comment("----------------------------\n",
-                        " For when you want the joy of bees always!")
+                        " Gui Bees On April Fools!")
                 .translation("the_bumblezone.configuration.showbeesonguionaprilfools")
                 .define("showBeesOnGuiOnAprilFools", true);
+
+        restrictBeesOnGuiToBzDimension = builder
+                .comment("----------------------------\n",
+                        " Show the Gui Bees only when player is in Bumblezone Dimension")
+                .translation("the_bumblezone.configuration.restrictbeesonguitobzdimension")
+                .define("restrictBeesOnGuiToBzDimension", false);
 
         maximumBeesOnGui = builder
                 .comment("----------------------------\n",
@@ -267,6 +274,7 @@ public class BzClientConfig {
         BzClientConfigs.disableEssenceBlockShaders = disableEssenceBlockShaders.get();
         BzClientConfigs.showBeesOnGuiAllYearRound = showBeesOnGuiAllYearRound.get();
         BzClientConfigs.showBeesOnGuiOnAprilFools = showBeesOnGuiOnAprilFools.get();
+        BzClientConfigs.restrictBeesOnGuiToBzDimension = restrictBeesOnGuiToBzDimension.get();
         BzClientConfigs.maximumBeesOnGui = maximumBeesOnGui.get();
         BzClientConfigs.knowingEssenceHighlightBosses = knowingEssenceHighlightBosses.get();
         BzClientConfigs.knowingEssenceHighlightMonsters = knowingEssenceHighlightMonsters.get();
