@@ -1,4 +1,4 @@
-### **(V.7.12.2 Changes) (1.21.1 Minecraft)**
+### **(V.7.13.0 Changes) (1.21.1 Minecraft)**
 
 #### Entities:
 Added a Bee Queen trade to exchange Banner Patterns for Experience Bottles.
