@@ -776,11 +776,11 @@
       "required": false
     },
     {
-      "id": "vanillabackport:open_eyeblossom",
+      "id": "minecraft:open_eyeblossom",
       "required": false
     },
     {
-      "id": "vanillabackport:closed_eyeblossom",
+      "id": "minecraft:closed_eyeblossom",
       "required": false
     }
   ]

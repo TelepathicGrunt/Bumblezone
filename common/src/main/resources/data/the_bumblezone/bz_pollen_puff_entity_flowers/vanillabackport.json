@@ -1,14 +1,14 @@
 {
-  "vanillabackport:creaking": [{
+  "minecraft:creaking": [{
     "plants_to_spawn": {
       "type": "minecraft:weighted_state_provider",
       "entries": [
         {
-          "data": { "Name": "vanillabackport:pale_moss_carpet" },
+          "data": { "Name": "minecraft:pale_moss_carpet" },
           "weight": 2
         },
         {
-          "data": { "Name": "vanillabackport:open_eyeblossom" },
+          "data": { "Name": "minecraft:open_eyeblossom" },
           "weight": 1
         },
         {
