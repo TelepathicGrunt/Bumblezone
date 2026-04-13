@@ -40,7 +40,7 @@ dependencies {
     compileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}")
     compileOnly("dev.architectury:architectury-neoforge:${project.architectury}") { transitive = false  }
     compileOnly("me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config}") { transitive = false  }
-    compileOnly("noobanidus.mods.lootr:lootr-neoforge:${project.lootr_version}") { transitive = false  }
+    compileOnly("noobanidus.mods:lootr-neoforge:${project.lootr_version}") { transitive = false  }
 }
 
 neoForge {

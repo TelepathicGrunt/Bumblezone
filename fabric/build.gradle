@@ -48,8 +48,8 @@ dependencies {
         transitive = false
     }
 
-    compileOnly("noobanidus.mods.lootr:lootr-fabric:${project.lootr_version}")
-    //localRuntime("noobanidus.mods.lootr:lootr-fabric:${project.lootr_version}")
+    compileOnly("noobanidus.mods:lootr-fabric:${project.lootr_version}")
+    //localRuntime("noobanidus.mods:lootr-fabric:${project.lootr_version}")
 
     //compileOnly("dev.emi:trinkets:${project.trinkets}") { transitive false }
     compileOnly("me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config}") // TODO: switch to fabric version when they update

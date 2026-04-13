@@ -64,7 +64,8 @@ allprojects {
             }
             filter {
                 includeGroupAndSubgroups("mezz.jei")
-                includeGroupAndSubgroups("noobanidus.mods.lootr")
+                includeGroupAndSubgroups("noobanidus.mods")
+                includeGroupAndSubgroups("noobanidus.mods")
             }
         }
         exclusiveContent {
