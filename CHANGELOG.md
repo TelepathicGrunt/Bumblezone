@@ -11,6 +11,9 @@ Removed the Vanilla Backport bz_pollen_puff_entity_flowers compat file because i
  I am electing to not do the breaking change and instead, officially remove my tiny insignificant compat with Vanilla Backport
  because mods registering new content under the `minecraft` namespace is not something that should ever be encouraged or supported.
 
+##### Misc:
+Fixed rare potential race condition issue with ServiceLoaders loading.
+
 
 ### **(V.7.13.1 Changes) (1.21.1 Minecraft)**
 
