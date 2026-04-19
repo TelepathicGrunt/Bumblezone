@@ -776,11 +776,13 @@
       "required": false
     },
     {
-      "id": "vanillabackport:open_eyeblossom",
+      "_comment": "Vanilla Backport mod compat",
+      "id": "minecraft:open_eyeblossom",
       "required": false
     },
     {
-      "id": "vanillabackport:closed_eyeblossom",
+      "_comment": "Vanilla Backport mod compat",
+      "id": "minecraft:closed_eyeblossom",
       "required": false
     }
   ]
