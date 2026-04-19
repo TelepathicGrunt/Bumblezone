@@ -1,3 +1,11 @@
+### **(V.7.13.2 Changes) (1.21.1 Minecraft)**
+
+#### Lang:
+pt_br.json lang file updated by PrincessStellar
+
+ru_ru.json lang file updated by AstardGrimotre
+
+
 ### **(V.7.13.1 Changes) (1.21.1 Minecraft)**
 
 #### Blocks:
