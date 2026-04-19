@@ -1,4 +1,5 @@
 {
   "type": "the_bumblezone:inject_drops_to_non_bz_mobs",
-  "conditions": []
+  "conditions": [],
+  "priority": 5000
 }

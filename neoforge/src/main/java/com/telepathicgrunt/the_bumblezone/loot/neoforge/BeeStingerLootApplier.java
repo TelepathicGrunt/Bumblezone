@@ -18,8 +18,8 @@ public class BeeStingerLootApplier extends LootModifier {
     public static final Supplier<MapCodec<BeeStingerLootApplier>> CODEC = Suppliers.memoize(() ->
             RecordCodecBuilder.mapCodec(inst -> codecStart(inst).apply(inst, BeeStingerLootApplier::new)));
 
-    public BeeStingerLootApplier(final LootItemCondition[] conditionsIn) {
-        super(conditionsIn);
+    public BeeStingerLootApplier(final LootItemCondition[] conditionsIn, int priority) {
+        super(conditionsIn, priority);
     }
 
     @Override
