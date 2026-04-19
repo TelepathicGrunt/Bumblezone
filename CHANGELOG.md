@@ -5,6 +5,12 @@ pt_br.json lang file updated by PrincessStellar
 
 ru_ru.json lang file updated by AstardGrimotre
 
+#### Mod Compat:
+Removed the Vanilla Backport bz_pollen_puff_entity_flowers compat file because it turns out Vanilla Backport registers content
+ under the `minecraft` namespace and is not possible to make compatible with my compat file without a breaking change to my file format.
+ I am electing to not do the breaking change and instead, officially remove my tiny insignificant compat with Vanilla Backport
+ because mods registering new content under the `minecraft` namespace is not something that should ever be encouraged or supported.
+
 
 ### **(V.7.11.1 Changes) (1.20.1 Minecraft)*
 
