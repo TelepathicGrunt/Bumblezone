@@ -3,6 +3,10 @@
 #### Fluids:
 Fixed Sugar Water making Suger Cane growing replace solid blocks.
 
+#### Misc:
+Deleted a mixin that aimed to fix MC-246262, but it seems Mojang fixed that bug a long time ago.
+ Slim chance that this mixin might had been involved with some server client-bound chunk data packet issue.
+
 #### Lang:
 zh_cn.json lang file updated by MechtaSnezhevna
 
