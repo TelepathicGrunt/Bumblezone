@@ -1,3 +1,9 @@
+### **(V.7.13.3 Changes) (1.21.1 Minecraft)**
+
+#### Lang:
+zh_cn.json lang file updated by MechtaSnezhevna
+
+
 ### **(V.7.13.2 Changes) (1.21.1 Minecraft)**
 
 #### Lang:
