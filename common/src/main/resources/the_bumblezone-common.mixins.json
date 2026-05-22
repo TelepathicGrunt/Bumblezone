@@ -87,8 +87,7 @@
     "world.ServerWorldMixin",
     "world.SinglePoolElementAccessor",
     "world.StructurePoolAccessor",
-    "world.StructureTemplateAccessor",
-    "world.StructureTemplateMixin"
+    "world.StructureTemplateAccessor"
   ],
   "client": [
     "blocks.BlockEntityRenderersAccessor",
