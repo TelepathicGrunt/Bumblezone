@@ -1,12 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.mixin.world;
 
-import com.llamalad7.mixinextras.injector.ModifyReceiver;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import org.spongepowered.asm.mixin.Mixin;
