@@ -1,5 +1,8 @@
 ### **(V.7.11.3 Changes) (1.20.1 Minecraft)**
 
+#### Fluids:
+Fixed Sugar Water making Suger Cane growing replace solid blocks.
+
 #### Lang:
 zh_cn.json lang file updated by MechtaSnezhevna
 

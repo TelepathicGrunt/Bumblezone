@@ -105,6 +105,10 @@ public abstract class SugarWaterFluid extends BzFlowingFluid {
                         if (agePropertyMaxAge.isPresent()) {
                             // New top block due to max age below
                             if (agePropertyMaxAge.get().equals(topSugarCaneLikeBlock.getValue(blockCurrentAge.get()))) {
+                                // Do not grow replace non-air blocks
+                                if (!sideCropState.isAir()) {
+                                    continue;
+                                }
                                 mutablePos.move(Direction.UP);
                                 BlockState newTopSugarCaneLikeBlock = topSugarCaneLikeBlock.setValue(blockCurrentAge.get(), 0);
                                 newTopSugarCaneLikeBlock = GeneralUtils.copyNonAgeProperties(topSugarCaneLikeBlock, newTopSugarCaneLikeBlock);
