@@ -1,7 +1,15 @@
+### **(V.7.13.5 Changes) (1.21.1 Minecraft)**
+
+#### Misc:
+Hey remember that mixin I deleted in previous update because it seemed like the Mojang bug was fixed?
+ The mojang bug wasn't fixed... Added back mixin to prevent worldgen deadlock 
+ BUT I adjusted the mixin to not cause a crash with certain combinations of mods on.
+
+
 ### **(V.7.13.3 Changes) (1.21.1 Minecraft)**
 
 #### Fluids:
-Fixed Sugar Water making Suger Cane growing replace solid blocks.
+Fixed Sugar Water making Sugar Cane growing replace solid blocks.
 
 #### Misc:
 Deleted a mixin that aimed to fix MC-246262, but it seems Mojang fixed that bug a long time ago.
