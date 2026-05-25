@@ -1,9 +1,17 @@
+### **(V.7.11.5 Changes) (1.20.1 Minecraft)**
+
+#### Misc:
+Slightly optimized the modded comb ore placing feature to skip a spot if it is surrounded by air.
+
+
 ### **(V.7.11.4 Changes) (1.20.1 Minecraft)**
 
 #### Misc:
 Hey remember that mixin I deleted in previous update because it seemed like the Mojang bug was fixed?
  The mojang bug wasn't fixed... Added back mixin to prevent worldgen deadlock
  BUT I adjusted the mixin to not cause a crash with certain combinations of mods on.
+ (Edit: Turns out this wasn't a mojang bug but a ModernFix + Smooth Chunk Save interaction bug 
+ that crashed my original mixin but my workaround does stop the crash)
 
 
 ### **(V.7.11.3 Changes) (1.20.1 Minecraft)**
