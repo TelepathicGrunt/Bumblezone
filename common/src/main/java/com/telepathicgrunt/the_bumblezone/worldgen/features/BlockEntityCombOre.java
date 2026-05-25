@@ -14,6 +14,7 @@ import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -52,6 +53,10 @@ public class BlockEntityCombOre extends Feature<NbtOreConfiguration> {
 			if (data.isPresent()) break;
 		}
 		if (data.isEmpty()) {
+			return false;
+		}
+
+		if (!IsNearSolidSurface(context, maxY, minY, size, blockposMutable)) {
 			return false;
 		}
 
@@ -105,6 +110,32 @@ public class BlockEntityCombOre extends Feature<NbtOreConfiguration> {
 		}
 		
 		return true;
+	}
+
+	private boolean IsNearSolidSurface(FeaturePlaceContext<NbtOreConfiguration> context, int maxY, int minY, float size, BlockPos.MutableBlockPos blockposMutable) {
+		ChunkAccess cachedChunk;
+		int ySize = (int)(((maxY - minY) / 2f) + 0.5f);
+
+		for(int y = -ySize; y <= ySize; y += ySize) {
+			for(int x = (int) -size; x <= size; x += (int) (size)) {
+				for(int z = (int) -size; z <= size; z += (int) size) {
+					int daFlag = 0;
+					if (x == 0) daFlag += 1;
+					if (y == 0) daFlag += 1;
+					if (z == 0) daFlag += 1;
+					if (daFlag == 1) {
+						blockposMutable.set(context.origin().getX() + x, context.origin().getY() + y, context.origin().getZ() + z);
+						cachedChunk = getCachedChunk(context.level(), blockposMutable);
+						BlockState blockToCheck = cachedChunk.getBlockState(blockposMutable);
+						if (!blockToCheck.is(Blocks.AIR)) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 
 
