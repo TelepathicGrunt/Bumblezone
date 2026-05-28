@@ -5,7 +5,7 @@
       "ignore_blocks_tag": "the_bumblezone:structures/dont_replace_blocks"
     },
     {
-      "processor_type": "minecraft:rule",
+      "processor_type": "the_bumblezone:reduced_allocation_rule_processor",
       "rules": [
         {
           "output_state": {
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "processor_type": "minecraft:rule",
+      "processor_type": "the_bumblezone:reduced_allocation_rule_processor",
       "rules": [
         {
           "output_state": {

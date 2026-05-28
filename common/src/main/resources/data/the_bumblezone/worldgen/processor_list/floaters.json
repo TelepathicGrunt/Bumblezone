@@ -6,7 +6,7 @@
       "overruling_blocks": "the_bumblezone:floaters/overruling_blocks"
     },
     {
-      "processor_type": "minecraft:rule",
+      "processor_type": "the_bumblezone:reduced_allocation_rule_processor",
       "rules": [
         {
           "output_state": {
