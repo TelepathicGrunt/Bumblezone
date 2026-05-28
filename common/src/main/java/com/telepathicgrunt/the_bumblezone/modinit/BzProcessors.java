@@ -17,6 +17,7 @@ import com.telepathicgrunt.the_bumblezone.worldgen.processors.NoiseReplaceWithPr
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.PillarProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.PollenPilingProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.RandomReplaceWithPropertiesProcessor;
+import com.telepathicgrunt.the_bumblezone.worldgen.processors.ReducedAllocationRuleProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.RemoveFloatingBlocksProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.ReplaceAirOnlyProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.ReplaceExistingBlockEntitySafelyProcessor;
@@ -56,4 +57,5 @@ public class BzProcessors {
     public static final RegistryEntry<StructureProcessorType<ArenaSpecialBlockHandlerProcessor>> ARENA_SPECIAL_BLOCK_HANDLER_PROCESSOR = STRUCTURE_PROCESSOR.register("arena_special_block_handler_processor", () -> () -> ArenaSpecialBlockHandlerProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<ReplaceHoneyProcessor>> REPLACE_HONEY_PROCESSOR = STRUCTURE_PROCESSOR.register("replace_honey_processor", () -> () -> ReplaceHoneyProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<ChiseledBookshelfProcessor>> CHISELED_BOOKSHELF_PROCESSOR = STRUCTURE_PROCESSOR.register("chiseled_bookshelf_processor", () -> () -> ChiseledBookshelfProcessor.CODEC);
+    public static final RegistryEntry<StructureProcessorType<ReducedAllocationRuleProcessor>> REDUCED_ALLOCATION_RULE_PROCESSOR = STRUCTURE_PROCESSOR.register("reduced_allocation_rule_processor", () -> () -> ReducedAllocationRuleProcessor.CODEC);
 }
