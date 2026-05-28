@@ -15,7 +15,7 @@
           }
         }
       ],
-      "processor_type": "minecraft:rule"
+      "processor_type": "the_bumblezone:reduced_allocation_rule_processor"
     },
     {
       "rules": [
@@ -33,7 +33,7 @@
           }
         }
       ],
-      "processor_type": "minecraft:rule"
+      "processor_type": "the_bumblezone:reduced_allocation_rule_processor"
     },
     {
       "processor_type": "the_bumblezone:replace_honey_processor"
@@ -42,7 +42,7 @@
       "processor_type": "minecraft:capped",
       "limit": 2,
       "delegate": {
-        "processor_type": "minecraft:rule",
+        "processor_type": "the_bumblezone:reduced_allocation_rule_processor",
         "rules": [
           {
             "block_entity_modifier": {
