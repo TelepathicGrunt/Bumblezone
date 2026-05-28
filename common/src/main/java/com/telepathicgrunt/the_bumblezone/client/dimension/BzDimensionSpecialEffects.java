@@ -20,7 +20,7 @@ public class BzDimensionSpecialEffects extends DimensionSpecialEffects {
 
     @Override
     public Vec3 getBrightnessDependentFogColor(Vec3 color, float sunHeight) {
-        return getFogColor().scale(0.003921568627451); // Divide by 255 to make values between 0 and 1
+        return getFogColor();
     }
 
     @Override
@@ -54,9 +54,12 @@ public class BzDimensionSpecialEffects extends DimensionSpecialEffects {
             REDDISH_FOG_TINT -= 0.00001f;
         }
 
-        return new Vec3((int)(Math.min(Math.min(0.54f * colorFactor, 0.65f + REDDISH_FOG_TINT)*255, 255)),
-                        ((int)(Math.min(Math.max(Math.min(0.3f * colorFactor, 0.87f) - REDDISH_FOG_TINT * 0.6f, 0)*255, 255))),
-                        ((int)(Math.min(Math.max(Math.min((0.001f * colorFactor) * (colorFactor * colorFactor), 0.9f) - REDDISH_FOG_TINT * 1.9f, 0)*255, 255))));
+        // Divide by 255 to make values between 0 and 1
+        double divideBy255 = 0.003921568627451d;
+
+        return new Vec3((int)(Math.min(Math.min(0.54f * colorFactor, 0.65f + REDDISH_FOG_TINT)*255, 255) * divideBy255),
+                        ((int)(Math.min(Math.max(Math.min(0.3f * colorFactor, 0.87f) - REDDISH_FOG_TINT * 0.6f, 0)*255, 255)) * divideBy255),
+                        ((int)(Math.min(Math.max(Math.min((0.001f * colorFactor) * (colorFactor * colorFactor), 0.9f) - REDDISH_FOG_TINT * 1.9f, 0)*255, 255))) * divideBy255);
     }
 
     public static void fogThicknessAdjustments(float renderDistance, FogRenderer.FogData fogData) {

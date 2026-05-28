@@ -75,6 +75,7 @@
     "logging.LevelChunkMixin",
     "loot.LootContextAccessor",
     "loot.LootParamsMixin",
+    "util.AABBAccessor",
     "util.FileUtilMixin",
     "util.WeightedRandomListAccessor",
     "world.BiomeManagerAccessor",

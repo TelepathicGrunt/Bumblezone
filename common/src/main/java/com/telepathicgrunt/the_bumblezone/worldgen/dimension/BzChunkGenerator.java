@@ -7,6 +7,8 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseChunkAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseGeneratorSettingsAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -289,66 +291,62 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     public void applyCarvers(WorldGenRegion worldGenRegion, long seed, RandomState randomState, BiomeManager biomeManager, StructureManager structureManager, ChunkAccess chunkAccess, GenerationStep.Carving carving) {}
 
     @Override
-    protected ChunkAccess doFill(Blender blender, StructureManager structureManager, RandomState randomState, ChunkAccess chunkAccess, int x, int z) {
+    protected ChunkAccess doFill(Blender blender, StructureManager structureManager, RandomState randomState, ChunkAccess chunkAccess, int chunkX, int chunkZ) {
         NoiseChunk noiseChunk = chunkAccess.getOrCreateNoiseChunk((chunkAccess1) -> this.createNoiseChunk(chunkAccess1, structureManager, blender, randomState));
-        Heightmap heightmap = chunkAccess.getOrCreateHeightmapUnprimed(Heightmap.Types.OCEAN_FLOOR_WG);
-        Heightmap heightmap1 = chunkAccess.getOrCreateHeightmapUnprimed(Heightmap.Types.WORLD_SURFACE_WG);
+
+        Heightmap oceanFloorHeightmap = chunkAccess.getOrCreateHeightmapUnprimed(Heightmap.Types.OCEAN_FLOOR_WG);
+        Heightmap worldSurfaceHeightmap = chunkAccess.getOrCreateHeightmapUnprimed(Heightmap.Types.WORLD_SURFACE_WG);
+        for(int x = 0; x < 16; x++) {
+            for(int z = 0; z < 16; z++) {
+                oceanFloorHeightmap.update(x, chunkAccess.getMaxBuildHeight(), z, BzBlocks.BEEHIVE_BEESWAX.get().defaultBlockState());
+                worldSurfaceHeightmap.update(x, chunkAccess.getMaxBuildHeight(), z, BzBlocks.BEEHIVE_BEESWAX.get().defaultBlockState());
+            }
+        }
+
         ChunkPos chunkpos = chunkAccess.getPos();
-        int i = chunkpos.getMinBlockX();
-        int j = chunkpos.getMinBlockZ();
-        Aquifer aquifer = noiseChunk.aquifer();
+        int minBlockPosX = chunkpos.getMinBlockX();
+        int minBlockPosZ = chunkpos.getMinBlockZ();
         noiseChunk.initializeForFirstCellX();
-        BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
-        int k = this.settings.value().noiseSettings().getCellWidth();
-        int l = this.settings.value().noiseSettings().getCellHeight();
-        int i1 = 16 / k;
-        int j1 = 16 / k;
+        int cellWidth = this.settings.value().noiseSettings().getCellWidth();
+        int cellHeight = this.settings.value().noiseSettings().getCellHeight();
+        int cellWidthSection = 16 / cellWidth;
+        int cellHeightSection = 16 / cellWidth;
 
-        for(int k1 = 0; k1 < i1; ++k1) {
-            noiseChunk.advanceCellX(k1);
+        for(int currentCellWidthSection = 0; currentCellWidthSection < cellWidthSection; ++currentCellWidthSection) {
+            noiseChunk.advanceCellX(currentCellWidthSection);
 
-            for(int l1 = 0; l1 < j1; ++l1) {
-                int bottomBlockY = chunkAccess.getSectionsCount() - 1;
-                LevelChunkSection levelchunksection = chunkAccess.getSection(chunkAccess.getSectionsCount() - 1);
+            for(int currentCellHeightSection = 0; currentCellHeightSection < cellHeightSection; ++currentCellHeightSection) {
+                int lastChunkSectionIndex = chunkAccess.getSectionsCount() - 1;
+                LevelChunkSection currentChunkSection = chunkAccess.getSection(chunkAccess.getSectionsCount() - 1);
 
-                for(int i2 = z - 1; i2 >= 0; --i2) {
-                    noiseChunk.selectCellYZ(i2, l1);
+                for(int magicYZCounter = chunkZ - 1; magicYZCounter >= 0; --magicYZCounter) {
+                    noiseChunk.selectCellYZ(magicYZCounter, currentCellHeightSection);
 
-                    for(int j2 = l - 1; j2 >= 0; --j2) {
-                        int k2 = (x + i2) * l + j2;
-                        int l2 = k2 & 15;
-                        int i3 = chunkAccess.getSectionIndex(k2);
-                        if (bottomBlockY != i3) {
-                            levelchunksection = chunkAccess.getSection(i3);
+                    for(int theOtherMagicCounter = cellHeight - 1; theOtherMagicCounter >= 0; --theOtherMagicCounter) {
+                        int y = (chunkX + magicYZCounter) * cellHeight + theOtherMagicCounter;
+                        int yOffset = y & 15;
+                        int currentChunkSectionIndex = chunkAccess.getSectionIndex(y);
+                        if (lastChunkSectionIndex != currentChunkSectionIndex) {
+                            currentChunkSection = chunkAccess.getSection(currentChunkSectionIndex);
                         }
+                        noiseChunk.updateForY(y, theOtherMagicCounter / (double)cellHeight);
 
-                        double d0 = (double)j2 / (double)l;
-                        noiseChunk.updateForY(k2, d0);
+                        for(int currentCellWidth = 0; currentCellWidth < cellWidth; ++currentCellWidth) {
+                            int x = minBlockPosX + currentCellWidthSection * cellWidth + currentCellWidth;
+                            int xOffset = x & 15;
+                            noiseChunk.updateForX(x, currentCellWidth / (double)cellWidth);
 
-                        for(int j3 = 0; j3 < k; ++j3) {
-                            int k3 = i + k1 * k + j3;
-                            int l3 = k3 & 15;
-                            double d1 = (double)j3 / (double)k;
-                            noiseChunk.updateForX(k3, d1);
-
-                            for(int i4 = 0; i4 < k; ++i4) {
-                                int j4 = j + l1 * k + i4;
-                                int k4 = j4 & 15;
-                                double d2 = (double)i4 / (double)k;
-                                noiseChunk.updateForZ(j4, d2);
+                            for(int currentCellHeight = 0; currentCellHeight < cellWidth; ++currentCellHeight) {
+                                int z = minBlockPosZ + currentCellHeightSection * cellWidth + currentCellHeight;
+                                int zOffset = z & 15;
+                                noiseChunk.updateForZ(z, currentCellHeight / (double)cellWidth);
                                 BlockState blockstate = ((NoiseChunkAccessor)noiseChunk).bumblezone$callGetInterpolatedState();
                                 if (blockstate == null) {
                                     blockstate = this.defaultBlock;
                                 }
 
-                                if (blockstate != Blocks.AIR.defaultBlockState()) {
-                                    levelchunksection.setBlockState(l3, l2, k4, blockstate, false);
-                                    heightmap.update(l3, k2, k4, blockstate);
-                                    heightmap1.update(l3, k2, k4, blockstate);
-                                    if (aquifer.shouldScheduleFluidUpdate() && !blockstate.getFluidState().isEmpty()) {
-                                        blockpos$mutableblockpos.set(k3, k2, j4);
-                                        chunkAccess.markPosForPostprocessing(blockpos$mutableblockpos);
-                                    }
+                                if (!blockstate.isAir()) {
+                                    currentChunkSection.setBlockState(xOffset, yOffset, zOffset, blockstate, false);
                                 }
                             }
                         }

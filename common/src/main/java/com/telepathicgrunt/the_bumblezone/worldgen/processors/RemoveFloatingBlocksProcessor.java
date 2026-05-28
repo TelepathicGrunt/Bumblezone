@@ -28,10 +28,9 @@ public class RemoveFloatingBlocksProcessor extends StructureProcessor {
             return structureBlockInfoWorld;
         }
 
-        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(structureBlockInfoWorld.pos());
-
         // attempts to remove invalid floating plants
         if (structureBlockInfoWorld.state().isAir() || !structureBlockInfoWorld.state().getFluidState().isEmpty()) {
+            BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(structureBlockInfoWorld.pos());
 
             // set the block in the world so that canPlaceAt's result changes
             ChunkAccess cachedChunk = levelReader.getChunk(mutable);
@@ -56,7 +55,7 @@ public class RemoveFloatingBlocksProcessor extends StructureProcessor {
                 }
             }
         }
-        else if (!structureBlockInfoWorld.state().canSurvive(levelReader, mutable)) {
+        else if (!structureBlockInfoWorld.state().canSurvive(levelReader, structureBlockInfoWorld.pos())) {
             return new StructureTemplate.StructureBlockInfo(structureBlockInfoWorld.pos(), Blocks.CAVE_AIR.defaultBlockState(), null);
         }
 
