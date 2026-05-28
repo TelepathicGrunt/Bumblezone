@@ -67,6 +67,7 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.level.material.FluidState;
@@ -74,7 +75,6 @@ import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BitSetDiscreteVoxelShape;
-import net.minecraft.world.phys.shapes.DiscreteVoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -700,6 +700,30 @@ public class GeneralUtils {
             return true;
         }
         return false;
+    }
+
+    private static void placeEntities(ServerLevelAccessor serverLevelAccessor, StructureTemplate structureTemplate, BlockPos blockPos, Mirror mirror, Rotation rotation, BlockPos blockPos2, @Nullable BoundingBox boundingBox, boolean bl) {
+        for (StructureTemplate.StructureEntityInfo structureEntityInfo : ((StructureTemplateAccessor)structureTemplate).bumblezone$getEntityInfoList()) {
+            BlockPos blockPos3 = StructureTemplate.transform(structureEntityInfo.blockPos, mirror, rotation, blockPos2).offset(blockPos);
+            if (boundingBox != null && !boundingBox.isInside(blockPos3)) continue;
+            CompoundTag compoundTag = structureEntityInfo.nbt.copy();
+            Vec3 vec3 = StructureTemplate.transform(structureEntityInfo.pos, mirror, rotation, blockPos2);
+            Vec3 vec32 = vec3.add(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+            ListTag listTag = new ListTag();
+            listTag.add(DoubleTag.valueOf(vec32.x));
+            listTag.add(DoubleTag.valueOf(vec32.y));
+            listTag.add(DoubleTag.valueOf(vec32.z));
+            compoundTag.put("Pos", listTag);
+            compoundTag.remove("UUID");
+            createEntityIgnoreException(serverLevelAccessor, compoundTag).ifPresent(entity -> {
+                float f = entity.rotate(rotation);
+                entity.moveTo(vec32.x, vec32.y, vec32.z, f + (entity.mirror(mirror) - entity.getYRot()), entity.getXRot());
+                if (bl && entity instanceof Mob) {
+                    ((Mob)entity).finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(BlockPos.containing(vec32)), MobSpawnType.STRUCTURE, null);
+                }
+                serverLevelAccessor.addFreshEntityWithPassengers(entity);
+            });
+        }
     }
 
     /////////////////////////////////////////////////
