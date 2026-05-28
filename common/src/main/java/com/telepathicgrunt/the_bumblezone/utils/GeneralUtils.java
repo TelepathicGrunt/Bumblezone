@@ -69,12 +69,12 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BitSetDiscreteVoxelShape;
-import net.minecraft.world.phys.shapes.DiscreteVoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -495,7 +495,7 @@ public class GeneralUtils {
                 BitSetDiscreteVoxelShape discreteVoxelShape = new BitSetDiscreteVoxelShape(m - j + 1, n - k + 1, o - l + 1);
                 for (Pair<BlockPos, CompoundTag> pair : list4) {
                     BlockPos blockPos6 = pair.getFirst();
-                    ((DiscreteVoxelShape)discreteVoxelShape).fill(blockPos6.getX() - j, blockPos6.getY() - k, blockPos6.getZ() - l);
+                    discreteVoxelShape.fill(blockPos6.getX() - j, blockPos6.getY() - k, blockPos6.getZ() - l);
                 }
                 StructureTemplate.updateShapeAtEdge(serverLevelAccessor, i, discreteVoxelShape, j, k, l);
             }
@@ -612,7 +612,7 @@ public class GeneralUtils {
                 BitSetDiscreteVoxelShape discreteVoxelShape = new BitSetDiscreteVoxelShape(m - j + 1, n - k + 1, o - l + 1);
                 for (Pair<BlockPos, CompoundTag> pair : list4) {
                     BlockPos blockPos6 = pair.getFirst();
-                    ((DiscreteVoxelShape)discreteVoxelShape).fill(blockPos6.getX() - j, blockPos6.getY() - k, blockPos6.getZ() - l);
+                    discreteVoxelShape.fill(blockPos6.getX() - j, blockPos6.getY() - k, blockPos6.getZ() - l);
                 }
                 StructureTemplate.updateShapeAtEdge(serverLevelAccessor, i, discreteVoxelShape, j, k, l);
             }
@@ -677,6 +677,46 @@ public class GeneralUtils {
         catch (Exception exception) {
             return Optional.empty();
         }
+    }
+
+    public static List<StructureTemplate.StructureBlockInfo> processBlockInfosWithReducedAllocation(
+            ServerLevelAccessor serverLevel,
+            BlockPos offset,
+            BlockPos pos,
+            StructurePlaceSettings settings,
+            List<StructureTemplate.StructureBlockInfo> blockInfos
+    ) {
+        List<StructureTemplate.StructureBlockInfo> firstPassProcessing = new ArrayList<>();
+        List<StructureTemplate.StructureBlockInfo> finalizedProcessing = new ArrayList<>();
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+
+        for (StructureTemplate.StructureBlockInfo structuretemplate$structureblockinfo : blockInfos) {
+            mutableBlockPos.set(StructureTemplate.calculateRelativePosition(settings, structuretemplate$structureblockinfo.pos()));
+            mutableBlockPos.move(offset);
+
+            StructureTemplate.StructureBlockInfo structuretemplate$structureblockinfo1 = new StructureTemplate.StructureBlockInfo(
+                    mutableBlockPos,
+                    structuretemplate$structureblockinfo.state(),
+                    structuretemplate$structureblockinfo.nbt() != null ? structuretemplate$structureblockinfo.nbt().copy() : null
+            );
+            Iterator<StructureProcessor> iterator = settings.getProcessors().iterator();
+
+            while (structuretemplate$structureblockinfo1 != null && iterator.hasNext()) {
+                structuretemplate$structureblockinfo1 = iterator.next()
+                        .processBlock(serverLevel, offset, pos, structuretemplate$structureblockinfo, structuretemplate$structureblockinfo1, settings);
+            }
+
+            if (structuretemplate$structureblockinfo1 != null) {
+                finalizedProcessing.add(structuretemplate$structureblockinfo1);
+                firstPassProcessing.add(structuretemplate$structureblockinfo);
+            }
+        }
+
+        for (StructureProcessor structureprocessor : settings.getProcessors()) {
+            finalizedProcessing = structureprocessor.finalizeProcessing(serverLevel, offset, pos, firstPassProcessing, finalizedProcessing, settings);
+        }
+
+        return finalizedProcessing;
     }
 
     /////////////////////////////////////////////////

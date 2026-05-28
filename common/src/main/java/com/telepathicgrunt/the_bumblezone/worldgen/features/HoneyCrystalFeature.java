@@ -26,15 +26,15 @@ public class HoneyCrystalFeature extends Feature<HoneyCrystalFeatureConfig> {
     @Override
     public boolean place(FeaturePlaceContext<HoneyCrystalFeatureConfig> context) {
 
-        BlockPos.MutableBlockPos blockpos$Mutable = new BlockPos.MutableBlockPos().set(context.origin());
-        BlockState originalBlockstate = context.level().getBlockState(blockpos$Mutable);
+        BlockState originalBlockstate = context.level().getBlockState(context.origin());
         BlockState blockstate;
-        ChunkPos currentChunkPos = new ChunkPos(blockpos$Mutable);
+        ChunkPos currentChunkPos = new ChunkPos(context.origin());
 
         if (originalBlockstate.getBlock() == Blocks.CAVE_AIR ||
             (context.config().exposed && originalBlockstate.isAir() && !originalBlockstate.is(BzTags.AIR_LIKE)) ||
-            (originalBlockstate.getFluidState().is(FluidTags.WATER) && originalBlockstate.getCollisionShape(context.level(), blockpos$Mutable).isEmpty()))
+            (originalBlockstate.getFluidState().is(FluidTags.WATER) && originalBlockstate.getCollisionShape(context.level(), context.origin()).isEmpty()))
         {
+            BlockPos.MutableBlockPos blockpos$Mutable = new BlockPos.MutableBlockPos().set(context.origin());
 
             for (Direction face : Direction.values()) {
                 blockpos$Mutable.set(context.origin());

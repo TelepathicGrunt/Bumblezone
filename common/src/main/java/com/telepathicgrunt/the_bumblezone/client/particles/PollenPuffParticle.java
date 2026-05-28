@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.client.particles;
 
+import com.telepathicgrunt.the_bumblezone.mixin.util.AABBAccessor;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
@@ -8,8 +9,11 @@ import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.world.phys.AABB;
 
 public class PollenPuffParticle extends TextureSheetParticle {
+    private boolean stoppedByCollision = false;
+
     private PollenPuffParticle(ClientLevel clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed, TextureAtlasSprite sprite) {
         super(clientWorld, xPos, yPos, zPos);
         this.xd += xSpeed;
@@ -40,6 +44,30 @@ public class PollenPuffParticle extends TextureSheetParticle {
             this.xd *= 0.98F;
             this.yd *= 0.98F;
             this.zd *= 0.98F;
+        }
+    }
+
+    @Override
+    public void move(double x, double y, double z) {
+        if (!this.stoppedByCollision) {
+            if (x != 0.0 || y != 0.0 || z != 0.0) {
+
+                // Reduce object allocation spam from my particle by a significant margin.
+                // This particle spawns extremely frequently in Pollinated Fields biome.
+                AABB aabb = this.getBoundingBox();
+                ((AABBAccessor)aabb).bumblezone$setMinX(aabb.minX + x);
+                ((AABBAccessor)aabb).bumblezone$setMaxX(aabb.maxX + x);
+                ((AABBAccessor)aabb).bumblezone$setMinY(aabb.minY + y);
+                ((AABBAccessor)aabb).bumblezone$setMaxY(aabb.maxY + y);
+                ((AABBAccessor)aabb).bumblezone$setMinZ(aabb.minZ + z);
+                ((AABBAccessor)aabb).bumblezone$setMaxZ(aabb.maxZ + z);
+
+                this.setLocationFromBoundingbox();
+            }
+
+            if (Math.abs(y) >= 1.0E-5F && Math.abs(y) < 1.0E-5F) {
+                this.stoppedByCollision = true;
+            }
         }
     }
 

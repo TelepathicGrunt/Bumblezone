@@ -121,8 +121,9 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     @Override
     public boolean canSurvive(BlockState blockstate, LevelReader world, BlockPos pos) {
         Direction direction = blockstate.getValue(FACING);
-        BlockState attachedBlockstate = world.getBlockState(pos.relative(direction.getOpposite()));
-        return attachedBlockstate.isFaceSturdy(world, pos.relative(direction.getOpposite()), direction);
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(pos.getX(), pos.getY(), pos.getZ()).move(direction.getOpposite());
+        BlockState attachedBlockstate = world.getBlockState(mutableBlockPos);
+        return attachedBlockstate.isFaceSturdy(world, mutableBlockPos, direction);
     }
 
     /**

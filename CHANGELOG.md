@@ -3,6 +3,8 @@
 #### Misc:
 Slightly optimized the modded comb ore placing feature to skip a spot if it is surrounded by air.
 
+Optimized various part of the codebase to try and reduce memory object allocation spam a little bit. 
+
 
 ### **(V.7.13.5 Changes) (1.21.1 Minecraft)**
 
