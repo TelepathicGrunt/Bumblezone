@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import net.minecraft.core.BlockPos;
@@ -8,6 +9,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.ProcessorRule;
+import net.minecraft.world.level.levelgen.structure.templatesystem.RuleProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
@@ -17,8 +19,11 @@ import java.util.List;
 
 public class ReducedAllocationRuleProcessor extends StructureProcessor {
 
-    public static final MapCodec<ReducedAllocationRuleProcessor> CODEC = ProcessorRule.CODEC.listOf().fieldOf("rules")
-            .xmap(ReducedAllocationRuleProcessor::new, ruleProcessor -> ruleProcessor.rules);
+    public static final Codec<ReducedAllocationRuleProcessor> CODEC = ProcessorRule.CODEC
+            .listOf()
+            .fieldOf("rules")
+            .xmap(ReducedAllocationRuleProcessor::new, ruleProcessor -> ruleProcessor.rules)
+            .codec();
     private final ImmutableList<ProcessorRule> rules;
 
     public ReducedAllocationRuleProcessor(List<? extends ProcessorRule> rules) {

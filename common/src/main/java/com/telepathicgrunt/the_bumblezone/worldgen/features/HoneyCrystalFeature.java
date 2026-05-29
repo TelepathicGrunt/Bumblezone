@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.worldgen.features;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.HoneyCrystalFeatureConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
