@@ -81,6 +81,7 @@
     "menus.SmithingMenuMixin",
     "menus.StonecutterMenuMixin",
     "util.AABBAccessor",
+    "util.Vec3Accessor",
     "util.WeightedListAccessor",
     "world.BiomeManagerAccessor",
     "world.LevelMixin",
