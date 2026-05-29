@@ -3,6 +3,8 @@ package com.telepathicgrunt.the_bumblezone.client.dimension;
 import com.mojang.blaze3d.shaders.FogShape;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
+import com.telepathicgrunt.the_bumblezone.mixin.util.Vec3Accessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
@@ -20,7 +22,7 @@ public class BzDimensionSpecialEffects extends DimensionSpecialEffects {
 
     @Override
     public Vec3 getBrightnessDependentFogColor(Vec3 color, float sunHeight) {
-        return getFogColor();
+        return getFogColor(color);
     }
 
     @Override
@@ -34,7 +36,7 @@ public class BzDimensionSpecialEffects extends DimensionSpecialEffects {
     /**
      * Returns fog color based on if player has wrath effect or not
      */
-    public Vec3 getFogColor() {
+    public Vec3 getFogColor(Vec3 colorHolder) {
         float colorFactor = 0.75f;
         /*
          * The sky will be turned to midnight when brightness is below 50. This lets us get the
@@ -57,9 +59,14 @@ public class BzDimensionSpecialEffects extends DimensionSpecialEffects {
         // Divide by 255 to make values between 0 and 1
         double divideBy255 = 0.003921568627451d;
 
-        return new Vec3((int)(Math.min(Math.min(0.54f * colorFactor, 0.65f + REDDISH_FOG_TINT)*255, 255)) * divideBy255,
-                        ((int)(Math.min(Math.max(Math.min(0.3f * colorFactor, 0.87f) - REDDISH_FOG_TINT * 0.6f, 0)*255, 255))) * divideBy255,
-                        ((int)(Math.min(Math.max(Math.min((0.001f * colorFactor) * (colorFactor * colorFactor), 0.9f) - REDDISH_FOG_TINT * 1.9f, 0)*255, 255))) * divideBy255);
+        // Micro-optimized to not create a new vec3. Instead, modify the incoming one which is already initialized just
+        // to pass the newly made Vec3 into BzDimensionSpecialEffects$getBrightnessDependentFogColor. Thus, it should be
+        // safe to modify this as nothing else is going to ever use this Vec3 object between when it was made and when
+        // it is passed to BzDimensionSpecialEffects$getBrightnessDependentFogColor.
+        ((Vec3Accessor)colorHolder).bumblezone$setX((int)(Math.min(Math.min(0.54f * colorFactor, 0.65f + REDDISH_FOG_TINT)*255, 255)) * divideBy255);
+        ((Vec3Accessor)colorHolder).bumblezone$setY(((int)(Math.min(Math.max(Math.min(0.3f * colorFactor, 0.87f) - REDDISH_FOG_TINT * 0.6f, 0)*255, 255))) * divideBy255);
+        ((Vec3Accessor)colorHolder).bumblezone$setZ(((int)(Math.min(Math.max(Math.min((0.001f * colorFactor) * (colorFactor * colorFactor), 0.9f) - REDDISH_FOG_TINT * 1.9f, 0)*255, 255))) * divideBy255);
+        return colorHolder;
     }
 
     public static void fogThicknessAdjustments(float renderDistance, FogRenderer.FogData fogData) {
