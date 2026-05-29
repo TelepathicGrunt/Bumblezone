@@ -3,8 +3,13 @@ package com.telepathicgrunt.the_bumblezone.utils;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.QuartPos;
 import net.minecraft.core.SectionPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -43,15 +48,26 @@ public class UnsafeBulkSectionAccess {
         return this.lastSection;
     }
 
+    public Holder<Biome> getBiome(BlockPos blockPos, LevelReader level) {
+        LevelChunkSection levelChunkSection = this.getSection(blockPos);
+        if (levelChunkSection == null) {
+            return level.getBiomeManager().getNoiseBiomeAtPosition(blockPos);
+        }
+        int x = QuartPos.fromBlock(blockPos.getX());
+        int y = QuartPos.fromBlock(blockPos.getY());
+        int z = QuartPos.fromBlock(blockPos.getZ());
+        return levelChunkSection.getNoiseBiome(x & 3, y & 3, z & 3);
+    }
+
     public BlockState getBlockState(BlockPos blockPos) {
         LevelChunkSection levelChunkSection = this.getSection(blockPos);
         if (levelChunkSection == null) {
             return Blocks.AIR.defaultBlockState();
         }
-        int i = SectionPos.sectionRelative(blockPos.getX());
-        int j = SectionPos.sectionRelative(blockPos.getY());
-        int k = SectionPos.sectionRelative(blockPos.getZ());
-        return levelChunkSection.getBlockState(i, j, k);
+        int x = SectionPos.sectionRelative(blockPos.getX());
+        int y = SectionPos.sectionRelative(blockPos.getY());
+        int z = SectionPos.sectionRelative(blockPos.getZ());
+        return levelChunkSection.getBlockState(x, y, z);
     }
 
     public FluidState getFluidState(BlockPos blockPos) {
@@ -59,10 +75,10 @@ public class UnsafeBulkSectionAccess {
         if (levelChunkSection == null) {
             return Fluids.EMPTY.defaultFluidState();
         }
-        int i = SectionPos.sectionRelative(blockPos.getX());
-        int j = SectionPos.sectionRelative(blockPos.getY());
-        int k = SectionPos.sectionRelative(blockPos.getZ());
-        return levelChunkSection.getFluidState(i, j, k);
+        int x = SectionPos.sectionRelative(blockPos.getX());
+        int y = SectionPos.sectionRelative(blockPos.getY());
+        int z = SectionPos.sectionRelative(blockPos.getZ());
+        return levelChunkSection.getFluidState(x, y, z);
     }
 
     public boolean setBlockState(BlockPos blockPos, BlockState state, boolean lockSection) {

@@ -202,8 +202,8 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                             mutableBlockPos.getZ() * 0.019D,
                             mutableBlockPos.getY() * 0.038D);
 
-                    if (noise1 >= 0.037D || noise1 <= -0.037D) {
-                        z = zSkipping(z, noise1);
+                    if (Math.abs(noise1) >= 0.037D) {
+                        z = zSkipping(z, Math.abs(noise1));
                         continue;
                     }
 
@@ -224,26 +224,26 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
         return true;
     }
 
+    /// Noise generators giving a value very far from our threshold means there a large area where the noise value will remain too far.
+    /// This attempts to skip those area in hopes we land into a spot that is much closer to our threshold where we can then be checking every block.
+    /// Noise generators can be expensive to run so this is a neat small optimization. Values were chosen based on visual testing.
     private int zSkipping(int z, double noise1) {
         if (noise1 >= 0.8) {
-            z += 7;
-        }
-        else if (noise1 >= 0.7) {
             z += 6;
         }
-        else if (noise1 >= 0.6) {
+        else if (noise1 >= 0.7) {
             z += 5;
         }
-        else if (noise1 >= 0.5) {
+        else if (noise1 >= 0.6) {
             z += 4;
         }
-        else if (noise1 >= 0.4) {
+        else if (noise1 >= 0.5) {
             z += 3;
         }
-        else if (noise1 >= 0.3) {
+        else if (noise1 >= 0.4) {
             z += 2;
         }
-        else if (noise1 >= 0.2) {
+        else if (noise1 >= 0.35) {
             z += 1;
         }
         return z;

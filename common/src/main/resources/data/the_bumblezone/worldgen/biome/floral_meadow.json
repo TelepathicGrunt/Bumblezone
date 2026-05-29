@@ -36,7 +36,8 @@
     [
       "the_bumblezone:beehive_beeswax_boundaries",
       "the_bumblezone:honeycomb_caves",
-      "the_bumblezone:honeycomb_holes"
+      "the_bumblezone:honeycomb_holes",
+      "the_bumblezone:carvable_wax_roads"
     ],
     [],
     [
@@ -58,8 +59,7 @@
       "the_bumblezone:web_wall"
     ],
     [
-      "the_bumblezone:floral_surface",
-      "the_bumblezone:grass_fern_patch"
+      "the_bumblezone:floral_surface"
     ],
     [],
     [

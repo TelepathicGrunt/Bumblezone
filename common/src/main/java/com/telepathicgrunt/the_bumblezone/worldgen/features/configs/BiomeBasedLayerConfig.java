@@ -2,7 +2,9 @@ package com.telepathicgrunt.the_bumblezone.worldgen.features.configs;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
@@ -16,7 +18,7 @@ public class BiomeBasedLayerConfig implements FeatureConfiguration {
             BlockState.CODEC.optionalFieldOf("rare_state").forGetter((config) -> config.rareState),
             Codec.floatRange(0, 1).fieldOf("rare_state_chance").orElse(0F).forGetter((config) -> config.rareStateChance),
             Identifier.CODEC.optionalFieldOf("suspicious_block_loot").forGetter((config) -> config.suspiciousBlockLoot),
-            Identifier.CODEC.fieldOf("biome_identifier").forGetter((config) -> config.biomeRL)
+            Biome.CODEC.fieldOf("biome").forGetter((config) -> config.biome)
         ).apply(instance, BiomeBasedLayerConfig::new));
 
     public final int height;
@@ -24,7 +26,7 @@ public class BiomeBasedLayerConfig implements FeatureConfiguration {
     public final Optional<BlockState> rareState;
     public final float rareStateChance;
     public final Optional<Identifier> suspiciousBlockLoot;
-    public final Identifier biomeRL;
+    public final Holder<Biome> biome;
 
     public BiomeBasedLayerConfig(
             int height,
@@ -32,13 +34,13 @@ public class BiomeBasedLayerConfig implements FeatureConfiguration {
             Optional<BlockState> rareState,
             float rareStateChance,
             Optional<Identifier> suspiciousBlockLoot,
-            Identifier biomeRL)
+            Holder<Biome> biome)
     {
         this.height = height;
         this.state = state;
         this.rareState = rareState;
         this.rareStateChance = rareStateChance;
         this.suspiciousBlockLoot = suspiciousBlockLoot;
-        this.biomeRL = biomeRL;
+        this.biome = biome;
     }
 }
