@@ -1,8 +1,11 @@
 ### **(V.7.14.0 Changes) (1.21.1 Minecraft)**
 
 #### Biomes:
-Replaced the Carvable Wax roads Surface Rule for Floral Meadow biome to be done as a feature instead. 
- Reduces memory allocation spam in that biome generation. Required changes to some Bumblezone worldgen JSON files.
+Replaced the Carvable Wax roads Surface Rules for Floral Meadow biome to be done as a feature instead. 
+ Reduces memory allocation spam for dimension worldgen. Required changes to some Bumblezone worldgen JSON files.
+
+Replaced the Carvable Wax and Sugar Infused Stone Surface Rules for Howling Construct biome to be done as a feature instead.
+ Reduces memory allocation spam for dimension worldgen. Required changes to some Bumblezone worldgen JSON files.
 
 Made Pollinated Field biome's pollen surface feature be better optimized with biome checks.
 
@@ -10,6 +13,8 @@ Made Pollinated Field and Pollinated Pillar biome's pollen filled caves be wider
 
 #### Features:
 Optimized Honeycomb Caves a tiny bit.
+
+The balloon and helicopter features will not be covered in Pile of Pollen blocks when in Pollinated Field biome.
 
 
 ### **(V.7.13.6 Changes) (1.21.1 Minecraft)**
