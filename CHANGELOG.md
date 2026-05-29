@@ -16,6 +16,8 @@ Optimized Honeycomb Caves a tiny bit.
 
 The balloon and helicopter features will not be covered in Pile of Pollen blocks when in Pollinated Field biome.
 
+Added small spikes to ceiling of most Bumblezone biomes. Help break up the flat ceiling look.
+
 
 ### **(V.7.11.5 Changes) (1.20.1 Minecraft)**
 
