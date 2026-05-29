@@ -102,6 +102,9 @@ publishMods {
             projectId = project.findProperty('curseforge_id_fabric')
             minecraftVersions.add(project.minecraft_version)
             changelog = changeLogText
+            changelogType = "markdown"
+            client = true
+            server = true
 
             uploadDependenciesCf.each { dep, required ->
                 if (required) {
