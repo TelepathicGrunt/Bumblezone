@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.worldgen.features.CarvableWaxRoads;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.CaveSugarWaterfall;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.FloralFillWithRootmin;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.GiantHoneyCrystalFeature;
+import com.telepathicgrunt.the_bumblezone.worldgen.features.GlisteringHoneyCrystalCeilingBands;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.HangingGardenMob;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.HoneyCrystalFeature;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.HoneycombCaves;
@@ -63,6 +64,7 @@ public class BzFeatures {
     public static final RegistryEntry<Feature<NoneFeatureConfiguration>> WEB_CEILING = FEATURES.register("web_ceiling", () -> new WebCeiling(NoneFeatureConfiguration.CODEC));
     public static final RegistryEntry<Feature<BiomeBasedConfig>> CARVABLE_WAX_ROADS = FEATURES.register("carvable_wax_roads", () -> new CarvableWaxRoads(BiomeBasedConfig.CODEC));
     public static final RegistryEntry<Feature<BiomeBasedConfig>> WAX_AND_STONE_SURFACE_BANDS = FEATURES.register("wax_and_stone_surface_bands", () -> new WaxAndStoneSurfaceBands(BiomeBasedConfig.CODEC));
+    public static final RegistryEntry<Feature<BiomeBasedConfig>> GLISTERING_HONEY_CRYSTAL_CEILING_BANDS = FEATURES.register("glistering_honey_crystal_ceiling_bands", () -> new GlisteringHoneyCrystalCeilingBands(BiomeBasedConfig.CODEC));
 
     public static final RegistryEntry<Feature<NbtOreConfiguration>> BLOCKENTITY_COMBS_FEATURE = FEATURES.register("blockentity_combs", () -> new BlockEntityCombOre(NbtOreConfiguration.CODEC));
 }
