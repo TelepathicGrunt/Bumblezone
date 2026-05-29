@@ -36,6 +36,7 @@ public class ReducedAllocationRuleProcessor extends StructureProcessor {
         this.rules = ImmutableList.copyOf(rules);
     }
 
+    // Micro-optimized to reduce object allocation
     @Nullable
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(
@@ -49,7 +50,8 @@ public class ReducedAllocationRuleProcessor extends StructureProcessor {
         RandomSource randomsource = settings.getRandom(relativeBlockInfo.pos());
         BlockState blockstate = level.getBlockState(relativeBlockInfo.pos());
 
-        for (ProcessorRule processorrule : this.rules) {
+        for (int i = 0; i < this.rules.size(); i++) {
+            ProcessorRule processorrule = this.rules.get(i);
             if (processorrule.test(relativeBlockInfo.state(), blockstate, blockInfo.pos(), relativeBlockInfo.pos(), pos, randomsource)) {
                 return new StructureTemplate.StructureBlockInfo(
                         relativeBlockInfo.pos(), processorrule.getOutputState(), processorrule.getOutputTag(randomsource, relativeBlockInfo.nbt())
