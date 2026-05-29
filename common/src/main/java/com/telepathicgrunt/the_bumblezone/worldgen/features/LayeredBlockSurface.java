@@ -59,7 +59,7 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
         Optional<BlockState> configRareBlockState = context.config().rareState;
         BlockPos.MutableBlockPos mutable = context.origin().mutable();
         BlockState currentBlockState;
-        BlockState previousBlockState = Blocks.AIR.defaultBlockState();
+        BlockState previousBlockState;
         RandomSource random = context.random();
 
         int maxY = (context.chunkGenerator().getGenDepth() + context.chunkGenerator().getMinY()) - 1;
@@ -70,10 +70,12 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
                     continue;
                 }
 
+                previousBlockState = null;
                 while (mutable.getY() >= context.chunkGenerator().getSeaLevel() - 1) {
                     currentBlockState = bulkSectionAccess.getBlockState(mutable);
 
                     if (!currentBlockState.isAir() && currentBlockState.getFluidState().isEmpty() &&
+                        previousBlockState != null &&
                         previousBlockState.getBlock() == Blocks.AIR &&
                         !currentBlockState.is(configBlockState.getBlock()) &&
                         !(configRareBlockState.isPresent() && currentBlockState.is(configRareBlockState.get().getBlock())))
