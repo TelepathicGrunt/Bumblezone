@@ -2,10 +2,12 @@
 
 #### Biomes:
 Replaced the Carvable Wax roads Surface Rules for Floral Meadow biome to be done as a feature instead. 
- Reduces memory allocation spam for dimension worldgen. Required changes to some Bumblezone worldgen JSON files.
 
 Replaced the Carvable Wax and Sugar Infused Stone Surface Rules for Howling Construct biome to be done as a feature instead.
- Reduces memory allocation spam for dimension worldgen. Required changes to some Bumblezone worldgen JSON files.
+
+Replaced the Glistering Honey Crystal Surface Rules for Buzzing Beepartments biome to be done as a feature instead.
+
+(These surface rule replacements will help reduces memory allocation spam for dimension worldgen)
 
 Made Pollinated Field biome's pollen surface feature be better optimized with biome checks.
 
