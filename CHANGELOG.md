@@ -4,7 +4,9 @@
 Replaced the Carvable Wax roads Surface Rule for Floral Meadow biome to be done as a feature instead. 
  Reduces memory allocation spam in that biome generation. Required changes to some Bumblezone worldgen JSON files.
 
-Make Pollinated Field biome's pollen surface try and do biome check from chunk's biome rather than recompute it from scratch.
+Made Pollinated Field biome's pollen surface feature be better optimized with biome checks.
+
+Made Pollinated Field and Pollinated Pillar biome's pollen filled caves be wider and easier to traverse.
 
 #### Features:
 Optimized Honeycomb Caves a tiny bit.
