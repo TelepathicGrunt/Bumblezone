@@ -43,25 +43,13 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
     @Override
     public boolean place(FeaturePlaceContext<BiomeBasedLayerConfig> context) {
         setSeed(context.level().getSeed());
-        BlockPos.MutableBlockPos mutableBlockPos = context.origin().mutable();
-        BlockPos.MutableBlockPos mutableBlockPosForChunk = new BlockPos.MutableBlockPos();
-        ChunkPos chunkPos = new ChunkPos(mutableBlockPos);
         Holder<Biome> targetBiome = context.config().biome;
 
         UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(context.level());
-        for (int xOffset = -1; xOffset <= 1; xOffset++) {
-            for (int zOffset = -1; zOffset <= 1; zOffset++) {
-                ChunkPos currentChunkPos = new ChunkPos(chunkPos.x + xOffset, chunkPos.z + zOffset);
-                mutableBlockPosForChunk.set(currentChunkPos.getWorldPosition());
-                ChunkAccess cachedChunk = context.level().getChunk(currentChunkPos.getWorldPosition());
+        BlockPos.MutableBlockPos mutableBlockPos = context.origin().mutable();
+        ChunkAccess cachedChunk = context.level().getChunk(mutableBlockPos);
+        fillChunkWithPollen(context, bulkSectionAccess, cachedChunk, mutableBlockPos, targetBiome);
 
-                if (xOffset != 0 && zOffset != 0 && cachedChunk.getSection(0).getNoiseBiome(0, 0, 0).is(targetBiome)) {
-                    continue;
-                }
-
-                fillChunkWithPollen(context, bulkSectionAccess, cachedChunk, currentChunkPos.getWorldPosition(), targetBiome);
-            }
-        }
         return true;
     }
 

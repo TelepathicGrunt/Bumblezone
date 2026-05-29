@@ -91,9 +91,9 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
                     mutableBlockPos.set(orgX, orgY, orgZ).move(x, y, z);
 
                     noise1 = Math.abs(noiseGen.noise3_Classic(
-                            mutableBlockPos.getX() * 0.019D,
-                            mutableBlockPos.getZ() * 0.019D,
-                            mutableBlockPos.getY() * 0.038D));
+                            mutableBlockPos.getX() * 0.01D,
+                            mutableBlockPos.getZ() * 0.01D,
+                            mutableBlockPos.getY() * 0.0325D));
 
                     if (noise1 >= 0.037D) {
                         if (noise1 >= 0.6) {
@@ -109,14 +109,14 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
                     }
 
                     noise2 = noiseGen2.noise3_Classic(
-                            mutableBlockPos.getX() * 0.019D,
-                            mutableBlockPos.getZ() * 0.019D,
-                            mutableBlockPos.getY() * 0.038D);
+                            mutableBlockPos.getX() * 0.01D,
+                            mutableBlockPos.getZ() * 0.01D,
+                            mutableBlockPos.getY() * 0.0325D);
 
                     double heightPressure = Math.max((30f - y) / 90f, 0);
                     finalNoise = (noise1 * noise1) + (noise2 * noise2) + heightPressure;
 
-                    if (finalNoise < 0.014f) {
+                    if (finalNoise < 0.015f) {
                         carve(level, bulkSectionAccess, mutableBlockPos, finalNoise, noise1);
                     }
                     else if (finalNoise >= 0.6) {
