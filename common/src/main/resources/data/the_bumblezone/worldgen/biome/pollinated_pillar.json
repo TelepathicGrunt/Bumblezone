@@ -35,7 +35,6 @@
   "features": [
     [
       "the_bumblezone:beehive_beeswax_boundaries",
-      "the_bumblezone:pollinated_surface_thick",
       "the_bumblezone:pollinated_caves"
     ],
     [],
@@ -45,7 +44,9 @@
       "the_bumblezone:spider_infested_bee_dungeon",
       "the_bumblezone:tree_dungeon"
     ],
-    [],
+    [
+      "the_bumblezone:pollinated_surface_thick"
+    ],
     [
       "the_bumblezone:web_wall"
     ],

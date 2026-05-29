@@ -77,8 +77,8 @@ public class CarvableWaxRoads extends Feature<BiomeBasedConfig> {
 
     private void fillChunkWithRoads(FeaturePlaceContext<BiomeBasedConfig> context, BlockPos.MutableBlockPos mutable, int orgX, int orgZ, UnsafeBulkSectionAccess bulkSectionAccess, Holder<Biome> targetBiome) {
         BlockState currentBlockState;
-        BlockState previousBlockState = Blocks.AIR.defaultBlockState();
-        int maxY = 80;
+        BlockState previousBlockState;
+        int maxY = 70;
         for (int xOffset = 0; xOffset <= 15; xOffset++) {
             for (int zOffset = 0; zOffset <= 15; zOffset++) {
                 mutable.set(orgX + xOffset, maxY, orgZ + zOffset);
@@ -86,10 +86,12 @@ public class CarvableWaxRoads extends Feature<BiomeBasedConfig> {
                     continue;
                 }
 
+                previousBlockState = null;
                 while (mutable.getY() >= 20) {
                     currentBlockState = bulkSectionAccess.getBlockState(mutable);
 
                     if (!currentBlockState.is(BlockTags.DIRT) ||
+                        previousBlockState == null ||
                         !previousBlockState.getCollisionShape(context.level(), mutable).isEmpty())
                     {
                         previousBlockState = currentBlockState;
@@ -129,11 +131,13 @@ public class CarvableWaxRoads extends Feature<BiomeBasedConfig> {
 
                     if (!previousBlockState.getFluidState().isEmpty()) {
                         double noise2 = noiseGen.noise3_Classic(
-                                mutable.getX() * -0.001D,
-                                mutable.getZ() *- 0.001D,
+                                mutable.getX() * -0.0011D,
+                                mutable.getZ() * -0.0011D,
                                 0);
 
-                        if (noise2 < 0.2) {
+                        double thresholdRootedDirt = 0.2f;
+
+                        if (noise2 < thresholdRootedDirt) {
                             bulkSectionAccess.setBlockState(
                                     mutable,
                                     Blocks.ROOTED_DIRT.defaultBlockState(),

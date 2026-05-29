@@ -23,6 +23,7 @@ import com.telepathicgrunt.the_bumblezone.worldgen.features.SpiderInfestedBeeDun
 import com.telepathicgrunt.the_bumblezone.worldgen.features.StickyHoneyResidueFeature;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.TreeDungeon;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.TwoToneSpikeFeature;
+import com.telepathicgrunt.the_bumblezone.worldgen.features.WaxAndStoneSurfaceBands;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.WebCeiling;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.WebWall;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.BiomeBasedConfig;
@@ -61,6 +62,7 @@ public class BzFeatures {
     public static final RegistryEntry<Feature<NoneFeatureConfiguration>> BEEHIVE_BEESWAX_BOUNDARIES = FEATURES.register("beehive_beeswax_boundaries", () -> new BeehiveBeewaxBoundaries(NoneFeatureConfiguration.CODEC));
     public static final RegistryEntry<Feature<NoneFeatureConfiguration>> WEB_CEILING = FEATURES.register("web_ceiling", () -> new WebCeiling(NoneFeatureConfiguration.CODEC));
     public static final RegistryEntry<Feature<BiomeBasedConfig>> CARVABLE_WAX_ROADS = FEATURES.register("carvable_wax_roads", () -> new CarvableWaxRoads(BiomeBasedConfig.CODEC));
+    public static final RegistryEntry<Feature<BiomeBasedConfig>> WAX_AND_STONE_SURFACE_BANDS = FEATURES.register("wax_and_stone_surface_bands", () -> new WaxAndStoneSurfaceBands(BiomeBasedConfig.CODEC));
 
     public static final RegistryEntry<Feature<NbtOreConfiguration>> BLOCKENTITY_COMBS_FEATURE = FEATURES.register("blockentity_combs", () -> new BlockEntityCombOre(NbtOreConfiguration.CODEC));
 }
