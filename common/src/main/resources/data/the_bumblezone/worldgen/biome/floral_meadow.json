@@ -54,7 +54,10 @@
     [
       "the_bumblezone:floral_surface"
     ],
-    [],
+    [
+      "the_bumblezone:honey_tipped_small_spikes_ceiling_rare",
+      "the_bumblezone:honey_tipped_spikes_ceiling_rare"
+    ],
     [
       "the_bumblezone:cave_sugar_waterfall",
       "the_bumblezone:sugar_waterfall_full_range",
