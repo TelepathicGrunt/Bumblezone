@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.BeeDungeon;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.BeehiveBeewaxBoundaries;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.BlockEntityCombOre;
+import com.telepathicgrunt.the_bumblezone.worldgen.features.CarvableWaxRoads;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.CaveSugarWaterfall;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.FloralFillWithRootmin;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.GiantHoneyCrystalFeature;
@@ -24,6 +25,7 @@ import com.telepathicgrunt.the_bumblezone.worldgen.features.TreeDungeon;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.TwoToneSpikeFeature;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.WebCeiling;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.WebWall;
+import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.BiomeBasedConfig;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.BiomeBasedLayerConfig;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.FloralFillWithRootminConfig;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.HoneyCrystalFeatureConfig;
@@ -58,6 +60,7 @@ public class BzFeatures {
     public static final RegistryEntry<Feature<TwoToneSpikeFeatureConfig>> TWO_TONE_SPIKE_FEATURE = FEATURES.register("two_tone_spike_feature", () -> new TwoToneSpikeFeature(TwoToneSpikeFeatureConfig.CODEC));
     public static final RegistryEntry<Feature<NoneFeatureConfiguration>> BEEHIVE_BEESWAX_BOUNDARIES = FEATURES.register("beehive_beeswax_boundaries", () -> new BeehiveBeewaxBoundaries(NoneFeatureConfiguration.CODEC));
     public static final RegistryEntry<Feature<NoneFeatureConfiguration>> WEB_CEILING = FEATURES.register("web_ceiling", () -> new WebCeiling(NoneFeatureConfiguration.CODEC));
+    public static final RegistryEntry<Feature<BiomeBasedConfig>> CARVABLE_WAX_ROADS = FEATURES.register("carvable_wax_roads", () -> new CarvableWaxRoads(BiomeBasedConfig.CODEC));
 
     public static final RegistryEntry<Feature<NbtOreConfiguration>> BLOCKENTITY_COMBS_FEATURE = FEATURES.register("blockentity_combs", () -> new BlockEntityCombOre(NbtOreConfiguration.CODEC));
 }

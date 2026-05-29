@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.utils.UnsafeBulkSectionAccess;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.BiomeBasedLayerConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
@@ -45,7 +46,7 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
         BlockPos.MutableBlockPos mutableBlockPos = context.origin().mutable();
         BlockPos.MutableBlockPos mutableBlockPosForChunk = new BlockPos.MutableBlockPos();
         ChunkPos chunkPos = new ChunkPos(mutableBlockPos);
-        Biome targetBiome = context.level().registryAccess().registry(Registries.BIOME).get().get(context.config().biomeRL);
+        Holder<Biome> targetBiome = context.config().biome;
 
         UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(context.level());
         for (int xOffset = -1; xOffset <= 1; xOffset++) {
@@ -54,7 +55,7 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
                 mutableBlockPosForChunk.set(currentChunkPos.getWorldPosition());
                 ChunkAccess cachedChunk = context.level().getChunk(currentChunkPos.getWorldPosition());
 
-                if (xOffset != 0 && zOffset != 0 && cachedChunk.getSection(0).getNoiseBiome(0, 0, 0).value() == targetBiome) {
+                if (xOffset != 0 && zOffset != 0 && cachedChunk.getSection(0).getNoiseBiome(0, 0, 0).is(targetBiome)) {
                     continue;
                 }
 
@@ -64,7 +65,7 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
         return true;
     }
 
-    private void fillChunkWithPollen(FeaturePlaceContext<BiomeBasedLayerConfig> context, UnsafeBulkSectionAccess bulkSectionAccess, ChunkAccess cachedChunk, BlockPos startPos, Biome targetBiome) {
+    private void fillChunkWithPollen(FeaturePlaceContext<BiomeBasedLayerConfig> context, UnsafeBulkSectionAccess bulkSectionAccess, ChunkAccess cachedChunk, BlockPos startPos, Holder<Biome> targetBiome) {
         int configHeight = context.config().height;
         BlockState configBlockState = context.config().state;
         Optional<BlockState> configRareBlockState = context.config().rareState;
@@ -77,7 +78,7 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
         for (int xOffset = 0; xOffset <= 15; xOffset++) {
             for (int zOffset = 0; zOffset <= 15; zOffset++) {
                 mutable.set(startPos.getX() + xOffset, maxY, startPos.getZ() + zOffset);
-                if(targetBiome != context.level().getBiome(mutable).value()) {
+                if (!bulkSectionAccess.getBiome(mutable, context.level()).is(targetBiome)) {
                     continue;
                 }
 

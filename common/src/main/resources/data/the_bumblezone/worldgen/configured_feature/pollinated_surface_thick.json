@@ -1,6 +1,6 @@
 {
   "config": {
-    "biome_resourcelocation": "the_bumblezone:pollinated_pillar",
+    "biome": "the_bumblezone:pollinated_pillar",
     "height": 3,
     "state": {
       "Name": "the_bumblezone:pile_of_pollen",
