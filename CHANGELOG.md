@@ -1,5 +1,10 @@
 ### **(V.7.14.0 Changes) (1.21.1 Minecraft)**
 
+#### Misc:
+
+Updated the Athena mod dependency that is shipped within Bumblezone jar.
+ Fixes incorrect Ambient Occlusion on Filled/Empty Porous Honeycomb Block and Honeycomb Brood Blocks.
+
 #### Biomes:
 Replaced the Carvable Wax roads Surface Rules for Floral Meadow biome to be done as a feature instead. 
 
