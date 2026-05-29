@@ -79,6 +79,7 @@
     "loot.LootContextAccessor",
     "loot.LootParamsMixin",
     "util.AABBAccessor",
+    "util.Vec3Accessor",
     "util.WeightedRandomListAccessor",
     "world.BiomeManagerAccessor",
     "world.LevelMixin",
