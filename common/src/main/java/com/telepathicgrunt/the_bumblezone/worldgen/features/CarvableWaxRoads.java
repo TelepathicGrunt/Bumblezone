@@ -21,6 +21,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
@@ -32,6 +33,7 @@ import net.minecraft.world.level.block.entity.BrushableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -45,12 +47,10 @@ import java.util.List;
 public class CarvableWaxRoads extends Feature<BiomeBasedConfig> {
     protected long seed;
     protected static OpenSimplex2F noiseGen;
-    protected static OpenSimplex2F noiseGen2;
 
     public void setSeed(long seed) {
         if (this.seed != seed || noiseGen == null) {
             noiseGen = new OpenSimplex2F(seed);
-            noiseGen2 = new OpenSimplex2F(seed + 1000);
             this.seed = seed;
         }
     }
@@ -64,14 +64,20 @@ public class CarvableWaxRoads extends Feature<BiomeBasedConfig> {
         WorldGenLevel level = context.level();
         setSeed(level.getSeed());
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(context.origin());
-        BlockState currentBlockState;
-        BlockState previousBlockState = Blocks.AIR.defaultBlockState();
         Holder<Biome> targetBiome = context.config().biome;
 
         int orgX = context.origin().getX();
         int orgZ = context.origin().getZ();
 
         UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(context.level());
+        fillChunkWithRoads(context, mutable, orgX, orgZ, bulkSectionAccess, targetBiome);
+
+        return true;
+    }
+
+    private void fillChunkWithRoads(FeaturePlaceContext<BiomeBasedConfig> context, BlockPos.MutableBlockPos mutable, int orgX, int orgZ, UnsafeBulkSectionAccess bulkSectionAccess, Holder<Biome> targetBiome) {
+        BlockState currentBlockState;
+        BlockState previousBlockState = Blocks.AIR.defaultBlockState();
         int maxY = 80;
         for (int xOffset = 0; xOffset <= 15; xOffset++) {
             for (int zOffset = 0; zOffset <= 15; zOffset++) {
@@ -92,57 +98,73 @@ public class CarvableWaxRoads extends Feature<BiomeBasedConfig> {
                     }
 
                     double noise1 = noiseGen.noise3_Classic(
-                            mutable.getX() * 0.0225D,
-                            mutable.getZ() * 0.0225D,
+                            mutable.getX() * 0.02225D,
+                            mutable.getZ() * 0.02225D,
                             0);
 
-                    if (Math.abs(noise1) >= 0.12D) {
-                        zOffset = zSkipping(zOffset, Math.abs(noise1));
+                    double thresholdBorder = 0.0125f;
+                    double thresholdInside = 0.0025f;
+                    double distanceFromThreshold = noise1 - 0.12f;
+                    double finalNoise = noise1 * noise1;
+
+                    if (distanceFromThreshold > 0) {
+                        zOffset = zSkipping(zOffset, distanceFromThreshold);
                         break;
                     }
 
-                    double finalNoise = noise1 * noise1;
-
-                    if (finalNoise < 0.0025f) {
+                    if (finalNoise < thresholdInside) {
                         bulkSectionAccess.setBlockState(
                                 mutable,
                                 BzBlocks.CARVABLE_WAX.get().defaultBlockState().setValue(CarvableWax.CARVING, CarvableWax.Carving.BRICKS),
                                 false);
+                        break;
                     }
-                    else if (finalNoise < 0.0125f) {
+                    else if (finalNoise < thresholdBorder) {
                         bulkSectionAccess.setBlockState(
                                 mutable,
                                 BzBlocks.CARVABLE_WAX.get().defaultBlockState().setValue(CarvableWax.CARVING, CarvableWax.Carving.FLOWER),
                                 false);
+                        break;
+                    }
+
+                    if (!previousBlockState.getFluidState().isEmpty()) {
+                        double noise2 = noiseGen.noise3_Classic(
+                                mutable.getX() * -0.001D,
+                                mutable.getZ() *- 0.001D,
+                                0);
+
+                        if (noise2 < 0.2) {
+                            bulkSectionAccess.setBlockState(
+                                    mutable,
+                                    Blocks.ROOTED_DIRT.defaultBlockState(),
+                                    false);
+                        }
+                        break;
                     }
 
                     break;
                 }
             }
         }
-        return true;
     }
 
     /// Noise generators giving a value very far from our threshold means there a large area where the noise value will remain too far.
     /// This attempts to skip those area in hopes we land into a spot that is much closer to our threshold where we can then be checking every block.
     /// Noise generators can be expensive to run so this is a neat small optimization. Values were chosen based on visual testing.
-    private int zSkipping(int z, double noise1) {
-        if (noise1 >= 0.9) {
-            z += 6;
-        }
-        else if (noise1 >= 0.8) {
+    private int zSkipping(int z, double noiseDistanceFromThreshold) {
+        if (noiseDistanceFromThreshold >= 0.8) {
             z += 5;
         }
-        else if (noise1 >= 0.7) {
+        else if (noiseDistanceFromThreshold >= 0.7) {
             z += 4;
         }
-        else if (noise1 >= 0.6) {
+        else if (noiseDistanceFromThreshold >= 0.6) {
             z += 3;
         }
-        else if (noise1 >= 0.5) {
+        else if (noiseDistanceFromThreshold >= 0.5) {
             z += 2;
         }
-        else if (noise1 >= 0.4) {
+        else if (noiseDistanceFromThreshold >= 0.4) {
             z += 1;
         }
         return z;

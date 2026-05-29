@@ -1,8 +1,4 @@
 {
   "feature": "the_bumblezone:carvable_wax_roads",
-  "placement": [
-    {
-      "type": "minecraft:biome"
-    }
-  ]
+  "placement": []
 }
