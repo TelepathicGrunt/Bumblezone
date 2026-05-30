@@ -66,7 +66,7 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
         for (int xOffset = 0; xOffset <= 15; xOffset++) {
             for (int zOffset = 0; zOffset <= 15; zOffset++) {
                 mutable.set(startPos.getX() + xOffset, maxY, startPos.getZ() + zOffset);
-                if (!bulkSectionAccess.getBiome(mutable, context.level()).is(targetBiome)) {
+                if (!bulkSectionAccess.getBiome(mutable, context.level()).is(targetBiome.unwrapKey().get())) {
                     continue;
                 }
 

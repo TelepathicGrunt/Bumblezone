@@ -54,7 +54,7 @@ public class GlisteringHoneyCrystalCeilingBands extends Feature<BiomeBasedConfig
         for (int xOffset = 0; xOffset <= 15; xOffset++) {
             for (int zOffset = 0; zOffset <= 15; zOffset++) {
                 mutable.set(orgX + xOffset, minY, orgZ + zOffset);
-                if (!bulkSectionAccess.getBiome(mutable, context.level()).is(targetBiome)) {
+                if (!bulkSectionAccess.getBiome(mutable, context.level()).is(targetBiome.unwrapKey().get())) {
                     continue;
                 }
 
