@@ -11,8 +11,6 @@ import com.telepathicgrunt.the_bumblezone.mixin.world.StructureTemplateAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.services.PlatformService;
-import it.unimi.dsi.fastutil.longs.LongSet;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
@@ -56,6 +54,7 @@ import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JigsawBlock;
@@ -69,6 +68,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.chunk.ChunkGeneratorStructureState;
+import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -100,6 +100,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.ServiceLoader;
@@ -1299,7 +1300,7 @@ public class GeneralUtils {
                 originalStructureCheck.getFixerUpper()
         );
         for (Holder<Structure> holder : structureHoldersSet) {
-            StructureCheckResult structurecheckresult = tempStructureCheck.checkStart(chunkPos, holder.value(), placement, skipKnownStructures);
+            StructureCheckResult structurecheckresult = tempStructureCheck.checkStart(chunkPos, holder.value(), skipKnownStructures);
             if (structurecheckresult != StructureCheckResult.START_NOT_PRESENT) {
                 if (!skipKnownStructures && structurecheckresult == StructureCheckResult.START_PRESENT) {
                     return Pair.of(placement.getLocatePos(chunkPos), holder);
