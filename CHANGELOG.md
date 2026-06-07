@@ -4,6 +4,9 @@
 Fixed an incredibly rare concurrency modification exception crash when Honey Compass tries to locate a 
  structure while something else is also searching for structures at same time.
 
+#### Structures
+Fixed typo in Blue Sempiternal Sanctum translated name.
+
 
 ### **(V.7.12.0 Changes) (1.20.1 Minecraft)**
 
