@@ -1,7 +1,13 @@
+### **(V.7.14.1 Changes) (1.21.1 Minecraft)**
+
+#### Misc:
+Fixed an incredibly rare concurrency modification exception crash when Honey Compass tries to locate a 
+ structure while something else is also searching for structures at same time.
+
+
 ### **(V.7.14.0 Changes) (1.21.1 Minecraft)**
 
 #### Misc:
-
 Updated the Athena mod dependency that is shipped within Bumblezone jar.
  Fixes incorrect Ambient Occlusion on Filled/Empty Porous Honeycomb Block and Honeycomb Brood Blocks.
 
