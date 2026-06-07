@@ -5,12 +5,17 @@ import com.google.common.collect.Lists;
 import com.google.common.primitives.Doubles;
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.mixin.world.StructureCheckAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.world.StructureManagerAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.SinglePoolElementAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.StructureTemplateAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import it.unimi.dsi.fastutil.longs.LongSet;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectArraySet;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.DefaultedRegistry;
 import net.minecraft.core.Direction;
@@ -58,13 +63,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.chunk.ChunkGeneratorStructureState;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureCheck;
+import net.minecraft.world.level.levelgen.structure.StructureCheckResult;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.levelgen.structure.placement.ConcentricRingsStructurePlacement;
+import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
+import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
@@ -87,6 +98,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ServiceLoader;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -1104,7 +1116,207 @@ public class GeneralUtils {
         return result;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////
 
+    // Below copied from ChunkGenerator as I needed to make a new StructureCheck instance so that the structure search is threadsafe
+    // So much freaking duplicate code
+
+    public static Pair<BlockPos, Holder<Structure>> findNearestMapStructureAsyncSafe(
+            ServerLevel level, HolderSet<Structure> structure, BlockPos pos, int searchRadius, boolean skipKnownStructures
+    ) {
+        ChunkGeneratorStructureState chunkgeneratorstructurestate = level.getChunkSource().getGeneratorState();
+        Map<StructurePlacement, Set<Holder<Structure>>> map = new Object2ObjectArrayMap<>();
+
+        for (Holder<Structure> holder : structure) {
+            for (StructurePlacement structureplacement : chunkgeneratorstructurestate.getPlacementsForStructure(holder)) {
+                map.computeIfAbsent(structureplacement, p_223127_ -> new ObjectArraySet<>()).add(holder);
+            }
+        }
+
+        if (map.isEmpty()) {
+            return null;
+        } else {
+            Pair<BlockPos, Holder<Structure>> pair2 = null;
+            double d2 = Double.MAX_VALUE;
+            StructureManager structuremanager = level.structureManager();
+            List<Map.Entry<StructurePlacement, Set<Holder<Structure>>>> list = new ArrayList<>(map.size());
+
+            for (Map.Entry<StructurePlacement, Set<Holder<Structure>>> entry : map.entrySet()) {
+                StructurePlacement structureplacement1 = entry.getKey();
+                if (structureplacement1 instanceof ConcentricRingsStructurePlacement concentricringsstructureplacement) {
+                    Pair<BlockPos, Holder<Structure>> pair = getNearestGeneratedStructureAsyncSafe(
+                            entry.getValue(), level, structuremanager, pos, skipKnownStructures, concentricringsstructureplacement
+                    );
+                    if (pair != null) {
+                        BlockPos blockpos = pair.getFirst();
+                        double d0 = pos.distSqr(blockpos);
+                        if (d0 < d2) {
+                            d2 = d0;
+                            pair2 = pair;
+                        }
+                    }
+                } else if (structureplacement1 instanceof RandomSpreadStructurePlacement) {
+                    list.add(entry);
+                }
+            }
+
+            if (!list.isEmpty()) {
+                int i = SectionPos.blockToSectionCoord(pos.getX());
+                int j = SectionPos.blockToSectionCoord(pos.getZ());
+
+                for (int k = 0; k <= searchRadius; k++) {
+                    boolean flag = false;
+
+                    for (Map.Entry<StructurePlacement, Set<Holder<Structure>>> entry1 : list) {
+                        RandomSpreadStructurePlacement randomspreadstructureplacement = (RandomSpreadStructurePlacement)entry1.getKey();
+                        Pair<BlockPos, Holder<Structure>> pair1 = getNearestGeneratedStructureAsyncSafe(
+                                entry1.getValue(),
+                                level,
+                                structuremanager,
+                                i,
+                                j,
+                                k,
+                                skipKnownStructures,
+                                chunkgeneratorstructurestate.getLevelSeed(),
+                                randomspreadstructureplacement
+                        );
+                        if (pair1 != null) {
+                            flag = true;
+                            double d1 = pos.distSqr(pair1.getFirst());
+                            if (d1 < d2) {
+                                d2 = d1;
+                                pair2 = pair1;
+                            }
+                        }
+                    }
+
+                    if (flag) {
+                        return pair2;
+                    }
+                }
+            }
+
+            return pair2;
+        }
+    }
+
+    private static Pair<BlockPos, Holder<Structure>> getNearestGeneratedStructureAsyncSafe(
+            Set<Holder<Structure>> structureHoldersSet,
+            ServerLevel level,
+            StructureManager structureManager,
+            BlockPos pos,
+            boolean skipKnownStructures,
+            ConcentricRingsStructurePlacement placement
+    ) {
+        List<ChunkPos> list = level.getChunkSource().getGeneratorState().getRingPositionsFor(placement);
+        if (list == null) {
+            throw new IllegalStateException("Somehow tried to find structures for a placement that doesn't exist");
+        } else {
+            Pair<BlockPos, Holder<Structure>> pair = null;
+            double d0 = Double.MAX_VALUE;
+            BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
+
+            for (ChunkPos chunkpos : list) {
+                blockpos$mutableblockpos.set(SectionPos.sectionToBlockCoord(chunkpos.x, 8), 32, SectionPos.sectionToBlockCoord(chunkpos.z, 8));
+                double d1 = blockpos$mutableblockpos.distSqr(pos);
+                boolean flag = pair == null || d1 < d0;
+                if (flag) {
+                    Pair<BlockPos, Holder<Structure>> pair1 = getStructureGeneratingAtAsyncSafe(structureHoldersSet, level, structureManager, skipKnownStructures, placement, chunkpos);
+                    if (pair1 != null) {
+                        pair = pair1;
+                        d0 = d1;
+                    }
+                }
+            }
+
+            return pair;
+        }
+    }
+
+    private static Pair<BlockPos, Holder<Structure>> getNearestGeneratedStructureAsyncSafe(
+            Set<Holder<Structure>> structureHoldersSet,
+            LevelReader level,
+            StructureManager structureManager,
+            int x,
+            int y,
+            int z,
+            boolean skipKnownStructures,
+            long seed,
+            RandomSpreadStructurePlacement spreadPlacement
+    ) {
+        int i = spreadPlacement.spacing();
+
+        for (int j = -z; j <= z; j++) {
+            boolean flag = j == -z || j == z;
+
+            for (int k = -z; k <= z; k++) {
+                boolean flag1 = k == -z || k == z;
+                if (flag || flag1) {
+                    int l = x + i * j;
+                    int i1 = y + i * k;
+                    ChunkPos chunkpos = spreadPlacement.getPotentialStructureChunk(seed, l, i1);
+                    Pair<BlockPos, Holder<Structure>> pair = getStructureGeneratingAtAsyncSafe(structureHoldersSet, level, structureManager, skipKnownStructures, spreadPlacement, chunkpos);
+                    if (pair != null) {
+                        return pair;
+                    }
+                }
+            }
+        }
+
+
+        return null;
+    }
+
+    private static Pair<BlockPos, Holder<Structure>> getStructureGeneratingAtAsyncSafe(
+            Set<Holder<Structure>> structureHoldersSet,
+            LevelReader level,
+            StructureManager structureManager,
+            boolean skipKnownStructures,
+            StructurePlacement placement,
+            ChunkPos chunkPos
+    ) {
+
+        // Need to create new instance as StructureCheck is not threadsafe.
+        StructureCheckAccessor originalStructureCheck = ((StructureCheckAccessor)((StructureManagerAccessor)structureManager).bumblezone$getStructureCheck());
+        StructureCheck tempStructureCheck = new StructureCheck(
+                originalStructureCheck.bumblezone$getStorageAccess(),
+                originalStructureCheck.bumblezone$getRegistryAccess(),
+                originalStructureCheck.bumblezone$getStructureTemplateManager(),
+                originalStructureCheck.bumblezone$getDimension(),
+                originalStructureCheck.bumblezone$getChunkGenerator(),
+                originalStructureCheck.bumblezone$getRandomState(),
+                originalStructureCheck.bumblezone$getHeightAccessor(),
+                originalStructureCheck.bumblezone$getBiomeSource(),
+                originalStructureCheck.bumblezone$getSeed(),
+                originalStructureCheck.getFixerUpper()
+        );
+        for (Holder<Structure> holder : structureHoldersSet) {
+            StructureCheckResult structurecheckresult = tempStructureCheck.checkStart(chunkPos, holder.value(), placement, skipKnownStructures);
+            if (structurecheckresult != StructureCheckResult.START_NOT_PRESENT) {
+                if (!skipKnownStructures && structurecheckresult == StructureCheckResult.START_PRESENT) {
+                    return Pair.of(placement.getLocatePos(chunkPos), holder);
+                }
+
+                ChunkAccess chunkaccess = level.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.STRUCTURE_STARTS);
+                StructureStart structurestart = structureManager.getStartForStructure(SectionPos.bottomOf(chunkaccess), holder.value(), chunkaccess);
+                if (structurestart != null && structurestart.isValid() && (!skipKnownStructures || tryAddReferenceAsyncSafe(tempStructureCheck, structurestart))) {
+                    return Pair.of(placement.getLocatePos(structurestart.getChunkPos()), holder);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private static boolean tryAddReferenceAsyncSafe(StructureCheck tempStructureCheck, StructureStart structureStart) {
+        if (structureStart.canBeReferenced()) {
+            structureStart.addReference();
+            tempStructureCheck.incrementReference(structureStart.getChunkPos(), structureStart.getStructure());
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /////////////////////////////////////////////////////////////////////////////////
 

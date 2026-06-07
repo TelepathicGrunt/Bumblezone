@@ -90,6 +90,8 @@
     "world.NoiseGeneratorSettingsAccessor",
     "world.ServerWorldMixin",
     "world.SinglePoolElementAccessor",
+    "world.StructureCheckAccessor",
+    "world.StructureManagerAccessor",
     "world.StructurePoolAccessor",
     "world.StructureTemplateAccessor",
     "world.StructureTemplateMixin"

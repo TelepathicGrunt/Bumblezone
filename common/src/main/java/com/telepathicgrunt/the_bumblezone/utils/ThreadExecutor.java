@@ -111,6 +111,9 @@ public class ThreadExecutor {
                     catch (Exception e) {
                         Bumblezone.LOGGER.error("Off thread structure locating crashed. Exception is: ", e);
                     }
+                    finally {
+                        runningSearches.getAndDecrement();
+                    }
                 }
         );
         return new LocateTask<>(level.getServer(), completableFuture, future);
@@ -134,10 +137,24 @@ public class ThreadExecutor {
                     try {
                         runningSearches.getAndIncrement();
                         queuedSearches.getAndDecrement();
-                        doLocateLevel(completableFuture, level, searchId, structureKey, pos, searchRadius, skipKnownStructures);
+                        Optional<BlockPos> foundPos = doLocateLevel(completableFuture, level, structureKey, pos, searchRadius, skipKnownStructures);
+                        synchronized (SEARCH_RESULTS) {
+                            if (foundPos.isEmpty()) {
+                                SEARCH_RESULTS.remove(searchId);
+                            }
+                            else {
+                                SEARCH_RESULTS.put(searchId, foundPos);
+                            }
+                        }
                     }
                     catch (Exception e) {
                         Bumblezone.LOGGER.error("Off thread structure locating crashed. Exception is: ", e);
+                        synchronized (SEARCH_RESULTS) {
+                            SEARCH_RESULTS.remove(searchId);
+                        }
+                    }
+                    finally {
+                        runningSearches.getAndDecrement();
                     }
                 }
         );
@@ -174,13 +191,11 @@ public class ThreadExecutor {
                 skipExistingChunks);
 
         completableFuture.complete(foundPos);
-        runningSearches.getAndDecrement();
     }
 
-    private static void doLocateLevel(
+    private static Optional<BlockPos> doLocateLevel(
             CompletableFuture<BlockPos> completableFuture,
             ServerLevel level,
-            UUID searchId,
             ResourceKey<Structure> structureKey,
             BlockPos pos,
             int searchRadius,
@@ -190,14 +205,10 @@ public class ThreadExecutor {
         Optional<Holder.Reference<Structure>> structureRegistryHolder = structureRegistry.get(structureKey);
         if (structureRegistryHolder.isEmpty()) {
             completableFuture.complete(null);
-            runningSearches.getAndDecrement();
-            synchronized (SEARCH_RESULTS) {
-                SEARCH_RESULTS.remove(searchId);
-            }
-            return;
+            return Optional.empty();
         }
 
-        Pair<BlockPos, Holder<Structure>> foundPos = level.getChunkSource().getGenerator().findNearestMapStructure(
+        Pair<BlockPos, Holder<Structure>> foundPos = GeneralUtils.findNearestMapStructureAsyncSafe(
                 level,
                 HolderSet.direct(structureRegistryHolder.get()),
                 pos,
@@ -205,14 +216,11 @@ public class ThreadExecutor {
                 skipExistingChunks);
 
         completableFuture.complete(foundPos != null ? foundPos.getFirst() : null);
-        runningSearches.getAndDecrement();
-        synchronized (SEARCH_RESULTS) {
-            if (foundPos == null) {
-                SEARCH_RESULTS.remove(searchId);
-            }
-            else {
-                SEARCH_RESULTS.put(searchId, Optional.of(foundPos.getFirst()));
-            }
+        if (foundPos == null) {
+            return Optional.empty();
+        }
+        else {
+            return Optional.of(foundPos.getFirst());
         }
     }
 
