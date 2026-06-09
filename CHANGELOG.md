@@ -1,5 +1,8 @@
 ### **(V.7.12.2 Changes) (1.20.1 Minecraft)**
 
+#### Biomes:
+Fuzzed the Pile of Pollen edges of Pollinated Fields biome so it looks a bit better.
+
 #### Enchantments:
 Comb Cutter now works if enchanted Shears is in the off-hand slot when extracting honeycombs from Beehives/Bee Nest blocks.
 

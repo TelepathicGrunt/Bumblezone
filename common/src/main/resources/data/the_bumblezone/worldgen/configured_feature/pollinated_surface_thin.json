@@ -1,6 +1,7 @@
 {
   "config": {
     "biome": "the_bumblezone:pollinated_fields",
+    "biome_tag_to_not_fuzz_into": "the_bumblezone:pollinated",
     "height": 1,
     "state": {
       "Name": "the_bumblezone:pile_of_pollen",
