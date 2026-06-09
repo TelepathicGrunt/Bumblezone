@@ -4,7 +4,8 @@
   },
   "supported_items": "#the_bumblezone:enchantable/comb_cutter",
   "slots": [
-    "mainhand"
+    "mainhand",
+    "offhand"
   ],
   "weight": 1,
   "max_level": 2,
