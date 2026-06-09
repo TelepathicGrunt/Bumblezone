@@ -1,5 +1,8 @@
 ### **(V.7.14.2 Changes) (1.21.1 Minecraft)**
 
+#### Enchantments:
+Comb Cutter now works if enchanted Shears is in the off-hand slot when extracting honeycombs from Beehives/Bee Nest blocks.
+
 #### Biomes:
 Fuzzed the Pile of Pollen edges of Pollinated Fields biome so it looks a bit better.
 
@@ -9,8 +12,8 @@ Made the honeycomb holes feature be able to replace fewer blocks now to prevent 
 #### Structures:
 Adjusted dimension's terrain noise range so that terrain adaption (what adds and removes land around structures) looks a bit better.
 
-#### Enchantments:
-Comb Cutter now works if enchanted Shears is in the off-hand slot when extracting honeycombs from Beehives/Bee Nest blocks.
+#### Dimension:
+Optimized the density function for the dimension terrain a tiny bit to squeeze out a tiny bit more performance.
 
 
 ### **(V.7.14.1 Changes) (1.21.1 Minecraft)**
