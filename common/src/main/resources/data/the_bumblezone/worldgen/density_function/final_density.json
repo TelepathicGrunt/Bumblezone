@@ -1,34 +1,27 @@
 {
-  "type": "min",
-  "argument1": 0.05,
-  "argument2": {
-    "type": "max",
-    "argument1": -0.0825,
-    "argument2": {
-      "type": "interpolated",
-      "argument": {
-        "type": "max",
-        "argument1": -1.5,
+  "type": "clamp",
+  "max": 0.05,
+  "min": -0.0825,
+  "input": {
+    "type": "interpolated",
+    "argument": {
+      "type": "minecraft:add",
+      "argument1": "the_bumblezone:floor_final",
+      "argument2": {
+        "type": "minecraft:add",
+        "argument1": "the_bumblezone:ceiling_final",
         "argument2": {
           "type": "minecraft:add",
-          "argument1": "the_bumblezone:floor_final",
+          "argument1": "the_bumblezone:coast",
           "argument2": {
             "type": "minecraft:add",
-            "argument1": "the_bumblezone:ceiling_final",
+            "argument1": {
+              "type": "the_bumblezone:biome_function"
+            },
             "argument2": {
-              "type": "minecraft:add",
-              "argument1": "the_bumblezone:coast",
-              "argument2": {
-                "type": "minecraft:add",
-                "argument1": {
-                  "type": "the_bumblezone:biome_function"
-                },
-                "argument2": {
-                  "type": "max",
-                  "argument1": "the_bumblezone:ceiling",
-                  "argument2": "the_bumblezone:floor"
-                }
-              }
+              "type": "max",
+              "argument1": "the_bumblezone:ceiling",
+              "argument2": "the_bumblezone:floor"
             }
           }
         }
