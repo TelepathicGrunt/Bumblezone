@@ -9,8 +9,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
@@ -44,21 +44,23 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
     @Override
     public boolean place(FeaturePlaceContext<BiomeBasedLayerConfig> context) {
         setSeed(context.level().getSeed());
-        Holder<Biome> targetBiome = context.config().biome;
 
         UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(context.level());
         BlockPos.MutableBlockPos mutableBlockPos = context.origin().mutable();
         ChunkAccess cachedChunk = context.level().getChunk(mutableBlockPos);
-        fillChunkWithPollen(context, bulkSectionAccess, cachedChunk, mutableBlockPos, targetBiome);
+        fillChunkWithPollen(context, bulkSectionAccess, cachedChunk, mutableBlockPos);
 
         return true;
     }
 
-    private void fillChunkWithPollen(FeaturePlaceContext<BiomeBasedLayerConfig> context, UnsafeBulkSectionAccess bulkSectionAccess, ChunkAccess cachedChunk, BlockPos startPos, Holder<Biome> targetBiome) {
+    private void fillChunkWithPollen(FeaturePlaceContext<BiomeBasedLayerConfig> context, UnsafeBulkSectionAccess bulkSectionAccess, ChunkAccess cachedChunk, BlockPos startPos) {
         int configHeight = context.config().height;
         BlockState configBlockState = context.config().state;
         Optional<BlockState> configRareBlockState = context.config().rareState;
+        Holder<Biome> targetBiome = context.config().biome;
+        TagKey<Biome> biomeTagToNotFuzzInto = context.config().biomeTagToNotFuzzInto;
         BlockPos.MutableBlockPos mutable = context.origin().mutable();
+        BlockPos.MutableBlockPos mutable2 = context.origin().mutable();
         BlockState currentBlockState;
         BlockState previousBlockState;
         RandomSource random = context.random();
@@ -66,9 +68,28 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
         int maxY = (context.chunkGenerator().getGenDepth() + context.chunkGenerator().getMinY()) - 1;
         for (int xOffset = 0; xOffset <= 15; xOffset++) {
             for (int zOffset = 0; zOffset <= 15; zOffset++) {
+                boolean lowerPile = false;
                 mutable.set(startPos.getX() + xOffset, maxY, startPos.getZ() + zOffset);
-                if (!bulkSectionAccess.getBiome(mutable, context.level()).is(targetBiome)) {
-                    continue;
+                Holder<Biome> currentBiome = bulkSectionAccess.getBiome(mutable, context.level());
+                if (!currentBiome.is(targetBiome)) {
+                    if (currentBiome.is(biomeTagToNotFuzzInto)) {
+                        continue;
+                    }
+
+                    boolean skipSpot = true;
+                    for (Direction direction : Direction.Plane.HORIZONTAL) {
+                        mutable2.set(mutable).move(direction, 2);
+                        Holder<Biome> nearbyBiome = bulkSectionAccess.getBiome(mutable2, context.level());
+                        if (nearbyBiome.is(targetBiome) && random.nextBoolean()) {
+                            skipSpot = false;
+                            lowerPile = true;
+                            break;
+                        }
+                    }
+
+                    if (skipSpot) {
+                        continue;
+                    }
                 }
 
                 previousBlockState = null;
@@ -104,6 +125,10 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
                                 double noiseVal = Math.abs(noiseGen.noise3_Classic(mutable.getX() * xzScale, (mutable.getY() * yScale) + height, mutable.getZ() * xzScale));
                                 layerHeight = Math.max(1, (int) (((noiseVal * 0.63D) + 0.4D) * 8D));
                                 layerHeight = Math.min(8, layerHeight);
+                            }
+
+                            if (lowerPile) {
+                                layerHeight = Math.max(1, layerHeight / 2);
                             }
 
                             BlockState blockToPlace = configBlockState;
