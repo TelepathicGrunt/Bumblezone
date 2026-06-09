@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
@@ -45,14 +46,18 @@ public class HoneycombHoleProcessor extends StructureProcessor {
         LevelChunkSection chunkSection = chunk.getSection(levelReader.getSectionIndex(worldPos.getY()));
         BlockState checkedState = getBlockStateFromSection(chunkSection, worldPos);
 
-        // does world checks for cave and pollen powder
-        if (checkedState.isAir() || !checkedState.getFluidState().isEmpty()) {
+        if (!checkedState.is(BzTags.BLOCKS_THAT_HONEYCOMB_HOLE_CAN_CARVE)) {
+            // does world checks for cave and pollen powder
             if (placingState.isAir() || placingState.is(BzBlocks.PILE_OF_POLLEN.get())) {
                 if (!checkedState.getFluidState().isEmpty() || worldPos.getY() <= floodLevel) {
                     setBlockStateFromSection(chunkSection, worldPos, BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState());
                     if (checkedState.hasBlockEntity()) {
                         chunk.removeBlockEntity(worldPos);
                     }
+                    return null;
+                }
+                // Place the air or pile of pollen if spot is air
+                if (!checkedState.is(BzTags.BLOCKS_THAT_HONEYCOMB_HOLE_AIR_CAN_CARVE)) {
                     return null;
                 }
             }
