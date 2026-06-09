@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -31,7 +32,7 @@ public class CombCutterEnchantment extends BzEnchantment {
     private static final GeneralUtils.Lazy<Set<Block>> LESSER_TARGET_BLOCKS = new GeneralUtils.Lazy<>();
 
     public CombCutterEnchantment() {
-        super(Enchantment.Rarity.RARE, EnchantmentCategory.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        super(Enchantment.Rarity.RARE, EnchantmentCategory.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
     }
 
     public Set<Block> getTargetBlocks() {
@@ -89,10 +90,10 @@ public class CombCutterEnchantment extends BzEnchantment {
         }
     }
 
-    public static void increasedCombDrops(Player playerEntity, Level world, BlockPos pos) {
-        ItemStack itemStack = playerEntity.getMainHandItem();
-        int equipmentLevel = EnchantmentHelper.getEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), playerEntity);
-        if (equipmentLevel > 0 && !itemStack.isEmpty()) {
+    public static void increasedCombDrops(Player playerEntity, InteractionHand hand, Level world, BlockPos pos) {
+        ItemStack itemStack = playerEntity.getItemInHand(hand);
+        int equipmentLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), itemStack);
+        if (equipmentLevel > 0) {
             Block.popResource(world, pos, new ItemStack(Items.HONEYCOMB, equipmentLevel * 3));
             if(playerEntity instanceof ServerPlayer serverPlayer) {
                 BzCriterias.COMB_CUTTER_EXTRA_DROPS_TRIGGER.trigger(serverPlayer);
