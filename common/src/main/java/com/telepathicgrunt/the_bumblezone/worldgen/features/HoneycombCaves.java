@@ -228,22 +228,28 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
     /// This attempts to skip those area in hopes we land into a spot that is much closer to our threshold where we can then be checking every block.
     /// Noise generators can be expensive to run so this is a neat small optimization. Values were chosen based on visual testing.
     private int zSkipping(int z, double noise1) {
-        if (noise1 >= 0.8) {
+        if (noise1 >= 0.85) {
+            z += 8;
+        }
+        else if (noise1 >= 0.75) {
+            z += 7;
+        }
+        else if (noise1 >= 0.65) {
             z += 6;
         }
-        else if (noise1 >= 0.7) {
+        else if (noise1 >= 0.55) {
             z += 5;
         }
-        else if (noise1 >= 0.6) {
+        else if (noise1 >= 0.45) {
             z += 4;
         }
-        else if (noise1 >= 0.5) {
+        else if (noise1 >= 0.35) {
             z += 3;
         }
-        else if (noise1 >= 0.4) {
+        else if (noise1 >= 0.25) {
             z += 2;
         }
-        else if (noise1 >= 0.35) {
+        else if (noise1 >= 0.15) {
             z += 1;
         }
         return z;

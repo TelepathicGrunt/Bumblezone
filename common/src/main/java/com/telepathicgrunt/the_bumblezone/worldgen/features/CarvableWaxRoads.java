@@ -80,7 +80,7 @@ public class CarvableWaxRoads extends Feature<BiomeBasedConfig> {
 
                     double thresholdBorder = 0.0125f;
                     double thresholdInside = 0.0025f;
-                    double distanceFromThreshold = noise1 - 0.12f;
+                    double distanceFromThreshold = Math.abs(noise1) - 0.12f;
                     double finalNoise = noise1 * noise1;
 
                     if (distanceFromThreshold > 0) {
@@ -130,19 +130,28 @@ public class CarvableWaxRoads extends Feature<BiomeBasedConfig> {
     /// This attempts to skip those area in hopes we land into a spot that is much closer to our threshold where we can then be checking every block.
     /// Noise generators can be expensive to run so this is a neat small optimization. Values were chosen based on visual testing.
     private int zSkipping(int z, double noiseDistanceFromThreshold) {
-        if (noiseDistanceFromThreshold >= 0.8) {
+        if (noiseDistanceFromThreshold >= 0.85) {
+            z += 8;
+        }
+        else if (noiseDistanceFromThreshold >= 0.75) {
+            z += 7;
+        }
+        else if (noiseDistanceFromThreshold >= 0.65) {
+            z += 6;
+        }
+        else if (noiseDistanceFromThreshold >= 0.55) {
             z += 5;
         }
-        else if (noiseDistanceFromThreshold >= 0.7) {
+        else if (noiseDistanceFromThreshold >= 0.45) {
             z += 4;
         }
-        else if (noiseDistanceFromThreshold >= 0.6) {
+        else if (noiseDistanceFromThreshold >= 0.35) {
             z += 3;
         }
-        else if (noiseDistanceFromThreshold >= 0.5) {
+        else if (noiseDistanceFromThreshold >= 0.25) {
             z += 2;
         }
-        else if (noiseDistanceFromThreshold >= 0.4) {
+        else if (noiseDistanceFromThreshold >= 0.15) {
             z += 1;
         }
         return z;
