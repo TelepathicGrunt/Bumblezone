@@ -3,6 +3,9 @@
 #### Biomes:
 Fuzzed the Pile of Pollen edges of Pollinated Fields biome so it looks a bit better.
 
+#### Features:
+Made the honeycomb holes feature be able to replace fewer blocks now to prevent it from eating away at other features.
+
 #### Enchantments:
 Comb Cutter now works if enchanted Shears is in the off-hand slot when extracting honeycombs from Beehives/Bee Nest blocks.
 
