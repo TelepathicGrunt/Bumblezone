@@ -1,9 +1,9 @@
 {
   "type": "min",
-  "argument1": 0.25,
+  "argument1": 0.05,
   "argument2": {
     "type": "max",
-    "argument1": -0.1,
+    "argument1": -0.0825,
     "argument2": {
       "type": "interpolated",
       "argument": {

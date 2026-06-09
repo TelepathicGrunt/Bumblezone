@@ -6,6 +6,9 @@ Fuzzed the Pile of Pollen edges of Pollinated Fields biome so it looks a bit bet
 #### Features:
 Made the honeycomb holes feature be able to replace fewer blocks now to prevent it from eating away at other features.
 
+#### Structures:
+Adjusted dimension's terrain noise range so that terrain adaption (what adds and removes land around structures) looks a bit better.
+
 #### Enchantments:
 Comb Cutter now works if enchanted Shears is in the off-hand slot when extracting honeycombs from Beehives/Bee Nest blocks.
 
