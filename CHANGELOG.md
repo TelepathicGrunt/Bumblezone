@@ -1,3 +1,9 @@
+### **(V.7.14.2 Changes) (1.21.1 Minecraft)**
+
+#### Enchantments:
+Comb Cutter now works if enchanted Shears is in the off-hand slot when extracting honeycombs from Beehives/Bee Nest blocks.
+
+
 ### **(V.7.14.1 Changes) (1.21.1 Minecraft)**
 
 #### Misc:

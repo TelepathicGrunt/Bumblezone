@@ -88,10 +88,9 @@ public class CombCutterEnchantmentApplication {
         }
     }
 
-    public static void increasedCombDrops(Player playerEntity, Level world, BlockPos pos) {
-        ItemStack itemStack = playerEntity.getMainHandItem();
-        int equipmentLevel = EnchantmentHelper.getEnchantmentLevel(EnchantmentUtils.getEnchantmentHolder(BzEnchantments.COMB_CUTTER, playerEntity.level()), playerEntity);
-        if (equipmentLevel > 0 && !itemStack.isEmpty()) {
+    public static void increasedCombDrops(ItemStack itemStack, Player playerEntity, Level world, BlockPos pos) {
+        int equipmentLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentUtils.getEnchantmentHolder(BzEnchantments.COMB_CUTTER, playerEntity.level()), itemStack);
+        if (equipmentLevel > 0) {
             Block.popResource(world, pos, new ItemStack(Items.HONEYCOMB, equipmentLevel * 3));
             if(playerEntity instanceof ServerPlayer serverPlayer) {
                 BzCriterias.COMB_CUTTER_EXTRA_DROPS_TRIGGER.get().trigger(serverPlayer);
