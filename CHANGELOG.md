@@ -6,8 +6,12 @@ Comb Cutter now works if enchanted Shears is in the off-hand slot when extractin
 #### Biomes:
 Fuzzed the Pile of Pollen edges of Pollinated Fields biome so it looks a bit better.
 
+Further optimized the Carvable Wax road generation in Floral Meadow to skip doing unnecessary work at spots it will for sure will not place roads at.
+
 #### Features:
-Made the honeycomb holes feature be able to replace fewer blocks now to prevent it from eating away at other features.
+Made the Honeycomb Holes feature be able to replace fewer blocks now to prevent it from eating away at other features.
+
+Further optimized Honeycomb Caves feature to skip doing unnecessary work at spots it will for sure will not carve.
 
 #### Structures:
 Adjusted dimension's terrain noise range so that terrain adaption (what adds and removes land around structures) looks a bit better.
