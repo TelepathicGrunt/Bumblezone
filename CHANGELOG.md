@@ -16,6 +16,8 @@ Further optimized Honeycomb Caves feature to skip doing unnecessary work at spot
 #### Structures:
 Adjusted dimension's terrain noise range so that terrain adaption (what adds and removes land around structures) looks a bit better.
 
+Improved the shape of terrain adaption around Candle Parkour structure.
+
 #### Dimension:
 Optimized the density function for the dimension terrain a tiny bit to squeeze out a tiny bit more performance.
 
