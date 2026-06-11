@@ -13,6 +13,9 @@ Made the Honeycomb Holes feature be able to replace fewer blocks now to prevent 
 
 Further optimized Honeycomb Caves feature to skip doing unnecessary work at spots it will for sure will not carve.
 
+Add a new small rare feature called Fungus Spore that is a source of Mushroom Block, Shroomlight, Hanging Roots, and Brown Mushrooms.
+ Spawns in all Bumblezone biomes.
+
 #### Structures:
 Adjusted dimension's terrain noise range so that terrain adaption (what adds and removes land around structures) looks a bit better.
 

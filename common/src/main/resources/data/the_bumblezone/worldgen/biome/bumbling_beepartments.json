@@ -31,15 +31,16 @@
       "the_bumblezone:glistering_honey_crystal_ceiling_bands"
     ],
     [],
-    [
-      "the_bumblezone:floaters_rare",
-      "the_bumblezone:floaters_crashed_rare"
-    ],
+    [],
     [
       "the_bumblezone:bee_dungeon",
       "the_bumblezone:spider_infested_bee_dungeon"
     ],
-    [],
+    [
+      "the_bumblezone:floaters_rare",
+      "the_bumblezone:floaters_crashed_rare",
+      "the_bumblezone:fungus_spore_rare_ceiling"
+    ],
     [
       "the_bumblezone:web_wall",
       "the_bumblezone:web_ceiling_middle"
