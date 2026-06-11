@@ -45,7 +45,10 @@
       "the_bumblezone:spider_infested_bee_dungeon",
       "the_bumblezone:tree_dungeon"
     ],
-    [],
+    [
+      "the_bumblezone:fungus_spore_rare_flooring",
+      "the_bumblezone:fungus_spore_rare_ceiling"
+    ],
     [
       "the_bumblezone:web_wall"
     ],

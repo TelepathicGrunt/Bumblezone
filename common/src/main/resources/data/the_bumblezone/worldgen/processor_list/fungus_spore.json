@@ -1,0 +1,105 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:tag_ignore_processor",
+      "ignore_blocks_tag": "the_bumblezone:structures/dont_replace_blocks"
+    },
+    {
+      "processor_type": "the_bumblezone:reduced_allocation_rule_processor",
+      "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "minecraft:brown_mushroom",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.65
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "minecraft:brown_mushroom",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "the_bumblezone:blocks_not_match_rule_test",
+            "blocks_to_not_match": [
+              "minecraft:air",
+              "minecraft:cave_air"
+            ]
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "minecraft:hanging_roots",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.55
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "minecraft:hanging_roots",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "the_bumblezone:blocks_not_match_rule_test",
+            "blocks_to_not_match": [
+              "minecraft:air",
+              "minecraft:cave_air"
+            ]
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "minecraft:mushroom_stem",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "the_bumblezone:blocks_not_match_rule_test",
+            "block_tag_to_not_match": "the_bumblezone:fungus_spore/replaceable_blocks"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "minecraft:shroomlight",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "the_bumblezone:blocks_not_match_rule_test",
+            "block_tag_to_not_match": "the_bumblezone:fungus_spore/replaceable_blocks"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "minecraft:block_ignore",
+      "blocks": [
+        {
+          "Name": "minecraft:structure_void"
+        }
+      ]
+    }
+  ]
+}

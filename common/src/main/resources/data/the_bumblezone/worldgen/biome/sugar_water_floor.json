@@ -39,17 +39,19 @@
       "the_bumblezone:honeycomb_holes"
     ],
     [],
-    [
-      "the_bumblezone:floaters_rare",
-      "the_bumblezone:floaters_crashed_rare",
-      "the_bumblezone:hive_voyager",
-      "the_bumblezone:ore_balloon"
-    ],
+    [],
     [
       "the_bumblezone:bee_dungeon",
       "the_bumblezone:spider_infested_bee_dungeon"
     ],
-    [],
+    [
+      "the_bumblezone:floaters_rare",
+      "the_bumblezone:floaters_crashed_rare",
+      "the_bumblezone:hive_voyager",
+      "the_bumblezone:ore_balloon",
+      "the_bumblezone:fungus_spore_rare_flooring",
+      "the_bumblezone:fungus_spore_rare_ceiling"
+    ],
     [
       "the_bumblezone:web_wall"
     ],
