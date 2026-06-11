@@ -18,6 +18,8 @@ Adjusted dimension's terrain noise range so that terrain adaption (what adds and
 
 Improved the shape of terrain adaption around Candle Parkour structure.
 
+Improved the shape of terrain adaption around Mite Fortress structure.
+
 #### Dimension:
 Optimized the density function for the dimension terrain a tiny bit to squeeze out a tiny bit more performance.
 
