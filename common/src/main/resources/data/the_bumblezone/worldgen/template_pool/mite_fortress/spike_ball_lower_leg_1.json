@@ -1,0 +1,23 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:mite_fortress/spike_ball_lower_leg_1",
+        "processors": "the_bumblezone:mite_fortress_spike_ball",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:mite_fortress/spike_ball_lower_leg_1_mirrored",
+        "processors": "the_bumblezone:mite_fortress_spike_ball",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}
