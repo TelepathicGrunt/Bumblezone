@@ -71,7 +71,6 @@ public class HoneyWeb extends Block {
     public HoneyWeb() {
         this(Properties.of()
                 .mapColor(MapColor.TERRACOTTA_ORANGE)
-                .forceSolidOn()
                 .noOcclusion()
                 .noCollision()
                 .requiresCorrectToolForDrops()

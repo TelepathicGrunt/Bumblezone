@@ -49,7 +49,6 @@ public class RedstoneHoneyWeb extends HoneyWeb {
     public RedstoneHoneyWeb() {
         this(Properties.of()
                 .mapColor(MapColor.TERRACOTTA_RED)
-                .forceSolidOn()
                 .lightLevel(blockState -> (blockState.getValue(POWER) + 9) / 10)
                 .noCollision()
                 .requiresCorrectToolForDrops()
