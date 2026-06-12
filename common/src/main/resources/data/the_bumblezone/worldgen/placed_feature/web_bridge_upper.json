@@ -1,0 +1,50 @@
+{
+  "feature": "the_bumblezone:web_bridge",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": {
+        "type": "minecraft:weighted_list",
+        "distribution": [
+          {
+            "data": 0,
+            "weight": 7
+          },
+          {
+            "data": 1,
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "type": "the_bumblezone:fixed_offset",
+      "offset": [
+        8,
+        0,
+        8
+      ]
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:trapezoid",
+        "plateau": 75,
+        "min_inclusive": {
+          "absolute": 140
+        },
+        "max_inclusive": {
+          "absolute": 210
+        }
+      }
+    },
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:matching_blocks",
+        "offset": [ 0, 0, 0 ],
+        "blocks": "minecraft:air"
+      }
+    }
+  ]
+}

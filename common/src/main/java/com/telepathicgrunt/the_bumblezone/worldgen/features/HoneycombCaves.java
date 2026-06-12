@@ -349,7 +349,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
             mutableBlockPos.set(position).move(direction);
             blockState = bulkSectionAccess.getBlockState(mutableBlockPos);
 
-            if (blockState.is(Blocks.AIR)) {
+            if (blockState.is(Blocks.AIR) || blockState.is(BzBlocks.HONEY_WEB.get())) {
                 return true;
             }
         }
