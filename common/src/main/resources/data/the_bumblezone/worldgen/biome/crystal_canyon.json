@@ -44,7 +44,9 @@
       "the_bumblezone:fungus_spore_rare_ceiling"
     ],
     [
-      "the_bumblezone:web_wall"
+      "the_bumblezone:web_wall",
+      "the_bumblezone:web_bridge_lower",
+      "the_bumblezone:web_bridge_upper"
     ],
     [
       "the_bumblezone:giant_honey_crystals",

@@ -25,6 +25,7 @@ import com.telepathicgrunt.the_bumblezone.worldgen.features.StickyHoneyResidueFe
 import com.telepathicgrunt.the_bumblezone.worldgen.features.TreeDungeon;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.TwoToneSpikeFeature;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.WaxAndStoneSurfaceBands;
+import com.telepathicgrunt.the_bumblezone.worldgen.features.WebBridge;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.WebCeiling;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.WebWall;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.BiomeBasedConfig;
@@ -65,6 +66,7 @@ public class BzFeatures {
     public static final RegistryEntry<Feature<BiomeBasedConfig>> CARVABLE_WAX_ROADS = FEATURES.register("carvable_wax_roads", () -> new CarvableWaxRoads(BiomeBasedConfig.CODEC));
     public static final RegistryEntry<Feature<BiomeBasedConfig>> WAX_AND_STONE_SURFACE_BANDS = FEATURES.register("wax_and_stone_surface_bands", () -> new WaxAndStoneSurfaceBands(BiomeBasedConfig.CODEC));
     public static final RegistryEntry<Feature<BiomeBasedConfig>> GLISTERING_HONEY_CRYSTAL_CEILING_BANDS = FEATURES.register("glistering_honey_crystal_ceiling_bands", () -> new GlisteringHoneyCrystalCeilingBands(BiomeBasedConfig.CODEC));
+    public static final RegistryEntry<Feature<NoneFeatureConfiguration>> WEB_BRIDGE = FEATURES.register("web_bridge", () -> new WebBridge(NoneFeatureConfiguration.CODEC));
 
     public static final RegistryEntry<Feature<NbtOreConfiguration>> BLOCKENTITY_COMBS_FEATURE = FEATURES.register("blockentity_combs", () -> new BlockEntityCombOre(NbtOreConfiguration.CODEC));
 }
