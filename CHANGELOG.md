@@ -1,3 +1,9 @@
+### **(V.7.13.1 Changes) (1.20.1 Minecraft)**
+
+#### Structures:
+Fix Hanging Gardens crashing when spawning certain other mod's mobs.
+
+
 ### **(V.7.13.0 Changes) (1.20.1 Minecraft)**
 
 #### Blocks:
