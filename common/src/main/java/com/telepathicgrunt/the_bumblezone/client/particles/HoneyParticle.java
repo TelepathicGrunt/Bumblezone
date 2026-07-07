@@ -6,6 +6,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.SuspendedParticle;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.RandomSource;
@@ -13,8 +14,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 
 public class HoneyParticle extends SuspendedParticle {
-    private HoneyParticle(ClientLevel clientWorld, SpriteSet spriteProvider, double xPos, double yPos, double zPos) {
-        super(clientWorld, spriteProvider, xPos, yPos, zPos);
+    private HoneyParticle(ClientLevel clientWorld, double xPos, double yPos, double zPos, TextureAtlasSprite sprite) {
+        super(clientWorld, xPos, yPos, zPos, sprite);
         this.rCol = 1F;
         this.gCol = 0.65F;
         this.bCol = 0.0F;
@@ -59,7 +60,7 @@ public class HoneyParticle extends SuspendedParticle {
 
         @Override
         public Particle createParticle(SimpleParticleType particleType, ClientLevel clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed, RandomSource random) {
-            HoneyParticle honeyParticle = new HoneyParticle(clientWorld, sprites, xPos, yPos, zPos);
+            HoneyParticle honeyParticle = new HoneyParticle(clientWorld, xPos, yPos, zPos, this.sprites.get(random));
             honeyParticle.setSpriteFromAge(this.sprites);
             return honeyParticle;
         }

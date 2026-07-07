@@ -4,18 +4,18 @@ import com.telepathicgrunt.the_bumblezone.mixin.util.AABBAccessor;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.AABB;
 
-public class PollenPuffParticle extends TextureSheetParticle {
+public class PollenPuffParticle extends SingleQuadParticle {
     private boolean stoppedByCollision = false;
 
     private PollenPuffParticle(ClientLevel clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed, TextureAtlasSprite sprite) {
-        super(clientWorld, xPos, yPos, zPos);
+        super(clientWorld, xPos, yPos, zPos, sprite);
         this.xd += xSpeed;
         this.yd += ySpeed;
         this.zd += zSpeed;
@@ -28,8 +28,8 @@ public class PollenPuffParticle extends TextureSheetParticle {
     }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+    protected Layer getLayer() {
+        return Layer.OPAQUE;
     }
 
     @Override
@@ -85,8 +85,8 @@ public class PollenPuffParticle extends TextureSheetParticle {
         }
 
         @Override
-        public Particle createParticle(SimpleParticleType particleType, ClientLevel clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed) {
-            return new PollenPuffParticle(clientWorld, xPos, yPos, zPos, xSpeed, ySpeed, zSpeed, sprites.get(clientWorld.random));
+        public Particle createParticle(SimpleParticleType particleType, ClientLevel clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed, RandomSource random) {
+            return new PollenPuffParticle(clientWorld, xPos, yPos, zPos, xSpeed, ySpeed, zSpeed, sprites.get(random));
         }
     }
 }

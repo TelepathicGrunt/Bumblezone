@@ -1,56 +1,62 @@
-package com.telepathicgrunt.the_bumblezone.client.particles;
+package com.telepathicgrunt.the_bumblezone.client.particles.renderstates;
 
+import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
-import com.telepathicgrunt.the_bumblezone.mixin.client.ParticleEngineAccessor;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderBuffers;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.feature.ParticleFeatureRenderer;
+import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.state.level.ParticleGroupRenderState;
+import net.minecraft.client.renderer.state.level.QuadParticleRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.Identifier;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.util.Brightness;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
-public class TradeHintParticle extends Particle {
-    public final static int TRADE_REWARD_CYCLE_TIME = 40;
-    public final static double PARTICLE_Y_OFFSET = 4D;
-    public final static Identifier SPEECH_BUBBLE_TEXTURE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "trade_hint/1");
-
-    private final RenderBuffers renderBuffers;
-    private final Item tradeWantItem;
-    private final List<ItemStack> tradeRewardItems;
-    protected TextureAtlasSprite sprite;
-    private int life;
-    private float pastAnimationProgress;
-
-    public TradeHintParticle(RenderBuffers arg2, ClientLevel arg3, Entity queen, Item tradeWantItem, List<ItemStack> tradeRewardItems) {
-        super(arg3, queen.getX(), queen.getY() + PARTICLE_Y_OFFSET, queen.getZ(), 0, 0, 0);
-        this.renderBuffers = arg2;
-        this.tradeWantItem = tradeWantItem;
-        this.tradeRewardItems = tradeRewardItems;
-        this.sprite = ((ParticleEngineAccessor)Minecraft.getInstance().particleEngine).bumblezone$getTextureAtlas().getSprite(SPEECH_BUBBLE_TEXTURE);
+public record TradeHintParticleRenderState(List<Entry> entries) implements ParticleGroupRenderState, SubmitNodeCollector.ParticleGroupRenderer
+{
+    @Override
+    public boolean isEmpty() {
+        return false;
     }
 
     @Override
-    public void render(VertexConsumer doNotUse, Camera camera, float partialTick) {
+    public QuadParticleRenderState.@Nullable PreparedBuffers prepare(ParticleFeatureRenderer.ParticleBufferCache buffer, boolean translucent) {
+        return null;
+    }
+
+    public record Entry(ItemModel model, ItemStack stack, PoseStack pose) {}
+
+    @Override
+    public void submit(SubmitNodeCollector collector, CameraRenderState cameraRenderState)
+    {
+        for (Entry entry : entries)
+        {
+            ItemStackRenderState renderState = new ItemStackRenderState();
+            entry.model().update(renderState, entry.stack(), Minecraft.getInstance().getItemModelResolver(), ItemDisplayContext.GROUND, Minecraft.getInstance().level, null, 0);
+            renderState.submit(entry.pose(), collector, Brightness.FULL_BRIGHT.block(), OverlayTexture.NO_OVERLAY, -1);
+        }
+    }
+
+    @Override
+    public void render(QuadParticleRenderState.PreparedBuffers buffers, ParticleFeatureRenderer.ParticleBufferCache bufferCache, RenderPass renderPass, TextureManager textureManager) {
         if (!BzClientConfigs.showBeeQueenSpeechBubble) {
             return;
         }
@@ -177,18 +183,5 @@ public class TradeHintParticle extends Particle {
                 bufferSource,
                 Minecraft.getInstance().level,
                 0);
-    }
-
-    @Override
-    public void tick() {
-        ++this.life;
-        if (this.life == BeeQueenEntity.TRADE_HINT_PARTICLE_LIFETIME) {
-            this.remove();
-        }
-    }
-
-    @Override
-    public ParticleRenderType getGroup() {
-        return ParticleRenderType.SINGLE_QUADS;
     }
 }

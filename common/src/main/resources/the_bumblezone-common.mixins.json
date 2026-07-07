@@ -98,6 +98,7 @@
   ],
   "client": [
     "blocks.BlockEntityRenderersAccessor",
+    "client.AtmosphericFogEnvironmentMixin",
     "client.BlockRenderDispatcherAccessor",
     "client.ClientEntityMixin",
     "client.ClientLevelMixin",

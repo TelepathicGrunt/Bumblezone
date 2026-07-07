@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.client.blocks;
 
 import com.google.gson.JsonObject;
 import earth.terrarium.athena.api.client.utils.CtmUtils;
-import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.util.GsonHelper;
 
 import java.util.EnumMap;

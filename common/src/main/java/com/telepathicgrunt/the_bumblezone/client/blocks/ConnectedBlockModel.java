@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.client.blocks;
 
 import com.google.gson.JsonObject;
 import earth.terrarium.athena.api.client.models.AthenaBlockModel;
+import earth.terrarium.athena.api.client.models.AthenaModelAttributes;
 import earth.terrarium.athena.api.client.models.AthenaModelFactory;
 import earth.terrarium.athena.api.client.models.AthenaQuad;
 import earth.terrarium.athena.api.client.utils.AppearanceAndTintGetter;
@@ -9,8 +10,7 @@ import earth.terrarium.athena.api.client.utils.CtmState;
 import earth.terrarium.athena.api.client.utils.CtmUtils;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.GsonHelper;
@@ -74,12 +74,17 @@ public class ConnectedBlockModel implements AthenaBlockModel {
     }
 
     @Override
-    public Int2ObjectMap<TextureAtlasSprite> getTextures(Function<Material, TextureAtlasSprite> getter) {
-        Int2ObjectMap<TextureAtlasSprite> textures = new Int2ObjectArrayMap<>();
+    public Int2ObjectMap<Material.Baked> getTextures(Function<Material, Material.Baked> getter) {
+        Int2ObjectMap<Material.Baked> textures = new Int2ObjectArrayMap<>();
         for (ConnectedTexture value : ConnectedTexture.values()) {
             textures.put(value.ordinal(), getter.apply(materials.get(value)));
         }
         return textures;
+    }
+
+    @Override
+    public AthenaModelAttributes getAttributes() {
+        return AthenaBlockModel.super.getAttributes();
     }
 
     private static class Factory implements AthenaModelFactory {

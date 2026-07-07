@@ -16,7 +16,6 @@ import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEve
 import com.telepathicgrunt.the_bumblezone.events.client.BzKeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockColorEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockEntityRendererEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterDimensionEffectsEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEffectRenderersEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEntityLayersEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEntityRenderersEvent;
@@ -35,16 +34,11 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.LazySupplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -58,11 +52,9 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
-import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import net.neoforged.neoforge.client.event.RenderBlockScreenEffectEvent;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
@@ -90,13 +82,11 @@ public class NeoForgeClientEventManager {
 
         modEventBus.addListener(NeoForgeClientEventManager::onClientSetup);
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterParticles);
-        modEventBus.addListener(NeoForgeClientEventManager::onRegisterShaders);
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterKeys);
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterItemColors);
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterBlockColors);
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterEntityRenderers);
         modEventBus.addListener(NeoForgeClientEventManager::onEntityLayers);
-        modEventBus.addListener(NeoForgeClientEventManager::onRegisterDimensionEffects);
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterScreens);
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterClientExtensions);
     }
@@ -176,23 +166,6 @@ public class NeoForgeClientEventManager {
 
     private static void onEntityLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         BzRegisterEntityLayersEvent.EVENT.invoke(new BzRegisterEntityLayersEvent(event::registerLayerDefinition));
-    }
-
-    private static void onRegisterDimensionEffects(RegisterDimensionSpecialEffectsEvent event) {
-        BzRegisterDimensionEffectsEvent.EVENT.invoke(new BzRegisterDimensionEffectsEvent(event::register));
-    }
-
-    public static void onRegisterShaders(RegisterShadersEvent event) {
-        BzRegisterShaderEvent.EVENT.invoke(new BzRegisterShaderEvent((name, vertexFormat, safeShaderCallback) -> {
-            ShaderInstance shaderInstance;
-            try {
-                shaderInstance = new ShaderInstance(Minecraft.getInstance().getResourceManager(), name, vertexFormat);
-            }
-            catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            event.registerShader(shaderInstance, safeShaderCallback);
-        }));
     }
 
     private static void onKeyInput(InputEvent.Key event) {

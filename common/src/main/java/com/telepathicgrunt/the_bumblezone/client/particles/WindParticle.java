@@ -3,19 +3,18 @@ package com.telepathicgrunt.the_bumblezone.client.particles;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import org.joml.Vector3f;
 
-public class WindParticle extends TextureSheetParticle {
+public class WindParticle extends SingleQuadParticle {
     private final SingleQuadParticle.FacingCameraMode facingCameraMode;
 
     private WindParticle(ClientLevel clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprites, boolean isEnvironmental) {
-        super(clientWorld, xPos, yPos, zPos);
+        super(clientWorld, xPos, yPos, zPos, sprites.get(0, 1));
 
         if (isEnvironmental) {
             this.xd += 0.1d;
@@ -33,19 +32,18 @@ public class WindParticle extends TextureSheetParticle {
         this.gravity = 0;
         this.quadSize *= (this.random.nextFloat() * 0.2f) + 0.7f;
         this.hasPhysics = false;
-        this.sprite = sprites.get(0, 1);
 
         Vector3f directionVec = new Vector3f((float) this.xd, (float) this.yd, (float) this.zd).normalize();
         facingCameraMode = (quaternionf, camera, f) -> {
             quaternionf.identity();
             quaternionf.rotateX(-Mth.PI / 2);
-            quaternionf.lookAlong(directionVec, camera.getLookVector()).conjugate();
+            quaternionf.lookAlong(directionVec, camera.forwardVector()).conjugate();
         };
     }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    protected Layer getLayer() {
+        return Layer.TRANSLUCENT;
     }
 
     @Override
@@ -77,7 +75,7 @@ public class WindParticle extends TextureSheetParticle {
         }
 
         @Override
-        public Particle createParticle(SimpleParticleType particleType, ClientLevel clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType particleType, ClientLevel clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed, RandomSource random) {
             return new WindParticle(clientWorld, xPos, yPos, zPos, xSpeed, ySpeed, zSpeed, sprites, isEnvironmental);
         }
     }

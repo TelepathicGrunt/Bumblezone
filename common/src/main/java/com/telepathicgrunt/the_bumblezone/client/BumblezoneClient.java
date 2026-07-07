@@ -92,11 +92,13 @@ import net.minecraft.Util;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BrushableBlockRenderer;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.function.Function;
 
@@ -166,16 +168,16 @@ public class BumblezoneClient {
         BzRegisterArmorProviderEvent.EVENT.addListener(BumblezoneClient::registerArmorProviders);
         BzRegisterEffectRenderersEvent.EVENT.addListener(BumblezoneClient::registerEffectRenderers);
         BzRegisterBlockEntityRendererEvent.EVENT.addListener(BumblezoneClient::registerBlockEntityRenderers);
-        BzTagsUpdatedEvent.EVENT.addListener((tagsUpdatedEvent) -> KnowingEssenceLootBlockOutlining.resetTargetBlockCache());
+        BzTagsUpdatedEvent.EVENT.addListener((_) -> KnowingEssenceLootBlockOutlining.resetTargetBlockCache());
 
         BzClientFluids.CLIENT_FLUIDS.init();
     }
 
     public static void clientSetup(BzClientSetupEnqueuedEvent event) {}
 
-    public static void registerBlockEntityRenderers(BzRegisterBlockEntityRendererEvent<?> event) {
-        BlockEntityRenderersAccessor.bumblezone$callRegister(BzBlockEntities.ESSENCE_BLOCK.get(), EssenceBlockEntityRenderer::new);
-        BlockEntityRenderersAccessor.bumblezone$callRegister(BzBlockEntities.STATE_FOCUSED_BRUSHABLE_BLOCK_ENTITY.get(), BrushableBlockRenderer::new);
+    public static void registerBlockEntityRenderers(BzRegisterBlockEntityRendererEvent event) {
+        event.register(BzBlockEntities.ESSENCE_BLOCK.get(), EssenceBlockEntityRenderer::new);
+        event.register(BzBlockEntities.STATE_FOCUSED_BRUSHABLE_BLOCK_ENTITY.get(), BrushableBlockRenderer::new);
     }
 
     public static void registerEffectRenderers(BzRegisterEffectRenderersEvent event) {
@@ -452,10 +454,10 @@ public class BumblezoneClient {
     }
 
     public static void registerShaders(BzRegisterShaderEvent event) {
-        event.register(
-            Identifier.fromNamespaceAndPath(Bumblezone.MODID, "rendertype_bumblezone_essence"),
-            EssenceBlockEntityRenderer.POSITION_COLOR_NORMAL,
-            (safeShader) -> EssenceBlockEntityRenderer.SAFE_SHADER_INSTANCE = safeShader
-        );
+//        event.register(
+//            Identifier.fromNamespaceAndPath(Bumblezone.MODID, "rendertype_bumblezone_essence"),
+//            EssenceBlockEntityRenderer.POSITION_COLOR_NORMAL,
+//            (safeShader) -> EssenceBlockEntityRenderer.SAFE_SHADER_INSTANCE = safeShader
+//        );
     }
 }
