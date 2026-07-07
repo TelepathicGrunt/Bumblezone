@@ -130,9 +130,9 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 //	private void renderSides(EssenceBlockEntity blockEntity, Matrix4f matrix4f, VertexConsumer vertexConsumer) {
 //		int colorInt = blockEntity.getBlockState().getMapColor(blockEntity.getLevel(), blockEntity.getBlockPos()).col;
 //
-//		float red = FastColor.ARGB32.red(colorInt) / 255f;
-//		float green = FastColor.ARGB32.green(colorInt) / 255f;
-//		float blue = FastColor.ARGB32.blue(colorInt) / 255f;
+//		float red = ARGB.red(colorInt) / 255f;
+//		float green = ARGB.green(colorInt) / 255f;
+//		float blue = ARGB.blue(colorInt) / 255f;
 //
 //		this.renderSide(blockEntity, matrix4f, vertexConsumer, 0.0F, 1.0F, 0.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, red, green, blue, Direction.SOUTH);
 //		this.renderSide(blockEntity, matrix4f, vertexConsumer, 0.0F, 1.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, red, green, blue, Direction.NORTH);

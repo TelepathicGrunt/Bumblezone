@@ -124,12 +124,12 @@ public class FabricPlatformService implements PlatformService {
 
     @Override
     public boolean hasCraftingRemainder(ItemStack stack) {
-        return stack.getItem().getCraftingRemainder() != ItemStack.EMPTY;
+        return stack.getCraftingRemainder() != null;
     }
 
     @Override
     public ItemStack getCraftingRemainder(ItemStack stack) {
-        final ItemStack itemStack = stack.getItem().getCraftingRemainder();
+        final ItemStack itemStack = stack.getItem().getCraftingRemainder().create();
         return itemStack == ItemStack.EMPTY ? ItemStack.EMPTY : new ItemStack(itemStack.getItem());
     }
 

@@ -16,6 +16,7 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -64,11 +65,10 @@ public class KnowingEssenceLootBlockOutlining {
         CACHED_NONTARGET_BLOCKS.clear();
     }
 
-    public static void outlineLootBlocks(PoseStack poseStack, Camera camera, LevelRenderer levelRenderer) {
+    public static void outlineLootBlocks(PoseStack poseStack, Vec3 cameraPos, LevelRenderer levelRenderer) {
         Player player = GeneralUtilsClient.getClientPlayer();
         if (KnowingEssence.IsKnowingEssenceActive(player)) {
             Level level = player.level();
-            Vec3 cameraPos = camera.position();
 
             scanChunks(cameraPos, level);
 
@@ -145,9 +145,9 @@ public class KnowingEssenceLootBlockOutlining {
                 BlockPos lootBlockPos = blockEntityEntry.getKey();
 
                 int colorInt = block.defaultMapColor().col;
-                int red = FastColor.ARGB32.red(colorInt);
-                int green = FastColor.ARGB32.green(colorInt);
-                int blue = FastColor.ARGB32.blue(colorInt);
+                int red = ARGB.red(colorInt);
+                int green = ARGB.green(colorInt);
+                int blue = ARGB.blue(colorInt);
 
                 CACHED_CHUNK_DATA.get(chunkPosLong).cachedDrawData.add(
                     new CachedDrawData(
@@ -200,9 +200,9 @@ public class KnowingEssenceLootBlockOutlining {
                                         sectionZ +  (chunk.getPos().z() << 4));
 
                                 int colorInt = block.defaultMapColor().col;
-                                int red = FastColor.ARGB32.red(colorInt);
-                                int green = FastColor.ARGB32.green(colorInt);
-                                int blue = FastColor.ARGB32.blue(colorInt);
+                                int red = ARGB.red(colorInt);
+                                int green = ARGB.green(colorInt);
+                                int blue = ARGB.blue(colorInt);
 
                                 CACHED_CHUNK_DATA.get(chunkPosLong).cachedDrawData.add(
                                         new CachedDrawData(

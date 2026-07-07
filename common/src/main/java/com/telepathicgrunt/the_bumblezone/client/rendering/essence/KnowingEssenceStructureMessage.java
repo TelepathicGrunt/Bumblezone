@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.items.essence.KnowingEssence;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -20,7 +20,7 @@ public class KnowingEssenceStructureMessage {
     private static final String FIRST_LETTER_REGEX = "\\b(.)(.*?)\\b";
     private static final Pattern FIRST_LETTER_PATTERN = Pattern.compile(FIRST_LETTER_REGEX);
 
-    public static void inStructureMessage(Player player, GuiGraphics guiGraphics) {
+    public static void inStructureMessage(Player player, GuiGraphicsExtractor guiGraphics) {
         if (KnowingEssence.IsKnowingEssenceActive(player) && BzClientConfigs.knowingEssenceStructureNameClient) {
             ItemStack offHandItem = player.getOffhandItem();
             String structureIdentifierStrings = KnowingEssence.GetAllStructure(offHandItem);
@@ -120,7 +120,7 @@ public class KnowingEssenceStructureMessage {
         return "structure." + identifier.replace(":", ".");
     }
 
-    public static void renderScrollingString(Minecraft minecraft, GuiGraphics guiGraphics, Component line1, Component line2, Component line3) {
+    public static void renderScrollingString(Minecraft minecraft, GuiGraphicsExtractor guiGraphics, Component line1, Component line2, Component line3) {
         int linesToMake = 0;
         if (line1 != null) {
             linesToMake++;
@@ -132,7 +132,7 @@ public class KnowingEssenceStructureMessage {
             linesToMake++;
         }
 
-        guiGraphics.drawString(
+        guiGraphics.text(
                 minecraft.font,
                 Component.translatable(line2 == null ? WITHIN_TEXT : WITHIN_TEXT_PLURAL),
                 4,
@@ -152,7 +152,7 @@ public class KnowingEssenceStructureMessage {
         }
     }
 
-    public static void renderScrollingString(Minecraft minecraft, GuiGraphics guiGraphics, Component component, int yOffset) {
+    public static void renderScrollingString(Minecraft minecraft, GuiGraphicsExtractor guiGraphics, Component component, int yOffset) {
         int startOfHotbar = (guiGraphics.guiWidth() - 250) / 2;
         GeneralUtilsClient.renderScrollingString(
                 guiGraphics,

@@ -7,7 +7,6 @@ import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockColorEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockEntityRendererEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterDimensionEffectsEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEffectRenderersEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEntityLayersEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEntityRenderersEvent;
@@ -17,21 +16,15 @@ import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterKeyMappingEven
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterMenuScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterParticleEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterRenderTypeEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterShaderEvent;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
-import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.CoreShaderRegistrationCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.DimensionRenderingRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
@@ -39,7 +32,6 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -66,7 +58,7 @@ public class FabricClientEventManager {
         BzRegisterParticleEvent.EVENT.invoke(new BzRegisterParticleEvent(FabricClientEventManager::particleRegister));
         BzRegisterEntityRenderersEvent.EVENT.invoke(new BzRegisterEntityRenderersEvent(EntityRenderers::register));
         BzRegisterEntityLayersEvent.EVENT.invoke(new BzRegisterEntityLayersEvent((type, supplier) -> EntityModelLayerRegistry.registerModelLayer(type, supplier::get)));
-        BzRegisterKeyMappingEvent.EVENT.invoke(new BzRegisterKeyMappingEvent(KeyBindingHelper::registerKeyBinding));
+        BzRegisterKeyMappingEvent.EVENT.invoke(new BzRegisterKeyMappingEvent(KeyMappingHelper::registerKeyMapping));
         BzRegisterBlockEntityRendererEvent.EVENT.invoke(new BzRegisterBlockEntityRendererEvent<>(BlockEntityRenderers::register));
         BzRegisterBlockColorEvent.EVENT.invoke(new BzRegisterBlockColorEvent(ColorProviderRegistry.BLOCK::register));
         BzRegisterItemColorEvent.EVENT.invoke(new BzRegisterItemColorEvent(ColorProviderRegistry.ITEM::register,
@@ -78,8 +70,8 @@ public class FabricClientEventManager {
         BzRegisterEffectRenderersEvent.EVENT.invoke(BzRegisterEffectRenderersEvent.INSTANCE);
         BzClientSetupEnqueuedEvent.EVENT.invoke(new BzClientSetupEnqueuedEvent(Runnable::run));
 
-        WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((worldRenderContext, result) -> {
-            KnowingEssenceLootBlockOutlining.outlineLootBlocks(worldRenderContext.matrixStack(), worldRenderContext.camera(), worldRenderContext.worldRenderer());
+        LevelRenderEvents.BEFORE_BLOCK_OUTLINE.register((worldRenderContext, result) -> {
+            KnowingEssenceLootBlockOutlining.outlineLootBlocks(worldRenderContext.poseStack(), worldRenderContext.levelState().cameraRenderState.pos, worldRenderContext.levelRenderer());
             return true;
         });
 

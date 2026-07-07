@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.items.essence.AbilityEssenceItem;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -17,7 +17,7 @@ import org.joml.Matrix4f;
 public class EssenceOverlay {
     private static final Identifier TEXTURE_OVERLAY_1 = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/misc/active_essence_overlay.png");
 
-    public static void essenceItemOverlay(Player player, GuiGraphics guiGraphics) {
+    public static void essenceItemOverlay(Player player, GuiGraphicsExtractor guiGraphics) {
         if (BzClientConfigs.essenceItemHUDVisualEffectLayers == 0) {
             return;
         }

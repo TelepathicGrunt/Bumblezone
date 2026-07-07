@@ -7,8 +7,6 @@
     "blocks.FireBlockInvoker",
     "blocks.FireBlockMixin",
     "blocks.SuperCandleMixin",
-    "blocks.UseOnContextAccessor",
-    "entities.EntityMixin",
     "items.BzArrowItemMixin",
     "items.ItemExtensionMixin"
   ],

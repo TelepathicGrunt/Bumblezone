@@ -136,7 +136,7 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
                 }
             }
 
-            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, packedLight, overlayCoords, FastColor.ARGB32.colorFromFloat(bl2 ? 0.15f : 1.0f, red, green, blue));
+            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, packedLight, overlayCoords, ARGB.colorFromFloat(bl2 ? 0.15f : 1.0f, red, green, blue));
         }
 
         if (!cosmicCrystalEntity.isSpectator()) {

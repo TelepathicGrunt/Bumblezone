@@ -13,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(AtmosphericFogEnvironment.class)
 public abstract class AtmosphericFogEnvironmentMixin {
 
+    // DO NOT CHANGE THIS MIXIN SIGNATURE.
+    // What it is now is supposed to be technically correct and compiles.
     @Definition(id = "Integer", type = Integer.class)
     @Definition(id = "getValue", method = "Lnet/minecraft/world/attribute/EnvironmentAttributeProbe;getValue(Lnet/minecraft/world/attribute/EnvironmentAttribute;F)Ljava/lang/Object;")
     @Definition(id = "FOG_COLOR", field = "Lnet/minecraft/world/attribute/EnvironmentAttributes;FOG_COLOR:Lnet/minecraft/world/attribute/EnvironmentAttribute;")

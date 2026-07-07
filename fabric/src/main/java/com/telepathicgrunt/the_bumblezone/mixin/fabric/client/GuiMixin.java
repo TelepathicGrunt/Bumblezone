@@ -6,7 +6,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.essence.RadianceEssen
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,10 +15,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = Gui.class, priority = 1200)
 public class GuiMixin {
 
-    @Inject(method = "renderHotbarAndDecorations(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/DeltaTracker;)V",
+    @Inject(method = "extractHotbarAndDecorations(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/DeltaTracker;)V",
             at = @At(value = "HEAD"),
             require = 0)
-    private void bumblezone$renderEssenceOverlay(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
+    private void bumblezone$renderEssenceOverlay(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
         if (Minecraft.getInstance().player != null) {
             EssenceOverlay.essenceItemOverlay(Minecraft.getInstance().player, guiGraphics);
             KnowingEssenceStructureMessage.inStructureMessage(Minecraft.getInstance().player, guiGraphics);

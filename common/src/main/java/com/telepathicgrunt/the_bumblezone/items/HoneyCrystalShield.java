@@ -24,6 +24,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ShieldItem;
@@ -118,8 +119,8 @@ public class HoneyCrystalShield extends ShieldItem implements ItemExtension {
     }
 
     @Override
-    public boolean bz$canPerformAction(ItemStack stack, String toolAction) {
-        return toolAction.equals("shield_block") && stack.is(this);
+    public boolean bz$canPerformAction(ItemInstance itemInstance, String toolAction) {
+        return toolAction.equals("shield_block") && itemInstance.is(this);
     }
 
     //extra effects for honey shield such as slow attackers or melt shield when hit by fire

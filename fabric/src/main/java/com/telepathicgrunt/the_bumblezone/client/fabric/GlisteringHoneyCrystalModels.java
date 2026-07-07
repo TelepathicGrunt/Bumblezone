@@ -4,8 +4,8 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.data.models.model.ModelLocationUtils;
 import net.minecraft.resources.Identifier;
 
 import java.util.List;

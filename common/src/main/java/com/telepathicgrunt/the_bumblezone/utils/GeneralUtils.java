@@ -15,7 +15,6 @@ import it.unimi.dsi.fastutil.longs.LongSet;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.DefaultedRegistry;
 import net.minecraft.core.Direction;
@@ -27,6 +26,8 @@ import net.minecraft.core.SectionPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.DoubleTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.TagKey;
@@ -38,6 +39,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.RandomizableContainer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -86,6 +88,7 @@ import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BitSetDiscreteVoxelShape;
+import net.minecraft.world.phys.shapes.DiscreteVoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -714,30 +717,6 @@ public class GeneralUtils {
         return false;
     }
 
-    private static void placeEntities(ServerLevelAccessor serverLevelAccessor, StructureTemplate structureTemplate, BlockPos blockPos, Mirror mirror, Rotation rotation, BlockPos blockPos2, @Nullable BoundingBox boundingBox, boolean bl) {
-        for (StructureTemplate.StructureEntityInfo structureEntityInfo : ((StructureTemplateAccessor)structureTemplate).bumblezone$getEntityInfoList()) {
-            BlockPos blockPos3 = StructureTemplate.transform(structureEntityInfo.blockPos, mirror, rotation, blockPos2).offset(blockPos);
-            if (boundingBox != null && !boundingBox.isInside(blockPos3)) continue;
-            CompoundTag compoundTag = structureEntityInfo.nbt.copy();
-            Vec3 vec3 = StructureTemplate.transform(structureEntityInfo.pos, mirror, rotation, blockPos2);
-            Vec3 vec32 = vec3.add(blockPos.getX(), blockPos.getY(), blockPos.getZ());
-            ListTag listTag = new ListTag();
-            listTag.add(DoubleTag.valueOf(vec32.x));
-            listTag.add(DoubleTag.valueOf(vec32.y));
-            listTag.add(DoubleTag.valueOf(vec32.z));
-            compoundTag.put("Pos", listTag);
-            compoundTag.remove("UUID");
-            createEntityIgnoreException(serverLevelAccessor, compoundTag).ifPresent(entity -> {
-                float f = entity.rotate(rotation);
-                entity.moveTo(vec32.x, vec32.y, vec32.z, f + (entity.mirror(mirror) - entity.getYRot()), entity.getXRot());
-                if (bl && entity instanceof Mob) {
-                    ((Mob)entity).finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(BlockPos.containing(vec32)), MobSpawnType.STRUCTURE, null);
-                }
-                serverLevelAccessor.addFreshEntityWithPassengers(entity);
-            });
-        }
-    }
-
     /////////////////////////////////////////////////
 
 
@@ -1217,7 +1196,7 @@ public class GeneralUtils {
             BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
             for (ChunkPos chunkpos : list) {
-                blockpos$mutableblockpos.set(SectionPos.sectionToBlockCoord(chunkpos.x, 8), 32, SectionPos.sectionToBlockCoord(chunkpos.z, 8));
+                blockpos$mutableblockpos.set(SectionPos.sectionToBlockCoord(chunkpos.x(), 8), 32, SectionPos.sectionToBlockCoord(chunkpos.z(), 8));
                 double d1 = blockpos$mutableblockpos.distSqr(pos);
                 boolean flag = pair == null || d1 < d0;
                 if (flag) {
@@ -1297,7 +1276,7 @@ public class GeneralUtils {
                     return Pair.of(placement.getLocatePos(chunkPos), holder);
                 }
 
-                ChunkAccess chunkaccess = level.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.STRUCTURE_STARTS);
+                ChunkAccess chunkaccess = level.getChunk(chunkPos.x(), chunkPos.z(), ChunkStatus.STRUCTURE_STARTS);
                 StructureStart structurestart = structureManager.getStartForStructure(SectionPos.bottomOf(chunkaccess), holder.value(), chunkaccess);
                 if (structurestart != null && structurestart.isValid() && (!skipKnownStructures || tryAddReferenceAsyncSafe(tempStructureCheck, structurestart))) {
                     return Pair.of(placement.getLocatePos(structurestart.getChunkPos()), holder);

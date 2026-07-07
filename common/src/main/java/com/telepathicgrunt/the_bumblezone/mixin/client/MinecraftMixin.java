@@ -58,7 +58,7 @@ public class MinecraftMixin {
         return isAir;
     }
 
-    @WrapOperation(method = "pickBlock()V",
+    @WrapOperation(method = "pickBlockOrEntity()V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/HitResult;getType()Lnet/minecraft/world/phys/HitResult$Type;"),
             require = 0)
     private HitResult.Type bumblezone$allowSpecialAirDestroy5(HitResult instance, Operation<HitResult.Type> original) {

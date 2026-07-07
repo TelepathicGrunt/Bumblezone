@@ -14,6 +14,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -43,8 +44,8 @@ public abstract class PlayerMixin extends Entity {
                     target = "Lnet/minecraft/world/entity/player/Player;getItemInHand(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;",
                     ordinal = 0),
             cancellable = true)
-    private void bumblezone$onInteractOn(Entity entity, InteractionHand interactionHand, CallbackInfoReturnable<InteractionResult> cir) {
-        InteractionResult result = BzPlayerEntityInteractEvent.EVENT.invoke(new BzPlayerEntityInteractEvent((Player) ((Object)this), entity, interactionHand));
+    private void bumblezone$onInteractOn(Entity entity, InteractionHand hand, Vec3 location, CallbackInfoReturnable<InteractionResult> cir) {
+        InteractionResult result = BzPlayerEntityInteractEvent.EVENT.invoke(new BzPlayerEntityInteractEvent((Player) ((Object)this), entity, hand));
         if (result != null) {
             cir.setReturnValue(result);
         }

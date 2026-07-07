@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.client.utils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
@@ -55,7 +56,7 @@ public class GeneralUtilsClient {
     /////////////////////////////////////////////////////////////////////////////////////////
 
     public static void renderScrollingString(
-            GuiGraphics guiGraphics,
+            GuiGraphicsExtractor guiGraphics,
             Font font,
             Component component,
             int minX,
@@ -74,11 +75,11 @@ public class GeneralUtilsClient {
             double f = Math.sin(1.5707963267948966 * Math.cos(Math.PI * 2 * d / e)) / 2.0 + 0.5;
             double g = Mth.lerp(f, 0.0, q);
             guiGraphics.enableScissor(minX, minY, maxX, maxY);
-            guiGraphics.drawString(font, component, minX - (int)g, o, color, true);
+            guiGraphics.text(font, component, minX - (int)g, o, color, true);
             guiGraphics.disableScissor();
         }
         else {
-            guiGraphics.drawString(font, component, minX, o, color);
+            guiGraphics.text(font, component, minX, o, color);
         }
     }
 

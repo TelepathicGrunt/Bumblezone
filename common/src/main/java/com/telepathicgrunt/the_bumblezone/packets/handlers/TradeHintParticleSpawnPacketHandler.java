@@ -19,7 +19,7 @@ public record TradeHintParticleSpawnPacketHandler() {
             return;
         }
 
-        Level level = Minecraft.getInstance().level;
+        ClientLevel level = Minecraft.getInstance().level;
         if (level == null) {
             return;
         }
@@ -44,9 +44,8 @@ public record TradeHintParticleSpawnPacketHandler() {
         }
 
         Minecraft.getInstance().particleEngine.add(new TradeHintParticle(
-                Minecraft.getInstance().getItemRenderer(),
                 Minecraft.getInstance().renderBuffers(),
-                (ClientLevel) level,
+                level,
                 queen,
                 message.wantItem(),
                 rewardItems));

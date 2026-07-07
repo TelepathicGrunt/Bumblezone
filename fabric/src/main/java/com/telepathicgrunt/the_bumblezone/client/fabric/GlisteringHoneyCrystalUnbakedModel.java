@@ -2,12 +2,12 @@ package com.telepathicgrunt.the_bumblezone.client.fabric;
 
 import com.google.common.collect.ImmutableSet;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import net.minecraft.client.renderer.block.dispatch.ModelState;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBaker;
-import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Nullable;
 

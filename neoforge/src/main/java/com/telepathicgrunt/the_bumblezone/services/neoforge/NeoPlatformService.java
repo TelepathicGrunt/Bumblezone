@@ -57,6 +57,7 @@ import net.neoforged.neoforge.common.util.BlockSnapshot;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
@@ -116,12 +117,12 @@ public class NeoPlatformService implements PlatformService {
 
     @Override
     public boolean hasCraftingRemainder(ItemStack stack) {
-        return stack.getCraftingRemainder() != ItemStack.EMPTY;
+        return stack.getCraftingRemainder() != null;
     }
 
     @Override
     public ItemStack getCraftingRemainder(ItemStack stack) {
-        return stack.getCraftingRemainder();
+        return stack.getCraftingRemainder().create();
     }
 
     @Override
@@ -159,7 +160,7 @@ public class NeoPlatformService implements PlatformService {
     
     @Override
     public boolean sendBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
-        BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(level, pos, state, player);
+        BreakBlockEvent event = new BreakBlockEvent(level, pos, state, player);
         NeoForge.EVENT_BUS.post(event);
         return event.isCanceled();
     }

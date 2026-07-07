@@ -53,7 +53,7 @@ public class RootminGrassRenderer extends RenderLayer<RootminEntity, RootminMode
                 float theColorThingy = ((float)(rootminEntity.tickCount % speed) + partialTicks) / 25.0f;
                 int fs = Sheep.getColor(DyeColor.byId(firstDye));
                 int gs = Sheep.getColor(DyeColor.byId(secondDye));
-                int color = FastColor.ARGB32.lerp(theColorThingy, fs, gs);
+                int color = ARGB.lerp(theColorThingy, fs, gs);
                 ((Model) this.renderLayerParent.getModel()).renderToBuffer(stack, vertexConsumer, packedLight, p, color);
             }
             else {
@@ -64,7 +64,7 @@ public class RootminGrassRenderer extends RenderLayer<RootminEntity, RootminMode
                         vertexConsumer,
                         packedLight,
                         p,
-                        FastColor.ARGB32.color(
+                        ARGB.color(
                                 bl2 ? 38 : 255,
                                 GeneralUtils.getRed(biomeColor),
                                 GeneralUtils.getGreen(biomeColor),

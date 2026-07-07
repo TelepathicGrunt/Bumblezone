@@ -10,10 +10,10 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(value = LivingEntityRenderer.class, priority = 1200)
 public class LivingEntityRendererMixin<T extends LivingEntity> {
 
-    @ModifyReturnValue(method = "isShaking(Lnet/minecraft/world/entity/LivingEntity;)Z",
+    @ModifyReturnValue(method = "isShaking(Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;)Z",
             at = @At(value = "RETURN"),
             require = 0)
-    private boolean bumblezone$shakeForParalysis(boolean isShaking, T entity) {
+    private boolean bumblezone$shakeForParalysis(boolean isShaking) {
         if (!isShaking && ParalyzedEffect.isParalyzedClient(entity)) {
             return true;
         }

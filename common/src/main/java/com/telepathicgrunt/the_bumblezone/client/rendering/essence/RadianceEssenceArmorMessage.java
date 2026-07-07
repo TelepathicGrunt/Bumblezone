@@ -5,9 +5,12 @@ import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.items.essence.RadianceEssence;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.Brightness;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.player.Player;
@@ -23,7 +26,7 @@ public class RadianceEssenceArmorMessage {
     private static final String LEGGINGS_TEXT = "item.the_bumblezone.essence_radiance_leggings_text";
     private static final String BOOTS_TEXT = "item.the_bumblezone.essence_radiance_boots_text";
 
-    public static void armorDurabilityMessage(Player player, GuiGraphics guiGraphics) {
+    public static void armorDurabilityMessage(Player player, GuiGraphicsExtractor guiGraphics) {
         if (RadianceEssence.IsRadianceEssenceActive(player) && BzClientConfigs.radianceEssenceArmorDurability) {
             Minecraft minecraft = Minecraft.getInstance();
 
@@ -76,7 +79,7 @@ public class RadianceEssenceArmorMessage {
         return line;
     }
 
-    public static void renderScrollingString(Minecraft minecraft, GuiGraphics guiGraphics, ItemStack armorItem, Component component, int yOffset, int yOffset2) {
+    public static void renderScrollingString(Minecraft minecraft, GuiGraphicsExtractor guiGraphics, ItemStack armorItem, Component component, int yOffset, int yOffset2) {
         if (component == null) {
             return;
         }
@@ -102,7 +105,7 @@ public class RadianceEssenceArmorMessage {
                 pose);
 
         pose.scale(0.7f, 0.7f, pose);
-        guiGraphics.renderItem(armorItem, 0, 0);
+        guiGraphics.item(armorItem, 0, 0);
         pose.popMatrix();
     }
 }

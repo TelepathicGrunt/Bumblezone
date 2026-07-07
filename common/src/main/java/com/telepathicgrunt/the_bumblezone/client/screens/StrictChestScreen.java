@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.client.screens;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.menus.StrictChestMenu;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.network.chat.Component;
@@ -20,12 +20,12 @@ public class StrictChestScreen extends AbstractContainerScreen<StrictChestMenu> 
         this.inventoryLabelY = this.imageHeight - 94;
     }
 
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
-    protected void renderBg(GuiGraphics guiGraphics, float partialtick, int x, int y) {
+    protected void renderBg(GuiGraphicsExtractor guiGraphics, float partialtick, int x, int y) {
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - this.imageHeight) / 2;
         guiGraphics.blit(CONTAINER_BACKGROUND, i, j, 0, 0, this.imageWidth, this.containerRows * 18 + 17);

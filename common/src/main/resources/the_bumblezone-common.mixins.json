@@ -26,7 +26,6 @@
     "blocks.WaterEquivalenceMixin",
     "blocks.WaterlilyBlockMixin",
     "blocks.WaterlogForPlacingBlockMixin",
-    "containers.ShapedRecipePatternAccessor",
     "effects.ClearAllStatusEffectsConsumeEffectMixin",
     "effects.MobEffectInstanceAccessor",
     "enchantments.EnchantmentMixin",
@@ -81,7 +80,6 @@
     "menus.SmithingMenuMixin",
     "menus.StonecutterMenuMixin",
     "util.AABBAccessor",
-    "util.Vec3Accessor",
     "util.WeightedListAccessor",
     "world.BiomeManagerAccessor",
     "world.LevelMixin",
@@ -97,24 +95,18 @@
     "world.StructureTemplateMixin"
   ],
   "client": [
-    "blocks.BlockEntityRenderersAccessor",
     "client.AtmosphericFogEnvironmentMixin",
-    "client.BlockRenderDispatcherAccessor",
     "client.ClientEntityMixin",
     "client.ClientLevelMixin",
     "client.ClientPacketListenerMixin",
     "client.EntityRenderersAccessor",
     "client.GameRendererMixin",
-    "client.LevelRendererMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
     "client.MultiPlayerGameModeMixin",
     "client.MusicManagerMixin",
-    "client.ParticleEngineAccessor",
-    "client.RenderStateShardAccessor",
     "client.SoundEngineAccessor",
-    "client.SoundManagerAccessor",
-    "client.TextureStateShardAccessor"
+    "client.SoundManagerAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

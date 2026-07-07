@@ -10,7 +10,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei;
 //	}
 //
 //	@Override
-//	public void render(GuiGraphics graphics, Rectangle bounds, int mouseX, int mouseY, float delta) {
+//	public void render(GuiGraphicsExtractor graphics, Rectangle bounds, int mouseX, int mouseY, float delta) {
 //		RenderSystem.setShaderTexture(0, this.texture);
 //		graphics.pose().pushPose();
 //		Matrix4f matrix = graphics.pose().last().pose();

@@ -18,7 +18,7 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.RenderType;
@@ -89,13 +89,10 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
     private CompoundTag cachedBriefcaseTag;
 
     public BuzzingBriefcaseScreen(BuzzingBriefcaseMenu menu, Inventory playerInventory, Component title) {
-        super(menu, playerInventory, title);
-        this.imageWidth = 240;
-        this.imageHeight = 126;
+        super(menu, playerInventory, title, 240, 126);
         this.titleLabelX = 75;
         this.titleLabelY = -38;
         this.inventory = playerInventory;
-
     }
 
     @Override
@@ -105,7 +102,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         ItemStack briefcaseStack = menu.getItems().get(0);
         if (!briefcaseStack.isEmpty() && !briefcaseStack.getComponents().get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()).getUnsafe().equals(this.cachedBriefcaseTag)) {
             this.cachedBriefcaseTag = briefcaseStack.getComponents().get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()).getUnsafe();
@@ -293,7 +290,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
     }
 
     @Override
-    protected void renderBg(GuiGraphics guiGraphics, float partialtick, int x, int y) {
+    protected void renderBg(GuiGraphicsExtractor guiGraphics, float partialtick, int x, int y) {
         int startX = (getTrueWidth() - MENU_WIDTH) / 2;
         int startY = (getTrueHeight() - MENU_HEIGHT) / 2;
         RenderSystem.enableDepthTest();
@@ -311,11 +308,11 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
     }
 
     @Override
-    protected void renderLabels(GuiGraphics guiGraphics, int i, int j) {
-        guiGraphics.drawString(this.font, this.title, 74, -38, 0xFFEFAF, true);
+    protected void renderLabels(GuiGraphicsExtractor guiGraphics, int i, int j) {
+        guiGraphics.text(this.font, this.title, 74, -38, 0xFFEFAF, true);
     }
 
-    protected void renderButtonTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+    protected void renderButtonTooltip(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
         int rowIndex = 0;
         int columnIndex = 0;
         for (BeeState beeState : BEE_INVENTORY) {
@@ -509,7 +506,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
         }
     }
 
-    private void drawBeeSlots(GuiGraphics guiGraphics, int startX, int startY, int mouseX, int mouseY) {
+    private void drawBeeSlots(GuiGraphicsExtractor guiGraphics, int startX, int startY, int mouseX, int mouseY) {
         boolean hasStingerItem = false;
         boolean hasHoneyBottleItem = false;
         boolean hasPollenPuffItem = false;
@@ -559,7 +556,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
         }
     }
 
-    private static void drawBeeSlot(GuiGraphics guiGraphics, int mainX, int mainY, BeeState beeState) {
+    private static void drawBeeSlot(GuiGraphicsExtractor guiGraphics, int mainX, int mainY, BeeState beeState) {
         guiGraphics.blit(BEE_SLOT_BACKGROUND, mainX, mainY, 0, 0, 22, 22, 64, 64);
 
         boolean isBaby = beeState.beeEntity().isBaby();
@@ -600,7 +597,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
 
     }
 
-    private static void renderReleaseButton(GuiGraphics guiGraphics, int mouseX, int mouseY, int mainX, int mainY) {
+    private static void renderReleaseButton(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, int mainX, int mainY) {
         //hover release button
         if (mouseX - (mainX + 22) >= 0.0D &&
             mouseX - (mainX + 22) < 11.0D &&
@@ -615,7 +612,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
         }
     }
 
-    private static void renderHealthButton(GuiGraphics guiGraphics, int mouseX, int mouseY, boolean hasHoneyBottle, int mainX, int mainY, BeeState beeState) {
+    private static void renderHealthButton(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, boolean hasHoneyBottle, int mainX, int mainY, BeeState beeState) {
         //has health button
         if (beeState.beeEntity().getHealth() == beeState.beeEntity().getMaxHealth()) {
             guiGraphics.blit(GENERAL_ICONS, mainX, mainY + 22, 11, 11, 11, 11, 64, 64);
@@ -638,7 +635,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
         }
     }
 
-    private static void renderStingerButton(GuiGraphics guiGraphics, int mouseX, int mouseY, boolean hasStingerItem, int mainX, int mainY, BeeState beeState) {
+    private static void renderStingerButton(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, boolean hasStingerItem, int mainX, int mainY, BeeState beeState) {
         //has stinger button
         if (!beeState.beeEntity().hasStung()) {
             guiGraphics.blit(GENERAL_ICONS, mainX + 11, mainY + 22, 11, 0, 11, 11, 64, 64);
@@ -661,7 +658,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
         }
     }
 
-    private static void renderGrowUpButton(GuiGraphics guiGraphics, int mouseX, int mouseY, boolean hasHoneyBottle, int mainX, int mainY, BeeState beeState) {
+    private static void renderGrowUpButton(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, boolean hasHoneyBottle, int mainX, int mainY, BeeState beeState) {
         //cannot grow up button
         if (!beeState.beeEntity().isBaby()) {
             guiGraphics.blit(GENERAL_ICONS, mainX, mainY + 33, 11, 33, 11, 11, 64, 64);
@@ -684,7 +681,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
         }
     }
 
-    private static void renderPollenButton(GuiGraphics guiGraphics, int mouseX, int mouseY, boolean hasPollenPuff, int mainX, int mainY, BeeState beeState) {
+    private static void renderPollenButton(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, boolean hasPollenPuff, int mainX, int mainY, BeeState beeState) {
         // Cannot pollinate
         if (!beeState.beeEntity().is(BzTags.BUZZING_BRIEFCASE_CAN_POLLINATE)) {
             guiGraphics.blit(BEE_SLOT_BACKGROUND, mainX + 11, mainY + 33, 22, 22, 11, 11, 64, 64);

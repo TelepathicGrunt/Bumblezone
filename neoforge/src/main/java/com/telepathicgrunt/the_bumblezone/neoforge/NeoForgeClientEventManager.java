@@ -34,6 +34,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.LazySupplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.particle.ParticleProvider;
@@ -118,7 +120,7 @@ public class NeoForgeClientEventManager {
         event.registerMobEffect(
             new IClientMobEffectExtensions() {
                 @Override
-                public boolean renderGuiIcon(MobEffectInstance instance, Gui gui, GuiGraphics guiGraphics, int x, int y, float z, float alpha) {
+                public boolean renderGuiIcon(MobEffectInstance instance, Gui gui, GuiGraphicsExtractor guiGraphics, int x, int y, float z, float alpha) {
                     return renderer.getOptional().map(r -> r.renderGuiIcon(instance, gui, guiGraphics, x, y, z, alpha)).orElse(false);
                 }
             },
@@ -147,7 +149,7 @@ public class NeoForgeClientEventManager {
         BzRegisterKeyMappingEvent.EVENT.invoke(new BzRegisterKeyMappingEvent(event::register));
     }
 
-    private static void onRegisterItemColors(RegisterColorHandlersEvent.Item event) {
+    private static void onRegisterItemColors(RegisterColorHandlersEvent.ItemTintSources event) {
         BzRegisterItemColorEvent.EVENT.invoke(new BzRegisterItemColorEvent(event::register, event.getBlockColors()::getColor));
         BzItems.ITEMS.stream()
                 .map(RegistryEntry::get)
@@ -156,7 +158,7 @@ public class NeoForgeClientEventManager {
                 .forEach(item -> event.register((stack, index) -> item.getColor(index), item));
     }
 
-    private static void onRegisterBlockColors(RegisterColorHandlersEvent.Block event) {
+    private static void onRegisterBlockColors(RegisterColorHandlersEvent.BlockTintSources event) {
         BzRegisterBlockColorEvent.EVENT.invoke(new BzRegisterBlockColorEvent(event::register));
     }
 
@@ -200,11 +202,11 @@ public class NeoForgeClientEventManager {
     }
 
     public static void onScreenRendering(ScreenEvent.Render.Pre event) {
-        if (event.getScreen() instanceof ReceivingLevelScreen receivingLevelScreen &&
+        if (event.getScreen() instanceof LevelLoadingScreen levelLoadingScreen &&
             GeneralUtilsClient.getClientPlayer() != null &&
             GeneralUtilsClient.getClientPlayer().level().dimension() == BzDimension.BZ_WORLD_KEY)
         {
-            DimensionTeleportingScreen.renderScreenAndText(receivingLevelScreen, event.getGuiGraphics());
+            DimensionTeleportingScreen.renderScreenAndText(levelLoadingScreen, event.getGuiGraphics());
             event.setCanceled(true);
         }
     }
@@ -217,9 +219,7 @@ public class NeoForgeClientEventManager {
         }
     }
 
-    public static void onBeforeBlockOutlineRendering(RenderLevelStageEvent event) {
-        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) {
-            KnowingEssenceLootBlockOutlining.outlineLootBlocks(event.getPoseStack(), event.getCamera(), event.getLevelRenderer());
-        }
+    public static void onBeforeBlockOutlineRendering(RenderLevelStageEvent.AfterTranslucentBlocks event) {
+        KnowingEssenceLootBlockOutlining.outlineLootBlocks(event.getPoseStack(), event.getLevelRenderState().cameraRenderState.pos, event.getLevelRenderer());
     }
 }

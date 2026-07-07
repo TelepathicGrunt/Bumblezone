@@ -15,7 +15,7 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
@@ -162,7 +162,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         renderBackground(guiGraphics, mouseX, mouseY, partialTick);
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         RenderSystem.enableDepthTest();
@@ -276,7 +276,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
-    private void drawTierState(GuiGraphics guiGraphics, int startX, int startY) {
+    private void drawTierState(GuiGraphicsExtractor guiGraphics, int startX, int startY) {
         int xOffset = startX + TIER_X_OFFSET;
         int yOffset = startY + TIER_Y_OFFSET;
 
@@ -311,7 +311,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         }
     }
 
-    private void drawPushableButtons(GuiGraphics guiGraphics, int startX, int startY, int mouseX, int mouseY) {
+    private void drawPushableButtons(GuiGraphicsExtractor guiGraphics, int startX, int startY, int mouseX, int mouseY) {
 
         if (pressedSortTimer > 0) {
             pressedSortTimer--;
@@ -443,7 +443,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         }
     }
 
-    private void drawEnchantmentText(GuiGraphics guiGraphics, int rowStartX, int currentRowStartY, EnchantmentSkeleton enchantmentEntry, int enchantmentNameColor, int enchantmentLevelColor, boolean shadow) {
+    private void drawEnchantmentText(GuiGraphicsExtractor guiGraphics, int rowStartX, int currentRowStartY, EnchantmentSkeleton enchantmentEntry, int enchantmentNameColor, int enchantmentLevelColor, boolean shadow) {
         String translatedEnchantmentName = getTruncatedString(
                 enchantmentEntry.namespace,
                 enchantmentEntry.path,
@@ -455,8 +455,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             mutableComponent2.append(Component.translatable("container.the_bumblezone.crystalline_flower.level_star"));
         }
 
-        guiGraphics.drawString(this.font, mutableComponent, rowStartX, currentRowStartY, enchantmentNameColor, shadow);
-        guiGraphics.drawString(this.font, mutableComponent2, rowStartX + 5, currentRowStartY + 8, enchantmentLevelColor, shadow);
+        guiGraphics.text(this.font, mutableComponent, rowStartX, currentRowStartY, enchantmentNameColor, shadow);
+        guiGraphics.text(this.font, mutableComponent2, rowStartX + 5, currentRowStartY + 8, enchantmentLevelColor, shadow);
     }
 
     @NotNull
@@ -512,7 +512,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     }
 
     @Override
-    protected void renderBg(GuiGraphics guiGraphics, float partialtick, int x, int y) {
+    protected void renderBg(GuiGraphicsExtractor guiGraphics, float partialtick, int x, int y) {
         int startX = (width - imageWidth) / 2;
         int startY = (height - imageHeight) / 2;
         RenderSystem.enableDepthTest();
@@ -520,7 +520,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         guiGraphics.blit(CONTAINER_BACKGROUND, startX, startY + MENU_HEIGHT, 0, 126, imageWidth, 71);
     }
 
-    private void renderXPBar(GuiGraphics guiGraphics, int startX, int startY) {
+    private void renderXPBar(GuiGraphicsExtractor guiGraphics, int startX, int startY) {
         if (this.menu.xpTier.get() == 7) {
             RenderSystem.enableDepthTest();
             guiGraphics.blit(CONTAINER_BACKGROUND, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE - 5, 54, 5, 256, 256);
@@ -535,7 +535,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         }
     }
 
-    private void renderScroller(GuiGraphics guiGraphics, int posX, int posY) {
+    private void renderScroller(GuiGraphicsExtractor guiGraphics, int posX, int posY) {
         int rowCount = enchantmentsAvailableSortedList.size() + 1 - 3;
         if (rowCount > 1) {
             if (startIndex > rowCount) {
@@ -576,7 +576,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     }
 
     @Override
-    protected void renderTooltip(GuiGraphics guiGraphics, int x, int y) {
+    protected void renderTooltip(GuiGraphicsExtractor guiGraphics, int x, int y) {
         super.renderTooltip(guiGraphics, x, y);
 
         // Sort button

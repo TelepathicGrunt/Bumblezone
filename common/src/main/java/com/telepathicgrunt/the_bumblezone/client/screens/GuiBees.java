@@ -5,7 +5,7 @@ import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
@@ -65,7 +65,7 @@ public class GuiBees {
         }
     }
 
-    public static void renderBees(Screen screen, boolean onBzDimTeleportScreen, GuiGraphics guiGraphics, int mouseX, int mouseY, float realTimeDeltaPartialTick) {
+    public static void renderBees(Screen screen, boolean onBzDimTeleportScreen, GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float realTimeDeltaPartialTick) {
         if (screen == null || GeneralUtilsClient.getClientPlayer() == null) {
             return;
         }

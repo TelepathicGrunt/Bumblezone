@@ -7,6 +7,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
@@ -33,7 +34,7 @@ public interface ItemExtension {
 
     default void bz$onArmorTick(ItemStack itemstack, Level world, Player player) { }
 
-    default boolean bz$canPerformAction(ItemStack stack, String toolAction) {
+    default boolean bz$canPerformAction(ItemInstance itemInstance, String toolAction) {
         return false;
     }
 
