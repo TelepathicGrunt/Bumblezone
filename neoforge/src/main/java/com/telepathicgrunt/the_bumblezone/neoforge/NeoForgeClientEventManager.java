@@ -24,8 +24,6 @@ import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterItemProperties
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterKeyMappingEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterMenuScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterParticleEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterRenderTypeEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterShaderEvent;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
@@ -67,7 +65,6 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.util.function.Function;
 
 public class NeoForgeClientEventManager {
@@ -97,7 +94,6 @@ public class NeoForgeClientEventManager {
         event.enqueueWork(() -> {
             BzClientSetupEnqueuedEvent.EVENT.invoke(new BzClientSetupEnqueuedEvent(Runnable::run));
             BzRegisterEffectRenderersEvent.EVENT.invoke(BzRegisterEffectRenderersEvent.INSTANCE);
-            BzRegisterRenderTypeEvent.EVENT.invoke(new BzRegisterRenderTypeEvent(ItemBlockRenderTypes::setRenderLayer, ItemBlockRenderTypes::setRenderLayer));
             BzRegisterItemPropertiesEvent.EVENT.invoke(new BzRegisterItemPropertiesEvent(ItemProperties::register));
             BzRegisterBlockEntityRendererEvent.EVENT.invoke(new BzRegisterBlockEntityRendererEvent<>(BlockEntityRenderers::register));
         });

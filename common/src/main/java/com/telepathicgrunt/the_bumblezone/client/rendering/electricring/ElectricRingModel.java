@@ -14,6 +14,7 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 
 public class ElectricRingModel<T extends ElectricRingEntity> extends EntityModel<T> {
@@ -23,7 +24,7 @@ public class ElectricRingModel<T extends ElectricRingEntity> extends EntityModel
     private final ModelPart side;
 
     public ElectricRingModel(ModelPart root) {
-        super(BumblezoneClient.ENTITY_CUTOUT_EMISSIVE_RENDER_TYPE);
+        super(root, RenderTypes::entityTranslucentEmissive);
         this.ring = root.getChild("ring");
         this.side = root.getChild("side");
     }

@@ -16,7 +16,6 @@ import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterItemProperties
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterKeyMappingEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterMenuScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterParticleEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterRenderTypeEvent;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
@@ -28,7 +27,6 @@ import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -48,17 +46,6 @@ import java.util.function.Function;
 public class FabricClientEventManager {
 
     public static void init() {
-        FluidRenderHandlerRegistry fluidHandler = FluidRenderHandlerRegistry.INSTANCE;
-        BzBlocks.BLOCKS.getEntries()
-                .forEach(blockRegistryEntry -> {
-                    if (blockRegistryEntry.get() instanceof BlockExtension extension) {
-                        OptionalBoolean result = extension.bz$shouldNotDisplayFluidOverlay();
-                        if (result.isPresent()) {
-                            fluidHandler.setBlockTransparency(blockRegistryEntry.get(), result.get());
-                        }
-                    }
-                });
-
         GlisteringHoneyCrystalModels.setupModels();
         FabricArmorRenderer.setupArmor();
         BzRegisterParticleEvent.EVENT.invoke(new BzRegisterParticleEvent(FabricClientEventManager::particleRegister));
@@ -71,7 +58,6 @@ public class FabricClientEventManager {
                 (state, level, pos, i) -> ColorProviderRegistry.BLOCK.get(state.getBlock()).getColor(state, level, pos, i)));
         BzRegisterMenuScreenEvent.EVENT.invoke(new BzRegisterMenuScreenEvent(FabricClientEventManager::registerScreen));
         BzRegisterItemPropertiesEvent.EVENT.invoke(new BzRegisterItemPropertiesEvent(ItemProperties::register));
-        BzRegisterRenderTypeEvent.EVENT.invoke(new BzRegisterRenderTypeEvent(BlockRenderLayerMap.INSTANCE::putFluid, BlockRenderLayerMap.INSTANCE::putBlock));
 
         BzRegisterEffectRenderersEvent.EVENT.invoke(BzRegisterEffectRenderersEvent.INSTANCE);
         BzClientSetupEnqueuedEvent.EVENT.invoke(new BzClientSetupEnqueuedEvent(Runnable::run));
