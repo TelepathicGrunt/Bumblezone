@@ -14,8 +14,6 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/rendering
 - GUIs/screens needs fixing. Also cryable
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/screens
-- DimensionTeleportingScreen needs hookup on fabric
-  - fabric/src/main/java/com/telepathicgrunt/the_bumblezone/fabric/FabricClientEventManager.java
 - Bumblezone armor rendering needs to be redone. Bruh
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/armor
   - neoforge/src/main/java/com/telepathicgrunt/the_bumblezone/mixin/neoforge/client/BzArmorMixin.java

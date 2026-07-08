@@ -68,15 +68,6 @@ public class FabricClientEventManager {
         });
 
         ClientTickEvents.END_CLIENT_TICK.register((mc) -> StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer()));
-        ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
-            if (screen instanceof LevelLoadingScreen levelLoadingScreen &&
-                    GeneralUtilsClient.getClientPlayer() != null &&
-                    GeneralUtilsClient.getClientPlayer().level().dimension() == BzDimension.BZ_WORLD_KEY)
-            {
-                GuiGraphicsExtractor graphics = new GuiGraphicsExtractor(client, client., scaledWidth, scaledHeight);
-                DimensionTeleportingScreen.renderScreenAndText(levelLoadingScreen, graphics);
-            }
-        });
     }
 
     private static <T extends ParticleOptions> void particleRegister(ParticleType<T> particleType, Function<SpriteSet, ParticleProvider<T>> spriteParticleRegistration) {
