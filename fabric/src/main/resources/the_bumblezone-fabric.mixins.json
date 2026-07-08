@@ -8,7 +8,6 @@
   "minVersion": "0.8",
   "client": [
     "client.FogRendererMixin",
-    "client.GameRendererMixin",
     "client.GuiMixin",
     "client.KeyboardHandlerMixin",
     "client.KeyMappingAccessor",
