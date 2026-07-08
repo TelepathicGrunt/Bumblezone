@@ -27,9 +27,6 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
 - Fix the Fabric fluid mixin code
   - fabric/src/main/java/com/telepathicgrunt/the_bumblezone/mixin/fabric/entities/EntityMixin.java
   - fabric/src/main/java/com/telepathicgrunt/the_bumblezone/mixin/fabric/entities/EntityAccessor.java
-- Replace the custom RenderType creation/registration code with the appropriate closest replacements
-  - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/BumblezoneClient.java$ENTITY_CUTOUT_EMISSIVE_RENDER_TYPE
-  - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/BumblezoneClient.java$ENTITY_TRANSPARENT_EMISSIVE_RENDER_TYPE
 - Glistering Honey Crystal block's baked/unbaked model code needs updating on Fabric. Faaaaaaaaaaabrrrrriiiiiiiiiiiiccccc
   - fabric/src/main/java/com/telepathicgrunt/the_bumblezone/client/fabric
 - Update optional mod compat versions to latest 26.1.2 version and then if they are on 26.1.2, update the compat code so it works again
