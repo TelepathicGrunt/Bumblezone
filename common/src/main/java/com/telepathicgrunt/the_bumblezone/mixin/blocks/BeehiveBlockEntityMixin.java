@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
+import com.llamalad7.mixinextras.expression.Definition;
+import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import net.minecraft.world.entity.Entity;
@@ -16,8 +18,10 @@ import java.util.List;
 @Mixin(BeehiveBlockEntity.class)
 public class BeehiveBlockEntityMixin {
 
+    @Definition(id = "releaseAllOccupants", method = "Lnet/minecraft/world/level/block/entity/BeehiveBlockEntity;releaseAllOccupants(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/BeehiveBlockEntity$BeeReleaseStatus;)Ljava/util/List;")
+    @Expression("? = ?.releaseAllOccupants(?, ?)")
     @Inject(method = "emptyAllLivingFromHive(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/BeehiveBlockEntity$BeeReleaseStatus;)V",
-            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/level/block/entity/BeehiveBlockEntity;releaseAllOccupants(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/BeehiveBlockEntity$BeeReleaseStatus;)Ljava/util/List;", ordinal = 0)
+            at = @At(value = "MIXINEXTRAS:EXPRESSION", shift = At.Shift.AFTER)
     )
     private void bumblezone$essenceBeehivePreventAnger1(Player player,
                                                         BlockState blockState,

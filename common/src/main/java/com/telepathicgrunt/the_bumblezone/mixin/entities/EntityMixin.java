@@ -9,16 +9,16 @@ import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.items.essence.CalmingEssence;
 import com.telepathicgrunt.the_bumblezone.loot.EntityLootDropInterface;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,8 +26,15 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Mixin(value = Entity.class, priority = 1200)
 public abstract class EntityMixin implements EntityLootDropInterface {
@@ -51,6 +58,14 @@ public abstract class EntityMixin implements EntityLootDropInterface {
     @Shadow
     public abstract Level level();
 
+    @ModifyArg(method = "<init>",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/EntityFluidInteraction;<init>(Ljava/util/Set;)V"))
+    private Set<TagKey<Fluid>> bumblezone$injectBzFluidForInteractions(Set<TagKey<Fluid>> fluids) {
+        Set<TagKey<Fluid>> mergedSet = new HashSet<>();
+        Collections.addAll(mergedSet, BzTags.BZ_HONEY_FLUID, BzTags.ROYAL_JELLY_FLUID, BzTags.SUGAR_WATER_FLUID);
+        return mergedSet;
+    }
+
     @ModifyReturnValue(method = "getVehicleAttachmentPoint(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/phys/Vec3;",
             at = @At(value = "RETURN"),
             require = 0)
@@ -58,16 +73,6 @@ public abstract class EntityMixin implements EntityLootDropInterface {
         return StinglessBeeHelmet.beeRidingOffset(original, vehicle, ((Entity)(Object)this));
     }
 
-    @ModifyReturnValue(method = "updateFluidHeightAndDoFluidPushing(Lnet/minecraft/tags/TagKey;D)Z",
-            at = @At(value = "RETURN"),
-            require = 0)
-    private boolean bumblezone$applyMissingWaterPhysicsForSugarWaterFluid(boolean appliedFluidPush) {
-        if(!appliedFluidPush) {
-            return PlatformService.INSTANCE.getFluidHeight((Entity) ((Object)this), BzTags.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID_TYPE.get()) > 0;
-        }
-        return true;
-    }
-    
     // let pollinated bees fill certain BZ blocks
     @Inject(method = "checkInsideBlocks(Ljava/util/List;Lnet/minecraft/world/entity/InsideBlockEffectApplier$StepBasedCollector;)V",
             at = @At(value = "HEAD"))

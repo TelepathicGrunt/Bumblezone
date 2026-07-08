@@ -6,6 +6,9 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.entities.neoforge.DisableFlightAttribute;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityFluidInteractionAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.TrackerAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
@@ -25,6 +28,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityFluidInteraction;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -56,13 +60,13 @@ import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.util.BlockSnapshot;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.event.EventHooks;
-import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class NeoPlatformService implements PlatformService {
@@ -172,19 +176,14 @@ public class NeoPlatformService implements PlatformService {
     
     @Override
     public double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidData... fluids) {
-        for (int i = 0, size = fluids.length; i < size; i++) {
-            FluidData fluid = fluids[i];
-            double forgeTypeHeight = entity.getFluidTypeHeight(fluid.still().get().getFluidType());
-            if (forgeTypeHeight > 0) {
-                return forgeTypeHeight;
-            }
-        }
         return entity.getFluidHeight(fallback);
     }
     
     @Override
     public boolean isEyesInNoFluid(Entity entity) {
-        return entity.getEyeInFluidType().isAir();
+        EntityFluidInteraction entityFluidInteraction = ((EntityAccessor)entity).bumblezone$getFluidInteraction();
+        Map<TagKey<Fluid>, EntityFluidInteraction.Tracker> tagKeyTrackerMap = ((EntityFluidInteractionAccessor)entityFluidInteraction).bumblezone$getTrackerByFluid();
+        return tagKeyTrackerMap.values().stream().noneMatch(tracker -> ((TrackerAccessor)tracker).bumblezone$isEyesInside());
     }
     
     @Override

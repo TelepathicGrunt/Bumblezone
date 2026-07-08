@@ -66,8 +66,7 @@ public class MinecraftMixin {
             return HitResult.Type.MISS;
         }
 
-        HitResult.Type type = original.call(instance);
-        return type;
+        return original.call(instance);
     }
 
     @WrapOperation(method = "continueAttack(Z)V",

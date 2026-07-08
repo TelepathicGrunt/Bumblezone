@@ -200,11 +200,11 @@ public class BzItems {
     public static final RegistryEntry<Item> MUSIC_DISC_A_LAST_FIRST_LAST = ITEMS.register("music_disc_a_last_first_last", () -> new BzMusicDiscs((new Item.Properties()).jukeboxPlayable(BzJukeboxSongs.A_LAST_FIRST_LAST)));
     public static final RegistryEntry<Item> MUSIC_DISC_DROWNING_IN_DESPAIR = ITEMS.register("music_disc_drowning_in_despair", () -> new BzMusicDiscs((new Item.Properties()).jukeboxPlayable(BzJukeboxSongs.DROWNING_IN_DESPAIR)));
     public static final RegistryEntry<Item> MUSIC_DISC_BEENNA_BOX = ITEMS.register("music_disc_beenna_box", () -> new BzMusicDiscs((new Item.Properties()).jukeboxPlayable(BzJukeboxSongs.BEENNA_BOX)));
-    public static final RegistryEntry<Item> HONEY_SLIME_SPAWN_EGG = ITEMS.register("honey_slime_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.HONEY_SLIME, new Item.Properties()));
-    public static final RegistryEntry<Item> VARIANT_BEE_SPAWN_EGG = ITEMS.register("variant_bee_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.VARIANT_BEE, new Item.Properties()));
-    public static final RegistryEntry<Item> BEEHEMOTH_SPAWN_EGG = ITEMS.register("beehemoth_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.BEEHEMOTH, new Item.Properties()));
-    public static final RegistryEntry<Item> BEE_QUEEN_SPAWN_EGG = ITEMS.register("bee_queen_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.BEE_QUEEN, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ROOTMIN_SPAWN_EGG = ITEMS.register("rootmin_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.ROOTMIN, new Item.Properties()));
+    public static final RegistryEntry<Item> HONEY_SLIME_SPAWN_EGG = ITEMS.register("honey_slime_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.HONEY_SLIME.get(), new Item.Properties()));
+    public static final RegistryEntry<Item> VARIANT_BEE_SPAWN_EGG = ITEMS.register("variant_bee_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.VARIANT_BEE.get(), new Item.Properties()));
+    public static final RegistryEntry<Item> BEEHEMOTH_SPAWN_EGG = ITEMS.register("beehemoth_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.BEEHEMOTH.get(), new Item.Properties()));
+    public static final RegistryEntry<Item> BEE_QUEEN_SPAWN_EGG = ITEMS.register("bee_queen_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.BEE_QUEEN.get(), new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryEntry<Item> ROOTMIN_SPAWN_EGG = ITEMS.register("rootmin_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.ROOTMIN.get(), new Item.Properties()));
     public static final RegistryEntry<Item> SENTRY_WATCHER_SPAWN_EGG = ITEMS.register("sentry_watcher_spawn_egg", () -> new SentryWatcherSpawnEgg(BzEntities.SENTRY_WATCHER, new Item.Properties()));
     public static final RegistryEntry<Item> ESSENCE_OF_THE_BEES = ITEMS.register("essence_of_the_bees", () -> new EssenceOfTheBees(new Item.Properties()));
     public static final RegistryEntry<Item> ESSENCE_RAGING = ITEMS.register("essence_raging", () -> new RagingEssence(new Item.Properties()));

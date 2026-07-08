@@ -13,11 +13,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin {
 
-    @Inject(method = "render(Lnet/minecraft/client/DeltaTracker;Z)V",
+    @Inject(method = "extractGui(Lnet/minecraft/client/DeltaTracker;ZZ)V",
             at = @At(value = "HEAD"),
             require = 0 // Not important. No crashy
     )
-    private void bumblezone$gui_bees1(DeltaTracker deltaTracker, boolean renderLevel, CallbackInfo ci) {
+    private void bumblezone$gui_bees1(DeltaTracker deltaTracker, boolean shouldRenderLevel, boolean resourcesLoaded, CallbackInfo ci) {
         GuiBees.initDateCheck();
         if (GuiBees.isGuiBeeAllowedByConfig()) {
             GuiBees.guiClosed(((GameRenderer)(Object)this).getMinecraft().screen);
@@ -25,17 +25,18 @@ public abstract class GameRendererMixin {
     }
 
     // Mixin so I am on top of all screens
-    @Inject(method = "render(Lnet/minecraft/client/DeltaTracker;Z)V",
+    @Inject(method = "extractGui(Lnet/minecraft/client/DeltaTracker;ZZ)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/Screen;handleDelayedNarration()V"),
             require = 0 // Not important. No crashy
     )
     private void bumblezone$gui_bees2(
             DeltaTracker deltaTracker,
-            boolean renderLevel,
+            boolean shouldRenderLevel,
+            boolean resourcesLoaded,
             CallbackInfo ci,
-            @Local(ordinal = 0) int mouseX,
-            @Local(ordinal = 1) int mouseY,
-            @Local(ordinal = 0) GuiGraphicsExtractor guiGraphics)
+            @Local(name = "xMouse") int mouseX,
+            @Local(name = "yMouse") int mouseY,
+            @Local(name = "graphics") GuiGraphicsExtractor guiGraphics)
     {
         if (GuiBees.isGuiBeeAllowedByConfig()) {
             GuiBees.renderBees(((GameRenderer)(Object)this).getMinecraft().screen, false, guiGraphics, mouseX, mouseY, deltaTracker.getRealtimeDeltaTicks());

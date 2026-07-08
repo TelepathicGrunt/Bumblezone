@@ -43,6 +43,6 @@ public interface StructureCheckAccessor {
     @Accessor("seed")
     long bumblezone$getSeed();
 
-    @Accessor
-    DataFixer getFixerUpper();
+    @Accessor("fixerUpper")
+    DataFixer bumblezone$getFixerUpper();
 }

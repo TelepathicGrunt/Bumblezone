@@ -12,7 +12,6 @@
     "client.KeyboardHandlerMixin",
     "client.KeyMappingAccessor",
     "client.PlayerTickClientMixin",
-    "client.LevelLoadingScreenMixin",
     "client.ScreenEffectRendererMixin",
     "mods.MidnightConfigScreenMixin"
   ],
@@ -24,7 +23,6 @@
     "blocks.ShulkerBoxBlockEntityMixin",
     "entities.AnimalMixin",
     "entities.BaseSpawnerMixin",
-    "entities.EntityAccessor",
     "entities.EntityMixin",
     "entities.FloatGoalMixin",
     "entities.ItemEntityMixin",

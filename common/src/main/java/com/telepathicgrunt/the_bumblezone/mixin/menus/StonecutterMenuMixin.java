@@ -16,7 +16,7 @@ public class StonecutterMenuMixin {
 
     @Inject(method = "onTake(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/ResultContainer;awardUsedRecipes(Lnet/minecraft/world/entity/player/Player;Ljava/util/List;)V"))
-    private void bumblezone$recipeCraftedCheck2(Player player, ItemStack carried, CallbackInfo ci) {
+    private void bumblezone$recipeCraftedCheck3(Player player, ItemStack carried, CallbackInfo ci) {
         BeehiveCraftedHelper.checkAndIncrementBeehiveCraftedCount(player, carried);
     }
 }

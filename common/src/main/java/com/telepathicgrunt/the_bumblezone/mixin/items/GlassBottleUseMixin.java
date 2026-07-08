@@ -45,7 +45,7 @@ public class GlassBottleUseMixin {
                                                               Player user,
                                                               InteractionHand hand,
                                                               CallbackInfoReturnable<InteractionResult> cir,
-                                                              @Local(ordinal = 0) BlockPos blockPos)
+                                                              @Local(name = "pos") BlockPos blockPos)
     {
         if (GlassBottleBehavior.useBottleOnBzHoneyLikeFluid(world, user, hand, blockPos)) {
             cir.setReturnValue(InteractionResult.SUCCESS.heldItemTransformedTo(user.getItemInHand(hand)));

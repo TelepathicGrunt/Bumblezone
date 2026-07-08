@@ -3,10 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.MapCodec;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzSetupEvent;
-import com.telepathicgrunt.the_bumblezone.mixin.items.SpawnEggItemAccessor;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -16,28 +13,13 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.item.component.TypedEntityData;
 import net.minecraft.world.level.block.DispenserBlock;
 import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
-
-//TODO: Likely needs to be redone as Spawn Eggs changes greatly
 public class DispenserAddedSpawnEgg extends SpawnEggItem {
-    private static final MapCodec<EntityType<?>> ENTITY_TYPE_FIELD_CODEC = BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("id");
-
-    private static final List<Pair<Supplier<? extends EntityType<? extends Mob>>, SpawnEggItem>> SPAWN_EGGS = new ArrayList<>();
-    private final Supplier<? extends EntityType<? extends Mob>> entityType;
-
-    public DispenserAddedSpawnEgg(Supplier<? extends EntityType<? extends Mob>> typeIn, Item.Properties properties) {
-        super(properties);
-        this.entityType = typeIn;
-
+    public DispenserAddedSpawnEgg(EntityType<? extends Mob> typeIn, Item.Properties properties) {
+        super(properties.spawnEgg(typeIn));
         setupDispenserBehavior();
-        SPAWN_EGGS.add(new Pair<>(typeIn, this));
     }
 
     protected void setupDispenserBehavior() {
@@ -53,12 +35,5 @@ public class DispenserAddedSpawnEgg extends SpawnEggItem {
                         return stack;
                     }
                 });
-    }
-
-    public static void onSetup(BzSetupEvent event) {
-        var spawnEggMap = SpawnEggItemAccessor.bumblezone$getIdMap();
-        for (var entry : DispenserAddedSpawnEgg.SPAWN_EGGS) {
-            spawnEggMap.put(entry.getFirst().get(), entry.getSecond());
-        }
     }
 }

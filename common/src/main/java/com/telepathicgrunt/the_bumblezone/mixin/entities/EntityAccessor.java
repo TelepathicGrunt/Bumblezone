@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityFluidInteraction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -33,4 +34,7 @@ public interface EntityAccessor {
 
     @Invoker("getEncodeId")
     String bumblezone$callGetEncodeId();
+
+    @Accessor("fluidInteraction")
+    EntityFluidInteraction bumblezone$getFluidInteraction();
 }

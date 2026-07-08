@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.fabric;
 import com.telepathicgrunt.the_bumblezone.client.fabric.FabricArmorRenderer;
 import com.telepathicgrunt.the_bumblezone.client.fabric.GlisteringHoneyCrystalModels;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
+import com.telepathicgrunt.the_bumblezone.client.screens.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockColorEvent;
@@ -18,6 +19,7 @@ import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterParticleEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterRenderTypeEvent;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
@@ -25,6 +27,10 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
@@ -76,6 +82,15 @@ public class FabricClientEventManager {
         });
 
         ClientTickEvents.END_CLIENT_TICK.register((mc) -> StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer()));
+        ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
+            if (screen instanceof LevelLoadingScreen levelLoadingScreen &&
+                    GeneralUtilsClient.getClientPlayer() != null &&
+                    GeneralUtilsClient.getClientPlayer().level().dimension() == BzDimension.BZ_WORLD_KEY)
+            {
+                GuiGraphicsExtractor graphics = new GuiGraphicsExtractor(client, client., scaledWidth, scaledHeight);
+                DimensionTeleportingScreen.renderScreenAndText(levelLoadingScreen, graphics);
+            }
+        });
     }
 
     private static <T extends ParticleOptions> void particleRegister(ParticleType<T> particleType, Function<SpriteSet, ParticleProvider<T>> spriteParticleRegistration) {

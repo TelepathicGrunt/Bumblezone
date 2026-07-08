@@ -4,7 +4,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.WaterlilyBlock;
+import net.minecraft.world.level.block.LilyPadBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -13,8 +13,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = WaterlilyBlock.class, priority = 1200)
-public class WaterlilyBlockMixin {
+@Mixin(value = LilyPadBlock.class, priority = 1200)
+public class LilyPadBlockMixin {
 
     @Inject(method = "mayPlaceOn(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z",
             at = @At(value = "RETURN"), cancellable = true, require = 0)

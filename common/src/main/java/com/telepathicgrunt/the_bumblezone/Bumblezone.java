@@ -160,7 +160,6 @@ public class Bumblezone {
         BzRegisterDataSerializersEvent.EVENT.addListener(Bumblezone::registerDataSerializers);
         BzFinalSetupEvent.EVENT.addListener(Bumblezone::onFinalSetup); //run after all mods
         BzRegisterFlammabilityEvent.EVENT.addListener(Bumblezone::onRegisterFlammablity);
-        BzSetupEvent.EVENT.addListener(DispenserAddedSpawnEgg::onSetup);
         BzAddCreativeTabEntriesEvent.EVENT.addListener(BzCreativeTabs::addCreativeTabEntries);
         BzRegisterEntityAttributesEvent.EVENT.addListener(BzEntities::registerEntityAttributes);
         BzRegisterSpawnPlacementsEvent.EVENT.addListener(BzEntities::registerEntitySpawnRestrictions);

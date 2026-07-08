@@ -26,8 +26,6 @@ import net.minecraft.core.SectionPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.DoubleTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.TagKey;
@@ -39,7 +37,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.RandomizableContainer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -80,7 +77,6 @@ import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStruct
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.level.material.FluidState;
@@ -1267,7 +1263,7 @@ public class GeneralUtils {
                 originalStructureCheck.bumblezone$getHeightAccessor(),
                 originalStructureCheck.bumblezone$getBiomeSource(),
                 originalStructureCheck.bumblezone$getSeed(),
-                originalStructureCheck.getFixerUpper()
+                originalStructureCheck.bumblezone$getFixerUpper()
         );
         for (Holder<Structure> holder : structureHoldersSet) {
             StructureCheckResult structurecheckresult = tempStructureCheck.checkStart(chunkPos, holder.value(), placement, skipKnownStructures);
