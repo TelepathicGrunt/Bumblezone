@@ -1,7 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.neoforge;
 
-import com.teamresourceful.resourcefullib.common.registry.RegistryEntry;
-import com.telepathicgrunt.the_bumblezone.client.screens.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.client.armor.ArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.neoforge.DimensionFog;
 import com.telepathicgrunt.the_bumblezone.client.neoforge.NeoforgeArmorProviders;
@@ -10,21 +8,21 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.essence.EssenceOverla
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceStructureMessage;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.RadianceEssenceArmorMessage;
+import com.telepathicgrunt.the_bumblezone.client.screens.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzHookupConditionalItemModelPropertiesEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzHookupRangeSelectItemModelPropertiesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzKeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockColorEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockEntityRendererEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEffectRenderersEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEntityLayersEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEntityRenderersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterItemColorEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterItemPropertiesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterKeyMappingEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterMenuScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterParticleEvent;
-import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -52,9 +50,11 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterConditionalItemModelPropertyEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.event.RegisterRangeSelectItemModelPropertyEvent;
 import net.neoforged.neoforge.client.event.RenderBlockScreenEffectEvent;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
@@ -77,12 +77,13 @@ public class NeoForgeClientEventManager {
         eventBus.addListener(NeoForgeClientEventManager::onScreenRendering);
         eventBus.addListener(NeoForgeClientEventManager::onBeforeBlockOutlineRendering);
         eventBus.addListener(NeoForgeClientEventManager::onGuiRendering);
+        eventBus.addListener(NeoForgeClientEventManager::onConditionalItemPropertiesSetup);
+        eventBus.addListener(NeoForgeClientEventManager::onRangeSelectItemPropertiesSetup);
         eventBus.addListener(EventPriority.HIGHEST, true, DimensionFog::fogThicknessAdjustments);
 
         modEventBus.addListener(NeoForgeClientEventManager::onClientSetup);
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterParticles);
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterKeys);
-        modEventBus.addListener(NeoForgeClientEventManager::onRegisterItemColors);
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterBlockColors);
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterEntityRenderers);
         modEventBus.addListener(NeoForgeClientEventManager::onEntityLayers);
@@ -94,7 +95,6 @@ public class NeoForgeClientEventManager {
         event.enqueueWork(() -> {
             BzClientSetupEnqueuedEvent.EVENT.invoke(new BzClientSetupEnqueuedEvent(Runnable::run));
             BzRegisterEffectRenderersEvent.EVENT.invoke(BzRegisterEffectRenderersEvent.INSTANCE);
-            BzRegisterItemPropertiesEvent.EVENT.invoke(new BzRegisterItemPropertiesEvent(ItemProperties::register));
             BzRegisterBlockEntityRendererEvent.EVENT.invoke(new BzRegisterBlockEntityRendererEvent<>(BlockEntityRenderers::register));
         });
     }
@@ -143,15 +143,6 @@ public class NeoForgeClientEventManager {
 
     private static void onRegisterKeys(RegisterKeyMappingsEvent event) {
         BzRegisterKeyMappingEvent.EVENT.invoke(new BzRegisterKeyMappingEvent(event::register));
-    }
-
-    private static void onRegisterItemColors(RegisterColorHandlersEvent.ItemTintSources event) {
-        BzRegisterItemColorEvent.EVENT.invoke(new BzRegisterItemColorEvent(event::register, event.getBlockColors()::getColor));
-        BzItems.ITEMS.stream()
-                .map(RegistryEntry::get)
-                .filter(item -> item instanceof DispenserAddedSpawnEgg)
-                .map(item -> (DispenserAddedSpawnEgg) item)
-                .forEach(item -> event.register((stack, index) -> item.getColor(index), item));
     }
 
     private static void onRegisterBlockColors(RegisterColorHandlersEvent.BlockTintSources event) {
@@ -217,5 +208,13 @@ public class NeoForgeClientEventManager {
 
     public static void onBeforeBlockOutlineRendering(RenderLevelStageEvent.AfterTranslucentBlocks event) {
         KnowingEssenceLootBlockOutlining.outlineLootBlocks(event.getPoseStack(), event.getLevelRenderState().cameraRenderState.pos, event.getLevelRenderer());
+    }
+
+    public static void onConditionalItemPropertiesSetup(RegisterConditionalItemModelPropertyEvent event) {
+        BzHookupConditionalItemModelPropertiesEvent.EVENT.invoke(new BzHookupConditionalItemModelPropertiesEvent(event::register));
+    }
+
+    public static void onRangeSelectItemPropertiesSetup(RegisterRangeSelectItemModelPropertyEvent event) {
+        BzHookupRangeSelectItemModelPropertiesEvent.EVENT.invoke(new BzHookupRangeSelectItemModelPropertiesEvent(event::register));
     }
 }

@@ -9,7 +9,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.ProblemReporter;
-import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -52,21 +52,6 @@ public class InfinityBarrierBlockEntity extends BlockEntity {
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    public static int getBlockColor(BlockAndTintGetter world, BlockPos pos, int tintIndex) {
-        if (world != null) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof InfinityBarrierBlockEntity infinityBarrierBlockEntity) {
-                if (tintIndex == 0) {
-                    return infinityBarrierBlockEntity.getPrimaryColor();
-                }
-                else if (tintIndex == 1) {
-                    return infinityBarrierBlockEntity.getSecondaryColor();
-                }
-            }
-        }
-        return tintIndex;
     }
 
     @Override

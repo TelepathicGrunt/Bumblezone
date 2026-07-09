@@ -56,15 +56,12 @@ import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseOnBlockEv
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.items.BuzzingBriefcase;
 import com.telepathicgrunt.the_bumblezone.items.BzMusicDiscsDownloadLinkTooltip;
-import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.items.essence.CalmingEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.ContinuityEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.RagingEssence;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.datamanager.PotionCandleRecipeSyncData;
-import com.telepathicgrunt.the_bumblezone.modinit.BzArmorMaterials;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCommands;
@@ -112,8 +109,6 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class Bumblezone {
-    public static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().setLenient().disableHtmlEscaping().excludeFieldsWithoutExposeAnnotation().create();
-
     // Note to self:
     // -XX:+AllowEnhancedClassRedefinition arg with JetBrainsRuntime SDK (JBRSDK) + Single HotSwap Plugin to enable better hotswapping
     // -Dmixin.debug.export=true for mixin dump of transformed classes.
@@ -253,7 +248,7 @@ public class Bumblezone {
         );
 
         event.add(
-                ResourceLocation.fromNamespaceAndPath(MODID, "shader_emissive"),
+                Identifier.fromNamespaceAndPath(MODID, "shader_emissive"),
                 Component.literal("Bumblezone - Shader Emissive"),
                 BzAddBuiltinResourcePacks.PackMode.USER_CONTROLLED
         );

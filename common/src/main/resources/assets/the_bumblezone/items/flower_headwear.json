@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "the_bumblezone:item/flower_headwear",
+    "tints": [
+      {
+        "type": "minecraft:dye",
+        "default": -1682375
+      }
+    ]
+  }
+}

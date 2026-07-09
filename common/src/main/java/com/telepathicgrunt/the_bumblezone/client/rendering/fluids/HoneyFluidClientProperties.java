@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import org.jetbrains.annotations.Nullable;
@@ -33,21 +33,21 @@ public class HoneyFluidClientProperties {
     public static ClientFluidProperties create() {
         return new ClientFluidProperties() {
             @Override
-            public Identifier still(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
+            public Identifier still(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
                 return HONEY_FLUID_STILL_TEXTURE;
             }
 
             @Override
-            public Identifier flowing(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
+            public Identifier flowing(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
                 return HONEY_FLUID_FLOWING_TEXTURE;
             }
 
-            public Identifier flowingDiagonal(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
+            public Identifier flowingDiagonal(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
                 return HONEY_FLUID_FLOWING_DIAGONAL_TEXTURE;
             }
 
             @Override
-            public Identifier overlay(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
+            public Identifier overlay(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
                 return HONEY_FLUID_FLOWING_TEXTURE;
             }
 
@@ -62,12 +62,12 @@ public class HoneyFluidClientProperties {
             }
 
             @Override
-            public int tintColor(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
+            public int tintColor(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
                 return 0xFFFFFFFF;
             }
 
             @Override
-            public boolean renderFluid(BlockPos pos, BlockAndTintGetter level, VertexConsumer vertexConsumer, BlockState blockState, FluidState fluidState, Function<Identifier, TextureAtlasSprite> sprites) {
+            public boolean renderFluid(BlockPos pos, BlockAndLightGetter level, VertexConsumer vertexConsumer, BlockState blockState, FluidState fluidState, Function<Identifier, TextureAtlasSprite> sprites) {
                 TextureAtlasSprite[] textureAtlasSprites = new TextureAtlasSprite[] {
                         sprites.apply(this.still(level, pos, fluidState)),
                         sprites.apply(this.flowing(level, pos, fluidState)),

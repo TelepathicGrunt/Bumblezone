@@ -5,6 +5,17 @@ import com.telepathicgrunt.the_bumblezone.client.armor.BeeArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.armor.FlowerHeadwearModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.blockentityrenderer.EssenceBlockEntityRenderer;
 import com.telepathicgrunt.the_bumblezone.client.blocks.ConnectedBlockModel;
+import com.telepathicgrunt.the_bumblezone.client.blocks.blocktintsources.InfinityBarrierTintSource;
+import com.telepathicgrunt.the_bumblezone.client.blocks.blocktintsources.PotionCandleTintSource;
+import com.telepathicgrunt.the_bumblezone.client.itemproperties.conditional.AbilityEssenceIsActive;
+import com.telepathicgrunt.the_bumblezone.client.itemproperties.conditional.AbilityEssenceIsLockedOrCooldown;
+import com.telepathicgrunt.the_bumblezone.client.itemproperties.conditional.AbilityEssenceMaxAbilityUseRemaining;
+import com.telepathicgrunt.the_bumblezone.client.itemproperties.conditional.AbilityEssenceNotInInventory;
+import com.telepathicgrunt.the_bumblezone.client.itemproperties.conditional.BeeCannonBeeCount;
+import com.telepathicgrunt.the_bumblezone.client.itemproperties.conditional.CreativeTabMarker;
+import com.telepathicgrunt.the_bumblezone.client.itemproperties.conditional.CrystalCannonCrystalCount;
+import com.telepathicgrunt.the_bumblezone.client.itemproperties.conditional.PollinatedBeeLeggings;
+import com.telepathicgrunt.the_bumblezone.client.itemproperties.rangeselect.HoneyCompassAngle;
 import com.telepathicgrunt.the_bumblezone.client.items.FlowerHeadwearColoring;
 import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
 import com.telepathicgrunt.the_bumblezone.client.items.InfinityBarrierColoring;
@@ -51,6 +62,8 @@ import com.telepathicgrunt.the_bumblezone.client.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzHookupConditionalItemModelPropertiesEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzHookupRangeSelectItemModelPropertiesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzKeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterArmorProviderEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockColorEvent;
@@ -58,20 +71,13 @@ import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockEntityRen
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEffectRenderersEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEntityLayersEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEntityRenderersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterItemColorEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterItemPropertiesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterKeyMappingEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterMenuScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterParticleEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzTagsUpdatedEvent;
-import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
-import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
-import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
-import com.telepathicgrunt.the_bumblezone.items.datacomponents.AbilityEssenceActivityData;
-import com.telepathicgrunt.the_bumblezone.items.essence.AbilityEssenceItem;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzClientFluids;
-import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -80,10 +86,10 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import earth.terrarium.athena.api.client.models.FactoryManager;
 import net.minecraft.client.renderer.blockentity.BrushableBlockRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
+
+import java.util.List;
 
 public class BumblezoneClient {
 
@@ -95,16 +101,15 @@ public class BumblezoneClient {
         BzRegisterEntityLayersEvent.EVENT.addListener(BumblezoneClient::registerEntityLayers);
         BzRegisterKeyMappingEvent.EVENT.addListener(BumblezoneClient::registerKeyBinding);
         BzRegisterShaderEvent.EVENT.addListener(BumblezoneClient::registerShaders);
-        BzRegisterBlockColorEvent.EVENT.addListener(InfinityBarrierColoring::registerBlockColors);
-        BzRegisterBlockColorEvent.EVENT.addListener(PotionCandleColoring::registerBlockColors);
-        BzRegisterItemColorEvent.EVENT.addListener(PotionCandleColoring::registerItemColors);
-        BzRegisterItemColorEvent.EVENT.addListener(FlowerHeadwearColoring::registerItemColors);
+        BzRegisterBlockColorEvent.EVENT.addListener((event) -> event.register(List.of(InfinityBarrierTintSource.indexOneTintSource(), InfinityBarrierTintSource.indexTwoTintSource()), BzBlocks.INFINITY_BARRIER.get()));
+        BzRegisterBlockColorEvent.EVENT.addListener((event) -> event.register(List.of(PotionCandleTintSource.indexOneTintSource(), PotionCandleTintSource.indexTwoTintSource()), BzBlocks.POTION_BASE_CANDLE.get()));
 
         BzClientSetupEnqueuedEvent.EVENT.addListener(BumblezoneClient::clientSetup);
         BzBlockRenderedOnScreenEvent.EVENT.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
         BzKeyInputEvent.EVENT.addListener(BeehemothControls::keyInput);
         BzRegisterMenuScreenEvent.EVENT.addListener(BumblezoneClient::registerScreens);
-        BzRegisterItemPropertiesEvent.EVENT.addListener(BumblezoneClient::registerItemProperties);
+        BzHookupConditionalItemModelPropertiesEvent.EVENT.addListener(BumblezoneClient::registerConditionalItemProperties);
+        BzHookupRangeSelectItemModelPropertiesEvent.EVENT.addListener(BumblezoneClient::registerRangeSelectItemProperties);
         BzRegisterArmorProviderEvent.EVENT.addListener(BumblezoneClient::registerArmorProviders);
         BzRegisterEffectRenderersEvent.EVENT.addListener(BumblezoneClient::registerEffectRenderers);
         BzRegisterBlockEntityRendererEvent.EVENT.addListener(BumblezoneClient::registerBlockEntityRenderers);
@@ -154,142 +159,19 @@ public class BumblezoneClient {
         event.register(BzMenuTypes.BUZZING_BRIEFCASE.get(), BuzzingBriefcaseScreen::new);
     }
 
-    @SuppressWarnings("ConstantConditions")
-    private static void registerItemProperties(BzRegisterItemPropertiesEvent event) {
-        // Allows shield to use the blocking json file for offset
-        event.register(
-                BzItems.HONEY_CRYSTAL_SHIELD.get(),
-                Identifier.withDefaultNamespace("blocking"),
-                (itemStack, world, livingEntity, integer) ->
-                        livingEntity != null &&
-                                livingEntity.isUsingItem() &&
-                                livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
-        );
-
-        // Correct model when about to throw
-        event.register(
-                BzItems.STINGER_SPEAR.get(),
-                Identifier.withDefaultNamespace("throwing"),
-                (itemStack, world, livingEntity, integer) ->
-                        livingEntity != null &&
-                                livingEntity.isUsingItem() &&
-                                livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
-        );
-
-        // Allows honey compass to render the correct texture
-        event.register(
-                BzItems.HONEY_COMPASS.get(),
-                Identifier.withDefaultNamespace("angle"),
-                HoneyCompassItemProperty.getClampedItemPropertyFunction());
-
-        // Correct model when about to fire
-        event.register(
-                BzItems.BEE_CANNON.get(),
-                Identifier.withDefaultNamespace("primed"),
-                (itemStack, world, livingEntity, int1) ->
-                        livingEntity != null &&
-                                livingEntity.isUsingItem() &&
-                                livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
-        );
-
-        event.register(
-                BzItems.CRYSTAL_CANNON.get(),
-                Identifier.withDefaultNamespace("primed"),
-                (itemStack, world, livingEntity, int1) ->
-                        livingEntity != null &&
-                                livingEntity.isUsingItem() &&
-                                livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F
-        );
-
-        // Correct model based on bees
-        event.register(
-                BzItems.BEE_CANNON.get(),
-                Identifier.withDefaultNamespace("bee_count"),
-                (itemStack, world, livingEntity, int1) ->
-                        BeeCannon.getNumberOfBees(itemStack) / 10f
-        );
-
-        // Correct model based on crystals
-        event.register(
-                BzItems.CRYSTAL_CANNON.get(),
-                Identifier.withDefaultNamespace("crystal_count"),
-                (itemStack, world, livingEntity, int1) ->
-                        CrystalCannon.getNumberOfCrystals(itemStack) / 10f
-        );
-
-
-        // Correct model based on crystals
-        event.register(
-                BzItems.CRYSTAL_CANNON.get(),
-                Identifier.withDefaultNamespace("crystal_count"),
-                (itemStack, world, livingEntity, int1) ->
-                        CrystalCannon.getNumberOfCrystals(itemStack) / 10f
-        );
-
-
-        // Show different stage for creative menu icon
-        event.register(
-                BzItems.HONEYCOMB_BROOD.get(),
-                Identifier.withDefaultNamespace("is_creative_tab_icon"),
-                (itemStack, world, livingEntity, integer) ->
-                        itemStack.getComponents().has(DataComponents.CUSTOM_DATA) &&
-                        itemStack.getComponents().get(DataComponents.CUSTOM_DATA).contains("isCreativeTabIcon") &&
-                        itemStack.getComponents().get(DataComponents.CUSTOM_DATA).getUnsafe().getBoolean("isCreativeTabIcon") ? 1.0F : 0.0F
-        );
-
-
-        // Correct model based on pollen on leggings
-        event.register(
-                BzItems.HONEY_BEE_LEGGINGS_1.get(),
-                Identifier.withDefaultNamespace("pollen"),
-                (itemStack, world, livingEntity, int1) ->
-                        HoneyBeeLeggings.isPollinated(itemStack) ? 1f : 0f
-        );
-
-
-        // Correct model based on pollen on leggings
-        event.register(
-                BzItems.HONEY_BEE_LEGGINGS_2.get(),
-                Identifier.withDefaultNamespace("pollen"),
-                (itemStack, world, livingEntity, int1) ->
-                        HoneyBeeLeggings.isPollinated(itemStack) ? 1f : 0f
-        );
-
-
-        // Show state of essence
-        registerEssenceItemProperty(event, BzItems.ESSENCE_RAGING.get());
-        registerEssenceItemProperty(event, BzItems.ESSENCE_KNOWING.get());
-        registerEssenceItemProperty(event, BzItems.ESSENCE_CALMING.get());
-        registerEssenceItemProperty(event, BzItems.ESSENCE_LIFE.get());
-        registerEssenceItemProperty(event, BzItems.ESSENCE_RADIANCE.get());
-        registerEssenceItemProperty(event, BzItems.ESSENCE_CONTINUITY.get());
+    private static void registerConditionalItemProperties(BzHookupConditionalItemModelPropertiesEvent event) {
+        event.registrator().accept(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "bee_cannon_bee_count"), BeeCannonBeeCount.MAP_CODEC);
+        event.registrator().accept(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystal_cannon_crystal_count"), CrystalCannonCrystalCount.MAP_CODEC);
+        event.registrator().accept(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "is_creative_tab_icon"), CreativeTabMarker.MAP_CODEC);
+        event.registrator().accept(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "pollinated_bee_leggings"), PollinatedBeeLeggings.MAP_CODEC);
+        event.registrator().accept(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "ability_essence_is_active"), AbilityEssenceIsActive.MAP_CODEC);
+        event.registrator().accept(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "ability_essence_is_locked_or_cooldown"), AbilityEssenceIsLockedOrCooldown.MAP_CODEC);
+        event.registrator().accept(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "ability_essence_max_ability_use_remaining"), AbilityEssenceMaxAbilityUseRemaining.MAP_CODEC);
+        event.registrator().accept(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "ability_essence_not_in_inventory"), AbilityEssenceNotInInventory.MAP_CODEC);
     }
 
-    private static void registerEssenceItemProperty(BzRegisterItemPropertiesEvent event, Item item) {
-        event.register(
-            item,
-            Identifier.withDefaultNamespace("state"),
-            (itemStack, world, livingEntity, integer) -> {
-                if (itemStack.getItem() instanceof AbilityEssenceItem abilityEssenceItem) {
-                    AbilityEssenceActivityData abilityEssenceActivityData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get());
-                    if (!abilityEssenceActivityData.isInInventory()) {
-                        return 0.0F;
-                    }
-                    else if (abilityEssenceActivityData.isActive()) {
-                        return abilityEssenceItem.getAbilityUseRemaining(itemStack) == abilityEssenceItem.getMaxAbilityUseAmount() ?
-                              0.2F : 0.25F;
-                    }
-                    else if (abilityEssenceActivityData.isLocked() || itemStack.get(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get()).forcedCooldown()) {
-                        return 0.3F;
-                    }
-                    else {
-                        return abilityEssenceItem.getAbilityUseRemaining(itemStack) == abilityEssenceItem.getMaxAbilityUseAmount() ?
-                                0.1F : 0.15F;
-                    }
-                }
-                return 0.0F;
-            }
-        );
+    private static void registerRangeSelectItemProperties(BzHookupRangeSelectItemModelPropertiesEvent event) {
+        event.registrator().accept(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "honey_compass"), HoneyCompassAngle.MAP_CODEC);
     }
 
     public static void registerEntityLayers(BzRegisterEntityLayersEvent event) {

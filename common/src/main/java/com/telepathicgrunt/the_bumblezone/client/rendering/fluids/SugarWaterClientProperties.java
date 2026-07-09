@@ -7,7 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.material.FluidState;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,17 +21,17 @@ public class SugarWaterClientProperties {
     public static ClientFluidProperties create() {
         return new ClientFluidProperties() {
             @Override
-            public Identifier still(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
+            public Identifier still(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
                 return FLUID_STILL_TEXTURE;
             }
 
             @Override
-            public Identifier flowing(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
+            public Identifier flowing(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
                 return FLUID_FLOWING_TEXTURE;
             }
 
             @Override
-            public Identifier overlay(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
+            public Identifier overlay(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
                 return FLUID_OVERLAY_TEXTURE;
             }
 
@@ -46,7 +46,7 @@ public class SugarWaterClientProperties {
             }
 
             @Override
-            public int tintColor(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
+            public int tintColor(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
                 if (view != null && pos != null) {
                     return BiomeColors.getAverageWaterColor(view, pos) | 0xFF000000;
                 }

@@ -6,6 +6,8 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenc
 import com.telepathicgrunt.the_bumblezone.client.screens.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzHookupConditionalItemModelPropertiesEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzHookupRangeSelectItemModelPropertiesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockColorEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockEntityRendererEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEffectRenderersEvent;
@@ -25,6 +27,7 @@ import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -36,6 +39,8 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperties;
+import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperties;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -53,11 +58,10 @@ public class FabricClientEventManager {
         BzRegisterEntityLayersEvent.EVENT.invoke(new BzRegisterEntityLayersEvent((type, supplier) -> EntityModelLayerRegistry.registerModelLayer(type, supplier::get)));
         BzRegisterKeyMappingEvent.EVENT.invoke(new BzRegisterKeyMappingEvent(KeyMappingHelper::registerKeyMapping));
         BzRegisterBlockEntityRendererEvent.EVENT.invoke(new BzRegisterBlockEntityRendererEvent<>(BlockEntityRenderers::register));
-        BzRegisterBlockColorEvent.EVENT.invoke(new BzRegisterBlockColorEvent(ColorProviderRegistry.BLOCK::register));
-        BzRegisterItemColorEvent.EVENT.invoke(new BzRegisterItemColorEvent(ColorProviderRegistry.ITEM::register,
-                (state, level, pos, i) -> ColorProviderRegistry.BLOCK.get(state.getBlock()).getColor(state, level, pos, i)));
+        BzRegisterBlockColorEvent.EVENT.invoke(new BzRegisterBlockColorEvent(BlockColorRegistry::register));
         BzRegisterMenuScreenEvent.EVENT.invoke(new BzRegisterMenuScreenEvent(FabricClientEventManager::registerScreen));
-        BzRegisterItemPropertiesEvent.EVENT.invoke(new BzRegisterItemPropertiesEvent(ItemProperties::register));
+        BzHookupConditionalItemModelPropertiesEvent.EVENT.invoke(new BzHookupConditionalItemModelPropertiesEvent(ConditionalItemModelProperties.ID_MAPPER::put));
+        BzHookupRangeSelectItemModelPropertiesEvent.EVENT.invoke(new BzHookupRangeSelectItemModelPropertiesEvent(RangeSelectItemModelProperties.ID_MAPPER::put));
 
         BzRegisterEffectRenderersEvent.EVENT.invoke(BzRegisterEffectRenderersEvent.INSTANCE);
         BzClientSetupEnqueuedEvent.EVENT.invoke(new BzClientSetupEnqueuedEvent(Runnable::run));
@@ -70,8 +74,8 @@ public class FabricClientEventManager {
         ClientTickEvents.END_CLIENT_TICK.register((mc) -> StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer()));
         ScreenEvents.BEFORE_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
             if (screen instanceof LevelLoadingScreen levelLoadingScreen &&
-                    GeneralUtilsClient.getClientPlayer() != null &&
-                    GeneralUtilsClient.getClientPlayer().level().dimension() == BzDimension.BZ_WORLD_KEY)
+                    client.player != null &&
+                    client.player.level().dimension() == BzDimension.BZ_WORLD_KEY)
             {
                 ScreenEvents.afterExtract(levelLoadingScreen).register((screen1, graphics, mouseX, mouseY, tickProgress) ->
                         DimensionTeleportingScreen.renderScreenAndText((LevelLoadingScreen) screen1, graphics));

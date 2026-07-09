@@ -1,0 +1,14 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "property": "the_bumblezone:is_creative_tab_icon",
+    "on_true": {
+      "type": "minecraft:model",
+      "base": "the_bumblezone:item/honeycomb_brood_block_creative_tab_icon"
+    },
+    "on_false": {
+      "type": "minecraft:model",
+      "base": "the_bumblezone:item/honeycomb_brood_block"
+    }
+  }
+}

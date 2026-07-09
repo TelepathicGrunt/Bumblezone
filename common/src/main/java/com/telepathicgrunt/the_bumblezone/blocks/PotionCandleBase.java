@@ -29,7 +29,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.TypedEntityData;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -268,25 +268,6 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
             return tag.getInt(PotionCandleBlockEntity.COLOR_TAG).orElse(PotionCandleBlockEntity.DEFAULT_COLOR);
         }
         return PotionCandleBlockEntity.DEFAULT_COLOR;
-    }
-
-    public static int getBlockColor(BlockAndTintGetter world, BlockPos pos, int tintIndex) {
-        if (world != null) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof PotionCandleBlockEntity potionCandleBlockEntity) {
-                int currentColor = potionCandleBlockEntity.getColor();
-
-                if (tintIndex == 1) {
-                    // Change tint of lit top
-                    int red = Math.max((currentColor >> 16 & 255), 40);
-                    int green = Math.max((currentColor >> 8 & 255), 10);
-                    int blue = Math.max((currentColor & 255), 5);
-                    currentColor = (Math.min(red + 60, 255) << 16) + (Math.min(green + 30, 255) << 8) + Math.min(blue + 25, 255);
-                }
-                return currentColor;
-            }
-        }
-        return tintIndex;
     }
 
     @Override

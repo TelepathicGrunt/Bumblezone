@@ -1,0 +1,65 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "property": "the_bumblezone:bee_cannon_bee_count",
+    "bee_count": 1,
+    "on_true": {
+      "type": "minecraft:condition",
+      "property": "minecraft:using_item",
+      "on_true": {
+        "type": "minecraft:model",
+        "base": "the_bumblezone:item/bee_cannon/bee_cannon_1_primed"
+      },
+      "on_false": {
+        "type": "minecraft:model",
+        "base": "the_bumblezone:item/bee_cannon/bee_cannon_1"
+      }
+    },
+    "on_false": {
+      "type": "minecraft:condition",
+      "property": "the_bumblezone:bee_cannon_bee_count",
+      "bee_count": 2,
+      "on_true": {
+        "type": "minecraft:condition",
+        "property": "minecraft:using_item",
+        "on_true": {
+          "type": "minecraft:model",
+          "base": "the_bumblezone:item/bee_cannon/bee_cannon_2_primed"
+        },
+        "on_false": {
+          "type": "minecraft:model",
+          "base": "the_bumblezone:item/bee_cannon/bee_cannon_2"
+        }
+      },
+      "on_false": {
+        "type": "minecraft:condition",
+        "property": "the_bumblezone:bee_cannon_bee_count",
+        "bee_count": 3,
+        "on_true": {
+          "type": "minecraft:condition",
+          "property": "minecraft:using_item",
+          "on_true": {
+            "type": "minecraft:model",
+            "base": "the_bumblezone:item/bee_cannon/bee_cannon_3_primed"
+          },
+          "on_false": {
+            "type": "minecraft:model",
+            "base": "the_bumblezone:item/bee_cannon/bee_cannon_3"
+          }
+        },
+        "on_false": {
+          "type": "minecraft:condition",
+          "property": "minecraft:using_item",
+          "on_true": {
+            "type": "minecraft:model",
+            "base": "the_bumblezone:item/bee_cannon/bee_cannon_primed"
+          },
+          "on_false": {
+            "type": "minecraft:model",
+            "base": "the_bumblezone:item/bee_cannon/bee_cannon"
+          }
+        }
+      }
+    }
+  }
+}

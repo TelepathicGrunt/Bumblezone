@@ -29,13 +29,5 @@
       "translation": [ 0, 1, 0],
       "scale":[ 0.45, 0.45, 0.45]
     }
-  },
-  "overrides": [
-    {
-      "predicate": {
-        "throwing": 1
-      },
-      "model": "the_bumblezone:item/stinger_spear_throwing"
-    }
-  ]
+  }
 }

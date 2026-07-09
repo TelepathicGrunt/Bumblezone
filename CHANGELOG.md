@@ -7,9 +7,6 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/particles/TradeHintParticle.java
 - Item model are redone and need to be setup for whatever the hell the new system is
   - common/src/main/resources/assets/the_bumblezone/models/item
-- Item properties for model state needs setup (note one item is dyeable, the Floral Headwear)
-  - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/items
-  - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/BumblezoneClient.java#registerItemProperties
 - entity renderers need to be fixed. Good luck and start crying
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/rendering
 - GUIs/screens needs fixing. Also cryable

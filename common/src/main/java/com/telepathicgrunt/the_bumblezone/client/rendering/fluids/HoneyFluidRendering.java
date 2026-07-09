@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HalfTransparentBlock;
@@ -27,7 +27,7 @@ public class HoneyFluidRendering {
 
     public static void renderSpecialHoneyFluid(
             BlockPos blockPos,
-            BlockAndTintGetter level,
+            BlockAndLightGetter level,
             VertexConsumer vertexConsumer,
             BlockState blockState,
             FluidState fluidState,
@@ -301,7 +301,7 @@ public class HoneyFluidRendering {
         }
     }
 
-    private static int getLightColor(BlockAndTintGetter blockAndTintGetter, BlockPos blockPos) {
+    private static int getLightColor(BlockAndLightGetter blockAndTintGetter, BlockPos blockPos) {
         int i = LevelRenderer.getLightColor(blockAndTintGetter, blockPos);
         int j = LevelRenderer.getLightColor(blockAndTintGetter, blockPos.above());
         int k = i & 255;
@@ -311,7 +311,7 @@ public class HoneyFluidRendering {
         return (Math.max(k, l)) | (Math.max(m, n)) << 16;
     }
 
-    private static float calculateAverageHeight(BlockAndTintGetter blockAndTintGetter, Fluid fluid, float f, float g, float h, BlockPos blockPos) {
+    private static float calculateAverageHeight(BlockAndLightGetter blockAndTintGetter, Fluid fluid, float f, float g, float h, BlockPos blockPos) {
         if (!(h >= 1.0F) && !(g >= 1.0F)) {
             float[] fs = new float[2];
             if (h > 0.0F || g > 0.0F) {
@@ -344,12 +344,12 @@ public class HoneyFluidRendering {
         }
     }
 
-    private static float getHeight(BlockAndTintGetter blockAndTintGetter, Fluid fluid, BlockPos blockPos) {
+    private static float getHeight(BlockAndLightGetter blockAndTintGetter, Fluid fluid, BlockPos blockPos) {
         BlockState blockState = blockAndTintGetter.getBlockState(blockPos);
         return getHeight(blockAndTintGetter, fluid, blockPos, blockState, blockState.getFluidState());
     }
 
-    private static float getHeight(BlockAndTintGetter blockAndTintGetter, Fluid fluid, BlockPos blockPos, BlockState blockState, FluidState fluidState) {
+    private static float getHeight(BlockAndLightGetter blockAndTintGetter, Fluid fluid, BlockPos blockPos, BlockState blockState, FluidState fluidState) {
         if (fluid.isSame(fluidState.getType())) {
             FluidState aboveFluidState = blockAndTintGetter.getFluidState(blockPos.above());
 

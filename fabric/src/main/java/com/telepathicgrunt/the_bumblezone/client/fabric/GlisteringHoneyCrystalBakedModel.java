@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.client.renderer.v1.Renderer;
 import net.fabricmc.fabric.api.client.renderer.v1.mesh.QuadEmitter;
 import net.fabricmc.fabric.api.client.renderer.v1.model.ModelHelper;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.BlockAndLightGetter;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.cuboid.ItemTransforms;
 import net.minecraft.client.resources.model.geometry.BakedQuad;
@@ -75,7 +75,7 @@ public record GlisteringHoneyCrystalBakedModel(BakedModel wrapped, BakedModel in
     }
 
     @Override
-    public void emitBlockQuads(BlockAndTintGetter blockView, BlockState state, BlockPos pos, Supplier<RandomSource> randomSupplier, RenderContext context) {
+    public void emitBlockQuads(BlockAndLightGetter blockView, BlockState state, BlockPos pos, Supplier<RandomSource> randomSupplier, RenderContext context) {
         emitBlockModelQuads(context, state, randomSupplier, insideModel, materialFinder.blendMode(BlendMode.CUTOUT).find());
         emitBlockModelQuads(context, state, randomSupplier, outsideModel, materialFinder.blendMode(BlendMode.TRANSLUCENT).find());
     }

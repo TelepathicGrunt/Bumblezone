@@ -20,7 +20,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
@@ -94,7 +94,7 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
             poseStack.popPose();
         }
 
-        public void renderSingleBlock(BlockState blockState, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, BlockAndTintGetter level, BlockPos blockPos) {
+        public void renderSingleBlock(BlockState blockState, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, BlockAndLightGetter level, BlockPos blockPos) {
             RenderShape renderShape = blockState.getRenderShape();
             if (renderShape == RenderShape.INVISIBLE) {
                 return;

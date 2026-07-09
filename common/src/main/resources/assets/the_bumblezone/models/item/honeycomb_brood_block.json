@@ -1,12 +1,4 @@
 {
   "parent": "the_bumblezone:block/honeycomb_brood_block/item_stage_1_honeycomb_brood_block",
-  "gui_light": "front",
-  "overrides": [
-    {
-      "predicate": {
-        "is_creative_tab_icon": 1
-      },
-      "model": "the_bumblezone:item/honeycomb_brood_block_creative_tab_icon"
-    }
-  ]
+  "gui_light": "front"
 }
