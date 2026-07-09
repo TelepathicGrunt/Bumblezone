@@ -13,8 +13,6 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/armor
   - neoforge/src/main/java/com/telepathicgrunt/the_bumblezone/mixin/neoforge/client/BzArmorMixin.java
   - neoforge/src/main/java/com/telepathicgrunt/the_bumblezone/neoforge/NeoForgeClientEventManager.java#createArmorExtension
-- Music manager needs to be completely redone. Again, bruh
-  - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/MusicHandler.java
 - Fix fluid rendering. Hahahaha...
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/rendering/fluids
 - Fix the Fabric fluid mixin code
