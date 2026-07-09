@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.client.screens.DimensionTeleportingScr
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzHookupConditionalItemModelPropertiesEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzHookupItemTintSourcesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzHookupRangeSelectItemModelPropertiesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockColorEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockEntityRendererEvent;
@@ -30,6 +31,7 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.minecraft.client.color.item.ItemTintSources;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -62,6 +64,7 @@ public class FabricClientEventManager {
         BzRegisterMenuScreenEvent.EVENT.invoke(new BzRegisterMenuScreenEvent(FabricClientEventManager::registerScreen));
         BzHookupConditionalItemModelPropertiesEvent.EVENT.invoke(new BzHookupConditionalItemModelPropertiesEvent(ConditionalItemModelProperties.ID_MAPPER::put));
         BzHookupRangeSelectItemModelPropertiesEvent.EVENT.invoke(new BzHookupRangeSelectItemModelPropertiesEvent(RangeSelectItemModelProperties.ID_MAPPER::put));
+        BzHookupItemTintSourcesEvent.EVENT.invoke(new BzHookupItemTintSourcesEvent(ItemTintSources.ID_MAPPER::put));
 
         BzRegisterEffectRenderersEvent.EVENT.invoke(BzRegisterEffectRenderersEvent.INSTANCE);
         BzClientSetupEnqueuedEvent.EVENT.invoke(new BzClientSetupEnqueuedEvent(Runnable::run));

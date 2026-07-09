@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "the_bumblezone:item/potion_candle",
+    "tints": [
+      {
+        "type": "the_bumblezone:potion_candle",
+        "default": -1
+      }
+    ]
+  }
+}

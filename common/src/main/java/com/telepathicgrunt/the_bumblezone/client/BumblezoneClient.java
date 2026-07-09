@@ -5,8 +5,8 @@ import com.telepathicgrunt.the_bumblezone.client.armor.BeeArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.armor.FlowerHeadwearModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.blockentityrenderer.EssenceBlockEntityRenderer;
 import com.telepathicgrunt.the_bumblezone.client.blocks.ConnectedBlockModel;
-import com.telepathicgrunt.the_bumblezone.client.blocks.blocktintsources.InfinityBarrierTintSource;
-import com.telepathicgrunt.the_bumblezone.client.blocks.blocktintsources.PotionCandleTintSource;
+import com.telepathicgrunt.the_bumblezone.client.blocks.blocktintsources.InfinityBarrierBlockTintSource;
+import com.telepathicgrunt.the_bumblezone.client.blocks.blocktintsources.PotionCandleBlockTintSource;
 import com.telepathicgrunt.the_bumblezone.client.itemproperties.conditional.AbilityEssenceIsActive;
 import com.telepathicgrunt.the_bumblezone.client.itemproperties.conditional.AbilityEssenceIsLockedOrCooldown;
 import com.telepathicgrunt.the_bumblezone.client.itemproperties.conditional.AbilityEssenceMaxAbilityUseRemaining;
@@ -20,6 +20,7 @@ import com.telepathicgrunt.the_bumblezone.client.items.FlowerHeadwearColoring;
 import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
 import com.telepathicgrunt.the_bumblezone.client.items.InfinityBarrierColoring;
 import com.telepathicgrunt.the_bumblezone.client.items.PotionCandleColoring;
+import com.telepathicgrunt.the_bumblezone.client.itemtintsources.PotionCandleItemTintSource;
 import com.telepathicgrunt.the_bumblezone.client.particles.DustParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuffParticle;
@@ -63,6 +64,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzHookupConditionalItemModelPropertiesEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzHookupItemTintSourcesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzHookupRangeSelectItemModelPropertiesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzKeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterArmorProviderEvent;
@@ -101,8 +103,8 @@ public class BumblezoneClient {
         BzRegisterEntityLayersEvent.EVENT.addListener(BumblezoneClient::registerEntityLayers);
         BzRegisterKeyMappingEvent.EVENT.addListener(BumblezoneClient::registerKeyBinding);
         BzRegisterShaderEvent.EVENT.addListener(BumblezoneClient::registerShaders);
-        BzRegisterBlockColorEvent.EVENT.addListener((event) -> event.register(List.of(InfinityBarrierTintSource.indexOneTintSource(), InfinityBarrierTintSource.indexTwoTintSource()), BzBlocks.INFINITY_BARRIER.get()));
-        BzRegisterBlockColorEvent.EVENT.addListener((event) -> event.register(List.of(PotionCandleTintSource.indexOneTintSource(), PotionCandleTintSource.indexTwoTintSource()), BzBlocks.POTION_BASE_CANDLE.get()));
+        BzRegisterBlockColorEvent.EVENT.addListener((event) -> event.register(List.of(InfinityBarrierBlockTintSource.indexOneTintSource(), InfinityBarrierBlockTintSource.indexTwoTintSource()), BzBlocks.INFINITY_BARRIER.get()));
+        BzRegisterBlockColorEvent.EVENT.addListener((event) -> event.register(List.of(PotionCandleBlockTintSource.indexOneTintSource(), PotionCandleBlockTintSource.indexTwoTintSource()), BzBlocks.POTION_BASE_CANDLE.get()));
 
         BzClientSetupEnqueuedEvent.EVENT.addListener(BumblezoneClient::clientSetup);
         BzBlockRenderedOnScreenEvent.EVENT.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
@@ -110,6 +112,7 @@ public class BumblezoneClient {
         BzRegisterMenuScreenEvent.EVENT.addListener(BumblezoneClient::registerScreens);
         BzHookupConditionalItemModelPropertiesEvent.EVENT.addListener(BumblezoneClient::registerConditionalItemProperties);
         BzHookupRangeSelectItemModelPropertiesEvent.EVENT.addListener(BumblezoneClient::registerRangeSelectItemProperties);
+        BzHookupItemTintSourcesEvent.EVENT.addListener(BumblezoneClient::registerItemTintSources);
         BzRegisterArmorProviderEvent.EVENT.addListener(BumblezoneClient::registerArmorProviders);
         BzRegisterEffectRenderersEvent.EVENT.addListener(BumblezoneClient::registerEffectRenderers);
         BzRegisterBlockEntityRendererEvent.EVENT.addListener(BumblezoneClient::registerBlockEntityRenderers);
@@ -172,6 +175,10 @@ public class BumblezoneClient {
 
     private static void registerRangeSelectItemProperties(BzHookupRangeSelectItemModelPropertiesEvent event) {
         event.registrator().accept(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "honey_compass"), HoneyCompassAngle.MAP_CODEC);
+    }
+
+    private static void registerItemTintSources(BzHookupItemTintSourcesEvent event) {
+        event.registrator().accept(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle"), PotionCandleItemTintSource.MAP_CODEC);
     }
 
     public static void registerEntityLayers(BzRegisterEntityLayersEvent event) {

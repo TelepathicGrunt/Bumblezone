@@ -13,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzHookupConditionalItemModelPropertiesEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.BzHookupItemTintSourcesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzHookupRangeSelectItemModelPropertiesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzKeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockColorEvent;
@@ -79,6 +80,7 @@ public class NeoForgeClientEventManager {
         eventBus.addListener(NeoForgeClientEventManager::onGuiRendering);
         eventBus.addListener(NeoForgeClientEventManager::onConditionalItemPropertiesSetup);
         eventBus.addListener(NeoForgeClientEventManager::onRangeSelectItemPropertiesSetup);
+        eventBus.addListener(NeoForgeClientEventManager::onItemTintSourcesSetup);
         eventBus.addListener(EventPriority.HIGHEST, true, DimensionFog::fogThicknessAdjustments);
 
         modEventBus.addListener(NeoForgeClientEventManager::onClientSetup);
@@ -216,5 +218,9 @@ public class NeoForgeClientEventManager {
 
     public static void onRangeSelectItemPropertiesSetup(RegisterRangeSelectItemModelPropertyEvent event) {
         BzHookupRangeSelectItemModelPropertiesEvent.EVENT.invoke(new BzHookupRangeSelectItemModelPropertiesEvent(event::register));
+    }
+
+    public static void onItemTintSourcesSetup(RegisterColorHandlersEvent.ItemTintSources event) {
+        BzHookupItemTintSourcesEvent.EVENT.invoke(new BzHookupItemTintSourcesEvent(event::register));
     }
 }

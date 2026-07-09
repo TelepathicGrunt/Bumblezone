@@ -261,15 +261,6 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
         }
     }
 
-    public static int getItemColor(ItemStack itemStack) {
-        TypedEntityData<@NotNull BlockEntityType<?>> customData = itemStack.get(DataComponents.BLOCK_ENTITY_DATA);
-        if (customData != null) {
-            CompoundTag tag = customData.copyTagWithoutId();
-            return tag.getInt(PotionCandleBlockEntity.COLOR_TAG).orElse(PotionCandleBlockEntity.DEFAULT_COLOR);
-        }
-        return PotionCandleBlockEntity.DEFAULT_COLOR;
-    }
-
     @Override
     public void animateTick(BlockState blockState, Level level, BlockPos position, RandomSource random) {
         if (blockState.hasProperty(LIT) && blockState.getValue(LIT)) {

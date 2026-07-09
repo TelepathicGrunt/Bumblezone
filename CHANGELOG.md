@@ -5,8 +5,6 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
   - common/src/main/resources/assets/the_bumblezone/shaders
 - Make TradeHintParticle work again or move it into the Bee Queen Renderer instead
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/particles/TradeHintParticle.java
-- Item model are redone and need to be setup for whatever the hell the new system is
-  - common/src/main/resources/assets/the_bumblezone/models/item
 - entity renderers need to be fixed. Good luck and start crying
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/rendering
 - GUIs/screens needs fixing. Also cryable

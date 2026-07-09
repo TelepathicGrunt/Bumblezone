@@ -7,7 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class PotionCandleTintSource {
+public class PotionCandleBlockTintSource {
     public static BlockTintSource indexOneTintSource() {
         return new BlockTintSource() {
             @Override
