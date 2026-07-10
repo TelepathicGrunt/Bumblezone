@@ -16,10 +16,6 @@ import com.telepathicgrunt.the_bumblezone.client.itemproperties.conditional.Crea
 import com.telepathicgrunt.the_bumblezone.client.itemproperties.conditional.CrystalCannonCrystalCount;
 import com.telepathicgrunt.the_bumblezone.client.itemproperties.conditional.PollinatedBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.client.itemproperties.rangeselect.HoneyCompassAngle;
-import com.telepathicgrunt.the_bumblezone.client.items.FlowerHeadwearColoring;
-import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
-import com.telepathicgrunt.the_bumblezone.client.items.InfinityBarrierColoring;
-import com.telepathicgrunt.the_bumblezone.client.items.PotionCandleColoring;
 import com.telepathicgrunt.the_bumblezone.client.itemtintsources.PotionCandleItemTintSource;
 import com.telepathicgrunt.the_bumblezone.client.particles.DustParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
@@ -30,7 +26,6 @@ import com.telepathicgrunt.the_bumblezone.client.particles.VoiceParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.WindParticle;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HiddenEffectIconRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.armor.BeeArmorModel;
-import com.telepathicgrunt.the_bumblezone.client.rendering.armor.FlowerHeadwearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenModel;
@@ -60,6 +55,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.variantbee.VariantBee
 import com.telepathicgrunt.the_bumblezone.client.screens.BuzzingBriefcaseScreen;
 import com.telepathicgrunt.the_bumblezone.client.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.client.screens.StrictChestScreen;
+import com.telepathicgrunt.the_bumblezone.client.shaders.EssenceBlockShader;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
@@ -102,7 +98,6 @@ public class BumblezoneClient {
         BzRegisterEntityRenderersEvent.EVENT.addListener(BumblezoneClient::registerEntityRenderers);
         BzRegisterEntityLayersEvent.EVENT.addListener(BumblezoneClient::registerEntityLayers);
         BzRegisterKeyMappingEvent.EVENT.addListener(BumblezoneClient::registerKeyBinding);
-        BzRegisterShaderEvent.EVENT.addListener(BumblezoneClient::registerShaders);
         BzRegisterBlockColorEvent.EVENT.addListener((event) -> event.register(List.of(InfinityBarrierBlockTintSource.indexOneTintSource(), InfinityBarrierBlockTintSource.indexTwoTintSource()), BzBlocks.INFINITY_BARRIER.get()));
         BzRegisterBlockColorEvent.EVENT.addListener((event) -> event.register(List.of(PotionCandleBlockTintSource.indexOneTintSource(), PotionCandleBlockTintSource.indexTwoTintSource()), BzBlocks.POTION_BASE_CANDLE.get()));
 
@@ -119,6 +114,7 @@ public class BumblezoneClient {
         BzTagsUpdatedEvent.EVENT.addListener((_) -> KnowingEssenceLootBlockOutlining.resetTargetBlockCache());
 
         BzClientFluids.CLIENT_FLUIDS.init();
+        EssenceBlockShader.initShaderSetup();
     }
 
     public static void clientSetup(BzClientSetupEnqueuedEvent event) {}
@@ -238,13 +234,5 @@ public class BumblezoneClient {
         event.register(BzParticles.CURSING_PARTICLE.get(), VoiceParticle.Factory::new);
         event.register(BzParticles.EMBARRASSED_PARTICLE.get(), VoiceParticle.Factory::new);
         event.register(BzParticles.SHOCK_PARTICLE.get(), VoiceParticle.Factory::new);
-    }
-
-    public static void registerShaders(BzRegisterShaderEvent event) {
-//        event.register(
-//            Identifier.fromNamespaceAndPath(Bumblezone.MODID, "rendertype_bumblezone_essence"),
-//            EssenceBlockEntityRenderer.POSITION_COLOR_NORMAL,
-//            (safeShader) -> EssenceBlockEntityRenderer.SAFE_SHADER_INSTANCE = safeShader
-//        );
     }
 }

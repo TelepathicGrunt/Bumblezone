@@ -17,10 +17,12 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
@@ -264,7 +266,7 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
 
             float uv2 = -1.0f + (totalTickTime * -0.2f % 1.0f);
             float uv1 = laserLength * 2.5f + uv2;
-            VertexConsumer vertexConsumer = multiBufferSource.getBuffer(BumblezoneClient.ENTITY_CUTOUT_EMISSIVE_RENDER_TYPE.apply(LASER_LOCATION));
+            VertexConsumer vertexConsumer = multiBufferSource.getBuffer(RenderTypes.entityTranslucentEmissive(LASER_LOCATION));
             PoseStack.Pose pose = poseStack.last();
             vertex(vertexConsumer, pose, x1, y1, z1, red2, green2, blue2, ux1, uv1);
             vertex(vertexConsumer, pose, x1, y2, z1, red, green, blue, ux1, uv2);

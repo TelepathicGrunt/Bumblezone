@@ -1,7 +1,5 @@
 TODO: DO NOT RELEASE UNTIL COMPLETED
 
-- Update Essence Block Shader to work
-  - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/blockentityrenderer/EssenceBlockEntityRenderer.java
 - entity renderers need to be fixed. Good luck and start crying
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/rendering
   - common/src/main/resources/assets/the_bumblezone/shaders

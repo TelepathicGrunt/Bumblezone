@@ -8,4 +8,6 @@ import java.util.Set;
 
 public class EssenceBlockEntityRendererState extends BlockEntityRenderState {
     public final Set<Direction> facesToShow = EnumSet.noneOf(Direction.class);
+
+    public int colorInt = -1;
 }

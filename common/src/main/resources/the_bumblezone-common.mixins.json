@@ -3,7 +3,6 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
-    "client.NeedleDirectionHelperAccessor",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",
     "blocks.BigDripleafBlockMixin",
@@ -27,6 +26,8 @@
     "blocks.VineBlockAccessor",
     "blocks.WaterEquivalenceMixin",
     "blocks.WaterlogForPlacingBlockMixin",
+    "client.NeedleDirectionHelperAccessor",
+    "client.RenderPipelinesAccessor",
     "effects.ClearAllStatusEffectsConsumeEffectMixin",
     "effects.MobEffectInstanceAccessor",
     "enchantments.EnchantmentMixin",

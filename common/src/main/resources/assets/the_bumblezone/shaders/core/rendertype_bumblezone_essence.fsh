@@ -1,13 +1,9 @@
-#version 150
+#version 330
 
-#moj_import <matrix.glsl>
+#moj_import <minecraft:matrix.glsl>
 
 uniform sampler2D Sampler0;
 uniform sampler2D Sampler1;
-
-uniform vec4 ColorModulator;
-uniform float GameTime;
-uniform int EndPortalLayers;
 
 in vec4 vertexColor;
 in vec4 texProj0;
@@ -57,8 +53,8 @@ out vec4 fragColor;
 
 void main() {
     vec3 color = textureProj(Sampler0, base_layer()).rgb * COLORS[0];
-    for (int i = 0; i < EndPortalLayers; i++) {
+    for (int i = 0; i < LAYERS; i++) {
         color += textureProj(Sampler1, bee_layer(float(i + 1))).rgb * COLORS[i + 1];
     }
-    fragColor = vec4(color, 1.0) * vertexColor * ColorModulator;
+    fragColor = apply_fog(vec4(color, 1.0) * vertexColor, sphericalVertexDistance, cylindricalVertexDistance, FogEnvironmentalStart, FogEnvironmentalEnd, FogRenderDistanceStart, FogRenderDistanceEnd, FogColor);
 }
