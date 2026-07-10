@@ -3,7 +3,7 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
-    "NeedleDirectionHelperAccessor",
+    "client.NeedleDirectionHelperAccessor",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",
     "blocks.BigDripleafBlockMixin",

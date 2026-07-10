@@ -15,9 +15,6 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
   - neoforge/src/main/java/com/telepathicgrunt/the_bumblezone/neoforge/NeoForgeClientEventManager.java#createArmorExtension
 - Fix fluid rendering. Hahahaha...
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/rendering/fluids
-- Fix the Fabric fluid mixin code
-  - fabric/src/main/java/com/telepathicgrunt/the_bumblezone/mixin/fabric/entities/EntityMixin.java
-  - fabric/src/main/java/com/telepathicgrunt/the_bumblezone/mixin/fabric/entities/EntityAccessor.java
 - Glistering Honey Crystal block's baked/unbaked model code needs updating on Fabric. Faaaaaaaaaaabrrrrriiiiiiiiiiiiccccc
   - fabric/src/main/java/com/telepathicgrunt/the_bumblezone/client/fabric
 - Update optional mod compat versions to latest 26.1.2 version and then if they are on 26.1.2, update the compat code so it works again

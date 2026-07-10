@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.items.datacomponents.HoneyCompassTargetData;
-import com.telepathicgrunt.the_bumblezone.mixin.NeedleDirectionHelperAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.client.NeedleDirectionHelperAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.properties.numeric.NeedleDirectionHelper;

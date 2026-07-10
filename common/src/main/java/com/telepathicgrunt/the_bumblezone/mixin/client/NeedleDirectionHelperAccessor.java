@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin;
+package com.telepathicgrunt.the_bumblezone.mixin.client;
 
 import net.minecraft.client.renderer.item.properties.numeric.NeedleDirectionHelper;
 import org.spongepowered.asm.mixin.Mixin;
