@@ -9,7 +9,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,17 +16,17 @@ public class FlowerHeadwearModelProvider implements ArmorModelProvider {
     private FlowerHeadwearModel model;
 
     @Override
-    public Identifier getArmorTexture(Entity entity, ItemStack stack, EquipmentSlot slot, ArmorMaterial.Layer type) {
+    public Identifier getArmorTexture(ItemStack stack) {
         return Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/models/armor/flower_headwear_layer.png");
     }
 
     @Override
-    public @NotNull HumanoidModel<?> getModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<?> original) {
+    public @NotNull HumanoidModel<?> getModel(ItemStack stack, HumanoidModel<?> original) {
         if (this.model == null) {
             ModelPart layer = Minecraft.getInstance().getEntityModels().bakeLayer(FlowerHeadwearModel.FLOWER_HEADWEAR_LAYER_LOCATION);
-            this.model = new FlowerHeadwearModel(layer, slot, entity);
+            this.model = new FlowerHeadwearModel(layer);
         }
-        model.entityLiving = entity;
+        model.itemStack = stack;
         return this.model;
     }
 }

@@ -10,9 +10,7 @@
     "items.BzArrowItemMixin",
     "items.ItemExtensionMixin"
   ],
-  "client": [
-    "client.BzArmorMixin"
-  ],
+  "client": [ ],
   "injectors": {
     "defaultRequire": 1
   },

@@ -195,7 +195,8 @@ public class BumblezoneClient {
         event.register(HoneyCrystalShardModel.LAYER_LOCATION, HoneyCrystalShardModel::createLayer);
         event.register(BeeArmorModel.VARIANT_1_LAYER_LOCATION, BeeArmorModel::createVariant1);
         event.register(BeeArmorModel.VARIANT_2_LAYER_LOCATION, BeeArmorModel::createVariant2);
-        event.register(FlowerHeadwearModel.FLOWER_HEADWEAR_LAYER_LOCATION, FlowerHeadwearModel::createBodyLayer);
+        // TODO: is this needed????
+        //event.register(FlowerHeadwearModel.FLOWER_HEADWEAR_LAYER_LOCATION, FlowerHeadwearModel::createBodyLayer);
         event.register(ElectricRingModel.LAYER_LOCATION, ElectricRingModel::createBodyLayer);
         event.register(PurpleSpikeModel.LAYER_LOCATION, PurpleSpikeModel::createBodyLayer);
         event.register(CosmicCrystalModel.LAYER_LOCATION, CosmicCrystalModel::createBodyLayer);

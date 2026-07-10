@@ -10,7 +10,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,7 +19,7 @@ public class BeeArmorModelProvider implements ArmorModelProvider {
     private int variant;
 
     @Override
-    public Identifier getArmorTexture(Entity entity, ItemStack stack, EquipmentSlot slot, ArmorMaterial.Layer type) {
+    public Identifier getArmorTexture(ItemStack stack) {
         if (stack.getItem() instanceof BeeArmor beeArmor && beeArmor.hasTransTexture()) {
             return Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/models/armor/trans_bee_material_layer_" + variant + ".png");
         }
@@ -30,7 +29,7 @@ public class BeeArmorModelProvider implements ArmorModelProvider {
     }
 
     @Override
-    public @NotNull HumanoidModel<?> getModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<?> original) {
+    public @NotNull HumanoidModel<?> getModel(ItemStack stack, HumanoidModel<?> original) {
         if (this.model == null || (stack.getItem() instanceof BeeArmor beeArmor && variant != beeArmor.getVariant())) {
 
             ModelPart layer = null;
@@ -49,9 +48,9 @@ public class BeeArmorModelProvider implements ArmorModelProvider {
                 layer = Minecraft.getInstance().getEntityModels().bakeLayer(BeeArmorModel.VARIANT_1_LAYER_LOCATION);
             }
 
-            this.model = new BeeArmorModel(layer, slot, entity);
+            this.model = new BeeArmorModel(layer);
         }
-        model.entityLiving = entity;
+        model.itemStack = stack;
         return this.model;
     }
 }

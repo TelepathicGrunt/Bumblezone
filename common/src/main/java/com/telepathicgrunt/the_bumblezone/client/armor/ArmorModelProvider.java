@@ -3,10 +3,6 @@ package com.telepathicgrunt.the_bumblezone.client.armor;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
@@ -17,8 +13,6 @@ import java.util.Map;
 
 public interface ArmorModelProvider {
 
-    ArmorModelProvider DEFAULT = (entity, stack, slot, original) -> original;
-
     Map<Item, ArmorModelProvider> PROVIDERS = new IdentityHashMap<>();
 
     @ApiStatus.Internal
@@ -27,17 +21,17 @@ public interface ArmorModelProvider {
     }
 
     static ArmorModelProvider get(Item item) {
-        return PROVIDERS.getOrDefault(item, DEFAULT);
+        return PROVIDERS.getOrDefault(item, (stack, original) -> original);
     }
 
-    default Identifier getArmorTexture(Entity entity, ItemStack stack, EquipmentSlot slot, ArmorMaterial.Layer type) {
+    default Identifier getArmorTexture(ItemStack stack) {
         return Identifier.fromNamespaceAndPath("minecraft", "textures/models/armor/leather_layer_1.png");
     }
 
-    @NotNull HumanoidModel<?> getModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<?> original);
+    @NotNull HumanoidModel<?> getModel(ItemStack stack, HumanoidModel<?> original);
 
-    default @NotNull Model getFinalModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<?> original) {
-        HumanoidModel<?> replacement = this.getModel(entity, stack, slot, original);
+    default @NotNull Model getFinalModel(ItemStack stack, HumanoidModel<?> original) {
+        HumanoidModel<?> replacement = this.getModel(stack, original);
         if (replacement != original) {
             copyPropertiesTo(original, replacement);
             return replacement;
@@ -46,9 +40,7 @@ public interface ArmorModelProvider {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    static <T extends LivingEntity> void copyPropertiesTo(HumanoidModel<T> original, HumanoidModel<?> replacement) {
-        original.copyPropertiesTo((HumanoidModel<T>)replacement);
+    static void copyPropertiesTo(HumanoidModel<?> original, HumanoidModel<?> replacement) {
         replacement.head.visible = original.head.visible;
         replacement.hat.visible = original.hat.visible;
         replacement.body.visible = original.body.visible;

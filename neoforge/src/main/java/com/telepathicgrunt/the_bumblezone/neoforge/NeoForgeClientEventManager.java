@@ -38,6 +38,7 @@ import net.minecraft.client.model.Model;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -130,11 +131,11 @@ public class NeoForgeClientEventManager {
             private ArmorModelProvider provider;
 
             @Override
-            public @NotNull Model getGenericArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
+            public @NotNull Model getHumanoidArmorModel(ItemStack itemStack, EquipmentClientInfo.LayerType layerType, Model original) {
                 if (provider == null) {
                     provider = NeoforgeArmorProviders.get(itemStack.getItem());
                 }
-                return provider.getFinalModel(livingEntity, itemStack, equipmentSlot, original);
+                return provider.getFinalModel(itemStack, (HumanoidModel<?>) original);
             }
         };
     }

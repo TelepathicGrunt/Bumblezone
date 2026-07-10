@@ -5,8 +5,11 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import com.telepathicgrunt.the_bumblezone.items.BumbleBeeChestplate;
+import com.telepathicgrunt.the_bumblezone.items.CarpenterBeeBoots;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
+import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -16,18 +19,20 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.entity.state.ArmorStandRenderState;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
-public class BeeArmorModel extends HumanoidModel<LivingEntity> {
+public class BeeArmorModel extends HumanoidModel<HumanoidRenderState> {
 
     public static final ModelLayerLocation VARIANT_1_LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "bee_armor"), "bee_armor");
     public static final ModelLayerLocation VARIANT_2_LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "bee_armor"), "bee_armor_2");
-    protected final EquipmentSlot slot;
-    public LivingEntity entityLiving;
+    public ItemStack itemStack;
     public final ModelPart leftWing;
     public final ModelPart rightWing;
     public final ModelPart leftPollen;
@@ -37,10 +42,8 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
     public final ModelPart bootRight;
     public final ModelPart bootLeft;
 
-    public BeeArmorModel(ModelPart part, EquipmentSlot slot, LivingEntity livingEntity) {
+    public BeeArmorModel(ModelPart part) {
         super(part);
-        this.slot = slot;
-        this.entityLiving = livingEntity;
         this.leftWing = part.getChild("body").getChild("left_wing");
         this.rightWing = part.getChild("body").getChild("right_wing");
         this.leftPollen = part.getChild("left_leg").getChild("true_left_leg").getChild("pollen_left");
@@ -52,22 +55,18 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int light, int overlay, int packedColor) {
-
-        setAllVisible(false);
-        switch (slot) {
-            case HEAD -> {
+    public void setupAnim(HumanoidRenderState state) {
+        super.setupAnim(state);
+        switch (itemStack.getItem()) {
+            case StinglessBeeHelmet _ -> {
                 head.visible = true;
                 hat.visible = true;
-
-                head.render(poseStack, buffer, light, overlay);
             }
-            case CHEST -> {
+            case BumbleBeeChestplate _ -> {
                 body.visible = true;
                 rightArm.visible = true;
                 leftArm.visible = true;
 
-                ItemStack itemStack = BumbleBeeChestplate.getEntityBeeChestplate(entityLiving);
                 if (!itemStack.isEmpty() && itemStack.get(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get()).isFlying()) {
                     long time = System.currentTimeMillis();
                     double currentProg = Math.abs(Math.sin(time / 40d));
@@ -95,9 +94,8 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
                         rightWing.xRot = -0.2f;
                     }
                 }
-                body.render(poseStack, buffer, light, overlay);
             }
-            case LEGS -> {
+            case HoneyBeeLeggings _ -> {
                 body.visible = true;
                 rightLeg.visible = true;
                 leftLeg.visible = true;
@@ -106,7 +104,6 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
                 bootRight.visible = false;
                 bootLeft.visible = false;
 
-                ItemStack itemStack = HoneyBeeLeggings.getEntityBeeLegging(entityLiving);
                 if (!itemStack.isEmpty() && HoneyBeeLeggings.isPollinated(itemStack)) {
                     leftPollen.visible = true;
                     rightPollen.visible = true;
@@ -115,19 +112,16 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
                     leftPollen.visible = false;
                     rightPollen.visible = false;
                 }
-                leftLeg.render(poseStack, buffer, light, overlay);
-                rightLeg.render(poseStack, buffer, light, overlay);
             }
-            case FEET -> {
+            case CarpenterBeeBoots _ -> {
                 rightLeg.visible = true;
                 leftLeg.visible = true;
                 bootRight.visible = true;
                 bootLeft.visible = true;
                 trueRightLeg.visible = false;
                 trueLeftLeg.visible = false;
-                leftLeg.render(poseStack, buffer, light, overlay);
-                rightLeg.render(poseStack, buffer, light, overlay);
             }
+            default -> {}
         }
     }
 

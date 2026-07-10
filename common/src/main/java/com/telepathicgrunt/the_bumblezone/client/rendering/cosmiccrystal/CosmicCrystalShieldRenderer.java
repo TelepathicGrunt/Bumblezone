@@ -28,7 +28,6 @@ public class CosmicCrystalShieldRenderer extends RenderLayer<CosmicCrystalEntity
             float m = (float)entity.tickCount + h;
             EntityModel<CosmicCrystalEntity> entityModel = this.model();
             entityModel.prepareMobModel(entity, f, g, h);
-            this.getParentModel().copyPropertiesTo(entityModel);
             VertexConsumer vertexConsumer = multiBufferSource.getBuffer(RenderType.energySwirl(this.getTextureLocation(), this.xOffset(m) % 1.0F, m * 0.01F % 1.0F));
             entityModel.setupAnim(entity, f, g, j, k, l);
             poseStack.scale(1.05f, 1.05f, 1.05f);

@@ -1,11 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.armor;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.client.items.FlowerHeadwearColoring;
-import com.telepathicgrunt.the_bumblezone.items.FlowerHeadwearHelmet;
-import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -15,52 +10,17 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.FastColor;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.DyedItemColor;
 
-public class FlowerHeadwearModel extends HumanoidModel<LivingEntity> {
-
+public class FlowerHeadwearModel extends HumanoidModel<HumanoidRenderState> {
     public static final ModelLayerLocation FLOWER_HEADWEAR_LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "flower_headwear"), "flower_headwear");
 
-    protected final EquipmentSlot slot;
-    public LivingEntity entityLiving;
+    public ItemStack itemStack;
 
-    public FlowerHeadwearModel(ModelPart part, EquipmentSlot slot, LivingEntity livingEntity) {
+    public FlowerHeadwearModel(ModelPart part) {
         super(part);
-        this.slot = slot;
-        this.entityLiving = livingEntity;
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int light, int overlay, int packedColor) {
-        setAllVisible(false);
-
-        if (slot == EquipmentSlot.HEAD && this.entityLiving != null) {
-            head.visible = true;
-            hat.visible = true;
-
-            int red;
-            int green;
-            int blue;
-            ItemStack stack = this.entityLiving.getItemBySlot(slot);
-            if (stack.getItem() instanceof FlowerHeadwearHelmet) {
-                int color = DyedItemColor.getOrDefault(stack, FlowerHeadwearColoring.DEFAULT_COLOR);
-                red = GeneralUtils.getRed(color);
-                green = GeneralUtils.getGreen(color);
-                blue = GeneralUtils.getBlue(color);
-            }
-            else {
-                red = GeneralUtils.getRed(FlowerHeadwearColoring.DEFAULT_COLOR);
-                green = GeneralUtils.getGreen(FlowerHeadwearColoring.DEFAULT_COLOR);
-                blue = GeneralUtils.getBlue(FlowerHeadwearColoring.DEFAULT_COLOR);
-            }
-
-            head.render(poseStack, buffer, light, overlay, ARGB.color(255, red, green, blue));
-        }
     }
 
     public static LayerDefinition createBodyLayer() {
