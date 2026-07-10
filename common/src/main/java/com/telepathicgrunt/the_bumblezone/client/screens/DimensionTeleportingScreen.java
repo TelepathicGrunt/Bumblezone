@@ -11,6 +11,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
@@ -19,17 +20,18 @@ public class DimensionTeleportingScreen {
     private static final Identifier BZ_BACKGROUND_LOCATION = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/dimension_teleporting_background.png");
 
     public static void renderScreenAndText(LevelLoadingScreen screen, GuiGraphicsExtractor guiGraphics) {
-        Tesselator tesselator = Tesselator.getInstance();
-        BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
-        RenderSystem.setShaderTexture(0, BZ_BACKGROUND_LOCATION);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        bufferbuilder.addVertex(0.0F, screen.height, 0.0F).setUv(0.0F, (float)screen.height / 32.0F).setColor(64, 64, 64, 255);
-        bufferbuilder.addVertex(screen.width, screen.height, 0.0F).setUv((float)screen.width / 32.0F, (float)screen.height / 32.0F).setColor(64, 64, 64, 255);
-        bufferbuilder.addVertex(screen.width, 0.0F, 0.0F).setUv((float)screen.width / 32.0F, 0.0f).setColor(64, 64, 64, 255);
-        bufferbuilder.addVertex(0.0F, 0.0F, 0.0F).setUv(0.0F, 0.0f).setColor(64, 64, 64, 255);
-        BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
-        
+        guiGraphics.blit(
+                RenderPipelines.GUI_TEXTURED,
+                BZ_BACKGROUND_LOCATION,
+                0,
+                0,
+                0,
+                0,
+                screen.width,
+                screen.height,
+                screen.width,
+                screen.height
+        );
         guiGraphics.centeredText(Minecraft.getInstance().font, DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT, screen.width / 2 + 1, screen.height / 2 - 9, 0);
         guiGraphics.centeredText(Minecraft.getInstance().font, DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT, screen.width / 2, screen.height / 2 - 10, 16774120);
     }

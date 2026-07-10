@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.fabric;
 
 import com.telepathicgrunt.the_bumblezone.client.fabric.FabricArmorRenderer;
-import com.telepathicgrunt.the_bumblezone.client.fabric.GlisteringHoneyCrystalModels;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.client.screens.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
@@ -14,16 +13,11 @@ import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockEntityRen
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEffectRenderersEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEntityLayersEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterEntityRenderersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterItemColorEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterItemPropertiesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterKeyMappingEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterMenuScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterParticleEvent;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
-import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
-import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
-import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
@@ -32,7 +26,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.minecraft.client.color.item.ItemTintSources;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
@@ -53,7 +46,6 @@ import java.util.function.Function;
 public class FabricClientEventManager {
 
     public static void init() {
-        GlisteringHoneyCrystalModels.setupModels();
         FabricArmorRenderer.setupArmor();
         BzRegisterParticleEvent.EVENT.invoke(new BzRegisterParticleEvent(FabricClientEventManager::particleRegister));
         BzRegisterEntityRenderersEvent.EVENT.invoke(new BzRegisterEntityRenderersEvent(EntityRenderers::register));

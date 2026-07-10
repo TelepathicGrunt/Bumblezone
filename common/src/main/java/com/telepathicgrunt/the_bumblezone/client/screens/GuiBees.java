@@ -6,9 +6,9 @@ import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.screens.ReceivingLevelScreen;
+import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.lwjgl.glfw.GLFW;
 
@@ -50,7 +50,7 @@ public class GuiBees {
     }
 
     public static boolean isPlayerInDimensionTeleportScreen(Screen screen) {
-        return screen instanceof ReceivingLevelScreen && isPlayerInDimension();
+        return screen instanceof LevelLoadingScreen && isPlayerInDimension();
     }
 
     public static boolean isPlayerInDimension() {
@@ -75,8 +75,8 @@ public class GuiBees {
             return;
         }
 
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(0.0F, 0.0F, 9000.0F);
+        guiGraphics.pose().pushMatrix();
+        guiGraphics.nextStratum();
         for (int i = beeSpriteStates.size() - 1; i >= 0; i--) {
             BeeSpriteState beeSpriteState = beeSpriteStates.get(i);
             beeSpriteState.xCord += (beeSpriteState.xVelocity * realTimeDeltaPartialTick);
@@ -109,7 +109,7 @@ public class GuiBees {
             float yDiffToMouse = beeSpriteState.yCord - mouseY;
             float exactDistanceToMouse = (float) Math.sqrt(xDiffToMouse * xDiffToMouse + yDiffToMouse * yDiffToMouse);
 
-            if (GLFW.glfwGetMouseButton(Minecraft.getInstance().getWindow().getWindow(), 0) == 1 && exactDistanceToMouse < 10) {
+            if (GLFW.glfwGetMouseButton(Minecraft.getInstance().getWindow().handle(), 0) == 1 && exactDistanceToMouse < 10) {
                 beeSpriteState.angry = true;
             }
 
@@ -128,7 +128,6 @@ public class GuiBees {
                 beeSpriteState.yVelocity += pushStrength * (yDiffToMouse / mouseDisThreshold) / 500f;
             }
         }
-        guiGraphics.pose().popPose();
 
         int currentBeeAmount = beeSpriteStates.size();
 
@@ -154,6 +153,7 @@ public class GuiBees {
         }
 
         timePassedWhileGuiIsOpened += realTimeDeltaPartialTick;
+        guiGraphics.pose().popMatrix();
     }
 
 
@@ -172,12 +172,12 @@ public class GuiBees {
 
         public boolean angry = false;
 
-        private static final ResourceLocation BEE_SPRITE_WINGS_DOWN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/bee_icon_wings_down.png");
-        private static final ResourceLocation BEE_SPRITE_WINGS_UP = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/bee_icon_wings_up.png");
-        private static final ResourceLocation ANGRY_BEE_SPRITE_WINGS_DOWN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/angry_bee_icon_wings_down.png");
-        private static final ResourceLocation ANGRY_BEE_SPRITE_WINGS_UP = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/angry_bee_icon_wings_up.png");
+        private static final Identifier BEE_SPRITE_WINGS_DOWN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/bee_icon_wings_down.png");
+        private static final Identifier BEE_SPRITE_WINGS_UP = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/bee_icon_wings_up.png");
+        private static final Identifier ANGRY_BEE_SPRITE_WINGS_DOWN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/angry_bee_icon_wings_down.png");
+        private static final Identifier ANGRY_BEE_SPRITE_WINGS_UP = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/angry_bee_icon_wings_up.png");
 
-        private static ResourceLocation GetBeeSprite(BeeSpriteState beeSpriteState) {
+        private static Identifier GetBeeSprite(BeeSpriteState beeSpriteState) {
             if (beeSpriteState.angry) {
                 return ((timePassedWhileGuiIsOpened - beeSpriteState.spriteAnimationOffset) % 2) > 1f ? ANGRY_BEE_SPRITE_WINGS_UP : ANGRY_BEE_SPRITE_WINGS_DOWN;
             }

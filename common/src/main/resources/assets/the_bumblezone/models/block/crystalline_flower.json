@@ -1,6 +1,5 @@
 {
 	"parent": "block/block",
-	"render_type": "minecraft:cutout",
 	"textures": {
 		"particle": "the_bumblezone:block/crystalline_flower",
 		"flower": "the_bumblezone:block/crystalline_flower",

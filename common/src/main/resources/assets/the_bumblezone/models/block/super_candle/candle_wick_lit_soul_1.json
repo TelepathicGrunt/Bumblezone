@@ -3,7 +3,6 @@
   "textures": {
     "1": "the_bumblezone:block/super_candle/candle_wick_lit_soul_1"
   },
-  "render_type": "minecraft:cutout",
   "elements": [
     {
       "from": [5, 0, 8],

@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.client.screens;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
@@ -20,17 +19,21 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.ItemInHandRenderer;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.block.BlockModelResolver;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.resources.LegacyStuffWrapper;
+import net.minecraft.client.resources.model.EquipmentAssetManager;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
@@ -102,42 +105,42 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
     }
 
     @Override
-    public void render(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         ItemStack briefcaseStack = menu.getItems().get(0);
-        if (!briefcaseStack.isEmpty() && !briefcaseStack.getComponents().get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()).getUnsafe().equals(this.cachedBriefcaseTag)) {
-            this.cachedBriefcaseTag = briefcaseStack.getComponents().get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()).getUnsafe();
+        if (!briefcaseStack.isEmpty()){
+            CompoundTag briefCaseDataTag = briefcaseStack.getComponents().get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()).copyTag();
+            if(!briefCaseDataTag.equals(this.cachedBriefcaseTag)) {
+                this.cachedBriefcaseTag = briefCaseDataTag;
 
-            List<Entity> beesStored = BuzzingBriefcase.getBeesStored(inventory.player.level(), briefcaseStack, false);
-            if (isDiffFoundInBeeList(beesStored)) {
+                List<Entity> beesStored = BuzzingBriefcase.getBeesStored(inventory.player.level(), briefcaseStack, false);
+                if (isDiffFoundInBeeList(beesStored)) {
 
-                BEE_INVENTORY.clear();
-                for (Entity entity : beesStored) {
+                    BEE_INVENTORY.clear();
+                    for (Entity entity : beesStored) {
 
-                    if (entity instanceof Bee bee) {
-                        bee.stopBeingAngry();
-                        boolean pollinated = bee.hasNectar();
-                        ((BeeEntityInvoker)bee).bumblezone$callSetHasNectar(false);
-                        try {
-                            addBeeWithColor(bee);
+                        if (entity instanceof Bee bee) {
+                            bee.stopBeingAngry();
+                            boolean pollinated = bee.hasNectar();
+                            ((BeeEntityInvoker) bee).bumblezone$callSetHasNectar(false);
+                            try {
+                                addBeeWithColor(bee);
+                            } catch (Exception e) {
+                                BEE_INVENTORY.add(new BeeState(bee, MISSING_PRIMARY_COLOR, MISSING_SECONDARY_COLOR));
+                                Bumblezone.LOGGER.warn("Bumblezone Buzzing Briefcase Clientside: Error trying to dynamically get color for following bee -");
+                                TagValueOutput tagvalueoutput = TagValueOutput.createWithContext(new ProblemReporter.ScopedCollector(Bumblezone.LOGGER), bee.level().registryAccess());
+                                bee.saveWithoutId(tagvalueoutput);
+                                Bumblezone.LOGGER.warn("Bee: {}", tagvalueoutput.buildResult());
+                            }
+                            ((BeeEntityInvoker) bee).bumblezone$callSetHasNectar(pollinated);
                         }
-                        catch (Exception e) {
-                            BEE_INVENTORY.add(new BeeState(bee, MISSING_PRIMARY_COLOR, MISSING_SECONDARY_COLOR));
-                            Bumblezone.LOGGER.warn("Bumblezone Buzzing Briefcase Clientside: Error trying to dynamically get color for following bee -");
-                            TagValueOutput tagvalueoutput = TagValueOutput.createWithContext(new ProblemReporter.ScopedCollector(Bumblezone.LOGGER), bee.level().registryAccess());
-                            bee.saveWithoutId(tagvalueoutput);
-                            Bumblezone.LOGGER.warn("Bee: {}", tagvalueoutput.buildResult());
-                        }
-                        ((BeeEntityInvoker)bee).bumblezone$callSetHasNectar(pollinated);
                     }
                 }
             }
         }
 
-        renderBackground(guiGraphics, mouseX, mouseY, partialTick);
-        super.render(guiGraphics, mouseX, mouseY, partialTick);
-        RenderSystem.enableDepthTest();
-
-        drawBeeSlots(guiGraphics, leftPos, topPos, mouseX, mouseY);
+        extractBackground(graphics, mouseX, mouseY, partialTick);
+        super.extractRenderState(graphics, mouseX, mouseY, partialTick);
+        drawBeeSlots(graphics, leftPos, topPos, mouseX, mouseY);
     }
 
     private boolean isDiffFoundInBeeList(List<Entity> beesStored) {
@@ -187,15 +190,18 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
 
         EntityRendererProvider<Bee> rendererProvider = (EntityRendererProvider<Bee>) EntityRenderersAccessor.bumblezone$getPROVIDERS().get(bee.getType());
         if (rendererProvider != null) {
-            EntityRenderer<Bee> entityRenderer = rendererProvider.create(new EntityRendererProvider.Context(
+            LivingEntityRenderer entityRenderer = (LivingEntityRenderer) rendererProvider.create(new EntityRendererProvider.Context(
                     minecraft.getEntityRenderDispatcher(),
-                    minecraft.getItemRenderer(),
-                    minecraft.getBlockRenderer(),
-                    new ItemInHandRenderer(minecraft, minecraft.getEntityRenderDispatcher(), minecraft.getItemRenderer()),
+                    new BlockModelResolver(minecraft.getModelManager()),
+                    minecraft.getItemModelResolver(),
+                    minecraft.getMapRenderer(),
                     minecraft.getResourceManager(),
                     minecraft.getEntityModels(),
-                    this.font));
-            Identifier textureLocation = entityRenderer.getTextureLocation(bee);
+                    new EquipmentAssetManager(),
+                    minecraft.getAtlasManager(),
+                    this.font,
+                    minecraft.playerSkinRenderCache()));
+            Identifier textureLocation = entityRenderer.getTextureLocation((LivingEntityRenderState) entityRenderer.createRenderState());
 
             int[] pixels = LegacyStuffWrapper.getPixels(minecraft.getResourceManager(), textureLocation);
             if (pixels == null || pixels.length == 0) {
@@ -290,11 +296,11 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
     }
 
     @Override
-    protected void renderBg(GuiGraphicsExtractor guiGraphics, float partialtick, int x, int y) {
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
         int startX = (getTrueWidth() - MENU_WIDTH) / 2;
         int startY = (getTrueHeight() - MENU_HEIGHT) / 2;
-        RenderSystem.enableDepthTest();
         guiGraphics.blit(
+                RenderPipelines.GUI_TEXTURED,
                 CONTAINER_BACKGROUND,
                 startX,
                 startY,
@@ -305,11 +311,13 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                 MENU_WIDTH,
                 MENU_HEIGHT * 2
         );
+
+        this.minecraft.gui.extractDeferredSubtitles();
     }
 
     @Override
-    protected void renderLabels(GuiGraphicsExtractor guiGraphics, int i, int j) {
-        guiGraphics.text(this.font, this.title, 74, -38, 0xFFEFAF, true);
+    protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
+        graphics.text(this.font, this.title, 74, -38, 0xFFEFAF, true);
     }
 
     protected void renderButtonTooltip(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
@@ -357,7 +365,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     toolTipComponents.add(Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_registry_name", BuiltInRegistries.ENTITY_TYPE.getKey(beeState.beeEntity().getType()).toString()).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
                 }
 
-                guiGraphics.renderTooltip(
+                guiGraphics.setTooltipForNextFrame(
                     this.font,
                     toolTipComponents,
                     Optional.empty(),
@@ -372,7 +380,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                 Entity beeEntity = beeState.beeEntity();
                 Component beeNormalAndCustomName = beeEntity.getName();
 
-                guiGraphics.renderTooltip(
+                guiGraphics.setTooltipForNextFrame(
                     this.font,
                     List.of(
                         Component.translatable("item.the_bumblezone.buzzing_briefcase_release", beeNormalAndCustomName)
@@ -389,7 +397,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                 if (beeState.beeEntity().getHealth() < beeState.beeEntity().getMaxHealth()) {
                     boolean hasHoneyBottleItem = inventory.contains(Items.HONEY_BOTTLE.getDefaultInstance());
                     if (hasHoneyBottleItem) {
-                        guiGraphics.renderTooltip(
+                        guiGraphics.setTooltipForNextFrame(
                             this.font,
                             List.of(
                                 Component.translatable("item.the_bumblezone.buzzing_briefcase_health_1"),
@@ -400,7 +408,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                             mouseY);
                     }
                     else {
-                        guiGraphics.renderTooltip(
+                        guiGraphics.setTooltipForNextFrame(
                             this.font,
                             List.of(
                                 Component.translatable("item.the_bumblezone.buzzing_briefcase_health_missing_item")
@@ -419,7 +427,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                 if (beeState.beeEntity().hasStung()) {
                     boolean hasBeeStingerItem = inventory.contains(BzItems.BEE_STINGER.get().getDefaultInstance());
                     if (hasBeeStingerItem) {
-                        guiGraphics.renderTooltip(
+                        guiGraphics.setTooltipForNextFrame(
                             this.font,
                             List.of(
                                 Component.translatable("item.the_bumblezone.buzzing_briefcase_stinger_1"),
@@ -430,7 +438,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                             mouseY);
                     }
                     else {
-                        guiGraphics.renderTooltip(
+                        guiGraphics.setTooltipForNextFrame(
                             this.font,
                             List.of(
                                 Component.translatable("item.the_bumblezone.buzzing_briefcase_stinger_missing_item")
@@ -449,7 +457,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                 if (beeState.beeEntity().isBaby()) {
                     boolean hasHoneyBottleItem = inventory.contains(Items.HONEY_BOTTLE.getDefaultInstance());
                     if (hasHoneyBottleItem) {
-                        guiGraphics.renderTooltip(
+                        guiGraphics.setTooltipForNextFrame(
                             this.font,
                             List.of(
                                 Component.translatable("item.the_bumblezone.buzzing_briefcase_grow_up_1"),
@@ -460,7 +468,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                             mouseY);
                     }
                     else {
-                        guiGraphics.renderTooltip(
+                        guiGraphics.setTooltipForNextFrame(
                             this.font,
                             List.of(
                                 Component.translatable("item.the_bumblezone.buzzing_briefcase_grow_up_missing_item")
@@ -480,7 +488,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     if (!beeState.beeEntity().hasNectar()) {
                         boolean hasPollenPuffItem = inventory.contains(BzItems.POLLEN_PUFF.get().getDefaultInstance());
                         if (hasPollenPuffItem) {
-                            guiGraphics.renderTooltip(
+                            guiGraphics.setTooltipForNextFrame(
                                 this.font,
                                 List.of(
                                     Component.translatable("item.the_bumblezone.buzzing_briefcase_pollen_1"),
@@ -491,7 +499,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                                 mouseY);
                         }
                         else {
-                            guiGraphics.renderTooltip(
+                            guiGraphics.setTooltipForNextFrame(
                                 this.font,
                                 List.of(
                                     Component.translatable("item.the_bumblezone.buzzing_briefcase_pollen_missing_item")
@@ -536,7 +544,6 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
             }
 
             //mainSlot
-            RenderSystem.enableDepthTest();
             if (beeState == null) {
                 guiGraphics.blit(BEE_SLOT_BACKGROUND, mainX, mainY, 22, 0, 22, 22, 64, 64);
                 guiGraphics.blit(BEE_SLOT_BACKGROUND, mainX, mainY + 22, 22, 22, 11, 11, 64, 64);
@@ -577,23 +584,23 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
         }
         else {
             guiGraphics.blit(isBaby ? BEE_BABY_BASE_ICON : BEE_BASE_ICON, mainX + 3, mainY + 3, 0, 0, 16, 16, 16, 16);
-            guiGraphics.setColor(GeneralUtils.getRed(beeState.primaryColor()) / 255f, GeneralUtils.getGreen(beeState.primaryColor()) / 255f, GeneralUtils.getBlue(beeState.primaryColor()) / 255f, 1F);
-            guiGraphics.blit(isBaby ? BEE_BABY_PRIMARY_ICON : BEE_PRIMARY_ICON, mainX + 3, mainY + 3, 0, 0, 16, 16, 16, 16);
-            guiGraphics.setColor(GeneralUtils.getRed(beeState.secondaryColor()) / 255f, GeneralUtils.getGreen(beeState.secondaryColor()) / 255f, GeneralUtils.getBlue(beeState.secondaryColor()) / 255f, 1F);
-            guiGraphics.blit(isBaby ? BEE_BABY_SECONDARY_ICON : BEE_SECONDARY_ICON, mainX + 3, mainY + 3, 0, 0, 16, 16, 16, 16);
-            guiGraphics.setColor(1F, 1F, 1F, 1F);
+            int color1 = ARGB.colorFromFloat(1F, GeneralUtils.getRed(beeState.primaryColor()) / 255f, GeneralUtils.getGreen(beeState.primaryColor()) / 255f, GeneralUtils.getBlue(beeState.primaryColor()) / 255f);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, isBaby ? BEE_BABY_PRIMARY_ICON : BEE_PRIMARY_ICON, mainX + 3, mainY + 3, 0, 0, 16, 16, 16, 16, color1);
+            int color2 = ARGB.colorFromFloat(1F, GeneralUtils.getRed(beeState.secondaryColor()) / 255f, GeneralUtils.getGreen(beeState.secondaryColor()) / 255f, GeneralUtils.getBlue(beeState.secondaryColor()) / 255f);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, isBaby ? BEE_BABY_SECONDARY_ICON : BEE_SECONDARY_ICON, mainX + 3, mainY + 3, 0, 0, 16, 16, 16, 16, color2);
+            int color3 = ARGB.colorFromFloat(1F, 1F, 1F, 1F);
             if (!beeState.beeEntity().hasStung()) {
-                guiGraphics.blit(isBaby ? BEE_BABY_STINGER_ICON : BEE_STINGER_ICON, mainX + 3, mainY + 3, 0, 0, 16, 16, 16, 16);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, isBaby ? BEE_BABY_STINGER_ICON : BEE_STINGER_ICON, mainX + 3, mainY + 3, 0, 0, 16, 16, 16, 16, color3);
             }
             if (beeState.beeEntity().hasNectar()) {
-                guiGraphics.blit(isBaby ? BEE_BABY_POLLEN_ICON : BEE_POLLEN_ICON, mainX + 3, mainY + 3, 0, 0, 16, 16, 16, 16);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, isBaby ? BEE_BABY_POLLEN_ICON : BEE_POLLEN_ICON, mainX + 3, mainY + 3, 0, 0, 16, 16, 16, 16, color3);
             }
         }
 
         float healthPercentage = Math.min(1, beeState.beeEntity().getHealth() / beeState.beeEntity().getMaxHealth());
         int barColor = Mth.hsvToRgb(healthPercentage / 3.0f, 1.0f, 1.0f);
         int barWidth = (int) (Math.max(1, 16 * healthPercentage));
-        guiGraphics.fill(RenderType.guiOverlay(), mainX + 3, mainY + 19, mainX + 3 + barWidth, mainY + 18, barColor | 0xFF000000);
+        guiGraphics.fill(RenderPipelines.GUI_TEXTURED, mainX + 3, mainY + 19, mainX + 3 + barWidth, mainY + 18, barColor | 0xFF000000);
 
     }
 
@@ -709,7 +716,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
         int rowIndex = 0;
         int columnIndex = 0;
         for (int beeIndex = 0; beeIndex < BuzzingBriefcase.MAX_NUMBER_OF_BEES; beeIndex++) {
@@ -729,17 +736,17 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                 columnIndex++;
             }
 
-            if (mouseX - (mainX + 22) >= 0.0D &&
-                mouseX - (mainX + 22) < 11.0D &&
-                mouseY - mainY >= 0.0D &&
-                mouseY - mainY < 11.0D)
+            if (event.x() - (mainX + 22) >= 0.0D &&
+                event.x() - (mainX + 22) < 11.0D &&
+                event.y() - mainY >= 0.0D &&
+                event.y() - mainY < 11.0D)
             {
                 sendButtonPressToMenu((beeIndex * BuzzingBriefcaseMenu.NUMBER_OF_BUTTONS) + BuzzingBriefcaseMenu.RELEASE_ID);
             }
-            else if (mouseX - mainX >= 0.0D &&
-                    mouseX - mainX < 11.0D &&
-                    mouseY - (mainY + 22) >= 0.0D &&
-                    mouseY - (mainY + 22) < 11.0D)
+            else if (event.x() - mainX >= 0.0D &&
+                    event.x() - mainX < 11.0D &&
+                    event.y() - (mainY + 22) >= 0.0D &&
+                    event.y() - (mainY + 22) < 11.0D)
             {
                 if (bee.getHealth() < bee.getMaxHealth()) {
                     sendButtonPressToMenu((beeIndex * BuzzingBriefcaseMenu.NUMBER_OF_BUTTONS) + BuzzingBriefcaseMenu.HEALTH_ID);
@@ -760,10 +767,10 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     }
                 }
             }
-            else if (mouseX - (mainX + 11) >= 0.0D &&
-                    mouseX - (mainX + 11) < 11.0D &&
-                    mouseY - (mainY + 22) >= 0.0D &&
-                    mouseY - (mainY + 22) < 11.0D)
+            else if (event.x() - (mainX + 11) >= 0.0D &&
+                    event.x() - (mainX + 11) < 11.0D &&
+                    event.y() - (mainY + 22) >= 0.0D &&
+                    event.y() - (mainY + 22) < 11.0D)
             {
                 if (bee.hasStung()) {
                     sendButtonPressToMenu((beeIndex * BuzzingBriefcaseMenu.NUMBER_OF_BUTTONS) + BuzzingBriefcaseMenu.STINGER_ID);
@@ -781,10 +788,10 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     }
                 }
             }
-            else if (mouseX - mainX >= 0.0D &&
-                    mouseX - mainX < 11.0D &&
-                    mouseY - (mainY + 33) >= 0.0D &&
-                    mouseY - (mainY + 33) < 11.0D)
+            else if (event.x() - mainX >= 0.0D &&
+                    event.x() - mainX < 11.0D &&
+                    event.y() - (mainY + 33) >= 0.0D &&
+                    event.y() - (mainY + 33) < 11.0D)
             {
                 if (bee.isBaby()) {
                     sendButtonPressToMenu((beeIndex * BuzzingBriefcaseMenu.NUMBER_OF_BUTTONS) + BuzzingBriefcaseMenu.GROW_UP_ID);
@@ -805,10 +812,10 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     }
                 }
             }
-            else if (mouseX - (mainX + 11) >= 0.0D &&
-                    mouseX - (mainX + 11) < 11.0D &&
-                    mouseY - (mainY + 33) >= 0.0D &&
-                    mouseY - (mainY + 33) < 11.0D)
+            else if (event.x() - (mainX + 11) >= 0.0D &&
+                    event.x() - (mainX + 11) < 11.0D &&
+                    event.y() - (mainY + 33) >= 0.0D &&
+                    event.y() - (mainY + 33) < 11.0D)
             {
                 if (!bee.hasNectar() && bee.is(BzTags.BUZZING_BRIEFCASE_CAN_POLLINATE)) {
                     sendButtonPressToMenu((beeIndex * BuzzingBriefcaseMenu.NUMBER_OF_BUTTONS) + BuzzingBriefcaseMenu.POLLEN_ID);
@@ -826,11 +833,11 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
             }
         }
 
-        return super.mouseClicked(mouseX, mouseY, button);
+        return super.mouseClicked(event, doubleClick);
     }
 
     @Override
-    protected boolean hasClickedOutside(double mouseX, double mouseY, int left, int top, int button) {
+    protected boolean hasClickedOutside(double mx, double my, int xo, int yo) {
         return false;
     }
 

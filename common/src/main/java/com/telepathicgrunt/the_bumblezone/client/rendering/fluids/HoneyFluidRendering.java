@@ -5,12 +5,16 @@ import com.teamresourceful.resourcefullib.client.fluid.data.ClientFluidPropertie
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.sprite.AtlasManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.ARGB;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.BlockGetter;
@@ -32,7 +36,7 @@ public class HoneyFluidRendering {
     public static void renderSpecialHoneyFluid(
             BlockPos blockPos,
             BlockAndTintGetter level,
-            VertexConsumer vertexConsumer,
+            VertexConsumer builder,
             BlockState blockState,
             FluidState fluidState,
             BzDiagonalClientFluidProperties clientFluidProperties)
@@ -60,6 +64,7 @@ public class HoneyFluidRendering {
         
         if (isNotSameFluidAbove || shouldRenderUp || renderDown || renderEast || renderWest || renderNorth || renderSouth) {
             CardinalLighting cardinalLighting = level.cardinalLighting();
+            AtlasManager atlasManager = Minecraft.getInstance().getAtlasManager();
             Fluid fluid = fluidState.getType();
             float n = getHeight(level, fluid, blockPos, blockState, fluidState);
             float o;
@@ -84,9 +89,9 @@ public class HoneyFluidRendering {
                 r = calculateAverageHeight(level, fluid, n, t, v, blockPos.relative(Direction.SOUTH).relative(Direction.WEST));
             }
 
-            double renderX = blockPos.getX() & 15;
-            double renderY = blockPos.getY() & 15;
-            double renderZ = blockPos.getZ() & 15;
+            float renderX = blockPos.getX() & 15;
+            float renderY = blockPos.getY() & 15;
+            float renderZ = blockPos.getZ() & 15;
             float y = fluidState.isSource() ? 0f : fluidState.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8f;
             float u1;
             float u2;
@@ -109,7 +114,7 @@ public class HoneyFluidRendering {
                 float ah;
                 float ai;
                 if (vec3.x == 0.0 && vec3.z == 0.0) {
-                    textureAtlasSprite = clientFluidProperties.still();
+                    textureAtlasSprite = atlasManager.get(clientFluidProperties.stillSpriteId());
                     u1 = textureAtlasSprite.getU(0.0F);
                     v1 = textureAtlasSprite.getV(0.0F);
                     u2 = u1;
@@ -123,7 +128,7 @@ public class HoneyFluidRendering {
                     boolean isDiagonal = vec3.x % 1.0 != 0.0 || vec3.z % 1.0 != 0.0;
                     float sizing = 1;
                     if (isDiagonal) {
-                        textureAtlasSprite = clientFluidProperties.flowingDiagonal();
+                        textureAtlasSprite = atlasManager.get(clientFluidProperties.flowingDiagonalSpriteId());
                         if (Math.abs(vec3.x()) == Math.abs(vec3.z())) {
                             sizing = 1.415f;
                         }
@@ -132,7 +137,7 @@ public class HoneyFluidRendering {
                         }
                     }
                     else {
-                        textureAtlasSprite = clientFluidProperties.flowing();
+                        textureAtlasSprite = atlasManager.get(clientFluidProperties.flowingSpriteId());
                     }
 
                     ah = (float) Mth.atan2(vec3.z, vec3.x) - 1.5707964F;
@@ -148,104 +153,125 @@ public class HoneyFluidRendering {
                     v4 = textureAtlasSprite.getV(0.5F + (-aj - ai));
                 }
 
-
-                float al = (u1 + u2 + u3 + u4) / 4.0F;
-                ah = (v1 + v2 + v3 + v4) / 4.0F;
-                ai = clientFluidProperties.still().uvShrinkRatio();
-
-                u1 = Mth.lerp(ai, u1, al);
-                u2 = Mth.lerp(ai, u2, al);
-                u3 = Mth.lerp(ai, u3, al);
-                u4 = Mth.lerp(ai, u4, al);
-                v1 = Mth.lerp(ai, v1, ah);
-                v2 = Mth.lerp(ai, v2, ah);
-                v3 = Mth.lerp(ai, v3, ah);
-                v4 = Mth.lerp(ai, v4, ah);
-                int uv2 = getLightColor(level, blockPos);
-
-                vertex(vertexConsumer, renderX + 0.0, renderY + (double)p, renderZ + 0.0, upShade, upShade, upShade, u1, v1, uv2);
-                vertex(vertexConsumer, renderX + 0.0, renderY + (double)r, renderZ + 1.0, upShade, upShade, upShade, u2, v2, uv2);
-                vertex(vertexConsumer, renderX + 1.0, renderY + (double)q, renderZ + 1.0, upShade, upShade, upShade, u3, v3, uv2);
-                vertex(vertexConsumer, renderX + 1.0, renderY + (double)o, renderZ + 0.0, upShade, upShade, upShade, u4, v4, uv2);
-
-                if (fluidState.shouldRenderBackwardUpFace(level, blockPos.above())) {
-                    vertex(vertexConsumer, renderX + 0.0, renderY + (double)p, renderZ + 0.0, upShade, upShade, upShade, u1, v1, uv2);
-                    vertex(vertexConsumer, renderX + 1.0, renderY + (double)o, renderZ + 0.0, upShade, upShade, upShade, u4, v4, uv2);
-                    vertex(vertexConsumer, renderX + 1.0, renderY + (double)q, renderZ + 1.0, upShade, upShade, upShade, u3, v3, uv2);
-                    vertex(vertexConsumer, renderX + 0.0, renderY + (double)r, renderZ + 1.0, upShade, upShade, upShade, u2, v2, uv2);
-                }
+                int topLightCoords = getLightCoords(level, blockPos);
+                int topColor = ARGB.scaleRGB(-1, cardinalLighting.up());
+                addFace(builder,
+                        renderX + 0.0F,
+                        renderY + p,
+                        renderZ + 0.0F,
+                        u1,
+                        v1,
+                        renderX + 0.0F,
+                        renderY + r,
+                        renderZ + 1.0F,
+                        u2,
+                        v2,
+                        renderX + 1.0F,
+                        renderY + q,
+                        renderZ + 1.0F,
+                        u3,
+                        v3,
+                        renderX + 1.0F,
+                        renderY + o,
+                        renderZ + 0.0F,
+                        u4,
+                        v4,
+                        topColor,
+                        topLightCoords,
+                        fluidState.shouldRenderBackwardUpFace(level, blockPos.above())
+                );
             }
 
             if (renderDown) {
-                u1 = clientFluidProperties.still().getU0();
-                u2 = clientFluidProperties.still().getU1();
-                u3 = clientFluidProperties.still().getV0();
-                u4 = clientFluidProperties.still().getV1();
-                int ap = getLightColor(level, blockPos.below());
-                v2 = downShade;
-                v3 = downShade;
-                v4 = downShade;
-                downVertex(vertexConsumer, renderX, renderY + (double)y, renderZ + 1.0, v2, v3, v4, u1, u4, ap);
-                downVertex(vertexConsumer, renderX, renderY + (double)y, renderZ, v2, v3, v4, u1, u3, ap);
-                downVertex(vertexConsumer, renderX + 1.0, renderY + (double)y, renderZ, v2, v3, v4, u2, u3, ap);
-                downVertex(vertexConsumer, renderX + 1.0, renderY + (double)y, renderZ + 1.0, v2, v3, v4, u2, u4, ap);
+                TextureAtlasSprite stillSprite = atlasManager.get(clientFluidProperties.stillSpriteId());
+                u1 = stillSprite.getU0();
+                u2 = stillSprite.getU1();
+                u3 = stillSprite.getV0();
+                u4 = stillSprite.getV1();
+                int belowLightCoords = getLightCoords(level, blockPos.below());
+                int belowColor = ARGB.scaleRGB(-1, cardinalLighting.down());
+                addFace(builder,
+                        renderX + 0.0F,
+                        renderY + y,
+                        renderZ + 1.0F,
+                        u1,
+                        u4,
+                        renderX + 0.0F,
+                        renderY + y,
+                        renderZ + 0.0F,
+                        u1,
+                        u3,
+                        renderX + 1.0F,
+                        renderY + y,
+                        renderZ + 0.0F,
+                        u2,
+                        u3,
+                        renderX + 1.0F,
+                        renderY + y,
+                        renderZ + 1.0F,
+                        u2,
+                        u4,
+                        belowColor,
+                        belowLightCoords,
+                        false
+                );
             }
 
-            int aq = getLightColor(level, blockPos);
+            int sideLightCoords = getLightCoords(level, blockPos);
 
             for(Direction direction : Direction.Plane.HORIZONTAL) {
-                double ar;
-                double at;
-                double as;
-                double au;
-                boolean renderside;
+                float ar;
+                float at;
+                float as;
+                float au;
+                boolean renderSide;
 
                 switch (direction) {
                     case NORTH -> {
                         u4 = p;
                         v1 = o;
                         ar = renderX;
-                        as = renderX + 1.0;
-                        at = renderZ + 0.0010000000474974513;
-                        au = renderZ + 0.0010000000474974513;
-                        renderside = renderNorth;
+                        as = renderX + 1.0F;
+                        at = renderZ + 0.001F;
+                        au = renderZ + 0.001F;
+                        renderSide = renderNorth;
                     }
                     case SOUTH -> {
                         u4 = q;
                         v1 = r;
-                        ar = renderX + 1.0;
+                        ar = renderX + 1.0F;
                         as = renderX;
-                        at = renderZ + 1.0 - 0.0010000000474974513;
-                        au = renderZ + 1.0 - 0.0010000000474974513;
-                        renderside = renderSouth;
+                        at = renderZ + 1.0F - 0.001F;
+                        au = renderZ + 1.0F - 0.001F;
+                        renderSide = renderSouth;
                     }
                     case WEST -> {
                         u4 = r;
                         v1 = p;
-                        ar = renderX + 0.0010000000474974513;
-                        as = renderX + 0.0010000000474974513;
-                        at = renderZ + 1.0;
+                        ar = renderX + 0.001F;
+                        as = renderX + 0.001F;
+                        at = renderZ + 1.0F;
                         au = renderZ;
-                        renderside = renderWest;
+                        renderSide = renderWest;
                     }
                     default -> {
                         u4 = o;
                         v1 = q;
-                        ar = renderX + 1.0 - 0.0010000000474974513;
-                        as = renderX + 1.0 - 0.0010000000474974513;
+                        ar = renderX + 1.0F - 0.001F;
+                        as = renderX + 1.0F - 0.001F;
                         at = renderZ;
-                        au = renderZ + 1.0;
-                        renderside = renderEast;
+                        au = renderZ + 1.0F;
+                        renderSide = renderEast;
                     }
                 }
 
-                if (renderside) {
+                if (renderSide) {
                     BlockPos blockPos2 = blockPos.relative(direction);
-                    TextureAtlasSprite textureAtlasSprite2 = clientFluidProperties.flowing();
+                    TextureAtlasSprite textureAtlasSprite2 = atlasManager.get(clientFluidProperties.flowingSpriteId());
                     Block block = level.getBlockState(blockPos2).getBlock();
                     boolean stillSide = false;
                     if (block instanceof HalfTransparentBlock || block instanceof LeavesBlock) {
-                        textureAtlasSprite2 = clientFluidProperties.still();
+                        textureAtlasSprite2 = atlasManager.get(clientFluidProperties.stillSpriteId());
                         stillSide = true;
                     }
 
@@ -254,27 +280,39 @@ public class HoneyFluidRendering {
                     float ax = textureAtlasSprite2.getV((1.0F - u4) * 0.5F);
                     float ay = textureAtlasSprite2.getV((1.0F - v1) * 0.5F);
                     float az = textureAtlasSprite2.getV((y == 0 ? 0.5F : 0.5F * (1 - y)) * (stillSide ? 2f : 1f));
-                    float ba = direction.getAxis() == Direction.Axis.Z ? northShade : westShade;
-                    float bb = upShade * ba;
-                    float bc = upShade * ba;
-                    float bd = upShade * ba;
-
-                    vertex(vertexConsumer, ar, renderY + (double)u4, at, bb, bc, bd, av, ax, aq);
-                    vertex(vertexConsumer, as, renderY + (double)v1, au, bb, bc, bd, aw, ay, aq);
-                    vertex(vertexConsumer, as, renderY + (double)y, au, bb, bc, bd, aw, az, aq);
-                    vertex(vertexConsumer, ar, renderY + (double)y, at, bb, bc, bd, av, az, aq);
-                    if (textureAtlasSprite2 != clientFluidProperties.still()) {
-                        vertex(vertexConsumer, ar, renderY + (double)y, at, bb, bc, bd, av, az, aq);
-                        vertex(vertexConsumer, as, renderY + (double)y, au, bb, bc, bd, aw, az, aq);
-                        vertex(vertexConsumer, as, renderY + (double)v1, au, bb, bc, bd, aw, ay, aq);
-                        vertex(vertexConsumer, ar, renderY + (double)u4, at, bb, bc, bd, av, ax, aq);
-                    }
+                    float shadeSide = direction.getAxis() == Direction.Axis.Z ? cardinalLighting.north() : cardinalLighting.west();
+                    int faceColor = ARGB.scaleRGB(-1, cardinalLighting.up() * shadeSide);
+                    addFace(builder,
+                            ar,
+                            renderY + u4,
+                            at,
+                            av,
+                            ax,
+                            as,
+                            renderY + v1,
+                            au,
+                            aw,
+                            ay,
+                            as,
+                            renderY + y,
+                            au,
+                            aw,
+                            az,
+                            ar,
+                            renderY + y,
+                            at,
+                            av,
+                            az,
+                            faceColor,
+                            sideLightCoords,
+                            !stillSide
+                    );
                 }
             }
         }
     }
 
-    private void addFace(
+    private static void addFace(
             final VertexConsumer builder,
             final float x0,
             final float y0,
@@ -300,21 +338,20 @@ public class HoneyFluidRendering {
             final int lightCoords,
             final boolean addBackFace
     ) {
-        this.vertex(builder, x0, y0, z0, color, u0, v0, lightCoords);
-        this.vertex(builder, x1, y1, z1, color, u1, v1, lightCoords);
-        this.vertex(builder, x2, y2, z2, color, u2, v2, lightCoords);
-        this.vertex(builder, x3, y3, z3, color, u3, v3, lightCoords);
+        vertex(builder, x0, y0, z0, color, u0, v0, lightCoords);
+        vertex(builder, x1, y1, z1, color, u1, v1, lightCoords);
+        vertex(builder, x2, y2, z2, color, u2, v2, lightCoords);
+        vertex(builder, x3, y3, z3, color, u3, v3, lightCoords);
         if (addBackFace) {
-            this.vertex(builder, x3, y3, z3, color, u3, v3, lightCoords);
-            this.vertex(builder, x2, y2, z2, color, u2, v2, lightCoords);
-            this.vertex(builder, x1, y1, z1, color, u1, v1, lightCoords);
-            this.vertex(builder, x0, y0, z0, color, u0, v0, lightCoords);
+            vertex(builder, x3, y3, z3, color, u3, v3, lightCoords);
+            vertex(builder, x2, y2, z2, color, u2, v2, lightCoords);
+            vertex(builder, x1, y1, z1, color, u1, v1, lightCoords);
+            vertex(builder, x0, y0, z0, color, u0, v0, lightCoords);
         }
     }
 
-    private void vertex(
-            final VertexConsumer builder, final float x, final float y, final float z, final int color, final float u, final float v, final int lightCoords
-    ) {
+    private static void vertex(final VertexConsumer builder, final float x, final float y, final float z, final int color, final float u, final float v, final int lightCoords)
+    {
         builder.addVertex(x, y, z, color, u, v, OverlayTexture.NO_OVERLAY, lightCoords, 0.0F, 1.0F, 0.0F);
     }
 
@@ -337,14 +374,8 @@ public class HoneyFluidRendering {
         }
     }
 
-    private static int getLightColor(BlockAndLightGetter blockAndTintGetter, BlockPos blockPos) {
-        int i = LevelRenderer.getLightCoords(blockAndTintGetter, blockPos);
-        int j = LevelRenderer.getLightCoords(blockAndTintGetter, blockPos.above());
-        int k = i & 255;
-        int l = j & 255;
-        int m = i >> 16 & 255;
-        int n = j >> 16 & 255;
-        return (Math.max(k, l)) | (Math.max(m, n)) << 16;
+    private static int getLightCoords(final BlockAndTintGetter level, final BlockPos pos) {
+        return LightCoordsUtil.max(LevelRenderer.getLightCoords(level, pos), LevelRenderer.getLightCoords(level, pos.above()));
     }
 
     private static float calculateAverageHeight(BlockAndLightGetter blockAndTintGetter, Fluid fluid, float f, float g, float h, BlockPos blockPos) {

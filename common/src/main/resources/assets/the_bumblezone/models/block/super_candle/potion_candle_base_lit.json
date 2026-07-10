@@ -5,7 +5,6 @@
     "1": "the_bumblezone:block/super_candle/potion_candle_lit_top",
     "particle": "the_bumblezone:block/super_candle/potion_candle_lit"
   },
-  "render_type": "minecraft:cutout",
   "elements": [
     {
       "from": [5, 0, 5],

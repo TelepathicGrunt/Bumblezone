@@ -30,7 +30,7 @@ public class HoneyFluidClientProperties {
     public static final Identifier HONEY_FLUID_FLOWING_DIAGONAL_TEXTURE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "block/honey_fluid/flow_diagonal");
 
     public static ClientFluidProperties create() {
-        return new BzDiagonalClientFluidProperties() {
+        return new BzCachingClientFluidProperties() {
 
             @Override
             public Material still() {
@@ -69,8 +69,8 @@ public class HoneyFluidClientProperties {
 
             @Override
             public boolean renderFluid(BlockPos pos, BlockAndTintGetter level, FluidRenderer.Output output, BlockState blockState, FluidState fluidState) {
-                VertexConsumer vertexConsumer = output.getBuilder(ChunkSectionLayer.TRANSLUCENT);
-                HoneyFluidRendering.renderSpecialHoneyFluid(pos, level, vertexConsumer, blockState, fluidState, this);
+                VertexConsumer builder = output.getBuilder(ChunkSectionLayer.TRANSLUCENT);
+                HoneyFluidRendering.renderSpecialHoneyFluid(pos, level, builder, blockState, fluidState, this);
                 return true;
             }
 

@@ -29,7 +29,7 @@ public class RoyalJellyClientProperties {
     public static final Identifier ROYAL_JELLY_FLUID_FLOWING_DIAGONAL_TEXTURE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "block/royal_jelly_fluid/flow_diagonal");
 
     public static ClientFluidProperties create() {
-        return new BzDiagonalClientFluidProperties() {
+        return new BzCachingClientFluidProperties() {
 
             @Override
             public Material still() {
