@@ -1,16 +1,20 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.fluids;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.teamresourceful.resourcefullib.client.fluid.data.ClientFluidProperties;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.CardinalLighting;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.LeavesBlock;
@@ -27,11 +31,11 @@ public class HoneyFluidRendering {
 
     public static void renderSpecialHoneyFluid(
             BlockPos blockPos,
-            BlockAndLightGetter level,
+            BlockAndTintGetter level,
             VertexConsumer vertexConsumer,
             BlockState blockState,
             FluidState fluidState,
-            TextureAtlasSprite[] sprites)
+            BzDiagonalClientFluidProperties clientFluidProperties)
     {
         BlockState aboveState = level.getBlockState(blockPos.relative(Direction.UP));
         BlockState northState = level.getBlockState(blockPos.relative(Direction.NORTH));
@@ -55,10 +59,7 @@ public class HoneyFluidRendering {
         boolean renderDown = HoneyFluid.shouldRenderSide(level, blockPos, Direction.DOWN, fluidState);
         
         if (isNotSameFluidAbove || shouldRenderUp || renderDown || renderEast || renderWest || renderNorth || renderSouth) {
-            float downShade = level.getShade(Direction.DOWN, true);
-            float upShade = level.getShade(Direction.UP, true);
-            float northShade = level.getShade(Direction.NORTH, true);
-            float westShade = level.getShade(Direction.WEST, true);
+            CardinalLighting cardinalLighting = level.cardinalLighting();
             Fluid fluid = fluidState.getType();
             float n = getHeight(level, fluid, blockPos, blockState, fluidState);
             float o;
@@ -108,7 +109,7 @@ public class HoneyFluidRendering {
                 float ah;
                 float ai;
                 if (vec3.x == 0.0 && vec3.z == 0.0) {
-                    textureAtlasSprite = sprites[0];
+                    textureAtlasSprite = clientFluidProperties.still();
                     u1 = textureAtlasSprite.getU(0.0F);
                     v1 = textureAtlasSprite.getV(0.0F);
                     u2 = u1;
@@ -122,7 +123,7 @@ public class HoneyFluidRendering {
                     boolean isDiagonal = vec3.x % 1.0 != 0.0 || vec3.z % 1.0 != 0.0;
                     float sizing = 1;
                     if (isDiagonal) {
-                        textureAtlasSprite = sprites[3];
+                        textureAtlasSprite = clientFluidProperties.flowingDiagonal();
                         if (Math.abs(vec3.x()) == Math.abs(vec3.z())) {
                             sizing = 1.415f;
                         }
@@ -131,7 +132,7 @@ public class HoneyFluidRendering {
                         }
                     }
                     else {
-                        textureAtlasSprite = sprites[1];
+                        textureAtlasSprite = clientFluidProperties.flowing();
                     }
 
                     ah = (float) Mth.atan2(vec3.z, vec3.x) - 1.5707964F;
@@ -150,7 +151,7 @@ public class HoneyFluidRendering {
 
                 float al = (u1 + u2 + u3 + u4) / 4.0F;
                 ah = (v1 + v2 + v3 + v4) / 4.0F;
-                ai = sprites[0].uvShrinkRatio();
+                ai = clientFluidProperties.still().uvShrinkRatio();
 
                 u1 = Mth.lerp(ai, u1, al);
                 u2 = Mth.lerp(ai, u2, al);
@@ -176,10 +177,10 @@ public class HoneyFluidRendering {
             }
 
             if (renderDown) {
-                u1 = sprites[0].getU0();
-                u2 = sprites[0].getU1();
-                u3 = sprites[0].getV0();
-                u4 = sprites[0].getV1();
+                u1 = clientFluidProperties.still().getU0();
+                u2 = clientFluidProperties.still().getU1();
+                u3 = clientFluidProperties.still().getV0();
+                u4 = clientFluidProperties.still().getV1();
                 int ap = getLightColor(level, blockPos.below());
                 v2 = downShade;
                 v3 = downShade;
@@ -240,11 +241,11 @@ public class HoneyFluidRendering {
 
                 if (renderside) {
                     BlockPos blockPos2 = blockPos.relative(direction);
-                    TextureAtlasSprite textureAtlasSprite2 = sprites[1];
+                    TextureAtlasSprite textureAtlasSprite2 = clientFluidProperties.flowing();
                     Block block = level.getBlockState(blockPos2).getBlock();
                     boolean stillSide = false;
                     if (block instanceof HalfTransparentBlock || block instanceof LeavesBlock) {
-                        textureAtlasSprite2 = sprites[0];
+                        textureAtlasSprite2 = clientFluidProperties.still();
                         stillSide = true;
                     }
 
@@ -262,7 +263,7 @@ public class HoneyFluidRendering {
                     vertex(vertexConsumer, as, renderY + (double)v1, au, bb, bc, bd, aw, ay, aq);
                     vertex(vertexConsumer, as, renderY + (double)y, au, bb, bc, bd, aw, az, aq);
                     vertex(vertexConsumer, ar, renderY + (double)y, at, bb, bc, bd, av, az, aq);
-                    if (textureAtlasSprite2 != sprites[0]) {
+                    if (textureAtlasSprite2 != clientFluidProperties.still()) {
                         vertex(vertexConsumer, ar, renderY + (double)y, at, bb, bc, bd, av, az, aq);
                         vertex(vertexConsumer, as, renderY + (double)y, au, bb, bc, bd, aw, az, aq);
                         vertex(vertexConsumer, as, renderY + (double)v1, au, bb, bc, bd, aw, ay, aq);
@@ -273,13 +274,48 @@ public class HoneyFluidRendering {
         }
     }
 
-    private static void vertex(VertexConsumer vertexConsumer, double x, double y, double z, float r, float g, float b, float u, float v, int uv2) {
-        vertexConsumer.addVertex((float) x, (float) y, (float) z).setColor(r, g, b, 1.0F).setUv(u, v).setLight(uv2).setNormal(0.0F, 1.0F, 0.0F);
+    private void addFace(
+            final VertexConsumer builder,
+            final float x0,
+            final float y0,
+            final float z0,
+            final float u0,
+            final float v0,
+            final float x1,
+            final float y1,
+            final float z1,
+            final float u1,
+            final float v1,
+            final float x2,
+            final float y2,
+            final float z2,
+            final float u2,
+            final float v2,
+            final float x3,
+            final float y3,
+            final float z3,
+            final float u3,
+            final float v3,
+            final int color,
+            final int lightCoords,
+            final boolean addBackFace
+    ) {
+        this.vertex(builder, x0, y0, z0, color, u0, v0, lightCoords);
+        this.vertex(builder, x1, y1, z1, color, u1, v1, lightCoords);
+        this.vertex(builder, x2, y2, z2, color, u2, v2, lightCoords);
+        this.vertex(builder, x3, y3, z3, color, u3, v3, lightCoords);
+        if (addBackFace) {
+            this.vertex(builder, x3, y3, z3, color, u3, v3, lightCoords);
+            this.vertex(builder, x2, y2, z2, color, u2, v2, lightCoords);
+            this.vertex(builder, x1, y1, z1, color, u1, v1, lightCoords);
+            this.vertex(builder, x0, y0, z0, color, u0, v0, lightCoords);
+        }
     }
 
-
-    private static void downVertex(VertexConsumer vertexConsumer, double d, double e, double f, float g, float h, float i, float j, float k, int l) {
-        vertexConsumer.addVertex((float) d, (float) e, (float) f).setColor(g, h, i, 1.0F).setUv(j, k).setLight(l).setNormal(0.0F, -1.0F, 0.0F);
+    private void vertex(
+            final VertexConsumer builder, final float x, final float y, final float z, final int color, final float u, final float v, final int lightCoords
+    ) {
+        builder.addVertex(x, y, z, color, u, v, OverlayTexture.NO_OVERLAY, lightCoords, 0.0F, 1.0F, 0.0F);
     }
 
     private static boolean isNeighborSameFluid(FluidState fluidState, FluidState fluidState2) {
@@ -293,8 +329,8 @@ public class HoneyFluidRendering {
     private static boolean isFaceOccludedByState(BlockGetter blockGetter, Direction direction, float f, BlockPos blockPos, BlockState blockState) {
         if (blockState.canOcclude()) {
             VoxelShape voxelShape = Shapes.box(0.0, 0.0, 0.0, 1.0, f, 1.0);
-            VoxelShape voxelShape2 = blockState.getOcclusionShape(blockGetter, blockPos);
-            return Shapes.blockOccudes(voxelShape, voxelShape2, direction);
+            VoxelShape voxelShape2 = blockState.getOcclusionShape();
+            return Shapes.blockOccludes(voxelShape, voxelShape2, direction);
         }
         else {
             return blockState.getBlock() instanceof HoneyFluidBlock honeyFluidBlock && honeyFluidBlock.getFluidState(blockState).is(BzTags.SPECIAL_HONEY_LIKE);
@@ -302,8 +338,8 @@ public class HoneyFluidRendering {
     }
 
     private static int getLightColor(BlockAndLightGetter blockAndTintGetter, BlockPos blockPos) {
-        int i = LevelRenderer.getLightColor(blockAndTintGetter, blockPos);
-        int j = LevelRenderer.getLightColor(blockAndTintGetter, blockPos.above());
+        int i = LevelRenderer.getLightCoords(blockAndTintGetter, blockPos);
+        int j = LevelRenderer.getLightCoords(blockAndTintGetter, blockPos.above());
         int k = i & 255;
         int l = j & 255;
         int m = i >> 16 & 255;

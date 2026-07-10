@@ -1,7 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.fluids;
 
-import com.mojang.blaze3d.shaders.FogShape;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.teamresourceful.resourcefullib.client.fluid.data.ClientFluidProperties;
@@ -10,19 +8,20 @@ import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.FogRenderer;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.Lightmap;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.FluidRenderer;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.client.renderer.fog.FogData;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
-
-import java.util.function.Function;
+import org.joml.Vector4f;
 
 public class HoneyFluidClientProperties {
 
@@ -31,24 +30,26 @@ public class HoneyFluidClientProperties {
     public static final Identifier HONEY_FLUID_FLOWING_DIAGONAL_TEXTURE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "block/honey_fluid/flow_diagonal");
 
     public static ClientFluidProperties create() {
-        return new ClientFluidProperties() {
+        return new BzDiagonalClientFluidProperties() {
+
             @Override
-            public Identifier still(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
-                return HONEY_FLUID_STILL_TEXTURE;
+            public Material still() {
+                return new Material(HONEY_FLUID_STILL_TEXTURE);
             }
 
             @Override
-            public Identifier flowing(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
-                return HONEY_FLUID_FLOWING_TEXTURE;
-            }
-
-            public Identifier flowingDiagonal(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
-                return HONEY_FLUID_FLOWING_DIAGONAL_TEXTURE;
+            public Material flowing() {
+                return new Material(HONEY_FLUID_FLOWING_TEXTURE);
             }
 
             @Override
-            public Identifier overlay(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
-                return HONEY_FLUID_FLOWING_TEXTURE;
+            public Material flowingDiagonal() {
+                return new Material(HONEY_FLUID_FLOWING_DIAGONAL_TEXTURE);
+            }
+
+            @Override
+            public Material overlay() {
+                return new Material(HONEY_FLUID_FLOWING_TEXTURE);
             }
 
             @Override
@@ -57,33 +58,28 @@ public class HoneyFluidClientProperties {
             }
 
             @Override
-            public void renderOverlay(Minecraft minecraft, PoseStack stack) {
-                FluidClientOverlay.renderHoneyOverlay(minecraft.player, stack);
+            public void renderOverlay(Minecraft minecraft, PoseStack stack, MultiBufferSource source) {
+                FluidClientOverlay.renderHoneyOverlay(minecraft.player, stack, source);
             }
 
             @Override
-            public int tintColor(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
+            public int tintColor(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, @Nullable FluidState state) {
                 return 0xFFFFFFFF;
             }
 
             @Override
-            public boolean renderFluid(BlockPos pos, BlockAndLightGetter level, VertexConsumer vertexConsumer, BlockState blockState, FluidState fluidState, Function<Identifier, TextureAtlasSprite> sprites) {
-                TextureAtlasSprite[] textureAtlasSprites = new TextureAtlasSprite[] {
-                        sprites.apply(this.still(level, pos, fluidState)),
-                        sprites.apply(this.flowing(level, pos, fluidState)),
-                        sprites.apply(this.overlay(level, pos, fluidState)),
-                        sprites.apply(this.flowingDiagonal(level, pos, fluidState)),
-                };
-                HoneyFluidRendering.renderSpecialHoneyFluid(pos, level, vertexConsumer, blockState, fluidState, textureAtlasSprites);
+            public boolean renderFluid(BlockPos pos, BlockAndTintGetter level, FluidRenderer.Output output, BlockState blockState, FluidState fluidState) {
+                VertexConsumer vertexConsumer = output.getBuilder(ChunkSectionLayer.TRANSLUCENT);
+                HoneyFluidRendering.renderSpecialHoneyFluid(pos, level, vertexConsumer, blockState, fluidState, this);
                 return true;
             }
 
             @Override
-            public Vector3f modifyFogColor(Camera camera, float partialTick, ClientLevel level, int renderDistance, float darkenWorldAmount, Vector3f fluidFogColor) {
-                Entity entity = camera.getEntity();
-                BlockState state = level.getBlockState(entity != null ? BlockPos.containing(entity.getEyePosition(1)) : camera.getBlockPosition());
+            public Vector4f modifyFogColor(Camera camera, float partialTick, ClientLevel level, int renderDistance, float darkenWorldAmount, Vector4f fluidFogColor) {
+                Entity entity = camera.entity();
+                BlockState state = level.getBlockState(entity != null ? BlockPos.containing(entity.getEyePosition(1)) : camera.blockPosition());
                 if (state.hasProperty(HoneyFluidBlock.BOTTOM_LEVEL)) {
-                    double yEye = Math.abs(entity != null ? entity.getEyePosition(1).y() : camera.getPosition().y());
+                    double yEye = Math.abs(entity != null ? entity.getEyePosition(1).y() : camera.position().y());
                     double yOffset = yEye - ((int)yEye);
                     if (state.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8D > yOffset + 0.1) {
                         return fluidFogColor;
@@ -91,34 +87,35 @@ public class HoneyFluidClientProperties {
                 }
 
                 // Scale the brightness of fog but make sure it is never darker than the dimension's min brightness.
-                BlockPos blockpos = BlockPos.containing(camera.getEntity().getX(), camera.getEntity().getEyeY(), camera.getEntity().getZ());
-                float brightnessAtEyes = LightTexture.getBrightness(camera.getEntity().level().dimensionType(), camera.getEntity().level().getMaxLocalRawBrightness(blockpos));
+                BlockPos blockpos = BlockPos.containing(entity.getX(), entity.getEyeY(), entity.getZ());
+                float brightnessAtEyes = Lightmap.getBrightness(entity.level().dimensionType(), entity.level().getMaxLocalRawBrightness(blockpos));
                 float brightness = (float) Math.max(
-                        Math.pow(FluidClientOverlay.getDimensionBrightnessAtEyes(camera.getEntity()), 2D),
+                        Math.pow(FluidClientOverlay.getDimensionBrightnessAtEyes(entity), 2D),
                         brightnessAtEyes
                 );
                 float fogRed = 0.6F * brightness;
                 float fogGreen = 0.3F * brightness;
                 float fogBlue = 0.0F;
-                return new Vector3f(fogRed, fogGreen, fogBlue);
+                return new Vector4f(fogRed, fogGreen, fogBlue, 1.0F);
             }
 
             @Override
-            public void modifyFogRender(Camera camera, FogRenderer.FogMode mode, float renderDistance, float partialTick, float nearDistance, float farDistance, FogShape shape) {
-                Entity entity = camera.getEntity();
+            public FogData modifyFogRender(Camera camera, float renderDistance, float partialTick, FogData data) {
+                Entity entity = camera.entity();
                 if (entity != null) {
                     BlockState state = entity.level().getBlockState(BlockPos.containing(entity.getEyePosition(1)));
                     if (state.hasProperty(HoneyFluidBlock.BOTTOM_LEVEL)) {
                         double yEye = Math.abs(entity.getEyePosition(1).y());
                         double yOffset = yEye - ((int)yEye);
                         if (state.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8D > yOffset + 0.1) {
-                            return;
+                            return data;
                         }
                     }
                 }
 
-                RenderSystem.setShaderFogStart(0.35f);
-                RenderSystem.setShaderFogEnd(4);
+                data.environmentalStart = 0.35f;
+                data.renderDistanceEnd = 4f;
+                return data;
             }
         };
     }

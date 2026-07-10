@@ -1,13 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.fluids;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.teamresourceful.resourcefullib.client.fluid.data.ClientFluidProperties;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.level.BlockAndLightGetter;
 import net.minecraft.world.level.material.FluidState;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,18 +20,18 @@ public class SugarWaterClientProperties {
     public static ClientFluidProperties create() {
         return new ClientFluidProperties() {
             @Override
-            public Identifier still(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
-                return FLUID_STILL_TEXTURE;
+            public Material still() {
+                return new Material(FLUID_STILL_TEXTURE);
             }
 
             @Override
-            public Identifier flowing(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
-                return FLUID_FLOWING_TEXTURE;
+            public Material flowing() {
+                return new Material(FLUID_FLOWING_TEXTURE);
             }
 
             @Override
-            public Identifier overlay(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
-                return FLUID_OVERLAY_TEXTURE;
+            public Material overlay() {
+                return new Material(FLUID_OVERLAY_TEXTURE);
             }
 
             @Override
@@ -41,12 +40,7 @@ public class SugarWaterClientProperties {
             }
 
             @Override
-            public void renderOverlay(Minecraft minecraft, PoseStack stack) {
-                FluidClientOverlay.renderHoneyOverlay(minecraft.player, stack);
-            }
-
-            @Override
-            public int tintColor(@Nullable BlockAndLightGetter view, @Nullable BlockPos pos, FluidState state) {
+            public int tintColor(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, @Nullable FluidState state) {
                 if (view != null && pos != null) {
                     return BiomeColors.getAverageWaterColor(view, pos) | 0xFF000000;
                 }
