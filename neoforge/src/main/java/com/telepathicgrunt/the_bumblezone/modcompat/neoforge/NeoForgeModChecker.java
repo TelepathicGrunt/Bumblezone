@@ -26,7 +26,7 @@ public class NeoForgeModChecker {
         String modid = "";
         try {
             modid = "framedblocks";
-            if (ModChecker.isNotOutdated(modid, "10.1.3", false)) {
+            if (ModChecker.isNotOutdated(modid, "11.3.3", false)) {
                 loadupModCompat(modid, () -> new FramedBlocksCompat(modEventBus));
             }
         }

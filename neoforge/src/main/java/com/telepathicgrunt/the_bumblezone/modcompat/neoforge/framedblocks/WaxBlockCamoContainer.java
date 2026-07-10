@@ -4,13 +4,14 @@ import com.telepathicgrunt.the_bumblezone.blocks.CarvableWax;
 import io.github.xfacthd.framedblocks.api.camo.block.AbstractBlockCamoContainer;
 import io.github.xfacthd.framedblocks.api.camo.block.AbstractBlockCamoContainerFactory;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Set;
 
 /**
  * Container for camos made of {@link CarvableWax}
  */
-final class CarvableWaxBlockCamoContainer extends AbstractBlockCamoContainer<CarvableWaxBlockCamoContainer> {
+final class WaxBlockCamoContainer extends AbstractBlockCamoContainer<WaxBlockCamoContainer> {
 
     /**
      * Set of carvable wax patterns which change visually when rotated
@@ -23,7 +24,7 @@ final class CarvableWaxBlockCamoContainer extends AbstractBlockCamoContainer<Car
             CarvableWax.Carving.MUSIC
     );
 
-    CarvableWaxBlockCamoContainer(BlockState state) {
+    WaxBlockCamoContainer(BlockState state) {
         super(state);
     }
 
@@ -32,8 +33,13 @@ final class CarvableWaxBlockCamoContainer extends AbstractBlockCamoContainer<Car
      */
     @Override
     public boolean canRotateCamo() {
-        CarvableWax.Carving carving = getState().getValue(CarvableWax.CARVING);
-        return ROTATABLE.contains(carving) && super.canRotateCamo();
+        if (getState().getBlock() instanceof CarvableWax) {
+            CarvableWax.Carving carving = getState().getValue(CarvableWax.CARVING);
+            if (!ROTATABLE.contains(carving)) {
+                return false;
+            }
+        }
+        return super.canRotateCamo();
     }
 
     @Override
@@ -42,23 +48,26 @@ final class CarvableWaxBlockCamoContainer extends AbstractBlockCamoContainer<Car
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (obj == null || obj.getClass() != CarvableWaxBlockCamoContainer.class) return false;
-        return content.equals(((CarvableWaxBlockCamoContainer) obj).content);
+    public boolean equals(@Nullable Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != WaxBlockCamoContainer.class) {
+            return false;
+        }
+        return content.equals(((WaxBlockCamoContainer) obj).content);
     }
 
     @Override
-    public String toString()
-    {
-        return "CarvableWaxBlockCamoContainer{" + content + "}";
+    public String toString() {
+        return "WaxBlockCamoContainer{" + content + "}";
     }
 
     /**
      * {@return the camo container factory used to create and manage camo containers of this type}
      */
     @Override
-    public AbstractBlockCamoContainerFactory<CarvableWaxBlockCamoContainer> getFactory() {
+    public AbstractBlockCamoContainerFactory<WaxBlockCamoContainer> getFactory() {
         return FramedBlocksCompat.WAX_BLOCK_CAMO_FACTORY.value();
     }
 }
