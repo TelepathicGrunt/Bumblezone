@@ -2,33 +2,37 @@ package com.telepathicgrunt.the_bumblezone.modcompat.fabric;
 
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.EnumSet;
 
 public class SpectrumJetpackCompat implements ModCompat {
-    private static TagKey<Item> SPECTRUM_JETPACKS;
-
-    public SpectrumJetpackCompat() {
-        SPECTRUM_JETPACKS = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("spectrumjetpacks", "jetpacks"));
-
-       // Keep at end so it is only set to true if no exceptions was thrown during setup
-        ModChecker.createJetpackPresent = true;
-    }
-
-    @Override
-    public EnumSet<Type> compatTypes() {
-        return EnumSet.of(Type.HEAVY_AIR_RESTRICTED);
-    }
-
-    @Override
-    public void restrictFlight(Entity entity, double extraGravity) {
-        if (SPECTRUM_JETPACKS != null && entity instanceof Player player) {
+//    private static TagKey<Item> SPECTRUM_JETPACKS;
+//
+//    public SpectrumJetpackCompat() {
+//        SPECTRUM_JETPACKS = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("spectrumjetpacks", "jetpacks"));
+//
+//       // Keep at end so it is only set to true if no exceptions was thrown during setup
+//        ModChecker.createJetpackPresent = true;
+//    }
+//
+//    @Override
+//    public EnumSet<Type> compatTypes() {
+//        return EnumSet.of(Type.HEAVY_AIR_RESTRICTED);
+//    }
+//
+//    @Override
+//    public void restrictFlight(Entity entity, double extraGravity) {
+//        if (SPECTRUM_JETPACKS != null && entity instanceof Player player) {
 //            TrinketsApi.getTrinketComponent(player).ifPresent(trinketComponent -> {
 //
 //                List<Tuple<SlotReference, ItemStack>> trinketComponentEquipped = trinketComponent
@@ -48,6 +52,6 @@ public class SpectrumJetpackCompat implements ModCompat {
 //                    }
 //                }
 //            });
-        }
-    }
+//        }
+//    }
 }

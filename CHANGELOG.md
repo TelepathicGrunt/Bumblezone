@@ -11,6 +11,7 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
   - fabric/src/main/java/com/telepathicgrunt/the_bumblezone/modcompat/fabric
   - neoforge/src/main/java/com/telepathicgrunt/the_bumblezone/modcompat/neoforge
 - Search TODO and verify they are all completed
+- Add compat for 
 
 
 ### **(V.7.9.0 Changes) (26.1.2 Minecraft)**

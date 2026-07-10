@@ -8,11 +8,11 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 
 public class RestrictedPortalsCompat implements ModCompat {
-	public RestrictedPortalsCompat() {
-		ModChecker.restrictedPortalsPresent = true;
-	}
-
-	public static boolean isDimensionDisallowed(ServerPlayer serverPlayer, ResourceKey<Level> dimension) {
-		return RPCommon.blockPlayerFromTransit(serverPlayer, dimension);
-	}
+//	public RestrictedPortalsCompat() {
+//		ModChecker.restrictedPortalsPresent = true;
+//	}
+//
+//	public static boolean isDimensionDisallowed(ServerPlayer serverPlayer, ResourceKey<Level> dimension) {
+//		return RPCommon.blockPlayerFromTransit(serverPlayer, dimension);
+//	}
 }

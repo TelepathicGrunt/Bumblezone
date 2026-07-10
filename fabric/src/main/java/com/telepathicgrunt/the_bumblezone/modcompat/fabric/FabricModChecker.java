@@ -32,11 +32,13 @@ public class FabricModChecker {
 //            modid = "trinkets";
 //            loadupModCompat(modid, () -> new TrinketsCompat());
 
-            modid = "spectrumjetpacks";
-            loadupModCompat(modid, () -> new SpectrumJetpackCompat());
+            // TODO: turn back on when trinkets and Spectrum Jetpacks updates
+//            modid = "spectrumjetpacks";
+//            loadupModCompat(modid, () -> new SpectrumJetpackCompat());
 
-            modid = "restrictedportals";
-            loadupModCompat(modid, () -> new RestrictedPortalsCompat());
+            // TODO: turn back on when Restricted Portals updates
+//            modid = "restrictedportals";
+//            loadupModCompat(modid, () -> new RestrictedPortalsCompat());
         }
         catch (Throwable e) {
             printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");

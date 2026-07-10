@@ -42,15 +42,19 @@ dependencies {
     runtimeOnly(compileOnly(jarJar("com.teamresourceful.resourcefullib:resourcefullib-neoforge-${project.resourcefullib}")))
 
     // COMPAT
-    compileOnly("curse.maven:iron_jetpack-284497:${project.iron_jetpack_file_id}") { transitive = false }
+
+    //runtimeOnly("com.blakebr0.cucumber:Cucumber:${project.cucumber}")
+    //runtimeOnly("com.blakebr0.ironjetpacks:IronJetpacks:${project.iron_jetpack}")
+    compileOnly("com.blakebr0.ironjetpacks:IronJetpacks:${project.iron_jetpack}")
+
     compileOnly("curse.maven:pneumaticcraft-281849:${project.pneumaticcraft_file_id}") { transitive = false }
 
     compileOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}") { transitive = false }
 
     // compileOnly("curse.maven:corail_tombstone-243707:6171577")
 
-    compileOnly "noobanidus.mods:lootr-neoforge:${project.lootr_version}"
-    // runtimeOnly("noobanidus.mods:lootr-neoforge:${project.lootr_version}")
+    compileOnly "noobanidus.mods:lootr-neoforge:${project.lootr}"
+    // runtimeOnly("noobanidus.mods:lootr-neoforge:${project.lootr}")
 
     compileOnly("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}") { transitive = false }
 
@@ -70,7 +74,7 @@ dependencies {
     compileOnly("mezz.jei:jei-${project.jei_mc}-neoforge:${project.jei}")
     compileOnly("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
 
-    compileOnly("dev.emi:emi-neoforge:${emi}:api") { transitive = false }
+//    compileOnly("dev.emi:emi-neoforge:${emi}:api") { transitive = false }
 
     compileOnly("me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei}") { transitive = false  }
     compileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}")

@@ -4,6 +4,8 @@ import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.blocks.CarvableWax;
 import com.telepathicgrunt.the_bumblezone.items.BzBlockItem;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import io.github.xfacthd.framedblocks.api.camo.TriggerRegistrar;
+import io.github.xfacthd.framedblocks.api.camo.block.AbstractBlockCamoContainerFactory;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -17,9 +19,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
-import xfacthd.framedblocks.api.camo.TriggerRegistrar;
-import xfacthd.framedblocks.api.camo.block.AbstractBlockCamoContainerFactory;
-import xfacthd.framedblocks.api.util.Utils;
 
 /**
  * Factory for creating {@link CarvableWaxBlockCamoContainer}s when a {@link CarvableWax} block is applied as a camo

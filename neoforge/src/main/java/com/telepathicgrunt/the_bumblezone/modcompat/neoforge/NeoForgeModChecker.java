@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.neoforge;
 
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.neoforge.framedblocks.FramedBlocksCompat;
 import net.neoforged.bus.api.IEventBus;
 
 import static com.telepathicgrunt.the_bumblezone.modcompat.ModChecker.loadupModCompat;
@@ -24,11 +25,10 @@ public class NeoForgeModChecker {
     public static void setupEarlyModCompat(IEventBus modEventBus) {
         String modid = "";
         try {
-            // TODO: fix when framed blocks updates
-//            modid = "framedblocks";
-//            if (ModChecker.isNotOutdated(modid, "10.1.3", false)) {
-//                loadupModCompat(modid, () -> new FramedBlocksCompat(modEventBus));
-//            }
+            modid = "framedblocks";
+            if (ModChecker.isNotOutdated(modid, "10.1.3", false)) {
+                loadupModCompat(modid, () -> new FramedBlocksCompat(modEventBus));
+            }
         }
         catch (Throwable e) {
             printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");
@@ -40,9 +40,8 @@ public class NeoForgeModChecker {
         String modid = "";
         try {
 
-            // TODO: Re-enable when Productive Bees updates
-//            modid = "productivebees";
-//            loadupModCompat(modid, () -> new ProductiveBeesCompat());
+            modid = "productivebees";
+            loadupModCompat(modid, () -> new ProductiveBeesCompat());
 
             modid = "buzzier_bees";
             loadupModCompat(modid, () -> new BuzzierBeesCompat());

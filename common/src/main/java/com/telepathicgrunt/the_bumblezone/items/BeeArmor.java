@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.modcompat.BackpackedCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -43,10 +44,11 @@ public abstract class BeeArmor extends BzArmor {
         }
         for (ModCompat compat : ModChecker.CUSTOM_EQUIPMENT_SLOTS_COMPATS) {
             beeWearablesCount += compat.getNumberOfMatchingEquippedItemsInCustomSlots(entity, (itemStack) -> {
-                // TODO: Re-enable when backpacked updates
-//                if (itemStack.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_WEARABLES)) {
-//                    return !ModChecker.backpackedPresent || BackpackedCompat.isBackpackedHoneyThemedOrOtherItem(itemStack);
-//                }
+                if (itemStack.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_WEARABLES)) {
+                    if (ModChecker.backpackedPresent) {
+                        return BackpackedCompat.isBackpackedHoneyThemedOrOtherItem(itemStack);
+                    }
+                }
                 return false;
             });
         }
