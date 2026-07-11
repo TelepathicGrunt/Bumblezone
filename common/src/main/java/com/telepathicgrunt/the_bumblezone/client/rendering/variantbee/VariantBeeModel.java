@@ -6,10 +6,11 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.BeeRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
-public class VariantBeeModel extends EntityModel<VariantBeeRenderState> {
+public class VariantBeeModel extends EntityModel<BeeRenderState> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "variant_bee"), "main");
 
     protected final ModelPart bone;
@@ -37,7 +38,7 @@ public class VariantBeeModel extends EntityModel<VariantBeeRenderState> {
     }
 
     @Override
-    public void setupAnim(VariantBeeRenderState state) {
+    public void setupAnim(BeeRenderState state) {
         super.setupAnim(state);
         this.stinger.visible = state.hasStinger;
         if (!state.isOnGround) {

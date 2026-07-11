@@ -109,7 +109,8 @@
     "client.MultiPlayerGameModeMixin",
     "client.MusicManagerMixin",
     "client.SoundEngineAccessor",
-    "client.SoundManagerAccessor"
+    "client.SoundManagerAccessor",
+    "client.VariantBeeRenderStateMixin"
   ],
   "injectors": {
     "defaultRequire": 1
