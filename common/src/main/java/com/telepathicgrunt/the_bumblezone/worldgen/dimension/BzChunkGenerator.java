@@ -317,8 +317,8 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         Heightmap worldSurfaceHeightmap = chunkAccess.getOrCreateHeightmapUnprimed(Heightmap.Types.WORLD_SURFACE_WG);
         for(int x = 0; x < 16; x++) {
             for(int z = 0; z < 16; z++) {
-                oceanFloorHeightmap.update(x, chunkAccess.getMaxBuildHeight(), z, BzBlocks.BEEHIVE_BEESWAX.get().defaultBlockState());
-                worldSurfaceHeightmap.update(x, chunkAccess.getMaxBuildHeight(), z, BzBlocks.BEEHIVE_BEESWAX.get().defaultBlockState());
+                oceanFloorHeightmap.update(x, chunkAccess.getMaxY(), z, BzBlocks.BEEHIVE_BEESWAX.get().defaultBlockState());
+                worldSurfaceHeightmap.update(x, chunkAccess.getMaxY(), z, BzBlocks.BEEHIVE_BEESWAX.get().defaultBlockState());
             }
         }
 

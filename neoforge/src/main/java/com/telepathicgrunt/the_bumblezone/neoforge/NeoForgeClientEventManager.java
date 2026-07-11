@@ -175,7 +175,7 @@ public class NeoForgeClientEventManager {
             case WATER -> BzBlockRenderedOnScreenEvent.Type.WATER;
         };
         event.setCanceled(BzBlockRenderedOnScreenEvent.EVENT.invoke(new BzBlockRenderedOnScreenEvent(
-                event.getPlayer(), event.getPoseStack(), type, event.getBlockState(), event.getBlockPos())));
+                event.getPlayer(), event.getPoseStack(), event.getBufferSource(), type, event.getBlockState(), event.getBlockPos())));
     }
 
     public static void onRegisterParticles(RegisterParticleProvidersEvent event) {

@@ -16,12 +16,13 @@ public class BackpackedCompat implements ModCompat {
 	private static Identifier BEE_THEMED = Identifier.fromNamespaceAndPath("backpacked", "honey_jar");
 
 	public static boolean isBackpackedHoneyThemedOrOtherItem(ItemStack itemStack) {
-		if (BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getNamespace().equals("backpacked")) {
-			CosmeticProperties cosmeticProperties = itemStack.get(ModDataComponents.COSMETIC_PROPERTIES);
-			if (cosmeticProperties.cosmetic().isPresent()) {
-				return cosmeticProperties.cosmetic().get().equals(BEE_THEMED);
-			}
-		}
+		// Compile error due to needing source. Ugh. And is only on github maven which requires username and password.
+//		if (BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getNamespace().equals("backpacked")) {
+//			CosmeticProperties cosmeticProperties = itemStack.get(ModDataComponents.COSMETIC_PROPERTIES);
+//			if (cosmeticProperties.cosmetic().isPresent()) {
+//				return cosmeticProperties.cosmetic().get().equals(BEE_THEMED);
+//			}
+//		}
 
 		return true;
 	}

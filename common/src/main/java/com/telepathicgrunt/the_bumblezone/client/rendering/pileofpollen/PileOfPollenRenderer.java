@@ -1,14 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.pileofpollen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
-import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -59,17 +61,11 @@ public class PileOfPollenRenderer {
             if(!isInPollen) {
                 return true;
             }
-
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderTexture(0, blockState.is(BzBlocks.PILE_OF_POLLEN_SUSPICIOUS.get()) ? TEXTURE_POLLEN_SUSPICIOUS : TEXTURE_POLLEN);
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
             float opacity = 1f;
             float brightness = 0.3f;
             float redStrength = 1f;
             float greenStrength = 0.9f;
             float blueStrength = 0.8f;
-            RenderSystem.setShaderColor(brightness * redStrength, brightness * greenStrength, brightness * blueStrength, opacity);
 
             float pitch = -playerEntity.getYRot() / 64.0F;
             float yaw = playerEntity.getXRot() / 64.0F;
@@ -82,27 +78,34 @@ public class PileOfPollenRenderer {
             float smallYOffset = playerPosition.y() * 0.33f;
 
             Matrix4f matrix4f = matrixStack.last().pose();
-            BufferBuilder bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-            bufferbuilder.addVertex(matrix4f, -1.0F, -1.0F, -0.5F).setUv(pitchPlus4 - smallXZOffset, yawPlus4 - playerPosition.y());
-            bufferbuilder.addVertex(matrix4f, 1.0F, -1.0F, -0.5F).setUv(pitch - smallXZOffset, yawPlus4 - playerPosition.y());
-            bufferbuilder.addVertex(matrix4f, 1.0F, 1.0F, -0.5F).setUv(pitch - smallXZOffset, yaw - playerPosition.y());
-            bufferbuilder.addVertex(matrix4f, -1.0F, 1.0F, -0.5F).setUv(pitchPlus4 - smallXZOffset, yaw - playerPosition.y());
-            BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
-            RenderSystem.setShaderColor(brightness * redStrength, brightness * greenStrength, brightness * blueStrength, opacity * 0.33f);
-            bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-            bufferbuilder.addVertex(matrix4f, -1.0F, -1.0F, -0.5F).setUv(pitchPlus4 - playerPosition.x(), yawPlus4 - smallYOffset);
-            bufferbuilder.addVertex(matrix4f, 1.0F, -1.0F, -0.5F).setUv(pitch - playerPosition.x(), yawPlus4 - smallYOffset);
-            bufferbuilder.addVertex(matrix4f, 1.0F, 1.0F, -0.5F).setUv(pitch - playerPosition.x(), yaw - smallYOffset);
-            bufferbuilder.addVertex(matrix4f, -1.0F, 1.0F, -0.5F).setUv(pitchPlus4 - playerPosition.x(), yaw - smallYOffset);
-            BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
-            RenderSystem.setShaderColor(brightness * redStrength, brightness * greenStrength, brightness * blueStrength, opacity * 0.33f);
-            bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-            bufferbuilder.addVertex(matrix4f, -1.0F, -1.0F, -0.5F).setUv(pitchPlus4 - playerPosition.z(), yawPlus4 - smallYOffset);
-            bufferbuilder.addVertex(matrix4f, 1.0F, -1.0F, -0.5F).setUv(pitch - playerPosition.z(), yawPlus4 - smallYOffset);
-            bufferbuilder.addVertex(matrix4f, 1.0F, 1.0F, -0.5F).setUv(pitch - playerPosition.z(), yaw - smallYOffset);
-            bufferbuilder.addVertex(matrix4f, -1.0F, 1.0F, -0.5F).setUv(pitchPlus4 - playerPosition.z(), yaw - smallYOffset);
-            BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
-            RenderSystem.disableBlend();
+
+            TextureAtlasSprite textureAtlasSprite = Minecraft.getInstance().getModelManager().getBlockStateModelSet().getParticleMaterial(blockState).sprite();
+
+            float u0 = textureAtlasSprite.getU0();
+            float u1 = textureAtlasSprite.getU1();
+            float v0 = textureAtlasSprite.getV0();
+            float v1 = textureAtlasSprite.getV1();
+
+            int color = ARGB.colorFromFloat(opacity, brightness * redStrength, brightness * greenStrength, brightness * blueStrength);
+            VertexConsumer builder = event.bufferSource().getBuffer(RenderTypes.blockScreenEffect(textureAtlasSprite.atlasLocation()));
+            builder.addVertex(matrix4f, -1.0F, -1.0F, -0.5F).setUv(u1 - smallXZOffset, v1 + yawPlus4 - playerPosition.y()).setColor(color);
+            builder.addVertex(matrix4f, 1.0F, -1.0F, -0.5F).setUv(u0 - smallXZOffset, v1 + yawPlus4 - playerPosition.y()).setColor(color);
+            builder.addVertex(matrix4f, 1.0F, 1.0F, -0.5F).setUv(u0 - smallXZOffset, v0 + yaw - playerPosition.y()).setColor(color);
+            builder.addVertex(matrix4f, -1.0F, 1.0F, -0.5F).setUv(u1 - smallXZOffset, v0 + yaw - playerPosition.y()).setColor(color);
+
+            color = ARGB.colorFromFloat(opacity * 0.33f, brightness * redStrength, brightness * greenStrength, brightness * blueStrength);
+            builder = event.bufferSource().getBuffer(RenderTypes.blockScreenEffect(textureAtlasSprite.atlasLocation()));
+            builder.addVertex(matrix4f, -1.0F, -1.0F, -0.5F).setUv(u1 - playerPosition.x(), v1 + yawPlus4 - smallYOffset).setColor(color);
+            builder.addVertex(matrix4f, 1.0F, -1.0F, -0.5F).setUv(u0 - playerPosition.x(), v1 + yawPlus4 - smallYOffset).setColor(color);
+            builder.addVertex(matrix4f, 1.0F, 1.0F, -0.5F).setUv(u0 - playerPosition.x(), v0 + yaw - smallYOffset).setColor(color);
+            builder.addVertex(matrix4f, -1.0F, 1.0F, -0.5F).setUv(u1 - playerPosition.x(), v0 + yaw - smallYOffset).setColor(color);
+
+            color = ARGB.colorFromFloat(opacity * 0.33f, brightness * redStrength, brightness * greenStrength, brightness * blueStrength);
+            builder = event.bufferSource().getBuffer(RenderTypes.blockScreenEffect(textureAtlasSprite.atlasLocation()));
+            builder.addVertex(matrix4f, -1.0F, -1.0F, -0.5F).setUv(u1 - playerPosition.z(), v1 + yawPlus4 - smallYOffset).setColor(color);
+            builder.addVertex(matrix4f, 1.0F, -1.0F, -0.5F).setUv(u0 - playerPosition.z(), v1 + yawPlus4 - smallYOffset).setColor(color);
+            builder.addVertex(matrix4f, 1.0F, 1.0F, -0.5F).setUv(u0 - playerPosition.z(), v0 + yaw - smallYOffset).setColor(color);
+            builder.addVertex(matrix4f, -1.0F, 1.0F, -0.5F).setUv(u1 - playerPosition.z(), v0 + yaw - smallYOffset).setColor(color);
             return true;
         }
         return false;

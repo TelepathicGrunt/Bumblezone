@@ -38,7 +38,7 @@ public class HoneyFluidRendering {
             VertexConsumer builder,
             BlockState blockState,
             FluidState fluidState,
-            BzDiagonalClientFluidProperties clientFluidProperties)
+            BzCachingClientFluidProperties clientFluidProperties)
     {
         BlockState aboveState = level.getBlockState(blockPos.relative(Direction.UP));
         BlockState northState = level.getBlockState(blockPos.relative(Direction.NORTH));

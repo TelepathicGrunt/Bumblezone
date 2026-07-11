@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 
-public record BzBlockRenderedOnScreenEvent(Player player, PoseStack stack, Type type, BlockState state, BlockPos pos) {
+public record BzBlockRenderedOnScreenEvent(Player player, PoseStack stack, net.minecraft.client.renderer.MultiBufferSource bufferSource, Type type, BlockState state, BlockPos pos) {
 
     public static final CancellableEventHandler<BzBlockRenderedOnScreenEvent> EVENT = new CancellableEventHandler<>();
 

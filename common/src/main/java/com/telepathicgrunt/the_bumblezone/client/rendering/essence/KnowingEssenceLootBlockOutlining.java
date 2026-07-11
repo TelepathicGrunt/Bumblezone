@@ -1,14 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.essence;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.items.essence.KnowingEssence;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.ARGB;
@@ -18,7 +20,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EnderChestBlock;
 import net.minecraft.world.level.block.InfestedBlock;
-import net.minecraft.world.level.block.entity.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BrushableBlockEntity;
+import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
+import net.minecraft.world.level.block.entity.EnderChestBlockEntity;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
@@ -26,7 +32,11 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.joml.Vector4d;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class KnowingEssenceLootBlockOutlining {
     private static final double DRAW_RADIUS = 0.45D;
@@ -229,8 +239,6 @@ public class KnowingEssenceLootBlockOutlining {
             poseStack.pushPose();
 
             Tesselator tesselator = Tesselator.getInstance();
-            RenderSystem.setShader(GameRenderer::getPositionColorShader);
-            RenderSystem.disableDepthTest();
             BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
             Matrix4f lastPose = poseStack.last().pose();
             CACHED_CHUNK_DATA.values().forEach(cachedChunkData ->
@@ -248,10 +256,7 @@ public class KnowingEssenceLootBlockOutlining {
                                 cachedDrawData.green,
                                 cachedDrawData.blue
                     )));
-            BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
             poseStack.popPose();
-            RenderSystem.enableDepthTest();
-            RenderType.cutout().clearRenderState();
         }
     }
 
