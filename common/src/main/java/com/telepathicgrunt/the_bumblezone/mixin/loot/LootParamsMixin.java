@@ -13,15 +13,15 @@ import java.util.Set;
 public class LootParamsMixin implements LootParamsBzVisitedLootInterface {
 
     @Unique
-    Set<Identifier> bumblezone_visitedBzLootRLs = new HashSet<>();
+    Set<Identifier> bumblezone_visitedBzLootIds = new HashSet<>();
 
     @Override
-    public Set<Identifier> theBumblezone$getVisitedLootRL() {
-        return bumblezone_visitedBzLootRLs;
+    public Set<Identifier> theBumblezone$getVisitedLootId() {
+        return bumblezone_visitedBzLootIds;
     }
 
     @Override
-    public void theBumblezone$addVisitedLootRL(Identifier bzVisitedLootRL) {
-        bumblezone_visitedBzLootRLs.add(bzVisitedLootRL);
+    public void theBumblezone$addVisitedLootId(Identifier bzVisitedLootId) {
+        bumblezone_visitedBzLootIds.add(bzVisitedLootId);
     }
 }

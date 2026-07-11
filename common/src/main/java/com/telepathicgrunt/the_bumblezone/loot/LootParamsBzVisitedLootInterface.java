@@ -6,7 +6,7 @@ import java.util.Set;
 
 public interface LootParamsBzVisitedLootInterface {
 
-    Set<Identifier> theBumblezone$getVisitedLootRL();
+    Set<Identifier> theBumblezone$getVisitedLootId();
 
-    void theBumblezone$addVisitedLootRL(Identifier bzVisitedLootRL);
+    void theBumblezone$addVisitedLootId(Identifier bzVisitedLootId);
 }

@@ -9,6 +9,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import noobanidus.mods.lootr.common.api.LootrAPI;
+import noobanidus.mods.lootr.common.api.data.ILootrContainerInstance;
 import noobanidus.mods.lootr.common.api.filler.DefaultLootFiller;
 
 public class LootrCompat implements ModCompat {
@@ -18,7 +19,7 @@ public class LootrCompat implements ModCompat {
     }
 
     public static MenuProvider getCocoonMenu(ServerPlayer player, HoneyCocoonBlockEntity blockEntity) {
-        ILootrInfoProvider iLootrInfoProvider = ILootrInfoProvider.of(blockEntity, blockEntity.getBlockEntityUuid());
+        ILootrContainerInstance iLootrInfoProvider = ILootrContainerInstance.of(blockEntity, blockEntity.getBlockEntityUuid());
         return LootrAPI.getInventory(iLootrInfoProvider, player, DefaultLootFiller.getInstance(), LootrCompat::menuBuilder);
     }
 

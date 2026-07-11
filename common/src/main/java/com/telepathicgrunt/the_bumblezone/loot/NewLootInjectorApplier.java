@@ -31,7 +31,7 @@ public final class NewLootInjectorApplier {
         if (BzGeneralConfigs.beeLootInjection || BzGeneralConfigs.moddedBeeLootInjection) {
             if(context.hasParameter(LootContextParams.THIS_ENTITY)) {
                 if (context.getParameter(LootContextParams.THIS_ENTITY) instanceof Bee bee) {
-                    if (!((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).bumblezone$getParams()).theBumblezone$getVisitedLootRL().contains(STINGER_DROP_LOOT_TABLE_RL) &&
+                    if (!((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).bumblezone$getParams()).theBumblezone$getVisitedLootId().contains(STINGER_DROP_LOOT_TABLE_RL) &&
                         !((EntityLootDropInterface)bee).thebumblezone_hasPerformedEntityDrops())
                     {
                         Identifier beeRL = BuiltInRegistries.ENTITY_TYPE.getKey(bee.getType());
@@ -46,7 +46,7 @@ public final class NewLootInjectorApplier {
     }
 
     public static boolean checkIfValidForDimensionFishingLoot(LootContext context) {
-        if (!((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).bumblezone$getParams()).theBumblezone$getVisitedLootRL().contains(NewLootInjectorApplier.BZ_DIMENSION_FISHING_LOOT_TABLE_RL)) {
+        if (!((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).bumblezone$getParams()).theBumblezone$getVisitedLootId().contains(NewLootInjectorApplier.BZ_DIMENSION_FISHING_LOOT_TABLE_RL)) {
             return context.getLevel().dimension().equals(BzDimension.BZ_WORLD_KEY);
         }
 
@@ -60,7 +60,7 @@ public final class NewLootInjectorApplier {
         }
 
         LootTable stingerLootTable = optionalLootTableReference.get().value();
-        ((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).bumblezone$getParams()).theBumblezone$addVisitedLootRL(lootTableToPullFrom);
+        ((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).bumblezone$getParams()).theBumblezone$addVisitedLootId(lootTableToPullFrom);
         ObjectArrayList<ItemStack> newItems = new ObjectArrayList<>();
         stingerLootTable.getRandomItems(((LootContextAccessor)context).bumblezone$getParams(), newItems::add);
         originalLoot.addAll(newItems);
