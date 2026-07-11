@@ -1,120 +1,83 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.sentrywatcher;
 
-import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.SentryWatcherEntity;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.Model;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
-public class SentryWatcherRenderer<M extends EntityModel<SentryWatcherEntity>>
-        extends EntityRenderer<SentryWatcherEntity>
-        implements RenderLayerParent<SentryWatcherEntity, M>
-{
+public class SentryWatcherRenderer extends EntityRenderer<SentryWatcherEntity, SentryWatcherRenderState> {
     private static final Identifier SKIN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/sentry_watcher.png");
+    private static final Identifier EYES = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/sentry_watcher_eyes.png");
     protected final SentryWatcherModel model;
-    protected final List<RenderLayer<SentryWatcherEntity, M>> layers = Lists.newArrayList();
 
     public SentryWatcherRenderer(EntityRendererProvider.Context context) {
         super(context);
         this.model = new SentryWatcherModel(context.bakeLayer(SentryWatcherModel.LAYER_LOCATION));
-        this.addLayer(new SentryWatcherRenderer.EyeLayerRenderer<>(this));
-    }
-
-    protected final boolean addLayer(RenderLayer<SentryWatcherEntity, M> renderLayer) {
-        return this.layers.add(renderLayer);
     }
 
     @Override
-    public M getModel() {
-        return (M) this.model;
-    }
-
-    @Override
-    public void render(SentryWatcherEntity sentryWatcherEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
+    public void submit(SentryWatcherRenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
         poseStack.pushPose();
-        float rotationLerp = Mth.lerp(g, sentryWatcherEntity.xRotO, sentryWatcherEntity.getXRot());
-        poseStack.scale(1, 1, 1);
-        poseStack.translate(0.0f, sentryWatcherEntity.getBoundingBox().getYsize() + 0.05f, 0.0f);
+        poseStack.translate(0.0f, state.ySize + 0.05f, 0.0f);
 
         float shakeEffect = 0;
-        if (sentryWatcherEntity.hasShaking()) {
-            shakeEffect += (float)(Math.cos((double)sentryWatcherEntity.tickCount * 3.25) * Math.PI * (double)0.4f);
+        if (state.shaking) {
+            shakeEffect += (float)(Math.cos(Mth.floor(state.ageInTicks) * 3.25D) * Mth.PI * 0.4F);
         }
 
-        poseStack.mulPose(Axis.YN.rotationDegrees(sentryWatcherEntity.getYRot() + shakeEffect));
-        poseStack.mulPose(Axis.XN.rotationDegrees(180.0f - sentryWatcherEntity.getXRot()));
-        this.model.prepareMobModel(sentryWatcherEntity, 0, 0, g);
-        ((EntityModel)this.model).setupAnim(sentryWatcherEntity, 0, 0, 0, 0, rotationLerp);
-        Minecraft minecraft = Minecraft.getInstance();
-        boolean glowing = minecraft.shouldEntityAppearGlowing(sentryWatcherEntity);
-        RenderType renderType = this.getRenderType(sentryWatcherEntity, true, false, glowing);
+        poseStack.mulPose(Axis.YN.rotationDegrees(state.yRot + shakeEffect));
+        poseStack.mulPose(Axis.XN.rotationDegrees(180.0f - state.xRot));
+        this.model.setupAnim(state);
+        boolean isBodyVisible = !state.isInvisible;
+        boolean forceTransparent = !isBodyVisible && !state.isInvisibleToPlayer;
+        RenderType renderType = this.getRenderType(isBodyVisible, forceTransparent, state.appearsGlowing());
         if (renderType != null) {
-            VertexConsumer vertexConsumer = multiBufferSource.getBuffer(renderType);
-            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, 0XFFFFFFFF);
-        }
-        if (!sentryWatcherEntity.isSpectator()) {
-            for (RenderLayer<SentryWatcherEntity, M> renderLayer : this.layers) {
-                renderLayer.render(poseStack, multiBufferSource, i, sentryWatcherEntity, 0, 0, g, 0, 0, rotationLerp);
+            collector.submitModel(this.model, state, poseStack, renderType, state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor, null);
+
+            if (state.activated) {
+                collector.submitModel(this.model, state, poseStack, RenderTypes.eyes(EYES), LightCoordsUtil.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, state.outlineColor, null);
             }
         }
         poseStack.popPose();
-        super.render(sentryWatcherEntity, f, g, poseStack, multiBufferSource, i);
+        super.submit(state, poseStack, collector, camera);
     }
 
     @Nullable
-    protected RenderType getRenderType(SentryWatcherEntity sentryWatcherEntity, boolean bodyVisible, boolean hidden, boolean glowing) {
-        Identifier identifier = this.getTextureLocation(sentryWatcherEntity);
-        if (bodyVisible) {
-            return this.model.renderType(identifier);
+    private RenderType getRenderType(boolean isBodyVisible, boolean forceTransparent, boolean appearGlowing) {
+        if (forceTransparent) {
+            return RenderTypes.entityTranslucentCullItemTarget(SKIN);
+        } else if (isBodyVisible) {
+            return this.model.renderType(SKIN);
+        } else {
+            return appearGlowing ? RenderTypes.outline(SKIN) : null;
         }
-        if (glowing) {
-            return RenderType.outline(identifier);
-        }
-        return null;
     }
 
     @Override
-    public Identifier getTextureLocation(SentryWatcherEntity sentryWatcherEntity) {
-        return SKIN;
+    public SentryWatcherRenderState createRenderState() {
+        return new SentryWatcherRenderState();
     }
 
-    static class EyeLayerRenderer<T extends Entity, M extends EntityModel<T>> extends RenderLayer<T, M> {
-        private static final Identifier EYES = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/sentry_watcher_eyes.png");
-        private static final RenderType RENDER_TYPE_EYES = RenderType.eyes(EYES);
-        protected SentryWatcherModel model;
-
-        public EyeLayerRenderer(RenderLayerParent<T, M> renderLayerParent) {
-            super(renderLayerParent);
-        }
-
-        @Override
-        public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, T entity, float f, float g, float h, float j, float k, float l) {
-            if (entity instanceof SentryWatcherEntity sentryWatcherEntity && sentryWatcherEntity.hasActivated()) {
-                VertexConsumer vertexConsumer = multiBufferSource.getBuffer(this.renderType());
-                this.getParentModel().renderToBuffer(poseStack, vertexConsumer, LightTexture.FULL_SKY, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
-            }
-        }
-
-        public RenderType renderType() {
-            return RENDER_TYPE_EYES;
-        }
+    @Override
+    public void extractRenderState(SentryWatcherEntity entity, SentryWatcherRenderState state, float partialTicks) {
+        super.extractRenderState(entity, state, partialTicks);
+        state.xRot = entity.getXRot(partialTicks);
+        state.yRot = entity.getYRot(partialTicks);
+        state.ySize = entity.getBoundingBox().getYsize();
+        state.shaking = entity.hasShaking();
+        state.activated = entity.hasActivated();
+        state.isInvisibleToPlayer = state.isInvisible && entity.isInvisibleTo(Minecraft.getInstance().player);
     }
 }

@@ -1,31 +1,42 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.rootmin;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.animation.KeyframeAnimation;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.Identifier;
 
-public class RootminModel extends HierarchicalModel<RootminEntity> {
+public class RootminModel extends EntityModel<RootminRenderState> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "rootmin"), "main");
-    private final ModelPart root;
+
+    private final KeyframeAnimation idleAnimation;
+    private final KeyframeAnimation angryAnimation;
+    private final KeyframeAnimation curiousAnimation;
+    private final KeyframeAnimation curseAnimation;
+    private final KeyframeAnimation embarassedAnimation;
+    private final KeyframeAnimation shockAnimation;
+    private final KeyframeAnimation shootAnimation;
+    private final KeyframeAnimation runAnimation;
+    private final KeyframeAnimation walkAnimation;
+    private final KeyframeAnimation blockToEntityAnimation;
+    private final KeyframeAnimation entityToBlockAnimation;
 
     public RootminModel(ModelPart root) {
-        this.root = root.getChild("root");
-    }
-
-    @Override
-    public ModelPart root() {
-        return this.root;
+        super(root);
+        this.idleAnimation = RootminAnimations.IDLE.bake(root);
+        this.angryAnimation = RootminAnimations.ANGRY.bake(root);
+        this.curiousAnimation = RootminAnimations.CURIOUS.bake(root);
+        this.curseAnimation = RootminAnimations.CURSE.bake(root);
+        this.embarassedAnimation = RootminAnimations.EMBARASSED.bake(root);
+        this.shockAnimation = RootminAnimations.SHOCK.bake(root);
+        this.shootAnimation = RootminAnimations.SHOOT.bake(root);
+        this.runAnimation = RootminAnimations.RUN.bake(root);
+        this.walkAnimation = RootminAnimations.WALK.bake(root);
+        this.blockToEntityAnimation = RootminAnimations.BLOCK_TO_ENTITY.bake(root);
+        this.entityToBlockAnimation = RootminAnimations.ENTITY_TO_BLOCK.bake(root);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -71,24 +82,18 @@ public class RootminModel extends HierarchicalModel<RootminEntity> {
     }
 
     @Override
-    public void setupAnim(RootminEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.root().getAllParts().forEach(ModelPart::resetPose);
-        this.animate(entity.idleAnimationState, RootminAnimations.IDLE, ageInTicks);
-        this.animate(entity.angryAnimationState, RootminAnimations.ANGRY, ageInTicks);
-        this.animate(entity.curiousAnimationState, RootminAnimations.CURIOUS, ageInTicks);
-        this.animate(entity.curseAnimationState, RootminAnimations.CURSE, ageInTicks);
-        this.animate(entity.embarassedAnimationState, RootminAnimations.EMBARASSED, ageInTicks);
-        this.animate(entity.shockAnimationState, RootminAnimations.SHOCK, ageInTicks);
-        this.animate(entity.shootAnimationState, RootminAnimations.SHOOT, ageInTicks);
-        this.animate(entity.runAnimationState, RootminAnimations.RUN, ageInTicks);
-        this.animate(entity.walkAnimationState, RootminAnimations.WALK, ageInTicks);
-        this.animate(entity.blockToEntityAnimationState, RootminAnimations.BLOCK_TO_ENTITY, ageInTicks);
-        this.animate(entity.entityToBlockAnimationState, RootminAnimations.ENTITY_TO_BLOCK, ageInTicks);
+    public void setupAnim(RootminRenderState state) {
+        super.setupAnim(state);
+        this.idleAnimation.apply(state.idleAnimationState, state.ageInTicks);
+        this.angryAnimation.apply(state.angryAnimationState, state.ageInTicks);
+        this.curiousAnimation.apply(state.curiousAnimationState, state.ageInTicks);
+        this.curseAnimation.apply(state.curseAnimationState, state.ageInTicks);
+        this.embarassedAnimation.apply(state.embarassedAnimationState, state.ageInTicks);
+        this.shockAnimation.apply(state.shockAnimationState, state.ageInTicks);
+        this.shootAnimation.apply(state.shootAnimationState, state.ageInTicks);
+        this.runAnimation.apply(state.runAnimationState, state.ageInTicks);
+        this.walkAnimation.apply(state.walkAnimationState, state.ageInTicks);
+        this.blockToEntityAnimation.apply(state.blockToEntityAnimationState, state.ageInTicks);
+        this.entityToBlockAnimation.apply(state.entityToBlockAnimationState, state.ageInTicks);
     }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int packedColor) {
-        root.render(poseStack, vertexConsumer, packedLight, packedOverlay, packedColor);
-    }
-
 }

@@ -1,27 +1,20 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.honeycrystalshard;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.ArrowRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 
-public class HoneyCrystalShardModel extends Model {
+public class HoneyCrystalShardModel extends Model<ArrowRenderState> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "honey_crystal_shard"), "main");
-    private final ModelPart root;
 
-    public HoneyCrystalShardModel(ModelPart modelPart) {
-        super(RenderType::entityTranslucent);
-        this.root = modelPart;
+    public HoneyCrystalShardModel(ModelPart root) {
+        super(root, RenderTypes::entityTranslucent);
     }
 
     public static LayerDefinition createLayer() {
@@ -42,11 +35,5 @@ public class HoneyCrystalShardModel extends Model {
                 PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.7854F, 1.5708F, 1.5708F));
 
         return LayerDefinition.create(meshdefinition, 8, 42);
-    }
-
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int packedColor) {
-        this.root.render(poseStack, buffer, packedLight, packedOverlay, packedColor);
     }
 }

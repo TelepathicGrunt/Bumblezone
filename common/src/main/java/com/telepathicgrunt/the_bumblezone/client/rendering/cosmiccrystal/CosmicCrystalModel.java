@@ -1,37 +1,32 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.animation.KeyframeAnimation;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
-public class CosmicCrystalModel extends HierarchicalModel<CosmicCrystalEntity> {
+public class CosmicCrystalModel extends EntityModel<CosmicCrystalRenderState> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "cosmic_crystal"), "main");
 
-    private final ModelPart root;
     private final ModelPart body;
     private final ModelPart spikes;
     private final ModelPart charging;
 
-    public CosmicCrystalModel(ModelPart root) {
-        super(RenderType::entityTranslucent);
+    private final KeyframeAnimation idleAnimation;
 
-        this.root = root;
+    public CosmicCrystalModel(ModelPart root) {
+        super(root, RenderTypes::entityTranslucent);
         this.body = root.getChild("body");
         this.spikes = root.getChild("laser").getChild("spikes");
         this.charging = root.getChild("laser").getChild("charging");
+        this.idleAnimation = CosmicCrystalAnimation.MODEL_IDLE.bake(root);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -87,30 +82,27 @@ public class CosmicCrystalModel extends HierarchicalModel<CosmicCrystalEntity> {
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
-
     @Override
-    public void setupAnim(CosmicCrystalEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(CosmicCrystalRenderState state) {
+        super.setupAnim(state);
         this.body.visible = true;
-        this.body.getAllParts().forEach(ModelPart::resetPose);
 
-        boolean isLaserState = CosmicCrystalEntity.isLaserState(entity.getCosmicCrystalState());
+        boolean isLaserState = CosmicCrystalEntity.isLaserState(state.crystalState);
 
-        if (isLaserState && entity.isLaserFiring()) {
+        if (isLaserState && state.firing) {
             this.spikes.visible = true;
             this.charging.visible = false;
-            this.spikes.getAllParts().forEach(ModelPart::resetPose);
 
-            float pulse = Math.abs(Mth.sin((entity.currentStateTimeTick % 360) * 6 * Mth.DEG_TO_RAD)) + 1.5f;
+            float pulse = Math.abs(Mth.sin((state.currentStateTimeTick % 360) * 6 * Mth.DEG_TO_RAD)) + 1.5f;
             this.spikes.xScale = pulse;
             this.spikes.zScale = pulse;
         }
-        else if (isLaserState && entity.currentStateTimeTick > entity.getLaserStartDelay()) {
+        else if (isLaserState && state.currentStateTimeTick > state.laserStartDelay) {
             this.spikes.visible = false;
             this.charging.visible = true;
-            this.charging.getAllParts().forEach(ModelPart::resetPose);
 
-            float durationToFiring = entity.getLaserFireStartTime() - entity.getLaserStartDelay();
-            float chargeTime = (1 - ((entity.currentStateTimeTick - entity.getLaserStartDelay()) / durationToFiring)) * 3f;
+            float durationToFiring = state.laserFireStartTime - state.laserStartDelay;
+            float chargeTime = (1 - ((state.currentStateTimeTick - state.laserStartDelay) / durationToFiring)) * 3f;
             this.charging.xScale = chargeTime;
             this.charging.zScale = chargeTime;
         }
@@ -119,16 +111,6 @@ public class CosmicCrystalModel extends HierarchicalModel<CosmicCrystalEntity> {
             this.spikes.visible = false;
         }
 
-        this.animate(entity.idleAnimationState, CosmicCrystalAnimation.MODEL_IDLE, ageInTicks);
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int packedColor) {
-        this.root.render(poseStack, vertexConsumer, packedLight, packedOverlay, packedColor);
-    }
-
-    @Override
-    public ModelPart root() {
-        return this.root;
+        this.idleAnimation.apply(state.idleAnimationState, state.ageInTicks);
     }
 }

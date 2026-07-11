@@ -49,8 +49,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.sentrywatcher.SentryW
 import com.telepathicgrunt.the_bumblezone.client.rendering.sentrywatcher.SentryWatcherRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearRenderer;
-import com.telepathicgrunt.the_bumblezone.client.rendering.variantbee.BackupVariantBeeModel;
-import com.telepathicgrunt.the_bumblezone.client.rendering.variantbee.BackupVariantBeeRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.variantbee.VariantBeeModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.variantbee.VariantBeeRenderer;
 import com.telepathicgrunt.the_bumblezone.client.screens.BuzzingBriefcaseScreen;
 import com.telepathicgrunt.the_bumblezone.client.screens.CrystallineFlowerScreen;
@@ -85,7 +84,6 @@ import earth.terrarium.athena.api.client.models.FactoryManager;
 import net.minecraft.client.renderer.blockentity.BrushableBlockRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.EntityType;
 
 import java.util.List;
 
@@ -179,7 +177,7 @@ public class BumblezoneClient {
 
     public static void registerEntityLayers(BzRegisterEntityLayersEvent event) {
         if (BzClientConfigs.useBackupModelForVariantBee) {
-            event.register(BackupVariantBeeModel.LAYER_LOCATION, BackupVariantBeeModel::createBodyLayer);
+            event.register(VariantBeeModel.LAYER_LOCATION, VariantBeeModel::createBodyLayer);
         }
 
         event.register(BeehemothModel.LAYER_LOCATION, BeehemothModel::createBodyLayer);
@@ -199,13 +197,7 @@ public class BumblezoneClient {
     }
 
     public static void registerEntityRenderers(BzRegisterEntityRenderersEvent event) {
-        if (BzClientConfigs.useBackupModelForVariantBee) {
-            event.register(BzEntities.VARIANT_BEE.get(), BackupVariantBeeRenderer::new);
-        }
-        else {
-            event.register((EntityType) BzEntities.VARIANT_BEE.get(), VariantBeeRenderer::new);
-        }
-
+        event.register(BzEntities.VARIANT_BEE.get(), VariantBeeRenderer::new);
         event.register(BzEntities.HONEY_SLIME.get(), HoneySlimeRendering::new);
         event.register(BzEntities.BEEHEMOTH.get(), BeehemothRenderer::new);
         event.register(BzEntities.BEE_QUEEN.get(), BeeQueenRenderer::new);

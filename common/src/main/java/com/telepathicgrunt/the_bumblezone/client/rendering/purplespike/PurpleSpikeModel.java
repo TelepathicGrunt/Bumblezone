@@ -1,23 +1,15 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.purplespike;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
-import com.telepathicgrunt.the_bumblezone.entities.nonliving.PurpleSpikeEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 
-public class PurpleSpikeModel<T extends PurpleSpikeEntity> extends EntityModel<T> {
+public class PurpleSpikeModel extends EntityModel<PurpleSpikeRenderState> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "purple_spike"), "main");
     private final ModelPart topSpike;
@@ -57,16 +49,10 @@ public class PurpleSpikeModel<T extends PurpleSpikeEntity> extends EntityModel<T
     }
 
     @Override
-    public void setupAnim(T spike, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        boolean hasSpikeCharge = spike.hasSpikeCharge();
-        boolean hasSpike = spike.hasSpike();
-        topSpike.visible = !hasSpikeCharge && hasSpike;
-        bottomSpike.visible = hasSpikeCharge || hasSpike;
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int packedColor) {
-        topSpike.render(poseStack, vertexConsumer, packedLight, packedOverlay, packedColor);
-        bottomSpike.render(poseStack, vertexConsumer, packedLight, packedOverlay, packedColor);
+    public void setupAnim(PurpleSpikeRenderState state) {
+        boolean hasSpikeCharge = state.hasSpikeCharge;
+        boolean hasSpike = state.hasSpike;
+        this.topSpike.visible = !hasSpikeCharge && hasSpike;
+        this.bottomSpike.visible = hasSpikeCharge || hasSpike;
     }
 }

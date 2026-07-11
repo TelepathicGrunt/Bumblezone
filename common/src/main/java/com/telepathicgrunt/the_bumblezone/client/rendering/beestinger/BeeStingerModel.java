@@ -1,28 +1,21 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.beestinger;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.ArrowRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 
 // Made with Blockbench 4.1.3
-public class BeeStingerModel extends Model {
+public class BeeStingerModel extends Model<ArrowRenderState> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "bee_stinger"), "main");
-    private final ModelPart root;
 
-    public BeeStingerModel(ModelPart modelPart) {
-        super(RenderType::entitySolid);
-        this.root = modelPart;
+    public BeeStingerModel(ModelPart root) {
+        super(root, RenderTypes::entitySolid);
     }
 
     public static LayerDefinition createLayer() {
@@ -34,10 +27,5 @@ public class BeeStingerModel extends Model {
                 PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 1.5708F, 3.1416F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 14, 7);
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int packedColor) {
-        this.root.render(poseStack, vertexConsumer, packedLight, packedOverlay, packedColor);
     }
 }

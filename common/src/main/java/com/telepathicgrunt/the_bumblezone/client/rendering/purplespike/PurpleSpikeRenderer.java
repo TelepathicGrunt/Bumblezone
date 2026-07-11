@@ -1,101 +1,74 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.purplespike;
 
-import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PurpleSpikeEntity;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.Model;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.FastColor;
-import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
-public class PurpleSpikeRenderer<M extends EntityModel<PurpleSpikeEntity>>
-        extends EntityRenderer<PurpleSpikeEntity>
-        implements RenderLayerParent<PurpleSpikeEntity, M>
+public class PurpleSpikeRenderer extends EntityRenderer<PurpleSpikeEntity, PurpleSpikeRenderState>
 {
     private static final Identifier SKIN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/purple_spike.png");
-    protected final PurpleSpikeModel<PurpleSpikeEntity> model;
-    protected final List<RenderLayer<PurpleSpikeEntity, M>> layers = Lists.newArrayList();
+    protected final PurpleSpikeModel model;
 
     public PurpleSpikeRenderer(EntityRendererProvider.Context context) {
         super(context);
-        this.model = new PurpleSpikeModel<>(context.bakeLayer(PurpleSpikeModel.LAYER_LOCATION));
-    }
-
-    protected final boolean addLayer(RenderLayer<PurpleSpikeEntity, M> renderLayer) {
-        return this.layers.add(renderLayer);
+        this.model = new PurpleSpikeModel(context.bakeLayer(PurpleSpikeModel.LAYER_LOCATION));
     }
 
     @Override
-    public M getModel() {
-        return (M) this.model;
+    public PurpleSpikeRenderState createRenderState() {
+        return new PurpleSpikeRenderState();
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
-    public void render(PurpleSpikeEntity ringEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
+    public void extractRenderState(PurpleSpikeEntity entity, PurpleSpikeRenderState state, float partialTicks) {
+        super.extractRenderState(entity, state, partialTicks);
+        state.xRot = entity.getXRot(partialTicks);
+        state.yRot = entity.getYRot(partialTicks);
+        state.hasSpike = entity.hasSpike();
+        state.hasSpikeCharge = entity.hasSpikeCharge();
+        state.spikeChargeClientTimeTracker = entity.spikeChargeClientTimeTracker;
+        state.isInvisibleToPlayer = state.isInvisible && entity.isInvisibleTo(Minecraft.getInstance().player);
+    }
+
+    @Override
+    public void submit(PurpleSpikeRenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
         poseStack.pushPose();
-        float m = Mth.lerp(g, ringEntity.xRotO, ringEntity.getXRot());
 
-        float offSet = 1.0f + Math.min(ringEntity.spikeChargeClientTimeTracker / 40f, 0.5f);
+        float offSet = 1.0f + Math.min(state.spikeChargeClientTimeTracker / 40f, 0.5f);
 
         poseStack.scale(1.0f, 1.0f, 1.0f);
         poseStack.translate(0.0f, offSet, 0.0f);
-        poseStack.mulPose(Axis.YN.rotationDegrees(180.0f - ringEntity.getYRot()));
-        poseStack.mulPose(Axis.XN.rotationDegrees(180.0f - ringEntity.getXRot()));
-        this.model.prepareMobModel(ringEntity, 0, 0, g);
-        ((EntityModel)this.model).setupAnim(ringEntity, 0, 0, 0, 0, m);
-        Minecraft minecraft = Minecraft.getInstance();
-        boolean bl = this.isBodyVisible(ringEntity);
-        boolean bl2 = !bl && !ringEntity.isInvisibleTo(minecraft.player);
-        boolean bl3 = minecraft.shouldEntityAppearGlowing(ringEntity);
-        RenderType renderType = this.getRenderType(ringEntity, bl, bl2, bl3);
+        poseStack.mulPose(Axis.YN.rotationDegrees(180.0f - state.yRot));
+        poseStack.mulPose(Axis.XN.rotationDegrees(180.0f - state.xRot));
+        this.model.setupAnim(state);
+        boolean isBodyVisible = !state.isInvisible;
+        boolean forceTransparent = !isBodyVisible && !state.isInvisibleToPlayer;
+        RenderType renderType = this.getRenderType(isBodyVisible, forceTransparent, state.appearsGlowing());
         if (renderType != null) {
-            VertexConsumer vertexConsumer = multiBufferSource.getBuffer(renderType);
-            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, i, 0, ARGB.colorFromFloat(bl2 ? 0.15f : 1.0f, 1.0f, 1.0f, 1.0f));
-        }
-        if (!ringEntity.isSpectator()) {
-            for (RenderLayer<PurpleSpikeEntity, M> renderLayer : this.layers) {
-                renderLayer.render(poseStack, multiBufferSource, i, ringEntity, 0, 0, g, 0, 0, m);
-            }
+            collector.submitModel(this.model, state, poseStack, renderType, state.lightCoords, OverlayTexture.NO_OVERLAY, forceTransparent ? 654311423 : -1, null, state.outlineColor, null);
         }
         poseStack.popPose();
     }
 
     @Nullable
-    protected RenderType getRenderType(PurpleSpikeEntity ringEntity, boolean bl, boolean bl2, boolean bl3) {
-        Identifier identifier = this.getTextureLocation(ringEntity);
-        if (bl2) {
-            return RenderType.itemEntityTranslucentCull(identifier);
+    private RenderType getRenderType(boolean isBodyVisible, boolean forceTransparent, boolean appearGlowing) {
+        if (forceTransparent) {
+            return RenderTypes.entityTranslucentCullItemTarget(SKIN);
+        } else if (isBodyVisible) {
+            return this.model.renderType(SKIN);
+        } else {
+            return appearGlowing ? RenderTypes.outline(SKIN) : null;
         }
-        if (bl) {
-            return this.model.renderType(identifier);
-        }
-        if (bl3) {
-            return RenderType.outline(identifier);
-        }
-        return null;
-    }
-
-    protected boolean isBodyVisible(PurpleSpikeEntity ringEntity) {
-        return !ringEntity.isInvisible();
-    }
-
-    @Override
-    public Identifier getTextureLocation(PurpleSpikeEntity ringEntity) {
-        return SKIN;
     }
 }
