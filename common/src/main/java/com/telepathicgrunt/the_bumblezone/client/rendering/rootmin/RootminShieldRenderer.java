@@ -1,48 +1,25 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.rootmin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 
-public class RootminShieldRenderer extends RenderLayer<RootminEntity, RootminModel> {
+public class RootminShieldRenderer extends RenderLayer<RootminRenderState, RootminModel> {
     private static final Identifier SHIELD_LOCATION = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/rootmin_shield.png");
-    private final RootminModel model;
 
-    public RootminShieldRenderer(RenderLayerParent<RootminEntity, RootminModel> renderLayerParent, EntityModelSet entityModelSet) {
+    public RootminShieldRenderer(RenderLayerParent<RootminRenderState, RootminModel> renderLayerParent) {
         super(renderLayerParent);
-        this.model = new RootminModel(entityModelSet.bakeLayer(RootminModel.LAYER_LOCATION));
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, RootminEntity entity, float f, float g, float h, float j, float k, float l) {
-        if (entity.getRootminShield()) {
-            float m = (float)entity.tickCount + h;
-            EntityModel<RootminEntity> entityModel = this.model();
-            entityModel.prepareMobModel(entity, f, g, h);
-            VertexConsumer vertexConsumer = multiBufferSource.getBuffer(RenderType.energySwirl(this.getTextureLocation(), this.xOffset(m) % 1.0F, m * 0.01F % 1.0F));
-            entityModel.setupAnim(entity, f, g, j, k, l);
-            entityModel.renderToBuffer(poseStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, -8355712);
+    public void submit(PoseStack poseStack, SubmitNodeCollector collector, int lightCoords, RootminRenderState state, float yRot, float xRot) {
+        if (state.shielded) {
+           collector.submitModel(this.getParentModel(), state, poseStack, RenderTypes.energySwirl(SHIELD_LOCATION, state.ageInTicks * 0.02F % 1.0F, state.ageInTicks * 0.01F % 1.0F), state.lightCoords, OverlayTexture.NO_OVERLAY, -8355712, null, state.outlineColor, null);
         }
-    }
-
-    protected float xOffset(float f) {
-        return f * 0.02F;
-    }
-
-    protected Identifier getTextureLocation() {
-        return SHIELD_LOCATION;
-    }
-
-    protected EntityModel<RootminEntity> model() {
-        return this.model;
     }
 }

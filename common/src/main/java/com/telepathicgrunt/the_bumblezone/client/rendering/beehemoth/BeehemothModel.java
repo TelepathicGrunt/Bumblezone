@@ -1,25 +1,18 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 // Made with Blockbench 4.0.0-beta.5
 // Exported for Minecraft version 1.17 with Mojang mappings
 
-public class BeehemothModel extends EntityModel<BeehemothEntity> {
+public class BeehemothModel extends EntityModel<BeehemothRenderState> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "beehemoth"), "main");
     private final ModelPart ROOT;
@@ -46,6 +39,7 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
     protected final ModelPart ABDOMEN;
 
     public BeehemothModel(ModelPart modelPart) {
+        super(modelPart);
         this.ROOT = modelPart.getChild("ROOT");
         this.FACE = this.ROOT.getChild("FACE");
         this.CROWN = this.FACE.getChild("CROWN");
@@ -151,16 +145,13 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
     }
 
     @Override
-    public void setupAnim(BeehemothEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        SADDLE.visible = entity.isSaddled();
-        CROWN.visible = entity.isQueen();
+    public void setupAnim(BeehemothRenderState state) {
+        SADDLE.visible = state.saddled;
+        CROWN.visible = state.queen;
         WING_RIGHT.xRot = 0.0f;
         ROOT.xRot = 0.0f;
         ROOT.y = 19.0f;
-        boolean onGround = entity.onGround() || entity.isPassenger();
-        boolean isSitting = entity.isInSittingPose();
-        double xzSpeed = Math.abs(entity.getDeltaMovement().x()) + Math.abs(entity.getDeltaMovement().z());
-        if (onGround) {
+        if (state.onGround) {
             WING_RIGHT.yRot = -0.2618f;
             WING_RIGHT.zRot = 0.0f;
             WING_LEFT.xRot = 0.0f;
@@ -173,27 +164,27 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
             LEG_REARLEFT.xRot = 0.0f;
             LEG_REARRIGHT.xRot = 0.0f;
 
-            if(xzSpeed > 0.0000008D) {
-                KneeFrontRightCube_r1.yRot = getSine(ageInTicks + entity.offset1, 0.2f, 0.475f);
-                KneeMidRightCube_r1.yRot = getCos(ageInTicks + entity.offset2, 0.375f, 0.525f);
-                KneeRearRightCube_r1.yRot = getSine(ageInTicks + entity.offset3, 0.45f, 0.625f);
-                KneeFrontLeftCube_r1.yRot = getSine(ageInTicks + entity.offset4, -0.20f, -0.475f);
-                KneeMidLeftCube_r1.yRot = getCos(ageInTicks + entity.offset5, -0.375f, -0.525f);
-                KneeRearLeftCube_r1.yRot = getSine(ageInTicks + entity.offset6, -0.45f, -0.625f);
+            if(state.xzSpeed > 0.0000008D) {
+                KneeFrontRightCube_r1.yRot = getSine(state.ageInTicks + state.kneeOffsets[0], 0.2f, 0.475f);
+                KneeMidRightCube_r1.yRot = getCos(state.ageInTicks + state.kneeOffsets[1], 0.375f, 0.525f);
+                KneeRearRightCube_r1.yRot = getSine(state.ageInTicks + state.kneeOffsets[2], 0.45f, 0.625f);
+                KneeFrontLeftCube_r1.yRot = getSine(state.ageInTicks + state.kneeOffsets[3], -0.20f, -0.475f);
+                KneeMidLeftCube_r1.yRot = getCos(state.ageInTicks + state.kneeOffsets[4], -0.375f, -0.525f);
+                KneeRearLeftCube_r1.yRot = getSine(state.ageInTicks + state.kneeOffsets[5], -0.45f, -0.625f);
             }
             else {
-                KneeFrontRightCube_r1.yRot = getSine(entity.offset1, 0.2f, 0.475f);
-                KneeMidRightCube_r1.yRot = getCos(entity.offset2, 0.375f, 0.525f);
-                KneeRearRightCube_r1.yRot = getSine(entity.offset3, 0.45f, 0.625f);
-                KneeFrontLeftCube_r1.yRot = getSine(entity.offset4, -0.20f, -0.475f);
-                KneeMidLeftCube_r1.yRot = getCos(entity.offset5, -0.375f, -0.525f);
-                KneeRearLeftCube_r1.yRot = getSine(entity.offset6, -0.45f, -0.625f);
+                KneeFrontRightCube_r1.yRot = getSine(state.kneeOffsets[0], 0.2f, 0.475f);
+                KneeMidRightCube_r1.yRot = getCos(state.kneeOffsets[1], 0.375f, 0.525f);
+                KneeRearRightCube_r1.yRot = getSine(state.kneeOffsets[2], 0.45f, 0.625f);
+                KneeFrontLeftCube_r1.yRot = getSine(state.kneeOffsets[3], -0.20f, -0.475f);
+                KneeMidLeftCube_r1.yRot = getCos(state.kneeOffsets[4], -0.375f, -0.525f);
+                KneeRearLeftCube_r1.yRot = getSine(state.kneeOffsets[5], -0.45f, -0.625f);
             }
 
-            if(xzSpeed > 0.03D) {
+            if(state.xzSpeed > 0.03D) {
                 WING_RIGHT.yRot = 0.0f;
                 float wingSpeed = 0.75f;
-                WING_LEFT.zRot = ((float) (Mth.cos((limbSwing + ageInTicks) * 2.1f * wingSpeed) * Math.PI * 0.15f));
+                WING_LEFT.zRot = ((float) (Mth.cos((state.walkAnimationPos + state.ageInTicks) * 2.1f * wingSpeed) * Math.PI * 0.15f));
                 WING_LEFT.xRot = WING_RIGHT.xRot;
                 WING_LEFT.yRot = WING_RIGHT.yRot;
                 WING_RIGHT.zRot = -WING_LEFT.zRot;
@@ -201,8 +192,8 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
         }
         else {
             WING_RIGHT.yRot = 0.0f;
-            float wingSpeed = isSitting ? 0.75f : 1f;
-            WING_LEFT.zRot = ((float) (Mth.cos((limbSwing + ageInTicks) * 2.1f * wingSpeed) * Math.PI * 0.15f));
+            float wingSpeed = state.sitting ? 0.75f : 1f;
+            WING_LEFT.zRot = ((float) (Mth.cos((state.walkAnimationPos + state.ageInTicks) * 2.1f * wingSpeed) * Math.PI * 0.15f));
             WING_LEFT.xRot = WING_RIGHT.xRot;
             WING_LEFT.yRot = WING_RIGHT.yRot;
             WING_RIGHT.zRot = -WING_LEFT.zRot;
@@ -220,20 +211,20 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
             // mr 37.5, 52.5
             // br 45, 62.5
 
-            KneeFrontRightCube_r1.yRot = getSine(ageInTicks + entity.offset1, 0.2f, 0.475f);
-            KneeMidRightCube_r1.yRot = getSine(ageInTicks + entity.offset2, 0.375f, 0.525f);
-            KneeRearRightCube_r1.yRot = getSine(ageInTicks + entity.offset3, 0.45f, 0.625f);
-            KneeFrontLeftCube_r1.yRot = getSine(ageInTicks + entity.offset4, -0.20f, -0.475f);
-            KneeMidLeftCube_r1.yRot = getSine(ageInTicks + entity.offset5, -0.375f, -0.525f);
-            KneeRearLeftCube_r1.yRot = getSine(ageInTicks + entity.offset6, -0.45f, -0.625f);
+            KneeFrontRightCube_r1.yRot = getSine(state.ageInTicks + state.kneeOffsets[0], 0.2f, 0.475f);
+            KneeMidRightCube_r1.yRot = getSine(state.ageInTicks + state.kneeOffsets[1], 0.375f, 0.525f);
+            KneeRearRightCube_r1.yRot = getSine(state.ageInTicks + state.kneeOffsets[2], 0.45f, 0.625f);
+            KneeFrontLeftCube_r1.yRot = getSine(state.ageInTicks + state.kneeOffsets[3], -0.20f, -0.475f);
+            KneeMidLeftCube_r1.yRot = getSine(state.ageInTicks + state.kneeOffsets[4], -0.375f, -0.525f);
+            KneeRearLeftCube_r1.yRot = getSine(state.ageInTicks + state.kneeOffsets[5], -0.45f, -0.625f);
         }
 
         ROOT.xRot = 0.0F;
         ROOT.yRot = 0.0F;
         ROOT.zRot = 0.0F;
 
-        float swayingMotion = Mth.sin(ageInTicks * 0.18F);
-        if(isSitting) {
+        float swayingMotion = Mth.sin(state.ageInTicks * 0.18F);
+        if(state.sitting) {
             ANTENNA_LEFT.xRot = swayingMotion * (float) Math.PI * 0.002F;
             ANTENNA_RIGHT.xRot = swayingMotion * (float) Math.PI * 0.002F;
             ANTENNA_LEFT.z = -0.3F;
@@ -252,24 +243,15 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
             ANTENNA_RIGHT.y = -1F;
         }
 
-        if (!onGround) {
+        if (!state.onGround) {
             ROOT.xRot = 0.1F + swayingMotion * (float) Math.PI * 0.015F;
-            ROOT.y = 19.0F - Mth.cos(ageInTicks * 0.18F) * 0.9F;
+            ROOT.y = 19.0F - Mth.cos(state.ageInTicks * 0.18F) * 0.9F;
         }
 
         THORAX.xRot = 0;
 
-        float swayingMotion2 = Mth.sin(ageInTicks * 0.18F);
+        float swayingMotion2 = Mth.sin(state.ageInTicks * 0.18F);
         FACE.xRot = (swayingMotion2 + 40) * (float) Math.PI * 0.0025F;
         ABDOMEN.xRot = (swayingMotion2 - 40) * (float) Math.PI * 0.0025F;
-    }
-
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int packedColor) {
-        float scale = 1.6f;
-        poseStack.scale(scale, scale, scale);
-        poseStack.translate(0, -0.5, 0);
-        ROOT.render(poseStack, buffer, packedLight, packedOverlay);
     }
 }

@@ -1,26 +1,28 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.beequeen;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.animation.KeyframeAnimation;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.Identifier;
 
-public class BeeQueenModel extends HierarchicalModel<BeeQueenEntity> {
+public class BeeQueenModel extends EntityModel<BeeQueenRenderState> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "bee_queen"), "main");
-    private final ModelPart root;
+
+    private final KeyframeAnimation attackAnimation;
+    private final KeyframeAnimation idleAnimation;
+    private final KeyframeAnimation itemThrowAnimation;
+    private final KeyframeAnimation itemRejectAnimation;
 
     public BeeQueenModel(ModelPart root) {
-        this.root = root.getChild("root");
+        super(root);
+        this.attackAnimation = BeeQueenAnimations.BEE_QUEEN_ATTACK.bake(root);
+        this.idleAnimation = BeeQueenAnimations.BEE_QUEEN_IDLE.bake(root);
+        this.itemThrowAnimation = BeeQueenAnimations.BEE_QUEEN_ITEM_THROW.bake(root);
+        this.itemRejectAnimation = BeeQueenAnimations.BEE_QUEEN_ITEM_REJECT.bake(root);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -82,24 +84,10 @@ public class BeeQueenModel extends HierarchicalModel<BeeQueenEntity> {
     }
 
     @Override
-    public void setupAnim(BeeQueenEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.root().getAllParts().forEach(ModelPart::resetPose);
-        this.animate(entity.attackAnimationState, BeeQueenAnimations.BEE_QUEEN_ATTACK, ageInTicks);
-        this.animate(entity.idleAnimationState, BeeQueenAnimations.BEE_QUEEN_IDLE, ageInTicks * (entity.isAngry() ? 2 : 1));
-        this.animate(entity.itemThrownAnimationState, BeeQueenAnimations.BEE_QUEEN_ITEM_THROW, ageInTicks);
-        this.animate(entity.itemRejectAnimationState, BeeQueenAnimations.BEE_QUEEN_ITEM_REJECT, ageInTicks);
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int packedColor) {
-        float scale = 2.6f;
-        poseStack.scale(scale, scale, scale);
-        poseStack.translate(0, -0.92, 0);
-        this.root().render(poseStack, vertexConsumer, packedLight, packedOverlay, packedColor);
-    }
-
-    @Override
-    public ModelPart root() {
-        return this.root;
+    public void setupAnim(BeeQueenRenderState state) {
+        this.attackAnimation.apply(state.attackAnimationState, state.ageInTicks);
+        this.idleAnimation.apply(state.idleAnimationState, state.ageInTicks * (state.angry ? 2 : 1));
+        this.itemThrowAnimation.apply(state.itemThrownAnimationState, state.ageInTicks);
+        this.itemRejectAnimation.apply(state.itemRejectAnimationState, state.ageInTicks);
     }
 }

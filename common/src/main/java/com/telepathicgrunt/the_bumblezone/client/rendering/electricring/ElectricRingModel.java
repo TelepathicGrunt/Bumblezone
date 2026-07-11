@@ -1,32 +1,20 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.electricring;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
-import com.telepathicgrunt.the_bumblezone.entities.nonliving.ElectricRingEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 
-public class ElectricRingModel<T extends ElectricRingEntity> extends EntityModel<T> {
+public class ElectricRingModel extends EntityModel<ElectricRingRenderState> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "electric_ring"), "main");
-    private final ModelPart ring;
-    private final ModelPart side;
 
     public ElectricRingModel(ModelPart root) {
         super(root, RenderTypes::entityTranslucentEmissive);
-        this.ring = root.getChild("ring");
-        this.side = root.getChild("side");
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -48,16 +36,5 @@ public class ElectricRingModel<T extends ElectricRingEntity> extends EntityModel
                 .texOffs(1, 52).addBox(-33.0F, -22.0F, -2.0F, 18.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.5708F));
 
         return LayerDefinition.create(meshdefinition, 128, 128);
-    }
-
-    @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int packedColor) {
-        ring.render(poseStack, vertexConsumer, packedLight, packedOverlay, packedColor);
-        side.render(poseStack, vertexConsumer, packedLight, packedOverlay, packedColor);
     }
 }

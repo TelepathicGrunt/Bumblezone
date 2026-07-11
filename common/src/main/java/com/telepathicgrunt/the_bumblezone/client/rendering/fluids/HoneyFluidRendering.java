@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.fluids;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.teamresourceful.resourcefullib.client.fluid.data.ClientFluidProperties;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
