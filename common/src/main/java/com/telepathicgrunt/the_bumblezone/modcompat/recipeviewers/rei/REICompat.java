@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.modcompat;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.rei;
 
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
@@ -7,13 +7,10 @@ import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.datamanagers.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.datamanagers.queentrades.WeightedTradeResult;
 import com.telepathicgrunt.the_bumblezone.items.recipes.PotionCandleRecipe;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.MainTradeRowInput;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.RandomizeTradeRowInput;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.datamanager.PotionCandleRecipeSyncData;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei.QueenRandomizerTradesREICategory;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei.QueenTradesREICategory;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei.REIQueenRandomizerTradesInfo;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei.REIQueenTradesInfo;
+import com.telepathicgrunt.the_bumblezone.modcompat.FakePotionCandleRecipeCreator;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.MainTradeRowInput;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.RandomizeTradeRowInput;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.jei.datamanager.PotionCandleRecipeSyncData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCreativeTabs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -40,9 +37,9 @@ import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.material.Fluid;
 
 import java.util.Collections;
@@ -158,15 +155,15 @@ public class REICompat implements REIClientPlugin {
 
     private static void registerExtraRecipes(RecipeHolder<?> baseRecipe, DisplayRegistry registry, boolean oneRecipeOnly) {
         if (baseRecipe.value() instanceof PotionCandleRecipe potionCandleRecipe) {
-            List<CraftingRecipe> extraRecipes = FakePotionCandleRecipeCreator.constructFakeRecipes(potionCandleRecipe, oneRecipeOnly);
+            List<ShapedRecipe> extraRecipes = FakePotionCandleRecipeCreator.constructFakeRecipes(potionCandleRecipe, oneRecipeOnly);
             extraRecipes.forEach(registry::add);
         }
     }
 
     @Override
     public void registerCategories(CategoryRegistry registry) {
-        registry.add(new QueenTradesREICategory());
-        registry.add(new QueenRandomizerTradesREICategory());
+        registry.add(new REIQueenTradesCategory());
+        registry.add(new REIQueenRandomizerTradesCategory());
 
         registry.addWorkstations(QUEEN_TRADES, EntryStacks.of(BzItems.BEE_QUEEN_SPAWN_EGG.get()));
         registry.addWorkstations(QUEEN_RANDOMIZE_TRADES, EntryStacks.of(BzItems.BEE_QUEEN_SPAWN_EGG.get()));

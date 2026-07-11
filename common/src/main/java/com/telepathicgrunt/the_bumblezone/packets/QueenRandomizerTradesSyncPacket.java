@@ -6,7 +6,7 @@ import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.datamanagers.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzDatapackSyncEvent;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.RandomizeTradeRowInput;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.RandomizeTradeRowInput;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

@@ -1,7 +1,6 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.jei;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.modcompat.JEIIntegration;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -16,7 +15,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
-public class QueenRandomizeTradesJEICategory implements IRecipeCategory<JEIQueenRandomizerTradesInfo> {
+public class JEIQueenRandomizeTradesCategory implements IRecipeCategory<JEIQueenRandomizerTradesInfo> {
 
     public static final int RECIPE_WIDTH = 136;
     public static final int RECIPE_HEIGHT = 28;
@@ -26,7 +25,7 @@ public class QueenRandomizeTradesJEICategory implements IRecipeCategory<JEIQueen
     private final Component localizedName;
     private final IDrawable tagIcon;
 
-    public QueenRandomizeTradesJEICategory(IGuiHelper guiHelper) {
+    public JEIQueenRandomizeTradesCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createDrawable(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/queen_randomizer_trades_layout.png"), 0, 0, RECIPE_WIDTH, RECIPE_HEIGHT);
         this.localizedName = Component.translatable("the_bumblezone.recipe_viewers.bee_queen_color_randomizing_trades");
 
@@ -71,9 +70,6 @@ public class QueenRandomizeTradesJEICategory implements IRecipeCategory<JEIQueen
 
         if (recipe.tagInAndOut() != null) {
             tagIcon.draw(guiGraphics, 11, 11);
-        }
-
-        if (recipe.tagInAndOut() != null) {
             tagIcon.draw(guiGraphics, 69, 11);
         }
     }

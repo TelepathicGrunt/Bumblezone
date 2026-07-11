@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.jei;
 
 import mezz.jei.api.recipe.category.extensions.IRecipeCategoryExtension;
 import net.minecraft.tags.TagKey;

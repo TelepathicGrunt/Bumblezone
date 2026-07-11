@@ -1,7 +1,6 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.jei;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.modcompat.JEIIntegration;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -17,7 +16,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
-public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInfo> {
+public class JEIQueenTradesCategory implements IRecipeCategory<JEIQueenTradesInfo> {
 
     public static final int RECIPE_WIDTH = 124;
     public static final int RECIPE_HEIGHT = 28;
@@ -27,7 +26,7 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
     private final Component localizedName;
     private final IDrawable tagIcon;
 
-    public QueenTradesJEICategory(IGuiHelper guiHelper) {
+    public JEIQueenTradesCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createDrawable(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/queen_trades_layout.png"), 0, 0, RECIPE_WIDTH, RECIPE_HEIGHT);
         this.localizedName = Component.translatable("the_bumblezone.recipe_viewers.bee_queen_trades");
 

@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.emi;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.emi;
 
 // TODO: Re-enable when EMI updates
 //public class EMIQueenTradesInfo implements EmiRecipe {

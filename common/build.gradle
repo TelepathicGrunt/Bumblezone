@@ -35,6 +35,7 @@ dependencies {
     // COMPAT
     compileOnly("mezz.jei:jei-${project.jei_mc}-neoforge-api:${project.jei}") { transitive = false  }
     compileOnly("mezz.jei:jei-${project.jei_mc}-common-api:${project.jei}") { transitive = false  }
+    compileOnly("cc.cassian.rrv:reliable-recipe-viewer-fabric:${rrv}") { transitive = false  }
     //compileOnly("dev.emi:emi-neoforge:${project.emi}:api") { transitive = false  }
     compileOnly("me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei}") { transitive = false  }
     compileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}")

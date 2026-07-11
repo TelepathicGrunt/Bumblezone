@@ -1,8 +1,7 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;

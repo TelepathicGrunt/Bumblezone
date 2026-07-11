@@ -31,7 +31,10 @@
             "com.telepathicgrunt.the_bumblezone.configs.fabric.ModMenuCompat"
         ],
         "jei_mod_plugin": [
-            "com.telepathicgrunt.the_bumblezone.modcompat.JEIIntegration"
+            "com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.jei.JEIIntegration"
+        ],
+        "rrv_client": [
+            "com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.rrv.RRVIntegration"
         ]
     },
     "mixins": [

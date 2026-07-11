@@ -1,15 +1,15 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.rei;
 
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.DisplayRenderer;
 import me.shedaniel.rei.api.client.gui.compat.GuiGraphics;
 import net.minecraft.resources.Identifier;
 
-public class QueenEggIconRenderer extends DisplayRenderer {
+public class REIQueenEggIconRenderer extends DisplayRenderer {
 
 	private final Identifier texture;
 
-	public QueenEggIconRenderer(Identifier texture) {
+	public REIQueenEggIconRenderer(Identifier texture) {
 		this.texture = texture;
 	}
 

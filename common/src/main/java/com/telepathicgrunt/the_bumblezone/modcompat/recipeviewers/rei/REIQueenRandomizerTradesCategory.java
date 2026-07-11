@@ -1,7 +1,6 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.rei;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.modcompat.REICompat;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.Renderer;
@@ -16,7 +15,7 @@ import org.joml.Matrix3x2f;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QueenRandomizerTradesREICategory implements DisplayCategory<REIQueenRandomizerTradesInfo> {
+public class REIQueenRandomizerTradesCategory implements DisplayCategory<REIQueenRandomizerTradesInfo> {
 
 	public static final int RECIPE_WIDTH = 136;
 	public static final int RECIPE_HEIGHT = 28;
@@ -24,8 +23,8 @@ public class QueenRandomizerTradesREICategory implements DisplayCategory<REIQuee
 	private final Renderer icon;
 	private final Component localizedName;
 
-	public QueenRandomizerTradesREICategory() {
-		this.icon = new QueenEggIconRenderer(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/bee_queen_randomize_trades.png"));
+	public REIQueenRandomizerTradesCategory() {
+		this.icon = new REIQueenEggIconRenderer(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/bee_queen_randomize_trades.png"));
 		this.localizedName = Component.translatable("the_bumblezone.recipe_viewers.bee_queen_color_randomizing_trades");
 	}
 

@@ -11,10 +11,16 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
   - fabric/src/main/java/com/telepathicgrunt/the_bumblezone/modcompat/fabric
   - neoforge/src/main/java/com/telepathicgrunt/the_bumblezone/modcompat/neoforge
 - Search TODO and verify they are all completed
-- Add compat for 
 
 
 ### **(V.7.9.0 Changes) (26.1.2 Minecraft)**
 
 #### Misc:
 Ported to 26.1.2
+
+Special thanks to all those who helped me out with questions about the porting!
+
+Also thanks to XFactHD who did the Framed Blocks compatibility porting work.
+
+#### Mod Compat:
+Brand new compatibility has been added for Reliable Recipe Viewer mod (RRV).

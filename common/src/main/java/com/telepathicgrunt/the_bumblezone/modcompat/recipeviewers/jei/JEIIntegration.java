@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.modcompat;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.jei;
 
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
@@ -6,13 +6,10 @@ import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.datamanagers.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.datamanagers.queentrades.WeightedTradeResult;
 import com.telepathicgrunt.the_bumblezone.items.recipes.PotionCandleRecipe;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.MainTradeRowInput;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.RandomizeTradeRowInput;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.JEIQueenRandomizerTradesInfo;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.JEIQueenTradesInfo;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.QueenRandomizeTradesJEICategory;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.QueenTradesJEICategory;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.datamanager.PotionCandleRecipeSyncData;
+import com.telepathicgrunt.the_bumblezone.modcompat.FakePotionCandleRecipeCreator;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.MainTradeRowInput;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.RandomizeTradeRowInput;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.jei.datamanager.PotionCandleRecipeSyncData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCreativeTabs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -42,9 +39,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -77,10 +74,13 @@ public class JEIIntegration implements IModPlugin {
 
     private static void registerExtraRecipes(RecipeHolder<?> baseRecipe, IRecipeRegistration registration, boolean oneRecipeOnly) {
         if (baseRecipe.value() instanceof PotionCandleRecipe potionCandleRecipe) {
-            List<CraftingRecipe> extraRecipes = FakePotionCandleRecipeCreator.constructFakeRecipes(potionCandleRecipe, oneRecipeOnly);
+            List<ShapedRecipe> extraRecipes = FakePotionCandleRecipeCreator.constructFakeRecipes(potionCandleRecipe, oneRecipeOnly);
             List<RecipeHolder<CraftingRecipe>> holders = new ArrayList<>(extraRecipes.size());
             for (int i = 0; i < extraRecipes.size(); i++) {
-                holders.add(new RecipeHolder<>(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(baseRecipe.id().identifier().getNamespace(), baseRecipe.id().identifier().getPath() + "_" + i)), extraRecipes.get(i)));
+                holders.add(new RecipeHolder<>(
+                    ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(baseRecipe.id().identifier().getNamespace(), baseRecipe.id().identifier().getPath() + "_" + i)),
+                    extraRecipes.get(i)
+                ));
             }
             registration.addRecipes(RecipeTypes.CRAFTING, holders);
         }
@@ -165,8 +165,8 @@ public class JEIIntegration implements IModPlugin {
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
-        registration.addRecipeCategories(new QueenTradesJEICategory(registration.getJeiHelpers().getGuiHelper()));
-        registration.addRecipeCategories(new QueenRandomizeTradesJEICategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new JEIQueenTradesCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new JEIQueenRandomizeTradesCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override

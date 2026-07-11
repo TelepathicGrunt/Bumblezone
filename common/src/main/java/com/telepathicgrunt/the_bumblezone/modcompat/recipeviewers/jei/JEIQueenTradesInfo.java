@@ -1,7 +1,7 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.jei;
 
 import com.telepathicgrunt.the_bumblezone.entities.datamanagers.queentrades.WeightedTradeResult;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.MainTradeRowInput;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.MainTradeRowInput;
 import mezz.jei.api.recipe.category.extensions.IRecipeCategoryExtension;
 import net.minecraft.util.random.Weighted;
 

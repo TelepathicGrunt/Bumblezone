@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

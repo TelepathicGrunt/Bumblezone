@@ -1,7 +1,6 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.datamanager;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.jei.datamanager;
 
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeMap;
 import org.jspecify.annotations.Nullable;
 
 public class PotionCandleRecipeSyncData {

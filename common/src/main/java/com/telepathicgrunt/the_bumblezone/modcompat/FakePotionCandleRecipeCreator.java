@@ -35,8 +35,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class FakePotionCandleRecipeCreator {
 
-    public static List<CraftingRecipe> constructFakeRecipes(PotionCandleRecipe potionCandleRecipe, boolean oneRecipeOnly) {
-        List<CraftingRecipe> extraRecipes = new ArrayList<>();
+    public static List<ShapedRecipe> constructFakeRecipes(PotionCandleRecipe potionCandleRecipe, boolean oneRecipeOnly) {
+        List<ShapedRecipe> extraRecipes = new ArrayList<>();
         Set<MobEffect> effects = new HashSet<>();
         List<Holder<Potion>> potions = new ArrayList<>();
         for (Identifier potionKey : BuiltInRegistries.POTION.keySet()) {
@@ -67,7 +67,7 @@ public class FakePotionCandleRecipeCreator {
         return extraRecipes;
     }
 
-    private static void addRecipeIfValid(List<CraftingRecipe> extraRecipes, ShapedRecipe recipe) {
+    private static void addRecipeIfValid(List<ShapedRecipe> extraRecipes, ShapedRecipe recipe) {
         extraRecipes.add(recipe);
     }
 
