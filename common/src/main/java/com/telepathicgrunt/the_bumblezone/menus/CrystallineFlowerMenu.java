@@ -44,10 +44,10 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
     public static final int CONSUME_SLOT_X = 47;
     public static final int CONSUME_SLOT_Y = 80;
-    private static final int BOOK_SLOT_X = 92;
-    private static final int BOOK_SLOT_Y = 28;
-    private static final int ENCHANTED_SLOT_X = 136;
-    private static final int ENCHANTED_SLOT_Y = 28;
+    private static final int BOOK_SLOT_X = 83;
+    private static final int BOOK_SLOT_Y = 17;
+    private static final int ENCHANTED_SLOT_X = 127;
+    private static final int ENCHANTED_SLOT_Y = 17;
 
     private final ContainerLevelAccess access;
     private final Player player;
