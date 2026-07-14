@@ -71,15 +71,14 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private static final float ENCHANTMENT_SORT_V_OFFSET = 197.0F;
 
     private static final int ENCHANTMENT_SEARCH_X_OFFSET = 75;
-    private static final int ENCHANTMENT_SEARCH_Y_OFFSET = 37;
+    private static final int ENCHANTMENT_SEARCH_Y_OFFSET = 39;
     private static final int ENCHANTMENT_SEARCH_WIDTH = 86;
     private static final int ENCHANTMENT_SEARCH_HEIGHT = 12;
     private static final int ENCHANTMENT_SEARCH_MAX_LENGTH = 128;
 
     private static final int ENCHANTMENT_TIER_COST_X_OFFSET = 155;
     private static final int ENCHANTMENT_TIER_COST_Y_OFFSET = 21;
-    private static final int ENCHANTMENT_LIMIT_MESSAGE_X_OFFSET = 120;
-    private static final int ENCHANTMENT_LIMIT_MESSAGE_Y_OFFSET = 72;
+    private static final float ENCHANTMENT_LIMIT_MESSAGE_SCALE = 0.80F;
 
     private static final float ENCHANTMENT_SELECTED_U_TEXTURE = 0F;
     private static final float ENCHANTMENT_SELECTED_V_TEXTURE = 197.0F;
@@ -189,6 +188,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 ENCHANTMENT_SEARCH_HEIGHT,
                 searchHint);
         this.searchBox.setMaxLength(ENCHANTMENT_SEARCH_MAX_LENGTH);
+        this.searchBox.setBordered(false);
         this.searchBox.setHint(searchHint);
         this.searchBox.setValue(searchQuery);
         this.searchBox.setResponder(this::updateSearchQuery);
@@ -302,7 +302,25 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
         if (this.menu.tooManyEnchantmentsOnInput.get() == 1) {
             MutableComponent mutableComponent = Component.translatable("container.the_bumblezone.crystalline_flower.too_many_enchants").withStyle(ChatFormatting.BOLD);
-            guiGraphics.drawCenteredString(font, mutableComponent, startX + ENCHANTMENT_LIMIT_MESSAGE_X_OFFSET, startY + ENCHANTMENT_LIMIT_MESSAGE_Y_OFFSET, 0xD03010);
+
+            float messageAreaX = startX + ENCHANTMENT_AREA_X_OFFSET - 2;
+            float messageAreaY = startY + ENCHANTMENT_AREA_Y_OFFSET - 2;
+            float messageAreaWidth = ENCHANTMENT_SECTION_WIDTH + 1;
+            float messageAreaHeight = ENCHANTMENT_SECTION_HEIGHT * 3;
+            float textCenterX = messageAreaX + messageAreaWidth / 2.0F;
+            float textY = messageAreaY + (messageAreaHeight - font.lineHeight * ENCHANTMENT_LIMIT_MESSAGE_SCALE) / 2.0F;
+
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(textCenterX, textY, 0.0F);
+            guiGraphics.pose().scale(ENCHANTMENT_LIMIT_MESSAGE_SCALE, ENCHANTMENT_LIMIT_MESSAGE_SCALE, 1.0F);
+            guiGraphics.drawCenteredString(
+                    font,
+                    mutableComponent,
+                    0,
+                    0,
+                    0xD03010
+            );
+            guiGraphics.pose().popPose();
         }
         else if (this.menu.selectedEnchantment != null && this.menu.enchantedSlot.hasItem()) {
             EnchantmentSkeleton enchantment = enchantmentsAvailable.get(this.menu.selectedEnchantment);
