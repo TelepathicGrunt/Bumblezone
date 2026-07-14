@@ -15,6 +15,7 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -29,6 +30,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.Util;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import org.lwjgl.glfw.GLFW;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -70,6 +72,17 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private static final int ENCHANTMENT_SORT_Y_OFFSET = 41;
     private static final float ENCHANTMENT_SORT_U_OFFSET = 92.0F;
     private static final float ENCHANTMENT_SORT_V_OFFSET = 197.0F;
+
+    private static final int ENCHANTMENT_SEARCH_X_OFFSET = 75;
+    private static final int ENCHANTMENT_SEARCH_Y_OFFSET = 37;
+    private static final int ENCHANTMENT_SEARCH_WIDTH = 86;
+    private static final int ENCHANTMENT_SEARCH_HEIGHT = 12;
+    private static final int ENCHANTMENT_SEARCH_MAX_LENGTH = 128;
+
+    private static final int ENCHANTMENT_TIER_COST_X_OFFSET = 155;
+    private static final int ENCHANTMENT_TIER_COST_Y_OFFSET = 21;
+    private static final int ENCHANTMENT_LIMIT_MESSAGE_X_OFFSET = 120;
+    private static final int ENCHANTMENT_LIMIT_MESSAGE_Y_OFFSET = 72;
 
     private static final float ENCHANTMENT_SELECTED_U_TEXTURE = 0F;
     private static final float ENCHANTMENT_SELECTED_V_TEXTURE = 197.0F;
@@ -130,10 +143,12 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private int cachedObstructionsTimer = 0;
     private int prevXpTier = 0;
     private boolean prevBookSlotEmpty = true;
+    private EditBox searchBox;
 
     public static Map<Identifier, EnchantmentSkeleton> enchantmentsAvailable = new HashMap<>();
     public static List<Identifier> enchantmentsAvailableSortedList = new ArrayList<>();
     public static SORT_STATE sortState = SORT_STATE.ALPHABETICAL;
+    private static String searchQuery = "";
 
     public enum SORT_STATE {
         ALPHABETICAL(0, 0, "sort_alphabetically"),
@@ -161,6 +176,33 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         super(menu, playerInventory, title);
         inventoryLabelY = imageHeight + INVENTORY_LABEL_Y_OFFSET;
         titleLabelY += TITLE_LABEL_Y_OFFSET;
+        searchQuery = "";
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+
+        Component searchHint = Component.translatable("container.the_bumblezone.crystalline_flower.search");
+        this.searchBox = new EditBox(
+                this.font,
+                this.leftPos + ENCHANTMENT_SEARCH_X_OFFSET,
+                this.topPos + ENCHANTMENT_SEARCH_Y_OFFSET,
+                ENCHANTMENT_SEARCH_WIDTH,
+                ENCHANTMENT_SEARCH_HEIGHT,
+                searchHint);
+        this.searchBox.setMaxLength(ENCHANTMENT_SEARCH_MAX_LENGTH);
+        this.searchBox.setHint(searchHint);
+        this.searchBox.setValue(searchQuery);
+        this.searchBox.setResponder(this::updateSearchQuery);
+        this.addRenderableWidget(this.searchBox);
+    }
+
+    private void updateSearchQuery(String query) {
+        searchQuery = query;
+        SortAndAssignAvailableEnchants();
+        this.startIndex = 0;
+        this.scrollOff = 0.0F;
     }
 
     @Override
@@ -258,13 +300,13 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
         if (this.menu.tooManyEnchantmentsOnInput.get() == 1) {
             MutableComponent mutableComponent = Component.translatable("container.the_bumblezone.crystalline_flower.too_many_enchants").withStyle(ChatFormatting.BOLD);
-            guiGraphics.centeredText(font, mutableComponent, rowStartX + 45, rowStartY - 36, 0xD03010);
+            guiGraphics.centeredText(font, mutableComponent, startX + ENCHANTMENT_LIMIT_MESSAGE_X_OFFSET, startY + ENCHANTMENT_LIMIT_MESSAGE_Y_OFFSET, 0xD03010);
         }
         else if (this.menu.selectedEnchantment != null && this.menu.enchantedSlot.hasItem()) {
             EnchantmentSkeleton enchantment = enchantmentsAvailable.get(this.menu.selectedEnchantment);
             int tierCost = EnchantmentUtils.getEnchantmentTierCost(enchantment.level, enchantment.minCost, enchantment.isTreasure, enchantment.isCurse);
             MutableComponent mutableComponent = Component.translatable("container.the_bumblezone.crystalline_flower.tier_cost_arrow", tierCost).withStyle(ChatFormatting.BOLD);
-            guiGraphics.centeredText(font, mutableComponent, rowStartX + 45, rowStartY - 36, 0xD03010);
+            guiGraphics.centeredText(font, mutableComponent, startX + ENCHANTMENT_TIER_COST_X_OFFSET, startY + ENCHANTMENT_TIER_COST_Y_OFFSET, 0xD03010);
         }
 
         drawPushableButtons(guiGraphics, startX, startY, mouseX, mouseY);
@@ -438,16 +480,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
     @NotNull
     private String getTruncatedString(String namespace, String path, int maxSize) {
-        StringBuilder translatedEnchantmentName = new StringBuilder(Language.getInstance().getOrDefault("""
-                enchantment.%s.%s""".formatted(namespace, path)));
-
-        String originalNameOutput = translatedEnchantmentName.toString();
-        if (originalNameOutput.contains("enchantment.")) {
-            translatedEnchantmentName = new StringBuilder(Arrays.stream(path
-                    .split("_"))
-                    .map(word -> word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1).toLowerCase(Locale.ROOT))
-                    .collect(Collectors.joining(" ")));
-        }
+        StringBuilder translatedEnchantmentName = new StringBuilder(getEnchantmentDisplayName(namespace, path));
 
         boolean hasTruncated = false;
         while (font.width(translatedEnchantmentName.toString()) > maxSize) {
@@ -578,15 +611,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 EnchantmentSkeleton enchantment = enchantmentsAvailable.get(enchantmentsAvailableSortedList.get(currentSection));
                 int tierCost = EnchantmentUtils.getEnchantmentTierCost(enchantment.level, enchantment.minCost, enchantment.isTreasure, enchantment.isCurse);
 
-                String translatedEnchantmentName = Language.getInstance().getOrDefault("""
-                    enchantment.%s.%s""".formatted(enchantment.namespace, enchantment.path));
-
-                if (translatedEnchantmentName.contains("enchantment.")) {
-                    translatedEnchantmentName = Arrays.stream(enchantment.path
-                            .split("_"))
-                            .map(word -> word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1).toLowerCase(Locale.ROOT))
-                            .collect(Collectors.joining(" "));
-                }
+                String translatedEnchantmentName = getEnchantmentDisplayName(enchantment.namespace, enchantment.path);
 
                 MutableComponent mutableComponent = Component.literal(translatedEnchantmentName)
                         .withStyle(ChatFormatting.GOLD);
@@ -640,7 +665,21 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
         this.scrolling = false;
 
-        if (handleEnchantmentAreaRow(event.x(), event.y(), (Integer sectionId) -> {
+        boolean searchBoxHovered = isSearchBoxHovered(mouseX, mouseY);
+        if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT && searchBoxHovered) {
+            this.searchBox.setValue("");
+            this.setFocused(this.searchBox);
+            this.searchBox.setFocused(true);
+            return true;
+        }
+        else if (!searchBoxHovered && this.searchBox != null) {
+            this.searchBox.setFocused(false);
+            if (this.getFocused() == this.searchBox) {
+                this.setFocused(null);
+            }
+        }
+
+        if (handleEnchantmentAreaRow(mouseX, mouseY, (Integer sectionId) -> {
             if (this.menu.clickMenuEnchantment(this.minecraft.player, CrystallineFlowerScreen.enchantmentsAvailableSortedList.get(sectionId))) {
                 sendButtonPressToMenu(sectionId);
                 return true;
@@ -725,6 +764,38 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         return super.mouseClicked(event, doubleClick);
     }
 
+    private boolean isSearchBoxHovered(double mouseX, double mouseY) {
+        return this.searchBox != null &&
+                mouseX >= this.leftPos + ENCHANTMENT_SEARCH_X_OFFSET &&
+                mouseX < this.leftPos + ENCHANTMENT_SEARCH_X_OFFSET + ENCHANTMENT_SEARCH_WIDTH &&
+                mouseY >= this.topPos + ENCHANTMENT_SEARCH_Y_OFFSET &&
+                mouseY < this.topPos + ENCHANTMENT_SEARCH_Y_OFFSET + ENCHANTMENT_SEARCH_HEIGHT;
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (this.searchBox != null &&
+                this.searchBox.isFocused() &&
+                keyCode != GLFW.GLFW_KEY_ESCAPE &&
+                keyCode != GLFW.GLFW_KEY_TAB)
+        {
+            if (this.searchBox.keyPressed(keyCode, scanCode, modifiers) || this.searchBox.canConsumeInput()) {
+                return true;
+            }
+        }
+
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public boolean charTyped(char codePoint, int modifiers) {
+        if (this.searchBox != null && this.searchBox.isFocused() && this.searchBox.charTyped(codePoint, modifiers)) {
+            return true;
+        }
+
+        return super.charTyped(codePoint, modifiers);
+    }
+
     private Boolean canPlayerBuyTier(int xpTiersToCheck) {
         return xpTiersToCheck <= this.menu.playerHasXPForTier.get();
     }
@@ -791,12 +862,30 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     public void onClose() {
         CrystallineFlowerScreen.enchantmentsAvailable.clear();
         CrystallineFlowerScreen.enchantmentsAvailableSortedList.clear();
+        searchQuery = "";
         super.onClose();
     }
 
-    private static final Comparator<Map.Entry<Identifier, EnchantmentSkeleton>> compareByNamespace = Comparator.comparing(e -> e.getKey().getNamespace());
-    private static final Comparator<Map.Entry<Identifier, EnchantmentSkeleton>> compareByLang = Comparator.comparing(e ->
-        Language.getInstance().getOrDefault(Util.makeDescriptionId("enchantment", e.getKey()), e.getKey().getPath().replace("_", " ")),
+    private static String getEnchantmentDisplayName(String namespace, String path) {
+        String translatedName = Language.getInstance().getOrDefault("enchantment.%s.%s".formatted(namespace, path));
+        if (!translatedName.contains("enchantment.")) {
+            return translatedName;
+        }
+
+        if (path.contains("/")) {
+            String[] slashPaths = path.split("/");
+            path = slashPaths[slashPaths.length - 1];
+        }
+
+        return Arrays.stream(path.split("_"))
+                .filter(word -> !word.isEmpty())
+                .map(word -> word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1).toLowerCase(Locale.ROOT))
+                .collect(Collectors.joining(" "));
+    }
+
+    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByNamespace = Comparator.comparing(e -> e.getKey().getNamespace());
+    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByLang = Comparator.comparing(e ->
+        getEnchantmentDisplayName(e.getKey().getNamespace(), e.getKey().getPath()),
         String.CASE_INSENSITIVE_ORDER);
     private static final Comparator<Map.Entry<Identifier, EnchantmentSkeleton>> compareByLevel = Comparator.comparingInt(e -> e.getValue().level);
     private static final Comparator<Map.Entry<Identifier, EnchantmentSkeleton>> compareByTreasure = Comparator.comparing(e -> !(e.getValue().isTreasure && !e.getValue().isCurse)); // reverse it so treasures are first
@@ -806,7 +895,12 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private static final Comparator<Map.Entry<Identifier, EnchantmentSkeleton>> compareByTreasureCurseAndLang = compareByTreasure.thenComparing(compareByCurse).thenComparing(compareByLang);
 
     public static void SortAndAssignAvailableEnchants() {
-        enchantmentsAvailableSortedList = enchantmentsAvailable.entrySet().stream().sorted((e1, e2) -> {
+        String normalizedQuery = searchQuery.strip().toLowerCase(Locale.ROOT);
+        enchantmentsAvailableSortedList = enchantmentsAvailable.entrySet().stream()
+        .filter(entry -> normalizedQuery.isEmpty() ||
+                getEnchantmentDisplayName(entry.getKey().getNamespace(), entry.getKey().getPath()).toLowerCase(Locale.ROOT).contains(normalizedQuery) ||
+                entry.getKey().toString().toLowerCase(Locale.ROOT).contains(normalizedQuery))
+        .sorted((e1, e2) -> {
             switch (sortState){
                 case MODID -> {
                     return compareByNamespaceAndLang.compare(e1, e2);
