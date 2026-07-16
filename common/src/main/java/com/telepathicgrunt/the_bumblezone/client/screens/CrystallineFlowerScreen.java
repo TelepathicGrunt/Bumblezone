@@ -974,11 +974,19 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByTreasureCurseAndLang = compareByTreasure.thenComparing(compareByCurse).thenComparing(compareByLang);
 
     public static void SortAndAssignAvailableEnchants() {
-        String normalizedQuery = searchQuery.strip().toLowerCase(Locale.ROOT);
+        List<String> searchTerms = Arrays.stream(searchQuery.strip().toLowerCase(Locale.ROOT).split("\\s+"))
+                .filter(term -> !term.isEmpty())
+                .toList();
+
         enchantmentsAvailableSortedList = enchantmentsAvailable.entrySet().stream()
-        .filter(entry -> normalizedQuery.isEmpty() ||
-                getEnchantmentDisplayName(entry.getKey().getNamespace(), entry.getKey().getPath()).toLowerCase(Locale.ROOT).contains(normalizedQuery) ||
-                entry.getKey().toString().toLowerCase(Locale.ROOT).contains(normalizedQuery))
+        .filter(entry -> {
+            String displayName = getEnchantmentDisplayName(entry.getKey().getNamespace(), entry.getKey().getPath()).toLowerCase(Locale.ROOT);
+            String namespace = entry.getKey().getNamespace().toLowerCase(Locale.ROOT);
+
+            return searchTerms.stream().allMatch(term -> term.startsWith("@")
+                    ? namespace.contains(term.substring(1))
+                    : displayName.contains(term));
+        })
         .sorted((e1, e2) -> {
             switch (sortState){
                 case MODID -> {
