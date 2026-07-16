@@ -70,8 +70,8 @@ public record CrystallineFlowerEnchantmentPacket(int containerId, List<Enchantme
                         CrystallineFlowerScreen.SortAndAssignAvailableEnchants();
 
                         crystallineFlowerMenu.selectedEnchantment = message.selectedResourceLocation().equals(new ResourceLocation("minecraft", "empty")) ? null : message.selectedResourceLocation();
-                        if (!CrystallineFlowerScreen.enchantmentsAvailable.containsKey(crystallineFlowerMenu.selectedEnchantment)) {
-                            crystallineFlowerMenu.selectedEnchantment = CrystallineFlowerScreen.enchantmentsAvailable.keySet().stream().findFirst().orElse(null);
+                        if (!CrystallineFlowerScreen.enchantmentsAvailable.containsKey(crystallineFlowerMenu.selectedEnchantment) && !CrystallineFlowerScreen.enchantmentsAvailableSortedList.isEmpty()) {
+                            CrystallineFlowerScreen.resetScroll = true;
                         }
                     }
                 }
