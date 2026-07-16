@@ -34,6 +34,7 @@ import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,10 +45,10 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
     public static final int CONSUME_SLOT_X = 47;
     public static final int CONSUME_SLOT_Y = 80;
-    private static final int BOOK_SLOT_X = 92;
-    private static final int BOOK_SLOT_Y = 28;
-    private static final int ENCHANTED_SLOT_X = 136;
-    private static final int ENCHANTED_SLOT_Y = 28;
+    private static final int BOOK_SLOT_X = 74;
+    private static final int BOOK_SLOT_Y = 17;
+    private static final int ENCHANTED_SLOT_X = 146;
+    private static final int ENCHANTED_SLOT_Y = 17;
 
     private final ContainerLevelAccess access;
     private final Player player;
@@ -128,11 +129,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
             public void setChanged() {
                 this.container.setChanged();
-
-                ItemStack bookSlotItem = bookSlot.getItem();
-                if (bookSlotItem.isEmpty()) {
-                    selectedEnchantment = null;
-                }
+                selectedEnchantment = null;
 
                 if (!player.level().isClientSide()) {
                     setupResultSlot();
@@ -558,6 +555,9 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             selectedEnchantment = null;
             if (enchantedSlot.hasItem()) {
                 enchantedSlot.set(ItemStack.EMPTY);
+            }
+            if (player instanceof ServerPlayer serverPlayer) {
+                CrystallineFlowerEnchantmentPacket.sendToClient(serverPlayer, this.containerId, new ArrayList<>(), ResourceLocation.fromNamespaceAndPath("minecraft", "empty"));
             }
             return;
         }
