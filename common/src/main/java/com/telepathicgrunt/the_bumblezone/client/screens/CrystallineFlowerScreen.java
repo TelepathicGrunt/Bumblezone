@@ -10,7 +10,6 @@ import com.telepathicgrunt.the_bumblezone.menus.CrystallineFlowerMenu;
 import com.telepathicgrunt.the_bumblezone.menus.EnchantmentSkeleton;
 import com.telepathicgrunt.the_bumblezone.packets.CrystallineFlowerClickedEnchantmentButtonPacket;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
-import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
@@ -25,9 +24,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.locale.Language;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -215,8 +212,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         this.searchBox.setValue(searchQuery);
         this.searchBox.setResponder(this::updateSearchQuery);
         this.addRenderableWidget(this.searchBox);
-        MutableComponent mutableComponent = Component.translatable("container.the_bumblezone.crystalline_flower.too_many_enchants").withColor(16732743);
+        MutableComponent mutableComponent = Component.translatable("container.the_bumblezone.crystalline_flower.too_many_enchants");
         this.centeredTextWidget = new MultiLineTextWidget(mutableComponent, this.font).setCentered(true).setMaxWidth(150);
+        this.centeredTextWidget.setColor(16732743);
     }
 
     private void updateSearchQuery(String query) {
