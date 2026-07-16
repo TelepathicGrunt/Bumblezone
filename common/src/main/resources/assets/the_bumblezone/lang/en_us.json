@@ -693,7 +693,7 @@
   "container.the_bumblezone.crystalline_flower.level_star": "★",
   "container.the_bumblezone.crystalline_flower.tier_cost": "Tier cost: %s",
   "container.the_bumblezone.crystalline_flower.tier_cost_arrow": "↓%s",
-  "container.the_bumblezone.crystalline_flower.too_many_enchants": "Enchant Limit 3",
+  "container.the_bumblezone.crystalline_flower.too_many_enchants": "Enchantment limit\nof 3 reached!",
   "container.the_bumblezone.crystalline_flower.search": "Search...",
   "container.the_bumblezone.crystalline_flower.sort_alphabetically": "Sort by display name",
   "container.the_bumblezone.crystalline_flower.sort_namespace": "Sort by namespace (mod ID)",
