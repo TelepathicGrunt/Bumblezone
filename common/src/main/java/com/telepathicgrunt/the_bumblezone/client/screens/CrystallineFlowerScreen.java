@@ -17,6 +17,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.MultiLineTextWidget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
@@ -31,7 +32,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Quaternionf;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -101,6 +101,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
     private static final int TOO_MANY_ENCHANTMENT_BACKGROUND_X_OFFSET = 74;
     private static final int TOO_MANY_ENCHANTMENT_BACKGROUND_Y_OFFSET = 50;
+    private static final int TOO_MANY_ENCHANTMENT_MARKER_X_OFFSET = 90;
+    private static final int TOO_MANY_ENCHANTMENT_MARKER_Y_OFFSET = 27;
 
     private static final int XP_BAR_X_OFFSET = 11;
     private static final int XP_BAR_Y_OFFSET = 99;
@@ -155,6 +157,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private int prevXpTier = 0;
     private boolean prevBookSlotEmpty = true;
     private EditBox searchBox;
+    private MultiLineTextWidget centeredTextWidget;
 
     public static Map<ResourceLocation, EnchantmentSkeleton> enchantmentsAvailable = new HashMap<>();
     public static List<ResourceLocation> enchantmentsAvailableSortedList = new ArrayList<>();
@@ -208,6 +211,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         this.searchBox.setValue(searchQuery);
         this.searchBox.setResponder(this::updateSearchQuery);
         this.addRenderableWidget(this.searchBox);
+        MutableComponent mutableComponent = Component.translatable("container.the_bumblezone.crystalline_flower.too_many_enchants").withColor(16732743);
+        this.centeredTextWidget = new MultiLineTextWidget(mutableComponent, this.font).setCentered(true).setMaxWidth(150);
     }
 
     private void updateSearchQuery(String query) {
@@ -321,31 +326,23 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         }
 
         if (this.menu.tooManyEnchantmentsOnInput.get() == 1) {
-            MutableComponent mutableComponent = Component.translatable("container.the_bumblezone.crystalline_flower.too_many_enchants");
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(0, 0, 251.0F);
+            MutableComponent mutableComponent2 = Component.translatable("container.the_bumblezone.crystalline_flower.too_many_enchants_marker").withStyle(ChatFormatting.BOLD);
+            guiGraphics.drawCenteredString(font, mutableComponent2, startX + TOO_MANY_ENCHANTMENT_MARKER_X_OFFSET, startY + TOO_MANY_ENCHANTMENT_MARKER_Y_OFFSET, 0xD03010);
+            guiGraphics.pose().popPose();
 
             float messageAreaX = startX + ENCHANTMENT_AREA_X_OFFSET - 2;
             float messageAreaY = startY + ENCHANTMENT_AREA_Y_OFFSET - 2;
             float messageAreaWidth = ENCHANTMENT_SECTION_WIDTH + 1;
             float messageAreaHeight = ENCHANTMENT_SECTION_HEIGHT * 3;
             float textCenterX = messageAreaX + messageAreaWidth / 2.0F;
-            float textY = messageAreaY + (messageAreaHeight - font.lineHeight) / 2.0F;
+            float textCenterY = messageAreaY + (messageAreaHeight / 2.0F);
 
             guiGraphics.blit(NO_ENCHANTS_BACKGROUND, startX + TOO_MANY_ENCHANTMENT_BACKGROUND_X_OFFSET, startY + TOO_MANY_ENCHANTMENT_BACKGROUND_Y_OFFSET, 0, 0, 89, 57, 89, 57);
 
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(textCenterX, textY, 0.0F);
-            List<FormattedText> formattedTexts = font.getSplitter().splitLines(mutableComponent, 150, Style.EMPTY);
-            float yStart = -(formattedTexts.size() - 1) * ((font.lineHeight + 2) / 2.0F);
-            for (int lineIndex = 0; lineIndex < formattedTexts.size(); lineIndex++) {
-                guiGraphics.drawCenteredString(
-                        font,
-                        formattedTexts.get(lineIndex).getString(),
-                        0,
-                        (int) (yStart + ((font.lineHeight + 2) * lineIndex)),
-                        0xD03010
-                );
-            }
-            guiGraphics.pose().popPose();
+            centeredTextWidget.setPosition((int) textCenterX - (centeredTextWidget.getWidth() / 2), (int) textCenterY - (centeredTextWidget.getHeight() / 2));
+            centeredTextWidget.renderWidget(guiGraphics, mouseX, mouseY, partialTick);
         }
         else if (this.menu.selectedEnchantment != null && this.menu.enchantedSlot.hasItem()) {
             EnchantmentSkeleton enchantment = enchantmentsAvailable.get(this.menu.selectedEnchantment);
