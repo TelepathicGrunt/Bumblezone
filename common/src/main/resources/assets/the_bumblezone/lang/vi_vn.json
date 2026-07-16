@@ -677,7 +677,7 @@
   "container.the_bumblezone.crystalline_flower.level_star": "★",
   "container.the_bumblezone.crystalline_flower.tier_cost": "Chi phí Cấp: %s",
   "container.the_bumblezone.crystalline_flower.tier_cost_arrow": "↓%s",
-  "container.the_bumblezone.crystalline_flower.too_many_enchants": "Giới Hạn Phù Phép 3",
+  "container.the_bumblezone.crystalline_flower.too_many_enchants": "Giới Hạn\nPhù Phép 3",
   
   "buzzing_briefcase.the_bumblezone.bee_typing.normal": "Bình Thường",
   "buzzing_briefcase.the_bumblezone.bee_typing.unknown": "Không Biết",
