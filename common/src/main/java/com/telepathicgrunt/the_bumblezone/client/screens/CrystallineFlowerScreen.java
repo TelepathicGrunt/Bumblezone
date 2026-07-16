@@ -164,8 +164,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
     public static Map<Identifier, EnchantmentSkeleton> enchantmentsAvailable = new HashMap<>();
     public static List<Identifier> enchantmentsAvailableSortedList = new ArrayList<>();
+    public static boolean resetScroll = false;
     public static SORT_STATE sortState = SORT_STATE.ALPHABETICAL;
-    private static String searchQuery = "";
+    public static String searchQuery = "";
 
     public enum SORT_STATE {
         ALPHABETICAL(0, 0, "sort_alphabetically"),
@@ -583,6 +584,11 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     }
 
     private void renderScroller(GuiGraphicsExtractor guiGraphics, int posX, int posY) {
+        if (resetScroll) {
+            resetScroll = false;
+            resetScroll();
+        }
+        
         int rowCount = enchantmentsAvailableSortedList.size() + 1 - 3;
         if (rowCount > 1) {
             if (startIndex > rowCount) {
@@ -887,6 +893,11 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         }
 
         return true;
+    }
+
+    public void resetScroll() {
+        this.scrollOff = 0;
+        this.startIndex = 0;
     }
 
     protected int getOffscreenRows() {
