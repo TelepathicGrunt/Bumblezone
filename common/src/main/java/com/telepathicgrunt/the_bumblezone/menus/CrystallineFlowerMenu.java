@@ -34,6 +34,7 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.EntityBlock;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -128,11 +129,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
             public void setChanged() {
                 this.container.setChanged();
-
-                ItemStack bookSlotItem = bookSlot.getItem();
-                if (bookSlotItem.isEmpty()) {
-                    selectedEnchantment = null;
-                }
+                selectedEnchantment = null;
 
                 if (!player.level().isClientSide()) {
                     setupResultSlot();
@@ -558,6 +555,9 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             selectedEnchantment = null;
             if (enchantedSlot.hasItem()) {
                 enchantedSlot.set(ItemStack.EMPTY);
+            }
+            if (player instanceof ServerPlayer serverPlayer) {
+                CrystallineFlowerEnchantmentPacket.sendToClient(serverPlayer, this.containerId, new ArrayList<>(), ResourceLocation.fromNamespaceAndPath("minecraft", "empty"));
             }
             return;
         }
