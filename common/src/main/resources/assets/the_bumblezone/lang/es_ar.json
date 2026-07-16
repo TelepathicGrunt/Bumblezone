@@ -701,7 +701,7 @@
   "container.the_bumblezone.crystalline_flower.level_star": "★",
   "container.the_bumblezone.crystalline_flower.tier_cost": "Costo de nivel: %s",
   "container.the_bumblezone.crystalline_flower.tier_cost_arrow": "↓%s",
-  "container.the_bumblezone.crystalline_flower.too_many_enchants": "Límite: 3 encantamientos",
+  "container.the_bumblezone.crystalline_flower.too_many_enchants": "Límite:\n3 encantamientos",
   "container.the_bumblezone.crystalline_flower.sort_alphabetically": "Ordenar por nombre",
   "container.the_bumblezone.crystalline_flower.sort_namespace": "Ordenar por mod",
   "container.the_bumblezone.crystalline_flower.sort_treasure_curse": "Ordenar por tesoros/maldiciones",

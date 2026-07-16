@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.client.screens;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
@@ -23,15 +24,17 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
+import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Util;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import org.lwjgl.glfw.GLFW;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Quaternionf;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,6 +53,7 @@ import java.util.stream.Collectors;
 
 public class CrystallineFlowerScreen extends AbstractContainerScreen<CrystallineFlowerMenu> {
     private static final Identifier CONTAINER_BACKGROUND = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/container/crystallized_flower.png");
+    private static final Identifier NO_ENCHANTS_BACKGROUND = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/container/crystallized_flower_no_enchants_background.png");
     private static final Pattern SPLIT_WITH_COMBINING_CHARS = Pattern.compile("(\\p{M}+|\\P{M}\\p{M}*)"); // {M} is any kind of 'mark' http://stackoverflow.com/questions/29110887/detect-any-combining-character-in-java/29111105
 
     private static final int MENU_HEIGHT = 126;
@@ -75,13 +79,21 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
     private static final int ENCHANTMENT_SEARCH_X_OFFSET = 75;
     private static final int ENCHANTMENT_SEARCH_Y_OFFSET = 39;
-    private static final int ENCHANTMENT_SEARCH_WIDTH = 86;
+    private static final int ENCHANTMENT_SEARCH_WIDTH = 80;
     private static final int ENCHANTMENT_SEARCH_HEIGHT = 12;
     private static final int ENCHANTMENT_SEARCH_MAX_LENGTH = 128;
 
-    private static final int ENCHANTMENT_TIER_COST_X_OFFSET = 155;
-    private static final int ENCHANTMENT_TIER_COST_Y_OFFSET = 21;
-    private static final float ENCHANTMENT_LIMIT_MESSAGE_SCALE = 0.80F;
+    private static final int ENCHANTMENT_TIER_COST_X_OFFSET = 123;
+    private static final int ENCHANTMENT_TIER_COST_Y_OFFSET = 28;
+
+    private static final int TIER_COST_ICON_X_OFFSET = 109;
+    private static final int TIER_COST_ICON_Y_OFFSET = 17;
+    private static final int TIER_COST_ICON_U_OFFSET = 176;
+    private static final int TIER_COST_ICON_V_OFFSET = 79;
+    private static final int INSUFFICENT_TIER_COST_ICON_U_OFFSET = 192;
+    private static final int INSUFFICENT_TIER_COST_ICON_V_OFFSET = 79;
+    private static final int TIER_COST_ICON_WIDTH = 16;
+    private static final int TIER_COST_ICON_HEIGHT = 16;
 
     private static final float ENCHANTMENT_SELECTED_U_TEXTURE = 0F;
     private static final float ENCHANTMENT_SELECTED_V_TEXTURE = 197.0F;
@@ -89,6 +101,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private static final float ENCHANTMENT_UNSELECTED_V_TEXTURE = 216.0F;
     private static final float ENCHANTMENT_HIGHLIGHTED_U_TEXTURE = 0F;
     private static final float ENCHANTMENT_HIGHLIGHTED_V_TEXTURE = 235.0F;
+
+    private static final int TOO_MANY_ENCHANTMENT_BACKGROUND_X_OFFSET = 74;
+    private static final int TOO_MANY_ENCHANTMENT_BACKGROUND_Y_OFFSET = 50;
 
     private static final int XP_BAR_X_OFFSET = 11;
     private static final int XP_BAR_Y_OFFSET = 99;
@@ -216,7 +231,6 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             prevXpTier = this.menu.xpTier.get();
             prevBookSlotEmpty = book.isEmpty();
         }
-
         int startX = (this.width - this.imageWidth) / 2;
         int startY = (this.height - this.imageHeight) / 2;
         final int rowStartX = startX + ENCHANTMENT_AREA_X_OFFSET;
@@ -297,27 +311,38 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 }
             });
 
+        if (this.menu.xpTier.get() > 1) {
+            guiGraphics.blit(CONTAINER_BACKGROUND, startX + TIER_COST_ICON_X_OFFSET, startY + TIER_COST_ICON_Y_OFFSET, TIER_COST_ICON_U_OFFSET, TIER_COST_ICON_V_OFFSET, TIER_COST_ICON_WIDTH, TIER_COST_ICON_HEIGHT, 256, 256);
+        }
+        else {
+            guiGraphics.blit(CONTAINER_BACKGROUND, startX + TIER_COST_ICON_X_OFFSET, startY + TIER_COST_ICON_Y_OFFSET, INSUFFICENT_TIER_COST_ICON_U_OFFSET, INSUFFICENT_TIER_COST_ICON_V_OFFSET, TIER_COST_ICON_WIDTH, TIER_COST_ICON_HEIGHT, 256, 256);
+        }
 
         if (this.menu.tooManyEnchantmentsOnInput.get() == 1) {
-            MutableComponent mutableComponent = Component.translatable("container.the_bumblezone.crystalline_flower.too_many_enchants").withStyle(ChatFormatting.BOLD);
+            MutableComponent mutableComponent = Component.translatable("container.the_bumblezone.crystalline_flower.too_many_enchants");
 
             float messageAreaX = startX + ENCHANTMENT_AREA_X_OFFSET - 2;
             float messageAreaY = startY + ENCHANTMENT_AREA_Y_OFFSET - 2;
             float messageAreaWidth = ENCHANTMENT_SECTION_WIDTH + 1;
             float messageAreaHeight = ENCHANTMENT_SECTION_HEIGHT * 3;
             float textCenterX = messageAreaX + messageAreaWidth / 2.0F;
-            float textY = messageAreaY + (messageAreaHeight - font.lineHeight * ENCHANTMENT_LIMIT_MESSAGE_SCALE) / 2.0F;
+            float textY = messageAreaY + (messageAreaHeight - font.lineHeight) / 2.0F;
+
+            guiGraphics.blit(NO_ENCHANTS_BACKGROUND, startX + TOO_MANY_ENCHANTMENT_BACKGROUND_X_OFFSET, startY + TOO_MANY_ENCHANTMENT_BACKGROUND_Y_OFFSET, 0, 0, 89, 57, 89, 57);
 
             guiGraphics.pose().pushPose();
             guiGraphics.pose().translate(textCenterX, textY, 0.0F);
-            guiGraphics.pose().scale(ENCHANTMENT_LIMIT_MESSAGE_SCALE, ENCHANTMENT_LIMIT_MESSAGE_SCALE, 1.0F);
-            guiGraphics.centeredText(
-                    font,
-                    mutableComponent,
-                    0,
-                    0,
-                    0xD03010
-            );
+            List<FormattedText> formattedTexts = font.getSplitter().splitLines(mutableComponent, 150, Style.EMPTY);
+            float yStart = -(formattedTexts.size() - 1) * ((font.lineHeight + 2) / 2.0F);
+            for (int lineIndex = 0; lineIndex < formattedTexts.size(); lineIndex++) {
+                guiGraphics.centeredText(
+                        font,
+                        formattedTexts.get(lineIndex).getString(),
+                        0,
+                        (int) (yStart + ((font.lineHeight + 2) * lineIndex)),
+                        0xD03010
+                );
+            }
             guiGraphics.pose().popPose();
         }
         else if (this.menu.selectedEnchantment != null && this.menu.enchantedSlot.hasItem()) {
@@ -684,7 +709,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         this.scrolling = false;
 
         boolean searchBoxHovered = isSearchBoxHovered(mouseX, mouseY);
-        if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT && searchBoxHovered) {
+        if (button == InputConstants.MOUSE_BUTTON_RIGHT && searchBoxHovered) {
             this.searchBox.setValue("");
             this.setFocused(this.searchBox);
             this.searchBox.setFocused(true);
@@ -794,8 +819,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (this.searchBox != null &&
                 this.searchBox.isFocused() &&
-                keyCode != GLFW.GLFW_KEY_ESCAPE &&
-                keyCode != GLFW.GLFW_KEY_TAB)
+                keyCode != InputConstants.KEY_ESCAPE &&
+                keyCode != InputConstants.KEY_TAB)
         {
             if (this.searchBox.keyPressed(keyCode, scanCode, modifiers) || this.searchBox.canConsumeInput()) {
                 return true;
