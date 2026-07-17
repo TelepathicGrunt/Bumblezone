@@ -1,11 +1,10 @@
-accessWidener   v2  named
+accessWidener v2 named
 
 accessible class net/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule
 accessible class net/minecraft/world/level/levelgen/SurfaceRules$Context
 
 accessible class net/minecraft/world/entity/animal/Bee$BeeWanderGoal
 accessible class net/minecraft/world/level/levelgen/DensityFunctions$BeardifierMarker
-accessible class net/minecraft/world/level/levelgen/blockpredicates/MatchingBlocksPredicate
 
 accessible method net/minecraft/client/renderer/RenderType create (Ljava/lang/String;Lcom/mojang/blaze3d/vertex/VertexFormat;Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;IZZLnet/minecraft/client/renderer/RenderType$CompositeState;)Lnet/minecraft/client/renderer/RenderType$CompositeRenderType;
 accessible class net/minecraft/client/renderer/RenderType$CompositeRenderType
@@ -46,7 +45,6 @@ extendable method net/minecraft/world/level/block/entity/BrushableBlockEntity br
 accessible class net/minecraft/world/level/block/PointedDripstoneBlock$FluidInfo
 accessible method net/minecraft/world/level/block/PointedDripstoneBlock$FluidInfo <init> (Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/Fluid;Lnet/minecraft/world/level/block/state/BlockState;)V
 
-accessible method net/minecraft/world/damagesource/DamageSources source (Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;
 accessible field net/minecraft/core/cauldron/CauldronInteraction WATER Ljava/util/Map;
 
 extendable method net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator doCreateBiomes (Lnet/minecraft/world/level/levelgen/blending/Blender;Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/chunk/ChunkAccess;)V
@@ -54,5 +52,5 @@ extendable method net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator do
 extendable method net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator createNoiseChunk (Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/levelgen/blending/Blender;Lnet/minecraft/world/level/levelgen/RandomState;)Lnet/minecraft/world/level/levelgen/NoiseChunk;
 
 accessible method net/minecraft/advancements/CriteriaTriggers register (Lnet/minecraft/advancements/CriterionTrigger;)Lnet/minecraft/advancements/CriterionTrigger;
-accessible class net/minecraft/world/inventory/MenuType$MenuSupplier
 accessible method net/minecraft/world/inventory/MenuType <init> (Lnet/minecraft/world/inventory/MenuType$MenuSupplier;Lnet/minecraft/world/flag/FeatureFlagSet;)V
+accessible class net/minecraft/world/inventory/MenuType$MenuSupplier
