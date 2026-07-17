@@ -24,8 +24,8 @@ public class CrystallineFlowerEnchantmentPacketHandleBody {
                 CrystallineFlowerScreen.SortAndAssignAvailableEnchants();
 
                 crystallineFlowerMenu.selectedEnchantment = message.selectedResourceLocation().equals(ResourceLocation.fromNamespaceAndPath("minecraft", "empty")) ? null : message.selectedResourceLocation();
-                if (!CrystallineFlowerScreen.enchantmentsAvailable.containsKey(crystallineFlowerMenu.selectedEnchantment)) {
-                    crystallineFlowerMenu.selectedEnchantment = CrystallineFlowerScreen.enchantmentsAvailable.keySet().stream().findFirst().orElse(null);
+                if (!CrystallineFlowerScreen.enchantmentsAvailable.containsKey(crystallineFlowerMenu.selectedEnchantment) && !CrystallineFlowerScreen.enchantmentsAvailableSortedList.isEmpty()) {
+                    CrystallineFlowerScreen.resetScroll = true;
                 }
             }
         }
