@@ -713,7 +713,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                             .withStyle(ChatFormatting.DARK_GRAY);
                 }
                 else {
-                    ModInfo info = PlatformService.INSTANCE.getModInfo(enchantment.namespace);
+                    ModInfo info = PlatformService.INSTANCE.getModInfo(enchantment.namespace, false);
                     if (info == null) {
                         String formattedModid = Arrays.stream(enchantment.namespace
                                 .split("_"))

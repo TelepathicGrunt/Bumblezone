@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockE
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import com.telepathicgrunt.the_bumblezone.modcompat.LootrCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.LootrCompatService;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -288,7 +289,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
             MenuProvider menuprovider = null;
             if (ModChecker.lootrPresent && BzModCompatibilityConfigs.allowLootrCompat && blockstate.getValue(IS_LOOT_CONTAINER)) {
                 if (world.getBlockEntity(position) instanceof HoneyCocoonBlockEntity blockEntity && blockEntity.getLootTable() != null) {
-                    menuprovider = LootrCompat.getCocoonMenu((ServerPlayer) playerEntity, blockEntity);
+                    menuprovider = LootrCompatService.INSTANCE.getCocoonMenu((ServerPlayer) playerEntity, blockEntity);
                 }
             }
             // IDE never realizes `ModChecker.lootrPresent` changes to true so it always thinks menuprovider is null.
