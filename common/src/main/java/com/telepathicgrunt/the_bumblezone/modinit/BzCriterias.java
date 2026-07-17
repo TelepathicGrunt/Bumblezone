@@ -8,10 +8,9 @@ import com.telepathicgrunt.the_bumblezone.advancements.GenericTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.ItemSpecificTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.KilledCounterTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
-import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
-import org.apache.commons.lang3.NotImplementedException;
 
 public class BzCriterias {
     public static final ResourceLocation QUEENS_DESIRE_ROOT_ADVANCEMENT = new ResourceLocation(Bumblezone.MODID, "the_queens_desire/the_beginning");
@@ -171,8 +170,7 @@ public class BzCriterias {
         register(VARIANT_BEE_BRIEFCASE_CAPTURE_TRIGGER);
     }
 
-    @ExpectPlatform
     private static <T extends CriterionTrigger<?>> T register(T criterionTrigger) {
-        throw new NotImplementedException("CriterionTriggerRegistry.register");
+        return CriteriaTriggers.register(criterionTrigger);
     }
 }

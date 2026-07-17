@@ -15,7 +15,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -136,7 +136,7 @@ public class CrystallineFlower extends BaseEntityBlock {
                     {
                         BlockEntity blockEntity = level.getBlockEntity(pos);
                         if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity && !crystallineFlowerBlockEntity.isMaxTier()) {
-                            int reward = PlatformHooks.getXpDrop(livingEntity, null, livingEntity.getExperienceReward());
+                            int reward = PlatformService.INSTANCE.getXpDrop(livingEntity, null, livingEntity.getExperienceReward());
                             ExperienceOrb.award((ServerLevel) level, livingEntity.position(), reward);
                         }
                     }

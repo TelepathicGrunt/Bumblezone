@@ -41,7 +41,7 @@ import com.telepathicgrunt.the_bumblezone.items.essence.RadianceEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.RagingEssence;
 import com.telepathicgrunt.the_bumblezone.items.materials.BeeArmorMaterial;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
-import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
+import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistriesService;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -59,7 +59,7 @@ import net.minecraft.world.item.Rarity;
 
 public class BzItems {
 
-    public static final ResourcefulRegistry<Item> ITEMS = ResourcefulRegistries.create(BuiltInRegistries.ITEM, Bumblezone.MODID);
+    public static final ResourcefulRegistry<Item> ITEMS = ResourcefulRegistriesService.INSTANCE.create(BuiltInRegistries.ITEM, Bumblezone.MODID);
 
     //blocks
     public static final RegistryEntry<Item> POROUS_HONEYCOMB = ITEMS.register("porous_honeycomb_block", () -> new BlockItem(BzBlocks.POROUS_HONEYCOMB.get(), new Item.Properties()));

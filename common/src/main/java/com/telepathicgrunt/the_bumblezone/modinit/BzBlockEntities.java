@@ -8,14 +8,14 @@ import com.telepathicgrunt.the_bumblezone.blocks.blockentities.InfinityBarrierBl
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.PotionCandleBlockEntity;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.StateFocusedBrushableBlockEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
-import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
+import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistriesService;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 
 public class BzBlockEntities {
-    public static final ResourcefulRegistry<BlockEntityType<?>> BLOCK_ENTITIES = ResourcefulRegistries.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Bumblezone.MODID);
+    public static final ResourcefulRegistry<BlockEntityType<?>> BLOCK_ENTITIES = ResourcefulRegistriesService.INSTANCE.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Bumblezone.MODID);
 
     //Blocks
     public static final RegistryEntry<BlockEntityType<HoneyCocoonBlockEntity>> HONEY_COCOON = BLOCK_ENTITIES.register("honey_cocoon", () -> BlockEntityType.Builder.of(HoneyCocoonBlockEntity::new, BzBlocks.HONEY_COCOON.get()).build(null));

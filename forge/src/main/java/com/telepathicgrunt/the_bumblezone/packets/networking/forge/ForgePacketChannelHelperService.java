@@ -1,0 +1,106 @@
+package com.telepathicgrunt.the_bumblezone.packets.networking.forge;
+
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
+import com.telepathicgrunt.the_bumblezone.packets.networking.PacketChannelHelperService;
+import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
+import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
+import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.simple.SimpleChannel;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class ForgePacketChannelHelperService implements PacketChannelHelperService {
+    public static final Map<ResourceLocation, Channel> CHANNELS = new HashMap<>();
+
+    @Override
+    public void registerChannel(ResourceLocation name) {
+        ModInfo info = PlatformService.INSTANCE.getModInfo(Bumblezone.MODID, true);
+        String protocolVersion = info.version();
+        Channel channel = new Channel(0, NetworkRegistry.newSimpleChannel(name, () -> protocolVersion, protocolVersion::equals, protocolVersion::equals));
+        CHANNELS.put(name, channel);
+    }
+
+    @Override
+    public <T extends Packet<T>> void registerS2CPacket(ResourceLocation name, ResourceLocation id, PacketHandler<T> handler, Class<T> packetClass) {
+        Channel channel = CHANNELS.get(name);
+        if (channel == null) {
+            throw new IllegalStateException("Channel " + name + " not registered");
+        }
+        channel.channel.registerMessage(++channel.packets, packetClass, handler::encode, handler::decode, (msg, ctx) -> {
+            NetworkEvent.Context context = ctx.get();
+            Player sender = context.getSender();
+
+            context.enqueueWork(() -> {
+                Player player = null;
+                if (sender == null) {
+                    player = GeneralUtilsClient.getClientPlayer();
+                }
+
+                if (player != null) {
+                    handler.handle(msg).apply(player, player.level());
+                }
+            });
+
+            context.setPacketHandled(true);
+        });
+    }
+
+    @Override
+    public <T extends Packet<T>> void registerC2SPacket(ResourceLocation name, ResourceLocation id, PacketHandler<T> handler, Class<T> packetClass) {
+        Channel channel = CHANNELS.get(name);
+        if (channel == null) {
+            throw new IllegalStateException("Channel " + name + " not registered");
+        }
+        channel.channel.registerMessage(++channel.packets, packetClass, handler::encode, handler::decode, (msg, ctx) -> {
+            NetworkEvent.Context context = ctx.get();
+            Player player = context.getSender();
+
+            context.enqueueWork(() -> {
+                if (player != null) {
+                    handler.handle(msg).apply(player, player.level());
+                }
+            });
+
+            context.setPacketHandled(true);
+        });
+    }
+
+    @Override
+    public <T extends Packet<T>> void sendToServer(ResourceLocation name, T packet) {
+        Channel channel = CHANNELS.get(name);
+        if (channel == null) {
+            throw new IllegalStateException("Channel " + name + " not registered");
+        }
+        channel.channel.sendToServer(packet);
+    }
+
+    @Override
+    public <T extends Packet<T>> void sendToPlayer(ResourceLocation name, T packet, Player player) {
+        Channel channel = CHANNELS.get(name);
+        if (channel == null) {
+            throw new IllegalStateException("Channel " + name + " not registered");
+        }
+        if (player instanceof ServerPlayer serverPlayer) {
+            channel.channel.send(PacketDistributor.PLAYER.with(() -> serverPlayer), packet);
+        }
+    }
+
+    private static final class Channel {
+        private int packets;
+        private final SimpleChannel channel;
+
+        private Channel(int packets, SimpleChannel channel) {
+            this.packets = packets;
+            this.channel = channel;
+        }
+    }
+}

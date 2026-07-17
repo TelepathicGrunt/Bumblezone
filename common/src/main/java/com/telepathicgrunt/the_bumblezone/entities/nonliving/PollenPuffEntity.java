@@ -16,8 +16,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -253,7 +253,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             if (this.getOwner() instanceof ServerPlayer serverPlayer) {
                 gameProfile = serverPlayer.getGameProfile();
             }
-            ServerPlayer fakePlayer = PlatformHooks.getFakePlayer((ServerLevel) this.level(), gameProfile);
+            ServerPlayer fakePlayer = PlatformService.INSTANCE.getFakePlayer((ServerLevel) this.level(), gameProfile);
             if(blockstate.getBlock() instanceof DoublePlantBlock) {
                 blockstate = blockstate.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
                 isTallPlant = true;

@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -35,8 +35,8 @@ public class LuminescentWaxChannel extends RotationAxisBlock implements Luminesc
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
         if (blockState.getBlock() instanceof LuminescentWaxChannel &&
-            (PlatformHooks.isToolAction(itemstack, ShearsItem.class, "shears_carve") ||
-            PlatformHooks.isToolAction(itemstack, SwordItem.class, "sword_dig")))
+            (PlatformService.INSTANCE.isToolAction(itemstack, ShearsItem.class, "shears_carve") ||
+            PlatformService.INSTANCE.isToolAction(itemstack, SwordItem.class, "sword_dig")))
         {
 
             Direction.Axis newAxisProp = blockState.getValue(AXIS);

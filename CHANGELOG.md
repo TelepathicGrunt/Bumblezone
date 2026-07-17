@@ -7,3 +7,6 @@ Fixed bug in Crystalline Flower screen when swapping from an input book that can
 
 Fixed bug in Crystalline Flower screen when swapping between input books can confuse result slot and selections.
  Now on input book swaps, scrollbar will scroll to top, deselect enchantment selection, and result slot emptied.
+
+#### Misc:
+Switched off of Arch Loom in favor of ModDevGradle/Loom multiloader setup for project build.

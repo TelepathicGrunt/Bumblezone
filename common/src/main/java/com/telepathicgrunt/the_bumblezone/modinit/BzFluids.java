@@ -14,7 +14,7 @@ import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterFluidType;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfoRegistry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
-import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
+import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistriesService;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.LiquidBlock;
@@ -22,8 +22,8 @@ import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 
 public class BzFluids {
-    public static final ResourcefulRegistry<Fluid> FLUIDS = ResourcefulRegistries.create(BuiltInRegistries.FLUID, Bumblezone.MODID);
-    public static final FluidInfoRegistry FLUID_TYPES = ResourcefulRegistries.createFluidRegistry(Bumblezone.MODID);
+    public static final ResourcefulRegistry<Fluid> FLUIDS = ResourcefulRegistriesService.INSTANCE.create(BuiltInRegistries.FLUID, Bumblezone.MODID);
+    public static final FluidInfoRegistry FLUID_TYPES = ResourcefulRegistriesService.INSTANCE.createFluidRegistry(Bumblezone.MODID);
 
     //FluidTypes
     public static final RegistryEntry<FluidInfo> SUGAR_WATER_FLUID_TYPE = FLUID_TYPES.register(SugarWaterFluidType.create());

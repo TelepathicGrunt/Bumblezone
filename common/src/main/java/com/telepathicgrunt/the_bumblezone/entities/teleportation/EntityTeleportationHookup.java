@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.EntityPosAndDimModule;
-import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
+import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelperService;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.advancements.Advancement;
@@ -81,7 +81,7 @@ public class EntityTeleportationHookup {
                 BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.trigger(serverPlayer);
 
                 if (BzDimensionConfigs.enableInitialWelcomeMessage) {
-                    ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(playerData -> {
+                    ModuleHelperService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(playerData -> {
                         if (!playerData.gottenWelcomed) {
                             playerData.gottenWelcomed = true;
                             serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
@@ -150,7 +150,7 @@ public class EntityTeleportationHookup {
             ResourceKey<Level> worldKey = null;
 
             if (livingEntity.getControllingPassenger() == null) {
-                Optional<EntityPosAndDimModule> capOptional = ModuleHelper.getModule(livingEntity, ModuleRegistry.ENTITY_POS_AND_DIM);
+                Optional<EntityPosAndDimModule> capOptional = ModuleHelperService.INSTANCE.getModule(livingEntity, ModuleRegistry.ENTITY_POS_AND_DIM);
                 if (capOptional.isPresent()) {
                     EntityPosAndDimModule capability = capOptional.orElseThrow(RuntimeException::new);
                     worldKey = ResourceKey.create(Registries.DIMENSION, capability.getNonBZDim());
@@ -158,7 +158,7 @@ public class EntityTeleportationHookup {
             }
             else {
                 checkAndCorrectStoredDimension(livingEntity.getControllingPassenger());
-                Optional<EntityPosAndDimModule> capOptional = ModuleHelper.getModule(livingEntity, ModuleRegistry.ENTITY_POS_AND_DIM);
+                Optional<EntityPosAndDimModule> capOptional = ModuleHelperService.INSTANCE.getModule(livingEntity, ModuleRegistry.ENTITY_POS_AND_DIM);
                 if (capOptional.isPresent()) {
                     EntityPosAndDimModule capability = capOptional.orElseThrow(RuntimeException::new);
                     worldKey = ResourceKey.create(Registries.DIMENSION, capability.getNonBZDim());
@@ -508,7 +508,7 @@ public class EntityTeleportationHookup {
      * BZ dimension or the config forces going to default dimension.
      */
     private static void checkAndCorrectStoredDimension(LivingEntity livingEntity) {
-        ModuleHelper.getModule(livingEntity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
+        ModuleHelperService.INSTANCE.getModule(livingEntity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
             if (capability.getNonBZDim().equals(Bumblezone.MOD_DIMENSION_ID) || BzDimensionConfigs.forceExitToOverworld) {
                 //Go to default dimension instead
                 //update stored dimension

@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import dev.architectury.injectables.annotations.ExpectPlatform;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -17,8 +17,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import org.apache.commons.lang3.NotImplementedException;
-import org.jetbrains.annotations.Contract;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,7 +73,7 @@ public class EnchantmentUtils {
 				minLevelAllowed = Math.max(minLevelAllowed, existingEnchantments.get(enchantment) + 1);
 			}
 
-			if (forceAllowed || (!(enchantment.isTreasureOnly() && !allowTreasure) && enchantment.isDiscoverable() && (canApplyAtEnchantingTable(enchantment, stack) || (bookFlag && isAllowedOnBooks(enchantment))))) {
+			if (forceAllowed || (!(enchantment.isTreasureOnly() && !allowTreasure) && enchantment.isDiscoverable() && (PlatformService.INSTANCE.canApplyAtEnchantingTable(enchantment, stack) || (bookFlag && PlatformService.INSTANCE.isAllowedOnBooks(enchantment))))) {
 				int maxLevelForEnchant = enchantment.getMaxLevel();
 				for (ModCompat compat : ModChecker.ENCHANTMENT_MAX_LEVEL_COMPATS) {
 					maxLevelForEnchant = compat.maxLevelForEnchantment(enchantment);
@@ -93,18 +91,6 @@ public class EnchantmentUtils {
 			}
 		}
 		return map;
-	}
-
-	@ExpectPlatform
-	@Contract(pure = true)
-	public static boolean canApplyAtEnchantingTable(Enchantment enchantment, ItemStack stack) {
-		throw new NotImplementedException();
-	}
-
-	@ExpectPlatform
-	@Contract(pure = true)
-	public static boolean isAllowedOnBooks(Enchantment enchantment) {
-		throw new NotImplementedException();
 	}
 
 	public static Map<Enchantment, Integer> getEnchantmentsOnBook(ItemStack itemStack) {

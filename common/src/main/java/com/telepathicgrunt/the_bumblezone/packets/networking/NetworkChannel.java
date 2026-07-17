@@ -20,23 +20,23 @@ public class NetworkChannel {
     public NetworkChannel(String modid, String channel) {
         this.channel = new ResourceLocation(modid, channel);
 
-        PacketChannelHelper.registerChannel(this.channel);
+        PacketChannelHelperService.INSTANCE.registerChannel(this.channel);
     }
 
     public final <T extends Packet<T>> void registerPacket(NetworkDirection direction, ResourceLocation id, PacketHandler<T> handler, Class<T> packetClass) {
         if (direction == NetworkDirection.CLIENT_TO_SERVER) {
-            PacketChannelHelper.registerC2SPacket(this.channel, id, handler, packetClass);
+            PacketChannelHelperService.INSTANCE.registerC2SPacket(this.channel, id, handler, packetClass);
         } else {
-            PacketChannelHelper.registerS2CPacket(this.channel, id, handler, packetClass);
+            PacketChannelHelperService.INSTANCE.registerS2CPacket(this.channel, id, handler, packetClass);
         }
     }
 
     public final <T extends Packet<T>> void sendToServer(T packet) {
-        PacketChannelHelper.sendToServer(this.channel, packet);
+        PacketChannelHelperService.INSTANCE.sendToServer(this.channel, packet);
     }
 
     public final <T extends Packet<T>> void sendToPlayer(T packet, Player player) {
-        PacketChannelHelper.sendToPlayer(this.channel, packet, player);
+        PacketChannelHelperService.INSTANCE.sendToPlayer(this.channel, packet, player);
     }
 
     public final <T extends Packet<T>> void sendToPlayers(T packet, Collection<? extends Player> players) {

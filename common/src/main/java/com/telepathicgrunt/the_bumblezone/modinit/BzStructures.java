@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
-import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
+import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistriesService;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.worldgen.structures.GenericOptimizedStructure;
 import com.telepathicgrunt.the_bumblezone.worldgen.structures.HoneyCaveRoomStructure;
@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.structure.StructureType;
 
 public class BzStructures {
 
-    public static final ResourcefulRegistry<StructureType<?>> STRUCTURES = ResourcefulRegistries.create(BuiltInRegistries.STRUCTURE_TYPE, Bumblezone.MODID);
+    public static final ResourcefulRegistry<StructureType<?>> STRUCTURES = ResourcefulRegistriesService.INSTANCE.create(BuiltInRegistries.STRUCTURE_TYPE, Bumblezone.MODID);
 
     public static final RegistryEntry<StructureType<PollinatedStreamStructure>> POLLINATED_STREAM = STRUCTURES.register("pollinated_stream", () -> () -> PollinatedStreamStructure.CODEC);
     public static final RegistryEntry<StructureType<HoneyCaveRoomStructure>> HONEY_CAVE_ROOM = STRUCTURES.register("honey_cave_room", () -> () -> HoneyCaveRoomStructure.CODEC);

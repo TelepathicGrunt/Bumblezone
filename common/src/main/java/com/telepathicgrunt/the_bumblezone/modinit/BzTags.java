@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import dev.architectury.injectables.annotations.ExpectPlatform;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -18,7 +18,6 @@ import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
-import org.apache.commons.lang3.NotImplementedException;
 
 public class BzTags {
     // Sole purpose is to initalize the tag wrappers at mod startup
@@ -130,12 +129,12 @@ public class BzTags {
     public static final TagKey<Item> ENCHANTABLE_POTENT_POISON = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "enchantable/potent_poison"));
     public static final TagKey<Item> ENCHANTABLE_HIVE_LIFELINE = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "enchantable/hive_lifeline"));
 
-    public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(getPlatformTagNamespace(), "honey"));
+    public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(PlatformService.INSTANCE.getPlatformTagNamespace(), "honey"));
     public static final TagKey<Fluid> BZ_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "honey"));
     public static final TagKey<Fluid> ROYAL_JELLY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "royal_jelly"));
     public static final TagKey<Fluid> SPECIAL_HONEY_LIKE = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "special_honey_like"));
-    public static final TagKey<Fluid> VISUAL_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(getPlatformTagNamespace(), "visual/honey"));
-    public static final TagKey<Fluid> VISUAL_WATER_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(getPlatformTagNamespace(), "visual/water"));
+    public static final TagKey<Fluid> VISUAL_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(PlatformService.INSTANCE.getPlatformTagNamespace(), "visual/honey"));
+    public static final TagKey<Fluid> VISUAL_WATER_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(PlatformService.INSTANCE.getPlatformTagNamespace(), "visual/water"));
     public static final TagKey<Fluid> SUGAR_WATER_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "sugar_water"));
     public static final TagKey<Fluid> CONVERTIBLE_TO_SUGAR_WATER = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "convertible_to_sugar_water"));
     public static final TagKey<Fluid> HONEY_BEE_BOOTS_REMOVES_POLLEN_FLUIDS = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings/removes_pollen"));
@@ -240,9 +239,4 @@ public class BzTags {
     public static final TagKey<BannerPattern> PATTERN_ITEM_EYES = TagKey.create(Registries.BANNER_PATTERN, new ResourceLocation(Bumblezone.MODID, "pattern_item/eyes"));
     public static final TagKey<BannerPattern> PATTERN_ITEM_PEACE = TagKey.create(Registries.BANNER_PATTERN, new ResourceLocation(Bumblezone.MODID, "pattern_item/peace"));
     public static final TagKey<BannerPattern> PATTERN_ITEM_ARROWS = TagKey.create(Registries.BANNER_PATTERN, new ResourceLocation(Bumblezone.MODID, "pattern_item/arrows"));
-
-    @ExpectPlatform
-    public static String getPlatformTagNamespace() {
-        throw new NotImplementedException("BzTags.getPlatformTagNamespace");
-    }
 }

@@ -40,7 +40,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.SuperCandleBase;
 import com.telepathicgrunt.the_bumblezone.blocks.SuperCandleWick;
 import com.telepathicgrunt.the_bumblezone.blocks.WindyAir;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
-import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
+import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistriesService;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
@@ -48,8 +48,8 @@ import net.minecraft.world.level.material.MapColor;
 
 
 public class BzBlocks {
-    public static final ResourcefulRegistry<Block> BLOCKS = ResourcefulRegistries.create(BuiltInRegistries.BLOCK, Bumblezone.MODID);
-    public static final ResourcefulRegistry<Block> CURTAINS = ResourcefulRegistries.create(BLOCKS);
+    public static final ResourcefulRegistry<Block> BLOCKS = ResourcefulRegistriesService.INSTANCE.create(BuiltInRegistries.BLOCK, Bumblezone.MODID);
+    public static final ResourcefulRegistry<Block> CURTAINS = ResourcefulRegistriesService.INSTANCE.create(BLOCKS);
 
     //Blocks
     public static final RegistryEntry<Block> POROUS_HONEYCOMB = BLOCKS.register("porous_honeycomb_block", PorousHoneycomb::new);

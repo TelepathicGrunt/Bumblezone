@@ -8,9 +8,9 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.BzNbtPredicate;
 import com.telepathicgrunt.the_bumblezone.utils.LenientUnboundedMapCodec;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -42,7 +42,7 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
                 Optional<EntityType<?>> entityTypeOptional = BuiltInRegistries.ENTITY_TYPE.getOptional(r);
                 if (entityTypeOptional.isPresent()) {
                     return DataResult.success(entityTypeOptional.get());
-                } else if (PlatformHooks.isModLoaded(r.getNamespace())) {
+                } else if (PlatformService.INSTANCE.isModLoaded(r.getNamespace())) {
                     Bumblezone.LOGGER.error("Bz Pollination File Reading Error - Unknown EntityType:  " + r);
                     return DataResult.error(() -> "Bz Error - Unknown EntityType:  " + r + "  - ");
                 } else {

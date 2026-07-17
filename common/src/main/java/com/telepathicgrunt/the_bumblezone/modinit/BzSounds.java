@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
-import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
+import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistriesService;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.platform.PlatformSoundType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 
 public class BzSounds {
-    public static final ResourcefulRegistry<SoundEvent> SOUND_EVENTS = ResourcefulRegistries.create(BuiltInRegistries.SOUND_EVENT, Bumblezone.MODID);
+    public static final ResourcefulRegistry<SoundEvent> SOUND_EVENTS = ResourcefulRegistriesService.INSTANCE.create(BuiltInRegistries.SOUND_EVENT, Bumblezone.MODID);
 
     public static final RegistryEntry<SoundEvent> BEEHIVE_AMBIENCE = registerSoundEvent("biomes.beehive_ambience");
     public static final RegistryEntry<SoundEvent> GENERAL_MUSIC = registerSoundEvent("biomes.general_music");

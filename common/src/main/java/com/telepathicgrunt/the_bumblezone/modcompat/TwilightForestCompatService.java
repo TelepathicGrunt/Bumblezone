@@ -1,0 +1,11 @@
+package com.telepathicgrunt.the_bumblezone.modcompat;
+
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
+
+public interface TwilightForestCompatService {
+    TwilightForestCompatService INSTANCE = GeneralUtils.loadService(TwilightForestCompatService.class);
+
+    CompoundTag getPersistentData(Entity entity);
+}
