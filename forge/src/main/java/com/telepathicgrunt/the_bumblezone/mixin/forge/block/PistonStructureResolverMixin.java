@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.blocks;
+package com.telepathicgrunt.the_bumblezone.mixin.forge.block;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
@@ -24,10 +24,10 @@ public class PistonStructureResolverMixin {
 
     // allow royal jelly block to be pullable only
     @Inject(method = "addBlockLine(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z",
-            at = @At(value = "INVOKE", target = "Ljava/util/List;size()I", ordinal = 0, remap = false),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;isEmptyBlock(Lnet/minecraft/core/BlockPos;)Z", ordinal = 0),
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
-    private void bumblezone$pullableOnlyBlocks3(BlockPos blockPos,
+    private void bumblezone$pullableOnlyBlocks2_forge(BlockPos blockPos,
                                                       Direction direction,
                                                       CallbackInfoReturnable<Boolean> cir,
                                                       BlockState blockState)

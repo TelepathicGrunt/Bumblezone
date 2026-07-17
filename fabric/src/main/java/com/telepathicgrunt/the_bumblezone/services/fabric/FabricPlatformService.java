@@ -49,8 +49,10 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
@@ -288,5 +290,15 @@ public class FabricPlatformService implements PlatformService {
     @Override
     public boolean isAllowedOnBooks(Enchantment enchantment) {
         return true;
+    }
+
+    @Override
+    public FlowingFluid getFlowingFluid(FluidInfo info) {
+        return info.source();
+    }
+
+    @Override
+    public Thread createServerThread(Runnable runnable, String name) {
+        return new Thread(runnable, name);
     }
 }

@@ -18,6 +18,7 @@
     "mods.MidnightConfigScreenMixin"
   ],
   "mixins": [
+    "block.BeehiveMixin",
     "block.FireBlockMixin",
     "block.LavaFluidMixin",
     "block.LiquidBlockMixin",
@@ -26,7 +27,6 @@
     "block.ShulkerBoxBlockEntityMixin",
     "enchantments.EnchantmentHelperMixin",
     "enchantments.EnchantmentMixin",
-    "fabricapi.BiomeModificationContextImplMixin",
     "entity.AbstractArrowMixin",
     "entity.AbstractHurtingProjectileMixin",
     "entity.AnimalMixin",
@@ -49,6 +49,7 @@
     "entity.StructureTemplateEntitySpawnMixin",
     "entity.ThrowableProjectileMixin",
     "entity.WalkNodeEvaluatorMixin",
+    "fabricapi.BiomeModificationContextImplMixin",
     "fluid.BzBucketItemMixin",
     "fluid.BzLiquidBlockMixin",
     "item.BowItemMixin",

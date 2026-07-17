@@ -9,7 +9,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import dev.architectury.injectables.annotations.PlatformOnly;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -104,8 +103,7 @@ public class BzCustomBucketItem extends BzBucketItem {
                 ((LiquidBlockContainer)blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, Fluids.WATER));
     }
 
-    // Override and redirect forge patched method to our own.
-    @PlatformOnly({"forge"})
+    // Overrides and redirect forge patched method to our own. Do not change name or signatures
     public boolean emptyContents(@Nullable Player player, Level world, BlockPos pos, @Nullable BlockHitResult hitResult, @Nullable ItemStack container) {
         return emptyContents(player, world, pos, hitResult);
     }

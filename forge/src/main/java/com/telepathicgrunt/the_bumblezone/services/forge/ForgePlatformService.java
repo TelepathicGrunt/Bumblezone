@@ -29,8 +29,11 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolAction;
@@ -41,6 +44,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.fml.util.thread.SidedThreadGroups;
 
 import java.util.Arrays;
 
@@ -199,5 +203,15 @@ public class ForgePlatformService implements PlatformService {
     @Override
     public boolean isAllowedOnBooks(Enchantment enchantment) {
         return enchantment.isAllowedOnBooks();
+    }
+
+    @Override
+    public FlowingFluid getFlowingFluid(FluidInfo info) {
+        return Fluids.FLOWING_WATER;
+    }
+
+    @Override
+    public Thread createServerThread(Runnable runnable, String name) {
+        return new Thread(SidedThreadGroups.SERVER, runnable, name);
     }
 }

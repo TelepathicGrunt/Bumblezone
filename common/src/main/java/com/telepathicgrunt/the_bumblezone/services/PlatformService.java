@@ -27,8 +27,12 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+import org.apache.commons.lang3.NotImplementedException;
 
 public interface PlatformService {
     PlatformService INSTANCE = GeneralUtils.loadService(PlatformService.class);
@@ -80,4 +84,8 @@ public interface PlatformService {
     boolean canApplyAtEnchantingTable(Enchantment enchantment, ItemStack stack);
 
     boolean isAllowedOnBooks(Enchantment enchantment);
+
+    FlowingFluid getFlowingFluid(FluidInfo info);
+
+    Thread createServerThread(Runnable runnable, String name);
 }
