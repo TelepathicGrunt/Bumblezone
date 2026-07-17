@@ -2,7 +2,7 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'me.modmuss50.mod-publish-plugin' version '0.8.4' apply false
-    id 'net.neoforged.moddev.legacyforge' version '2.0.88' apply false
+    id 'net.neoforged.moddev.legacyforge' version '2.0.142' apply false
 }
 
 def javaVersion = 17
