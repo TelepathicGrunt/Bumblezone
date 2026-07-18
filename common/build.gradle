@@ -18,15 +18,15 @@ dependencies {
     compileOnly "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"
     annotationProcessor "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"
 
-    modRuntimeOnly(modCompileOnly("earth.terrarium.athena:athena-fabric-${rootProject.athena}"))
+    modRuntimeOnly(modCompileOnly("earth.terrarium.athena:athena-fabric-${project.athena}"))
 
     // COMPAT
-    modCompileOnly("mezz.jei:jei-${rootProject.jei_mc}-common-api:${rootProject.jei}")
-    modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:${rootProject.rei}")
-    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${rootProject.rei}")
-    modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
+    modCompileOnly("mezz.jei:jei-${project.jei_mc}-common-api:${project.jei}")
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:${project.rei}")
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}")
+    modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config}")
 
-    modCompileOnly("maven.modrinth:projectile-damage-attribute:${rootProject.projectile_damage_attribute}-forge")
+    modCompileOnly("maven.modrinth:projectile-damage-attribute:${project.projectile_damage_attribute}-forge")
 }
 
 loom {

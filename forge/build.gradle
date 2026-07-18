@@ -52,7 +52,7 @@ dependencies {
         transitive = false
     }
 
-    runtimeOnly(compileOnly(jarJar("earth.terrarium.athena:athena-forge-${rootProject.athena}")))
+    runtimeOnly(compileOnly(jarJar("earth.terrarium.athena:athena-forge-${project.athena}")))
 
     annotationProcessor 'net.fabricmc:sponge-mixin:0.13.0+mixin.0.8.5'
     annotationProcessor "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"

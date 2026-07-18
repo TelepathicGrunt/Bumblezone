@@ -47,13 +47,13 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:${project.fabric_loader_version}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}")
 
-    modImplementation("maven.modrinth:midnightlib:${rootProject.midnightlib}")
-    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}")
-    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")
-    include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}")
-    include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")
-    include("me.luligabi:NoIndium:${rootProject.noindium}")
-    modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-fabric-${rootProject.athena}")))
+    modImplementation("maven.modrinth:midnightlib:${project.midnightlib}")
+    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components}")
+    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_components}")
+    include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components}")
+    include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_components}")
+    include("me.luligabi:NoIndium:${project.noindium}")
+    modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-fabric-${project.athena}")))
     include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${project.mixin_extras_version}")))
 
     modCompileOnly("com.terraformersmc:modmenu:${project.mod_menu}") {
@@ -67,27 +67,27 @@ dependencies {
     modCompileOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}")
     //modRuntimeOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}")
 
-    modCompileOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
-    modRuntimeOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
+    modCompileOnly("maven.modrinth:modmenu:${project.mod_menu}")
+    modRuntimeOnly("maven.modrinth:modmenu:${project.mod_menu}")
 
-    modCompileOnly("mezz.jei:jei-${rootProject.jei_mc}-fabric:${rootProject.jei}")
+    modCompileOnly("mezz.jei:jei-${project.jei_mc}-fabric:${project.jei}")
 
-    modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:${rootProject.rei}")
-    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${rootProject.rei}")
-    modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:${project.rei}")
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}")
+    modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config}")
 
-    modCompileOnly("dev.emi:trinkets:${trinkets}")
+    modCompileOnly("dev.emi:trinkets:${project.trinkets}")
 
-    //modLocalRuntime("dev.emi:emi-fabric:${rootProject.emi}")
-    modCompileOnly "dev.emi:emi-fabric:${rootProject.emi}"
+    //modLocalRuntime("dev.emi:emi-fabric:${project.emi}")
+    modCompileOnly "dev.emi:emi-fabric:${project.emi}"
 
-    modCompileOnly "curse.maven:restricted-portals-228266:${rootProject.restricted_portals_file_id}"
+    modCompileOnly "curse.maven:restricted-portals-228266:${project.restricted_portals_file_id}"
 
-    modCompileOnly("maven.modrinth:sodium:${rootProject.sodium}")
+    modCompileOnly("maven.modrinth:sodium:${project.sodium}")
 
     modCompileOnly("curse.maven:zenith-620928:${project.zenith_file_id}")
 
-    modCompileOnly("maven.modrinth:projectile-damage-attribute:${rootProject.projectile_damage_attribute}-forge")
+    modCompileOnly("maven.modrinth:projectile-damage-attribute:${project.projectile_damage_attribute}-forge")
 
 //    modLocalRuntime("curse.maven:huge-structure-blocks-474114:4803539")
 //    modLocalRuntime("com.telepathicgrunt:CommandStructures:${project.commandstructures_fabric}")
