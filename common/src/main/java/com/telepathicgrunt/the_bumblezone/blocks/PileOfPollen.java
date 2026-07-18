@@ -162,7 +162,7 @@ public class PileOfPollen extends FallingBlock {
     @Override
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
         if (canFall(serverLevel.getBlockState(blockPos.below())) && blockPos.getY() >= serverLevel.getMinBuildHeight()) {
-            FallingBlockEntity fallingblockentity = new FallingBlockEntity(serverLevel, (double)blockPos.getX() + 0.5D, blockPos.getY(), (double)blockPos.getZ() + 0.5D, serverLevel.getBlockState(blockPos));
+            FallingBlockEntity fallingblockentity = FallingBlockEntityAccessor.bumblezone$FallingBlockEntity(serverLevel, (double)blockPos.getX() + 0.5D, blockPos.getY(), (double)blockPos.getZ() + 0.5D, serverLevel.getBlockState(blockPos));
             serverLevel.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
             this.falling(fallingblockentity);
             serverLevel.addFreshEntity(fallingblockentity);
@@ -288,7 +288,7 @@ public class PileOfPollen extends FallingBlock {
 
                 // Prevents the FallingBlock's checkInsideBlocks from triggering this
                 // method again for the pollen block we just set above our collision block.
-                ((FallingBlockEntityAccessor) entity).bumblezone$bumblezone$setBlockState(Blocks.AIR.defaultBlockState());
+                ((FallingBlockEntityAccessor) entity).bumblezone$setBlockState(Blocks.AIR.defaultBlockState());
             }
             else {
                 level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);

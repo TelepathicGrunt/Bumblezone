@@ -82,6 +82,13 @@ dependencies {
     compileOnly("curse.maven:apotheosis-313970:${project.apotheosis_file_id}")
     compileOnly("top.theillusivec4.curios:curios-forge:${project.curios}:api")
 
+    modCompileOnly("mezz.jei:jei-${project.jei_mc}-common-api:${project.jei}")
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-api-forge:${project.rei}")
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}")
+    modCompileOnly("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config}")
+
+    modCompileOnly("maven.modrinth:projectile-damage-attribute:${project.projectile_damage_attribute}-forge")
+
     // runtimeOnly("curse.maven:better-advancements-272515:4631253")
     // runtimeOnly("curse.maven:spit-it-out-857141:4614678")
     // runtimeOnly("curse.maven:atlasviewer-633577:4597419")
@@ -92,14 +99,6 @@ dependencies {
 //    runtimeOnly("mekanism:Mekanism:${project.mekanism}:generators")// Mekanism: Generators
 //    runtimeOnly("mekanism:Mekanism:${project.mekanism}:tools")// Mekanism: Tools
 
-    //runtimeOnly("mezz.jei:jei-${project.jei_mc}-forge:${project.jei}")
-    //runtimeOnly("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
-
-    //compileOnly("dev.emi:emi-forge:${emi}:api")
-    //runtimeOnly("dev.emi:emi-forge:${emi}")
-
-    //runtimeOnly("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config}")
-    //runtimeOnly("dev.architectury:architectury-forge:${project.architectury}")
     //runtimeOnly("curse.maven:travelersbackpacks-321117:${project.travelersbackpacks_file_id}")
     //runtimeOnly("top.theillusivec4.curios:curios-forge:${project.curios}")
 
@@ -120,7 +119,7 @@ legacyForge {
         }
     }
 
-    //validateAccessTransformers.set(true)
+    validateAccessTransformers.set(true)
 
     runs {
         client {

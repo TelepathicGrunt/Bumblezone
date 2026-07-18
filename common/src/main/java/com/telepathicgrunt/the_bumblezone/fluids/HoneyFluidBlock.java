@@ -163,10 +163,10 @@ public class HoneyFluidBlock extends BzLiquidBlock {
         boolean isFalling = blockState.getValue(FALLING);
         FluidState fluidState;
         if(fluidLevel == 0) {
-            fluidState = this.getFluid().getSource(false);
+            fluidState = this.getFlowingFluid().getSource(false);
         }
         else {
-            fluidState = this.getFluid().getFlowing(fluidLevel, isFalling).setValue(BOTTOM_LEVEL, bottomFluidLevel);
+            fluidState = this.getFlowingFluid().getFlowing(fluidLevel, isFalling).setValue(BOTTOM_LEVEL, bottomFluidLevel);
         }
         return fluidState.setValue(ABOVE_FLUID, blockState.getValue(ABOVE_FLUID));
     }

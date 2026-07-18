@@ -170,7 +170,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         else if(entity instanceof FallingBlockEntity fallingBlockEntity && fallingBlockEntity.getBlockState().is(BzBlocks.PILE_OF_POLLEN.get())) {
             BlockState fallingState = fallingBlockEntity.getBlockState();
             int newLayer = Math.min(8, fallingState.getValue(PileOfPollen.LAYERS) + 1);
-            ((FallingBlockEntityAccessor)fallingBlockEntity).bumblezone$bumblezone$setBlockState(fallingState.setValue(PileOfPollen.LAYERS, newLayer));
+            ((FallingBlockEntityAccessor)fallingBlockEntity).bumblezone$setBlockState(fallingState.setValue(PileOfPollen.LAYERS, newLayer));
 
             UpdateFallingBlockPacket.sendToClient(fallingBlockEntity, fallingBlockEntity.getId(), (short)newLayer);
         }
