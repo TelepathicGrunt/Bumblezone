@@ -46,7 +46,6 @@
     },
     "mixins": [
         "the_bumblezone-fabric.mixins.json",
-        "the_bumblezone-fabric-base.mixins.json",
         "the_bumblezone-common.mixins.json"
     ],
     "depends": {

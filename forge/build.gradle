@@ -120,7 +120,7 @@ legacyForge {
         }
     }
 
-    validateAccessTransformers.set(true)
+    //validateAccessTransformers.set(true)
 
     runs {
         client {

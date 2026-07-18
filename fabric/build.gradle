@@ -70,9 +70,24 @@ dependencies {
     modCompileOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
     modRuntimeOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
 
+    modCompileOnly("mezz.jei:jei-${rootProject.jei_mc}-fabric:${rootProject.jei}")
+
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:${rootProject.rei}")
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${rootProject.rei}")
     modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
 
+    modCompileOnly("dev.emi:trinkets:${trinkets}")
+
     //modLocalRuntime("dev.emi:emi-fabric:${rootProject.emi}")
+    modCompileOnly "dev.emi:emi-fabric:${rootProject.emi}"
+
+    modCompileOnly "curse.maven:restricted-portals-228266:${rootProject.restricted_portals_file_id}"
+
+    modCompileOnly("maven.modrinth:sodium:${rootProject.sodium}")
+
+    modCompileOnly("curse.maven:zenith-620928:${project.zenith_file_id}")
+
+    modCompileOnly("maven.modrinth:projectile-damage-attribute:${rootProject.projectile_damage_attribute}-forge")
 
 //    modLocalRuntime("curse.maven:huge-structure-blocks-474114:4803539")
 //    modLocalRuntime("com.telepathicgrunt:CommandStructures:${project.commandstructures_fabric}")
