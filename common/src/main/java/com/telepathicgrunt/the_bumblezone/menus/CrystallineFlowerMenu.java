@@ -558,7 +558,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                 enchantedSlot.set(ItemStack.EMPTY);
             }
             if (player instanceof ServerPlayer serverPlayer) {
-                CrystallineFlowerEnchantmentPacket.sendToClient(serverPlayer, this.containerId, new ArrayList<>(), ResourceLocation.fromNamespaceAndPath("minecraft", "empty"));
+                CrystallineFlowerEnchantmentPacket.sendToClient(serverPlayer, this.containerId, new ArrayList<>(), Identifier.fromNamespaceAndPath("minecraft", "empty"));
             }
             return;
         }

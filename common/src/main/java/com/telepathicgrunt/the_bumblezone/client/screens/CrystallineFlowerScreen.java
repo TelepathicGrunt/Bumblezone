@@ -19,6 +19,8 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.MultiLineTextWidget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.input.CharacterEvent;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -325,11 +327,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         }
 
         if (this.menu.tooManyEnchantmentsOnInput.get() == 1) {
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(0, 0, 251.0F);
+            // #TODO - May need to move this elsewhere to dray on top of itemstack
             MutableComponent mutableComponent2 = Component.translatable("container.the_bumblezone.crystalline_flower.too_many_enchants_marker").withStyle(ChatFormatting.BOLD);
-            guiGraphics.drawCenteredString(font, mutableComponent2, startX + TOO_MANY_ENCHANTMENT_MARKER_X_OFFSET, startY + TOO_MANY_ENCHANTMENT_MARKER_Y_OFFSET, 0xD03010);
-            guiGraphics.pose().popPose();
+            guiGraphics.centeredText(font, mutableComponent2, startX + TOO_MANY_ENCHANTMENT_MARKER_X_OFFSET, startY + TOO_MANY_ENCHANTMENT_MARKER_Y_OFFSET, 0xD03010);
 
             float messageAreaX = startX + ENCHANTMENT_AREA_X_OFFSET - 2;
             float messageAreaY = startY + ENCHANTMENT_AREA_Y_OFFSET - 2;
@@ -341,7 +341,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             guiGraphics.blit(NO_ENCHANTS_BACKGROUND, startX + TOO_MANY_ENCHANTMENT_BACKGROUND_X_OFFSET, startY + TOO_MANY_ENCHANTMENT_BACKGROUND_Y_OFFSET, 0, 0, 89, 57, 89, 57);
 
             centeredTextWidget.setPosition((int) textCenterX - (centeredTextWidget.getWidth() / 2), (int) textCenterY - (centeredTextWidget.getHeight() / 2));
-            centeredTextWidget.renderWidget(guiGraphics, mouseX, mouseY, partialTick);
+            centeredTextWidget.extractRenderState(guiGraphics, mouseX, mouseY, partialTick);
         }
         else if (this.menu.selectedEnchantment != null && this.menu.enchantedSlot.hasItem()) {
             EnchantmentSkeleton enchantment = enchantmentsAvailable.get(this.menu.selectedEnchantment);
@@ -711,8 +711,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
         this.scrolling = false;
 
-        boolean searchBoxHovered = isSearchBoxHovered(mouseX, mouseY);
-        if (button == InputConstants.MOUSE_BUTTON_RIGHT && searchBoxHovered) {
+        boolean searchBoxHovered = isSearchBoxHovered(event.x(), event.y());
+        if (event.button() == InputConstants.MOUSE_BUTTON_RIGHT && searchBoxHovered) {
             this.searchBox.setValue("");
             this.setFocused(this.searchBox);
             this.searchBox.setFocused(true);
@@ -725,7 +725,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             }
         }
 
-        if (handleEnchantmentAreaRow(mouseX, mouseY, (Integer sectionId) -> {
+        if (handleEnchantmentAreaRow(event.x(), event.y(), (Integer sectionId) -> {
             if (this.menu.clickMenuEnchantment(this.minecraft.player, CrystallineFlowerScreen.enchantmentsAvailableSortedList.get(sectionId))) {
                 sendButtonPressToMenu(sectionId);
                 return true;
@@ -819,27 +819,27 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    public boolean keyPressed(KeyEvent keyEvent) {
         if (this.searchBox != null &&
                 this.searchBox.isFocused() &&
-                keyCode != InputConstants.KEY_ESCAPE &&
-                keyCode != InputConstants.KEY_TAB)
+                keyEvent.key() != InputConstants.KEY_ESCAPE &&
+                keyEvent.key() != InputConstants.KEY_TAB)
         {
-            if (this.searchBox.keyPressed(keyCode, scanCode, modifiers) || this.searchBox.canConsumeInput()) {
+            if (this.searchBox.keyPressed(keyEvent) || this.searchBox.canConsumeInput()) {
                 return true;
             }
         }
 
-        return super.keyPressed(keyCode, scanCode, modifiers);
+        return super.keyPressed(keyEvent);
     }
 
     @Override
-    public boolean charTyped(char codePoint, int modifiers) {
-        if (this.searchBox != null && this.searchBox.isFocused() && this.searchBox.charTyped(codePoint, modifiers)) {
+    public boolean charTyped(CharacterEvent characterEvent) {
+        if (this.searchBox != null && this.searchBox.isFocused() && this.searchBox.charTyped(characterEvent)) {
             return true;
         }
 
-        return super.charTyped(codePoint, modifiers);
+        return super.charTyped(characterEvent);
     }
 
     private Boolean canPlayerBuyTier(int xpTiersToCheck) {
@@ -934,8 +934,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 .collect(Collectors.joining(" "));
     }
 
-    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByNamespace = Comparator.comparing(e -> e.getKey().getNamespace());
-    private static final Comparator<Map.Entry<ResourceLocation, EnchantmentSkeleton>> compareByLang = Comparator.comparing(e ->
+    private static final Comparator<Map.Entry<Identifier, EnchantmentSkeleton>> compareByNamespace = Comparator.comparing(e -> e.getKey().getNamespace());
+    private static final Comparator<Map.Entry<Identifier, EnchantmentSkeleton>> compareByLang = Comparator.comparing(e ->
         getEnchantmentDisplayName(e.getKey().getNamespace(), e.getKey().getPath()),
         String.CASE_INSENSITIVE_ORDER);
     private static final Comparator<Map.Entry<Identifier, EnchantmentSkeleton>> compareByLevel = Comparator.comparingInt(e -> e.getValue().level);
