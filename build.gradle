@@ -2,129 +2,17 @@ plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.14-SNAPSHOT" apply false
     id 'io.github.juuxel.loom-vineflower' version '1.11.0' apply false
-    id "com.modrinth.minotaur" version "2.+"
+    id 'me.modmuss50.mod-publish-plugin' version '2.0.0-beta.2' apply false
     id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
+def javaVersion = 17
+def ENV = System.getenv()
+version = mod_version
+group = mod_group_id
+
 architectury {
     minecraft = rootProject.minecraft_version
-}
-
-subprojects {
-    apply plugin: "dev.architectury.loom"
-    apply plugin: "com.modrinth.minotaur"
-    apply plugin: "com.matthewprenger.cursegradle"
-
-    version = "${rootProject.mod_version}+${rootProject.minecraft_version}-${name}"
-
-    loom {
-        silentMojangMappingsLicense()
-    }
-
-    dependencies {
-        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
-        mappings loom.officialMojangMappings()
-    }
-
-    Map<String, Map<String, String>> platformSettings = [
-            "fabric": [
-                    "curse-id": "363949",
-                    "modrinth-id": "eA8SXqWL"
-            ],
-            "forge": [
-                    "curse-id": "362479",
-                    "modrinth-id": "38tpSycf"
-            ]
-    ]
-
-    Map<String, Map<String, Boolean>> platformDependencies = [
-            "fabric": [
-                    "fabric-api": true,
-                    "midnightlib": true,
-                    "better-advancements": false
-            ],
-            "forge": [
-                    "better-advancements": false
-            ]
-    ]
-
-    var env = System.getenv()
-    def uploadSettings = platformSettings.get(name)
-    def uploadDependencies = platformDependencies.get(name)
-
-    if (uploadSettings != null && uploadDependencies != null) {
-
-        File changeLog = rootProject.file("CHANGELOG.md")
-        String changeLogText = changeLog.exists() ? changeLog.text : ""
-
-        if (env.MODRINTH_TOKEN) {
-            modrinth {
-                token = env.MODRINTH_TOKEN
-                versionName = "The Bumblezone"
-                versionNumber = "${project.version}"
-                changelog = changeLogText
-                projectId = uploadSettings["modrinth-id"]
-
-                gameVersions = ["${rootProject.minecraft_version}"]
-                if (name == "forge") {
-                    loaders = [name, "neoforge"]
-                }
-                else {
-                    loaders = [name]
-                }
-                versionType = "RELEASE"
-
-                uploadFile = tasks.remapJar
-
-                dependencies {
-                    def optionalContainer = getOptional()
-                    def requiredContainer = getRequired()
-                    uploadDependencies.each { dep, required ->
-                        if (required) {
-                            requiredContainer.project(dep)
-                        } else {
-                            optionalContainer.project(dep)
-                        }
-                    }
-                }
-            }
-        }
-
-        if (env.CURSEFORGEKEY) {
-            curseforge {
-                apiKey = env.CURSEFORGEKEY
-                project { proj ->
-                    id = uploadSettings["curse-id"]
-                    changelogType = "markdown"
-                    changelog = changeLogText
-                    releaseType = "release"
-
-                    addGameVersion("${rootProject.minecraft_version}")
-                    addGameVersion(name.capitalize())
-                    if (name == "forge") {
-                        addGameVersion("NeoForge")
-                    }
-
-                    mainArtifact(tasks.remapJar) {
-                        displayName = "The Bumblezone v${rootProject.mod_version} (${rootProject.minecraft_version} MC ${name.capitalize()})"
-                    }
-
-                    if (uploadDependencies.size() > 0) {
-                        relations {
-                            uploadDependencies.each { dep, required ->
-                                if (required) {
-                                    requiredDependency(dep)
-                                }
-                                else {
-                                    optionalDependency(dep)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
 allprojects {
@@ -223,13 +111,143 @@ allprojects {
         }
     }
 
-    tasks.withType(JavaCompile) {
-        options.encoding = "UTF-8"
-        options.release = 17
+    tasks.register('buildAndRelease') {
+        dependsOn(tasks.build, tasks.publish)
+    }
+}
+
+
+subprojects {
+    apply plugin: "dev.architectury.loom"
+    apply plugin: "com.matthewprenger.cursegradle"
+    apply plugin: 'me.modmuss50.mod-publish-plugin'
+
+    version = "${rootProject.mod_version}+${rootProject.minecraft_version}-${name}"
+
+    loom {
+        silentMojangMappingsLicense()
     }
 
     java {
+        if (JavaVersion.current() < JavaVersion.toVersion(javaVersion)) {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(javaVersion)
+            }
+        } else {
+            sourceCompatibility = JavaVersion.toVersion(javaVersion)
+            targetCompatibility = JavaVersion.toVersion(javaVersion)
+        }
+
         withSourcesJar()
+//        withJavadocJar()
+    }
+
+    javadoc {
+        // make javadoc not throw on mixin's '@reason'
+        options.tags = ["reason"]
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.release.set(javaVersion)
+    }
+
+    dependencies {
+        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+        mappings loom.officialMojangMappings()
+    }
+
+    jar {
+        def licenseFile1 = rootProject.file("LICENSE.txt")
+        def licenseFile2 = rootProject.file("LICENSE_ASSETS.txt")
+        inputs.file(licenseFile1)
+        inputs.file(licenseFile2)
+
+        from(licenseFile1) {
+            rename { "LICENSE.txt" }
+        }
+        from(licenseFile2) {
+            rename { "LICENSE_ASSETS.txt" }
+        }
+    }
+
+    sourcesJar {
+        def licenseFile1 = rootProject.file("LICENSE.txt")
+        def licenseFile2 = rootProject.file("LICENSE_ASSETS.txt")
+        inputs.file(licenseFile1)
+        inputs.file(licenseFile2)
+
+        from(licenseFile1) {
+            rename { "LICENSE.txt" }
+        }
+        from(licenseFile2) {
+            rename { "LICENSE_ASSETS.txt" }
+        }
+    }
+
+    publishMods {
+        type = STABLE
+
+        displayName = "${project.mod_name} v${rootProject.mod_version} (${rootProject.minecraft_version} MC ${name.capitalize()})"
+        version = project.version
+
+        def changeLogFile = project.file("CHANGELOG.md")
+        changelog = changeLogFile.exists() ? changeLogFile.text : ""
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.release.set(javaVersion)
+    }
+
+    tasks.publishMods.mustRunAfter tasks.publish
+    tasks.buildAndRelease.dependsOn(tasks.publish).dependsOn(tasks.publishMods)
+
+    publishing {
+        repositories {
+            if (ENV.MAVEN_USER) {
+                maven {
+                    url = uri("https://nexus.resourcefulbees.com/repository/telepathicgrunt/")
+                    credentials {
+                        username ENV.MAVEN_USER
+                        password ENV.MAVEN_PASS
+                    }
+                }
+            }
+        }
+
+        publications {
+            "mavenJava${project.name}"(MavenPublication) {
+                from components.java
+                artifactId "${project.mod_id}"
+
+                pom {
+                    name = project.mod_name
+                    description = project.mod_description
+                    url = project.sources_url
+
+                    scm {
+                        connection = "git:${project.sources_url}.git"
+                        developerConnection = "git:${project.sources_url}.git"
+                        url = project.sources_url
+                    }
+
+                    licenses {
+                        license {
+                            name = 'LGPLv3 License'
+                            url = project.license_url
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id = 'telepathic_grunt'
+                            name = 'TelepathicGrunt'
+                            email = 'asarnesespam@gmail.com'
+                        }
+                    }
+                }
+
+            }
+        }
     }
 
     task optimizePng {
@@ -248,6 +266,10 @@ allprojects {
     }
 }
 
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
+
 //Minimize/optimize all png files, requires optipng on the PATH
 // Credits: BrainStone
 void minimizePNGFile(File file) {
@@ -257,6 +279,10 @@ void minimizePNGFile(File file) {
     }
 }
 
-task buildAndReleaseAll{
-    dependsOn(':common:buildAndRelease', ':forge:buildAndRelease', ':fabric:buildAndRelease')
+// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
 }

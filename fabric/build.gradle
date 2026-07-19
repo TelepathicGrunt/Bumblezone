@@ -7,6 +7,66 @@ architectury {
     fabric()
 }
 
+publishMods {
+    file = tasks.remapJar.archiveFile
+    modLoaders.add("fabric")
+
+    File changeLog = rootProject.file("CHANGELOG.md")
+    String changeLogText = changeLog.exists() ? changeLog.text : ""
+
+    def uploadDependenciesCf = [
+            "fabric-api": true,
+            "midnightlib": true,
+            "resourceful-lib": true,
+            "better-advancements": false
+    ]
+    def uploadDependenciesMr = [
+            "fabric-api": true,
+            "midnightlib": true,
+            "resourceful-lib": true,
+            "better-advancements": false
+    ]
+
+    if (project.hasProperty('curseforge_id_fabric')) {
+        curseforge('curseforgeFabric') {
+            accessToken = providers.environmentVariable('CURSEFORGEKEY')
+            projectId = project.findProperty('curseforge_id_fabric')
+            minecraftVersions.add(project.minecraft_version)
+            changelog = changeLogText
+            changelogType = "markdown"
+            client = true
+            server = true
+
+            uploadDependenciesCf.each { dep, required ->
+                if (required) {
+                    requires(dep)
+                } else {
+                    optional(dep)
+                }
+            }
+        }
+    }
+
+    if (project.hasProperty('modrinth_id_fabric')) {
+        modrinth('modrinthFabric') {
+            accessToken = providers.environmentVariable('MODRINTH_TOKEN')
+            projectId = project.findProperty('modrinth_id_fabric')
+            minecraftVersions.add(project.minecraft_version)
+            changelog = changeLogText
+
+            dependencies {
+                uploadDependenciesMr.each { dep, required ->
+                    if (required) {
+                        requires(dep)
+                    } else {
+                        optional(dep)
+                    }
+                }
+            }
+        }
+    }
+}
+
 loom {
     accessWidenerPath = project(":common").loom.accessWidenerPath
 }
@@ -62,7 +122,7 @@ dependencies {
 processResources {
     inputs.property "version", project.version
 
-    filesMatching("fabric.mod.json") {
+    filesMatching("META-INF/mods.toml") {
         expand "version": project.version
     }
 }
@@ -95,61 +155,3 @@ components.java {
         skip()
     }
 }
-
-def ENV = System.getenv()
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact remapJar
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
-            }
-
-            artifactId = "$rootProject.name"
-
-            pom {
-                name = 'TheBumblezone'
-                description = 'A wonderful bee dimension mod with lots of new exploration and adventuring to do!'
-                url = 'https://github.com/TelepathicGrunt/Bumblezone'
-
-                scm {
-                    connection = 'git:https://github.com/TelepathicGrunt/Bumblezone.git'
-                    developerConnection = 'git:https://github.com/TelepathicGrunt/Bumblezone.git'
-                    url = 'https://github.com/TelepathicGrunt/Bumblezone'
-                }
-
-                licenses {
-                    license {
-                        name = 'GNU Lesser General Public License v3.0'
-                        url = 'https://github.com/TelepathicGrunt/Bumblezone/LICENSE'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id = 'telepathic_grunt'
-                        name = 'TelepathicGrunt'
-                        email = 'asarnesespam@gmail.com'
-                    }
-                }
-            }
-        }
-    }
-    repositories {
-        maven {
-            url = "https://maven.resourcefulbees.com/repository/telepathicgrunt/"
-            credentials {
-                username ENV.MAVEN_USER
-                password ENV.MAVEN_PASS
-            }
-        }
-    }
-}
-
-task buildAndRelease{}
-tasks.build.mustRunAfter tasks.clean
-tasks.publish.mustRunAfter tasks.build
-tasks.curseforge.mustRunAfter tasks.publish
-tasks.modrinth.mustRunAfter tasks.publish
-tasks.buildAndRelease.dependsOn(tasks.clean, tasks.build, tasks.publish, tasks.curseforge, tasks.modrinth)
