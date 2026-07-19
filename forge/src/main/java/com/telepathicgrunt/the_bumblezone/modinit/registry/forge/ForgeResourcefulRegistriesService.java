@@ -22,7 +22,7 @@ public class ForgeResourcefulRegistriesService implements ResourcefulRegistriesS
         return new ResourcefulRegistryChild<>(parent);
     }
 
-    private static final List<ResourcefulRegistriesImpl.CustomRegistryInfo<?>> CUSTOM_REGISTRIES = new ArrayList<>();
+    private static final List<CustomRegistryInfo<?>> CUSTOM_REGISTRIES = new ArrayList<>();
 
     @Override
     public <T> ResourcefulRegistry<T> create(Registry<T> registry, String id) {
@@ -31,7 +31,7 @@ public class ForgeResourcefulRegistriesService implements ResourcefulRegistriesS
 
     @Override
     public <T, K extends Registry<T>> Pair<Supplier<CustomRegistryLookup<T>>, ResourcefulRegistry<T>> createCustomRegistryInternal(String modId, Class<T> type, ResourceKey<K> key, boolean save, boolean sync, boolean allowModification) {
-        ResourcefulRegistriesImpl.CustomRegistryInfo<T> info = new ResourcefulRegistriesImpl.CustomRegistryInfo<>(new ResourcefulRegistriesImpl.LateSupplier<>(), key, save, sync, allowModification);
+        CustomRegistryInfo<T> info = new CustomRegistryInfo<>(new LateSupplier<>(), key, save, sync, allowModification);
         CUSTOM_REGISTRIES.add(info);
         return Pair.of(info.lookup(), new ForgeResourcefulRegistry<>(key, modId));
     }
@@ -64,7 +64,7 @@ public class ForgeResourcefulRegistriesService implements ResourcefulRegistriesS
     }
 
     public record CustomRegistryInfo<T>(
-            ResourcefulRegistriesImpl.LateSupplier<CustomRegistryLookup<T>> lookup,
+            LateSupplier<CustomRegistryLookup<T>> lookup,
             ResourceKey<? extends Registry<T>> key,
             boolean save,
             boolean sync,

@@ -45,6 +45,16 @@ repositories {
             includeGroup "com.jamieswhiteshirt"
         }
     }
+    exclusiveContent {
+        forRepository {
+            maven {
+                url = "https://maven.architectury.dev/"
+            }
+        }
+        filter {
+            includeGroupAndSubgroups("dev.architectury")
+        }
+    }
 }
 
 dependencies {
@@ -84,8 +94,9 @@ dependencies {
 
     modCompileOnly("mezz.jei:jei-${project.jei_mc}-common-api:${project.jei}")
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-api-forge:${project.rei}")
-    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}")
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${project.rei}")
     modCompileOnly("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config}")
+    modCompileOnly("dev.architectury:architectury-forge:${project.architectury}")
 
     modCompileOnly("maven.modrinth:projectile-damage-attribute:${project.projectile_damage_attribute}-forge")
 
