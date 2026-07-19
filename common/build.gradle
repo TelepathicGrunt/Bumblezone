@@ -18,7 +18,7 @@ dependencies {
     compileOnly "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"
     annotationProcessor "io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"
 
-    modRuntimeOnly(modCompileOnly("earth.terrarium.athena:athena-fabric-${project.athena}"))
+    modCompileOnly("earth.terrarium.athena:athena-fabric-${project.athena}")
 
     // COMPAT
     modCompileOnly("mezz.jei:jei-${project.jei_mc}-common-api:${project.jei}")
