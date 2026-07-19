@@ -170,20 +170,6 @@ subprojects {
         }
     }
 
-    sourcesJar {
-        def licenseFile1 = rootProject.file("LICENSE.txt")
-        def licenseFile2 = rootProject.file("LICENSE_ASSETS.txt")
-        inputs.file(licenseFile1)
-        inputs.file(licenseFile2)
-
-        from(licenseFile1) {
-            rename { "LICENSE.txt" }
-        }
-        from(licenseFile2) {
-            rename { "LICENSE_ASSETS.txt" }
-        }
-    }
-
     publishMods {
         type = STABLE
 
