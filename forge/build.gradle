@@ -8,7 +8,7 @@ architectury {
 
 
 publishMods {
-    file = tasks.jar.archiveFile
+    file = tasks.remapJar.archiveFile
     modLoaders.add("forge")
 
     File changeLog = rootProject.file("CHANGELOG.md")
