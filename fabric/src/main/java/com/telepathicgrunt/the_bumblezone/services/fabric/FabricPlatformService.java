@@ -280,9 +280,9 @@ public class FabricPlatformService implements PlatformService {
     
     @Override
     public boolean isDimensionAllowed(ServerPlayer serverPlayer, ResourceKey<Level> dimension) {
-        if (ModChecker.restrictedPortalsPresent) {
-            return !RestrictedPortalsCompat.isDimensionDisallowed(serverPlayer, dimension);
-        }
+//        if (ModChecker.restrictedPortalsPresent) {
+//            return !RestrictedPortalsCompat.isDimensionDisallowed(serverPlayer, dimension);
+//        }
 
         return true;
     }

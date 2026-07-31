@@ -86,7 +86,7 @@ public class WindyAir extends ProperFacingBlock {
 
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
-        return collisionContext.isHoldingItem(BzItems.WINDY_AIR.get()) ? Shapes.block() : Shapes.empty();
+        return collisionContext.isHoldingItem(this.asItem()) ? Shapes.block() : Shapes.empty();
     }
 
     @Override

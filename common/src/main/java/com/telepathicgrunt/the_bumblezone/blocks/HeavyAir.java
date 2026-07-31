@@ -79,7 +79,7 @@ public class HeavyAir extends Block {
 
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
-        return collisionContext.isHoldingItem(BzItems.HEAVY_AIR.get()) ? Shapes.block() : Shapes.empty();
+        return collisionContext.isHoldingItem(this.asItem()) ? Shapes.block() : Shapes.empty();
     }
 
     @Override

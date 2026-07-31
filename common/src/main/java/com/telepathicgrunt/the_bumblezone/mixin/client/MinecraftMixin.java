@@ -13,11 +13,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-
-import javax.annotation.Nullable;
 
 @Mixin(Minecraft.class)
 public class MinecraftMixin {
@@ -25,7 +24,8 @@ public class MinecraftMixin {
     @Shadow
     public LocalPlayer player;
 
-    @Shadow @Nullable public HitResult hitResult;
+    @Shadow @Nullable
+    public HitResult hitResult;
 
     @ModifyReturnValue(method = "shouldEntityAppearGlowing(Lnet/minecraft/world/entity/Entity;)Z",
             at = @At(value = "RETURN"))

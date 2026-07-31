@@ -214,7 +214,6 @@ public class Bumblezone {
             BzItems.setupDispenserBehaviors();
 		});
         MessageHandler.init();
-        BzMusicDiscsDownloadLinkTooltip.SetupTooltipData();
     }
 
     private static void registerDataSerializers(BzRegisterDataSerializersEvent event) {
@@ -235,6 +234,7 @@ public class Bumblezone {
     }
 
     private static void serverAboutToStart(final BzServerGoingToStartEvent event) {
+        BzMusicDiscsDownloadLinkTooltip.SetupTooltipData();
         PollinatedSurfaceSource.RandomLayerStateRule.initNoise(event.getServer().getWorldGenSettings().options().seed());
         BiomeRegistryHolder.setupBiomeRegistry(event.getServer());
         ThreadExecutor.setupExecutorService();

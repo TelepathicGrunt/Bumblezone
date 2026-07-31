@@ -1,9 +1,0 @@
-{
-	"parent": "block/block",
-	"textures": {
-		"0": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_3",
-		"1": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_glint_2",
-		"particle": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_1"
-	},
-	"elements": []
-}

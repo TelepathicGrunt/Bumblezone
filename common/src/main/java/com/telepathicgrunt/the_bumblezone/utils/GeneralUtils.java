@@ -1050,7 +1050,7 @@ public class GeneralUtils {
             ServerLevel serverLevel,
             Class<? extends T> entityClazz,
             TargetingConditions conditions,
-            @javax.annotation.Nullable LivingEntity target,
+            @Nullable LivingEntity target,
             double x,
             double y,
             double z,

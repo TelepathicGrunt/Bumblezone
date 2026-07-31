@@ -30,7 +30,9 @@ import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
+import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.ParticleResources;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -49,7 +51,7 @@ public class FabricClientEventManager {
         FabricArmorRenderer.setupArmor();
         BzRegisterParticleEvent.EVENT.invoke(new BzRegisterParticleEvent(FabricClientEventManager::particleRegister));
         BzRegisterEntityRenderersEvent.EVENT.invoke(new BzRegisterEntityRenderersEvent(EntityRenderers::register));
-        BzRegisterEntityLayersEvent.EVENT.invoke(new BzRegisterEntityLayersEvent((type, supplier) -> EntityModelLayerRegistry.registerModelLayer(type, supplier::get)));
+        BzRegisterEntityLayersEvent.EVENT.invoke(new BzRegisterEntityLayersEvent(EntityModelLayerRegistry::register));
         BzRegisterKeyMappingEvent.EVENT.invoke(new BzRegisterKeyMappingEvent(KeyMappingHelper::registerKeyMapping));
         BzRegisterBlockEntityRendererEvent.EVENT.invoke(new BzRegisterBlockEntityRendererEvent<>(BlockEntityRenderers::register));
         BzRegisterBlockColorEvent.EVENT.invoke(new BzRegisterBlockColorEvent(BlockColorRegistry::register));
@@ -79,6 +81,7 @@ public class FabricClientEventManager {
     }
 
     private static <T extends ParticleOptions> void particleRegister(ParticleType<T> particleType, Function<SpriteSet, ParticleProvider<T>> spriteParticleRegistration) {
+        ParticleResources.MutableSpriteSet mutableSpriteSet = new ParticleResources.MutableSpriteSet();
         ParticleProviderRegistry.getInstance().register(particleType, spriteParticleRegistration.apply(mutableSpriteSet));
     }
 

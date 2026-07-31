@@ -24,6 +24,7 @@ public class BzMusicDiscsDownloadLinkTooltip {
     private static final Map<Optional<ResourceKey<JukeboxSong>>, String> SONG_WITH_DOWNLOAD_LINKS = new HashMap<>();
 
     public static void SetupTooltipData() {
+        SONG_WITH_DOWNLOAD_LINKS.clear();
         AddSong(BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY.get());
         AddSong(BzItems.MUSIC_DISC_RIVERS_OF_HONEY_MOSERAO.get());
         AddSong(BzItems.MUSIC_DISC_LA_BEE_DA_LOCA.get());
