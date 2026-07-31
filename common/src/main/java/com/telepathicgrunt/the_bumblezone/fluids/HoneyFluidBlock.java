@@ -120,7 +120,7 @@ public class HoneyFluidBlock extends LiquidBlock implements FluidGetter {
                 }
 
                 BlockState sideState = world.getBlockState(sidePos);
-                if (sideState.getBlock() instanceof LiquidBlock || !sideState.getFluidState().isEmpty() || sideState.canBeReplaced()) {
+                if (sideState.getBlock() instanceof LiquidBlock || (!sideState.getFluidState().isEmpty() && sideState.getCollisionShape(world, sidePos).isEmpty()) || sideState.canBeReplaced()) {
                     world.setBlock(sidePos, BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState(), 3);
                 }
                 else if (!currentFluid.isSource()) {
