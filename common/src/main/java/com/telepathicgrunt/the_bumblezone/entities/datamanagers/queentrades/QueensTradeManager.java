@@ -29,6 +29,7 @@ import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -58,14 +59,14 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
     public record TradeCollection(
         Optional<SpecialDaysEntry> specialDaysEntry,
         Optional<List<RawTradeInputEntry>> randomizerItems,
-        List<RawTradeInputEntry> wantItems,
+        Optional<List<RawTradeInputEntry>> wantItems,
         Optional<List<RawTradeOutputEntry>> resultItems,
         boolean randomizerTrade)
     {
         public static final Codec<TradeCollection> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
                 SpecialDaysEntry.CODEC.optionalFieldOf("special_days").forGetter(e -> e.specialDaysEntry),
                 RawTradeInputEntry.CODEC.listOf().optionalFieldOf("randomizes").forGetter(e -> e.randomizerItems),
-                RawTradeInputEntry.CODEC.listOf().fieldOf("wants").forGetter(e -> e.wantItems),
+                RawTradeInputEntry.CODEC.listOf().optionalFieldOf("wants").forGetter(e -> e.wantItems),
                 RawTradeOutputEntry.CODEC.listOf().optionalFieldOf("possible_rewards").forGetter(e -> e.resultItems),
                 Codec.BOOL.fieldOf("is_color_randomizer_trade").orElse(false).forGetter(e -> e.randomizerTrade)
         ).apply(instance, instance.stable(TradeCollection::new)));
@@ -89,10 +90,10 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
         ).apply(instance, instance.stable(RawTradeInputEntry::new)));
     }
 
-    public record RawTradeOutputEntry(Optional<String> tag, Optional<ItemStack> itemstack, boolean required, int count, int xpReward, int weight) {
+    public record RawTradeOutputEntry(Optional<String> tag, Optional<ItemStackTemplate> itemStackTemplate, boolean required, int count, int xpReward, int weight) {
         public static final Codec<RawTradeOutputEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
                 Codec.STRING.optionalFieldOf("tag").forGetter(e -> e.tag),
-                ItemStack.CODEC.optionalFieldOf("item").forGetter(e -> e.itemstack),
+                ItemStackTemplate.CODEC.optionalFieldOf("item").forGetter(e -> e.itemStackTemplate),
                 Codec.BOOL.fieldOf("required").forGetter(e -> e.required),
                 Codec.intRange(1, 64).fieldOf("count_output_for_tags").orElse(1).forGetter(e -> e.count),
                 ExtraCodecs.NON_NEGATIVE_INT.fieldOf("xp_reward").forGetter(e -> e.xpReward),
@@ -154,7 +155,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
             if (entry.specialDaysEntry().isPresent()) {
                 if (entry.wantItems().isEmpty()) continue;
                 if (entry.resultItems().isEmpty()) continue;
-                for (RawTradeInputEntry rawTradeWantEntry : entry.wantItems()) {
+                for (RawTradeInputEntry rawTradeWantEntry : entry.wantItems().get()) {
                     TradeWantEntry tradeWantEntry = getInputTradeEntry(rawTradeWantEntry);
 
                     if (tradeWantEntry == null || tradeWantEntry.wantItems().size() == 0) {
@@ -190,7 +191,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
             else {
                 if (entry.wantItems().isEmpty()) continue;
                 if (entry.resultItems().isEmpty()) continue;
-                for (RawTradeInputEntry rawTradeWantEntry : entry.wantItems()) {
+                for (RawTradeInputEntry rawTradeWantEntry : entry.wantItems().get()) {
                     TradeWantEntry tradeWantEntry = getInputTradeEntry(rawTradeWantEntry);
 
                     if (tradeWantEntry == null || tradeWantEntry.wantItems().size() == 0) {
@@ -301,12 +302,12 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
                 else tag.ifPresent(holders -> tradeResultEntries.add(new TradeResultEntry(Optional.of(tagKey), holders.stream().map(i -> i.value().getDefaultInstance()).collect(Collectors.toCollection(ArrayList::new)), rawTradeOutputEntry.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
             }
             else {
-                if (rawTradeOutputEntry.itemstack().isEmpty() || rawTradeOutputEntry.itemstack().get().isEmpty()) {
+                if (rawTradeOutputEntry.itemStackTemplate().isEmpty() || rawTradeOutputEntry.itemStackTemplate().get().create().isEmpty()) {
                     if (rawTradeOutputEntry.required) {
-                        Bumblezone.LOGGER.error("Trade result entry is set to required but " + rawTradeOutputEntry + " itemstack entry does not exist.");
+                        Bumblezone.LOGGER.error("Trade result entry is set to required but " + rawTradeOutputEntry + " itemStackTemplate entry does not exist.");
                     }
                 }
-                else rawTradeOutputEntry.itemstack().ifPresent(itemHolder -> tradeResultEntries.add(new TradeResultEntry(Optional.empty(), Arrays.asList(itemHolder), itemHolder.getCount(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
+                else rawTradeOutputEntry.itemStackTemplate().ifPresent(itemStackTemplate -> tradeResultEntries.add(new TradeResultEntry(Optional.empty(), List.of(itemStackTemplate.create()), itemStackTemplate.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
             }
         }
 
