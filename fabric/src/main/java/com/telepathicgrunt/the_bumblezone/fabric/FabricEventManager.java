@@ -46,6 +46,7 @@ import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityDataRegistry;
 import net.fabricmc.fabric.api.registry.FabricPotionBrewingBuilder;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
@@ -143,7 +144,7 @@ public class FabricEventManager {
         BzSetupEvent.EVENT.invoke(new BzSetupEvent(Runnable::run));
         BzFinalSetupEvent.EVENT.invoke(new BzFinalSetupEvent(Runnable::run));
 
-        BzRegisterDataSerializersEvent.EVENT.invoke(new BzRegisterDataSerializersEvent((id, serializer) -> EntityDataSerializers.registerSerializer(serializer)));
+        BzRegisterDataSerializersEvent.EVENT.invoke(new BzRegisterDataSerializersEvent(FabricEntityDataRegistry::register));
 
         ServerTickEvents.END_LEVEL_TICK.register(BzWorldSavedData::tick);
 

@@ -18,11 +18,11 @@ import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterMenuScreenEven
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterParticleEvent;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
-import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.minecraft.client.color.item.ItemTintSources;
@@ -30,6 +30,7 @@ import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleResources;
@@ -51,7 +52,9 @@ public class FabricClientEventManager {
         FabricArmorRenderer.setupArmor();
         BzRegisterParticleEvent.EVENT.invoke(new BzRegisterParticleEvent(FabricClientEventManager::particleRegister));
         BzRegisterEntityRenderersEvent.EVENT.invoke(new BzRegisterEntityRenderersEvent(EntityRenderers::register));
-        BzRegisterEntityLayersEvent.EVENT.invoke(new BzRegisterEntityLayersEvent(EntityModelLayerRegistry::register));
+        BzRegisterEntityLayersEvent.EVENT.invoke(new BzRegisterEntityLayersEvent(
+                (modelLayerLocation, layerDefinitionSupplier) ->
+                        ModelLayerRegistry.registerModelLayer(modelLayerLocation, layerDefinitionSupplier::get)));
         BzRegisterKeyMappingEvent.EVENT.invoke(new BzRegisterKeyMappingEvent(KeyMappingHelper::registerKeyMapping));
         BzRegisterBlockEntityRendererEvent.EVENT.invoke(new BzRegisterBlockEntityRendererEvent<>(BlockEntityRenderers::register));
         BzRegisterBlockColorEvent.EVENT.invoke(new BzRegisterBlockColorEvent(BlockColorRegistry::register));
