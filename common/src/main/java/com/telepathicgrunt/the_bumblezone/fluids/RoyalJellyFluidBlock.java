@@ -40,8 +40,8 @@ public class RoyalJellyFluidBlock extends LiquidBlock implements FluidGetter {
 
     public static final int maxBottomLayer = 8;
 
-    public RoyalJellyFluidBlock(FluidData baseFluid) {
-        super(baseFluid.still().get(), BlockBehaviour.Properties.of()
+    public RoyalJellyFluidBlock(FluidData baseFluid, Properties properties) {
+        super(baseFluid.still().get(), properties
                 .mapColor(MapColor.TERRACOTTA_PURPLE)
                 .liquid()
                 .noCollision()

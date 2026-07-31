@@ -87,6 +87,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.apache.logging.log4j.util.Lazy;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -115,7 +116,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     private int poseTicks;
     private int tradeHintCooldown = 0;
     private boolean isSpecialDay = false;
-    private static final WeightedTradeResult ESSENCE_DROP = new WeightedTradeResult(null, Optional.of(List.of(BzItems.ESSENCE_OF_THE_BEES.get().getDefaultInstance())), 1, 1000, 1);
+    private static final Lazy<WeightedTradeResult> ESSENCE_DROP = Lazy.lazy(() -> new WeightedTradeResult(null, Optional.of(List.of(BzItems.ESSENCE_OF_THE_BEES.get().getDefaultInstance())), 1, 1000, 1));
 
     public BeeQueenEntity(EntityType<? extends BeeQueenEntity> type, Level world) {
         super(type, world);
@@ -592,7 +593,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 if (finalbeeQueenAdvancementDone(serverPlayer)) {
                     PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> {
                         if (!capability.receivedEssencePrize) {
-                            spawnReward(forwardVect, sideVect, ESSENCE_DROP, ItemStack.EMPTY, serverPlayer.getUUID());
+                            spawnReward(forwardVect, sideVect, ESSENCE_DROP.value(), ItemStack.EMPTY, serverPlayer.getUUID());
                             capability.receivedEssencePrize = true;
                             serverPlayer.sendSystemMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD));
                         }
@@ -621,7 +622,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     if (!capability.receivedEssencePrize) {
                         Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
                         Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
-                        spawnReward(forwardVect, sideVect, ESSENCE_DROP, ItemStack.EMPTY, serverPlayer.getUUID());
+                        spawnReward(forwardVect, sideVect, ESSENCE_DROP.value(), ItemStack.EMPTY, serverPlayer.getUUID());
                         capability.receivedEssencePrize = true;
                         serverPlayer.sendSystemMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD));
                     }
@@ -700,7 +701,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                             if (!capability.receivedEssencePrize) {
                                 Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
                                 Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
-                                spawnReward(forwardVect, sideVect, ESSENCE_DROP, ItemStack.EMPTY, serverPlayer.getUUID());
+                                spawnReward(forwardVect, sideVect, ESSENCE_DROP.value(), ItemStack.EMPTY, serverPlayer.getUUID());
                                 capability.receivedEssencePrize = true;
                                 serverPlayer.sendSystemMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD));
                             }

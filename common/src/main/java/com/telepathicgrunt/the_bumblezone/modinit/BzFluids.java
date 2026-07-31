@@ -18,7 +18,6 @@ import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterBubbleColumnBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterFluidType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 
@@ -40,10 +39,10 @@ public class BzFluids {
     public static final RegistryEntry<FlowingFluid> ROYAL_JELLY_FLUID_FLOWING = FLUIDS.register("royal_jelly_fluid_flowing", () -> new RoyalJellyFluid.Flowing(BzFluids.ROYAL_JELLY_FLUID_TYPE.get()));
 
     //FluidBlocks
-    public static final RegistryEntry<LiquidBlock> SUGAR_WATER_BLOCK = BzBlocks.BLOCKS.register("sugar_water_block", () -> new SugarWaterBlock(BzFluids.SUGAR_WATER_FLUID_TYPE.get()));
-    public static final RegistryEntry<LiquidBlock> HONEY_FLUID_BLOCK = BzBlocks.BLOCKS.register("honey_fluid_block", () -> new HoneyFluidBlock(BzFluids.HONEY_FLUID_TYPE.get()));
-    public static final RegistryEntry<LiquidBlock> ROYAL_JELLY_FLUID_BLOCK = BzBlocks.BLOCKS.register("royal_jelly_fluid_block", () -> new RoyalJellyFluidBlock(BzFluids.ROYAL_JELLY_FLUID_TYPE.get()));
+    public static final RegistryEntry<SugarWaterBlock> SUGAR_WATER_BLOCK = BzBlocks.register("sugar_water_block", (properties) -> new SugarWaterBlock(BzFluids.SUGAR_WATER_FLUID_TYPE.get(), properties));
+    public static final RegistryEntry<HoneyFluidBlock> HONEY_FLUID_BLOCK = BzBlocks.register("honey_fluid_block", (properties) -> new HoneyFluidBlock(BzFluids.HONEY_FLUID_TYPE.get(), properties));
+    public static final RegistryEntry<RoyalJellyFluidBlock> ROYAL_JELLY_FLUID_BLOCK = BzBlocks.register("royal_jelly_fluid_block", (properties) -> new RoyalJellyFluidBlock(BzFluids.ROYAL_JELLY_FLUID_TYPE.get(), properties));
 
     //Bubble Columns
-    public static final RegistryEntry<SugarWaterBubbleColumnBlock> SUGAR_WATER_BUBBLE_COLUMN_BLOCK = BzBlocks.BLOCKS.register("sugar_water_bubble_column_block", SugarWaterBubbleColumnBlock::new);
+    public static final RegistryEntry<SugarWaterBubbleColumnBlock> SUGAR_WATER_BUBBLE_COLUMN_BLOCK = BzBlocks.register("sugar_water_bubble_column_block", SugarWaterBubbleColumnBlock::new);
 }

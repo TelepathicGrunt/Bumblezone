@@ -24,8 +24,8 @@ import net.minecraft.world.level.redstone.Orientation;
 
 public class SugarWaterBlock extends LiquidBlock implements FluidGetter {
 
-    public SugarWaterBlock(FluidData baseFluid) {
-        super(baseFluid.still().get(), BlockBehaviour.Properties.of()
+    public SugarWaterBlock(FluidData baseFluid, Properties properties) {
+        super(baseFluid.still().get(), properties
                 .mapColor(MapColor.WATER)
                 .liquid()
                 .noCollision()

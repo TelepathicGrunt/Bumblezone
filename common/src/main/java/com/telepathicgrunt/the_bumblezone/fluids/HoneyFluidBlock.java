@@ -42,8 +42,8 @@ public class HoneyFluidBlock extends LiquidBlock implements FluidGetter {
     public static final IntegerProperty BOTTOM_LEVEL = IntegerProperty.create("bottom_level", 0, maxBottomLayer);
     public static final BooleanProperty ABOVE_FLUID = BooleanProperty.create("above_support");
 
-    public HoneyFluidBlock(FluidData baseFluid) {
-        super(baseFluid.still().get(), BlockBehaviour.Properties.of()
+    public HoneyFluidBlock(FluidData baseFluid, Properties properties) {
+        super(baseFluid.still().get(), properties
                 .mapColor(MapColor.TERRACOTTA_ORANGE)
                 .liquid()
                 .noCollision()

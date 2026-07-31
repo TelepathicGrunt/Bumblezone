@@ -42,7 +42,6 @@ import com.telepathicgrunt.the_bumblezone.blocks.SugarInfusedStone;
 import com.telepathicgrunt.the_bumblezone.blocks.SuperCandleBase;
 import com.telepathicgrunt.the_bumblezone.blocks.SuperCandleWick;
 import com.telepathicgrunt.the_bumblezone.blocks.WindyAir;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -156,13 +155,13 @@ public class BzBlocks {
     public static final RegistryEntry<Block> INFINITY_BARRIER = register("infinity_barrier", InfinityBarrier::new);
     public static final RegistryEntry<Block> DENSE_BUBBLE_BLOCK = register("dense_bubble_block", DenseBubbleBlock::new);
 
-    private static RegistryEntry<Block> register(String id, Function<BlockBehaviour.Properties, Block> factory) {
+    protected static <T extends Block> RegistryEntry<T> register(String id, Function<BlockBehaviour.Properties, T> factory) {
         return BLOCKS.register(
                 id,
                 () -> factory.apply(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Bumblezone.MODID, id)))));
     }
 
-    private static RegistryEntry<Block> registerCurtains(String id, Function<BlockBehaviour.Properties, Block> factory) {
+    private static <T extends Block> RegistryEntry<T> registerCurtains(String id, Function<BlockBehaviour.Properties, T> factory) {
         return CURTAINS.register(
                 id,
                 () -> factory.apply(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Bumblezone.MODID, id)))));

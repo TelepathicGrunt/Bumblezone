@@ -33,8 +33,8 @@ import java.util.Optional;
 
 public class SugarWaterBubbleColumnBlock extends BubbleColumnBlock {
 
-    public SugarWaterBubbleColumnBlock() {
-        super(BlockBehaviour.Properties.of()
+    public SugarWaterBubbleColumnBlock(Properties properties) {
+        super(properties
                 .mapColor(MapColor.WATER)
                 .liquid()
                 .noCollision()

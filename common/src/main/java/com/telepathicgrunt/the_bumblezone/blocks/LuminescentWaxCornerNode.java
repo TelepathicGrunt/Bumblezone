@@ -31,7 +31,7 @@ public class LuminescentWaxCornerNode extends RotationFacingBlock implements Lum
     }
 
     public LuminescentWaxCornerNode(MapColor mapColor, int light, Properties properties) {
-        super(properties.of()
+        super(properties
                 .mapColor(mapColor)
                 .instrument(NoteBlockInstrument.BASS)
                 .lightLevel((blockState) -> light)
