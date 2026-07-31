@@ -7,6 +7,7 @@
     "#the_bumblezone:luminescent_wax/channels",
     "#the_bumblezone:luminescent_wax/corners",
     "#the_bumblezone:luminescent_wax/nodes",
-    "minecraft:chain"
+    "minecraft:copper_chain",
+    "minecraft:iron_chain"
   ]
 }

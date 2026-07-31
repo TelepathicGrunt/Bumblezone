@@ -552,7 +552,7 @@
           "quality": 1
         },
         {
-          "name": "minecraft:chain",
+          "name": "minecraft:iron_chain",
           "type": "minecraft:item",
           "weight": 1
         },

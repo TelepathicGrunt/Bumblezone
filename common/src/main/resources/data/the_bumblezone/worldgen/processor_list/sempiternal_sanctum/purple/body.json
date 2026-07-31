@@ -57,7 +57,7 @@
             "Name": "minecraft:black_stained_glass"
           },
           "replacement": {
-            "Name": "minecraft:chain",
+            "Name": "minecraft:iron_chain",
             "Properties": {
               "axis": "y"
             }

@@ -1,5 +1,5 @@
 {
-  // Legacy placedfeature to prevent worldgen errors
+  "_comment": "Legacy placedfeature to prevent worldgen errors",
   "feature": "the_bumblezone:dance_floor_random_music_disc",
   "placement": []
 }

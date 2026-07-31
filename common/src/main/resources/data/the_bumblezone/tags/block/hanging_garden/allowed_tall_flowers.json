@@ -1,7 +1,10 @@
 {
   "replace": false,
   "values": [
-    "#minecraft:tall_flowers",
+    {
+      "id": "#c:flowers/tall",
+      "required": true
+    },
     {
       "id": "biomemakeover:foxglove",
       "required": false

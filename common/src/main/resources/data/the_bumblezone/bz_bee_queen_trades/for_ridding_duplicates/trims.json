@@ -1,7 +1,7 @@
 {
   "wants" : [
     {
-      "id": "#minecraft:trim_templates",
+      "id": "#c:trim_templates",
       "required": true
     }
   ],

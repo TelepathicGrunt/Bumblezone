@@ -6,7 +6,7 @@
     "structure_y_offset": -3,
     "nbt_entries": [
       {
-        "resourcelocation": "the_bumblezone:fungus/spore",
+        "identifier": "the_bumblezone:fungus/spore",
         "weight": 1
       }
     ]

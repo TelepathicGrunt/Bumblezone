@@ -31,8 +31,10 @@
   "height" : 256,
   "min_y": 0,
   "has_fixed_time" : false,
+  "default_clock": "minecraft:overworld",
   "timelines": "#minecraft:in_overworld",
   "coordinate_scale": 4.0,
+  "has_ender_dragon_fight": false,
   "monster_spawn_block_light_limit": 12,
   "monster_spawn_light_level": 11
 }

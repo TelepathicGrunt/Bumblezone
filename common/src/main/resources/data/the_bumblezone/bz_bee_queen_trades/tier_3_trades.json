@@ -5,7 +5,7 @@
       "required": true
     },
     {
-      "id": "#minecraft:tall_flowers",
+      "id": "#c:flowers/tall",
       "required": true
     },
     {
