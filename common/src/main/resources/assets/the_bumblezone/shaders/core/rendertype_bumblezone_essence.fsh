@@ -35,8 +35,7 @@ vec3 base_layer() {
         0.0, 0.0, scale
     );
 
-    //return -view.xyz * translate;
-    return -vec3(0.5, 0, 0.5) * translate;
+    return -view.xyz * translate;
 }
 
 vec3 bee_layer(float layer) {
@@ -51,8 +50,7 @@ vec3 bee_layer(float layer) {
         0.0, 0.0, scale
     );
 
-    //return -view.xyz * (layer + 1) * rotateAndTranslate;
-    return -vec3(0.5, 0, 0.5) * (layer + 1) * rotateAndTranslate;
+    return -view.xyz * (layer + 1) * rotateAndTranslate;
 }
 
 out vec4 fragColor;
