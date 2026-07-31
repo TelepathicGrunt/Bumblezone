@@ -20,7 +20,7 @@ public abstract class AtmosphericFogEnvironmentMixin {
     @Definition(id = "FOG_COLOR", field = "Lnet/minecraft/world/attribute/EnvironmentAttributes;FOG_COLOR:Lnet/minecraft/world/attribute/EnvironmentAttribute;")
     @Expression("(Integer) ?.getValue(FOG_COLOR, ?)")
     @ModifyExpressionValue(method = "getBaseColor(Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/client/Camera;IF)I",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/attribute/EnvironmentAttributeProbe;getValue(Lnet/minecraft/world/attribute/EnvironmentAttribute;F)Ljava/lang/Object;", ordinal = 0))
+            at = @At(value = "MIXINEXTRAS:EXPRESSION", target = "Lnet/minecraft/world/attribute/EnvironmentAttributeProbe;getValue(Lnet/minecraft/world/attribute/EnvironmentAttribute;F)Ljava/lang/Object;", ordinal = 0))
     private Integer bumblezone$changeFogColor(Integer original, @Local(argsOnly = true) ClientLevel level) {
         return BzDimensionSpecialEffects.getBrightnessDependentFogColor(level, original);
     }
