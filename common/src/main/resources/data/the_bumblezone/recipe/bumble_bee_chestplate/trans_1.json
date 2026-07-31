@@ -3,24 +3,12 @@
   "category": "equipment",
   "group": "the_bumblezone:chestplate",
   "ingredients": [
-    {
-      "item": "the_bumblezone:bumble_bee_chestplate_1"
-    },
-    {
-      "tag": "the_bumblezone:dyes/cyan"
-    },
-    {
-      "tag": "the_bumblezone:dyes/cyan"
-    },
-    {
-      "tag": "the_bumblezone:dyes/pink"
-    },
-    {
-      "tag": "the_bumblezone:dyes/pink"
-    },
-    {
-      "tag": "the_bumblezone:dyes/white"
-    }
+    "the_bumblezone:bumble_bee_chestplate_1",
+    "#the_bumblezone:dyes/cyan",
+    "#the_bumblezone:dyes/cyan",
+    "#the_bumblezone:dyes/pink",
+    "#the_bumblezone:dyes/pink",
+    "#the_bumblezone:dyes/white"
   ],
   "result": {
     "id": "the_bumblezone:bumble_bee_chestplate_trans_1"

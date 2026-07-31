@@ -3,18 +3,10 @@
   "category": "equipment",
   "group": "the_bumblezone:honey_compass",
   "ingredients": [
-    {
-      "item": "minecraft:compass"
-    },
-    {
-      "tag": "the_bumblezone:buckets/honey"
-    },
-    {
-      "item": "the_bumblezone:honey_crystal_shards"
-    },
-    {
-      "item": "the_bumblezone:pollen_puff"
-    }
+    "minecraft:compass",
+    "the_bumblezone:buckets/honey",
+    "the_bumblezone:honey_crystal_shards",
+    "the_bumblezone:pollen_puff"
   ],
   "result": {
     "id": "the_bumblezone:honey_compass"

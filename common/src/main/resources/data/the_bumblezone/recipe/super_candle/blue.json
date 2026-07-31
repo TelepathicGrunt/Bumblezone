@@ -3,15 +3,9 @@
   "category": "building",
   "group": "the_bumblezone:super_candle",
   "ingredients": [
-    {
-      "tag": "the_bumblezone:super_candles"
-    },
-    {
-      "tag": "the_bumblezone:dyes/blue"
-    },
-    {
-      "tag": "the_bumblezone:dyes/blue"
-    }
+    "#the_bumblezone:super_candles",
+    "#the_bumblezone:dyes/blue",
+    "#the_bumblezone:dyes/blue"
   ],
   "result": {
     "id": "the_bumblezone:super_candle_blue"

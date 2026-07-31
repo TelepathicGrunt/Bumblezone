@@ -3,27 +3,13 @@
   "category": "misc",
   "group": "the_bumblezone:bee_soup",
   "ingredients": [
-    {
-      "item": "the_bumblezone:bee_bread"
-    },
-    {
-      "item": "minecraft:bowl"
-    },
-    {
-      "item": "minecraft:beetroot"
-    },
-    {
-      "item": "minecraft:potato"
-    },
-    {
-      "item": "minecraft:honeycomb"
-    },
-    {
-      "item": "minecraft:honeycomb"
-    },
-    {
-      "item": "the_bumblezone:bee_stinger"
-    }
+    "the_bumblezone:bee_bread",
+    "minecraft:bowl",
+    "minecraft:beetroot",
+    "minecraft:potato",
+    "minecraft:honeycomb",
+    "minecraft:honeycomb",
+    "the_bumblezone:bee_stinger"
   ],
   "result": {
     "id": "the_bumblezone:bee_soup"

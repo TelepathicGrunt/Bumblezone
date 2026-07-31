@@ -50,7 +50,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     private final String group;
     private final List<Ingredient> shapelessRecipeItems;
     private final ShapedRecipePattern pattern;
-    private final ItemStack result;
+    private final ItemStackTemplate result;
     private final int maxAllowedPotions;
     private final boolean allowNormalPotions;
     private final boolean allowSplashPotions;
@@ -59,7 +59,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
 
     public PotionCandleRecipe(
             String group,
-            ItemStack result,
+            ItemStackTemplate result,
             ShapedRecipePattern pattern,
             List<Ingredient> shapelessRecipeItems,
             int maxAllowedPotions,
@@ -139,20 +139,20 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         }
 
         if (effects.isEmpty()) {
-            return this.result.copy();
+            return this.result.create();
         }
 
         HashSet<MobEffect> setPicker = new HashSet<>(effects);
         List<MobEffect> filteredMobEffects = setPicker.stream().filter(e -> !GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.DISALLOWED_POTION_CANDLE_EFFECTS, e)).toList();
         chosenEffect = filteredMobEffects.get(new Random().nextInt(filteredMobEffects.size()));
         if (chosenEffect == null) {
-            return this.result.copy();
+            return this.result.create();
         }
 
         balanceMainStats(chosenEffect, maxDuration, effectLevel, potionEffectsFound);
         effectLevel.set(Math.min(effectLevel.get(), this.maxLevelCap));
 
-        return createTaggedPotionCandle(chosenEffect, maxDuration, effectLevel, splashCount, lingerCount, this.result.copy()).create();
+        return createTaggedPotionCandle(chosenEffect, maxDuration, effectLevel, splashCount, lingerCount, this.result.create()).create();
     }
 
     public static void balanceMainStats(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger effectLevel, AtomicInteger potionEffectsFound) {
@@ -327,7 +327,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     private static final MapCodec<PotionCandleRecipe> CODEC = RecordCodecBuilder.mapCodec(
         r -> r.group(
             Codec.STRING.optionalFieldOf("group", "").forGetter(o -> o.group),
-            ItemStack.CODEC.fieldOf("result").forGetter(o -> o.result),
+            ItemStackTemplate.CODEC.fieldOf("result").forGetter(o -> o.result),
             ShapedRecipePattern.MAP_CODEC.forGetter(o -> o.pattern),
             Ingredient.CODEC.listOf().fieldOf("shapelessExtraIngredients").forGetter(shapelessRecipe -> shapelessRecipe.shapelessRecipeItems),
             Codec.intRange(1, 6).fieldOf("maxAllowedPotions").forGetter(potionRecipe -> potionRecipe.maxAllowedPotions),
@@ -345,7 +345,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
 
     public static PotionCandleRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
         String group = buffer.readUtf();
-        ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
+        ItemStackTemplate result = ItemStackTemplate.STREAM_CODEC.decode(buffer);
         ShapedRecipePattern pattern = ShapedRecipePattern.STREAM_CODEC.decode(buffer);
         List<Ingredient> shapelessRecipe = Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buffer);
         int maxPotionRead = buffer.readVarInt();
@@ -358,7 +358,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
 
     public static void toNetwork(RegistryFriendlyByteBuf buffer, PotionCandleRecipe recipe) {
         buffer.writeUtf(recipe.group);
-        ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
+        ItemStackTemplate.STREAM_CODEC.encode(buffer, recipe.result);
         ShapedRecipePattern.STREAM_CODEC.encode(buffer, recipe.pattern);
         Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).encode(buffer, recipe.shapelessRecipeItems);
         buffer.writeVarInt(recipe.maxAllowedPotions);

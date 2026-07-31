@@ -3,15 +3,9 @@
   "category": "building",
   "group": "the_bumblezone:super_candle",
   "ingredients": [
-    {
-      "tag": "the_bumblezone:super_candles"
-    },
-    {
-      "tag": "the_bumblezone:dyes/pink"
-    },
-    {
-      "tag": "the_bumblezone:dyes/pink"
-    }
+    "#the_bumblezone:super_candles",
+    "#the_bumblezone:dyes/pink",
+    "#the_bumblezone:dyes/pink"
   ],
   "result": {
     "id": "the_bumblezone:super_candle_pink"

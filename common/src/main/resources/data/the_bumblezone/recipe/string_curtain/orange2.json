@@ -3,12 +3,8 @@
   "category": "building",
   "group": "the_bumblezone:string_curtain",
   "ingredients": [
-    {
-      "tag": "the_bumblezone:string_curtains"
-    },
-    {
-      "tag": "the_bumblezone:dyes/orange"
-    }
+    "#the_bumblezone:string_curtains",
+    "#the_bumblezone:dyes/orange"
   ],
   "result": {
     "id": "the_bumblezone:string_curtain_orange"

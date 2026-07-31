@@ -3,18 +3,10 @@
   "category": "misc",
   "group": "the_bumblezone:bee_bread",
   "ingredients": [
-    {
-      "item": "the_bumblezone:pollen_puff"
-    },
-    {
-      "item": "the_bumblezone:pollen_puff"
-    },
-    {
-      "item": "the_bumblezone:pollen_puff"
-    },
-    {
-      "tag": "the_bumblezone:buckets/honey"
-    }
+    "the_bumblezone:pollen_puff",
+    "the_bumblezone:pollen_puff",
+    "the_bumblezone:pollen_puff",
+    "#the_bumblezone:buckets/honey"
   ],
   "result": {
     "count": 3,

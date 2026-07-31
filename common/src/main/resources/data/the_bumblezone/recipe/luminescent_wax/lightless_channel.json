@@ -3,9 +3,7 @@
   "category": "building",
   "group": "the_bumblezone:luminescent_wax_channel",
   "ingredients": [
-    {
-      "tag": "the_bumblezone:luminescent_wax/light_channels"
-    }
+    "#the_bumblezone:luminescent_wax/light_channels"
   ],
   "result": {
     "id": "the_bumblezone:luminescent_wax_channel"

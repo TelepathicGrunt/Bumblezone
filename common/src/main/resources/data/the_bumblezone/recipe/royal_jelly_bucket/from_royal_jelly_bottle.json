@@ -3,21 +3,11 @@
   "category": "misc",
   "group": "the_bumblezone:royal_jelly_bucket",
   "ingredients": [
-    {
-      "item": "the_bumblezone:royal_jelly_bottle"
-    },
-    {
-      "item": "the_bumblezone:royal_jelly_bottle"
-    },
-    {
-      "item": "the_bumblezone:royal_jelly_bottle"
-    },
-    {
-      "item": "the_bumblezone:royal_jelly_bottle"
-    },
-    {
-      "item": "minecraft:bucket"
-    }
+    "the_bumblezone:royal_jelly_bottle",
+    "the_bumblezone:royal_jelly_bottle",
+    "the_bumblezone:royal_jelly_bottle",
+    "the_bumblezone:royal_jelly_bottle",
+    "minecraft:bucket"
   ],
   "result": {
     "count": 1,

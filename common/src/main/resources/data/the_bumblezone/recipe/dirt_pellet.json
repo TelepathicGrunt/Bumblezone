@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "the_bumblezone:dirt_pellet",
   "ingredients": [
-    {
-      "item": "minecraft:coarse_dirt"
-    },
-    {
-      "item": "minecraft:rooted_dirt"
-    }
+    "minecraft:coarse_dirt",
+    "minecraft:rooted_dirt"
   ],
   "result": {
     "count": 8,

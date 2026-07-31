@@ -3,12 +3,8 @@
   "category": "redstone",
   "group": "the_bumblezone:sticky_honey_redstone",
   "ingredients": [
-    {
-      "item": "the_bumblezone:sticky_honey_residue"
-    },
-    {
-      "item": "minecraft:redstone"
-    }
+    "the_bumblezone:sticky_honey_residue",
+    "minecraft:redstone"
   ],
   "result": {
     "id": "the_bumblezone:sticky_honey_redstone"

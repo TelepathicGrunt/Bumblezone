@@ -3,12 +3,8 @@
   "category": "building",
   "group": "the_bumblezone:string_curtain",
   "ingredients": [
-    {
-      "tag": "the_bumblezone:string_curtains"
-    },
-    {
-      "tag": "the_bumblezone:dyes/light_gray"
-    }
+    "#the_bumblezone:string_curtains",
+    "#the_bumblezone:dyes/light_gray"
   ],
   "result": {
     "id": "the_bumblezone:string_curtain_light_gray"

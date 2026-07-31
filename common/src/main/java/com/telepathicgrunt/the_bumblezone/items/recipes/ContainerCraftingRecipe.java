@@ -12,6 +12,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
@@ -31,7 +32,7 @@ import static java.util.Map.entry;
 public class ContainerCraftingRecipe implements CraftingRecipe {
     protected final Recipe.CommonInfo commonInfo;
     protected final CraftingRecipe.CraftingBookInfo bookInfo;
-    private final ItemStack result;
+    private final ItemStackTemplate result;
     private final List<Ingredient> ingredients;
 
     @Nullable
@@ -54,7 +55,7 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
             entry(Items.EXPERIENCE_BOTTLE, Items.GLASS_BOTTLE)
     );
 
-    public ContainerCraftingRecipe(Recipe.CommonInfo commonInfo, CraftingRecipe.CraftingBookInfo bookInfo, ItemStack result, List<Ingredient> ingredients) {
+    public ContainerCraftingRecipe(Recipe.CommonInfo commonInfo, CraftingRecipe.CraftingBookInfo bookInfo, ItemStackTemplate result, List<Ingredient> ingredients) {
         this.commonInfo = commonInfo;
         this.bookInfo = bookInfo;
         this.result = result;
@@ -93,7 +94,7 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
 
     @Override
     public ItemStack assemble(CraftingInput recipeInput) {
-        return this.result.copy();
+        return this.result.create();
     }
 
     @Override
@@ -104,22 +105,23 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
     @Override
     public NonNullList<ItemStack> getRemainingItems(CraftingInput craftingInput) {
         NonNullList<ItemStack> remainingInv = NonNullList.withSize(craftingInput.size(), ItemStack.EMPTY);
-        int containerOutput = PlatformService.INSTANCE.hasCraftingRemainder(this.result) ? this.result.getCount() : 0;
+        ItemStack resultStack = this.result.create();
+        int containerOutput = PlatformService.INSTANCE.hasCraftingRemainder(resultStack) ? resultStack.getCount() : 0;
 
         for(int i = 0; i < remainingInv.size(); ++i) {
             ItemStack itemStack = craftingInput.getItem(i);
             ItemStack craftingContainer = PlatformService.INSTANCE.getCraftingRemainder(itemStack);
-            ItemStack recipeContainer = PlatformService.INSTANCE.getCraftingRemainder(this.result);
+            ItemStack recipeContainer = PlatformService.INSTANCE.getCraftingRemainder(resultStack);
             if (craftingContainer.isEmpty() && HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.containsKey(itemStack.getItem())) {
                 craftingContainer = HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(itemStack.getItem()).getDefaultInstance();
             }
-            if (recipeContainer.isEmpty() && HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.containsKey(this.result.getItem())) {
-                recipeContainer = HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(this.result.getItem()).getDefaultInstance();
+            if (recipeContainer.isEmpty() && HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.containsKey(resultStack.getItem())) {
+                recipeContainer = HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(resultStack.getItem()).getDefaultInstance();
             }
 
             if (!craftingContainer.isEmpty()) {
                 if(containerOutput > 0 &&
-                    (this.result.getItem() == craftingContainer.getItem() ||
+                    (resultStack.getItem() == craftingContainer.getItem() ||
                     recipeContainer.getItem() == itemStack.getItem() ||
                     recipeContainer.getItem() == craftingContainer.getItem()))
                 {
@@ -137,7 +139,7 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
     private static final MapCodec<ContainerCraftingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Recipe.CommonInfo.MAP_CODEC.forGetter(o -> o.commonInfo),
             CraftingRecipe.CraftingBookInfo.MAP_CODEC.forGetter(o -> o.bookInfo),
-            ItemStack.CODEC.fieldOf("result").forGetter(o -> o.result),
+            ItemStackTemplate.CODEC.fieldOf("result").forGetter(o -> o.result),
             Ingredient.CODEC.listOf(1, 9).fieldOf("ingredients").forGetter(o -> o.ingredients)
     ).apply(instance, ContainerCraftingRecipe::new));
 
@@ -146,7 +148,7 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
             o -> o.commonInfo,
             CraftingRecipe.CraftingBookInfo.STREAM_CODEC,
             o -> o.bookInfo,
-            ItemStack.STREAM_CODEC,
+            ItemStackTemplate.STREAM_CODEC,
             r -> r.result,
             Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()),
             r -> r.ingredients,

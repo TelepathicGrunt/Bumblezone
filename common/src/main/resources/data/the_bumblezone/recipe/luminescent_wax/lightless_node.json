@@ -3,9 +3,7 @@
   "category": "building",
   "group": "the_bumblezone:luminescent_wax_node",
   "ingredients": [
-    {
-      "tag": "the_bumblezone:luminescent_wax/light_nodes"
-    }
+    "#the_bumblezone:luminescent_wax/light_nodes"
   ],
   "result": {
     "id": "the_bumblezone:luminescent_wax_node"

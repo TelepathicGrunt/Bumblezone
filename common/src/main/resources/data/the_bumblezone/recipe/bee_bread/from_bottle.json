@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "the_bumblezone:bee_bread",
   "ingredients": [
-    {
-      "item": "the_bumblezone:pollen_puff"
-    },
-    {
-      "item": "minecraft:honey_bottle"
-    }
+    "the_bumblezone:pollen_puff",
+    "minecraft:honey_bottle"
   ],
   "result": {
     "id": "the_bumblezone:bee_bread"

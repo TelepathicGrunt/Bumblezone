@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "the_bumblezone:honey_bottle",
   "ingredients": [
-    {
-      "item": "the_bumblezone:honey_bucket"
-    }
+    "the_bumblezone:honey_bucket"
   ],
   "result": {
     "id": "minecraft:honey_block"

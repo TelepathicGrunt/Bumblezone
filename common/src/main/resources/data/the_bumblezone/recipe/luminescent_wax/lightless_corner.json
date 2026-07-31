@@ -3,9 +3,7 @@
   "category": "building",
   "group": "the_bumblezone:luminescent_wax_corner",
   "ingredients": [
-    {
-      "tag": "the_bumblezone:luminescent_wax/light_corners"
-    }
+    "#the_bumblezone:luminescent_wax/light_corners"
   ],
   "result": {
     "id": "the_bumblezone:luminescent_wax_corner"

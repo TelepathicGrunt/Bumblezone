@@ -16,6 +16,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -34,14 +35,14 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
 
     protected final Recipe.CommonInfo commonInfo;
     protected final CraftingRecipe.CraftingBookInfo bookInfo;
-    private final ItemStack result;
+    private final ItemStackTemplate result;
     private final List<Ingredient> ingredients;
     private final Item itemToKeepNbtOf;
 
     @Nullable
     private PlacementInfo placementInfo;
 
-    public NbtKeepingShapelessRecipe(Recipe.CommonInfo commonInfo, CraftingRecipe.CraftingBookInfo bookInfo, ItemStack result, List<Ingredient> ingredients, Item itemToKeepNbtOf) {
+    public NbtKeepingShapelessRecipe(Recipe.CommonInfo commonInfo, CraftingRecipe.CraftingBookInfo bookInfo, ItemStackTemplate result, List<Ingredient> ingredients, Item itemToKeepNbtOf) {
         this.commonInfo = commonInfo;
         this.bookInfo = bookInfo;
         this.result = result;
@@ -63,7 +64,7 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
 
     @Override
     public ItemStack assemble(CraftingInput craftingContainer) {
-        ItemStack resultItem = this.result.copy();
+        ItemStack resultItem = this.result.create();
         for (ItemStack input : craftingContainer.items()) {
             if (input.is(this.itemToKeepNbtOf)) {
                 resultItem = input.transmuteCopy(resultItem.getItem(), 1);
@@ -101,7 +102,7 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
     private static final MapCodec<NbtKeepingShapelessRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Recipe.CommonInfo.MAP_CODEC.forGetter(o -> o.commonInfo),
             CraftingRecipe.CraftingBookInfo.MAP_CODEC.forGetter(o -> o.bookInfo),
-            ItemStack.CODEC.fieldOf("result").forGetter(o -> o.result),
+            ItemStackTemplate.CODEC.fieldOf("result").forGetter(o -> o.result),
             Ingredient.CODEC.listOf(1, 9).fieldOf("ingredients").forGetter(o -> o.ingredients),
             BuiltInRegistries.ITEM.byNameCodec().fieldOf("keep_nbt_of").forGetter(o -> o.itemToKeepNbtOf)
     ).apply(instance, NbtKeepingShapelessRecipe::new));
@@ -111,7 +112,7 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
             o -> o.commonInfo,
             CraftingRecipe.CraftingBookInfo.STREAM_CODEC,
             o -> o.bookInfo,
-            ItemStack.STREAM_CODEC,
+            ItemStackTemplate.STREAM_CODEC,
             r -> r.result,
             Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()),
             r -> r.ingredients,

@@ -3,21 +3,11 @@
   "category": "misc",
   "group": "the_bumblezone:royal_jelly_bottle",
   "ingredients": [
-    {
-      "item": "the_bumblezone:royal_jelly_block"
-    },
-    {
-      "item": "minecraft:glass_bottle"
-    },
-    {
-      "item": "minecraft:glass_bottle"
-    },
-    {
-      "item": "minecraft:glass_bottle"
-    },
-    {
-      "item": "minecraft:glass_bottle"
-    }
+    "the_bumblezone:royal_jelly_block",
+    "minecraft:glass_bottle",
+    "minecraft:glass_bottle",
+    "minecraft:glass_bottle",
+    "minecraft:glass_bottle"
   ],
   "result": {
     "count": 4,
