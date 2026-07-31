@@ -34,8 +34,8 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
 
     public static final MapCodec<StickyHoneyRedstone> CODEC = Block.simpleCodec(StickyHoneyRedstone::new);
 
-    public StickyHoneyRedstone() {
-        this(BlockBehaviour.Properties.of()
+    public StickyHoneyRedstone(Properties properties) {
+        super(properties
                 .mapColor(MapColor.TERRACOTTA_RED)
                 .lightLevel(blockState -> blockState.getValue(POWERED) ? 1 : 0)
                 .noCollision()
@@ -43,10 +43,6 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
                 .noOcclusion()
                 .replaceable()
                 .pushReaction(PushReaction.DESTROY));
-    }
-
-    public StickyHoneyRedstone(Properties properties) {
-        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(UP, false)

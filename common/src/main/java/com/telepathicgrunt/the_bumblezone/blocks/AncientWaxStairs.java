@@ -27,15 +27,11 @@ public class AncientWaxStairs extends StairBlock implements AncientWaxBase {
             StairBlock.propertiesCodec()
     ).apply(instance, AncientWaxStairs::new));
 
-    public AncientWaxStairs(BlockState state) {
-        this(state, Properties.of()
+    public AncientWaxStairs(BlockState state, Properties properties) {
+        super(state, properties
                 .mapColor(MapColor.TERRACOTTA_BROWN)
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(3.0F, 19.0F));
-    }
-
-    public AncientWaxStairs(BlockState state, Properties properties) {
-        super(state, properties);
         this.baseState = state;
     }
 

@@ -36,16 +36,12 @@ public class PorousHoneycomb extends Block {
 
     public static final MapCodec<PorousHoneycomb> CODEC = Block.simpleCodec(PorousHoneycomb::new);
 
-    public PorousHoneycomb() {
-        this(BlockBehaviour.Properties.of()
+    public PorousHoneycomb(Properties properties) {
+        super(properties
                 .mapColor(MapColor.COLOR_ORANGE)
                 .instrument(NoteBlockInstrument.BANJO)
                 .strength(0.5F, 0.5F)
                 .sound(SoundType.CORAL_BLOCK));
-    }
-
-    public PorousHoneycomb(Properties properties) {
-        super(properties);
     }
 
     @Override

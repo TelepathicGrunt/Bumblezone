@@ -34,17 +34,12 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
 
     public static final MapCodec<EmptyHoneycombBrood> CODEC = Block.simpleCodec(EmptyHoneycombBrood::new);
 
-    public EmptyHoneycombBrood() {
-        super(BlockBehaviour.Properties.of()
+    public EmptyHoneycombBrood(Properties properties) {
+        super(properties
                 .mapColor(MapColor.COLOR_ORANGE)
                 .instrument(NoteBlockInstrument.BANJO)
                 .strength(0.5F, 0.5F)
                 .sound(SoundType.CORAL_BLOCK));
-    }
-
-
-    public EmptyHoneycombBrood(Properties properties) {
-        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.SOUTH));
     }

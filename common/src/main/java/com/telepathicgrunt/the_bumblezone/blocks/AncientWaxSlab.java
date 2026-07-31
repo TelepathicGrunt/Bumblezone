@@ -22,15 +22,11 @@ public class AncientWaxSlab extends SlabBlock implements AncientWaxBase {
 
     public static final MapCodec<AncientWaxSlab> CODEC = Block.simpleCodec(AncientWaxSlab::new);
 
-    public AncientWaxSlab() {
-        this(Properties.of()
+    public AncientWaxSlab(Properties properties) {
+        super(properties
                 .mapColor(MapColor.TERRACOTTA_BROWN)
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(3.0F, 19.0F));
-    }
-
-    public AncientWaxSlab(Properties properties) {
-        super(properties);
     }
 
     @Override

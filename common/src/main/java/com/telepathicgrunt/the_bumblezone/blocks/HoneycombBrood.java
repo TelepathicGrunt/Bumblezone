@@ -68,17 +68,13 @@ public class HoneycombBrood extends ProperFacingBlock {
 
     public static final IntegerProperty STAGE = BlockStateProperties.AGE_3;
 
-    public HoneycombBrood() {
-        this(BlockBehaviour.Properties.of()
+    public HoneycombBrood(Properties properties) {
+        super(properties
                 .mapColor(MapColor.COLOR_ORANGE)
                 .instrument(NoteBlockInstrument.BANJO)
                 .randomTicks().strength(0.5F, 0.5F)
                 .sound(SoundType.CORAL_BLOCK).
                 speedFactor(0.8F));
-    }
-
-    public HoneycombBrood(Properties properties) {
-        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.SOUTH).setValue(STAGE, 0));
     }

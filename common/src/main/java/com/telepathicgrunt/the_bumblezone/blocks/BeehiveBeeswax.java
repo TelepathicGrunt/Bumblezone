@@ -12,16 +12,12 @@ public class BeehiveBeeswax extends Block {
 
     public static final MapCodec<BeehiveBeeswax> CODEC = Block.simpleCodec(BeehiveBeeswax::new);
 
-    public BeehiveBeeswax() {
-        this(BlockBehaviour.Properties.of()
+    public BeehiveBeeswax(Properties properties) {
+        super(properties
                 .mapColor(MapColor.WOOD)
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(0.6F, 0.3F)
                 .sound(SoundType.WOOD));
-    }
-
-    public BeehiveBeeswax(Properties properties) {
-        super(properties);
     }
 
     @Override

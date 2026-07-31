@@ -71,11 +71,8 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
             BuiltInRegistries.SOUND_EVENT.byNameCodec().fieldOf("brush_comleted_sound").forGetter(PileOfPollenSuspicious::getBrushCompletedSound), PileOfPollenSuspicious.propertiesCodec()
     ).apply(instance, PileOfPollenSuspicious::new));
 
-    public PileOfPollenSuspicious() {
-        this(null,
-                SoundEvents.BRUSH_SAND,
-                SoundEvents.BRUSH_SAND_COMPLETED,
-                Properties.of()
+    public PileOfPollenSuspicious(Block block, SoundEvent soundEvent1, SoundEvent soundEvent2, BlockBehaviour.Properties properties) {
+        super(block, soundEvent1, soundEvent2, properties
                 .mapColor(MapColor.COLOR_YELLOW)
                 .isViewBlocking((blockState, world, blockPos) -> true)
                 .isSuffocating((blockState, blockGetter, blockPos) -> false)
@@ -84,10 +81,6 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
                 .strength(0.1F)
                 .pushReaction(PushReaction.DESTROY)
                 .sound(SoundType.SNOW));
-    }
-
-    public PileOfPollenSuspicious(Block block, SoundEvent soundEvent1, SoundEvent soundEvent2, BlockBehaviour.Properties properties) {
-        super(block, soundEvent1, soundEvent2, properties);
     }
 
     @Override

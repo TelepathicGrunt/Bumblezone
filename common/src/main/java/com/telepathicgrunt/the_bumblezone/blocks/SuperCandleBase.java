@@ -51,18 +51,14 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
 
     public static final MapCodec<SuperCandleBase> CODEC = Block.simpleCodec(SuperCandleBase::new);
 
-    public SuperCandleBase() {
-        this(Properties.of()
+    public SuperCandleBase(Properties properties) {
+        super(properties
                 .mapColor(MapColor.SAND)
                 .lightLevel((blockState) -> blockState.getValue(LIT) ? 15 : 0)
                 .noOcclusion()
                 .strength(0.1F)
                 .sound(SoundType.CANDLE)
                 .pushReaction(PushReaction.DESTROY));
-    }
-
-    public SuperCandleBase(Properties properties) {
-        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
     }

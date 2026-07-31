@@ -63,19 +63,15 @@ public class StringCurtain extends Block {
 
     public static final MapCodec<StringCurtain> CODEC = Block.simpleCodec(StringCurtain::new);
 
-    public StringCurtain() {
-        this(Properties.of()
+    public StringCurtain(Properties properties) {
+        super(properties
                 .mapColor(MapColor.WOOL)
-                .lightLevel((blockState) -> 1)
+                .lightLevel((_) -> 1)
                 .noOcclusion()
                 .sound(SoundType.WOOL)
                 .strength(0.3F)
                 .ignitedByLava()
                 .pushReaction(PushReaction.DESTROY));
-    }
-
-    public StringCurtain(Properties properties) {
-        super(properties);
 
         this.collisionShapeByMap = this.makeShapes();
         this.registerDefaultState(this.stateDefinition.any()

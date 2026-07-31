@@ -84,8 +84,8 @@ public class PileOfPollen extends FallingBlock {
 
     public static final MapCodec<PileOfPollen> CODEC = Block.simpleCodec(PileOfPollen::new);
 
-    public PileOfPollen() {
-        this(BlockBehaviour.Properties.of()
+    public PileOfPollen(Properties properties) {
+        super(properties
                 .mapColor(MapColor.COLOR_YELLOW)
                 .isViewBlocking((blockState, world, blockPos) -> true)
                 .isSuffocating((blockState, blockGetter, blockPos) -> false)
@@ -95,10 +95,6 @@ public class PileOfPollen extends FallingBlock {
                 .replaceable()
                 .pushReaction(PushReaction.DESTROY)
                 .sound(SoundType.SNOW));
-    }
-
-    public PileOfPollen(Properties properties) {
-        super(properties);
     }
 
     @Override

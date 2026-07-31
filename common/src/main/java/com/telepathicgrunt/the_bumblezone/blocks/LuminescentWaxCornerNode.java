@@ -26,16 +26,16 @@ public class LuminescentWaxCornerNode extends RotationFacingBlock implements Lum
 
     public static final MapCodec<LuminescentWaxCornerNode> CODEC = Block.simpleCodec(LuminescentWaxCornerNode::new);
 
-    public LuminescentWaxCornerNode(MapColor mapColor, int light) {
-        this(Properties.of()
+    public LuminescentWaxCornerNode(Properties properties) {
+        super(properties);
+    }
+
+    public LuminescentWaxCornerNode(MapColor mapColor, int light, Properties properties) {
+        super(properties.of()
                 .mapColor(mapColor)
                 .instrument(NoteBlockInstrument.BASS)
                 .lightLevel((blockState) -> light)
                 .strength(3.0F, 19.0F));
-    }
-
-    public LuminescentWaxCornerNode(Properties properties) {
-        super(properties);
     }
 
     @Override

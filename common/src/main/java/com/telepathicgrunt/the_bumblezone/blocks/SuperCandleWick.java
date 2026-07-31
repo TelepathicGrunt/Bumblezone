@@ -68,17 +68,13 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
             SuperCandleWick.propertiesCodec()
     ).apply(instance, SuperCandleWick::new));
 
-    public SuperCandleWick(boolean isSoul) {
-        this(isSoul, Properties.of()
+    public SuperCandleWick(boolean isSoul, Properties properties) {
+        super(properties
                 .mapColor(MapColor.COLOR_BLACK)
                 .lightLevel((blockState) -> blockState.getValue(LIT) ? (isSoul ? SOUL_LIGHT_LEVEL : NORMAL_LIGHT_LEVEL) : 0)
                 .replaceable()
                 .noCollision()
                 .noLootTable());
-    }
-
-    public SuperCandleWick(boolean isSoul, Properties properties) {
-        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
         this.isSoul = isSoul;

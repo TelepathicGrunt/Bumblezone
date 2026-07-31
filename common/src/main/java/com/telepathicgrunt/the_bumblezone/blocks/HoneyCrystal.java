@@ -69,8 +69,8 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
 
     public static final MapCodec<HoneyCrystal> CODEC = Block.simpleCodec(HoneyCrystal::new);
 
-    public HoneyCrystal() {
-        this(BlockBehaviour.Properties.of()
+    public HoneyCrystal(Properties properties) {
+        super(properties
                 .mapColor(MapColor.TERRACOTTA_YELLOW)
                 .instrument(NoteBlockInstrument.HAT)
                 .lightLevel((_) -> 1)
@@ -78,10 +78,6 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
                 .sound(BzSounds.HONEY_CRYSTALS_TYPE)
                 .noOcclusion()
                 .pushReaction(PushReaction.DESTROY));
-    }
-
-    public HoneyCrystal(Properties properties) {
-        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.UP)

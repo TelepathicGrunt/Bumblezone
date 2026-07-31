@@ -83,18 +83,14 @@ public class StickyHoneyResidue extends Block {
 
     public static final MapCodec<StickyHoneyResidue> CODEC = Block.simpleCodec(StickyHoneyResidue::new);
 
-    public StickyHoneyResidue() {
-        this(BlockBehaviour.Properties.of()
+    public StickyHoneyResidue(BlockBehaviour.Properties settings) {
+        super(settings
                 .mapColor(MapColor.TERRACOTTA_ORANGE)
                 .noCollision()
                 .strength(6.0f, 0.0f)
                 .noOcclusion()
                 .replaceable()
                 .pushReaction(PushReaction.DESTROY));
-    }
-
-    public StickyHoneyResidue(BlockBehaviour.Properties settings) {
-        super(settings);
 
         for (BlockState blockState : this.stateDefinition.getPossibleStates()) {
             shapeByIndex.computeIfAbsent(

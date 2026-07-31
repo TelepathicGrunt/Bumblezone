@@ -21,16 +21,12 @@ public class SugarInfusedCobblestone extends Block {
 
     public static final MapCodec<SugarInfusedCobblestone> CODEC = Block.simpleCodec(SugarInfusedCobblestone::new);
 
-    public SugarInfusedCobblestone() {
-        this(BlockBehaviour.Properties.of()
+    public SugarInfusedCobblestone(Properties properties) {
+        super(properties
                 .mapColor(MapColor.STONE)
                 .instrument(NoteBlockInstrument.BASEDRUM)
                 .requiresCorrectToolForDrops()
                 .strength(2.0F, 6.0F));
-    }
-
-    public SugarInfusedCobblestone(Properties properties) {
-        super(properties);
     }
 
     @Override
