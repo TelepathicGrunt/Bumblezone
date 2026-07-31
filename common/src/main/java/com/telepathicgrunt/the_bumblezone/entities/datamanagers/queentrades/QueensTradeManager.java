@@ -6,7 +6,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzTagsUpdatedEvent;
-import com.telepathicgrunt.the_bumblezone.mixin.util.WeightedListAccessor;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.MainTradeRowInput;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.RandomizeTradeRowInput;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
@@ -15,6 +14,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.FileToIdConverter;
@@ -30,6 +30,7 @@ import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.Items;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -37,7 +38,6 @@ import java.time.Month;
 import java.time.Year;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -49,6 +49,7 @@ import java.util.stream.Collectors;
 public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensTradeManager.TradeCollection> {
     private static final FileToIdConverter ASSET_LISTER = FileToIdConverter.json("bz_bee_queen_trades");
     public static final QueensTradeManager QUEENS_TRADE_MANAGER = new QueensTradeManager();
+    private static final Identifier AIR = Identifier.withDefaultNamespace("air");
 
     private final List<TradeCollection> rawTrades = new ArrayList<>();
     public Object2ObjectOpenHashMap<Item, WeightedList<WeightedTradeResult>> queenTrades = new Object2ObjectOpenHashMap<>();
@@ -90,15 +91,25 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
         ).apply(instance, instance.stable(RawTradeInputEntry::new)));
     }
 
-    public record RawTradeOutputEntry(Optional<String> tag, Optional<ItemStackTemplate> itemStackTemplate, boolean required, int count, int xpReward, int weight) {
+    public record RawTradeOutputEntry(Optional<String> tag, Optional<GenerousItemStackTemplate> itemStackTemplate, boolean required, int count, int xpReward, int weight) {
         public static final Codec<RawTradeOutputEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
                 Codec.STRING.optionalFieldOf("tag").forGetter(e -> e.tag),
-                ItemStackTemplate.CODEC.optionalFieldOf("item").forGetter(e -> e.itemStackTemplate),
+                GenerousItemStackTemplate.CODEC.optionalFieldOf("item").orElse(Optional.empty()).forGetter(e -> e.itemStackTemplate),
                 Codec.BOOL.fieldOf("required").forGetter(e -> e.required),
                 Codec.intRange(1, 64).fieldOf("count_output_for_tags").orElse(1).forGetter(e -> e.count),
                 ExtraCodecs.NON_NEGATIVE_INT.fieldOf("xp_reward").forGetter(e -> e.xpReward),
                 ExtraCodecs.POSITIVE_INT.fieldOf("weight").forGetter(e -> e.weight)
         ).apply(instance, instance.stable(RawTradeOutputEntry::new)));
+    }
+
+    public record GenerousItemStackTemplate(Holder<Item> item, int count, DataComponentPatch components) {
+        public static final Codec<GenerousItemStackTemplate> CODEC = RecordCodecBuilder.create(
+                i -> i.group(
+                        Item.CODEC.fieldOf("id").forGetter(GenerousItemStackTemplate::item),
+                        ExtraCodecs.intRange(1, 99).optionalFieldOf("count", 1).forGetter(GenerousItemStackTemplate::count),
+                        DataComponentPatch.CODEC.optionalFieldOf("components", DataComponentPatch.EMPTY).forGetter(GenerousItemStackTemplate::components)
+                ).apply(i, GenerousItemStackTemplate::new)
+        );
     }
 
     public record TradeWantEntry(Optional<TagKey<Item>> tagKey, HolderSet<Item> wantItems) {
@@ -237,7 +248,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
         Set<TagKey<Item>> collectedTag = new HashSet<>();
         for (Object2ObjectMap.Entry<Item, Pair<WeightedList<WeightedTradeResult>, TagKey<Item>>> pairEntry : tempQueenTradesFirstPass.object2ObjectEntrySet()) {
             pairEntry.getValue().getFirst().unwrap().forEach(e -> {
-                int weight = ((WeightedListAccessor)pairEntry.getValue().getFirst().unwrap()).bumblezone$getTotalWeight();
+                int weight = pairEntry.getValue().getFirst().unwrap().stream().map(Weighted::weight).reduce(0, Integer::sum);
                 e.value().setTotalWeight(weight);
             });
 
@@ -302,12 +313,12 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
                 else tag.ifPresent(holders -> tradeResultEntries.add(new TradeResultEntry(Optional.of(tagKey), holders.stream().map(i -> i.value().getDefaultInstance()).collect(Collectors.toCollection(ArrayList::new)), rawTradeOutputEntry.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
             }
             else {
-                if (rawTradeOutputEntry.itemStackTemplate().isEmpty() || rawTradeOutputEntry.itemStackTemplate().get().create().isEmpty()) {
+                if (rawTradeOutputEntry.itemStackTemplate().isEmpty() || rawTradeOutputEntry.itemStackTemplate().get().item().is(AIR) || rawTradeOutputEntry.itemStackTemplate().get().count() <= 0) {
                     if (rawTradeOutputEntry.required) {
                         Bumblezone.LOGGER.error("Trade result entry is set to required but " + rawTradeOutputEntry + " itemStackTemplate entry does not exist.");
                     }
                 }
-                else rawTradeOutputEntry.itemStackTemplate().ifPresent(itemStackTemplate -> tradeResultEntries.add(new TradeResultEntry(Optional.empty(), List.of(itemStackTemplate.create()), itemStackTemplate.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
+                else rawTradeOutputEntry.itemStackTemplate().ifPresent(itemStackTemplate -> tradeResultEntries.add(new TradeResultEntry(Optional.empty(), List.of(new ItemStack(itemStackTemplate.item(), itemStackTemplate.count(), itemStackTemplate.components())), itemStackTemplate.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
             }
         }
 

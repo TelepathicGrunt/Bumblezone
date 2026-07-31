@@ -2,19 +2,17 @@
   "type": "the_bumblezone:potion_candle_recipe",
   "category": "misc",
   "group": "the_bumblezone:potion_candle",
-  "shapedPattern": [
+  "pattern": [
     "s",
     "h",
     "h"
   ],
-  "shapedKey": {
+  "key": {
     "h": "#the_bumblezone:carvable_wax",
     "s": "minecraft:string"
   },
   "shapelessExtraIngredients": [
-    {
-      "item": "the_bumblezone:royal_jelly_bottle"
-    }
+    "the_bumblezone:royal_jelly_bottle"
   ],
   "maxAllowedPotions": 5,
   "allowNormalPotions": true,

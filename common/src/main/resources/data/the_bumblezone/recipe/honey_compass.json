@@ -4,7 +4,7 @@
   "group": "the_bumblezone:honey_compass",
   "ingredients": [
     "minecraft:compass",
-    "the_bumblezone:buckets/honey",
+    "#the_bumblezone:buckets/honey",
     "the_bumblezone:honey_crystal_shards",
     "the_bumblezone:pollen_puff"
   ],
