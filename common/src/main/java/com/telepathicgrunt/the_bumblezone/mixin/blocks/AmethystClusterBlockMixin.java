@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterFluid;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.world.level.block.AmethystClusterBlock;
@@ -17,7 +18,7 @@ public class AmethystClusterBlockMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/LevelAccessor;getFluidState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;"),
             require = 0)
     private FluidState bumblezone$waterlogWhenPlacedIntoSugarWater(FluidState fluid) {
-        if(fluid.is(BzTags.SUGAR_WATER_FLUID) && GeneralUtils.isBlockAllowedForSugarWaterWaterlogging(((AmethystClusterBlock)(Object)this).defaultBlockState())) {
+        if(fluid.is(BzTags.SUGAR_WATER_FLUID) && SugarWaterFluid.isBlockAllowedForSugarWaterWaterlogging(((AmethystClusterBlock)(Object)this).defaultBlockState())) {
             return Fluids.WATER.defaultFluidState();
         }
         return fluid;
