@@ -15,7 +15,7 @@ public class AmethystClusterBlockMixin {
 
     @ModifyExpressionValue(method = "getStateForPlacement(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/level/block/state/BlockState;",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/LevelAccessor;getFluidState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;"),
-            require = 1)
+            require = 0)
     private FluidState bumblezone$waterlogWhenPlacedIntoSugarWater(FluidState fluid) {
         if(fluid.is(BzTags.SUGAR_WATER_FLUID) && GeneralUtils.isBlockAllowedForSugarWaterWaterlogging(((AmethystClusterBlock)(Object)this).defaultBlockState())) {
             return Fluids.WATER.defaultFluidState();
