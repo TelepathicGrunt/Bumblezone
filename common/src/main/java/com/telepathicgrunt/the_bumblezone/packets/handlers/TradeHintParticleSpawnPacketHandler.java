@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.packets.handlers;
 
-import com.telepathicgrunt.the_bumblezone.client.particles.TradeHintParticle;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.packets.TradeHintParticleSpawnPacket;
 import net.minecraft.client.Minecraft;
@@ -8,7 +7,6 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +41,11 @@ public record TradeHintParticleSpawnPacketHandler() {
             return;
         }
 
-        Minecraft.getInstance().particleEngine.add(new TradeHintParticle(
-                Minecraft.getInstance().renderBuffers(),
-                level,
-                queen,
-                message.wantItem(),
-                rewardItems));
+//        Minecraft.getInstance().particleEngine.add(new TradeHintParticle(
+//                Minecraft.getInstance().renderBuffers(),
+//                level,
+//                queen,
+//                message.wantItem(),
+//                rewardItems));
     }
 }
