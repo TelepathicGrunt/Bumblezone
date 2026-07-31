@@ -6,9 +6,7 @@
     "www"
   ],
   "key": {
-    "w": {
-      "item": "the_bumblezone:luminescent_wax_node"
-    }
+    "w": "the_bumblezone:luminescent_wax_node"
   },
   "result": {
     "count": 3,

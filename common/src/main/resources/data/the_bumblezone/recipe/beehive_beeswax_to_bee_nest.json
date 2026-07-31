@@ -8,12 +8,8 @@
     "bbb"
   ],
   "key": {
-    "b": {
-      "item": "the_bumblezone:beehive_beeswax"
-    },
-    "c": {
-      "item": "minecraft:honeycomb"
-    }
+    "b": "the_bumblezone:beehive_beeswax",
+    "c": "minecraft:honeycomb"
   },
   "result": {
     "id": "minecraft:bee_nest"

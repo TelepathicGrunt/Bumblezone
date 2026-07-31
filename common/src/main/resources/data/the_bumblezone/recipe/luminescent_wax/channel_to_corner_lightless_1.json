@@ -7,9 +7,7 @@
     "ww"
   ],
   "key": {
-    "w": {
-      "item": "the_bumblezone:luminescent_wax_channel"
-    }
+    "w": "the_bumblezone:luminescent_wax_channel"
   },
   "result": {
     "count": 3,

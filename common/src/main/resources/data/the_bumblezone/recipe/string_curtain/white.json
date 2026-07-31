@@ -8,15 +8,9 @@
     "s s"
   ],
   "key": {
-    "t": {
-      "item": "minecraft:stick"
-    },
-    "s": {
-      "item": "minecraft:string"
-    },
-    "g": {
-      "item": "minecraft:glass"
-    }
+    "t": "minecraft:stick",
+    "s": "minecraft:string",
+    "g": "minecraft:glass"
   },
   "result": {
     "id": "the_bumblezone:string_curtain_white"

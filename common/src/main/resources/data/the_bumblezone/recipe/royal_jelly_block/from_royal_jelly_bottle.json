@@ -7,9 +7,7 @@
     "bb"
   ],
   "key": {
-    "b": {
-      "item": "the_bumblezone:royal_jelly_bottle"
-    }
+    "b": "the_bumblezone:royal_jelly_bottle"
   },
   "result": {
     "id": "the_bumblezone:royal_jelly_block"

@@ -6,12 +6,8 @@
     "ssp"
   ],
   "key": {
-    "p": {
-      "tag": "the_bumblezone:stingers"
-    },
-    "s": {
-      "item": "minecraft:stick"
-    }
+    "p": "#the_bumblezone:stingers",
+    "s": "minecraft:stick"
   },
   "result": {
     "id": "the_bumblezone:stinger_spear"

@@ -8,9 +8,7 @@
     "s"
   ],
   "key": {
-    "s": {
-      "item": "the_bumblezone:sticky_honey_redstone"
-    }
+    "s": "the_bumblezone:sticky_honey_redstone"
   },
   "result": {
     "id": "the_bumblezone:redstone_honey_web"

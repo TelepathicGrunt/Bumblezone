@@ -8,9 +8,7 @@
     " s "
   ],
   "key": {
-    "s": {
-      "item": "the_bumblezone:honey_crystal_shards"
-    }
+    "s": "the_bumblezone:honey_crystal_shards"
   },
   "result": {
     "id": "the_bumblezone:honey_crystal_shield"

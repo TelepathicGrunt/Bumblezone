@@ -8,18 +8,10 @@
     "sds"
   ],
   "key": {
-    "t": {
-      "item": "minecraft:stick"
-    },
-    "s": {
-      "item": "minecraft:string"
-    },
-    "g": {
-      "item": "minecraft:glass"
-    },
-    "d": {
-      "tag": "the_bumblezone:dyes/cyan"
-    }
+    "t": "minecraft:stick",
+    "s": "minecraft:string",
+    "g": "minecraft:glass",
+    "d": "#the_bumblezone:dyes/cyan"
   },
   "result": {
     "id": "the_bumblezone:string_curtain_cyan"

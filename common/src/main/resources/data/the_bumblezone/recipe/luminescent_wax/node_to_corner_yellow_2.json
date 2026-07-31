@@ -7,9 +7,7 @@
     "w "
   ],
   "key": {
-    "w": {
-      "item": "the_bumblezone:luminescent_wax_node_yellow"
-    }
+    "w": "the_bumblezone:luminescent_wax_node_yellow"
   },
   "result": {
     "count": 3,

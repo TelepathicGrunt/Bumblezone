@@ -8,15 +8,9 @@
     "csc"
   ],
   "key": {
-    "s": {
-      "item": "the_bumblezone:sugar_infused_stone"
-    },
-    "c": {
-      "item": "the_bumblezone:sugar_infused_cobblestone"
-    },
-    "g": {
-      "item": "minecraft:gunpowder"
-    }
+    "s": "the_bumblezone:sugar_infused_stone",
+    "c": "the_bumblezone:sugar_infused_cobblestone",
+    "g": "minecraft:gunpowder"
   },
   "result": {
     "id": "the_bumblezone:bee_cannon"

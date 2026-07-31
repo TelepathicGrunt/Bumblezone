@@ -6,9 +6,7 @@
     "c"
   ],
   "shapedKey": {
-    "c": {
-      "tag": "the_bumblezone:super_candles"
-    }
+    "c": "#the_bumblezone:super_candles"
   },
   "shapelessExtraIngredients": [
     {

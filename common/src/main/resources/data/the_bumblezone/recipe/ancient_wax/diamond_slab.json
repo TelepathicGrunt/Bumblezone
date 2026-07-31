@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "the_bumblezone:ancient_wax_diamond"
-    }
+    "#": "the_bumblezone:ancient_wax_diamond"
   },
   "pattern": [
     "###"

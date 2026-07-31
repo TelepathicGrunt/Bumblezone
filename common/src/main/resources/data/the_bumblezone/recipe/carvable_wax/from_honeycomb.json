@@ -8,9 +8,7 @@
     "hhh"
   ],
   "key": {
-    "h": {
-      "item": "minecraft:honeycomb"
-    }
+    "h": "minecraft:honeycomb"
   },
   "result": {
     "id": "the_bumblezone:carvable_wax"

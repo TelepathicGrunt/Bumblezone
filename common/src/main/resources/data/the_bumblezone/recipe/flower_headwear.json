@@ -8,12 +8,8 @@
     "fff"
   ],
   "key": {
-    "f": {
-      "tag": "minecraft:flowers"
-    },
-    "h": {
-      "item": "minecraft:leather_helmet"
-    }
+    "f": "#minecraft:flowers",
+    "h": "minecraft:leather_helmet"
   },
   "result": {
     "id": "the_bumblezone:flower_headwear"

@@ -8,12 +8,8 @@
     " a "
   ],
   "key": {
-    "a": {
-      "tag": "the_bumblezone:ancient_wax/full_blocks"
-    },
-    "l": {
-      "tag": "the_bumblezone:luminescent_wax/light_nodes"
-    }
+    "a": "#the_bumblezone:ancient_wax/full_blocks",
+    "l": "#the_bumblezone:luminescent_wax/light_nodes"
   },
   "result": {
     "id": "the_bumblezone:sentry_watcher_spawn_egg"

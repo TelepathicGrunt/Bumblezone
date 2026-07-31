@@ -6,9 +6,7 @@
     "www"
   ],
   "key": {
-    "w": {
-      "item": "the_bumblezone:luminescent_wax_corner_yellow"
-    }
+    "w": "the_bumblezone:luminescent_wax_corner_yellow"
   },
   "result": {
     "count": 3,

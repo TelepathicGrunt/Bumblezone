@@ -7,15 +7,9 @@
     " h "
   ],
   "key": {
-    "c": {
-      "item": "the_bumblezone:honey_crystal_shards"
-    },
-    "h": {
-      "item": "the_bumblezone:honey_crystal"
-    },
-    "b": {
-      "item": "the_bumblezone:bee_cannon"
-    }
+    "c": "the_bumblezone:honey_crystal_shards",
+    "h": "the_bumblezone:honey_crystal",
+    "b": "the_bumblezone:bee_cannon"
   },
   "result": {
     "id": "the_bumblezone:crystal_cannon"

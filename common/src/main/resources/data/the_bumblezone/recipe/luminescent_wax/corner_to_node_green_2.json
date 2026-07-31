@@ -8,9 +8,7 @@
     " w "
   ],
   "key": {
-    "w": {
-      "item": "the_bumblezone:luminescent_wax_corner_green"
-    }
+    "w": "the_bumblezone:luminescent_wax_corner_green"
   },
   "result": {
     "count": 3,
