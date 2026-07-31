@@ -92,7 +92,7 @@ import net.neoforged.neoforge.event.entity.player.AdvancementEvent;
 import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
@@ -130,7 +130,8 @@ public class NeoForgeEventManager {
         eventBus.addListener(NeoForgeEventManager::onGrantAdvancement);
         eventBus.addListener(NeoForgeEventManager::onInteractEntity);
         eventBus.addListener(NeoForgeEventManager::onBreakSpeed);
-        eventBus.addListener(NeoForgeEventManager::onTagsUpdate);
+        eventBus.addListener(NeoForgeEventManager::onTagsUpdateServerLoad);
+        eventBus.addListener(NeoForgeEventManager::onTagsUpdateClientReceived);
         eventBus.addListener(NeoForgeEventManager::onLevelTickPost);
         eventBus.addListener(NeoForgeEventManager::onAddReloadListeners);
         eventBus.addListener(NeoForgeEventManager::onDatapackSync);
@@ -268,7 +269,7 @@ public class NeoForgeEventManager {
         }
     }
 
-    private static void onBlockBreak(BlockEvent.BreakEvent event) {
+    private static void onBlockBreak(BreakBlockEvent event) {
         boolean cancel = BzBlockBreakEvent.EVENT_LOWEST.invoke(new BzBlockBreakEvent(event.getPlayer(), event.getState()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);
@@ -297,8 +298,12 @@ public class NeoForgeEventManager {
         event.setNewSpeed(speed.floatValue());
     }
 
-    private static void onTagsUpdate(TagsUpdatedEvent event) {
-        BzTagsUpdatedEvent.EVENT.invoke(new BzTagsUpdatedEvent(event.getLookupProvider(), event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED));
+    private static void onTagsUpdateServerLoad(TagsUpdatedEvent.ServerDataLoad event) {
+        BzTagsUpdatedEvent.EVENT.invoke(new BzTagsUpdatedEvent(event.getRegistries()));
+    }
+
+    private static void onTagsUpdateClientReceived(TagsUpdatedEvent.ClientPacketReceived event) {
+        BzTagsUpdatedEvent.EVENT.invoke(new BzTagsUpdatedEvent(event.getRegistries()));
     }
 
     private static void onSpawnPlacements(RegisterSpawnPlacementsEvent event) {
@@ -367,7 +372,7 @@ public class NeoForgeEventManager {
     }
 
     private static void onEntityHurtLowest(LivingDamageEvent.Post event) {
-        BzEntityHurtEvent.EVENT_LOWEST.invoke(new BzEntityHurtEvent(event.getEntity(), event.getSource(), event.getNewDamage()));
+        BzEntityHurtEvent.EVENT_LOWEST.invoke(new BzEntityHurtEvent(event.getEntity(), event.getSource(), event.getInflictedDamage()));
     }
 
     private static void onEntityDeath(LivingDeathEvent event) {

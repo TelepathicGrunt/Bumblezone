@@ -79,9 +79,6 @@ public class NeoForgeClientEventManager {
         eventBus.addListener(NeoForgeClientEventManager::onScreenRendering);
         eventBus.addListener(NeoForgeClientEventManager::onBeforeBlockOutlineRendering);
         eventBus.addListener(NeoForgeClientEventManager::onGuiRendering);
-        eventBus.addListener(NeoForgeClientEventManager::onConditionalItemPropertiesSetup);
-        eventBus.addListener(NeoForgeClientEventManager::onRangeSelectItemPropertiesSetup);
-        eventBus.addListener(NeoForgeClientEventManager::onItemTintSourcesSetup);
         eventBus.addListener(EventPriority.HIGHEST, true, DimensionFog::fogThicknessAdjustments);
 
         modEventBus.addListener(NeoForgeClientEventManager::onClientSetup);
@@ -92,6 +89,9 @@ public class NeoForgeClientEventManager {
         modEventBus.addListener(NeoForgeClientEventManager::onEntityLayers);
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterScreens);
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterClientExtensions);
+        modEventBus.addListener(NeoForgeClientEventManager::onConditionalItemPropertiesSetup);
+        modEventBus.addListener(NeoForgeClientEventManager::onRangeSelectItemPropertiesSetup);
+        modEventBus.addListener(NeoForgeClientEventManager::onItemTintSourcesSetup);
     }
 
     public static void onClientSetup(FMLClientSetupEvent event) {

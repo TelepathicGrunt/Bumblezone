@@ -1,9 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
-import com.mrcrayfish.backpacked.common.backpack.CosmeticProperties;
-import com.mrcrayfish.backpacked.core.ModDataComponents;
-import net.minecraft.core.component.DataComponentType;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 

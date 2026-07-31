@@ -64,16 +64,17 @@ public class NeoForgeModChecker {
             modid = "ironjetpacks";
             loadupModCompat(modid, () -> new IronJetpacksCompat());
 
-            modid = "pneumaticcraft";
-            if (ModChecker.isNotOutdated(modid, "6.0.9", false)) {
-                loadupModCompat(modid, () -> new PneumaticCraftCompat());
-            }
+            // #TODO: restore functionality after Pneumaticcraft updates to 26.1.2
+//            modid = "pneumaticcraft";
+//            loadupModCompat(modid, () -> new PneumaticCraftCompat());
 
-            modid = "ars_nouveau";
-            loadupModCompat(modid, () -> new ArsNouveauCompat());
+            // #TODO: restore functionality after Ars Nouveau updates to 26.1.2
+//            modid = "ars_nouveau";
+//            loadupModCompat(modid, () -> new ArsNouveauCompat());
 
-            modid = "ars_elemental";
-            loadupModCompat(modid, () -> new ArsElementalCompat());
+            // #TODO: restore functionality after Ars Elemental updates to 26.1.2
+//            modid = "ars_elemental";
+//            loadupModCompat(modid, () -> new ArsElementalCompat());
 
             modid = "bloodmagic";
             loadupModCompat(modid, () -> new BloodMagicCompat());

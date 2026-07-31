@@ -21,6 +21,7 @@ import cy.jdkdigital.productivebees.common.entity.bee.ConfigurableBee;
 import cy.jdkdigital.productivebees.init.ModBlocks;
 import cy.jdkdigital.productivebees.init.ModEntities;
 import cy.jdkdigital.productivebees.setup.BeeData;
+import cy.jdkdigital.productivebees.setup.BeeRegistries;
 import cy.jdkdigital.productivebees.state.properties.VerticalHive;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -57,27 +58,27 @@ import java.util.Optional;
 public class ProductiveBeesCompat implements ModCompat {
 
     private static final GeneralUtils.Lazy<List<Identifier>> SPIDER_DUNGEON_HONEYCOMBS = new GeneralUtils.Lazy<>(() ->
-            BeeReloadListener.INSTANCE.getData().entrySet().stream().filter(e -> {
-                CompoundTag tag = e.getValue();
-                int primary = tag.getIntOr("primaryColor", 0);
+            BeeRegistries.allRegistered().toList().stream().filter(e -> {
+                int primary = e.value().primaryColor();
                 return BzModCompatibilityConfigs.allowedCombsForDungeons.contains(e.getKey().toString()) &&
-                        tag.getBooleanOr("createComb", false) &&
+                        e.value().createComb() &&
                         (colorsAreClose(GeneralUtils.colorToInt(106, 127, 0), primary, 150) ||
                         colorsAreClose(GeneralUtils.colorToInt(129, 198, 0), primary, 150) ||
                         colorsAreClose(GeneralUtils.colorToInt(34, 45, 0), primary, 150));
-            }).map(Map.Entry::getKey).toList());
+            }).map(e -> e.getKey().identifier()).toList());
 
     private static final GeneralUtils.Lazy<List<Identifier>> BEE_DUNGEON_HONEYCOMBS = new GeneralUtils.Lazy<>(() ->
-            BeeReloadListener.INSTANCE.getData().entrySet().stream().filter(e -> {
-                CompoundTag tag = e.getValue();
-                return BzModCompatibilityConfigs.allowedCombsForDungeons.contains(e.getKey().toString()) &&
-                        tag.getBooleanOr("createComb", false) &&
-                        !SPIDER_DUNGEON_HONEYCOMBS.getOrFillFromInternal().contains(e.getKey());
-            }).map(Map.Entry::getKey).toList());
+            BeeRegistries.allRegistered().toList().stream().filter(e ->
+                BzModCompatibilityConfigs.allowedCombsForDungeons.contains(e.getKey().toString()) &&
+                    e.value().createComb() &&
+                    !SPIDER_DUNGEON_HONEYCOMBS.getOrFillFromInternal().contains(e.getKey())
+            ).map(e -> e.getKey().identifier()).toList());
 
     private static final GeneralUtils.Lazy<List<Identifier>> ALL_BEES = new GeneralUtils.Lazy<>(() ->
-            BeeReloadListener.INSTANCE.getData().keySet().stream()
-                    .filter(e -> BzModCompatibilityConfigs.allowedBees.contains(e.toString())).toList());
+            BeeRegistries.allRegistered().toList().stream()
+                    .filter(e -> BzModCompatibilityConfigs.allowedBees.contains(e.toString()))
+                    .map(e ->  e.getKey().identifier())
+                    .toList());
 
     public static final TagKey<Block> SOLITARY_OVERWORLD_NESTS_TAG = TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("productivebees", "solitary_overworld_nests"));
 
@@ -230,8 +231,8 @@ public class ProductiveBeesCompat implements ModCompat {
     @Override
     public OptionalBoolean validateCombType(CompoundTag tag) {
         if (tag.contains("type")) {
-            CompoundTag productiveBeesData = BeeReloadListener.INSTANCE.getData().get(Identifier.tryParse(tag.getStringOr("type", "")));
-            if (productiveBeesData != null && productiveBeesData.getBooleanOr("createComb" ,false)) {
+            BeeData productiveBeesData = BeeRegistries.lookup(Identifier.tryParse(tag.getStringOr("type", "")));
+            if (productiveBeesData != null && productiveBeesData.createComb()) {
                 return OptionalBoolean.TRUE;
             }
         }

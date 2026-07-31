@@ -164,7 +164,7 @@ public class FabricEventManager {
 
         BzRegisterSpawnPlacementsEvent.EVENT.invoke(new BzRegisterSpawnPlacementsEvent(FabricEventManager::registerPlacement));
         CommonLifecycleEvents.TAGS_LOADED.register((registryAccess, client) ->
-                BzTagsUpdatedEvent.EVENT.invoke(new BzTagsUpdatedEvent(registryAccess, client)));
+                BzTagsUpdatedEvent.EVENT.invoke(new BzTagsUpdatedEvent(registryAccess)));
         PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, blockentity) ->
                 !BzBlockBreakEvent.EVENT_LOWEST.invoke(new BzBlockBreakEvent(player, state)));
         CommandRegistrationCallback.EVENT.register((dispatcher, context, environment) ->

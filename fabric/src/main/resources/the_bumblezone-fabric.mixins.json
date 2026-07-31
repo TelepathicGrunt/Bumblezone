@@ -42,5 +42,6 @@
     "items.ProjectileWeaponItemMixin",
     "loot.LootTableMixin",
     "util.FileUtilMixin"
-  ]
+  ],
+  "mixinextras": {"minVersion": "0.5.4"}
 }
