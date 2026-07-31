@@ -1,7 +1,8 @@
 {
     "pack": {
         "description": "The Bumblezone - JEED Effects compat",
-        "pack_format": 26,
-        "supported_formats": [0, 1000000]
+        "pack_format": 101,
+        "min_format": 101,
+        "max_format": 1000000
     }
 }

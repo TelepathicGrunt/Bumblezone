@@ -1,10 +1,14 @@
 #version 330
 
+#moj_import <minecraft:fog.glsl>
 #moj_import <minecraft:matrix.glsl>
+#moj_import <minecraft:globals.glsl>
 
 uniform sampler2D Sampler0;
 uniform sampler2D Sampler1;
 
+in float sphericalVertexDistance;
+in float cylindricalVertexDistance;
 in vec4 vertexColor;
 in vec4 texProj0;
 in vec3 view;
@@ -31,7 +35,8 @@ vec3 base_layer() {
         0.0, 0.0, scale
     );
 
-    return -view.xyz * translate;
+    //return -view.xyz * translate;
+    return -vec3(0.5, 0, 0.5) * translate;
 }
 
 vec3 bee_layer(float layer) {
@@ -46,7 +51,8 @@ vec3 bee_layer(float layer) {
         0.0, 0.0, scale
     );
 
-    return -view.xyz * (layer + 1) * rotateAndTranslate;
+    //return -view.xyz * (layer + 1) * rotateAndTranslate;
+    return -vec3(0.5, 0, 0.5) * (layer + 1) * rotateAndTranslate;
 }
 
 out vec4 fragColor;

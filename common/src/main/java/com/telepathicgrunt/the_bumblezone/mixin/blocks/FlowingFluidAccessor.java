@@ -21,5 +21,7 @@ public interface FlowingFluidAccessor {
     int bumblezone$callSourceNeighborCount(LevelReader levelReader, BlockPos pos);
 
     @Invoker("canPassThroughWall")
-    boolean bumblezone$callCanPassThroughWall(Direction direction, BlockGetter blockGetter, BlockPos pos, BlockState blockState, BlockPos pos1, BlockState blockState1);
+    static boolean bumblezone$callCanPassThroughWall(Direction direction, BlockGetter blockGetter, BlockPos pos, BlockState blockState, BlockPos pos1, BlockState blockState1) {
+        throw new UnsupportedOperationException();
+    }
 }

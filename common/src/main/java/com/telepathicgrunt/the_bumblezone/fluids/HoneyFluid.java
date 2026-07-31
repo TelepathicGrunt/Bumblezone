@@ -209,13 +209,13 @@ public abstract class HoneyFluid extends BzFluid {
         BlockPos aboveBlockPos = blockPos.above();
         BlockState aboveBlockState = serverLevel.getBlockState(aboveBlockPos);
         BlockState belowBlockState = serverLevel.getBlockState(blockPos.below());
-        boolean canPassThroughBelow = ((FlowingFluidAccessor)this).bumblezone$callCanPassThroughWall(Direction.DOWN, serverLevel, blockPos, blockState, blockPos.below(), belowBlockState);
+        boolean canPassThroughBelow = FlowingFluidAccessor.bumblezone$callCanPassThroughWall(Direction.DOWN, serverLevel, blockPos, blockState, blockPos.below(), belowBlockState);
 
         for(Direction direction : Direction.Plane.HORIZONTAL) {
             BlockPos sideBlockPos = blockPos.relative(direction);
             BlockState sideBlockState = serverLevel.getBlockState(sideBlockPos);
             FluidState sideFluidState = sideBlockState.getFluidState();
-            if (sideFluidState.getType().isSame(this) && ((FlowingFluidAccessor)this).bumblezone$callCanPassThroughWall(direction, serverLevel, blockPos, blockState, sideBlockPos, sideBlockState)) {
+            if (sideFluidState.getType().isSame(this) && FlowingFluidAccessor.bumblezone$callCanPassThroughWall(direction, serverLevel, blockPos, blockState, sideBlockPos, sideBlockState)) {
                 if (sideFluidState.isSource()) {
                     ++neighboringFluidSource;
                 }
@@ -237,7 +237,7 @@ public abstract class HoneyFluid extends BzFluid {
             dropOffValue = 0;
         }
 
-        if (aboveFluidIsThisFluid && ((FlowingFluidAccessor)this).bumblezone$callCanPassThroughWall(Direction.UP, serverLevel, blockPos, blockState, aboveBlockPos, aboveBlockState)) {
+        if (aboveFluidIsThisFluid && FlowingFluidAccessor.bumblezone$callCanPassThroughWall(Direction.UP, serverLevel, blockPos, blockState, aboveBlockPos, aboveBlockState)) {
             if(!aboveFluidState.isSource() && aboveFluidState.is(BzTags.SPECIAL_HONEY_LIKE) && aboveFluidState.getValue(BOTTOM_LEVEL) != 0) {
                 newFluidLevel = highestNeighboringFluidLevel - dropOffValue;
             }

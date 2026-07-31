@@ -23,8 +23,8 @@ public class EssenceBlockShader {
                 RenderPipeline.builder().withUniform("Fog", UniformType.UNIFORM_BUFFER).buildSnippet(),
                 RenderPipeline.builder().withUniform("Globals", UniformType.UNIFORM_BUFFER).buildSnippet()
             )
-            .withVertexShader("core/rendertype_bumblezone_essence")
-            .withFragmentShader("core/rendertype_bumblezone_essence")
+            .withVertexShader(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "core/rendertype_bumblezone_essence"))
+            .withFragmentShader(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "core/rendertype_bumblezone_essence"))
             .withSampler("Sampler0")
             .withSampler("Sampler1")
             .withVertexFormat(DefaultVertexFormat.POSITION, VertexFormat.Mode.QUADS)
@@ -32,7 +32,9 @@ public class EssenceBlockShader {
             .buildSnippet();
 
     public static final RenderPipeline BUMBLEZONE_ESSENCE_PIPELINE = registerPipeline(
-            RenderPipeline.builder(BUMBLEZONE_ESSENCE_SNIPPET).withLocation("pipeline/bumblezone_essence").withShaderDefine("LAYERS", 5).build()
+            RenderPipeline.builder(BUMBLEZONE_ESSENCE_SNIPPET)
+                    .withLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "pipeline/bumblezone_essence"))
+                    .withShaderDefine("LAYERS", 5).build()
     );
 
     public static final RenderType BUMBLEZONE_ESSENCE_RENDERTYPE = RenderType.create(
