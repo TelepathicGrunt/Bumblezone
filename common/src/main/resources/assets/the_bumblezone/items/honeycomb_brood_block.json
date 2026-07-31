@@ -4,11 +4,11 @@
     "property": "the_bumblezone:is_creative_tab_icon",
     "on_true": {
       "type": "minecraft:model",
-      "base": "the_bumblezone:block/honeycomb_brood_block/item_stage_3_honeycomb_brood_block"
+      "model": "the_bumblezone:block/honeycomb_brood_block/item_stage_3_honeycomb_brood_block"
     },
     "on_false": {
       "type": "minecraft:model",
-      "base": "the_bumblezone:block/empty_porous_honeycomb_block"
+      "model": "the_bumblezone:block/honeycomb_brood_block/empty_honeycomb_brood_block"
     }
   }
 }

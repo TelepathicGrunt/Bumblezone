@@ -1,7 +1,7 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "the_bumblezone:item/music_disc_knowing_renren"
+    "model": "the_bumblezone:item/music_disc/knowing_renren"
   }
 }
 

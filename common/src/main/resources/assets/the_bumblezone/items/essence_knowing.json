@@ -1,43 +1,43 @@
 {
   "model": {
     "type": "minecraft:condition",
-    "property": "minecraft:ability_essence_not_in_inventory",
+    "property": "the_bumblezone:ability_essence_not_in_inventory",
     "on_true": {
       "type": "minecraft:model",
-      "base": "the_bumblezone:item/essence/knowing"
+      "model": "the_bumblezone:item/essence/knowing"
     },
     "on_false": {
       "type": "minecraft:condition",
-      "property": "minecraft:ability_essence_is_active",
+      "property": "the_bumblezone:ability_essence_is_active",
       "on_true": {
         "type": "minecraft:condition",
-        "property": "minecraft:ability_essence_max_ability_use_remaining",
+        "property": "the_bumblezone:ability_essence_max_ability_use_remaining",
         "on_true": {
           "type": "minecraft:model",
-          "base": "the_bumblezone:item/essence/knowing_active"
+          "model": "the_bumblezone:item/essence/knowing_active"
         },
         "on_false": {
           "type": "minecraft:model",
-          "base": "the_bumblezone:item/essence/knowing_active_used"
+          "model": "the_bumblezone:item/essence/knowing_active_used"
         }
       },
       "on_false": {
         "type": "minecraft:condition",
-        "property": "minecraft:ability_essence_is_locked_or_cooldown",
+        "property": "the_bumblezone:ability_essence_is_locked_or_cooldown",
         "on_true": {
           "type": "minecraft:model",
-          "base": "the_bumblezone:item/essence/knowing_disabled"
+          "model": "the_bumblezone:item/essence/knowing_disabled"
         },
         "on_false": {
           "type": "minecraft:condition",
-          "property": "minecraft:ability_essence_max_ability_use_remaining",
+          "property": "the_bumblezone:ability_essence_max_ability_use_remaining",
           "on_true": {
             "type": "minecraft:model",
-            "base": "the_bumblezone:item/essence/knowing_ready"
+            "model": "the_bumblezone:item/essence/knowing_ready"
           },
           "on_false": {
             "type": "minecraft:model",
-            "base": "the_bumblezone:item/essence/knowing_ready_used"
+            "model": "the_bumblezone:item/essence/knowing_ready_used"
           }
         }
       }

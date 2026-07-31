@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "the_bumblezone:block/redstone_honey_web/redstone_honey_web_0"
+    "model": "the_bumblezone:item/redstone_honey_web"
   }
 }

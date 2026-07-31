@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "the_bumblezone:item/super_candle/candle_gray"
+    "model": "the_bumblezone:item/super_candle/gray"
   }
 }

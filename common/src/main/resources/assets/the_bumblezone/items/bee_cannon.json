@@ -8,11 +8,11 @@
       "property": "minecraft:using_item",
       "on_true": {
         "type": "minecraft:model",
-        "base": "the_bumblezone:item/bee_cannon/bee_cannon_1_primed"
+        "model": "the_bumblezone:item/bee_cannon/bee_cannon_1_bee_primed"
       },
       "on_false": {
         "type": "minecraft:model",
-        "base": "the_bumblezone:item/bee_cannon/bee_cannon_1"
+        "model": "the_bumblezone:item/bee_cannon/bee_cannon_1_bee"
       }
     },
     "on_false": {
@@ -24,11 +24,11 @@
         "property": "minecraft:using_item",
         "on_true": {
           "type": "minecraft:model",
-          "base": "the_bumblezone:item/bee_cannon/bee_cannon_2_primed"
+          "model": "the_bumblezone:item/bee_cannon/bee_cannon_2_bee_primed"
         },
         "on_false": {
           "type": "minecraft:model",
-          "base": "the_bumblezone:item/bee_cannon/bee_cannon_2"
+          "model": "the_bumblezone:item/bee_cannon/bee_cannon_2_bee"
         }
       },
       "on_false": {
@@ -40,11 +40,11 @@
           "property": "minecraft:using_item",
           "on_true": {
             "type": "minecraft:model",
-            "base": "the_bumblezone:item/bee_cannon/bee_cannon_3_primed"
+            "model": "the_bumblezone:item/bee_cannon/bee_cannon_3_bee_primed"
           },
           "on_false": {
             "type": "minecraft:model",
-            "base": "the_bumblezone:item/bee_cannon/bee_cannon_3"
+            "model": "the_bumblezone:item/bee_cannon/bee_cannon_3_bee"
           }
         },
         "on_false": {
@@ -52,11 +52,11 @@
           "property": "minecraft:using_item",
           "on_true": {
             "type": "minecraft:model",
-            "base": "the_bumblezone:item/bee_cannon/bee_cannon_primed"
+            "model": "the_bumblezone:item/bee_cannon/bee_cannon_primed"
           },
           "on_false": {
             "type": "minecraft:model",
-            "base": "the_bumblezone:item/bee_cannon/bee_cannon"
+            "model": "the_bumblezone:item/bee_cannon/bee_cannon"
           }
         }
       }

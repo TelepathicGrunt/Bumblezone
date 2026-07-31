@@ -4,11 +4,11 @@
     "property": "the_bumblezone:pollinated_bee_leggings",
     "on_true": {
       "type": "minecraft:model",
-      "base": "the_bumblezone:item/honey_bee_leggings/1_with_pollen"
+      "model": "the_bumblezone:item/honey_bee_leggings/1_with_pollen"
     },
     "on_false": {
       "type": "minecraft:model",
-      "base": "the_bumblezone:item/honey_bee_leggings/1"
+      "model": "the_bumblezone:item/honey_bee_leggings/1"
     }
   }
 }

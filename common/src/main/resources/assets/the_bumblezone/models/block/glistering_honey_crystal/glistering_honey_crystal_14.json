@@ -2,7 +2,8 @@
 	"parent": "block/block",
 	"textures": {
 		"0": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_4",
-		"1": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_glint_1"
+		"1": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_glint_1",
+		"particle": "the_bumblezone:block/glistering_honey_crystal/glistering_honey_crystal_1"
 	},
 	"elements": [
 		{

@@ -1,74 +1,35 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.variantbee;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.animal.bee.BeeModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.entity.state.BeeRenderState;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.Mth;
 
-public class VariantBeeModel extends EntityModel<BeeRenderState> {
+public class VariantBeeModel extends BeeModel {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "variant_bee"), "main");
 
-    protected final ModelPart bone;
-    private final ModelPart rightWing;
-    private final ModelPart leftWing;
-    private final ModelPart frontLeg;
-    private final ModelPart midLeg;
-    private final ModelPart backLeg;
-    private final ModelPart stinger;
+    private static final String LEFT_ANTENNA = "left_antenna";
+    private static final String RIGHT_ANTENNA = "right_antenna";
     private final ModelPart leftAntenna;
     private final ModelPart rightAntenna;
 
     public VariantBeeModel(ModelPart root) {
         super(root);
-        this.bone = root.getChild("bone");
         ModelPart body = this.bone.getChild("body");
-        this.stinger = body.getChild("stinger");
-        this.rightWing = this.bone.getChild("right_wing");
-        this.leftWing = this.bone.getChild("left_wing");
-        this.frontLeg = this.bone.getChild("front_legs");
-        this.midLeg = this.bone.getChild("middle_legs");
-        this.backLeg = this.bone.getChild("back_legs");
-        this.leftAntenna = body.getChild("left_antenna");
-        this.rightAntenna = body.getChild("right_antenna");
+        this.leftAntenna = body.getChild(LEFT_ANTENNA);
+        this.rightAntenna = body.getChild(RIGHT_ANTENNA);
     }
 
     @Override
-    public void setupAnim(BeeRenderState state) {
-        super.setupAnim(state);
-        this.stinger.visible = state.hasStinger;
-        if (!state.isOnGround) {
-            float speed = state.ageInTicks * 120.32113F * (float) (Math.PI / 180.0);
-            this.rightWing.yRot = 0.0F;
-            this.rightWing.zRot = Mth.cos(speed) * (float) Math.PI * 0.15F;
-            this.leftWing.xRot = this.rightWing.xRot;
-            this.leftWing.yRot = this.rightWing.yRot;
-            this.leftWing.zRot = -this.rightWing.zRot;
-            this.frontLeg.xRot = (float) (Math.PI / 4);
-            this.midLeg.xRot = (float) (Math.PI / 4);
-            this.backLeg.xRot = (float) (Math.PI / 4);
-        }
-
-        if (!state.isAngry && !state.isOnGround) {
-            float speed = Mth.cos(state.ageInTicks * 0.18F);
-            this.bobUpAndDown(speed, state.ageInTicks);
-        }
-
-        float rollAmount = state.rollAmount;
-        if (rollAmount > 0.0F) {
-            this.bone.xRot = Mth.rotLerpRad(rollAmount, this.bone.xRot, 3.0915928F);
-        }
-    }
-
     protected void bobUpAndDown(float speed, float ageInTicks) {
-        this.bone.xRot = 0.1F + speed * (float) Math.PI * 0.025F;
-        this.bone.y = this.bone.y - Mth.cos(ageInTicks * 0.18F) * 0.9F;
-        this.frontLeg.xRot = -speed * (float) Math.PI * 0.1F + (float) (Math.PI / 8);
-        this.backLeg.xRot = -speed * (float) Math.PI * 0.05F + (float) (Math.PI / 4);
+        super.bobUpAndDown(speed, ageInTicks);
         this.leftAntenna.xRot = speed * (float) Math.PI * 0.03F;
         this.rightAntenna.xRot = speed * (float) Math.PI * 0.03F;
     }
@@ -82,10 +43,10 @@ public class VariantBeeModel extends EntityModel<BeeRenderState> {
         );
         body.addOrReplaceChild("stinger", CubeListBuilder.create().texOffs(26, 7).addBox(0.0F, -1.0F, 5.0F, 0.0F, 1.0F, 2.0F), PartPose.ZERO);
         body.addOrReplaceChild(
-                "left_antenna", CubeListBuilder.create().texOffs(2, 0).addBox(1.5F, -2.0F, -3.0F, 1.0F, 2.0F, 3.0F), PartPose.offset(0.0F, -2.0F, -5.0F)
+                LEFT_ANTENNA, CubeListBuilder.create().texOffs(2, 0).addBox(1.5F, -2.0F, -3.0F, 1.0F, 2.0F, 3.0F), PartPose.offset(0.0F, -2.0F, -5.0F)
         );
         body.addOrReplaceChild(
-                "right_antenna", CubeListBuilder.create().texOffs(2, 3).addBox(-2.5F, -2.0F, -3.0F, 1.0F, 2.0F, 3.0F), PartPose.offset(0.0F, -2.0F, -5.0F)
+                RIGHT_ANTENNA, CubeListBuilder.create().texOffs(2, 3).addBox(-2.5F, -2.0F, -3.0F, 1.0F, 2.0F, 3.0F), PartPose.offset(0.0F, -2.0F, -5.0F)
         );
         CubeDeformation wingDeformation = new CubeDeformation(0.001F);
         bone.addOrReplaceChild(

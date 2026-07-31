@@ -1,7 +1,7 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "the_bumblezone:item/music_disc_drowning_in_despair"
+    "model": "the_bumblezone:item/music_disc/drowning_in_despair"
   }
 }
 

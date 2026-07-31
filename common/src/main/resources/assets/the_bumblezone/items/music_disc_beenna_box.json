@@ -1,7 +1,7 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "the_bumblezone:item/music_disc_beenna_box"
+    "model": "the_bumblezone:item/music_disc/beenna_box"
   }
 }
 
