@@ -114,7 +114,7 @@ public class RoyalJellyFluidBlock extends LiquidBlock implements FluidGetter {
                 }
 
                 BlockState sideState = level.getBlockState(sidePos);
-                if (sideState.getBlock() instanceof LiquidBlock || !sideState.getFluidState().isEmpty() || sideState.canBeReplaced()) {
+                if (sideState.getBlock() instanceof LiquidBlock || (!sideState.getFluidState().isEmpty() && sideState.getCollisionShape(level, sidePos).isEmpty()) || sideState.canBeReplaced()) {
                     level.setBlock(sidePos, BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState(), 3);
                 }
                 else if (!currentFluid.isSource()) {
