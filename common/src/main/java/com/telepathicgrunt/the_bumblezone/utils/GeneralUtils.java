@@ -529,8 +529,10 @@ public class GeneralUtils {
             }
 
             if (!structurePlaceSettings.isIgnoreEntities()) {
-                ((StructureTemplateAccessor) structureTemplate).bumblezone$callPlaceEntities(
+                PlatformService.INSTANCE.callStructureTemplatePlaceEntities(
+                        structureTemplate,
                         serverLevelAccessor,
+                        structurePlaceSettings,
                         blockPos,
                         structurePlaceSettings.getMirror(),
                         structurePlaceSettings.getRotation(),
@@ -689,16 +691,17 @@ public class GeneralUtils {
                 }
 
                 if (!settings.isIgnoreEntities()) {
-                    ((StructureTemplateAccessor)structureTemplate).bumblezone$callPlaceEntities(
+                    PlatformService.INSTANCE.callStructureTemplatePlaceEntities(
+                            structureTemplate,
                             serverLevel,
+                            settings,
                             offset,
                             settings.getMirror(),
                             settings.getRotation(),
                             settings.getRotationPivot(),
                             boundingbox,
                             settings.shouldFinalizeEntities(),
-                            problemreporter$scopedcollector
-                    );
+                            problemreporter$scopedcollector);
                 }
             }
         }

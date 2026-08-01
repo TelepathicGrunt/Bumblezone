@@ -41,7 +41,9 @@
     "items.ItemStackMixin",
     "items.ProjectileWeaponItemMixin",
     "loot.LootTableMixin",
-    "util.FileUtilMixin"
+    "util.FileUtilMixin",
+    "world.StructureTemplateAccessor"
   ],
-  "mixinextras": {"minVersion": "0.5.4"}
+  "mixinextras": {
+    "minVersion": "0.5.4"}
 }

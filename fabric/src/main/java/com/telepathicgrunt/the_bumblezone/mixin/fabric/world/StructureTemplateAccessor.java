@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.world;
+package com.telepathicgrunt.the_bumblezone.mixin.fabric.world;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.ProblemReporter;
@@ -15,10 +15,15 @@ import java.util.List;
 
 @Mixin(StructureTemplate.class)
 public interface StructureTemplateAccessor {
-
-    @Accessor("palettes")
-    List<StructureTemplate.Palette> bumblezone$getBlocks();
-
-    @Accessor("entityInfoList")
-    List<StructureTemplate.StructureEntityInfo> bumblezone$getEntityInfoList();
+    @Invoker("placeEntities")
+    void bumblezone$callPlaceEntities(
+        ServerLevelAccessor level,
+        BlockPos position,
+        Mirror mirror,
+        Rotation rotation,
+        BlockPos pivot,
+        BoundingBox boundingBox,
+        boolean finalizeEntities,
+        ProblemReporter problemReporter
+    );
 }

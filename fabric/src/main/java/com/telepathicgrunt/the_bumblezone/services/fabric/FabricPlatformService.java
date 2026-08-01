@@ -9,9 +9,8 @@ import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityFluidInteractionA
 import com.telepathicgrunt.the_bumblezone.mixin.entities.TrackerAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.fabric.items.BucketItemAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.fabric.world.StructureTemplateAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.items.ItemAccessor;
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.fabric.RestrictedPortalsCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
@@ -38,6 +37,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -61,9 +61,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
@@ -356,5 +361,29 @@ public class FabricPlatformService implements PlatformService {
     @Override
     public <T extends AbstractContainerMenu> MenuType<T> create(BzMenuTypes.MenuCreator<T> creator) {
         return new MenuType<>(creator::create, FeatureFlags.DEFAULT_FLAGS);
+    }
+
+    @Override
+    public void callStructureTemplatePlaceEntities(
+            StructureTemplate structureTemplate,
+            ServerLevelAccessor level,
+            StructurePlaceSettings settings,
+            BlockPos position,
+            Mirror mirror,
+            Rotation rotation,
+            BlockPos pivot,
+            BoundingBox boundingBox,
+            boolean finalizeEntities,
+            ProblemReporter problemReporter
+    ) {
+        ((StructureTemplateAccessor)structureTemplate).bumblezone$callPlaceEntities(
+                level,
+                position,
+                mirror,
+                rotation,
+                pivot,
+                boundingBox,
+                finalizeEntities,
+                problemReporter);
     }
 }

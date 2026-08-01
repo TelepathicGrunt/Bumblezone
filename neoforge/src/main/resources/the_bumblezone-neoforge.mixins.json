@@ -8,12 +8,14 @@
     "blocks.FireBlockMixin",
     "blocks.SuperCandleMixin",
     "items.BzArrowItemMixin",
-    "items.ItemExtensionMixin"
+    "items.ItemExtensionMixin",
+    "world.StructureTemplateAccessor"
   ],
-  "client": [ ],
+  "client": [],
   "injectors": {
     "defaultRequire": 1
   },
   "minVersion": "0.8",
-  "mixinextras": {"minVersion": "0.5.4"}
+  "mixinextras": {
+    "minVersion": "0.5.4"}
 }
