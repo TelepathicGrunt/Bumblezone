@@ -130,7 +130,6 @@ public class NeoForgeEventManager {
         eventBus.addListener(NeoForgeEventManager::onGrantAdvancement);
         eventBus.addListener(NeoForgeEventManager::onInteractEntity);
         eventBus.addListener(NeoForgeEventManager::onBreakSpeed);
-        eventBus.addListener(NeoForgeEventManager::onTagsUpdateServerLoad);
         eventBus.addListener(NeoForgeEventManager::onTagsUpdateClientReceived);
         eventBus.addListener(NeoForgeEventManager::onLevelTickPost);
         eventBus.addListener(NeoForgeEventManager::onAddReloadListeners);
@@ -296,10 +295,6 @@ public class NeoForgeEventManager {
         AtomicDouble speed = new AtomicDouble(event.getNewSpeed());
         BzPlayerBreakSpeedEvent.EVENT.invoke(new BzPlayerBreakSpeedEvent(event.getEntity(), event.getState(), speed));
         event.setNewSpeed(speed.floatValue());
-    }
-
-    private static void onTagsUpdateServerLoad(TagsUpdatedEvent.ServerDataLoad event) {
-        BzTagsUpdatedEvent.EVENT.invoke(new BzTagsUpdatedEvent(event.getRegistries()));
     }
 
     private static void onTagsUpdateClientReceived(TagsUpdatedEvent.ClientPacketReceived event) {
