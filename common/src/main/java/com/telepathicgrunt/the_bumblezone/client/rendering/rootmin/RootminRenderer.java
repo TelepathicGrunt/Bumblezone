@@ -112,7 +112,7 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminRenderSta
         @Override
         public void submit(PoseStack poseStack, SubmitNodeCollector collector, int lightCoords, RootminRenderState state, float yRot, float xRot) {
             if (!state.flower.isEmpty()) {
-                ModelPart rootModel = this.getParentModel().root();
+                ModelPart rootModel = this.getParentModel().root().getChild("root");
                 ModelPart bodyModel = rootModel.getChild("body");
                 poseStack.pushPose();
                 rootModel.translateAndRotate(poseStack);
