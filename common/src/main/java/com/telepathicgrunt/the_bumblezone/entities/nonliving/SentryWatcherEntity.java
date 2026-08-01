@@ -391,10 +391,6 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                 e = this.getY();
                 float speed = this.getFluidSpeed();
                 float g = 0.02F;
-                float h = 0;
-                if (!this.onGround()) {
-                    h *= 0.5F;
-                }
 
                 this.moveRelative(g, Vec3.ZERO);
                 this.move(MoverType.SELF, this.getDeltaMovement());
@@ -723,7 +719,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
     private void turnToTargetFacing() {
         if (!this.hasNoAI() && !this.hasActivated() && this.getYRot() != this.getTargetFacingFromSync().toYRot()) {
-            double targetY = this.getTargetFacing().toYRot();
+            double targetY = this.getTargetFacingFromSync().toYRot();
             double currentY = this.getYRot();
             double diff = targetY - currentY;
             double diff2 = targetY - (currentY + 360d);

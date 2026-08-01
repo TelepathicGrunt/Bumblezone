@@ -20,6 +20,7 @@ import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
+import net.fabricmc.fabric.api.client.particle.v1.FabricSpriteSet;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
@@ -84,8 +85,7 @@ public class FabricClientEventManager {
     }
 
     private static <T extends ParticleOptions> void particleRegister(ParticleType<T> particleType, Function<SpriteSet, ParticleProvider<T>> spriteParticleRegistration) {
-        ParticleResources.MutableSpriteSet mutableSpriteSet = new ParticleResources.MutableSpriteSet();
-        ParticleProviderRegistry.getInstance().register(particleType, spriteParticleRegistration.apply(mutableSpriteSet));
+        ParticleProviderRegistry.getInstance().register(particleType, (ParticleProviderRegistry.PendingParticleProvider) spriteSet -> spriteParticleRegistration.apply(spriteSet));
     }
 
     private static <T extends AbstractContainerMenu, U extends Screen & MenuAccess<T>> void registerScreen(MenuType<T> type, BzRegisterMenuScreenEvent.ScreenConstructor<T, U> provider) {

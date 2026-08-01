@@ -161,7 +161,7 @@ public class NeoForgeClientEventManager {
     }
 
     private static void onKeyInput(InputEvent.Key event) {
-        BzKeyInputEvent.EVENT.invoke(new BzKeyInputEvent(event.getKeyEvent()));
+        BzKeyInputEvent.EVENT.invoke(new BzKeyInputEvent(event.getKeyEvent(), event.getAction()));
     }
 
     private static void onClientTickPost(ClientTickEvent.Post event) {

@@ -39,7 +39,7 @@ public class BeehemothRenderer extends MobRenderer<BeehemothEntity, BeehemothRen
     protected void scale(BeehemothRenderState state, PoseStack poseStack) {
         float scale = 1.6f;
         poseStack.scale(scale, scale, scale);
-        poseStack.translate(0, -0.5, 0);
+        poseStack.translate(0, 0.15, 0);
     }
 
     protected void renderFriendshipProgress(BeehemothRenderState state, Component component, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {

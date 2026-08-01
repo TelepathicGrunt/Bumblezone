@@ -49,6 +49,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.PlayerRideable;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -79,7 +80,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
-public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, PlayerRideable {
+public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, PlayerRideable, OwnableEntity {
 
     public static boolean beehemothSpeedConfigChanged = false;
     public static double beehemothSpeedConfigValue = BzGeneralConfigs.beehemothSpeed;
@@ -158,7 +159,6 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Play
     @Override
     public void readAdditionalSaveData(ValueInput input) {
         super.readAdditionalSaveData(input);
-        setSaddled(input.getBooleanOr("saddled", false));
         setQueen(input.getBooleanOr("queen", false));
         setFriendship(input.getIntOr("friendship", 0));
     }
@@ -184,26 +184,17 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Play
 
     @Override
     public boolean canUseSlot(EquipmentSlot slot) {
-        return slot != EquipmentSlot.SADDLE ? super.canUseSlot(slot) : this.isAlive() && !this.isBaby() && this.isTame();
+        return (slot != EquipmentSlot.SADDLE ? super.canUseSlot(slot) : this.isAlive() && !this.isBaby()) && this.isTame();
     }
 
     @Override
     protected boolean canDispenserEquipIntoSlot(EquipmentSlot slot) {
-        return (slot == EquipmentSlot.BODY || slot == EquipmentSlot.SADDLE) && this.isTame() || super.canDispenserEquipIntoSlot(slot);
+        return (slot == EquipmentSlot.SADDLE || super.canDispenserEquipIntoSlot(slot)) && this.isTame();
     }
 
     @Override
     protected Holder<SoundEvent> getEquipSound(EquipmentSlot slot, ItemStack stack, Equippable equippable) {
         return slot == EquipmentSlot.SADDLE ? SoundEvents.HORSE_SADDLE : super.getEquipSound(slot, stack, equippable);
-    }
-
-    public void setSaddled(boolean saddled) {
-        this.entityData.set(SADDLED, saddled);
-    }
-
-    @Override
-    public boolean isSaddled() {
-        return this.entityData.get(SADDLED);
     }
 
     public int getMaxFriendshipThreshold() {
@@ -391,7 +382,10 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Play
             // Healing and befriending Beehemoth
             if (isTame()) {
                 if (isOwnedBy(player)) {
-                    if (stack.is(BzTags.BEE_FEEDING_ITEMS) && !player.isShiftKeyDown()) {
+                    if (this.isEquippableInSlot(stack, EquipmentSlot.SADDLE)) {
+                        return stack.interactLivingEntity(player, this, hand);
+                    }
+                    else if (stack.is(BzTags.BEE_FEEDING_ITEMS) && !player.isShiftKeyDown()) {
                         if(stack.is(BzTags.ROYAL_JELLY_BUCKETS)) {
                             heal(40);
                             BeeInteractivity.calmAndSpawnHearts(this.level(), player, this, 1f, 30);
@@ -444,8 +438,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Play
 
                     if(player.isShiftKeyDown()) {
                         if (isSaddled() && isInSittingPose() && stack.isEmpty()) {
-                            setSaddled(false);
-                            ItemStack saddle = new ItemStack(Items.SADDLE);
+                            ItemStack saddle = this.getItemBySlot(EquipmentSlot.SADDLE);
+                            this.setItemSlot(EquipmentSlot.SADDLE, ItemStack.EMPTY);
                             if (player.addItem(saddle)) {
                                 ItemEntity entity = new ItemEntity(player.level(), player.getX(), player.getY(), player.getZ(), saddle);
                                 player.level().addFreshEntity(entity);
@@ -747,7 +741,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Play
                 double forwardSpeed = (livingEntity.zza * 10);
                 double strafeSpeed = 0;
 
-                if (livingEntity.zza != 0 || this.movingStraightUp || this.movingStraightDown) {
+                 if (livingEntity.zza != 0 || this.movingStraightUp || this.movingStraightDown) {
                     currentSpeed = Math.min(beehemothSpeedConfigValue * speedModifier, currentSpeed + 0.003D);
                 }
                 else {

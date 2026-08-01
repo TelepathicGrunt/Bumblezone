@@ -185,6 +185,7 @@ neoForge {
         client {
             client()
             //systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            systemProperty("terminal.ansi", "true")
 
             if (project.hasProperty('mc_uuid')) {
                 programArguments.add("--uuid=${project.findProperty('mc_uuid')}")
@@ -201,12 +202,14 @@ neoForge {
 
         server {
             server()
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            //systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            systemProperty("terminal.ansi", "true")
             programArguments.add('--nogui')
         }
 
         serverData {
             serverData()
+            systemProperty("terminal.ansi", "true")
             programArguments.add("--all --mod the_bumblezone")
             programArguments.add("--existing ${project.project(":common").file("src/main/resources").absolutePath}")
             programArguments.add("--output ${project.project(":common").file("src/main/generated/resources").absolutePath}")

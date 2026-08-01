@@ -14,6 +14,6 @@ public class KeyboardHandlerMixin {
     @Inject(method = "keyPress",
             at = @At(value = "HEAD"))
     private void bumblezone$keyPressHandling(long handle, int action, KeyEvent event, CallbackInfo ci) {
-        BzKeyInputEvent.EVENT.invoke(new BzKeyInputEvent(event));
+        BzKeyInputEvent.EVENT.invoke(new BzKeyInputEvent(event, action));
     }
 }

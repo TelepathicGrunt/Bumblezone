@@ -35,7 +35,8 @@ public class BeehemothControls {
         {
             boolean upKeyAction = KEY_BIND_BEEHEMOTH_UP.matches(event.keyEvent());
             boolean downKeyAction = KEY_BIND_BEEHEMOTH_DOWN.matches(event.keyEvent());
-            int keyAction = event.keyEvent().input();
+            int keyAction = event.action();
+            Bumblezone.LOGGER.error("" + event.action());
 
             if ((upKeyAction || downKeyAction) && keyAction != 2) {
                 BeehemothControlsPacket.sendToServer(
