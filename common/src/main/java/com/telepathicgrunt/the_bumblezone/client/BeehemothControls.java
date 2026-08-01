@@ -13,7 +13,7 @@ import org.lwjgl.glfw.GLFW;
 
 public class BeehemothControls {
     public static final KeyMapping.Category CATEGORY =
-            KeyMapping.Category.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "key.categories." + Bumblezone.MODID));
+            KeyMapping.Category.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, Bumblezone.MODID));
 
     public static final KeyMapping KEY_BIND_BEEHEMOTH_DOWN = ClientPlatformService.INSTANCE.createKey(
     "key." + Bumblezone.MODID + ".beehemoth_down",
