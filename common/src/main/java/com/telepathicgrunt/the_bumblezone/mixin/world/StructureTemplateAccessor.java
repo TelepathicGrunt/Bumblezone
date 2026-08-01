@@ -7,7 +7,6 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
@@ -23,15 +22,16 @@ public interface StructureTemplateAccessor {
     @Accessor("entityInfoList")
     List<StructureTemplate.StructureEntityInfo> bumblezone$getEntityInfoList();
 
+    // TODO: Fix as neo patched this method. Need multiloader setup
     @Invoker("placeEntities")
     void bumblezone$callPlaceEntities(
-        ServerLevelAccessor serverLevel,
-        BlockPos pos,
+        ServerLevelAccessor level,
+        BlockPos position,
         Mirror mirror,
         Rotation rotation,
-        BlockPos offset,
-        @Nullable BoundingBox boundingBox,
-        boolean withEntities,
-        ProblemReporter p_421857_
+        BlockPos pivot,
+        BoundingBox boundingBox,
+        boolean finalizeEntities,
+        ProblemReporter problemReporter
     );
 }

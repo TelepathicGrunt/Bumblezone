@@ -8,7 +8,7 @@
     },
     "on_false": {
       "type": "minecraft:model",
-      "model": "the_bumblezone:block/honeycomb_brood_block/empty_honeycomb_brood_block"
+      "model": "the_bumblezone:block/honeycomb_brood_block/item_stage_1_honeycomb_brood_block"
     }
   }
 }
