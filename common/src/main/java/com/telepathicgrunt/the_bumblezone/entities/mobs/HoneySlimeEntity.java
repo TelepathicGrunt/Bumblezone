@@ -159,7 +159,8 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
  	 return Mob.createMobAttributes()
               .add(Attributes.MAX_HEALTH, 8.0D)
               .add(Attributes.MOVEMENT_SPEED, 2.0D)
-              .add(Attributes.ATTACK_DAMAGE, 1.0D);
+              .add(Attributes.ATTACK_DAMAGE, 1.0D)
+              .add(Attributes.TEMPT_RANGE, 16.0);
     }
 
     @Override

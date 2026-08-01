@@ -71,37 +71,41 @@ public class HoneyCompass extends Item {
             HoneyCompassTargetData honeyCompassTargetData = itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
             Optional<Block> block = honeyCompassTargetData.getStoredBlock();
             if (block.isPresent() && block.get() != Blocks.AIR) {
-                return Component.translatable(this.getNameBase(itemStack), block.get().getName());
+                return this.getNameBase(itemStack, block);
             }
-            return Component.translatable(this.getNameBase(itemStack), Component.translatable("item.the_bumblezone.honey_compass_unknown_block"));
         }
-        return Component.translatable(this.getNameBase(itemStack));
+        return this.getNameBase(itemStack, Optional.empty());
     }
 
-    private String getNameBase(ItemStack itemStack) {
+    private Component getNameBase(ItemStack itemStack, Optional<Block> block) {
         HoneyCompassStateData honeyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
         if (honeyCompassStateData.isLoading()) {
-            return "item.the_bumblezone.honey_compass_structure_loading";
+            return Component.translatable("item.the_bumblezone.honey_compass_structure_loading");
         }
 
         if (honeyCompassStateData.isFailed()) {
-            return "item.the_bumblezone.honey_compass_structure_failed";
+            return Component.translatable("item.the_bumblezone.honey_compass_structure_failed");
         }
 
         HoneyCompassBaseData honeyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
         if (honeyCompassBaseData.customName().isPresent()) {
-            return honeyCompassBaseData.customName().get();
+            return Component.translatable(honeyCompassBaseData.customName().get());
         }
 
         if (honeyCompassBaseData.isStructureCompass()) {
-            return "item.the_bumblezone.honey_compass_structure";
+            return Component.translatable("item.the_bumblezone.honey_compass_structure");
         }
 
         if (honeyCompassBaseData.isBlockCompass()) {
-            return "item.the_bumblezone.honey_compass_block";
+            if (block.isPresent() && block.get() != Blocks.AIR) {
+                return Component.translatable("item.the_bumblezone.honey_compass_block", block.get().getName());
+            }
+            else {
+                return Component.translatable("item.the_bumblezone.honey_compass_block", Component.translatable("item.the_bumblezone.honey_compass_unknown_block"));
+            }
         }
 
-        return this.components().getOrDefault(DataComponents.ITEM_NAME, CommonComponents.EMPTY).getContents().toString();
+        return this.components().getOrDefault(DataComponents.ITEM_NAME, CommonComponents.EMPTY);
     }
 
     // CLIENT-SIDED

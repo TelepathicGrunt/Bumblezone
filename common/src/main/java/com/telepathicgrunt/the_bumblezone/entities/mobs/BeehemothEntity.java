@@ -130,9 +130,10 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Play
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 40.0D)
                 .add(Attributes.FLYING_SPEED, 0.4000000059604645D)
-                .add(Attributes.MOVEMENT_SPEED, 0.3)
+                .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.ATTACK_DAMAGE, 4.0D)
-                .add(Attributes.FOLLOW_RANGE, 128.0D);
+                .add(Attributes.FOLLOW_RANGE, 128.0D)
+                .add(Attributes.TEMPT_RANGE, 32.0D);
     }
 
     @Override

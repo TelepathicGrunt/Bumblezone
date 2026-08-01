@@ -5,8 +5,11 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
   - common/src/main/resources/assets/the_bumblezone/shaders
 - Make TradeHintParticle work again or move it into the Bee Queen Renderer instead (moving to bee queen renderer may be best way to go)
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/particles/TradeHintParticle.java
+- Fix floral headwear not rendering when worn
+- FIx bee armor not rendering properly when worn
 - Search TODO and verify they are all completed
 - Test the everliving hell out of EVERYTHING
+- Commission new textures for spawn eggs
 
 
 ### **(V.7.9.0 Changes) (26.1.2 Minecraft)**

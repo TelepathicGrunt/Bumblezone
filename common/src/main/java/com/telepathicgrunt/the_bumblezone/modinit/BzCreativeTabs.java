@@ -213,23 +213,7 @@ public class BzCreativeTabs {
                     BzItems.HONEY_WEB,
                     BzItems.PILE_OF_POLLEN_SUSPICIOUS,
                     BzItems.POTION_CANDLE,
-                    BzItems.SUPER_CANDLE,
-                    BzItems.SUPER_CANDLE_WHITE,
-                    BzItems.SUPER_CANDLE_LIGHT_GRAY,
-                    BzItems.SUPER_CANDLE_GRAY,
-                    BzItems.SUPER_CANDLE_BLACK,
-                    BzItems.SUPER_CANDLE_BROWN,
-                    BzItems.SUPER_CANDLE_RED,
-                    BzItems.SUPER_CANDLE_ORANGE,
-                    BzItems.SUPER_CANDLE_YELLOW,
-                    BzItems.SUPER_CANDLE_LIME,
-                    BzItems.SUPER_CANDLE_GREEN,
-                    BzItems.SUPER_CANDLE_CYAN,
-                    BzItems.SUPER_CANDLE_LIGHT_BLUE,
-                    BzItems.SUPER_CANDLE_BLUE,
-                    BzItems.SUPER_CANDLE_PURPLE,
-                    BzItems.SUPER_CANDLE_MAGENTA,
-                    BzItems.SUPER_CANDLE_PINK
+                    BzItems.SUPER_CANDLE
             ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
 
@@ -293,6 +277,16 @@ public class BzCreativeTabs {
 
         if (event.type() == BzAddCreativeTabEntriesEvent.Type.TOOLS) {
             Stream.of(
+                    BzItems.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV,
+                    BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY,
+                    BzItems.MUSIC_DISC_RIVERS_OF_HONEY_MOSERAO,
+                    BzItems.MUSIC_DISC_LA_BEE_DA_LOCA,
+                    BzItems.MUSIC_DISC_BEE_WARE_OF_THE_TEMPLE,
+                    BzItems.MUSIC_DISC_BEENNA_BOX,
+                    BzItems.MUSIC_DISC_RADIANCE_RENREN,
+                    BzItems.MUSIC_DISC_LIFE_RENREN,
+                    BzItems.MUSIC_DISC_KNOWING_RENREN,
+                    BzItems.MUSIC_DISC_A_LAST_FIRST_LAST,
                     BzItems.BUZZING_BRIEFCASE
             ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
