@@ -80,8 +80,8 @@ public class CrystallineFlower extends BaseEntityBlock {
     private static final Component CONTAINER_TITLE = Component.translatable("container." + Bumblezone.MODID + ".crystalline_flower");
     private static final Component OCCUPIED_CRYSTALLINE_FLOWER_TEXT = Component.translatable("system.the_bumblezone.occupied_crystalline_flower");
 
-    public CrystallineFlower() {
-        this(Properties.of()
+    public CrystallineFlower(Properties properties) {
+        super(properties
                 .mapColor(MapColor.TERRACOTTA_YELLOW)
                 .lightLevel((blockState) -> blockState.getValue(FLOWER) ? 7 : 0)
                 .noCollision()
@@ -89,11 +89,6 @@ public class CrystallineFlower extends BaseEntityBlock {
                 .strength(0.4F, 0.01F)
                 .pushReaction(PushReaction.DESTROY)
                 .sound(BzSounds.HONEY_CRYSTALS_TYPE));
-    }
-
-
-    public CrystallineFlower(Properties properties) {
-        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(FLOWER, false));
     }

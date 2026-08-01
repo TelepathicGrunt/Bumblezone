@@ -52,8 +52,8 @@ public class HeavyAir extends Block {
 
     private static final ConcurrentMap<String, Integer> APPLIED_PUSH_FOR_ENTITY = new MapMaker().concurrencyLevel(2).weakKeys().makeMap();
 
-    public HeavyAir() {
-        this(Properties.of()
+    public HeavyAir(Properties properties) {
+        super(properties
                 .strength(0.05f, 0)
                 .air()
                 .noCollision()
@@ -61,10 +61,6 @@ public class HeavyAir extends Block {
                 .noLootTable()
                 .noOcclusion()
                 .pushReaction(PushReaction.DESTROY));
-    }
-
-    public HeavyAir(Properties properties) {
-        super(properties);
     }
 
     @Override

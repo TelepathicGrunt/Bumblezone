@@ -37,17 +37,13 @@ public class RoyalJellyBlock extends HalfTransparentBlock implements BlockExtens
 
     public static final MapCodec<RoyalJellyBlock> CODEC = Block.simpleCodec(RoyalJellyBlock::new);
 
-    public RoyalJellyBlock() {
-        this(Properties.of()
+    public RoyalJellyBlock(Properties properties) {
+        super(properties
                 .mapColor(MapColor.COLOR_PURPLE)
                 .speedFactor(0.4F)
                 .jumpFactor(0.5F)
                 .noOcclusion()
                 .sound(SoundType.HONEY_BLOCK));
-    }
-
-    public RoyalJellyBlock(Properties properties) {
-        super(properties);
     }
 
     @Override

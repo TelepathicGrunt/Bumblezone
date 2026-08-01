@@ -21,15 +21,11 @@ public class AncientWax extends Block implements AncientWaxBase {
 
     public static final MapCodec<AncientWax> CODEC = Block.simpleCodec(AncientWax::new);
 
-    public AncientWax() {
-        this(Properties.of()
+    public AncientWax(Properties properties) {
+        super(properties
                 .mapColor(MapColor.TERRACOTTA_BROWN)
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(3.0F, 19.0F));
-    }
-
-    public AncientWax(Properties properties) {
-        super(properties);
     }
 
     @Override

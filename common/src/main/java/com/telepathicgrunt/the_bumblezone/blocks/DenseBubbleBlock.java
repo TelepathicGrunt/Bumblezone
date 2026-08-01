@@ -39,8 +39,8 @@ public class DenseBubbleBlock extends Block implements BucketPickup {
 
     public static final MapCodec<DenseBubbleBlock> CODEC = Block.simpleCodec(DenseBubbleBlock::new);
 
-    public DenseBubbleBlock() {
-        this(Properties.of()
+    public DenseBubbleBlock(Properties properties) {
+        super(properties
                 .mapColor(MapColor.WATER)
                 .liquid()
                 .noCollision()
@@ -49,10 +49,6 @@ public class DenseBubbleBlock extends Block implements BucketPickup {
                 .replaceable()
                 .sound(SoundType.EMPTY)
                 .pushReaction(PushReaction.DESTROY));
-    }
-
-    public DenseBubbleBlock(Properties properties) {
-        super(properties);
     }
 
     @Override

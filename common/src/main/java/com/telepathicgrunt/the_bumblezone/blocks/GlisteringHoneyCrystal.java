@@ -34,22 +34,18 @@ public class GlisteringHoneyCrystal extends ProperFacingBlock implements BlockEx
 
     public static final MapCodec<GlisteringHoneyCrystal> CODEC = Block.simpleCodec(GlisteringHoneyCrystal::new);
 
-    public GlisteringHoneyCrystal() {
-        this(BlockBehaviour.Properties.of()
+    public GlisteringHoneyCrystal(Properties properties) {
+        super(properties
                 .mapColor(MapColor.TERRACOTTA_YELLOW)
                 .instrument(NoteBlockInstrument.PLING)
-                .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
-                .isRedstoneConductor((blockState, blockGetter, blockPos) -> false)
-                .isSuffocating((blockState, blockGetter, blockPos) -> false)
-                .isViewBlocking((blockState, blockGetter, blockPos) -> false)
-                .lightLevel((blockState) -> 11)
+                .isValidSpawn((_, _, _, _) -> false)
+                .isRedstoneConductor((_, _, _) -> false)
+                .isSuffocating((_, _, _) -> false)
+                .isViewBlocking((_, _, _) -> false)
+                .lightLevel((_) -> 11)
                 .strength(0.4F, 0.4f)
                 .sound(BzSounds.HONEY_CRYSTALS_TYPE)
                 .noOcclusion());
-    }
-
-    public GlisteringHoneyCrystal(Properties properties) {
-        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.UP));
     }

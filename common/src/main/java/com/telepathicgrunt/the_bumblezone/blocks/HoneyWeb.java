@@ -68,18 +68,14 @@ public class HoneyWeb extends Block {
 
     public static final MapCodec<HoneyWeb> CODEC = Block.simpleCodec(HoneyWeb::new);
 
-    public HoneyWeb() {
-        this(Properties.of()
+    public HoneyWeb(Properties properties) {
+        super(properties
                 .mapColor(MapColor.TERRACOTTA_ORANGE)
                 .noOcclusion()
                 .noCollision()
                 .requiresCorrectToolForDrops()
                 .strength(4.0F)
                 .pushReaction(PushReaction.DESTROY));
-    }
-
-    public HoneyWeb(Properties properties) {
-        super(properties);
 
         this.collisionShapeByIndex = this.makeShapes();
         this.shapeByIndex = this.makeShapes();

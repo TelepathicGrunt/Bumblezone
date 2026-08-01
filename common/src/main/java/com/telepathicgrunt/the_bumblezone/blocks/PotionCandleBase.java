@@ -71,18 +71,14 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
 
     public static final MapCodec<PotionCandleBase> CODEC = Block.simpleCodec(PotionCandleBase::new);
 
-    public PotionCandleBase() {
-        this(Properties.of()
+    public PotionCandleBase(Properties properties) {
+        super(properties
                 .mapColor(MapColor.SAND)
                 .lightLevel((blockState) -> blockState.getValue(LIT) ? 15 : 0)
                 .noOcclusion()
                 .strength(0.1F)
                 .sound(SoundType.CANDLE)
                 .pushReaction(PushReaction.DESTROY));
-    }
-
-    public PotionCandleBase(Properties properties) {
-        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
     }
@@ -190,9 +186,14 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
 
     @Override
     public InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        if (level instanceof ServerLevel serverLevel && player.mayInteract(serverLevel, blockPos) && (!PlatformService.INSTANCE.isNeoForge() || !PlatformService.INSTANCE.isItemAbility(itemStack, null, "firestarter_light"))) {
+        if (!PlatformService.INSTANCE.isNeoForge() || !PlatformService.INSTANCE.isItemAbility(itemStack, null, "firestarter_light")) {
             if (CandleUnlightBehaviors(itemStack, blockState, level, blockPos, player, false) || CandleLightBehaviors(itemStack, blockState, level, blockPos, player, interactionHand, false)) {
-                return InteractionResult.SUCCESS_SERVER;
+                if (level instanceof ServerLevel serverLevel && player.mayInteract(serverLevel, blockPos)) {
+                    return InteractionResult.SUCCESS_SERVER;
+                }
+                else if (level.isClientSide()) {
+                    return InteractionResult.SUCCESS;
+                }
             }
         }
         return InteractionResult.PASS;

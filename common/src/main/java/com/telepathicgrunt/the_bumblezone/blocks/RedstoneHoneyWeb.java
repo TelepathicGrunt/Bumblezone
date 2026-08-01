@@ -46,18 +46,14 @@ public class RedstoneHoneyWeb extends HoneyWeb {
 
     public static final MapCodec<RedstoneHoneyWeb> CODEC = Block.simpleCodec(RedstoneHoneyWeb::new);
 
-    public RedstoneHoneyWeb() {
-        this(Properties.of()
+    public RedstoneHoneyWeb(Properties properties) {
+        super(properties
                 .mapColor(MapColor.TERRACOTTA_RED)
                 .lightLevel(blockState -> (blockState.getValue(POWER) + 9) / 10)
                 .noCollision()
                 .requiresCorrectToolForDrops()
                 .strength(4.0F)
                 .pushReaction(PushReaction.DESTROY));
-    }
-
-    public RedstoneHoneyWeb(Properties properties) {
-        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(NORTHSOUTH, false)

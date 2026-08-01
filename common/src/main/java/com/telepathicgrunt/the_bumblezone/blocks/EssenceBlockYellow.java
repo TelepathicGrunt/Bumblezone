@@ -56,20 +56,16 @@ public class EssenceBlockYellow extends EssenceBlock {
 
     private static final int RINGS_TO_PASS = 100;
 
-    public EssenceBlockYellow() {
-        this(Properties.of()
+    public EssenceBlockYellow(Properties properties) {
+        super(properties
                 .mapColor(MapColor.COLOR_YELLOW)
                 .strength(-1.0f, 3600000.8f)
-                .lightLevel((blockState) -> 15)
+                .lightLevel((_) -> 15)
                 .noLootTable()
                 .forceSolidOn()
-                .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
-                .isViewBlocking((blockState, blockGetter, blockPos) -> false)
+                .isValidSpawn((_, _, _, _) -> false)
+                .isViewBlocking((_, _, _) -> false)
                 .pushReaction(PushReaction.BLOCK));
-    }
-
-    public EssenceBlockYellow(Properties properties) {
-        super(properties);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.blockentities.InfinityBarrierBl
 import net.minecraft.client.color.block.BlockTintSource;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -20,7 +21,7 @@ public class InfinityBarrierBlockTintSource {
                 if (level != null) {
                     BlockEntity blockEntity = level.getBlockEntity(pos);
                     if (blockEntity instanceof InfinityBarrierBlockEntity infinityBarrierBlockEntity) {
-                        return infinityBarrierBlockEntity.getPrimaryColor();
+                        return ARGB.color(255, infinityBarrierBlockEntity.getPrimaryColor());
                     }
                 }
                 return color(state);
@@ -40,7 +41,7 @@ public class InfinityBarrierBlockTintSource {
                 if (level != null) {
                     BlockEntity blockEntity = level.getBlockEntity(pos);
                     if (blockEntity instanceof InfinityBarrierBlockEntity infinityBarrierBlockEntity) {
-                            return infinityBarrierBlockEntity.getSecondaryColor();
+                            return ARGB.color(255, infinityBarrierBlockEntity.getSecondaryColor());
                     }
                 }
                 return color(state);

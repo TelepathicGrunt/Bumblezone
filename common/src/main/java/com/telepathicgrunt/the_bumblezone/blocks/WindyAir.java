@@ -52,8 +52,8 @@ public class WindyAir extends ProperFacingBlock {
 
     public static final MapCodec<WindyAir> CODEC = Block.simpleCodec(WindyAir::new);
 
-    public WindyAir() {
-        this(Properties.of()
+    public WindyAir(Properties properties) {
+        super(properties
                 .strength(0.05f, 0)
                 .air()
                 .noCollision()
@@ -61,10 +61,6 @@ public class WindyAir extends ProperFacingBlock {
                 .noLootTable()
                 .noOcclusion()
                 .pushReaction(PushReaction.DESTROY));
-    }
-
-    public WindyAir(Properties properties) {
-        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.UP));
     }

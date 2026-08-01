@@ -79,17 +79,13 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     protected final VoxelShape shape;
     public static final int waterDropDelay = 150;
 
-    public HoneyCocoon() {
-        this(Properties.of()
+    public HoneyCocoon(Properties properties) {
+        super(properties
                 .mapColor(MapColor.COLOR_YELLOW)
                 .strength(0.3F, 0.3F)
                 .randomTicks()
                 .noOcclusion()
                 .sound(SoundType.HONEY_BLOCK));
-    }
-
-    public HoneyCocoon(Properties properties) {
-        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE).setValue(IS_LOOT_CONTAINER, Boolean.FALSE));
 

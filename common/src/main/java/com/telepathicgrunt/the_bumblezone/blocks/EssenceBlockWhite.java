@@ -35,20 +35,16 @@ public class EssenceBlockWhite extends EssenceBlock {
 
     public static final MapCodec<EssenceBlockWhite> CODEC = Block.simpleCodec(EssenceBlockWhite::new);
 
-    public EssenceBlockWhite() {
-        this(Properties.of()
+    public EssenceBlockWhite(Properties properties) {
+        super(properties
                 .mapColor(MapColor.SNOW)
                 .strength(-1.0f, 3600000.8f)
-                .lightLevel((blockState) -> 15)
+                .lightLevel((_) -> 15)
                 .noLootTable()
                 .forceSolidOn()
-                .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
-                .isViewBlocking((blockState, blockGetter, blockPos) -> false)
+                .isValidSpawn((_, _, _, _) -> false)
+                .isViewBlocking((_, _, _) -> false)
                 .pushReaction(PushReaction.BLOCK));
-    }
-
-    public EssenceBlockWhite(Properties properties) {
-        super(properties);
     }
 
     @Override

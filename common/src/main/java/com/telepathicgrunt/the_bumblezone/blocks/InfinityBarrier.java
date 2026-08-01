@@ -34,19 +34,15 @@ public class InfinityBarrier extends BaseEntityBlock implements BlockExtension {
 
     public static final MapCodec<InfinityBarrier> CODEC = Block.simpleCodec(InfinityBarrier::new);
 
-    public InfinityBarrier() {
-        this(Properties.of()
+    public InfinityBarrier(Properties properties) {
+        super(properties
                 .mapColor(MapColor.NONE)
                 .strength(-1.0F, 3600000.8F)
-                .lightLevel((blockState) -> 15)
+                .lightLevel((_) -> 15)
                 .noLootTable()
                 .noTerrainParticles()
-                .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
+                .isValidSpawn((_, _, _, _) -> false)
                 .pushReaction(PushReaction.BLOCK));
-    }
-
-    public InfinityBarrier(Properties properties) {
-        super(properties);
     }
 
     @Override

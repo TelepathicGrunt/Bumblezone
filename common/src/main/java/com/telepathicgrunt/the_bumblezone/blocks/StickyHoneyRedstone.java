@@ -150,8 +150,8 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
         for (Direction direction : Direction.values()) {
             if (blockstate.getValue(StickyHoneyResidue.FACING_TO_PROPERTY_MAP.get(direction))) {
                 BlockPos blockPos = pos.relative(direction);
-                level.neighborChanged(blockPos, this, orientation.withFront(direction));
-                level.updateNeighborsAtExceptFromFacing(blockPos, this, direction, orientation.withFront(direction));
+                level.neighborChanged(blockPos, this, orientation == null ? null : orientation.withFront(direction));
+                level.updateNeighborsAtExceptFromFacing(blockPos, this, direction, orientation == null ? null : orientation.withFront(direction));
             }
         }
     }

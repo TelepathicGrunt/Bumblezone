@@ -145,9 +145,14 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
 
     @Override
     public InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        if (level instanceof ServerLevel serverLevel && player.mayInteract(serverLevel, blockPos) && (!PlatformService.INSTANCE.isNeoForge() || !PlatformService.INSTANCE.isItemAbility(itemStack, null, "firestarter_light"))) {
+        if (!PlatformService.INSTANCE.isNeoForge() || !PlatformService.INSTANCE.isItemAbility(itemStack, null, "firestarter_light")) {
             if (CandleUnlightBehaviors(itemStack, blockState, level, blockPos, player, false) || CandleLightBehaviors(itemStack, blockState, level, blockPos, player, interactionHand, false)) {
-                return InteractionResult.SUCCESS_SERVER;
+                if (level instanceof ServerLevel serverLevel && player.mayInteract(serverLevel, blockPos)) {
+                    return InteractionResult.SUCCESS_SERVER;
+                }
+                else if (level.isClientSide()) {
+                    return InteractionResult.SUCCESS;
+                }
             }
         }
         return InteractionResult.PASS;

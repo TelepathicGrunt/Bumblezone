@@ -68,17 +68,12 @@ public class CarvableWax extends ProperFacingBlock {
 
     private Item item;
 
-    public CarvableWax() {
-        this(Properties.of()
+    public CarvableWax(Properties properties) {
+        super(properties
                 .mapColor(MapColor.SAND)
                 .instrument(NoteBlockInstrument.FLUTE)
                 .strength(0.28F, 0.28F)
                 .sound(SoundType.WOOD));
-    }
-
-
-    public CarvableWax(Properties properties) {
-        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(CARVING, Carving.UNCARVED));
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.UP));

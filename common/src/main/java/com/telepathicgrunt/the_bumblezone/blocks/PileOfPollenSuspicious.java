@@ -74,8 +74,8 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
     public PileOfPollenSuspicious(Block block, SoundEvent soundEvent1, SoundEvent soundEvent2, BlockBehaviour.Properties properties) {
         super(block, soundEvent1, soundEvent2, properties
                 .mapColor(MapColor.COLOR_YELLOW)
-                .isViewBlocking((blockState, world, blockPos) -> true)
-                .isSuffocating((blockState, blockGetter, blockPos) -> false)
+                .isViewBlocking((_, _, _) -> true)
+                .isSuffocating((_, _, _) -> false)
                 .noOcclusion()
                 .noCollision()
                 .strength(0.1F)

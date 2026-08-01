@@ -87,8 +87,8 @@ public class PileOfPollen extends FallingBlock {
     public PileOfPollen(Properties properties) {
         super(properties
                 .mapColor(MapColor.COLOR_YELLOW)
-                .isViewBlocking((blockState, world, blockPos) -> true)
-                .isSuffocating((blockState, blockGetter, blockPos) -> false)
+                .isViewBlocking((_, _, _) -> true)
+                .isSuffocating((_, _, _) -> false)
                 .noOcclusion()
                 .noCollision()
                 .strength(0.1F)

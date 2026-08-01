@@ -51,19 +51,19 @@ public class EssenceBlockRed extends EssenceBlock {
     private static final int ENTITIES_TO_KILL = 100;
 
     public EssenceBlockRed() {
-        this(Properties.of()
-                .mapColor(MapColor.COLOR_RED)
-                .strength(-1.0f, 3600000.8f)
-                .lightLevel((blockState) -> 15)
-                .noLootTable()
-                .forceSolidOn()
-                .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
-                .isViewBlocking((blockState, blockGetter, blockPos) -> false)
-                .pushReaction(PushReaction.BLOCK));
+        this(Properties.of());
     }
 
     public EssenceBlockRed(Properties properties) {
-        super(properties);
+        super(properties
+                .mapColor(MapColor.COLOR_RED)
+                .strength(-1.0f, 3600000.8f)
+                .lightLevel((_) -> 15)
+                .noLootTable()
+                .forceSolidOn()
+                .isValidSpawn((_, _, _, _) -> false)
+                .isViewBlocking((_, _, _) -> false)
+                .pushReaction(PushReaction.BLOCK));
     }
 
     @Override

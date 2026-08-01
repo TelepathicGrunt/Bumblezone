@@ -59,20 +59,16 @@ public class EssenceBlockBlue extends EssenceBlock {
 
     private static final int ENTITIES_TO_KILL = 50;
 
-    public EssenceBlockBlue() {
-        this(Properties.of()
+    public EssenceBlockBlue(Properties properties) {
+        super(properties
                 .mapColor(MapColor.COLOR_BLUE)
                 .strength(-1.0f, 3600000.8f)
-                .lightLevel((blockState) -> 15)
+                .lightLevel((_) -> 15)
                 .noLootTable()
                 .forceSolidOn()
-                .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
-                .isViewBlocking((blockState, blockGetter, blockPos) -> false)
+                .isValidSpawn((_, _, _, _) -> false)
+                .isViewBlocking((_, _, _) -> false)
                 .pushReaction(PushReaction.BLOCK));
-    }
-
-    public EssenceBlockBlue(Properties properties) {
-        super(properties);
     }
 
     @Override

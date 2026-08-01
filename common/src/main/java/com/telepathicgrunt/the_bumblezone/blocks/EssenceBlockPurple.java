@@ -40,20 +40,16 @@ public class EssenceBlockPurple extends EssenceBlock {
 
     public static final int INTERVALS = 36;
 
-    public EssenceBlockPurple() {
-        this(Properties.of()
+    public EssenceBlockPurple(Properties properties) {
+        super(properties
                 .mapColor(MapColor.COLOR_PURPLE)
                 .strength(-1.0f, 3600000.8f)
-                .lightLevel((blockState) -> 15)
+                .lightLevel((_) -> 15)
                 .noLootTable()
                 .forceSolidOn()
-                .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
-                .isViewBlocking((blockState, blockGetter, blockPos) -> false)
+                .isValidSpawn((_, _, _, _) -> false)
+                .isViewBlocking((_, _, _) -> false)
                 .pushReaction(PushReaction.BLOCK));
-    }
-
-    public EssenceBlockPurple(Properties properties) {
-        super(properties);
     }
 
     @Override
