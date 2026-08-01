@@ -19,7 +19,6 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenRender
     protected void scale(BeeQueenRenderState state, PoseStack poseStack) {
         float scale = 2.6f;
         poseStack.scale(scale, scale, scale);
-        poseStack.translate(0, -0.92, 0);
     }
 
     @Override
