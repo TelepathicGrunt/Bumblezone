@@ -54,7 +54,7 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
         int disallowedBottomRange = Integer.MAX_VALUE;
         int disallowedTopRange = Integer.MIN_VALUE;
         if (context.level() instanceof WorldGenRegion worldGenRegion) {
-            Registry<Structure> structureRegistry = worldGenRegion.registryAccess().getOrThrow(Registries.STRUCTURE).value();
+            Registry<Structure> structureRegistry = worldGenRegion.registryAccess().lookupOrThrow(Registries.STRUCTURE);
             StructureManager structureManager = context.level().getLevel().structureManager();
             SectionPos sectionPos = SectionPos.of(mutableBlockPos);
             List<StructureStart> structureStarts = GeneralUtils.startsForAllStructure(worldGenRegion, structureManager, sectionPos,

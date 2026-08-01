@@ -84,7 +84,7 @@ public class FilledPorousHoneycomb extends Block {
                 !playerEntity.isSpectator() &&
                 BzBeeAggressionConfigs.aggressiveBees)
             {
-                Registry<MobEffect> mobEffects = level.registryAccess().getOrThrow(Registries.MOB_EFFECT).value();
+                Registry<MobEffect> mobEffects = level.registryAccess().lookupOrThrow(Registries.MOB_EFFECT);
                 boolean hasProtection = playerEntity.hasEffect(mobEffects.get(BzEffects.PROTECTION_OF_THE_HIVE.getId()).get());
                 if(!hasProtection &&
                     playerEntity instanceof ServerPlayer serverPlayer &&

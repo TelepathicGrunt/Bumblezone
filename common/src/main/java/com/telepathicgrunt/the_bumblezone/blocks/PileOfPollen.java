@@ -438,7 +438,7 @@ public class PileOfPollen extends FallingBlock {
 
     static void applyHiddenEffectIfBuried(LivingEntity livingEntity, BlockState blockState, BlockPos blockPos, boolean doesNotRefreshExistingHidden) {
 
-        Registry<MobEffect> mobEffects = livingEntity.level().registryAccess().getOrThrow(Registries.MOB_EFFECT).value();
+        Registry<MobEffect> mobEffects = livingEntity.level().registryAccess().lookupOrThrow(Registries.MOB_EFFECT);
         Holder.Reference<MobEffect> hiddenEffectReference = mobEffects.get(BzEffects.HIDDEN.getId()).get();
         if (doesNotRefreshExistingHidden) {
             if (livingEntity.hasEffect(hiddenEffectReference)) {

@@ -166,8 +166,8 @@ public class MusicHandler {
 
     public static void playStopEssenceEventMusic(Player entity, Identifier identifier, boolean play) {
         Minecraft minecraftClient = Minecraft.getInstance();
-        SoundEvent soundEvent = minecraftClient.level.registryAccess().getOrThrow(Registries.SOUND_EVENT).value().get(identifier).get().value();
-        if (soundEvent == null || !GeneralUtils.isInTag(minecraftClient.level.registryAccess().getOrThrow(Registries.SOUND_EVENT).value(), BzTags.ESSENCE_EVENT_MUSIC, soundEvent)) {
+        SoundEvent soundEvent = minecraftClient.level.registryAccess().lookupOrThrow(Registries.SOUND_EVENT).get(identifier).get().value();
+        if (soundEvent == null || !GeneralUtils.isInTag(minecraftClient.level.registryAccess().lookupOrThrow(Registries.SOUND_EVENT), BzTags.ESSENCE_EVENT_MUSIC, soundEvent)) {
             return;
         }
 

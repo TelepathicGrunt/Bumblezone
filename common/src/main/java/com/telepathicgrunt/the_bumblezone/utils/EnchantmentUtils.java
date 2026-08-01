@@ -53,7 +53,7 @@ public class EnchantmentUtils {
 		boolean bookFlag = itemStack.is(Items.BOOK) || itemStack.is(Items.ENCHANTED_BOOK);
 		boolean allowTreasure = xpTier == 7;
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(itemStack);
-		Registry<Enchantment> enchantmentRegistry = level.registryAccess().getOrThrow(Registries.ENCHANTMENT).value();
+		Registry<Enchantment> enchantmentRegistry = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
 		enchantmentRegistry.listElements().forEach(enchantment -> {
 
 			boolean forceAllowed = enchantment.is(BzTags.FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
@@ -128,10 +128,10 @@ public class EnchantmentUtils {
 	}
 
 	public static Holder<Enchantment> getEnchantmentHolder(Identifier enchantmentRL, Level level) {
-		return level.registryAccess().getOrThrow(Registries.ENCHANTMENT).value().get(enchantmentRL).orElse(null);
+		return level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(enchantmentRL).orElse(null);
 	}
 
 	public static Holder<Enchantment> getEnchantmentHolder(ResourceKey<Enchantment> enchantmentRL, Level level) {
-		return level.registryAccess().getOrThrow(Registries.ENCHANTMENT).value().get(enchantmentRL).orElse(null);
+		return level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(enchantmentRL).orElse(null);
 	}
 }

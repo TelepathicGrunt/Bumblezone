@@ -11,7 +11,7 @@ public class BiomeRegistryHolder {
     private static final Identifier EMPTY_RL = Identifier.fromNamespaceAndPath("b", "empty");
 
     public static void setupBiomeRegistry(MinecraftServer server) {
-        BIOME_REGISTRY = server.registryAccess().getOrThrow(Registries.BIOME).value();
+        BIOME_REGISTRY = server.registryAccess().lookupOrThrow(Registries.BIOME);
     }
 
     public static Identifier convertToRL(int id) {

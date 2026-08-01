@@ -125,7 +125,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                     BzBeeAggressionConfigs.aggressiveBees &&
                     level.getDifficulty() != Difficulty.PEACEFUL)
             {
-                Registry<MobEffect> mobEffects = level.registryAccess().getOrThrow(Registries.MOB_EFFECT).value();
+                Registry<MobEffect> mobEffects = level.registryAccess().lookupOrThrow(Registries.MOB_EFFECT);
                 if (playerEntity instanceof ServerPlayer serverPlayer && !EssenceOfTheBees.hasEssence(serverPlayer)) {
                     Holder.Reference<MobEffect> wrathOfTheHiveEffectHolder = mobEffects.get(BzEffects.WRATH_OF_THE_HIVE.getId()).get();
                     if(playerEntity.hasEffect(wrathOfTheHiveEffectHolder)) {
@@ -221,7 +221,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
     private static void applyProtection(Player playerEntity) {
         Level level = playerEntity.level();
-        Registry<MobEffect> mobEffects = level.registryAccess().getOrThrow(Registries.MOB_EFFECT).value();
+        Registry<MobEffect> mobEffects = level.registryAccess().lookupOrThrow(Registries.MOB_EFFECT);
 
         playerEntity.addEffect(new MobEffectInstance(
                 mobEffects.get(BzEffects.PROTECTION_OF_THE_HIVE.getId()).get(),
@@ -257,7 +257,7 @@ public class HoneycombBrood extends ProperFacingBlock {
         List<LivingEntity> nearbyEntities = null;
 
         if (level.getDifficulty() == Difficulty.PEACEFUL) {
-            Registry<MobEffect> mobEffects = level.registryAccess().getOrThrow(Registries.MOB_EFFECT).value();
+            Registry<MobEffect> mobEffects = level.registryAccess().lookupOrThrow(Registries.MOB_EFFECT);
             nearbyEntities = level.getEntitiesOfClass(
                     LivingEntity.class,
                     new AABB(position).inflate(WrathOfTheHiveEffect.NEARBY_WRATH_EFFECT_RADIUS),

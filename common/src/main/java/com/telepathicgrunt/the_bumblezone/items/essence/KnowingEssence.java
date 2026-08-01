@@ -80,7 +80,7 @@ public class KnowingEssence extends AbilityEssenceItem {
                     List<StructureStart> structureStarts = structureManager.startsForStructure(ChunkPos.containing(serverPlayer.blockPosition()), s -> true);
                     List<Structure> structures = new ArrayList<>();
 
-                    Registry<Structure> structureRegistry = level.registryAccess().getOrThrow(Registries.STRUCTURE).value();
+                    Registry<Structure> structureRegistry = level.registryAccess().lookupOrThrow(Registries.STRUCTURE);
 
                     for(StructureStart structureStart : structureStarts) {
                         if (structureStart.getBoundingBox().isInside(serverPlayer.blockPosition())) {

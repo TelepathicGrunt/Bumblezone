@@ -57,7 +57,7 @@ public interface LuminescentWaxBase {
                             false,
                             true));
 
-                    Registry<MobEffect> mobEffects = livingEntity.level().registryAccess().getOrThrow(Registries.MOB_EFFECT).value();
+                    Registry<MobEffect> mobEffects = livingEntity.level().registryAccess().lookupOrThrow(Registries.MOB_EFFECT);
                     livingEntity.addEffect(new MobEffectInstance(
                             mobEffects.get(BzEffects.BEENERGIZED.getId()).get(),
                             110,

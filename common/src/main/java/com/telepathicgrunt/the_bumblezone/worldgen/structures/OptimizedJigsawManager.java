@@ -110,7 +110,7 @@ public class OptimizedJigsawManager {
         // Get starting pool
         StructureTemplatePool startPool = startPoolHolder.value();
         if(startPool.size() == 0) {
-            Identifier structureID = context.registryAccess().getOrThrow(Registries.STRUCTURE).value().getKey(structureObject);
+            Identifier structureID = context.registryAccess().lookupOrThrow(Registries.STRUCTURE).getKey(structureObject);
             Bumblezone.LOGGER.warn("Bumblezone: Empty or nonexistent start pool in structure: {}  Crash is imminent", structureID);
             throw new RuntimeException("Bumblezone: Empty or nonexistent start pool in structure: " + structureID + " Crash is imminent");
         }
@@ -184,7 +184,7 @@ public class OptimizedJigsawManager {
         int finalPieceCenterY = pieceCenterY;
 
         // Get jigsaw pool registry
-        Registry<StructureTemplatePool> jigsawPoolRegistry = context.registryAccess().getOrThrow(Registries.TEMPLATE_POOL).value();
+        Registry<StructureTemplatePool> jigsawPoolRegistry = context.registryAccess().lookupOrThrow(Registries.TEMPLATE_POOL);
 
         return Optional.of(new Structure.GenerationStub(new BlockPos(pieceCenterX, pieceCenterY, pieceCenterZ), (structurePiecesBuilder) -> {
 //            var timer1 = System.currentTimeMillis();

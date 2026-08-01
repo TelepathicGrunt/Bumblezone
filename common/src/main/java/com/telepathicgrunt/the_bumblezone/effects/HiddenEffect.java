@@ -43,7 +43,7 @@ public class HiddenEffect extends BzEffect {
     public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity livingEntity, int amplifier) {
         super.applyEffectTick(serverLevel, livingEntity, amplifier);
 
-        Registry<MobEffect> mobEffects = serverLevel.registryAccess().getOrThrow(Registries.MOB_EFFECT).value();
+        Registry<MobEffect> mobEffects = serverLevel.registryAccess().lookupOrThrow(Registries.MOB_EFFECT);
         Holder.Reference<MobEffect> hiddenEffectReference = mobEffects.get(BzEffects.HIDDEN.getId()).get();
         MobEffectInstance effect = livingEntity.getEffect(hiddenEffectReference);
         if (effect != null && effect.getDuration() <= 1) {
@@ -78,7 +78,7 @@ public class HiddenEffect extends BzEffect {
     }
 
     public static double hideEntity(LivingEntity livingEntity) {
-        Registry<MobEffect> mobEffects = livingEntity.level().registryAccess().getOrThrow(Registries.MOB_EFFECT).value();
+        Registry<MobEffect> mobEffects = livingEntity.level().registryAccess().lookupOrThrow(Registries.MOB_EFFECT);
         Holder.Reference<MobEffect> hiddenEffectReference = mobEffects.get(BzEffects.HIDDEN.getId()).get();
         if (livingEntity.hasEffect(hiddenEffectReference)) {
             return 0;
