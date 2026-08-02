@@ -23,7 +23,17 @@ public class RootminGrassRenderer extends RenderLayer<RootminRenderState, Rootmi
         boolean forceTransparent = !isBodyVisible && !state.isInvisibleToPlayer;
         RenderType renderType = this.getRenderType(isBodyVisible, forceTransparent, state.appearsGlowing());
         if (renderType != null) {
-            collector.submitModel(this.getParentModel(), state, poseStack, renderType, lightCoords, LivingEntityRenderer.getOverlayCoords(state, 0.0F), state.getGrassColor(), null, state.outlineColor, null);
+            collector.submitModel(
+                    this.getParentModel(),
+                    state,
+                    poseStack,
+                    renderType,
+                    lightCoords,
+                    LivingEntityRenderer.getOverlayCoords(state, 0.0F),
+                    state.getGrassColor(),
+                    null,
+                    state.outlineColor,
+                    null);
         }
     }
 
