@@ -179,15 +179,14 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
        }
 
        this.xpReward = isBaby ? 1 : 2;
+       this.setBaby(isBaby);
     }
 
     @Override
     public void remove(Entity.RemovalReason removalReason) {
-       if (this.level() instanceof ServerLevel serverLevel && this.isDeadOrDying()) {
+       if (this.level() instanceof ServerLevel && this.isDeadOrDying()) {
           if (!this.isBaby()) {
 
-             Component component = this.getCustomName();
-             boolean flag = this.isNoAi();
              int splitAmount = 2 + this.random.nextInt(3);
              PlayerTeam team = this.getTeam();
 
@@ -197,7 +196,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
                 float zOffset = ((float)(currentNewSlime / 2) - 0.5F) * 0.5F;
                 if (isInHoney()) {
                     this.convertTo(BzEntities.HONEY_SLIME.get(), new ConversionParams(ConversionType.SPLIT_ON_DEATH, false, false, team), EntitySpawnReason.TRIGGERED, honeySlime -> {
-                        honeySlime.setupHoneySlime(honeySlime.isBaby(), true);
+                        honeySlime.setupHoneySlime(true, true);
                         honeySlime.snapTo(this.getX() + xOffset, this.getY() + 0.5, this.getZ() + zOffset, this.random.nextFloat() * 360.0F, 0.0F);
                     });
                 }

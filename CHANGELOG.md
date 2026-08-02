@@ -6,8 +6,13 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
 - Rootmin crashes on render
 - Fix floral headwear not rendering when worn
 - Fix bee armor not rendering properly when worn
+- Fix sugar water fluid physics
+- Fix fluid screen overlay for honey fluid and royal jelly fluid
+- Fix screen overlay when inside Pile of Pollen block
+- Fixed stinger spear crash when thrown at mob
 - Search TODO and verify they are all completed
 - Test the everliving hell out of EVERYTHING
+- Banner pattern texture change to match vanilla
 - Commission new textures for spawn eggs
 
 

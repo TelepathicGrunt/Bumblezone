@@ -245,7 +245,6 @@ public class FabricPlatformService implements PlatformService {
                 else {
                     blockState = world.getBlockState(blockPos);
                     BlockPos blockPos3 = blockState.getBlock() instanceof LiquidBlockContainer && fluid.is(FluidTags.WATER) ? blockPos : blockPos2;
-                    user.swingingArm = hand;
                     if (bzCustomBucketItem.emptyContents(user, world, blockPos3, blockHitResult)) {
                         bzCustomBucketItem.checkExtraContent(user, world, itemStack, blockPos3);
                         if (user instanceof ServerPlayer serverPlayer) {
@@ -253,8 +252,8 @@ public class FabricPlatformService implements PlatformService {
                         }
 
                         user.awardStat(Stats.ITEM_USED.get(bzCustomBucketItem));
-                        BucketItem.getEmptySuccessItem(itemStack, user);
-                        return InteractionResult.SUCCESS;
+                        ItemStack emptyResult = ItemUtils.createFilledResult(itemStack, user, BucketItem.getEmptySuccessItem(itemStack, user));
+                        return InteractionResult.SUCCESS.heldItemTransformedTo(emptyResult);
                     }
                     else {
                         return InteractionResult.FAIL;
