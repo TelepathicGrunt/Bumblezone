@@ -54,7 +54,7 @@ public final class NewLootInjectorApplier {
     }
 
     public static void injectLoot(LootContext context, List<ItemStack> originalLoot, Identifier lootTableToPullFrom) {
-        Optional<Holder.Reference<LootTable>> optionalLootTableReference = context.getResolver().getOrThrow(Registries.LOOT_TABLE).value().get(ResourceKey.create(Registries.LOOT_TABLE, lootTableToPullFrom));
+        Optional<Holder.Reference<LootTable>> optionalLootTableReference = context.getResolver().lookupOrThrow(Registries.LOOT_TABLE).get(ResourceKey.create(Registries.LOOT_TABLE, lootTableToPullFrom));
         if (optionalLootTableReference.isEmpty()) {
             return;
         }

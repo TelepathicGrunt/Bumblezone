@@ -43,8 +43,7 @@ public class SempiternalSanctumBehavior {
                     // Don't send message if player logs in while in structure.
                     if (serverPlayer.tickCount > 40) {
                         Identifier identifier = serverPlayer.level().registryAccess()
-                                .getOrThrow(Registries.STRUCTURE)
-                                .value()
+                                .lookupOrThrow(Registries.STRUCTURE)
                                 .getKey(detectedStructure.getStructure());
 
                         ChatFormatting color;

@@ -2,6 +2,8 @@ package com.telepathicgrunt.the_bumblezone.loot;
 
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
@@ -21,12 +23,13 @@ public class LootUtils {
             return CACHED_IS_ENTITY_LOOT_TABLES.getBoolean(lootTable);
         }
 
-        Identifier identifier = minecraftServer
+        HolderLookup.RegistryLookup<LootTable> tableRegistryLookup = minecraftServer
                 .reloadableRegistries()
                 .lookup()
-                .getOrThrow(Registries.LOOT_TABLE)
-                .value()
-                .getKey(lootTable);
+                .lookupOrThrow(Registries.LOOT_TABLE);
+
+        Identifier identifier = tableRegistryLookup instanceof MappedRegistry<LootTable> mappedRegistry ?
+                mappedRegistry.getKey(lootTable) : null;
 
         boolean isEntityLootTable = (identifier == null ? "" : identifier.getPath()).contains("entities/");
         CACHED_IS_ENTITY_LOOT_TABLES.put(lootTable, isEntityLootTable);

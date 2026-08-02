@@ -41,8 +41,7 @@ public class TreeDungeon extends NbtFeature<TreeDungeonFeatureConfig> {
             level.setBlock(center.above(), Blocks.CAVE_AIR.defaultBlockState(), 3);
 
             Optional<ConfiguredFeature<?, ?>> configuredFeature = level.registryAccess()
-                    .getOrThrow(Registries.CONFIGURED_FEATURE)
-                    .value()
+                    .lookupOrThrow(Registries.CONFIGURED_FEATURE)
                     .getOptional(context.config().treeConfiguredFeature);
 
             configuredFeature.ifPresent(cf -> cf.place(level, context.chunkGenerator(), context.random(), center));

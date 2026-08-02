@@ -259,7 +259,7 @@ public class FabricEventManager {
 
     private static Iterable<Holder<PlacedFeature>> getPlacedFeaturesByTag(BiomeModificationContext context, TagKey<PlacedFeature> placedFeatureTagKey) {
         RegistryAccess registryAccess = ((BiomeModificationContextImplMixin)context).bumblezone$getRegistries();
-        Registry<PlacedFeature> placedFeatureRegistry = registryAccess.getOrThrow(Registries.PLACED_FEATURE).value();
+        Registry<PlacedFeature> placedFeatureRegistry = registryAccess.lookupOrThrow(Registries.PLACED_FEATURE);
         return placedFeatureRegistry.getTagOrEmpty(placedFeatureTagKey);
     }
 
