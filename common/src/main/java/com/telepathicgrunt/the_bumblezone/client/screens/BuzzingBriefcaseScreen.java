@@ -24,6 +24,7 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.block.BlockModelResolver;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.state.BeeRenderState;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.resources.LegacyStuffWrapper;
 import net.minecraft.client.resources.model.EquipmentAssetManager;
@@ -263,6 +264,11 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     minecraft.playerSkinRenderCache()));
             LivingEntityRenderState renderState = (LivingEntityRenderState) entityRenderer.createRenderState();
             entityRenderer.extractRenderState(bee, renderState, partialTick);
+            if (renderState instanceof BeeRenderState beeRenderState) {
+                beeRenderState.hasNectar = false;
+                beeRenderState.isAngry = false;
+            }
+            renderState.isBaby = false;
             Identifier textureLocation = entityRenderer.getTextureLocation(renderState);
 
             int[] pixels = LegacyStuffWrapper.getPixels(minecraft.getResourceManager(), textureLocation);
