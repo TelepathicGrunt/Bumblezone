@@ -30,5 +30,6 @@
     [
       "variant_bee_briefcase_capture"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

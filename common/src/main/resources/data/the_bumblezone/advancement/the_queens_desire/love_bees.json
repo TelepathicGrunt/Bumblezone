@@ -33,5 +33,6 @@
     [
       "bee_breeding"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

@@ -28,5 +28,6 @@
     [
       "bee_stinger_paralyze"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

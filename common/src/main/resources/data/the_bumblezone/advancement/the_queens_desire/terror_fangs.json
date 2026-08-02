@@ -35,5 +35,6 @@
     [
       "cave_spider_killed"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

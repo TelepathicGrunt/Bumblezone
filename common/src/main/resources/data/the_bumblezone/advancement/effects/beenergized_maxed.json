@@ -28,5 +28,6 @@
     [
       "beenergized_maxed"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

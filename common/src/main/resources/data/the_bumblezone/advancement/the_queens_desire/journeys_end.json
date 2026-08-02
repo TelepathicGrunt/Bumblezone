@@ -168,5 +168,6 @@
     [
       "too_many_legs"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

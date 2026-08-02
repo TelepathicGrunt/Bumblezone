@@ -27,5 +27,6 @@
     [
       "buzzing_briefcase_heal"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

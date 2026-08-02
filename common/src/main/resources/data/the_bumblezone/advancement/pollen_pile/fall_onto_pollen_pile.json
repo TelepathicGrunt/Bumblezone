@@ -28,5 +28,6 @@
     [
       "fall_onto_pollen_pile"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

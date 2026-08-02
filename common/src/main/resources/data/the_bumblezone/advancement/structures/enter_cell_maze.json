@@ -40,5 +40,6 @@
     [
       "in_cell_maze"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

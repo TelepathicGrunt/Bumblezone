@@ -27,5 +27,6 @@
     [
       "rootmin_flower_swap"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

@@ -49,5 +49,6 @@
       "obtain_sugar_infused_stone",
       "obtain_sugar_infused_cobblestone"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

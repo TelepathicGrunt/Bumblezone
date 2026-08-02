@@ -177,5 +177,6 @@
     [
       "obtain_music_disc_beenna_box"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

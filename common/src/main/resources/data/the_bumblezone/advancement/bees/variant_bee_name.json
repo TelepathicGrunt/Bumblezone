@@ -43,5 +43,6 @@
     [
       "variant_bee_name"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

@@ -28,5 +28,6 @@
     [
       "pollen_puff_panda"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

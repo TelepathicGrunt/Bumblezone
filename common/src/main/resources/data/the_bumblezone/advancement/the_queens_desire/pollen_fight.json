@@ -33,5 +33,6 @@
     [
       "pollen_puff_hit"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

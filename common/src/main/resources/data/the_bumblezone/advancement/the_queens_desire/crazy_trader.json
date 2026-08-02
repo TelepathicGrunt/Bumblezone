@@ -33,5 +33,6 @@
     [
       "bee_queen_trading"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

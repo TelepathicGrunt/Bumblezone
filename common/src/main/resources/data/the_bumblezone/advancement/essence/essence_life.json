@@ -34,5 +34,6 @@
     [
       "essence_life"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

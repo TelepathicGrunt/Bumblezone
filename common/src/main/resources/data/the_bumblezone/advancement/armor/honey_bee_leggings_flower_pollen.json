@@ -2,8 +2,12 @@
   "parent": "the_bumblezone:armor/warrior_bee",
   "display": {
     "icon": {
-      "nbt": "{\"pollinated\":1b}",
-      "id": "the_bumblezone:honey_bee_leggings_1"
+      "id": "the_bumblezone:honey_bee_leggings_1",
+      "components": {
+        "the_bumblezone:honey_bee_leggings_data": {
+          "pollinated": true
+        }
+      }
     },
     "title": {
       "translate": "advancements.the_bumblezone.honey_bee_leggings_flower_pollen.title"
@@ -28,5 +32,6 @@
     [
       "honey_bee_leggings_flower_pollen"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

@@ -36,5 +36,6 @@
     [
       "obtain_stinger_spear"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

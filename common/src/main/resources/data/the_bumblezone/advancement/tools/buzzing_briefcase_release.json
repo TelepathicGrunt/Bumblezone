@@ -27,5 +27,6 @@
     [
       "buzzing_briefcase_release"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

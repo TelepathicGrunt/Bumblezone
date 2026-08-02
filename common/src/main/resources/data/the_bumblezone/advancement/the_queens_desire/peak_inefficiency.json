@@ -31,5 +31,6 @@
     [
       "stinger_spear_killed_with_wither"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

@@ -28,5 +28,6 @@
     [
       "royal_jelly_block_next_to_piston"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

@@ -27,5 +27,6 @@
     [
       "honey_cocoon_silk_touch"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

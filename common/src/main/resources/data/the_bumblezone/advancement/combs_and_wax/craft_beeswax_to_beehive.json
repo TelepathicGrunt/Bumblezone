@@ -30,5 +30,6 @@
     [
       "craft_beeswax_to_beehive"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

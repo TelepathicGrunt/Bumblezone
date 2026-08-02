@@ -7,6 +7,7 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
 - Check if it is my mixin on fabric that is breaking water physics and checks
 - Fix fluid screen overlay for honey fluid and royal jelly fluid
 - Fix screen overlay when inside Pile of Pollen block
+- Fix crashes in menus (Buzzing Briefcase, Crystalline Flower, Honey Cocoon)
 - Search TODO and verify they are all completed
 - Test the everliving hell out of EVERYTHING
 - Banner pattern texture change to match vanilla

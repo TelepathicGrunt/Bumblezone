@@ -33,5 +33,6 @@
     [
       "honey_slime_bred"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

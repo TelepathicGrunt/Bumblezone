@@ -65,5 +65,6 @@
       "brush_pollen_pollen_suspicious_5",
       "brush_pollen_pollen_suspicious_6"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

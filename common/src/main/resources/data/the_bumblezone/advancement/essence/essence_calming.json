@@ -34,5 +34,6 @@
     [
       "essence_calming"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

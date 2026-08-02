@@ -28,5 +28,6 @@
     [
       "bee_drop_pollen_puff"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

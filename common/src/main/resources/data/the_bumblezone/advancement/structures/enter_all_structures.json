@@ -629,5 +629,6 @@
     [
       "in_throne_pillar"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

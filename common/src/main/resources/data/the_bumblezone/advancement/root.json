@@ -1,8 +1,12 @@
 {
   "display": {
     "icon": {
-      "nbt": "{\"isCreativeTabIcon\":1b}",
-      "id": "the_bumblezone:honeycomb_brood_block"
+      "id": "the_bumblezone:honeycomb_brood_block",
+      "components": {
+        "minecraft:custom_data": {
+          "isCreativeTabIcon": true
+        }
+      }
     },
     "title": {
       "translate": "advancements.the_bumblezone.root.title"
@@ -14,7 +18,7 @@
     "show_toast": false,
     "announce_to_chat": false,
     "hidden": false,
-    "background": "the_bumblezone:textures/advancements/background.png"
+    "background": "the_bumblezone:advancements/background"
   },
   "rewards": {},
   "criteria": {
@@ -27,5 +31,6 @@
     [
       "instant_granted"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

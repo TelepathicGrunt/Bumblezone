@@ -28,5 +28,6 @@
     [
       "sugar_water_next_to_sugar_cane"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

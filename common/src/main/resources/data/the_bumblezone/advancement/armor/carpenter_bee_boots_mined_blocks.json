@@ -27,5 +27,6 @@
     [
       "carpenter_bee_boots_mined_blocks"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

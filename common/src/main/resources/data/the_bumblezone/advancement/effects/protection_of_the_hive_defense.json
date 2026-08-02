@@ -32,5 +32,6 @@
     [
       "protection_of_the_hive_defense"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

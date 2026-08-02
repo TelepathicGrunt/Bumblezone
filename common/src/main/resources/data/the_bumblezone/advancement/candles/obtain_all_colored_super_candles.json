@@ -276,5 +276,6 @@
     [
       "yellow_super_candle"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

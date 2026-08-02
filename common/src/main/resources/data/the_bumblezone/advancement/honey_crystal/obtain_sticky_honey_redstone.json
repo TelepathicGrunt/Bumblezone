@@ -36,5 +36,6 @@
     [
       "obtain_sticky_honey_redstone"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

@@ -2,8 +2,12 @@
   "parent": "the_bumblezone:combs_and_wax/craft_beeswax_to_beehive",
   "display": {
     "icon": {
-      "nbt": "{\"Enchantments\":[{\"id\":\"the_bumblezone:comb_cutter\",\"lvl\":1}]}",
-      "id": "minecraft:shears"
+      "id": "minecraft:shears",
+      "components": {
+        "minecraft:enchantments": {
+          "the_bumblezone:comb_cutter": 1
+        }
+      }
     },
     "title": {
       "translate": "advancements.the_bumblezone.comb_cutter_extra_drops.title"
@@ -29,5 +33,6 @@
     [
       "comb_cutter_extra_drops"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

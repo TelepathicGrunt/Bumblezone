@@ -254,5 +254,6 @@
       "string_curtain_recipe_yellow",
       "string_curtain_recipe_yellow2"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

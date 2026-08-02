@@ -28,5 +28,6 @@
     [
       "trigger_redstone_honey_web"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

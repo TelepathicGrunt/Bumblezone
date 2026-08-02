@@ -28,5 +28,6 @@
     [
       "bee_queen_first_trade"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

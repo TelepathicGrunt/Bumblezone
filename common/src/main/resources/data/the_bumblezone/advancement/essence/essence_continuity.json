@@ -34,5 +34,6 @@
     [
       "essence_continuity"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

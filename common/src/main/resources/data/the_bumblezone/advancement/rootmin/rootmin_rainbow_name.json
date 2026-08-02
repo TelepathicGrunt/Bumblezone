@@ -26,7 +26,9 @@
           "items": [
             "minecraft:name_tag"
           ],
-          "nbt": "{display:{Name:'{\"text\":\"jeb_\"}'}}"
+          "components": {
+            "minecraft:custom_name": "jeb_"
+          }
         },
         "entity": [
           {
@@ -44,5 +46,6 @@
     [
       "rootmin_rainbow_name"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

@@ -32,5 +32,6 @@
     [
       "bee_hit_wrath_of_the_hive"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

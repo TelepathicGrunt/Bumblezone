@@ -42,5 +42,6 @@
       "brew_bee_soup",
       "brew_bee_soup_long"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

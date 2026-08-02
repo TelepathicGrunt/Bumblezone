@@ -34,5 +34,6 @@
     [
       "consume_bee_soup"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

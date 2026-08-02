@@ -33,5 +33,6 @@
     [
       "pollen_puff_spawn_flower"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

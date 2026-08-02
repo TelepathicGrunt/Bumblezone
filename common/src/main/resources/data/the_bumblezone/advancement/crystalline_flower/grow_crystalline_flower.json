@@ -28,5 +28,6 @@
     [
       "grow_crystalline_flower"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

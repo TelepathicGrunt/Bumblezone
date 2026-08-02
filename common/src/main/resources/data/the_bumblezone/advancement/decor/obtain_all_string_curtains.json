@@ -261,5 +261,6 @@
     [
       "yellow_string_curtain"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

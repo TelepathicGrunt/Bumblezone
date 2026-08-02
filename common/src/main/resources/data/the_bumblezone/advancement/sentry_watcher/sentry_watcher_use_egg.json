@@ -27,5 +27,6 @@
     [
       "sentry_watcher_spawn_egg"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

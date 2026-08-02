@@ -156,5 +156,6 @@
     [
       "carve_wax_9"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

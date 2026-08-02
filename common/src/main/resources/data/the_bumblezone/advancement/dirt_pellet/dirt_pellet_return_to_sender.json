@@ -51,5 +51,6 @@
     [
       "hurt_rootmin_with_pellet"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

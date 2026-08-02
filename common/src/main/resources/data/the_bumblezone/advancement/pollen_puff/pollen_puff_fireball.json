@@ -28,5 +28,6 @@
     [
       "pollen_puff_fireball"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

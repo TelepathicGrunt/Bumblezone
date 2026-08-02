@@ -2,8 +2,13 @@
   "parent": "the_bumblezone:candles/multi_potion_potion_candle",
   "display": {
     "icon": {
-      "nbt": "{\"BlockEntityTag\":{\"color\":11101546}}",
-      "id": "the_bumblezone:potion_candle"
+      "id": "the_bumblezone:potion_candle",
+      "components": {
+        "minecraft:block_entity_data": {
+          "id": "the_bumblezone:potion_candle",
+          "color": 11101546
+        }
+      }
     },
     "title": {
       "translate": "advancements.the_bumblezone.projectile_light_instant_potion_candle.title"
@@ -29,5 +34,6 @@
     [
       "projectile_light_instant_potion_candle"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

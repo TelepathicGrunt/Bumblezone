@@ -28,5 +28,6 @@
     [
       "honey_slime_harvest"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

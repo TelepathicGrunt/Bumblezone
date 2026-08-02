@@ -33,5 +33,6 @@
     [
       "bee_fed"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

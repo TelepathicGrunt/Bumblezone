@@ -28,5 +28,6 @@
     [
       "teleport_out_of_bumblezone"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

@@ -28,5 +28,6 @@
     [
       "sempiternal_sanctum_enter_with_bee_essence"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

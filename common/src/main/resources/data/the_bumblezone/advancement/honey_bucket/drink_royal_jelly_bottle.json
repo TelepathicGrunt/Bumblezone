@@ -34,5 +34,6 @@
     [
       "drink_royal_jelly_bottle"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

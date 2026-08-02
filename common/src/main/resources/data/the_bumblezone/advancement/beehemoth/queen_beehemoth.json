@@ -28,5 +28,6 @@
     [
       "created_queen_beehemoth"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

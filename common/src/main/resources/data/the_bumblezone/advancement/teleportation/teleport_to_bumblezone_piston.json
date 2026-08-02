@@ -28,5 +28,6 @@
     [
       "teleport_to_bumblezone_piston"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

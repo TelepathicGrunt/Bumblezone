@@ -35,5 +35,6 @@
     [
       "silverfish_killed"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

@@ -28,5 +28,6 @@
     [
       "honey_crystal_shield_block_ineffectively"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

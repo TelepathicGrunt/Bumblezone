@@ -173,5 +173,6 @@
     [
       "bumbling_beepartments"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

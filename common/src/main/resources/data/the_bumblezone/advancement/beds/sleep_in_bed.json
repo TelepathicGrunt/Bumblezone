@@ -34,5 +34,6 @@
     [
       "sleep_in_bed"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

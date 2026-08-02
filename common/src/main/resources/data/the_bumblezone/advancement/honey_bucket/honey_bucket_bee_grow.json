@@ -28,5 +28,6 @@
     [
       "honey_bucket_bee_grow"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

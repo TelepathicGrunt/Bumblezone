@@ -27,5 +27,6 @@
     [
       "stingless_bee_helmet_super_sight"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

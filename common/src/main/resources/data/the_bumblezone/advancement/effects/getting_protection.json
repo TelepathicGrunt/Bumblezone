@@ -28,5 +28,6 @@
     [
       "getting_protection"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

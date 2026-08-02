@@ -34,5 +34,6 @@
     [
       "consume_honey_crystal_shards"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

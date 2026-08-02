@@ -43,5 +43,6 @@
       "craft_honey_compass",
       "obtain_honey_compass"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

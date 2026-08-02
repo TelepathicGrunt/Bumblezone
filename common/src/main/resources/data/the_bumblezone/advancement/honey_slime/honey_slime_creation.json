@@ -28,5 +28,6 @@
     [
       "honey_slime_creation"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

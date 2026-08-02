@@ -53,5 +53,6 @@
       "craft_multi_potion_potion_candle_1",
       "craft_multi_potion_potion_candle_2"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

@@ -27,5 +27,6 @@
     [
       "bumble_bee_chestplate_max_flight"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

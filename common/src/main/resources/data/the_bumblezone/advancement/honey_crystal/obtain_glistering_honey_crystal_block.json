@@ -36,5 +36,6 @@
     [
       "obtain_glistering_honey_crystal_block"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

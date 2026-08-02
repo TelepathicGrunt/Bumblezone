@@ -43,5 +43,6 @@
       "craft_flower_headwear",
       "obtain_flower_headwear"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

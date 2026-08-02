@@ -28,5 +28,6 @@
     [
       "is_near_beehive"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

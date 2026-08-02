@@ -28,5 +28,6 @@
     [
       "stinger_spear_poisoning"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

@@ -28,5 +28,6 @@
     [
       "pollen_puff_pollinate_bee"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

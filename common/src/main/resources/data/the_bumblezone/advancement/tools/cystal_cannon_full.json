@@ -27,5 +27,6 @@
     [
       "crystal_cannon_full"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

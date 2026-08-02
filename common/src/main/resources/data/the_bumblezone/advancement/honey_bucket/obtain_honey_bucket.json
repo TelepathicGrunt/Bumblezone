@@ -34,5 +34,6 @@
     [
       "obtain_honey_bucket"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

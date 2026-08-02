@@ -28,5 +28,6 @@
     [
       "pollen_puff_mooshroom"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

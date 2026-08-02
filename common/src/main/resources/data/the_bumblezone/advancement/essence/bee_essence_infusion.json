@@ -34,5 +34,6 @@
     [
       "consume_essence"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

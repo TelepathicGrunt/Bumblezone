@@ -34,5 +34,6 @@
     [
       "essence_knowing"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

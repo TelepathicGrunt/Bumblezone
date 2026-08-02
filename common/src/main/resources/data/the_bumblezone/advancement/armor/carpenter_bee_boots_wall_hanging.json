@@ -27,5 +27,6 @@
     [
       "carpenter_bee_boots_wall_hanging"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

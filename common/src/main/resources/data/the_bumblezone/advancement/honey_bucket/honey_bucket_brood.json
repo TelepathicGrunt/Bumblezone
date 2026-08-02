@@ -28,5 +28,6 @@
     [
       "honey_bucket_brood"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

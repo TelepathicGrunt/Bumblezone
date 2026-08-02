@@ -2,8 +2,10 @@
   "parent": "the_bumblezone:armor/dye_flower_headwear",
   "display": {
     "icon": {
-      "nbt": "{\"display\":{\"color\":16751872}}",
-      "id": "the_bumblezone:flower_headwear"
+      "id": "the_bumblezone:flower_headwear",
+      "components": {
+        "minecraft:dyed_color": -25344
+      }
     },
     "title": {
       "translate": "advancements.the_bumblezone.flower_headwear_wrath_structure.title"
@@ -28,5 +30,6 @@
     [
       "flower_headwear_wrath_structure"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

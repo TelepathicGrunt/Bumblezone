@@ -34,5 +34,6 @@
     [
       "consume_sugar_water_bottle"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

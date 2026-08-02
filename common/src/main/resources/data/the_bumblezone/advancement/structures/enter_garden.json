@@ -40,5 +40,6 @@
     [
       "in_hanging_garden"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

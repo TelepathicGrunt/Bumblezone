@@ -26,5 +26,6 @@
     [
       "instant_granted"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

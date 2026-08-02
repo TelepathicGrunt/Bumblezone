@@ -36,5 +36,6 @@
     [
       "obtain_windy_air"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

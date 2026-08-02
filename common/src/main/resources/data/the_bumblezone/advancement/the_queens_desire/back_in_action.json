@@ -33,5 +33,6 @@
     [
       "bee_saved_by_stinger"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

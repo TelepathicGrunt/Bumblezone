@@ -141,5 +141,6 @@
     [
       "banner_pattern_arrows"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

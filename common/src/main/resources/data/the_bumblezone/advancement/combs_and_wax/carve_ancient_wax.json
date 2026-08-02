@@ -53,5 +53,6 @@
       "ancient_wax_slab",
       "ancient_wax_stairs"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

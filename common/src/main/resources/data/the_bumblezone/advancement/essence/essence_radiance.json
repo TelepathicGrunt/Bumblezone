@@ -34,5 +34,6 @@
     [
       "essence_radiance"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

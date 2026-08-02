@@ -33,5 +33,6 @@
     [
       "honey_bottle_drank"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

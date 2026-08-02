@@ -28,5 +28,6 @@
     [
       "stinger_spear_long_range_kill"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

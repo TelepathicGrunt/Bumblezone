@@ -34,5 +34,6 @@
     [
       "obtain_honey_crystal_shield"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

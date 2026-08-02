@@ -28,5 +28,6 @@
     [
       "cleanup_sticky_honey_residue"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }
