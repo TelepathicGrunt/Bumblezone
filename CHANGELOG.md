@@ -4,7 +4,6 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/particles/TradeHintParticle.java
 - Fix floral headwear not rendering when worn
 - Fix bee armor not rendering properly when worn
-- Check if it is my mixin on fabric that is breaking water physics and checks
 - Fix fluid screen overlay for honey fluid and royal jelly fluid
 - Fix screen overlay when inside Pile of Pollen block
 - Search TODO and verify they are all completed
