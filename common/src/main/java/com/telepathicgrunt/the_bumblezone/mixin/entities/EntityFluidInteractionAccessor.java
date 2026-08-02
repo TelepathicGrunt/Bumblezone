@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 import java.util.Map;
 
-@Mixin(net.minecraft.world.entity.EntityFluidInteraction.class)
+@Mixin(EntityFluidInteraction.class)
 public interface EntityFluidInteractionAccessor {
     @Accessor("trackerByFluid")
     Map<TagKey<Fluid>, EntityFluidInteraction.Tracker> bumblezone$getTrackerByFluid();

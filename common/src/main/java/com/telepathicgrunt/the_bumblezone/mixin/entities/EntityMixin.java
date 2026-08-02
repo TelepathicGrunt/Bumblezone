@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.blocks.FilledPorousHoneycomb;
@@ -63,6 +65,7 @@ public abstract class EntityMixin implements EntityLootDropInterface {
     private Set<TagKey<Fluid>> bumblezone$injectBzFluidForInteractions(Set<TagKey<Fluid>> fluids) {
         Set<TagKey<Fluid>> mergedSet = new HashSet<>();
         Collections.addAll(mergedSet, BzTags.BZ_HONEY_FLUID, BzTags.ROYAL_JELLY_FLUID, BzTags.SUGAR_WATER_FLUID);
+        mergedSet.addAll(fluids);
         return mergedSet;
     }
 
@@ -146,5 +149,16 @@ public abstract class EntityMixin implements EntityLootDropInterface {
                 }
             }
         }
+    }
+
+    @WrapOperation(method = "lambda$checkInsideBlocks$0(ILjava/util/concurrent/atomic/AtomicInteger;ZLnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lit/unimi/dsi/fastutil/longs/LongSet;ZLnet/minecraft/world/phys/AABB;Lnet/minecraft/world/entity/InsideBlockEffectApplier$StepBasedCollector;Lnet/minecraft/core/BlockPos;I)Z",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;isAir()Z"),
+            require = 0
+    )
+    private boolean bumblezone$allowBzAirInteraction(BlockState instance, Operation<Boolean> original) {
+        if (instance.is(BzTags.AIR_LIKE)) {
+            return false; // We need `state.isAir()` to eval to false
+        }
+        return original.call(instance);
     }
 }

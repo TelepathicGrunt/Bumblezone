@@ -104,6 +104,7 @@
     "client.ClientPacketListenerMixin",
     "client.EntityRenderersAccessor",
     "client.GameRendererMixin",
+    "client.LevelRendererMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
     "client.MultiPlayerGameModeMixin",
@@ -116,5 +117,6 @@
     "defaultRequire": 1
   },
   "minVersion": "0.8",
-  "mixinextras": {"minVersion": "0.5.4"}
+  "mixinextras": {
+    "minVersion": "0.5.4"}
 }
