@@ -26,14 +26,14 @@ public class JEIQueenRandomizeTradesCategory implements IRecipeCategory<JEIQueen
     private final IDrawable tagIcon;
 
     public JEIQueenRandomizeTradesCategory(IGuiHelper guiHelper) {
-        this.background = guiHelper.createDrawable(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/queen_randomizer_trades_layout.png"), 0, 0, RECIPE_WIDTH, RECIPE_HEIGHT);
+        this.background = guiHelper.createDrawable(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/recipe_viewer/queen_randomizer_trades_layout.png"), 0, 0, RECIPE_WIDTH, RECIPE_HEIGHT);
         this.localizedName = Component.translatable("the_bumblezone.recipe_viewers.bee_queen_color_randomizing_trades");
 
-        DrawableBuilder iconBuilder = new DrawableBuilder(Identifier.fromNamespaceAndPath("the_bumblezone", "textures/gui/bee_queen_randomize_trades.png"), 0, 0, 16, 16);
+        DrawableBuilder iconBuilder = new DrawableBuilder(Identifier.fromNamespaceAndPath("the_bumblezone", "textures/gui/recipe_viewer/bee_queen_randomize_trades.png"), 0, 0, 16, 16);
         iconBuilder.setTextureSize(16, 16);
         this.icon = iconBuilder.build();
 
-        DrawableBuilder tagIconBuilder = new DrawableBuilder(Identifier.fromNamespaceAndPath("the_bumblezone", "textures/gui/tag_icon.png"), 0, 0, 16, 16);
+        DrawableBuilder tagIconBuilder = new DrawableBuilder(Identifier.fromNamespaceAndPath("the_bumblezone", "textures/gui/recipe_viewer/tag_icon.png"), 0, 0, 16, 16);
         tagIconBuilder.setTextureSize(16, 16);
         this.tagIcon = tagIconBuilder.build();
     }

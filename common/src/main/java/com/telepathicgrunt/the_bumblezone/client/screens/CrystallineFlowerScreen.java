@@ -242,14 +242,15 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     }
 
     @Override
-    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
-        super.extractBackground(guiGraphics, mouseX, mouseY, a);
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(guiGraphics, mouseX, mouseY, partialTick);
         int startX = (width - imageWidth) / 2;
         int startY = (height - imageHeight) / 2;
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, startX, startY, 0, 0, imageWidth, MENU_HEIGHT, 176, 197);
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, startX, startY + MENU_HEIGHT, 0, 126, imageWidth, 71, 176, 197);
     }
 
+    @Override
     public void extractContents(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.extractContents(guiGraphics, mouseX, mouseY, partialTick);
 

@@ -24,7 +24,7 @@ public class REIQueenRandomizerTradesCategory implements DisplayCategory<REIQuee
 	private final Component localizedName;
 
 	public REIQueenRandomizerTradesCategory() {
-		this.icon = new REIQueenEggIconRenderer(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/bee_queen_randomize_trades.png"));
+		this.icon = new REIQueenEggIconRenderer(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/recipe_viewer/bee_queen_randomize_trades.png"));
 		this.localizedName = Component.translatable("the_bumblezone.recipe_viewers.bee_queen_color_randomizing_trades");
 	}
 
@@ -60,7 +60,7 @@ public class REIQueenRandomizerTradesCategory implements DisplayCategory<REIQuee
 		Rectangle bounds = origin.getBounds();
 		bounds.translate(4, 4);
 
-		widgets.add(Widgets.createTexturedWidget(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/queen_randomizer_trades_layout.png"), new Rectangle(bounds.getX(), bounds.getY(), RECIPE_WIDTH, RECIPE_HEIGHT)));
+		widgets.add(Widgets.createTexturedWidget(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/recipe_viewer/queen_randomizer_trades_layout.png"), new Rectangle(bounds.getX(), bounds.getY(), RECIPE_WIDTH, RECIPE_HEIGHT)));
 		widgets.add(Widgets.createSlot(new Rectangle(bounds.getX() + 5, bounds.getY() + 5, 18, 18)).entries(display.getInputEntries().get(0)).markInput().disableBackground());
 		widgets.add(Widgets.createSlot(new Rectangle(bounds.getX() + 63, bounds.getY() + 5, 18, 18)).entries(display.getOutputEntries().get(0)).markInput().disableBackground());
 
@@ -68,7 +68,7 @@ public class REIQueenRandomizerTradesCategory implements DisplayCategory<REIQuee
 
 		if (display.getInOutTag() != null) {
 			widgets.add(Widgets.withTranslate(Widgets.createTexturedWidget(
-				Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/tag_icon.png"),
+				Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/recipe_viewer/tag_icon.png"),
 				new Rectangle(
 					bounds.getX() + 11,
 					bounds.getY() + 11,
@@ -82,7 +82,7 @@ public class REIQueenRandomizerTradesCategory implements DisplayCategory<REIQuee
 			), new Matrix3x2f()));
 
 			widgets.add(Widgets.withTranslate(Widgets.createTexturedWidget(
-				Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/tag_icon.png"),
+				Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/recipe_viewer/tag_icon.png"),
 				new Rectangle(
 					bounds.getX() + 69,
 					bounds.getY() + 11,

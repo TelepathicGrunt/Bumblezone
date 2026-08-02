@@ -4,7 +4,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.emi;
 //public class QueenRandomizerTradesEMICategory extends EmiRecipeCategory {
 //
 //	public QueenRandomizerTradesEMICategory() {
-//		super(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "queen_color_randomizer_trades"), new EmiTexture(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/bee_queen_randomize_trades.png"), 0, 0, 16, 16, 16, 16, 16, 16));
+//		super(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "queen_color_randomizer_trades"), new EmiTexture(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/recipe_viewer/bee_queen_randomize_trades.png"), 0, 0, 16, 16, 16, 16, 16, 16));
 //	}
 //
 //	public Component getName() {

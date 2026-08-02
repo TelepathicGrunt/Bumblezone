@@ -18,8 +18,8 @@ public class RRVQueenTradesRecipeType implements ReliableClientRecipeType {
     protected static final ReliableClientRecipeType INSTANCE = new RRVQueenTradesRecipeType();
     public static final int RECIPE_WIDTH = 124;
     public static final int RECIPE_HEIGHT = 28;
-    public static final Identifier CATEGORY_ICON = Identifier.fromNamespaceAndPath("the_bumblezone", "textures/gui/bee_queen_trades.png");
-    public static final Identifier TAG_ICON = Identifier.fromNamespaceAndPath("the_bumblezone", "textures/gui/tag_icon.png");
+    public static final Identifier CATEGORY_ICON = Identifier.fromNamespaceAndPath("the_bumblezone", "textures/gui/recipe_viewer/bee_queen_trades.png");
+    public static final Identifier TAG_ICON = Identifier.fromNamespaceAndPath("the_bumblezone", "textures/gui/recipe_viewer/tag_icon.png");
 
     @Override
     public Component getDisplayName() {
@@ -38,7 +38,7 @@ public class RRVQueenTradesRecipeType implements ReliableClientRecipeType {
 
     @Override
     public @Nullable Identifier getGuiTexture() {
-        return Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/queen_trades_layout.png");
+        return Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/recipe_viewer/queen_trades_layout.png");
     }
 
     @Override
