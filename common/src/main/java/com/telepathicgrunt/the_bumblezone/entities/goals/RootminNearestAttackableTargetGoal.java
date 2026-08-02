@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.EnumSet;
 import java.util.function.Predicate;
 
-public class RootminNearestAttackableTargetGoal  extends TargetGoal {
+public class RootminNearestAttackableTargetGoal extends TargetGoal {
     private static final int DEFAULT_RANDOM_INTERVAL = 10;
     protected final TargetingConditions targetConditions;
     protected final int randomInterval;
@@ -31,7 +31,7 @@ public class RootminNearestAttackableTargetGoal  extends TargetGoal {
         super(mob, mustSee, false);
         this.randomInterval = reducedTickDelay(randomInterval);
         this.setFlags(EnumSet.of(Goal.Flag.TARGET));
-        this.targetConditions = TargetingConditions.forCombat().range(this.getFollowDistance()).selector((entity, level) -> targetPredicate.test(entity));
+        this.targetConditions = TargetingConditions.forCombat().range(this.getFollowDistance()).selector((entity, level) -> targetPredicate != null && targetPredicate.test(entity));
     }
 
     @Override

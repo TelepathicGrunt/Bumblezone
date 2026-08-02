@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.client.screens;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
@@ -27,13 +26,10 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
-import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
-import net.minecraft.util.Util;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -54,8 +50,50 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class CrystallineFlowerScreen extends AbstractContainerScreen<CrystallineFlowerMenu> {
-    private static final Identifier CONTAINER_BACKGROUND = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/container/crystallized_flower.png");
-    private static final Identifier NO_ENCHANTS_BACKGROUND = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/container/crystallized_flower_no_enchants_background.png");
+    private static final Identifier BACKGROUND = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/container/crystallized_flower.png");
+    private static final Identifier NO_ENCHANTS_BACKGROUND = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/no_enchants_background");
+    private static final Identifier ENCHANTMENT_SECTION_SELECTED = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/enchantment_section_selected");
+    private static final Identifier ENCHANTMENT_SECTION_UNSELECTED = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/enchantment_section_unselected");
+    private static final Identifier ENCHANTMENT_SECTION_HOVER = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/enchantment_section_hover");
+    private static final Identifier FLOWER_TIER_TOP = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/flower_tier_top");
+    private static final Identifier FLOWER_TIER_TRUNK = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/flower_tier_trunk");
+    private static final Identifier FLOWER_TIER_BLOCKED = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/flower_tier_blocked");
+    private static final Identifier FLOWER_TIER_COST_INVALID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/flower_tier_cost_invalid");
+    private static final Identifier FLOWER_TIER_COST_VALID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/flower_tier_cost_valid");
+    private static final Identifier ITEM_CONSUME_ARROW_ACTIVE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/item_consume_arrow_active");
+    private static final Identifier ITEM_CONSUME_ARROW_INACTIVE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/item_consume_arrow_inactive");
+    private static final Identifier ITEM_CONSUME_BUTTON_AVAILABLE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/item_consume_button_available");
+    private static final Identifier ITEM_CONSUME_BUTTON_UNAVAILABLE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/item_consume_button_unavailable");
+    private static final Identifier ITEM_CONSUME_BUTTON_HOVER = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/item_consume_button_hover");
+    private static final Identifier ITEM_CONSUME_BUTTON_COVER = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/item_consume_button_cover");
+    private static final Identifier SCROLLBAR_ACTIVE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/scrollbar_active");
+    private static final Identifier SCROLLBAR_INACTIVE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/scrollbar_inactive");
+    private static final Identifier SORT_ALPHABETICAL_BUTTON_PRESSED = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/sort_alphabetical_button_pressed");
+    private static final Identifier SORT_ALPHABETICAL_BUTTON_SELECTED = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/sort_alphabetical_button_selected");
+    private static final Identifier SORT_ALPHABETICAL_BUTTON_HOVER = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/sort_alphabetical_button_hover");
+    private static final Identifier SORT_ID_BUTTON_PRESSED = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/sort_id_button_pressed");
+    private static final Identifier SORT_ID_BUTTON_SELECTED = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/sort_id_button_selected");
+    private static final Identifier SORT_ID_BUTTON_HOVER = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/sort_id_button_hover");
+    private static final Identifier SORT_LEVEL_BUTTON_PRESSED = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/sort_level_button_pressed");
+    private static final Identifier SORT_LEVEL_BUTTON_SELECTED = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/sort_level_button_selected");
+    private static final Identifier SORT_LEVEL_BUTTON_HOVER = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/sort_level_button_hover");
+    private static final Identifier SORT_SPECIAL_BUTTON_PRESSED = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/sort_special_button_pressed");
+    private static final Identifier SORT_SPECIAL_BUTTON_SELECTED = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/sort_special_button_selected");
+    private static final Identifier SORT_SPECIAL_BUTTON_HOVER = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/sort_special_button_hover");
+    private static final Identifier XP_BAR_EMPTY = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_bar_empty");
+    private static final Identifier XP_BAR_FILLED = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_bar_filled");
+    private static final Identifier XP_BAR_MAX = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_bar_max");
+    private static final Identifier XP_CONSUME_1_BUTTON_AVAILABLE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_consume_1_button_available");
+    private static final Identifier XP_CONSUME_1_BUTTON_UNAVAILABLE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_consume_1_button_unavailable");
+    private static final Identifier XP_CONSUME_1_BUTTON_HOVER = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_consume_1_button_hover");
+    private static final Identifier XP_CONSUME_2_BUTTON_AVAILABLE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_consume_2_button_available");
+    private static final Identifier XP_CONSUME_2_BUTTON_UNAVAILABLE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_consume_2_button_unavailable");
+    private static final Identifier XP_CONSUME_2_BUTTON_HOVER = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_consume_2_button_hover");
+    private static final Identifier XP_CONSUME_3_BUTTON_AVAILABLE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_consume_3_button_available");
+    private static final Identifier XP_CONSUME_3_BUTTON_UNAVAILABLE = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_consume_3_button_unavailable");
+    private static final Identifier XP_CONSUME_3_BUTTON_HOVER = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_consume_3_button_hover");
+    private static final Identifier XP_CONSUME_BUTTON_COVER = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/xp_consume_button_cover");
+
     private static final Pattern SPLIT_WITH_COMBINING_CHARS = Pattern.compile("(\\p{M}+|\\P{M}\\p{M}*)"); // {M} is any kind of 'mark' http://stackoverflow.com/questions/29110887/detect-any-combining-character-in-java/29111105
 
     private static final int MENU_HEIGHT = 126;
@@ -71,13 +109,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private static final int ENCHANTMENT_SCROLLBAR_X_OFFSET = 164;
     private static final int ENCHANTMENT_SCROLLBAR_Y_OFFSET = 50;
     private static final int ENCHANTMENT_SCROLLBAR_Y_RANGE = 50;
-    private static final float ENCHANTMENT_SCROLLBAR_U_TEXTURE = 230.0F;
-    private static final float ENCHANTMENT_SCROLLBAR_V_TEXTURE = 182.0F;
 
     private static final int ENCHANTMENT_SORT_X_OFFSET = 163;
     private static final int ENCHANTMENT_SORT_Y_OFFSET = 41;
-    private static final float ENCHANTMENT_SORT_U_OFFSET = 92.0F;
-    private static final float ENCHANTMENT_SORT_V_OFFSET = 197.0F;
 
     private static final int ENCHANTMENT_SEARCH_X_OFFSET = 75;
     private static final int ENCHANTMENT_SEARCH_Y_OFFSET = 39;
@@ -90,19 +124,10 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
     private static final int TIER_COST_ICON_X_OFFSET = 109;
     private static final int TIER_COST_ICON_Y_OFFSET = 17;
-    private static final int TIER_COST_ICON_U_OFFSET = 176;
-    private static final int TIER_COST_ICON_V_OFFSET = 79;
-    private static final int INSUFFICENT_TIER_COST_ICON_U_OFFSET = 192;
-    private static final int INSUFFICENT_TIER_COST_ICON_V_OFFSET = 79;
     private static final int TIER_COST_ICON_WIDTH = 16;
     private static final int TIER_COST_ICON_HEIGHT = 16;
-
-    private static final float ENCHANTMENT_SELECTED_U_TEXTURE = 0F;
-    private static final float ENCHANTMENT_SELECTED_V_TEXTURE = 197.0F;
-    private static final float ENCHANTMENT_UNSELECTED_U_TEXTURE = 0F;
-    private static final float ENCHANTMENT_UNSELECTED_V_TEXTURE = 216.0F;
-    private static final float ENCHANTMENT_HIGHLIGHTED_U_TEXTURE = 0F;
-    private static final float ENCHANTMENT_HIGHLIGHTED_V_TEXTURE = 235.0F;
+    private static final int TIER_ICON_WIDTH = 10;
+    private static final int TIER_ICON_HEIGHT = 10;
 
     private static final int TOO_MANY_ENCHANTMENT_BACKGROUND_X_OFFSET = 74;
     private static final int TOO_MANY_ENCHANTMENT_BACKGROUND_Y_OFFSET = 50;
@@ -111,8 +136,6 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
     private static final int XP_BAR_X_OFFSET = 11;
     private static final int XP_BAR_Y_OFFSET = 99;
-    private static final float XP_BAR_U_TEXTURE = 176.0F;
-    private static final float XP_BAR_V_TEXTURE = 187.0F;
 
     private static final int XP_CONSUME_1_X_OFFSET = 46;
     private static final int XP_CONSUME_1_Y_OFFSET = 14;
@@ -121,30 +144,13 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private static final int XP_CONSUME_3_X_OFFSET = 46;
     private static final int XP_CONSUME_3_Y_OFFSET = 54;
 
-    private static final float XP_CONSUME_1_U_OFFSET = 108.0F;
-    private static final float XP_CONSUME_1_V_OFFSET = 197.0F;
-    private static final float XP_CONSUME_2_U_OFFSET = 126.0F;
-    private static final float XP_CONSUME_2_V_OFFSET = 197.0F;
-    private static final float XP_CONSUME_3_U_OFFSET = 144.0F;
-    private static final float XP_CONSUME_3_V_OFFSET = 197.0F;
-
     private static final int CONSUME_CONFIRMATION_X_OFFSET = 25;
     private static final int CONSUME_CONFIRMATION_Y_OFFSET = 62;
-    private static final float CONSUME_CONFIRMATION_U_OFFSET = 162.0F;
-    private static final float CONSUME_CONFIRMATION_V_OFFSET = 197.0F;
     private static final int CONSUME_ARROW_X_OFFSET = 26;
     private static final int CONSUME_ARROW_Y_OFFSET = 82;
-    private static final float CONSUME_ARROW_U_OFFSET = 180.0F;
-    private static final float CONSUME_ARROW_V_OFFSET = 197.0F;
 
     private static final int TIER_X_OFFSET = 11;
     private static final int TIER_Y_OFFSET = 15;
-    private static final float TIER_FLOWER_U_TEXTURE = 195.0F;
-    private static final float TIER_FLOWER_V_TEXTURE = 197.0F;
-    private static final float TIER_BODY_U_TEXTURE = 195.0F;
-    private static final float TIER_BODY_V_TEXTURE = 207.0F;
-    private static final float TIER_BLOCK_U_TEXTURE = 195.0F;
-    private static final float TIER_BLOCK_V_TEXTURE = 217.0F;
 
     private static final int BUTTON_PRESSED_TIMER_VISUAL = 25;
 
@@ -171,20 +177,22 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     public static String searchQuery = "";
 
     public enum SORT_STATE {
-        ALPHABETICAL(0, 0, "sort_alphabetically"),
-        MODID(8, 0, "sort_namespace"),
-        TREASURE_AND_CURSE(0, 24, "sort_treasure_curse"),
-        LEVEL(8, 24, "sort_level");
+        ALPHABETICAL("sort_alphabetically", SORT_ALPHABETICAL_BUTTON_SELECTED, SORT_ALPHABETICAL_BUTTON_HOVER, SORT_ALPHABETICAL_BUTTON_PRESSED),
+        MODID("sort_namespace", SORT_ID_BUTTON_SELECTED, SORT_ID_BUTTON_HOVER, SORT_ID_BUTTON_PRESSED),
+        TREASURE_AND_CURSE("sort_treasure_curse", SORT_SPECIAL_BUTTON_SELECTED, SORT_SPECIAL_BUTTON_HOVER, SORT_SPECIAL_BUTTON_PRESSED),
+        LEVEL("sort_level", SORT_LEVEL_BUTTON_SELECTED, SORT_LEVEL_BUTTON_HOVER, SORT_LEVEL_BUTTON_PRESSED);
 
         private static final SORT_STATE[] vals = values();
-        private final int offsetU;
-        private final int offsetV;
         private final String langKey;
+        private final Identifier selectedButtonTexture;
+        private final Identifier hoverButtonTexture;
+        private final Identifier pressedButtonTexture;
 
-        SORT_STATE(int offsetU, int offsetV, String langKey) {
-            this.offsetU = offsetU;
-            this.offsetV = offsetV;
+        SORT_STATE(String langKey, Identifier selectedButtonTexture, Identifier hoverButtonTexture, Identifier pressedButtonTexture) {
             this.langKey = langKey;
+            this.selectedButtonTexture = selectedButtonTexture;
+            this.hoverButtonTexture = hoverButtonTexture;
+            this.pressedButtonTexture = pressedButtonTexture;
         }
 
         public SORT_STATE next() {
@@ -203,7 +211,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     protected void init() {
         super.init();
 
-        Component searchHint = Component.translatable("container.the_bumblezone.crystalline_flower.search");
+        Component searchHint = Component.translatable("container.the_bumblezone.crystalline_flower.search").withColor(15329769);
         this.searchBox = new EditBox(
                 this.font,
                 this.leftPos + ENCHANTMENT_SEARCH_X_OFFSET,
@@ -230,8 +238,20 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
     @Override
     public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
-        extractBackground(guiGraphics, mouseX, mouseY, partialTick);
         super.extractRenderState(guiGraphics, mouseX, mouseY, partialTick);
+    }
+
+    @Override
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
+        super.extractBackground(guiGraphics, mouseX, mouseY, a);
+        int startX = (width - imageWidth) / 2;
+        int startY = (height - imageHeight) / 2;
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, startX, startY, 0, 0, imageWidth, MENU_HEIGHT, 176, 197);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, startX, startY + MENU_HEIGHT, 0, 126, imageWidth, 71, 176, 197);
+    }
+
+    public void extractContents(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.extractContents(guiGraphics, mouseX, mouseY, partialTick);
 
         ItemStack book = this.menu.bookSlot.getItem();
         if (book.isEmpty() != prevBookSlotEmpty || this.menu.xpTier.get() != prevXpTier) {
@@ -239,124 +259,34 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             prevXpTier = this.menu.xpTier.get();
             prevBookSlotEmpty = book.isEmpty();
         }
+
         int startX = (this.width - this.imageWidth) / 2;
         int startY = (this.height - this.imageHeight) / 2;
         final int rowStartX = startX + ENCHANTMENT_AREA_X_OFFSET;
         final int rowStartY = startY + ENCHANTMENT_AREA_Y_OFFSET;
 
         renderScroller(guiGraphics, startX + ENCHANTMENT_SCROLLBAR_X_OFFSET, startY + ENCHANTMENT_SCROLLBAR_Y_OFFSET);
-
-        handleEnchantmentAreaRow(mouseX, mouseY,
-            (Integer selectedIndex) -> {
-                if (selectedIndex > enchantmentsAvailableSortedList.size()) {
-                    return false;
-                }
-
-                Identifier selectedEnchant = enchantmentsAvailableSortedList.get(selectedIndex);
-                EnchantmentSkeleton enchantmentSkeleton = enchantmentsAvailable.get(selectedEnchant);
-                boolean isCurse = enchantmentSkeleton.isCurse;
-                boolean isTreasure = enchantmentSkeleton.isTreasure;
-                int row = enchantmentsAvailableSortedList.indexOf(selectedEnchant) - this.startIndex;
-                if (Identifier.fromNamespaceAndPath(enchantmentSkeleton.namespace, enchantmentSkeleton.path).equals(this.menu.selectedEnchantment)) {
-                    guiGraphics.blit(CONTAINER_BACKGROUND, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SELECTED_U_TEXTURE, ENCHANTMENT_SELECTED_V_TEXTURE, 256, 256);
-                    drawEnchantmentText(
-                            guiGraphics,
-                            rowStartX,
-                            rowStartY + row * ENCHANTMENT_SECTION_HEIGHT,
-                            enchantmentSkeleton,
-                            isCurse ? 0x990000 : isTreasure ? 0xFFF000 : 0xFFD000,
-                            0xC0FF00,
-                            true
-                    );
-                }
-                else {
-                    guiGraphics.blit(CONTAINER_BACKGROUND, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_HIGHLIGHTED_U_TEXTURE, ENCHANTMENT_HIGHLIGHTED_V_TEXTURE, 256, 256);
-                    drawEnchantmentText(
-                            guiGraphics,
-                            rowStartX,
-                            rowStartY + row * 19,
-                            enchantmentSkeleton,
-                            isCurse ? 0x800000 : isTreasure ? 0xFFFF50 : 0x402020,
-                            0x304000,
-                            false
-                    );
-                }
-                return true;
-            },
-            (Integer selectedIndex) -> {
-                if (selectedIndex > enchantmentsAvailableSortedList.size()) {
-                    return;
-                }
-
-                Identifier selectedEnchant = enchantmentsAvailableSortedList.get(selectedIndex);
-                EnchantmentSkeleton enchantmentEntry = enchantmentsAvailable.get(selectedEnchant);
-                boolean isCurse = enchantmentEntry.isCurse;
-                boolean isTreasure = enchantmentEntry.isTreasure;
-                int row = selectedIndex - this.startIndex;
-                if (selectedEnchant.equals(this.menu.selectedEnchantment)) {
-                    guiGraphics.blit(CONTAINER_BACKGROUND, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SELECTED_U_TEXTURE, ENCHANTMENT_SELECTED_V_TEXTURE, 256, 256);
-                    drawEnchantmentText(
-                            guiGraphics,
-                            rowStartX,
-                            rowStartY + row * ENCHANTMENT_SECTION_HEIGHT,
-                            enchantmentEntry,
-                            isCurse ? 0x990000 : isTreasure ? 0xFFF000 : 0xFFD000,
-                            0xC0FF00,
-                            true
-                    );
-                }
-                else {
-                    guiGraphics.blit(CONTAINER_BACKGROUND, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_UNSELECTED_U_TEXTURE, ENCHANTMENT_UNSELECTED_V_TEXTURE, 256, 256);
-                    drawEnchantmentText(
-                            guiGraphics,
-                            rowStartX,
-                            rowStartY + row * ENCHANTMENT_SECTION_HEIGHT,
-                            enchantmentEntry,
-                            isCurse ? 0xFF2000 : isTreasure ? 0xFFF000 : 0xD0B0F0,
-                            0x00DD40,
-                            true
-                    );
-                }
-            });
-
-        if (this.menu.xpTier.get() > 1) {
-            guiGraphics.blit(CONTAINER_BACKGROUND, startX + TIER_COST_ICON_X_OFFSET, startY + TIER_COST_ICON_Y_OFFSET, TIER_COST_ICON_U_OFFSET, TIER_COST_ICON_V_OFFSET, TIER_COST_ICON_WIDTH, TIER_COST_ICON_HEIGHT, 256, 256);
-        }
-        else {
-            guiGraphics.blit(CONTAINER_BACKGROUND, startX + TIER_COST_ICON_X_OFFSET, startY + TIER_COST_ICON_Y_OFFSET, INSUFFICENT_TIER_COST_ICON_U_OFFSET, INSUFFICENT_TIER_COST_ICON_V_OFFSET, TIER_COST_ICON_WIDTH, TIER_COST_ICON_HEIGHT, 256, 256);
-        }
-
-        if (this.menu.tooManyEnchantmentsOnInput.get() == 1) {
-            // #TODO - May need to move this elsewhere to dray on top of itemstack
-            MutableComponent mutableComponent2 = Component.translatable("container.the_bumblezone.crystalline_flower.too_many_enchants_marker").withStyle(ChatFormatting.BOLD);
-            guiGraphics.centeredText(font, mutableComponent2, startX + TOO_MANY_ENCHANTMENT_MARKER_X_OFFSET, startY + TOO_MANY_ENCHANTMENT_MARKER_Y_OFFSET, 0xD03010);
-
-            float messageAreaX = startX + ENCHANTMENT_AREA_X_OFFSET - 2;
-            float messageAreaY = startY + ENCHANTMENT_AREA_Y_OFFSET - 2;
-            float messageAreaWidth = ENCHANTMENT_SECTION_WIDTH + 1;
-            float messageAreaHeight = ENCHANTMENT_SECTION_HEIGHT * 3;
-            float textCenterX = messageAreaX + messageAreaWidth / 2.0F;
-            float textCenterY = messageAreaY + (messageAreaHeight / 2.0F);
-
-            guiGraphics.blit(NO_ENCHANTS_BACKGROUND, startX + TOO_MANY_ENCHANTMENT_BACKGROUND_X_OFFSET, startY + TOO_MANY_ENCHANTMENT_BACKGROUND_Y_OFFSET, 0, 0, 89, 57, 89, 57);
-
-            centeredTextWidget.setPosition((int) textCenterX - (centeredTextWidget.getWidth() / 2), (int) textCenterY - (centeredTextWidget.getHeight() / 2));
-            centeredTextWidget.extractRenderState(guiGraphics, mouseX, mouseY, partialTick);
-        }
-        else if (this.menu.selectedEnchantment != null && this.menu.enchantedSlot.hasItem()) {
-            EnchantmentSkeleton enchantment = enchantmentsAvailable.get(this.menu.selectedEnchantment);
-            int tierCost = EnchantmentUtils.getEnchantmentTierCost(enchantment.level, enchantment.minCost, enchantment.isTreasure, enchantment.isCurse);
-            MutableComponent mutableComponent = Component.translatable("container.the_bumblezone.crystalline_flower.tier_cost_arrow", tierCost).withStyle(ChatFormatting.BOLD);
-            guiGraphics.centeredText(font, mutableComponent, startX + ENCHANTMENT_TIER_COST_X_OFFSET, startY + ENCHANTMENT_TIER_COST_Y_OFFSET, 0xD03010);
-        }
-
-        drawPushableButtons(guiGraphics, startX, startY, mouseX, mouseY);
-        drawTierState(guiGraphics, startX, startY);
+        renderEnchantmentRows(guiGraphics, mouseX, mouseY, rowStartX, rowStartY);
+        renderTierCostArea(guiGraphics, mouseX, mouseY, partialTick, startX, startY);
+        renderPushableButtons(guiGraphics, startX, startY, mouseX, mouseY);
+        renderTierState(guiGraphics, startX, startY);
         renderXPBar(guiGraphics, startX, startY);
         extractTooltip(guiGraphics, mouseX, mouseY);
     }
 
-    private void drawTierState(GuiGraphicsExtractor guiGraphics, int startX, int startY) {
+    private void populateAvailableEnchants() {
+        ItemStack book = this.menu.bookSlot.getItem();
+        if (!book.isEmpty() && this.menu.xpTier.get() > 1 && this.menu.tooManyEnchantmentsOnInput.get() != 1) {
+            ItemStack tempBook = book.copy();
+            tempBook.setCount(1);
+        }
+        else {
+            enchantmentsAvailable.clear();
+            enchantmentsAvailableSortedList.clear();
+        }
+    }
+
+    private void renderTierState(GuiGraphicsExtractor guiGraphics, int startX, int startY) {
         int xOffset = startX + TIER_X_OFFSET;
         int yOffset = startY + TIER_Y_OFFSET;
 
@@ -374,132 +304,295 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         for (int i = 0; i < 7; i++) {
             if (i >= this.menu.xpTier.get()) {
                 if (i < cachedObstructions.size() && cachedObstructions.get(i)) {
-                    guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset + (72 - (i * 12)), 10, 10, TIER_BLOCK_U_TEXTURE, TIER_BLOCK_V_TEXTURE, 256, 256);
+                    guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, FLOWER_TIER_BLOCKED, xOffset, yOffset + (72 - (i * 12)), TIER_ICON_WIDTH, TIER_ICON_HEIGHT);
                 }
                 continue;
             }
 
-            float textureU = TIER_BODY_U_TEXTURE;
-            float textureV = TIER_BODY_V_TEXTURE;
             if (i + 1 == this.menu.xpTier.get()) {
-                textureU = TIER_FLOWER_U_TEXTURE;
-                textureV = TIER_FLOWER_V_TEXTURE;
+                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, FLOWER_TIER_TOP, xOffset, yOffset + (72 - (i * 12)), TIER_ICON_WIDTH, TIER_ICON_HEIGHT);
             }
-            guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset + (72 - (i * 12)), 10, 10, textureU, textureV, 256, 256);
+            else {
+                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, FLOWER_TIER_TRUNK, xOffset, yOffset + (72 - (i * 12)), TIER_ICON_WIDTH, TIER_ICON_HEIGHT);
+            }
         }
     }
 
-    private void drawPushableButtons(GuiGraphicsExtractor guiGraphics, int startX, int startY, int mouseX, int mouseY) {
+    private void renderPushableButtons(GuiGraphicsExtractor guiGraphics, int startX, int startY, int mouseX, int mouseY) {
+        renderSortingButton(guiGraphics, startX, startY, mouseX, mouseY);
+        renderXpConsumeButtons(guiGraphics, startX, startY, mouseX, mouseY);
+        renderItemConsumeButtons(guiGraphics, startX, startY, mouseX, mouseY);
+    }
 
+    private void renderSortingButton(GuiGraphicsExtractor guiGraphics, int startX, int startY, int mouseX, int mouseY) {
         if (pressedSortTimer > 0) {
             pressedSortTimer--;
-            guiGraphics.blit(CONTAINER_BACKGROUND, startX + ENCHANTMENT_SORT_X_OFFSET, startY + ENCHANTMENT_SORT_Y_OFFSET, 8, 8, ENCHANTMENT_SORT_U_OFFSET + sortState.offsetU, ENCHANTMENT_SORT_V_OFFSET + sortState.offsetV + 8, 256, 256);
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, sortState.pressedButtonTexture, startX + ENCHANTMENT_SORT_X_OFFSET, startY + ENCHANTMENT_SORT_Y_OFFSET, 8, 8);
         }
         else {
             int xOffset = startX + ENCHANTMENT_SORT_X_OFFSET;
             int yOffset = startY + ENCHANTMENT_SORT_Y_OFFSET;
             if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 8.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 8.0D) {
-                guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, 8, 8, ENCHANTMENT_SORT_U_OFFSET + sortState.offsetU, ENCHANTMENT_SORT_V_OFFSET + sortState.offsetV + 16, 256, 256);
+                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, sortState.hoverButtonTexture, xOffset, yOffset, 8, 8);
             }
             else {
-                guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, 8, 8, ENCHANTMENT_SORT_U_OFFSET + sortState.offsetU, ENCHANTMENT_SORT_V_OFFSET + sortState.offsetV, 256, 256);
+                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, sortState.selectedButtonTexture, xOffset, yOffset, 8, 8);
             }
         }
+    }
 
-        if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI) {
-            if (pressedXp1Timer > 0 ||
-                    this.menu.xpTier.get() == 7 ||
-                    isPathObstructed(1) ||
-                    !canPlayerBuyTier(1)) {
-                pressedXp1Timer--;
-                guiGraphics.blit(CONTAINER_BACKGROUND, startX + XP_CONSUME_1_X_OFFSET, startY + XP_CONSUME_1_Y_OFFSET, 18, 18, XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 18, 256, 256);
-            }
-            else {
-                int xOffset = startX + XP_CONSUME_1_X_OFFSET;
-                int yOffset = startY + XP_CONSUME_1_Y_OFFSET;
-                if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
-                    guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, 18, 18, XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 36, 256, 256);
-                }
-                else {
-                    guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, 18, 18, XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET, 256, 256);
-                }
-            }
-        }
-
-        if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI) {
-            if (pressedXp2Timer > 0 ||
-                    this.menu.xpTier.get() == 7 ||
-                    isPathObstructed(2) ||
-                    !canPlayerBuyTier(2)) {
-                pressedXp2Timer--;
-                guiGraphics.blit(CONTAINER_BACKGROUND, startX + XP_CONSUME_2_X_OFFSET, startY + XP_CONSUME_2_Y_OFFSET, 18, 18, XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 18, 256, 256);
-            }
-            else {
-                int xOffset = startX + XP_CONSUME_2_X_OFFSET;
-                int yOffset = startY + XP_CONSUME_2_Y_OFFSET;
-                if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
-                    guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, 18, 18, XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 36, 256, 256);
-                }
-                else {
-                    guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, 18, 18, XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET, 256, 256);
-                }
-            }
-        }
-
-        if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI) {
-            if (pressedXp3Timer > 0 ||
-                    this.menu.xpTier.get() == 7 ||
-                    isPathObstructed(3) ||
-                    !canPlayerBuyTier(3))
-            {
-                pressedXp3Timer--;
-                guiGraphics.blit(CONTAINER_BACKGROUND, startX + XP_CONSUME_3_X_OFFSET, startY + XP_CONSUME_3_Y_OFFSET, 18, 18, XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 18, 256, 256);
-            }
-            else {
-                int xOffset = startX + XP_CONSUME_3_X_OFFSET;
-                int yOffset = startY + XP_CONSUME_3_Y_OFFSET;
-                if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
-                    guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, 18, 18, XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 36, 256, 256);
-                }
-                else {
-                    guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, 18, 18, XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET, 256, 256);
-                }
-            }
-        }
-
+    private void renderXpConsumeButtons(GuiGraphicsExtractor guiGraphics, int startX, int startY, int mouseX, int mouseY) {
         if (!BzGeneralConfigs.crystallineFlowerConsumeExperienceUI) {
             int xOffset = startX + 26;
             int yOffset = startY + 14;
-            guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, 48, 58, 176, 0, 256, 256);
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, XP_CONSUME_BUTTON_COVER, xOffset, yOffset, 48, 58);
+            return;
+        }
+
+        if (pressedXp1Timer > 0 ||
+                this.menu.xpTier.get() == 7 ||
+                isPathObstructed(1) ||
+                !canPlayerBuyTier(1)) {
+            pressedXp1Timer--;
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, XP_CONSUME_1_BUTTON_UNAVAILABLE, startX + XP_CONSUME_1_X_OFFSET, startY + XP_CONSUME_1_Y_OFFSET, 18, 18);
+        }
+        else {
+            int xOffset = startX + XP_CONSUME_1_X_OFFSET;
+            int yOffset = startY + XP_CONSUME_1_Y_OFFSET;
+            if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
+                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, XP_CONSUME_1_BUTTON_HOVER, xOffset, yOffset, 18, 18);
+            }
+            else {
+                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, XP_CONSUME_1_BUTTON_AVAILABLE, xOffset, yOffset, 18, 18);
+            }
+        }
+
+        if (pressedXp2Timer > 0 ||
+                this.menu.xpTier.get() == 7 ||
+                isPathObstructed(2) ||
+                !canPlayerBuyTier(2)) {
+            pressedXp2Timer--;
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, XP_CONSUME_2_BUTTON_UNAVAILABLE, startX + XP_CONSUME_2_X_OFFSET, startY + XP_CONSUME_2_Y_OFFSET, 18, 18);
+        }
+        else {
+            int xOffset = startX + XP_CONSUME_2_X_OFFSET;
+            int yOffset = startY + XP_CONSUME_2_Y_OFFSET;
+            if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
+                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, XP_CONSUME_2_BUTTON_HOVER, xOffset, yOffset, 18, 18);
+            }
+            else {
+                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, XP_CONSUME_2_BUTTON_AVAILABLE, xOffset, yOffset, 18, 18);
+            }
+        }
+
+        if (pressedXp3Timer > 0 ||
+                this.menu.xpTier.get() == 7 ||
+                isPathObstructed(3) ||
+                !canPlayerBuyTier(3))
+        {
+            pressedXp3Timer--;
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, XP_CONSUME_3_BUTTON_UNAVAILABLE, startX + XP_CONSUME_3_X_OFFSET, startY + XP_CONSUME_3_Y_OFFSET, 18, 18);
+        }
+        else {
+            int xOffset = startX + XP_CONSUME_3_X_OFFSET;
+            int yOffset = startY + XP_CONSUME_3_Y_OFFSET;
+            if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
+                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, XP_CONSUME_3_BUTTON_HOVER, xOffset, yOffset, 18, 18);
+            }
+            else {
+                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, XP_CONSUME_3_BUTTON_AVAILABLE, xOffset, yOffset, 18, 18);
+            }
+        }
+    }
+
+    private void renderItemConsumeButtons(GuiGraphicsExtractor guiGraphics, int startX, int startY, int mouseX, int mouseY) {
+        if (!BzGeneralConfigs.crystallineFlowerConsumeItemUI) {
+            int xOffset = startX + 26;
+            int yOffset = startY + 78;
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ITEM_CONSUME_BUTTON_COVER, xOffset, yOffset, 48, 19);
+            return;
         }
 
         if (pressedConsumeTimer > 0) {
             pressedConsumeTimer--;
         }
+
         if (this.menu.consumeSlotFullyObstructed.get() != 1 && BzGeneralConfigs.crystallineFlowerConsumeItemUI) {
             if (this.menu.consumeSlot.hasItem() && this.menu.xpTier.get() < 7) {
                 if (pressedConsumeTimer > 0) {
-                    guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, 18, 18, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 18, 256, 256);
-                    guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, 15, 11, CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET + 18, 256, 256);
+                    guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ITEM_CONSUME_BUTTON_UNAVAILABLE, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, 18, 18);
+                    guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ITEM_CONSUME_ARROW_INACTIVE, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, 15, 11);
                 }
                 else {
                     int xOffset = startX + CONSUME_CONFIRMATION_X_OFFSET;
                     int yOffset = startY + CONSUME_CONFIRMATION_Y_OFFSET;
                     if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
-                        guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, 18, 18, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 36, 256, 256);
+                        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ITEM_CONSUME_BUTTON_HOVER, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, 18, 18);
                     }
                     else {
-                        guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, 18, 18, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET, 256, 256);
+                        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ITEM_CONSUME_BUTTON_AVAILABLE, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, 18, 18);
                     }
-                    guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, 15, 11, CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET, 256, 256);
+                    guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ITEM_CONSUME_ARROW_ACTIVE, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, 15, 11);
                 }
             }
         }
+    }
 
-        if (!BzGeneralConfigs.crystallineFlowerConsumeItemUI) {
-            int xOffset = startX + 26;
-            int yOffset = startY + 78;
-            guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, 48, 19, 176, 59, 256, 256);
+    private void renderXPBar(GuiGraphicsExtractor guiGraphics, int startX, int startY) {
+        if (this.menu.xpTier.get() == 7) {
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, XP_BAR_MAX, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, 54, 5);
+        }
+        else {
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, XP_BAR_EMPTY, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, 54, 5);
+            if (this.menu.xpBarPercent.get() > 0) {
+                int widthToDraw = (int) (54 * (this.menu.xpBarPercent.get() / 100f));
+                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, XP_BAR_FILLED, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, widthToDraw, 5);
+            }
+        }
+    }
+
+    private void renderTierCostArea(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick, int startX, int startY) {
+        renderTierCostIcon(guiGraphics, startX, startY);
+
+        if (this.menu.tooManyEnchantmentsOnInput.get() == 1) {
+            MutableComponent mutableComponent2 = Component.translatable("container.the_bumblezone.crystalline_flower.too_many_enchants_marker").withStyle(ChatFormatting.BOLD);
+            guiGraphics.centeredText(font, mutableComponent2, startX + TOO_MANY_ENCHANTMENT_MARKER_X_OFFSET, startY + TOO_MANY_ENCHANTMENT_MARKER_Y_OFFSET, 0xFFD03010);
+
+            float messageAreaX = startX + ENCHANTMENT_AREA_X_OFFSET - 2;
+            float messageAreaY = startY + ENCHANTMENT_AREA_Y_OFFSET - 2;
+            float messageAreaWidth = ENCHANTMENT_SECTION_WIDTH + 1;
+            float messageAreaHeight = ENCHANTMENT_SECTION_HEIGHT * 3;
+            float textCenterX = messageAreaX + messageAreaWidth / 2.0F;
+            float textCenterY = messageAreaY + (messageAreaHeight / 2.0F);
+
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, NO_ENCHANTS_BACKGROUND, startX + TOO_MANY_ENCHANTMENT_BACKGROUND_X_OFFSET, startY + TOO_MANY_ENCHANTMENT_BACKGROUND_Y_OFFSET, 89, 57);
+
+            centeredTextWidget.setPosition((int) textCenterX - (centeredTextWidget.getWidth() / 2), (int) textCenterY - (centeredTextWidget.getHeight() / 2));
+            centeredTextWidget.extractRenderState(guiGraphics, mouseX, mouseY, partialTick);
+        }
+        else if (this.menu.selectedEnchantment != null && this.menu.enchantedSlot.hasItem()) {
+            EnchantmentSkeleton enchantment = enchantmentsAvailable.get(this.menu.selectedEnchantment);
+            int tierCost = EnchantmentUtils.getEnchantmentTierCost(enchantment.level, enchantment.minCost, enchantment.isTreasure, enchantment.isCurse);
+            MutableComponent mutableComponent = Component.translatable("container.the_bumblezone.crystalline_flower.tier_cost_arrow", tierCost).withStyle(ChatFormatting.BOLD);
+            guiGraphics.centeredText(font, mutableComponent, startX + ENCHANTMENT_TIER_COST_X_OFFSET, startY + ENCHANTMENT_TIER_COST_Y_OFFSET, 0xFFD03010);
+        }
+    }
+
+    private void renderTierCostIcon(GuiGraphicsExtractor guiGraphics, int startX, int startY) {
+        if (this.menu.xpTier.get() > 1) {
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, FLOWER_TIER_COST_VALID, startX + TIER_COST_ICON_X_OFFSET, startY + TIER_COST_ICON_Y_OFFSET, TIER_COST_ICON_WIDTH, TIER_COST_ICON_HEIGHT);
+        }
+        else {
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, FLOWER_TIER_COST_INVALID, startX + TIER_COST_ICON_X_OFFSET, startY + TIER_COST_ICON_Y_OFFSET, TIER_COST_ICON_WIDTH, TIER_COST_ICON_HEIGHT);
+        }
+    }
+
+    private void renderScroller(GuiGraphicsExtractor guiGraphics, int posX, int posY) {
+        if (resetScroll) {
+            resetScroll = false;
+            resetScroll();
+        }
+
+        int rowCount = enchantmentsAvailableSortedList.size() + 1 - 3;
+        if (rowCount > 1) {
+            if (startIndex > rowCount) {
+                scrollOff = 1.0F;
+            }
+            startIndex = (int)((double)(this.scrollOff * (float)this.getOffscreenRows()) + 0.5D);
+            int scrollPosition = (int) (scrollOff * 40);
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SCROLLBAR_ACTIVE, posX, posY + scrollPosition, 6, 17);
+        }
+        else {
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SCROLLBAR_INACTIVE, posX, posY, 6, 17);
+        }
+    }
+
+    private void renderEnchantmentRows(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, int rowStartX, int rowStartY) {
+        int startX = this.leftPos + ENCHANTMENT_AREA_X_OFFSET - 2;
+        int startY = this.topPos + ENCHANTMENT_AREA_Y_OFFSET - 2;
+        int selectableSections = this.startIndex + Math.min(enchantmentsAvailableSortedList.size(), 3);
+        for(int currentSection = this.startIndex; currentSection < selectableSections; ++currentSection) {
+            int sectionOffset = currentSection - this.startIndex;
+            double sectionMouseX = mouseX - (double)(startX);
+            double sectionMouseY = mouseY - (double)(startY + sectionOffset * ENCHANTMENT_SECTION_HEIGHT);
+            if (sectionMouseX >= 0.0D && sectionMouseX < ENCHANTMENT_SECTION_WIDTH && sectionMouseY >= 0.0D && sectionMouseY < ENCHANTMENT_SECTION_HEIGHT) {
+                renderTargetedEnchantmentRow(guiGraphics, rowStartX, rowStartY, currentSection);
+            }
+            else {
+                renderUntargetedEnchantmentRow(guiGraphics, rowStartX, rowStartY, currentSection);
+            }
+        }
+    }
+
+    private void renderTargetedEnchantmentRow(GuiGraphicsExtractor guiGraphics, int rowStartX, int rowStartY, Integer selectedIndex) {
+        if (selectedIndex > enchantmentsAvailableSortedList.size()) {
+            return;
+        }
+
+        Identifier selectedEnchant = enchantmentsAvailableSortedList.get(selectedIndex);
+        EnchantmentSkeleton enchantmentSkeleton = enchantmentsAvailable.get(selectedEnchant);
+        boolean isCurse = enchantmentSkeleton.isCurse;
+        boolean isTreasure = enchantmentSkeleton.isTreasure;
+        int row = enchantmentsAvailableSortedList.indexOf(selectedEnchant) - this.startIndex;
+        if (Identifier.fromNamespaceAndPath(enchantmentSkeleton.namespace, enchantmentSkeleton.path).equals(this.menu.selectedEnchantment)) {
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ENCHANTMENT_SECTION_SELECTED, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT);
+            drawEnchantmentText(
+                    guiGraphics,
+                    rowStartX,
+                    rowStartY + row * ENCHANTMENT_SECTION_HEIGHT,
+                    enchantmentSkeleton,
+                    isCurse ? 0xFF990000 : isTreasure ? 0xFFFFF000 : 0xFFFFD000,
+                    0xFFC0FF00,
+                    true
+            );
+        }
+        else {
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ENCHANTMENT_SECTION_HOVER, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT);
+            drawEnchantmentText(
+                    guiGraphics,
+                    rowStartX,
+                    rowStartY + row * 19,
+                    enchantmentSkeleton,
+                    isCurse ? 0xFF800000 : isTreasure ? 0xFFFFFF50 : 0xFF402020,
+                    0xFF304000,
+                    false
+            );
+        }
+    }
+
+    private void renderUntargetedEnchantmentRow(GuiGraphicsExtractor guiGraphics, int rowStartX, int rowStartY, Integer selectedIndex) {
+        if (selectedIndex > enchantmentsAvailableSortedList.size()) {
+            return;
+        }
+
+        Identifier selectedEnchant = enchantmentsAvailableSortedList.get(selectedIndex);
+        EnchantmentSkeleton enchantmentEntry = enchantmentsAvailable.get(selectedEnchant);
+        boolean isCurse = enchantmentEntry.isCurse;
+        boolean isTreasure = enchantmentEntry.isTreasure;
+        int row = selectedIndex - this.startIndex;
+        if (selectedEnchant.equals(this.menu.selectedEnchantment)) {
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ENCHANTMENT_SECTION_SELECTED, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT);
+            drawEnchantmentText(
+                    guiGraphics,
+                    rowStartX,
+                    rowStartY + row * ENCHANTMENT_SECTION_HEIGHT,
+                    enchantmentEntry,
+                    isCurse ? 0xFF990000 : isTreasure ? 0xFFFFF000 : 0xFFFFD000,
+                    0xFFC0FF00,
+                    true
+            );
+        }
+        else {
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ENCHANTMENT_SECTION_UNSELECTED, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT);
+            drawEnchantmentText(
+                    guiGraphics,
+                    rowStartX,
+                    rowStartY + row * ENCHANTMENT_SECTION_HEIGHT,
+                    enchantmentEntry,
+                    isCurse ? 0xFFFF2000 : isTreasure ? 0xFFFFF000 : 0xFFD0B0F0,
+                    0xFF00DD40,
+                    true
+            );
         }
     }
 
@@ -548,82 +641,6 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             hasTruncated = true;
         }
         return translatedEnchantmentName.toString();
-    }
-
-    private void populateAvailableEnchants() {
-        ItemStack book = this.menu.bookSlot.getItem();
-        if (!book.isEmpty() && this.menu.xpTier.get() > 1 && this.menu.tooManyEnchantmentsOnInput.get() != 1) {
-            ItemStack tempBook = book.copy();
-            tempBook.setCount(1);
-        }
-        else {
-            enchantmentsAvailable.clear();
-            enchantmentsAvailableSortedList.clear();
-        }
-    }
-
-    @Override
-    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float a) {
-        int startX = (width - imageWidth) / 2;
-        int startY = (height - imageHeight) / 2;
-
-        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, CONTAINER_BACKGROUND, startX, startY, 0, 0, imageWidth, MENU_HEIGHT, imageWidth, MENU_HEIGHT);
-        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, CONTAINER_BACKGROUND, startX, startY + MENU_HEIGHT, 0, 126, imageWidth, 71, imageWidth, 71);
-    }
-
-    private void renderXPBar(GuiGraphicsExtractor guiGraphics, int startX, int startY) {
-        if (this.menu.xpTier.get() == 7) {
-            guiGraphics.blit(CONTAINER_BACKGROUND, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, 54, 5, XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE - 5, 256, 256);
-        }
-        else {
-            guiGraphics.blit(CONTAINER_BACKGROUND, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, 54, 5, XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE, 256, 256);
-            if (this.menu.xpBarPercent.get() > 0) {
-                guiGraphics.blit(CONTAINER_BACKGROUND, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, (int) (54 * (this.menu.xpBarPercent.get() / 100f)), 5, XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE + 5, 256, 256);
-            }
-        }
-    }
-
-    private void renderScroller(GuiGraphicsExtractor guiGraphics, int posX, int posY) {
-        if (resetScroll) {
-            resetScroll = false;
-            resetScroll();
-        }
-        
-        int rowCount = enchantmentsAvailableSortedList.size() + 1 - 3;
-        if (rowCount > 1) {
-            if (startIndex > rowCount) {
-                scrollOff = 1.0F;
-            }
-            startIndex = (int)((double)(this.scrollOff * (float)this.getOffscreenRows()) + 0.5D);
-            int scrollPosition = (int) (scrollOff * 42);
-            guiGraphics.blit(CONTAINER_BACKGROUND, posX, posY + scrollPosition, 6, 17, ENCHANTMENT_SCROLLBAR_U_TEXTURE, ENCHANTMENT_SCROLLBAR_V_TEXTURE, 256, 256);
-        }
-        else {
-            guiGraphics.blit(CONTAINER_BACKGROUND, posX, posY, 6, 17, ENCHANTMENT_SCROLLBAR_U_TEXTURE + 6.0F, ENCHANTMENT_SCROLLBAR_V_TEXTURE, 256, 256);
-        }
-    }
-
-    private boolean canScroll(int numOffers) {
-        return numOffers > 3;
-    }
-
-    private boolean handleEnchantmentAreaRow(double mouseX, double mouseY, Function<Integer, Boolean> targetedSectionTask, Consumer<Integer> untargetedSectionTask) {
-        int startX = this.leftPos + ENCHANTMENT_AREA_X_OFFSET - 2;
-        int startY = this.topPos + ENCHANTMENT_AREA_Y_OFFSET - 2;
-        int selectableSections = this.startIndex + Math.min(enchantmentsAvailableSortedList.size(), 3);
-        boolean targetedSectionTaskSuccess = false;
-        for(int currentSection = this.startIndex; currentSection < selectableSections; ++currentSection) {
-            int sectionOffset = currentSection - this.startIndex;
-            double sectionMouseX = mouseX - (double)(startX);
-            double sectionMouseY = mouseY - (double)(startY + sectionOffset * ENCHANTMENT_SECTION_HEIGHT);
-            if (sectionMouseX >= 0.0D && sectionMouseX < ENCHANTMENT_SECTION_WIDTH && sectionMouseY >= 0.0D && sectionMouseY < ENCHANTMENT_SECTION_HEIGHT) {
-                targetedSectionTaskSuccess = targetedSectionTask.apply(currentSection);
-            }
-            else {
-                untargetedSectionTask.accept(currentSection);
-            }
-        }
-        return targetedSectionTaskSuccess;
     }
 
     @Override
@@ -725,7 +742,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             }
         }
 
-        if (handleEnchantmentAreaRow(event.x(), event.y(), (Integer sectionId) -> {
+        if (clickingEnchantmentRow(event.x(), event.y(), (Integer sectionId) -> {
             if (this.menu.clickMenuEnchantment(this.minecraft.player, CrystallineFlowerScreen.enchantmentsAvailableSortedList.get(sectionId))) {
                 sendButtonPressToMenu(sectionId);
                 return true;
@@ -808,6 +825,28 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         }
 
         return super.mouseClicked(event, doubleClick);
+    }
+
+    private boolean clickingEnchantmentRow(double mouseX, double mouseY, Function<Integer, Boolean> targetedSectionTask, Consumer<Integer> untargetedSectionTask) {
+        int startX = this.leftPos + ENCHANTMENT_AREA_X_OFFSET - 2;
+        int startY = this.topPos + ENCHANTMENT_AREA_Y_OFFSET - 2;
+        int selectableSections = this.startIndex + Math.min(enchantmentsAvailableSortedList.size(), 3);
+        boolean targetedSectionTaskSuccess = false;
+        for(int currentSection = this.startIndex; currentSection < selectableSections; ++currentSection) {
+            int sectionOffset = currentSection - this.startIndex;
+            double sectionMouseX = mouseX - (double)(startX);
+            double sectionMouseY = mouseY - (double)(startY + sectionOffset * ENCHANTMENT_SECTION_HEIGHT);
+            if (sectionMouseX >= 0.0D && sectionMouseX < ENCHANTMENT_SECTION_WIDTH && sectionMouseY >= 0.0D && sectionMouseY < ENCHANTMENT_SECTION_HEIGHT) {
+                if (currentSection < enchantmentsAvailableSortedList.size()) {
+                    targetedSectionTask.apply(currentSection);
+                    targetedSectionTaskSuccess = true;
+                }
+            }
+            else {
+                untargetedSectionTask.accept(currentSection);
+            }
+        }
+        return targetedSectionTaskSuccess;
     }
 
     private boolean isSearchBoxHovered(double mouseX, double mouseY) {
@@ -898,6 +937,10 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     public void resetScroll() {
         this.scrollOff = 0;
         this.startIndex = 0;
+    }
+
+    private boolean canScroll(int numOffers) {
+        return numOffers > 3;
     }
 
     protected int getOffscreenRows() {
