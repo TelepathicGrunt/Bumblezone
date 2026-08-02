@@ -3,13 +3,12 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
 - Make TradeHintParticle work again or move it into the Bee Queen Renderer instead (moving to bee queen renderer may be best way to go)
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/particles/TradeHintParticle.java
 - Bee queen render is broken
-- Rootmin crashes on render
 - Fix floral headwear not rendering when worn
 - Fix bee armor not rendering properly when worn
 - Check if it is my mixin on fabric that is breaking water physics and checks
 - Fix fluid screen overlay for honey fluid and royal jelly fluid
 - Fix screen overlay when inside Pile of Pollen block
-- Heavy Air and Winy Air pushing is not working. Nor hitboxes show when holding the item form
+- Heavy Air and Windy Air pushing is not working. Nor hitboxes show when holding the item form
 - Search TODO and verify they are all completed
 - Test the everliving hell out of EVERYTHING
 - Banner pattern texture change to match vanilla
