@@ -6,10 +6,10 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
 - Rootmin crashes on render
 - Fix floral headwear not rendering when worn
 - Fix bee armor not rendering properly when worn
-- Fix sugar water fluid physics
+- Check if it is my mixin on fabric that is breaking water physics and checks
 - Fix fluid screen overlay for honey fluid and royal jelly fluid
 - Fix screen overlay when inside Pile of Pollen block
-- Fixed stinger spear crash when thrown at mob
+- Heavy Air and Winy Air pushing is not working. Nor hitboxes show when holding the item form
 - Search TODO and verify they are all completed
 - Test the everliving hell out of EVERYTHING
 - Banner pattern texture change to match vanilla

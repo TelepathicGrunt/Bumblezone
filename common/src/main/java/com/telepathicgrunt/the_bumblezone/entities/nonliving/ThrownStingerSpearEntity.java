@@ -20,11 +20,14 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -37,7 +40,6 @@ import net.minecraft.world.phys.Vec3;
 public class ThrownStingerSpearEntity extends AbstractArrow {
     private static final EntityDataAccessor<Byte> ID_LOYALTY = SynchedEntityData.defineId(ThrownStingerSpearEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> ID_FOIL = SynchedEntityData.defineId(ThrownStingerSpearEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final ItemStack DEFAULT_SPEAR_STACK = new ItemStack(BzItems.STINGER_SPEAR.get());
     private boolean dealtDamage;
     public int clientSideReturnSpearTickCount;
 
@@ -46,7 +48,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
     }
 
     public ThrownStingerSpearEntity(Level level, LivingEntity livingEntity, ItemStack weaponItem) {
-        super(BzEntities.THROWN_STINGER_SPEAR_ENTITY.get(), livingEntity, level, weaponItem, null);
+        super(BzEntities.THROWN_STINGER_SPEAR_ENTITY.get(), livingEntity, level, weaponItem, weaponItem);
         this.entityData.set(ID_LOYALTY, this.getLoyaltyFromItem(weaponItem));
         this.entityData.set(ID_FOIL, weaponItem.hasFoil());
     }
@@ -117,7 +119,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         float damageAmount = StingerSpearItem.BASE_THROWN_DAMAGE;
         DamageSource damageSource = this.damageSources().trident(this, owner == null ? this : owner);
         if (level instanceof ServerLevel serverLevel) {
-            damageAmount += EnchantmentHelper.modifyDamage(serverLevel, this.getWeaponItem(), entity, damageSource, damageAmount);
+            damageAmount = EnchantmentHelper.modifyDamage(serverLevel, this.getWeaponItem(), entity, damageSource, damageAmount);
         }
 
         DamageSource damagesource = damageSources().trident(this, owner == null ? this : owner);
@@ -129,12 +131,11 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
 
             if (entity instanceof LivingEntity hitEntity) {
                 if (level instanceof ServerLevel serverLevel) {
-                    EnchantmentHelper.doPostAttackEffectsWithItemSource(serverLevel, entity, damageSource, this.getWeaponItem());
+                    EnchantmentHelper.doPostAttackEffectsWithItemSourceOnBreak(serverLevel, entity, damageSource, this.getWeaponItem(), _ -> this.kill(serverLevel));
                 }
 
                 if (hitEntity instanceof LivingEntity livingEntity) {
                     this.doKnockback(livingEntity, damageSource);
-                    this.doPostHurtEffects(livingEntity);
                 }
 
                 this.doPostHurtEffects(hitEntity);
@@ -154,14 +155,24 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
             }
         }
 
-        this.setDeltaMovement(this.getDeltaMovement().multiply(-0.01D, -0.1D, -0.01D));
+        this.deflect(ProjectileDeflection.REVERSE, entity, this.owner, false);
+        this.setDeltaMovement(this.getDeltaMovement().multiply(0.02, 0.2, 0.02));
         this.playSound(BzSounds.STINGER_SPEAR_HIT.get(), 1.0F, 1.0F);
     }
 
     @Override
     protected void doPostHurtEffects(LivingEntity victim) {
-       if (!victim.is(EntityTypeTags.UNDEAD)) {
-           PotentPoisonEnchantmentApplication.doPostAttackBoostedPoison(this.getPickupItemStackOrigin(), victim);
+        if (!victim.is(EntityTypeTags.UNDEAD)) {
+            boolean potentPoisonApplied = PotentPoisonEnchantmentApplication.doPostAttackBoostedPoison(this.getPickupItemStackOrigin(), victim);
+            if (!potentPoisonApplied) {
+                victim.addEffect(new MobEffectInstance(
+                        MobEffects.POISON,
+                        100,
+                        0,
+                        false,
+                        true,
+                        true));
+            }
 
             if (this.getOwner() instanceof ServerPlayer serverPlayer) {
                 BzCriterias.STINGER_SPEAR_POISONING_TRIGGER.get().trigger(serverPlayer);
