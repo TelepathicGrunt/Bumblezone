@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
+import net.minecraft.client.renderer.Lightmap;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.core.BlockPos;
@@ -39,7 +40,7 @@ public class FluidClientOverlay {
                     Math.pow(FluidClientOverlay.getDimensionBrightnessAtEyes(clientPlayerEntity), 2D),
                     clientPlayerEntity.level().dimensionType().ambientLight()
             );
-            int color = ARGB.colorFromFloat(0.1F, brightness, brightness, brightness);
+            int color = ARGB.colorFromFloat(0.9F, brightness, brightness, brightness);
 
             float modifiedYaw = -clientPlayerEntity.getYRot() / (64.0F * 8F);
             float modifiedPitch = clientPlayerEntity.getXRot() / (64.0F * 8F);
@@ -57,22 +58,7 @@ public class FluidClientOverlay {
 
     public static float getDimensionBrightnessAtEyes(Entity entity) {
         Level level = entity.level();
-        float lightLevelAtEyes;
-
-        if (level.dimensionType().hasSkyLight()) {
-            BlockPos eyePos = BlockPos.containing(entity.getEyePosition(1));
-            lightLevelAtEyes = level.getRawBrightness(eyePos, level.getSkyDarken());
-            level.updateSkyBrightness();
-            if (level.isDarkOutside()) {
-                MoonPhase moonPhase = level.environmentAttributes().getValue(EnvironmentAttributes.MOON_PHASE, Vec3.atCenterOf(eyePos));
-                float moonBrightness = DimensionType.MOON_BRIGHTNESS_PER_PHASE[moonPhase.index()];
-                lightLevelAtEyes *= moonBrightness;
-            }
-        }
-        else {
-            lightLevelAtEyes = level.getRawBrightness(BlockPos.containing(entity.getEyePosition(1)), 0);
-        }
-
-        return lightLevelAtEyes / 15f;
+        BlockPos eyePos = BlockPos.containing(entity.getEyePosition(1));
+        return Lightmap.getBrightness(level.dimensionType(), level.getMaxLocalRawBrightness(eyePos));
     }
 }

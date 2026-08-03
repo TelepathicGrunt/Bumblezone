@@ -4,12 +4,12 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/particles/TradeHintParticle.java
 - Fix floral headwear not rendering when worn
 - Fix bee armor not rendering properly when worn
-- Fix fluid screen overlay for honey fluid and royal jelly fluid
 - Fix screen overlay when inside Pile of Pollen block
 - Search TODO and verify they are all completed
 - Test the everliving hell out of EVERYTHING
 - Banner pattern texture change to match vanilla
 - Commission new textures for spawn eggs
+- run oxipng to shrink texture sizes
 
 
 ### **(V.7.9.0 Changes) (26.1.2 Minecraft)**
