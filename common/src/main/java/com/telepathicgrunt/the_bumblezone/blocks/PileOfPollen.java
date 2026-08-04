@@ -340,7 +340,11 @@ public class PileOfPollen extends FallingBlock {
         // slows the entity and spawns particles
         else if (!(entity instanceof ExperienceOrb)) {
             int layerValueMinusOne = blockState.getValue(LAYERS) - 1;
-            double entitySpeed = entity.getDeltaMovement().length();
+            Vec3 movementDelta = entity.getDeltaMovement();
+            double entitySpeed = Math.sqrt(
+                    movementDelta.x * movementDelta.x +
+                    (entity.onGround() ? 0 : movementDelta.y * movementDelta.y) +
+                    movementDelta.z * movementDelta.z);
             double chance = 0.22D + layerValueMinusOne * 0.09D;
 
             Pair<Integer, Integer> reduction = APPLIED_FALL_REDUCTION_FOR_ENTITY.getOrDefault(entity.getStringUUID(), null);
