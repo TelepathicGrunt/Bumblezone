@@ -129,7 +129,9 @@ public class WindyAir extends ProperFacingBlock {
             return;
         }
 
-        double strength = windDirection == Direction.UP ? 0.089D : 0.0275D;
+        Vec3 newVelocity = entity.getDeltaMovement();
+        double strength = windDirection == Direction.UP ? 0.08D : 0.02D;
+        double gravityResist = -newVelocity.y() * 0.9D;
         double size = entity.getBoundingBox().getSize();
         if (size <= 1) {
             strength = strength * (1 / (size / 2 + 0.5D));
@@ -140,20 +142,22 @@ public class WindyAir extends ProperFacingBlock {
 
         if (entity instanceof ItemEntity) {
             strength *= windDirection == Direction.UP ? 0.9f : 0.7f;
+            if (windDirection != Direction.UP) {
+                gravityResist += 0.05D;
+            }
         }
         else if (entity instanceof Mob) {
             strength *= windDirection == Direction.UP ? 2.0f : 0.7f;
         }
 
         Vec3 pushPower = Vec3.atLowerCornerOf(windDirection.getUnitVec3i()).scale(strength);
-        Vec3 newVelocity = entity.getDeltaMovement();
         if (entity instanceof ItemEntity) {
             newVelocity = newVelocity.add(newVelocity.scale(-0.15f));
         }
 
         newVelocity = newVelocity.add(pushPower);
         if (!entity.onGround() && newVelocity.y() < 0 && windDirection != Direction.DOWN) {
-            newVelocity = newVelocity.add(0, -newVelocity.y() + 0.04F, 0);
+            newVelocity = newVelocity.add(0, gravityResist, 0);
         }
 
         if (windDirection == Direction.UP && newVelocity.y() > -0.05) {

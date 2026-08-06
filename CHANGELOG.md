@@ -5,6 +5,9 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
 - Fix floral headwear not rendering when worn
 - Fix bee armor not rendering properly when worn
 - Fix screen overlay when inside Pile of Pollen block
+- teleporting to bumblezone screen is missing
+- Handle fog distance manually for dimension
+- Fix dimension sky color
 - Search TODO and verify they are all completed
 - Test the everliving hell out of EVERYTHING
 - Banner pattern texture change to match vanilla
