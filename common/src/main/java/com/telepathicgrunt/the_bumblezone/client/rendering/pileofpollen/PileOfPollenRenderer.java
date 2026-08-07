@@ -6,6 +6,8 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
@@ -61,23 +63,12 @@ public class PileOfPollenRenderer {
             if(!isInPollen) {
                 return true;
             }
-            float opacity = 1f;
+
+            float opacity = 0.975f;
             float brightness = 0.3f;
             float redStrength = 1f;
             float greenStrength = 0.9f;
             float blueStrength = 0.8f;
-
-            float pitch = -playerEntity.getYRot() / 64.0F;
-            float yaw = playerEntity.getXRot() / 64.0F;
-            float yawPlus4 = 4.0F + yaw;
-            float pitchPlus4 = 4.0F + pitch;
-
-            float movementScaling = 0.85f;
-            Vector3f playerPosition = playerEntity.position().multiply(movementScaling, movementScaling, movementScaling).toVector3f();
-            float smallXZOffset = playerPosition.x() * playerPosition.z() * 0;
-            float smallYOffset = playerPosition.y() * 0.33f;
-
-            Matrix4f matrix4f = matrixStack.last().pose();
 
             TextureAtlasSprite textureAtlasSprite = Minecraft.getInstance().getModelManager().getBlockStateModelSet().getParticleMaterial(blockState).sprite();
 
@@ -86,26 +77,16 @@ public class PileOfPollenRenderer {
             float v0 = textureAtlasSprite.getV0();
             float v1 = textureAtlasSprite.getV1();
 
+            Matrix4f pose = matrixStack.last().pose();
+
             int color = ARGB.colorFromFloat(opacity, brightness * redStrength, brightness * greenStrength, brightness * blueStrength);
             VertexConsumer builder = event.bufferSource().getBuffer(RenderTypes.blockScreenEffect(textureAtlasSprite.atlasLocation()));
-            builder.addVertex(matrix4f, -1.0F, -1.0F, -0.5F).setUv(u1 - smallXZOffset, v1 + yawPlus4 - playerPosition.y()).setColor(color);
-            builder.addVertex(matrix4f, 1.0F, -1.0F, -0.5F).setUv(u0 - smallXZOffset, v1 + yawPlus4 - playerPosition.y()).setColor(color);
-            builder.addVertex(matrix4f, 1.0F, 1.0F, -0.5F).setUv(u0 - smallXZOffset, v0 + yaw - playerPosition.y()).setColor(color);
-            builder.addVertex(matrix4f, -1.0F, 1.0F, -0.5F).setUv(u1 - smallXZOffset, v0 + yaw - playerPosition.y()).setColor(color);
 
-            color = ARGB.colorFromFloat(opacity * 0.33f, brightness * redStrength, brightness * greenStrength, brightness * blueStrength);
-            builder = event.bufferSource().getBuffer(RenderTypes.blockScreenEffect(textureAtlasSprite.atlasLocation()));
-            builder.addVertex(matrix4f, -1.0F, -1.0F, -0.5F).setUv(u1 - playerPosition.x(), v1 + yawPlus4 - smallYOffset).setColor(color);
-            builder.addVertex(matrix4f, 1.0F, -1.0F, -0.5F).setUv(u0 - playerPosition.x(), v1 + yawPlus4 - smallYOffset).setColor(color);
-            builder.addVertex(matrix4f, 1.0F, 1.0F, -0.5F).setUv(u0 - playerPosition.x(), v0 + yaw - smallYOffset).setColor(color);
-            builder.addVertex(matrix4f, -1.0F, 1.0F, -0.5F).setUv(u1 - playerPosition.x(), v0 + yaw - smallYOffset).setColor(color);
+            builder.addVertex(pose, -1.0F, -1.0F, -0.5F).setUv(u1, v1).setColor(color);
+            builder.addVertex(pose, 1.0F, -1.0F, -0.5F).setUv(u0, v1).setColor(color);
+            builder.addVertex(pose, 1.0F, 1.0F, -0.5F).setUv(u0, v0).setColor(color);
+            builder.addVertex(pose, -1.0F, 1.0F, -0.5F).setUv(u1, v0).setColor(color);
 
-            color = ARGB.colorFromFloat(opacity * 0.33f, brightness * redStrength, brightness * greenStrength, brightness * blueStrength);
-            builder = event.bufferSource().getBuffer(RenderTypes.blockScreenEffect(textureAtlasSprite.atlasLocation()));
-            builder.addVertex(matrix4f, -1.0F, -1.0F, -0.5F).setUv(u1 - playerPosition.z(), v1 + yawPlus4 - smallYOffset).setColor(color);
-            builder.addVertex(matrix4f, 1.0F, -1.0F, -0.5F).setUv(u0 - playerPosition.z(), v1 + yawPlus4 - smallYOffset).setColor(color);
-            builder.addVertex(matrix4f, 1.0F, 1.0F, -0.5F).setUv(u0 - playerPosition.z(), v0 + yaw - smallYOffset).setColor(color);
-            builder.addVertex(matrix4f, -1.0F, 1.0F, -0.5F).setUv(u1 - playerPosition.z(), v0 + yaw - smallYOffset).setColor(color);
             return true;
         }
         return false;
