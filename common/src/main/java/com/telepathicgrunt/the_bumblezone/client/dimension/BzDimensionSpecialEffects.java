@@ -44,19 +44,16 @@ public class BzDimensionSpecialEffects {
             colorFactor *= (BzDimensionConfigs.fogBrightnessPercentage / 100);
         }
 
-        if (WrathOfTheHiveEffect.ACTIVE_WRATH && REDDISH_FOG_TINT < 0.38f) {
-            REDDISH_FOG_TINT += 0.00001f;
+        if (WrathOfTheHiveEffect.ACTIVE_WRATH && REDDISH_FOG_TINT < 0.3f) {
+            REDDISH_FOG_TINT += 0.0025f;
         }
         else if (REDDISH_FOG_TINT > 0) {
-            REDDISH_FOG_TINT -= 0.00001f;
+            REDDISH_FOG_TINT -= 0.0025f;
         }
 
-        // Divide by 255 to make values between 0 and 1
-        double divideBy255 = 0.003921568627451d;
-
-        int red = (int) ((int)(Math.min(Math.min(0.54f * colorFactor, 0.65f + REDDISH_FOG_TINT)*255, 255)) * divideBy255);
-        int green = (int) (((int)(Math.min(Math.max(Math.min(0.3f * colorFactor, 0.87f) - REDDISH_FOG_TINT * 0.6f, 0)*255, 255))) * divideBy255);
-        int blue = (int) (((int)(Math.min(Math.max(Math.min((0.001f * colorFactor) * (colorFactor * colorFactor), 0.9f) - REDDISH_FOG_TINT * 1.9f, 0)*255, 255))) * divideBy255);
+        int red = (int)(Math.min(Math.min(0.54f * colorFactor, 0.65f + REDDISH_FOG_TINT) * 255, 255));
+        int green = ((int)(Math.min(Math.max(Math.min(0.3f * colorFactor, 0.87f) - REDDISH_FOG_TINT * 0.6f, 0) * 255, 255)));
+        int blue = ((int)(Math.min(Math.max(Math.min((0.001f * colorFactor) * (colorFactor * colorFactor), 0.9f) - REDDISH_FOG_TINT * 1.9f, 0) * 255, 255)));
 
         return ARGB.color(red, green, blue);
     }
