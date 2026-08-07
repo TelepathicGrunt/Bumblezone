@@ -20,19 +20,25 @@ public class DimensionTeleportingScreen {
     private static final Identifier BZ_BACKGROUND_LOCATION = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/screens/dimension_teleporting_background.png");
 
     public static void renderScreenAndText(LevelLoadingScreen screen, GuiGraphicsExtractor guiGraphics) {
-        guiGraphics.blit(
-                RenderPipelines.GUI_TEXTURED,
-                BZ_BACKGROUND_LOCATION,
-                0,
-                0,
-                0,
-                0,
-                screen.width,
-                screen.height,
-                screen.width,
-                screen.height
-        );
-        guiGraphics.centeredText(Minecraft.getInstance().font, DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT, screen.width / 2 + 1, screen.height / 2 - 9, 0);
-        guiGraphics.centeredText(Minecraft.getInstance().font, DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT, screen.width / 2, screen.height / 2 - 10, 16774120);
+        int xIterations = (int) Math.ceil(screen.width / 16D);
+        int yIterations = (int) Math.ceil(screen.height / 16D);
+        for (int x = -1; x <= xIterations; x++) {
+            for (int y = -1; y <= yIterations; y++) {
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BZ_BACKGROUND_LOCATION,
+                        16 * x,
+                        16 * y,
+                        0.0F,
+                        0.0F,
+                        16,
+                        16,
+                        16,
+                        16);
+            }
+        }
+
+        int xCenter = screen.width / 2;
+        int yCenter = screen.height / 2;
+        guiGraphics.centeredText(Minecraft.getInstance().font, DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT, xCenter, yCenter - 9, 0);
+        guiGraphics.centeredText(Minecraft.getInstance().font, DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT, xCenter, yCenter - 10, -3096);
     }
 }

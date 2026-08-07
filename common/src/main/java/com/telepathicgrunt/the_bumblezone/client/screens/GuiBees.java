@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.lwjgl.glfw.GLFW;
@@ -91,15 +92,12 @@ public class GuiBees {
                 continue;
             }
 
-            guiGraphics.blit(
+            guiGraphics.blitSprite(
+                    RenderPipelines.GUI_TEXTURED,
                     BeeSpriteState.GetBeeSprite(beeSpriteState),
                     (int) (beeSpriteState.xCord - 8),
                     (int) (beeSpriteState.yCord - 8),
-                    0,
-                    0,
                     16,
-                    16,
-                    16 * (beeSpriteState.xVelocity > 0 ? 1 : -1),
                     16);
 
             float cosOffset = Mth.cos((timePassedWhileGuiIsOpened - beeSpriteState.creationTimestamp) / 20f);
@@ -172,17 +170,31 @@ public class GuiBees {
 
         public boolean angry = false;
 
-        private static final Identifier BEE_SPRITE_WINGS_DOWN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/bee_icon_wings_down.png");
-        private static final Identifier BEE_SPRITE_WINGS_UP = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/bee_icon_wings_up.png");
-        private static final Identifier ANGRY_BEE_SPRITE_WINGS_DOWN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/angry_bee_icon_wings_down.png");
-        private static final Identifier ANGRY_BEE_SPRITE_WINGS_UP = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/april_fools/angry_bee_icon_wings_up.png");
+        private static final Identifier BEE_SPRITE_WINGS_DOWN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "april_fools/bee_icon_wings_down");
+        private static final Identifier BEE_SPRITE_WINGS_DOWN_REVERSED = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "april_fools/bee_icon_wings_down_reversed");
+        private static final Identifier BEE_SPRITE_WINGS_UP = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "april_fools/bee_icon_wings_up");
+        private static final Identifier BEE_SPRITE_WINGS_UP_REVERSED = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "april_fools/bee_icon_wings_up_reversed");
+        private static final Identifier ANGRY_BEE_SPRITE_WINGS_DOWN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "april_fools/angry_bee_icon_wings_down");
+        private static final Identifier ANGRY_BEE_SPRITE_WINGS_DOWN_REVERSED = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "april_fools/angry_bee_icon_wings_down_reversed");
+        private static final Identifier ANGRY_BEE_SPRITE_WINGS_UP = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "april_fools/angry_bee_icon_wings_up");
+        private static final Identifier ANGRY_BEE_SPRITE_WINGS_UP_REVERSED = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "april_fools/angry_bee_icon_wings_up_reversed");
 
         private static Identifier GetBeeSprite(BeeSpriteState beeSpriteState) {
             if (beeSpriteState.angry) {
-                return ((timePassedWhileGuiIsOpened - beeSpriteState.spriteAnimationOffset) % 2) > 1f ? ANGRY_BEE_SPRITE_WINGS_UP : ANGRY_BEE_SPRITE_WINGS_DOWN;
+                if (beeSpriteState.xVelocity > 0) {
+                    return ((timePassedWhileGuiIsOpened - beeSpriteState.spriteAnimationOffset) % 2) > 1f ? ANGRY_BEE_SPRITE_WINGS_UP : ANGRY_BEE_SPRITE_WINGS_DOWN;
+                }
+                else {
+                    return ((timePassedWhileGuiIsOpened - beeSpriteState.spriteAnimationOffset) % 2) > 1f ? ANGRY_BEE_SPRITE_WINGS_UP_REVERSED : ANGRY_BEE_SPRITE_WINGS_DOWN_REVERSED;
+                }
             }
 
-            return ((timePassedWhileGuiIsOpened - beeSpriteState.spriteAnimationOffset) % 3) > 1.5f ? BEE_SPRITE_WINGS_UP : BEE_SPRITE_WINGS_DOWN;
+            if (beeSpriteState.xVelocity > 0) {
+                return ((timePassedWhileGuiIsOpened - beeSpriteState.spriteAnimationOffset) % 3) > 1.5f ? BEE_SPRITE_WINGS_UP : BEE_SPRITE_WINGS_DOWN;
+            }
+            else {
+                return ((timePassedWhileGuiIsOpened - beeSpriteState.spriteAnimationOffset) % 3) > 1.5f ? BEE_SPRITE_WINGS_UP_REVERSED : BEE_SPRITE_WINGS_DOWN_REVERSED;
+            }
         }
     }
 }

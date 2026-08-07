@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.fabric;
 import com.telepathicgrunt.the_bumblezone.client.fabric.FabricArmorRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.client.screens.DimensionTeleportingScreen;
+import com.telepathicgrunt.the_bumblezone.client.screens.LevelLoadingScreenInterface;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzHookupConditionalItemModelPropertiesEvent;
@@ -75,8 +76,8 @@ public class FabricClientEventManager {
         ClientTickEvents.END_CLIENT_TICK.register((mc) -> StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer()));
         ScreenEvents.BEFORE_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
             if (screen instanceof LevelLoadingScreen levelLoadingScreen &&
-                    client.player != null &&
-                    client.player.level().dimension() == BzDimension.BZ_WORLD_KEY)
+                client.player != null &&
+                ((LevelLoadingScreenInterface)levelLoadingScreen).theBumblezone$getNewLevel() == BzDimension.BZ_WORLD_KEY)
             {
                 ScreenEvents.afterExtract(levelLoadingScreen).register((screen1, graphics, mouseX, mouseY, tickProgress) ->
                         DimensionTeleportingScreen.renderScreenAndText((LevelLoadingScreen) screen1, graphics));

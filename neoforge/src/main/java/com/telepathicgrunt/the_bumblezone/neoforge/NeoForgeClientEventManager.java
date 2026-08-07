@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenc
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceStructureMessage;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.RadianceEssenceArmorMessage;
 import com.telepathicgrunt.the_bumblezone.client.screens.DimensionTeleportingScreen;
+import com.telepathicgrunt.the_bumblezone.client.screens.LevelLoadingScreenInterface;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
@@ -194,7 +195,7 @@ public class NeoForgeClientEventManager {
     public static void onScreenRendering(ScreenEvent.Render.Pre event) {
         if (event.getScreen() instanceof LevelLoadingScreen levelLoadingScreen &&
             GeneralUtilsClient.getClientPlayer() != null &&
-            GeneralUtilsClient.getClientPlayer().level().dimension() == BzDimension.BZ_WORLD_KEY)
+            ((LevelLoadingScreenInterface)levelLoadingScreen).theBumblezone$getNewLevel() == BzDimension.BZ_WORLD_KEY)
         {
             DimensionTeleportingScreen.renderScreenAndText(levelLoadingScreen, event.getGuiGraphics());
             event.setCanceled(true);
