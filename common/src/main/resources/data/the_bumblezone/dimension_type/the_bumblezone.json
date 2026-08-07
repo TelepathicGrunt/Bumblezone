@@ -15,8 +15,8 @@
     "minecraft:gameplay/sky_light_level": 0.0,
     "minecraft:gameplay/snow_golem_melts": true,
     "minecraft:gameplay/water_evaporates": false,
-    "minecraft:visual/ambient_light_color": "#443e32",
-    "minecraft:visual/sky_light_color": "#ffae00",
+    "minecraft:visual/ambient_light_color": "#726554",
+    "minecraft:visual/sky_light_color": "#726554",
     "minecraft:visual/sky_light_factor": 1
   },
   "ambient_light": 0.15,

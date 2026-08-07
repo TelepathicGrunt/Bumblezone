@@ -20,19 +20,22 @@ public class DimensionTeleportingScreen {
     private static final Identifier BZ_BACKGROUND_LOCATION = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/screens/dimension_teleporting_background.png");
 
     public static void renderScreenAndText(LevelLoadingScreen screen, GuiGraphicsExtractor guiGraphics) {
-        int xIterations = (int) Math.ceil(screen.width / 16D);
-        int yIterations = (int) Math.ceil(screen.height / 16D);
+        int textureSize = 32;
+        int xIterations = (int) Math.ceil(screen.width / (float)textureSize);
+        int yIterations = (int) Math.ceil(screen.height / (float)textureSize);
         for (int x = -1; x <= xIterations; x++) {
             for (int y = -1; y <= yIterations; y++) {
-                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BZ_BACKGROUND_LOCATION,
-                        16 * x,
-                        16 * y,
+                guiGraphics.blit(
+                        RenderPipelines.GUI_TEXTURED,
+                        BZ_BACKGROUND_LOCATION,
+                        textureSize * x,
+                        textureSize * y,
                         0.0F,
                         0.0F,
-                        16,
-                        16,
-                        16,
-                        16);
+                        textureSize,
+                        textureSize,
+                        textureSize,
+                        textureSize);
             }
         }
 

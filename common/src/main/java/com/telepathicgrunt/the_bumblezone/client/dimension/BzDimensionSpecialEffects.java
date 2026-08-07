@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.ARGB;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -62,13 +63,13 @@ public class BzDimensionSpecialEffects {
 
     public static void fogThicknessAdjustments(
             Player player,
-            float renderDistance,
+            float renderDistanceInChunks,
             boolean thickFog,
             FogType fogType,
             Consumer<Float> setFogStart,
             Consumer<Float> setFogEnd)
     {
-        if (fogType == FogType.NONE &&
+        if (fogType == FogType.ATMOSPHERIC &&
             thickFog &&
             player != null &&
             player.level().dimension().equals(BzDimension.BZ_WORLD_KEY))
@@ -80,14 +81,18 @@ public class BzDimensionSpecialEffects {
             }
 
             float distanceRationAdjuster = 1;
-            if (renderDistance > 352) {
-                distanceRationAdjuster = Math.min(renderDistance / 352, 1.25F);
-            } else if (renderDistance < 126) {
-                distanceRationAdjuster = Math.max(renderDistance / 126, 0.75F);
+            if (renderDistanceInChunks > 22) {
+                distanceRationAdjuster = Math.min(renderDistanceInChunks / 22, 1.5F);
+            } else if (renderDistanceInChunks < 7) {
+                distanceRationAdjuster = Math.max(renderDistanceInChunks / 7, 0.75F);
             }
-            float fogStart = (float) (renderDistance / ((BzDimensionConfigs.fogThickness * distanceRationAdjuster * 0.3f) + 0.00001D));
-            setFogStart.accept(Math.min(renderDistance, fogStart));
-            setFogEnd.accept(Math.max(renderDistance, fogStart));
+
+            float renderDistanceInBlocks = (renderDistanceInChunks * 16) - 4;
+            float renderDistanceFogSpan = Mth.clamp(renderDistanceInBlocks / 10.0F, 4.0F, 64.0F);
+
+            float fogStart = (float) (renderDistanceInChunks / ((BzDimensionConfigs.fogThickness * distanceRationAdjuster * 0.425f) + 0.00001D)) * 16;
+            setFogStart.accept(Math.min(renderDistanceInBlocks - renderDistanceFogSpan, fogStart));
+            setFogEnd.accept(Math.max(renderDistanceInBlocks, fogStart));
         }
     }
 }
