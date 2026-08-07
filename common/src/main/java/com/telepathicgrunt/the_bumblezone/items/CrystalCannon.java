@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import com.telepathicgrunt.the_bumblezone.utils.TriState;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -24,6 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -33,6 +35,7 @@ import org.joml.Quaternionf;
 import org.joml.Quaternionfc;
 import org.joml.Vector3f;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension {
@@ -44,7 +47,12 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
                 .durability(80)
                 .repairable(BzTags.CRYSTAL_CANNON_REPAIR_ITEMS)
                 .component(BzDataComponents.CRYSTAL_CANNON_DATA.get(), new CrystalCannonData())
+                .component(DataComponents.TOOL, createToolProperties())
                 .rarity(Rarity.UNCOMMON));
+    }
+
+    public static Tool createToolProperties() {
+        return new Tool(List.of(), 1.0F, 1, false);
     }
 
     @Override

@@ -45,6 +45,7 @@ public class HoneyCrystalShield extends ShieldItem implements ItemExtension {
                 .repairable(BzTags.HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS)
                 .equippableUnswappable(EquipmentSlot.OFFHAND)
                 .durability(40)
+                .enchantable(1)
                 .component(BzDataComponents.HONEY_CRYSTAL_SHIELD_DEFINED_LEVELS_DATA.get(), new HoneyCrystalShieldDefinedLevelsData(40))
                 .component(BzDataComponents.HONEY_CRYSTAL_SHIELD_CURRENT_LEVEL_DATA.get(), new HoneyCrystalShieldCurrentLevelData())
                 .delayedComponent(

@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import com.telepathicgrunt.the_bumblezone.utils.TriState;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -33,6 +34,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
@@ -57,7 +59,12 @@ public class BeeCannon extends Item implements ItemExtension {
                 .durability(50)
                 .enchantable(1)
                 .repairable(BzTags.BEE_CANNON_REPAIR_ITEMS)
-                .component(BzDataComponents.BEE_CANNON_DATA.get(), CustomData.EMPTY));
+                .component(BzDataComponents.BEE_CANNON_DATA.get(), CustomData.EMPTY)
+                .component(DataComponents.TOOL, createToolProperties()));
+    }
+
+    public static Tool createToolProperties() {
+        return new Tool(List.of(), 1.0F, 1, false);
     }
 
     @Override

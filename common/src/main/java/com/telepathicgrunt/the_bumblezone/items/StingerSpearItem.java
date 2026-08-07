@@ -12,6 +12,7 @@ import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import com.telepathicgrunt.the_bumblezone.utils.TriState;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -34,9 +35,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.component.Tool;
+import net.minecraft.world.item.component.Weapon;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class StingerSpearItem extends TridentItem implements ItemExtension {
     public static final float BASE_DAMAGE = 1F;
@@ -47,8 +52,15 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
                 .stacksTo(1)
                 .durability(220)
                 .repairable(BzTags.STINGER_SPEAR_REPAIR_ITEMS)
+                .enchantable(1)
+                .component(DataComponents.TOOL, createToolProperties())
+                .component(DataComponents.WEAPON, new Weapon(1))
                 .attributes(StingerSpearItem.createAttributes())
                 .rarity(Rarity.UNCOMMON));
+    }
+
+    public static Tool createToolProperties() {
+        return new Tool(List.of(), 1.0F, 2, false);
     }
 
     public static @NotNull ItemAttributeModifiers createAttributes() {
