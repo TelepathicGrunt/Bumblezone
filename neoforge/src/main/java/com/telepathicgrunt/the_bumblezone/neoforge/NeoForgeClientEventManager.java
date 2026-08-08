@@ -67,7 +67,9 @@ import net.neoforged.neoforge.client.extensions.common.IClientMobEffectExtension
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 public class NeoForgeClientEventManager {
@@ -136,7 +138,8 @@ public class NeoForgeClientEventManager {
                 if (provider == null) {
                     provider = NeoforgeArmorProviders.get(itemStack.getItem());
                 }
-                return provider.getFinalModel(itemStack, (HumanoidModel<?>) original);
+
+                return Objects.requireNonNullElse(provider.getFinalModel(itemStack, null, (HumanoidModel<?>) original), original);
             }
         };
     }

@@ -3,10 +3,12 @@ package com.telepathicgrunt.the_bumblezone.client.armor;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -21,17 +23,21 @@ public interface ArmorModelProvider {
     }
 
     static ArmorModelProvider get(Item item) {
-        return PROVIDERS.getOrDefault(item, (stack, original) -> original);
+        return PROVIDERS.getOrDefault(item, (stack, equipmentSlot, original) -> original);
     }
 
     default Identifier getArmorTexture(ItemStack stack) {
         return Identifier.fromNamespaceAndPath("minecraft", "textures/models/armor/leather_layer_1.png");
     }
 
-    @NotNull HumanoidModel<?> getModel(ItemStack stack, HumanoidModel<?> original);
+    @Nullable HumanoidModel<?> getModel(ItemStack stack, @Nullable EquipmentSlot equipmentSlot, HumanoidModel<?> original);
 
-    default @NotNull Model getFinalModel(ItemStack stack, HumanoidModel<?> original) {
-        HumanoidModel<?> replacement = this.getModel(stack, original);
+    default @Nullable Model getFinalModel(ItemStack stack, @Nullable EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
+        HumanoidModel<?> replacement = this.getModel(stack, equipmentSlot, original);
+        if(replacement == null) {
+            return null;
+        }
+
         if (replacement != original) {
             copyPropertiesTo(original, replacement);
             return replacement;

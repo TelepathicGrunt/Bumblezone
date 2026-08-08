@@ -11,6 +11,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class FlowerHeadwearModelProvider implements ArmorModelProvider {
     private FlowerHeadwearModel model;
@@ -21,7 +22,7 @@ public class FlowerHeadwearModelProvider implements ArmorModelProvider {
     }
 
     @Override
-    public @NotNull HumanoidModel<?> getModel(ItemStack stack, HumanoidModel<?> original) {
+    public @NotNull HumanoidModel<?> getModel(ItemStack stack, @Nullable EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
         if (this.model == null) {
             ModelPart layer = Minecraft.getInstance().getEntityModels().bakeLayer(FlowerHeadwearModel.FLOWER_HEADWEAR_LAYER_LOCATION);
             this.model = new FlowerHeadwearModel(layer);
