@@ -26,7 +26,6 @@ public class FlowerHeadwearModelProvider implements ArmorModelProvider {
             ModelPart layer = Minecraft.getInstance().getEntityModels().bakeLayer(FlowerHeadwearModel.FLOWER_HEADWEAR_LAYER_LOCATION);
             this.model = new FlowerHeadwearModel(layer);
         }
-        model.itemStack = stack;
         return this.model;
     }
 }

@@ -26,6 +26,7 @@ import com.telepathicgrunt.the_bumblezone.client.particles.VoiceParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.WindParticle;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HiddenEffectIconRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.armor.BeeArmorModel;
+import com.telepathicgrunt.the_bumblezone.client.rendering.armor.FlowerHeadwearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenModel;
@@ -187,16 +188,15 @@ public class BumblezoneClient {
         event.register(BeeQueenModel.LAYER_LOCATION, BeeQueenModel::createBodyLayer);
         event.register(SentryWatcherModel.LAYER_LOCATION, SentryWatcherModel::createBodyLayer);
         event.register(RootminModel.LAYER_LOCATION, RootminModel::createBodyLayer);
+        event.register(ElectricRingModel.LAYER_LOCATION, ElectricRingModel::createBodyLayer);
+        event.register(PurpleSpikeModel.LAYER_LOCATION, PurpleSpikeModel::createBodyLayer);
+        event.register(CosmicCrystalModel.LAYER_LOCATION, CosmicCrystalModel::createBodyLayer);
         event.register(StingerSpearModel.LAYER_LOCATION, StingerSpearModel::createLayer);
         event.register(BeeStingerModel.LAYER_LOCATION, BeeStingerModel::createLayer);
         event.register(HoneyCrystalShardModel.LAYER_LOCATION, HoneyCrystalShardModel::createLayer);
         event.register(BeeArmorModel.VARIANT_1_LAYER_LOCATION, BeeArmorModel::createVariant1);
         event.register(BeeArmorModel.VARIANT_2_LAYER_LOCATION, BeeArmorModel::createVariant2);
-        // TODO: is this needed????
-        //event.register(FlowerHeadwearModel.FLOWER_HEADWEAR_LAYER_LOCATION, FlowerHeadwearModel::createBodyLayer);
-        event.register(ElectricRingModel.LAYER_LOCATION, ElectricRingModel::createBodyLayer);
-        event.register(PurpleSpikeModel.LAYER_LOCATION, PurpleSpikeModel::createBodyLayer);
-        event.register(CosmicCrystalModel.LAYER_LOCATION, CosmicCrystalModel::createBodyLayer);
+        event.register(FlowerHeadwearModel.FLOWER_HEADWEAR_LAYER_LOCATION, FlowerHeadwearModel::createBodyLayer);
     }
 
     public static void registerEntityRenderers(BzRegisterEntityRenderersEvent event) {
