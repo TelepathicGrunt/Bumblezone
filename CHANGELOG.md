@@ -3,12 +3,14 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
 - Make TradeHintParticle work again or move it into the Bee Queen Renderer instead (moving to bee queen renderer may be best way to go)
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/particles/TradeHintParticle.java
 - Fix floral headwear not rendering when worn
-- Fix bee armor not rendering properly when worn
+- Fix bee armor leggings and chestplate animations not working
+- Need bee chestplate flight working again
 - Make boots mining enchants say they are for feet instead of hand.
 - Search TODO and verify they are all completed
 - Test the everliving hell out of EVERYTHING (music, functionality, mob, arena, etc)
 - Banner pattern texture change to match vanilla
 - Commission new textures for spawn eggs
+- Make bee pants have waist cube
 - run oxipng to shrink texture sizes
 
 

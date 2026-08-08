@@ -36,16 +36,21 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
+import net.minecraft.client.model.object.equipment.ElytraModel;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -67,7 +72,7 @@ import net.neoforged.neoforge.client.extensions.common.IClientMobEffectExtension
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.function.Function;
@@ -139,7 +144,28 @@ public class NeoForgeClientEventManager {
                     provider = NeoforgeArmorProviders.get(itemStack.getItem());
                 }
 
+                if (original instanceof ElytraModel) {
+                    return original;
+                }
+
                 return Objects.requireNonNullElse(provider.getFinalModel(itemStack, null, (HumanoidModel<?>) original), original);
+            }
+
+            @Override
+            public int getDefaultDyeColor(ItemStack stack) {
+                if (stack.is(BzItems.FLOWER_HEADWEAR.get())) {
+                    return DyedItemColor.getOrDefault(stack, stack.is(BzItems.FLOWER_HEADWEAR.get()) ? -1682375 : 0);
+                }
+                return DyedItemColor.getOrDefault(stack, 0);
+            }
+
+            @Override
+            public Identifier getArmorTexture(ItemStack stack, EquipmentClientInfo.LayerType type, EquipmentClientInfo.Layer layer, Identifier _default) {
+                if (provider == null) {
+                    provider = NeoforgeArmorProviders.get(stack.getItem());
+                }
+
+                return provider.getArmorTexture(stack);
             }
         };
     }
