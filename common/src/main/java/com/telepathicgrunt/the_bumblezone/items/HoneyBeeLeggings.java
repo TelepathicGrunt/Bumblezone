@@ -157,22 +157,6 @@ public class HoneyBeeLeggings extends BeeArmor {
         }
     }
 
-    public static void armorStandTick(LivingEntity livingEntity) {
-        if (livingEntity instanceof ArmorStand armorStand) {
-            ItemStack leggings = armorStand.getItemBySlot(EquipmentSlot.LEGS);
-
-            if (leggings.getItem() instanceof HoneyBeeLeggings) {
-                Level level = armorStand.level();
-                RandomSource random = armorStand.getRandom();
-                boolean isPollinated = isPollinated(leggings);
-                boolean isSprinting = armorStand.isSprinting();
-                int beeWearablesCount = BeeArmor.getBeeThemedWearablesCount(armorStand);
-
-                pollenBehavior(leggings, level, armorStand, random, isPollinated, isSprinting, beeWearablesCount);
-            }
-        }
-    }
-
     public static ItemStack getEntityBeeLegging(LivingEntity entity) {
         for (EquipmentSlot equipmentSlot : EquipmentSlotGroup.ARMOR) {
             if (equipmentSlot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {

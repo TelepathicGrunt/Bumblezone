@@ -16,7 +16,11 @@ public class BzArmor extends Item implements ItemExtension {
 
     @Override
     public void inventoryTick(ItemStack itemStack, ServerLevel level, Entity entity, EquipmentSlot equipmentSlot) {
-        if (entity instanceof Player player && player.getItemBySlot(equipmentSlot) == itemStack) {
+        if (entity instanceof Player player &&
+            equipmentSlot != EquipmentSlot.MAINHAND &&
+            equipmentSlot != EquipmentSlot.OFFHAND &&
+            player.getItemBySlot(equipmentSlot) == itemStack)
+        {
             this.bz$onArmorTick(itemStack, level, player);
         }
     }

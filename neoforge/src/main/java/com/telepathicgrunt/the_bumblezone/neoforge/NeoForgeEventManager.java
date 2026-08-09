@@ -353,7 +353,6 @@ public class NeoForgeEventManager {
 
     private static void onEntityTick(EntityTickEvent.Post event) {
         if (event.getEntity() instanceof LivingEntity livingEntity) {
-            HoneyBeeLeggings.armorStandTick(livingEntity);
             EntityTeleportationHookup.entityTick(livingEntity);
         }
     }

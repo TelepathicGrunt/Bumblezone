@@ -39,7 +39,6 @@ public abstract class LivingEntityMixin {
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void bumblezone$onTick(CallbackInfo ci) {
-        HoneyBeeLeggings.armorStandTick((LivingEntity) (Object) this);
         EntityTeleportationHookup.entityTick((LivingEntity) (Object) this);
     }
 

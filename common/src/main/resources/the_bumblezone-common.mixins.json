@@ -102,6 +102,7 @@
     "client.ClientPacketListenerMixin",
     "client.EntityRenderersAccessor",
     "client.GameRendererMixin",
+    "client.ItemStackMixin",
     "client.LevelLoadingScreenMixin",
     "client.LevelRendererMixin",
     "client.LivingEntityRendererMixin",
