@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.client.fabric;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.client.armor.ArmorModelProvider;
+import com.telepathicgrunt.the_bumblezone.client.rendering.armor.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterArmorProviderEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
@@ -28,17 +29,17 @@ public class FabricArmorRenderer implements ArmorRenderer {
     }
 
     @Override
-    public void render(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, ItemStack stack, HumanoidRenderState humanoidRenderState, EquipmentSlot slot, int light, HumanoidModel<HumanoidRenderState> contextModel) {
+    public void render(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, ItemStack itemStack, HumanoidRenderState humanoidRenderState, EquipmentSlot slot, int light, HumanoidModel<HumanoidRenderState> contextModel) {
         if (provider instanceof ArmorModelProvider armorModelProvider) {
-            Model model = provider.getFinalModel(stack, slot, contextModel);
+            Model model = provider.getFinalModel(itemStack, slot, contextModel);
             if (model == null) {
                 return;
             }
 
-            Identifier armorTexture = armorModelProvider.getArmorTexture(stack);
+            Identifier armorTexture = armorModelProvider.getArmorTexture(itemStack);
 
-            if (stack.has(DataComponents.DYED_COLOR) || stack.is(BzItems.FLOWER_HEADWEAR.get())) {
-                int dyeColor = DyedItemColor.getOrDefault(stack, stack.is(BzItems.FLOWER_HEADWEAR.get()) ? -1682375 : 0);
+            if (itemStack.has(DataComponents.DYED_COLOR) || itemStack.is(BzItems.FLOWER_HEADWEAR.get())) {
+                int dyeColor = DyedItemColor.getOrDefault(itemStack, itemStack.is(BzItems.FLOWER_HEADWEAR.get()) ? -1682375 : 0);
                 submitNodeCollector.order(1).submitModel(
                         TransformCopyingModel.create(contextModel, model, false),
                         Pair.of(humanoidRenderState, humanoidRenderState),
@@ -65,6 +66,10 @@ public class FabricArmorRenderer implements ArmorRenderer {
                         OverlayTexture.NO_OVERLAY,
                         0,
                         null);
+            }
+
+            if (model instanceof BeeArmorModel beeArmorModel) {
+                beeArmorModel.setupAnimByStack(humanoidRenderState, itemStack);
             }
         }
     }

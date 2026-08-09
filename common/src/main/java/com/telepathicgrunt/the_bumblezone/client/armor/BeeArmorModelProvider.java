@@ -60,7 +60,6 @@ public class BeeArmorModelProvider implements ArmorModelProvider {
             }
 
             this.model = new BeeArmorModel(layer);
-            model.itemStack = stack;
         }
         return this.model;
     }

@@ -151,6 +151,16 @@ public class BumbleBeeChestplate extends BeeArmor {
         }
     }
 
+    public static boolean isFlying(ItemStack itemStack) {
+        return itemStack.getItem() instanceof BumbleBeeChestplate &&
+                itemStack.get(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get()).isFlying();
+    }
+
+    public static int getVariant(ItemStack itemStack) {
+        return itemStack.getItem() instanceof BumbleBeeChestplate bumbleBeeChestplate ?
+                bumbleBeeChestplate.getVariant() : 1;
+    }
+
     public static ItemStack getEntityBeeChestplate(LivingEntity entity) {
         for (EquipmentSlot equipmentSlot : EquipmentSlotGroup.ARMOR) {
             if (equipmentSlot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
