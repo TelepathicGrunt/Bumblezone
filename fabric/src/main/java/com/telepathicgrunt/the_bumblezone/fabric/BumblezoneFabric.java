@@ -10,6 +10,7 @@ public class BumblezoneFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         BzConfig.setup();
+        FabricEventManager.earlyInit();
         Bumblezone.init();
 
         FabricEventManager.init();

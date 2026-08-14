@@ -111,6 +111,10 @@ public class FabricEventManager {
         map.put(CreativeModeTabs.OP_BLOCKS, BzAddCreativeTabEntriesEvent.Type.OPERATOR);
     });
 
+    public static void earlyInit() {
+        BzRegisterDataSerializersEvent.EVENT.invoke(new BzRegisterDataSerializersEvent(FabricEntityDataRegistry::register));
+    }
+
     public static void init() {
         BzAddBuiltinResourcePacks.EVENT.invoke(new BzAddBuiltinResourcePacks((id, displayName, mode) -> {
             ModContainer container = getModPack(id);
@@ -143,8 +147,6 @@ public class FabricEventManager {
         BzRegisterEntityAttributesEvent.EVENT.invoke(new BzRegisterEntityAttributesEvent(FabricDefaultAttributeRegistry::register));
         BzSetupEvent.EVENT.invoke(new BzSetupEvent(Runnable::run));
         BzFinalSetupEvent.EVENT.invoke(new BzFinalSetupEvent(Runnable::run));
-
-        BzRegisterDataSerializersEvent.EVENT.invoke(new BzRegisterDataSerializersEvent(FabricEntityDataRegistry::register));
 
         ServerTickEvents.END_LEVEL_TICK.register(BzWorldSavedData::tick);
 

@@ -8,6 +8,7 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
 - Fix Green Essence Arena Rootmin's Dirt Block trajectory being glitchy
 - Fix unable to hit back shot/thrown Dirt Pellets
 - Make boots mining enchants say they are for feet instead of hand.
+- Fix Cosmic Crystal spawn complaining about Unregistered serializer
 
 - Search TODO and verify they are all completed
 - Test the everliving hell out of EVERYTHING (music, functionality, mob, arena, etc)
