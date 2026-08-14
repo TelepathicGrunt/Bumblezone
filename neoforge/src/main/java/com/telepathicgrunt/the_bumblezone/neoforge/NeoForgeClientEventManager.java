@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.neoforge;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.armor.ArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.neoforge.DimensionFog;
 import com.telepathicgrunt.the_bumblezone.client.neoforge.NeoforgeArmorProviders;
@@ -30,6 +31,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.LazySupplier;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -40,15 +42,12 @@ import net.minecraft.client.model.object.equipment.ElytraModel;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.neoforged.bus.api.EventPriority;
@@ -56,6 +55,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterConditionalItemModelPropertyEvent;
@@ -72,8 +72,8 @@ import net.neoforged.neoforge.client.extensions.common.IClientMobEffectExtension
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.Nullable;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -85,7 +85,8 @@ public class NeoForgeClientEventManager {
         eventBus.addListener(NeoForgeClientEventManager::onKeyInput);
         eventBus.addListener(NeoForgeClientEventManager::onClientTickPost);
         eventBus.addListener(NeoForgeClientEventManager::onScreenRendering);
-        eventBus.addListener(NeoForgeClientEventManager::onBeforeBlockOutlineRendering);
+        eventBus.addListener(NeoForgeClientEventManager::onLevelExtractRendering);
+        eventBus.addListener(NeoForgeClientEventManager::onBlockRenderStageRendering);
         eventBus.addListener(NeoForgeClientEventManager::onGuiRendering);
         eventBus.addListener(EventPriority.HIGHEST, true, DimensionFog::fogThicknessAdjustments);
 
@@ -239,8 +240,14 @@ public class NeoForgeClientEventManager {
         }
     }
 
-    public static void onBeforeBlockOutlineRendering(RenderLevelStageEvent.AfterTranslucentBlocks event) {
-        KnowingEssenceLootBlockOutlining.outlineLootBlocks(event.getPoseStack(), event.getLevelRenderState().cameraRenderState.pos, event.getLevelRenderer());
+    public static final ContextKey<Long2ObjectOpenHashMap<List<KnowingEssenceLootBlockOutlining.CachedDrawData>>> KNOWING_ESSENCE_BLOCK_OUTLINES_KEY = new ContextKey<>(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "knowing_essence_block_outlines"));
+    public static void onLevelExtractRendering(ExtractLevelRenderStateEvent event) {
+        var data = KnowingEssenceLootBlockOutlining.gatherLootBlocks(event.getLevel(), event.getCamera(), event.getFrustum());
+        event.getRenderState().setRenderData(KNOWING_ESSENCE_BLOCK_OUTLINES_KEY, data);
+    }
+
+    public static void onBlockRenderStageRendering(RenderLevelStageEvent.AfterTranslucentBlocks event) {
+        KnowingEssenceLootBlockOutlining.drawLootBlockOutlines(event.getLevelRenderState().getRenderData(KNOWING_ESSENCE_BLOCK_OUTLINES_KEY), event.getLevelRenderState().cameraRenderState.pos);
     }
 
     public static void onConditionalItemPropertiesSetup(RegisterConditionalItemModelPropertyEvent event) {

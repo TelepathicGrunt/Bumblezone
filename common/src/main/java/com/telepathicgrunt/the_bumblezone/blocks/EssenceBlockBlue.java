@@ -262,7 +262,7 @@ public class EssenceBlockBlue extends EssenceBlock {
                 if (livingEntityAttributeSpeed != null) {
                     livingEntityAttributeSpeed.addPermanentModifier(new AttributeModifier(
                             Identifier.fromNamespaceAndPath(Bumblezone.MODID, "essence_arena_speed_boost"),
-                            isEssenced ? 0.04 : 0.08,
+                            isEssenced ? 0.01 : 0.02,
                             AttributeModifier.Operation.ADD_VALUE));
                 }
 
@@ -358,7 +358,7 @@ public class EssenceBlockBlue extends EssenceBlock {
                         drowned.addEffect(new MobEffectInstance(
                                 MobEffects.SPEED,
                                 Integer.MAX_VALUE,
-                                4,
+                                0,
                                 false,
                                 false,
                                 true));

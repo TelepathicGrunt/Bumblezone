@@ -359,7 +359,7 @@ public class PileOfPollen extends FallingBlock {
 
             // Need to multiply speed to avoid issues where tiny movement is seen as zero.
             if(entitySpeed > 0.00001D && level.getRandom().nextFloat() < chance) {
-                int particleNumber = (int) (entitySpeed / 0.0045D);
+                int particleNumber = (int) (entitySpeed / 0.01D);
                 int particleStrength = (entity instanceof ItemEntity) ? Math.min(10, particleNumber / 3) : Math.min(20, particleNumber);
 
                 if(level.isClientSide()) {

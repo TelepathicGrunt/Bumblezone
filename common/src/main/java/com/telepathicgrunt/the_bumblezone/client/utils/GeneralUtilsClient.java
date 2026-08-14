@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.client.utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
@@ -21,7 +22,7 @@ public class GeneralUtilsClient {
         return Minecraft.getInstance().player;
     }
 
-    public static Level getClientLevel() {
+    public static ClientLevel getClientLevel() {
         return Minecraft.getInstance().level;
     }
 

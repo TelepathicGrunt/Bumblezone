@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.fabric;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.fabric.FabricArmorRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.client.screens.DimensionTeleportingScreen;
@@ -19,12 +20,13 @@ import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterMenuScreenEven
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterParticleEvent;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
-import net.fabricmc.fabric.api.client.particle.v1.FabricSpriteSet;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.minecraft.client.color.item.ItemTintSources;
@@ -32,10 +34,7 @@ import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.ParticleResources;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -43,9 +42,11 @@ import net.minecraft.client.renderer.item.properties.conditional.ConditionalItem
 import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperties;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 
+import java.util.List;
 import java.util.function.Function;
 
 public class FabricClientEventManager {
@@ -68,10 +69,16 @@ public class FabricClientEventManager {
         BzRegisterEffectRenderersEvent.EVENT.invoke(BzRegisterEffectRenderersEvent.INSTANCE);
         BzClientSetupEnqueuedEvent.EVENT.invoke(new BzClientSetupEnqueuedEvent(Runnable::run));
 
-        LevelRenderEvents.BEFORE_BLOCK_OUTLINE.register((worldRenderContext, result) -> {
-            KnowingEssenceLootBlockOutlining.outlineLootBlocks(worldRenderContext.poseStack(), worldRenderContext.levelState().cameraRenderState.pos, worldRenderContext.levelRenderer());
-            return true;
+        RenderStateDataKey<Long2ObjectOpenHashMap<List<KnowingEssenceLootBlockOutlining.CachedDrawData>>> KNOWING_ESSENCE_BLOCK_OUTLINES_KEY = RenderStateDataKey.create(() -> Identifier.fromNamespaceAndPath(Bumblezone.MODID, "knowing_essence_block_outlines").toString());
+        LevelRenderEvents.COLLECT_SUBMITS.register((worldRenderContext) -> {
+            var data = KnowingEssenceLootBlockOutlining.gatherLootBlocks(GeneralUtilsClient.getClientLevel(), worldRenderContext.gameRenderer().getMainCamera(), worldRenderContext.gameRenderer().getMainCamera().getCullFrustum());
+            worldRenderContext.levelState().setData(KNOWING_ESSENCE_BLOCK_OUTLINES_KEY, data);
         });
+
+        LevelRenderEvents.AFTER_TRANSLUCENT_TERRAIN.register((worldRenderContext) -> {
+            KnowingEssenceLootBlockOutlining.drawLootBlockOutlines(worldRenderContext.levelState().getData(KNOWING_ESSENCE_BLOCK_OUTLINES_KEY), worldRenderContext.levelState().cameraRenderState.pos);
+        });
+
 
         ClientTickEvents.END_CLIENT_TICK.register((mc) -> StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer()));
         ScreenEvents.BEFORE_INIT.register((client, screen, scaledWidth, scaledHeight) -> {

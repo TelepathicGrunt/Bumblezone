@@ -3,7 +3,12 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
 - Make TradeHintParticle work again or move it into the Bee Queen Renderer instead (moving to bee queen renderer may be best way to go)
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/particles/TradeHintParticle.java
 - Fix bee chestplate animations not working
+- Fix bee chestplate flight not matching older versions
+- Fix Essence Block shaders being all black
+- Fix Green Essence Arena Rootmin's Dirt Block trajectory being glitchy
+- Fix unable to hit back shot/thrown Dirt Pellets
 - Make boots mining enchants say they are for feet instead of hand.
+
 - Search TODO and verify they are all completed
 - Test the everliving hell out of EVERYTHING (music, functionality, mob, arena, etc)
 - Banner pattern texture change to match vanilla

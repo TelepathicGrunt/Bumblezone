@@ -116,7 +116,7 @@ public class KnowingEssence extends AbilityEssenceItem {
     }
 
     public static String GetAllStructure(ItemStack itemStack) {
-        return itemStack.get(BzDataComponents.KNOWING_ESSENCE_STRUCTURE_DATA.get()).inStructures();
+        return itemStack.getOrDefault(BzDataComponents.KNOWING_ESSENCE_STRUCTURE_DATA.get(), new KnowingEssenceStructureData()).inStructures();
     }
 
     public static boolean IsKnowingEssenceActive(Player player) {

@@ -26,6 +26,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ProblemReporter;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -78,18 +79,19 @@ public class EssenceBlockEntity extends BlockEntity {
     private int extraEventTrackingProgress = 0;
     private BlockPos arenaSize = BlockPos.ZERO;
     private boolean beaten = false;
+    protected final RandomSource random = RandomSource.create();
 
     protected EssenceBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
         if (blockState.getBlock() instanceof EssenceBlock essenceBlock) {
-            eventBar = essenceBlock.getServerEssenceEvent(this.getLevel().getRandom());
+            eventBar = essenceBlock.getServerEssenceEvent(random);
         }
     }
 
     public EssenceBlockEntity(BlockPos blockPos, BlockState blockState) {
         this(BzBlockEntities.ESSENCE_BLOCK.get(), blockPos, blockState);
         if (blockState.getBlock() instanceof EssenceBlock essenceBlock) {
-            eventBar = essenceBlock.getServerEssenceEvent(this.getLevel().getRandom());
+            eventBar = essenceBlock.getServerEssenceEvent(random);
         }
     }
 

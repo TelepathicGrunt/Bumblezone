@@ -67,7 +67,7 @@ public class RadianceEssence extends AbilityEssenceItem {
                         .toList();
 
                 for (Holder<MobEffect> effectHolder : radianceEffects) {
-                    if (effectHolder.value() == MobEffects.SPEED) {
+                    if (effectHolder.is(MobEffects.SPEED)) {
                         serverPlayer.addEffect(new MobEffectInstance(
                                 MobEffects.SPEED,
                                 120,
@@ -78,7 +78,7 @@ public class RadianceEssence extends AbilityEssenceItem {
                             return;
                         }
                     }
-                    else if (effectHolder.value() == MobEffects.RESISTANCE) {
+                    else if (effectHolder.is(MobEffects.RESISTANCE)) {
                         serverPlayer.addEffect(new MobEffectInstance(
                                 MobEffects.RESISTANCE,
                                 120,
@@ -89,7 +89,7 @@ public class RadianceEssence extends AbilityEssenceItem {
                             return;
                         }
                     }
-                    else if (effectHolder.value() == MobEffects.REGENERATION) {
+                    else if (effectHolder.is(MobEffects.REGENERATION)) {
                         serverPlayer.addEffect(new MobEffectInstance(
                                 MobEffects.REGENERATION,
                                 120,
@@ -100,7 +100,7 @@ public class RadianceEssence extends AbilityEssenceItem {
                             return;
                         }
                     }
-                    else if (effectHolder.value() == MobEffects.HASTE) {
+                    else if (effectHolder.is(MobEffects.HASTE)) {
                         serverPlayer.addEffect(new MobEffectInstance(
                                 MobEffects.HASTE,
                                 120,
@@ -111,7 +111,7 @@ public class RadianceEssence extends AbilityEssenceItem {
                             return;
                         }
                     }
-                    else if (effectHolder.value() == MobEffects.SATURATION) {
+                    else if (effectHolder.is(MobEffects.SATURATION)) {
                         serverPlayer.addEffect(new MobEffectInstance(
                                 MobEffects.SATURATION,
                                 120,

@@ -22,6 +22,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -152,14 +153,18 @@ public abstract class HoneyFluid extends BzFluid {
                 BlockPos belowBlockPos = blockPos.below();
                 BlockState belowBlockState = serverLevel.getBlockState(belowBlockPos);
                 FluidState belowFluidState = this.getNewLiquid(serverLevel, belowBlockPos, belowBlockState);
-                if (!belowBlockState.getFluidState().is(BzTags.HONEY_FLUID) &&
-                    this.canMaybePassThrough(serverLevel, blockPos, blockState, Direction.DOWN, belowBlockPos, belowBlockState, belowFluidState)) {
 
-                    if(!justFilledBottom) {
+                if (this.canMaybePassThrough(serverLevel, blockPos, blockState, Direction.DOWN, belowBlockPos, belowBlockState, belowFluidState)) {
+                    FluidState newBelowFluid = this.getNewLiquid(serverLevel, belowBlockPos, belowBlockState);
+                    Fluid newBelowFluidType = newBelowFluid.getType();
+                    if (belowFluidState.canBeReplacedWith(serverLevel, belowBlockPos, newBelowFluidType, Direction.DOWN)
+                            && canHoldSpecificFluid(serverLevel, belowBlockPos, belowBlockState, newBelowFluidType)) {
                         this.spreadDown(serverLevel, belowBlockPos, belowBlockState, Direction.DOWN, belowFluidState);
+                        this.spreadTo(serverLevel, belowBlockPos, belowBlockState, Direction.DOWN, newBelowFluid);
                         if (((FlowingFluidAccessor)this).bumblezone$callSourceNeighborCount(serverLevel, blockPos) >= 3) {
                             ((FlowingFluidAccessor)this).bumblezone$callSpreadToSides(serverLevel, blockPos, fluidState, blockState);
                         }
+
                     }
                 }
                 else if (fluidState.isSource() || !belowBlockState.getFluidState().getType().isSame(this)) {
@@ -190,11 +195,20 @@ public abstract class HoneyFluid extends BzFluid {
         }
     }
 
-    protected void spreadDown(LevelAccessor world, BlockPos blockPos, BlockState blockState, Direction direction, FluidState fluidState) {
-        if (!blockState.isAir()) {
-            this.beforeDestroyingBlock(world, blockPos, blockState);
+    protected void spreadDown(LevelAccessor level, BlockPos blockPos, BlockState blockState, Direction direction, FluidState fluidState) {
+        if (blockState.getBlock() instanceof LiquidBlockContainer container) {
+            container.placeLiquid(level, blockPos, blockState, fluidState);
         }
-        world.setBlock(blockPos, fluidState.createLegacyBlock(), 3);
+        else {
+            if (!blockState.isAir()) {
+                this.beforeDestroyingBlock(level, blockPos, blockState);
+            }
+            level.setBlock(blockPos, fluidState.createLegacyBlock(), 3);
+        }
+    }
+
+    private static boolean canHoldSpecificFluid(BlockGetter level, BlockPos pos, BlockState state, Fluid newFluid) {
+        return !(state.getBlock() instanceof LiquidBlockContainer container) || container.canPlaceLiquid(null, level, pos, state, newFluid);
     }
 
     @Override

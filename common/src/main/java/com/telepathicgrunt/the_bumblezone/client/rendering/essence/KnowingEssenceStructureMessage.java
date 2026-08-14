@@ -71,7 +71,8 @@ public class KnowingEssenceStructureMessage {
 
                         String langKey = transformStructureToLangKey(structEntry);
                         Language language = Language.getInstance();
-                        if (!language.has(langKey)) {
+                        boolean containsLang = language.has(langKey);
+                        if (!containsLang) {
                             langKey = structEntry
                                     .split(":")[1]
                                     .replace("_", " ")
@@ -162,7 +163,7 @@ public class KnowingEssenceStructureMessage {
                 guiGraphics.guiHeight() - BzClientConfigs.knowingEssenceStructureNameYCoord - yOffset,
                 BzClientConfigs.knowingEssenceStructureNameXCoord + startOfHotbar,
                 guiGraphics.guiHeight(),
-                0xFFE090
+                0xFFFFE090
         );
     }
 }

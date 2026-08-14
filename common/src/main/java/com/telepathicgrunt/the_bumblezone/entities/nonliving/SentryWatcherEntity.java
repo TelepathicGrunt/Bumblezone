@@ -204,7 +204,9 @@ public class SentryWatcherEntity extends Entity implements Enemy {
         output.putString("targetFacing", targetFacingName);
         output.putBoolean("NoAI", this.hasNoAI());
 
-        output.store("owner", EntityReference.codec(), this.getOwner());
+        if (this.getOwner() != null) {
+            output.store("owner", EntityReference.codec(), this.getOwner());
+        }
     }
 
     @Override

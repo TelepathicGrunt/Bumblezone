@@ -1,18 +1,19 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.essence;
 
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.items.essence.KnowingEssence;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.Camera;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.SectionPos;
+import net.minecraft.gizmos.GizmoStyle;
+import net.minecraft.gizmos.Gizmos;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
@@ -28,8 +29,8 @@ import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Matrix4f;
 import org.joml.Vector4d;
 
 import java.util.HashSet;
@@ -45,7 +46,7 @@ public class KnowingEssenceLootBlockOutlining {
     private static final Vector4d VECTOR_4D_MIN = new Vector4d(MIN_CORNER, MIN_CORNER, MIN_CORNER, 1.0D);
     private static final Vector4d VECTOR_4D_MAX = new Vector4d(MAX_CORNER, MAX_CORNER, MAX_CORNER, 1.0D);
     private static final LinkedHashSet<Long> CACHED_CHUNK_POS = new LinkedHashSet<>();
-    private static final Long2ObjectOpenHashMap<CachedChunkData> CACHED_CHUNK_DATA = new Long2ObjectOpenHashMap<>();
+    private static final Long2ObjectOpenHashMap<List<CachedDrawData>> CACHED_CHUNK_DATA = new Long2ObjectOpenHashMap<>();
     private static final Set<Block> CACHED_TARGET_BLOCKS = new ObjectOpenHashSet<>();
     private static final Set<Block> CACHED_NONTARGET_BLOCKS = new ObjectOpenHashSet<>();
     private static final int chunkRadius = 4;
@@ -62,22 +63,29 @@ public class KnowingEssenceLootBlockOutlining {
         CACHED_NONTARGET_BLOCKS.clear();
     }
 
-    public static void outlineLootBlocks(PoseStack poseStack, Vec3 cameraPos, LevelRenderer levelRenderer) {
+    public static Long2ObjectOpenHashMap<List<CachedDrawData>> gatherLootBlocks(ClientLevel level, Camera camera, Frustum frustum) {
         Player player = GeneralUtilsClient.getClientPlayer();
         if (KnowingEssence.IsKnowingEssenceActive(player)) {
-            Level level = player.level();
-
-            scanChunks(cameraPos, level);
-
-            drawOutlines(poseStack, cameraPos);
+            scanChunks(camera.position(), level, frustum);
         }
         else if (!CACHED_CHUNK_POS.isEmpty()) {
             CACHED_CHUNK_DATA.clear();
             CACHED_CHUNK_POS.clear();
         }
+
+        // Needed for ensuring threadsafety and not being passed by ref
+        Long2ObjectOpenHashMap<List<CachedDrawData>> deepCopyChunkData = new Long2ObjectOpenHashMap<>(CACHED_CHUNK_DATA.size());
+        for (Map.Entry<Long, List<CachedDrawData>> entry : CACHED_CHUNK_DATA.long2ObjectEntrySet()) {
+            deepCopyChunkData.put(entry.getKey().longValue(), new ObjectArrayList<>(entry.getValue()));
+        }
+        return deepCopyChunkData;
     }
 
-    private static void scanChunks(Vec3 cameraPos, Level level) {
+    public static void drawLootBlockOutlines(Long2ObjectOpenHashMap<List<CachedDrawData>> cachedChunkDatas, Vec3 cameraPos) {
+        drawOutlines(cachedChunkDatas, cameraPos);
+    }
+
+    private static void scanChunks(Vec3 cameraPos, Level level, Frustum frustum) {
         long currentTime = System.currentTimeMillis();
         if (currentTime > targetScanTime) {
             targetScanTime = currentTime + targetScanTimeIncrement;
@@ -88,7 +96,7 @@ public class KnowingEssenceLootBlockOutlining {
             HashSet<Long> copySet = new HashSet<>(CACHED_CHUNK_POS);
             for (int x = -chunkRadius; x <= chunkRadius; x++) {
                 for (int z = -chunkRadius; z <= chunkRadius; z++) {
-                    long chunkPosLong = ChunkPos.hash(x + centerChunkPos.x(), z + centerChunkPos.z());
+                    long chunkPosLong = ChunkPos.pack(x + centerChunkPos.x(), z + centerChunkPos.z());
                     copySet.remove(chunkPosLong);
 
                     currentChunk++;
@@ -96,10 +104,17 @@ public class KnowingEssenceLootBlockOutlining {
                         continue;
                     }
 
+                    int xInBlocks = SectionPos.sectionToBlockCoord(x + centerChunkPos.x());
+                    int zInBlocks = SectionPos.sectionToBlockCoord(z + centerChunkPos.z());
+
+                    if (!frustum.isVisible(new AABB(xInBlocks, level.getMinY(), zInBlocks, xInBlocks + 16, level.getMaxY(), zInBlocks + 16))) {
+                        continue;
+                    }
+
                     LevelChunk chunk = level.getChunk(x + centerChunkPos.x(), z + centerChunkPos.z());
 
                     // Reset cached data
-                    CACHED_CHUNK_DATA.put(chunkPosLong, new CachedChunkData(new ObjectArrayList<>()));
+                    CACHED_CHUNK_DATA.put(chunkPosLong, new ObjectArrayList<>());
                     CACHED_CHUNK_POS.add(chunkPosLong);
 
                     blockEntityScan(chunk, chunkPosLong);
@@ -107,13 +122,14 @@ public class KnowingEssenceLootBlockOutlining {
                 }
             }
 
+            // remove cache positions outside radius scan.
             for (Long chunkPos : copySet) {
                 CACHED_CHUNK_POS.remove(chunkPos);
                 CACHED_CHUNK_DATA.remove(chunkPos.longValue());
             }
 
             currentScanIncrement++;
-            if (currentScanIncrement >= chunkBatches) {
+            if (currentScanIncrement > chunkBatches) {
                 currentScanIncrement = 0;
             }
         }
@@ -130,12 +146,12 @@ public class KnowingEssenceLootBlockOutlining {
 
             if (CACHED_TARGET_BLOCKS.contains(block) ||
                 ((blockState.is(BzTags.KNOWING_BLOCK_ENTITY_FORCED_HIGHLIGHTING) ||
-                    blockEntity instanceof RandomizableContainerBlockEntity ||
-                    blockEntity instanceof BrushableBlockEntity ||
-                    blockEntity instanceof EnderChestBlockEntity ||
-                    blockEntity instanceof DecoratedPotBlockEntity ||
-                    block instanceof EnderChestBlock)
-                    && !blockState.is(BzTags.KNOWING_BLOCK_ENTITY_PREVENT_HIGHLIGHTING)))
+                blockEntity instanceof RandomizableContainerBlockEntity ||
+                blockEntity instanceof BrushableBlockEntity ||
+                blockEntity instanceof EnderChestBlockEntity ||
+                blockEntity instanceof DecoratedPotBlockEntity ||
+                block instanceof EnderChestBlock)
+                && !blockState.is(BzTags.KNOWING_BLOCK_ENTITY_PREVENT_HIGHLIGHTING)))
             {
                 CACHED_TARGET_BLOCKS.add(block);
 
@@ -146,7 +162,7 @@ public class KnowingEssenceLootBlockOutlining {
                 int green = ARGB.green(colorInt);
                 int blue = ARGB.blue(colorInt);
 
-                CACHED_CHUNK_DATA.get(chunkPosLong).cachedDrawData.add(
+                CACHED_CHUNK_DATA.get(chunkPosLong).add(
                     new CachedDrawData(
                         VECTOR_4D_MIN.x() + lootBlockPos.getX(),
                         VECTOR_4D_MIN.y() + lootBlockPos.getY(),
@@ -178,6 +194,7 @@ public class KnowingEssenceLootBlockOutlining {
                 for (int sectionX = 0; sectionX < 16; sectionX++) {
                     for (int sectionZ = 0; sectionZ < 16; sectionZ++) {
                         for (int sectionY = 0; sectionY < 16; sectionY++) {
+
                             BlockState blockState = levelChunkSection.getBlockState(sectionX, sectionY, sectionZ);
                             Block block = blockState.getBlock();
 
@@ -201,7 +218,7 @@ public class KnowingEssenceLootBlockOutlining {
                                 int green = ARGB.green(colorInt);
                                 int blue = ARGB.blue(colorInt);
 
-                                CACHED_CHUNK_DATA.get(chunkPosLong).cachedDrawData.add(
+                                CACHED_CHUNK_DATA.get(chunkPosLong).add(
                                         new CachedDrawData(
                                                 VECTOR_4D_MIN.x() + lootBlockPos.getX(),
                                                 VECTOR_4D_MIN.y() + lootBlockPos.getY(),
@@ -223,11 +240,11 @@ public class KnowingEssenceLootBlockOutlining {
         }
     }
 
-    private static void drawOutlines(PoseStack poseStack, Vec3 cameraPos) {
-        if (!CACHED_CHUNK_DATA.isEmpty()) {
+    private static void drawOutlines(Long2ObjectOpenHashMap<List<CachedDrawData>> cachedChunkDatas, Vec3 cameraPos) {
+        if (!cachedChunkDatas.isEmpty()) {
             boolean hasEntry = false;
-            for (CachedChunkData cachedChunkData : CACHED_CHUNK_DATA.values()) {
-                if (!cachedChunkData.cachedDrawData.isEmpty()) {
+            for (List<CachedDrawData> cachedChunkData : cachedChunkDatas.values()) {
+                if (!cachedChunkData.isEmpty()) {
                     hasEntry = true;
                     break;
                 }
@@ -236,60 +253,42 @@ public class KnowingEssenceLootBlockOutlining {
                 return;
             }
 
-            poseStack.pushPose();
+            cachedChunkDatas.values().forEach(cachedChunkData ->
+                    cachedChunkData.forEach(cachedDrawData -> {
 
-            Tesselator tesselator = Tesselator.getInstance();
-            BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
-            Matrix4f lastPose = poseStack.last().pose();
-            CACHED_CHUNK_DATA.values().forEach(cachedChunkData ->
-                    cachedChunkData.cachedDrawData.forEach(cachedDrawData ->
+//                            if (!frustum.pointInFrustum(sectionX + chunk.getPos().getMinBlockX(), sectionY, sectionZ + chunk.getPos().getMinBlockZ())) {
+//                                continue;
+//                            }
+
+                            int distTillMaxFade = 200;
+                            int alpha = GeneralUtils.capBetween((int) (Math.pow(1 - (cameraPos.distanceToSqr(cachedDrawData.minX, cachedDrawData.minY, cachedDrawData.minZ) / (distTillMaxFade * distTillMaxFade)), 15) * 255), 10, 255);
                             renderLineBox(
-                                bufferbuilder,
-                                lastPose,
-                                (float) (cachedDrawData.minX - cameraPos.x()),
-                                (float) (cachedDrawData.minY - cameraPos.y()),
-                                (float) (cachedDrawData.minZ - cameraPos.z()),
-                                (float) (cachedDrawData.maxX - cameraPos.x()),
-                                (float) (cachedDrawData.maxY - cameraPos.y()),
-                                (float) (cachedDrawData.maxZ - cameraPos.z()),
-                                cachedDrawData.red,
-                                cachedDrawData.green,
-                                cachedDrawData.blue
-                    )));
-            poseStack.popPose();
+                                cachedDrawData.minX,
+                                cachedDrawData.minY,
+                                cachedDrawData.minZ,
+                                cachedDrawData.maxX,
+                                cachedDrawData.maxY,
+                                cachedDrawData.maxZ,
+                                ARGB.color(alpha, cachedDrawData.red, cachedDrawData.green, cachedDrawData.blue));
+                        }
+                    ));
         }
     }
 
-    private static void renderLineBox(BufferBuilder builder, Matrix4f pose, float minX, float minY, float minZ, float maxX, float maxY, float maxZ, int red, int green, int blue) {
-        builder.addVertex(pose, minX, minY, minZ).setColor(red, green, blue, 255).setNormal(1.0F, 0.0F, 0.0F);
-        builder.addVertex(pose, maxX, minY, minZ).setColor(red, green, blue, 255).setNormal(1.0F, 0.0F, 0.0F);
-        builder.addVertex(pose, minX, minY, minZ).setColor(red, green, blue, 255).setNormal(0.0F, 1.0F, 0.0F);
-        builder.addVertex(pose, minX, maxY, minZ).setColor(red, green, blue, 255).setNormal(0.0F, 1.0F, 0.0F);
-        builder.addVertex(pose, minX, minY, minZ).setColor(red, green, blue, 255).setNormal(0.0F, 0.0F, 1.0F);
-        builder.addVertex(pose, minX, minY, maxZ).setColor(red, green, blue, 255).setNormal(0.0F, 0.0F, 1.0F);
-        builder.addVertex(pose, maxX, minY, minZ).setColor(red, green, blue, 255).setNormal(0.0F, 1.0F, 0.0F);
-        builder.addVertex(pose, maxX, maxY, minZ).setColor(red, green, blue, 255).setNormal(0.0F, 1.0F, 0.0F);
-        builder.addVertex(pose, maxX, maxY, minZ).setColor(red, green, blue, 255).setNormal(-1.0F, 0.0F, 0.0F);
-        builder.addVertex(pose, minX, maxY, minZ).setColor(red, green, blue, 255).setNormal(-1.0F, 0.0F, 0.0F);
-        builder.addVertex(pose, minX, maxY, minZ).setColor(red, green, blue, 255).setNormal(0.0F, 0.0F, 1.0F);
-        builder.addVertex(pose, minX, maxY, maxZ).setColor(red, green, blue, 255).setNormal(0.0F, 0.0F, 1.0F);
-        builder.addVertex(pose, minX, maxY, maxZ).setColor(red, green, blue, 255).setNormal(0.0F, -1.0F, 0.0F);
-        builder.addVertex(pose, minX, minY, maxZ).setColor(red, green, blue, 255).setNormal(0.0F, -1.0F, 0.0F);
-        builder.addVertex(pose, minX, minY, maxZ).setColor(red, green, blue, 255).setNormal(1.0F, 0.0F, 0.0F);
-        builder.addVertex(pose, maxX, minY, maxZ).setColor(red, green, blue, 255).setNormal(1.0F, 0.0F, 0.0F);
-        builder.addVertex(pose, maxX, minY, maxZ).setColor(red, green, blue, 255).setNormal(0.0F, 0.0F, -1.0F);
-        builder.addVertex(pose, maxX, minY, minZ).setColor(red, green, blue, 255).setNormal(0.0F, 0.0F, -1.0F);
-        builder.addVertex(pose, minX, maxY, maxZ).setColor(red, green, blue, 255).setNormal(1.0F, 0.0F, 0.0F);
-        builder.addVertex(pose, maxX, maxY, maxZ).setColor(red, green, blue, 255).setNormal(1.0F, 0.0F, 0.0F);
-        builder.addVertex(pose, maxX, minY, maxZ).setColor(red, green, blue, 255).setNormal(0.0F, 1.0F, 0.0F);
-        builder.addVertex(pose, maxX, maxY, maxZ).setColor(red, green, blue, 255).setNormal(0.0F, 1.0F, 0.0F);
-        builder.addVertex(pose, maxX, maxY, minZ).setColor(red, green, blue, 255).setNormal(0.0F, 0.0F, 1.0F);
-        builder.addVertex(pose, maxX, maxY, maxZ).setColor(red, green, blue, 255).setNormal(0.0F, 0.0F, 1.0F);
+    private static void renderLineBox(
+            double minX,
+            double minY,
+            double minZ,
+            double maxX,
+            double maxY,
+            double maxZ,
+            int color)
+    {
+        Gizmos.cuboid(
+            new AABB(minX, minY, minZ, maxX, maxY, maxZ),
+            GizmoStyle.stroke(color)
+        ).setAlwaysOnTop();
     }
 
-    private record CachedChunkData(List<CachedDrawData> cachedDrawData){
-    }
-
-    private record CachedDrawData(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, int red, int green, int blue) {
-    }
+    public record CachedDrawData(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, int red, int green, int blue) { }
 }

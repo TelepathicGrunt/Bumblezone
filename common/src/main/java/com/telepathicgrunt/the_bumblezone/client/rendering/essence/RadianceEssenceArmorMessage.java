@@ -90,7 +90,7 @@ public class RadianceEssenceArmorMessage {
                 guiGraphics.guiHeight() - BzClientConfigs.radianceEssenceArmorDurabilityYCoord - yOffset,
                 BzClientConfigs.radianceEssenceArmorDurabilityXCoord + startOfHotbar,
                 guiGraphics.guiHeight(),
-                0xFFE090
+                0xFFFFE090
         );
 
         Matrix3x2fStack pose = guiGraphics.pose();
