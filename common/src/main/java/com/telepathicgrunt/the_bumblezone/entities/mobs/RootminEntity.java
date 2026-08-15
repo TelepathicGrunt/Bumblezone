@@ -66,9 +66,12 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.Snowball;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -603,8 +606,8 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
       if (!this.level().isClientSide()) {
          for (int currentProjectile = 0; currentProjectile < totalProjectiles; currentProjectile++) {
             Vec3 viewVector = this.getViewVector(1.0F);
-            DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this, BzItems.DIRT_PELLET.get().getDefaultInstance());
-            pelletEntity.setPos(pelletEntity.position().add(viewVector.x(), 0, viewVector.z()));
+            ItemStack itemStack = BzItems.DIRT_PELLET.get().getDefaultInstance();
+            DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this, itemStack);
 
             if (this.getEssenceController() != null) {
                pelletEntity.setEventBased(true);
@@ -624,22 +627,26 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
                shootAngle = new Vec3(x, y, z);
             }
 
-            double archOffset = Math.sqrt((shootAngle.x() * shootAngle.x()) + (shootAngle.z() * shootAngle.z()));
+            double archOffset = Math.sqrt((shootAngle.x() * shootAngle.x()) + (shootAngle.z() * shootAngle.z())) * 1.05d;
 
             Vec3 vec3 = this.getUpVector(1.0f);
             int angle = (currentProjectile - (int) (totalProjectiles / 2f)) * 3;
             Quaternionf quaternionf = new Quaternionf().setAngleAxis(angle * ((float) Math.PI / 180), vec3.x, vec3.y, vec3.z);
             Vector3f rotatedShootAngle = shootAngle.toVector3f().rotate(quaternionf);
 
-            pelletEntity.shoot(
-                    rotatedShootAngle.x(),
-                    rotatedShootAngle.y() + archOffset * 0.2D * (currentProjectile != 1 ? 1.4F : 1),
-                    rotatedShootAngle.z(),
-                    1.5F * speedMultiplier * (currentProjectile != 1 ? 0.75F : 1),
-                    1);
-
+            int finalCurrentProjectile = currentProjectile;
+            Projectile.spawnProjectile(
+                    pelletEntity,
+                    (ServerLevel) this.level(),
+                    itemStack,
+                    projectile -> projectile.shoot(
+                            rotatedShootAngle.x(),
+                            rotatedShootAngle.y() + archOffset * 0.2D * (finalCurrentProjectile != 1 ? 1.4F : 1),
+                            rotatedShootAngle.z(),
+                            1.5F * speedMultiplier * (finalCurrentProjectile != 1 ? 0.75F : 1),
+                            1)
+            );
             this.playSound(BzSounds.ROOTMIN_SHOOT.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
-            this.level().addFreshEntity(pelletEntity);
          }
       }
    }
