@@ -1,5 +1,5 @@
 {
   "parent": "minecraft:item/generated",
-  "textures": { "layer0": "the_bumblezone:item/music_disc_rivers_of_honey_moserao" }
+  "textures": { "layer0": "the_bumblezone:item/music_disc/rivers_of_honey_moserao" }
 }
 
