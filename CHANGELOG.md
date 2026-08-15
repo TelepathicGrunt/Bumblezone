@@ -10,7 +10,6 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
   - Do `/give @s the_bumblezone:essence_of_the_bees` and consume right by holding right click.
   - Then do `/setblock ~3 ~ ~ the_bumblezone:essence_block_white` and touch the block. Cosmic Crystals will spawn.
 
-- Search TODO and verify they are all completed
 - Test the everliving hell out of EVERYTHING (music needs checking)
 - Commission new textures for spawn eggs
 - run oxipng to shrink texture sizes
