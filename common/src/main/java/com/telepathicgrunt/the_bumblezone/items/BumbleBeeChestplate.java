@@ -89,9 +89,9 @@ public class BumbleBeeChestplate extends BeeArmor {
         if (isFlying) {
             if (flyCounter > 0) {
                 Vec3 velocity = player.getDeltaMovement();
-                double additiveSpeed = velocity.y() > 0 ? velocity.y() > 0.1D ? 0.0325D : 0.045D : 0.0675D;
+                double additiveSpeed = velocity.y() > 0 ? velocity.y() > 0.1D ? 0.06D : 0.080D : 0.13D;
                 if (isBeenergized) {
-                    additiveSpeed += (beenergized.getAmplifier() + 1) * 0.00575D;
+                    additiveSpeed += (beenergized.getAmplifier() + 1) * 0.0125D;
                 }
 
                 double newYSpeed = velocity.y() + additiveSpeed;

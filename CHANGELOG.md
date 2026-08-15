@@ -3,12 +3,15 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
 - Make TradeHintParticle work again or move it into the Bee Queen Renderer instead (moving to bee queen renderer may be best way to go)
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/particles/TradeHintParticle.java
 - Fix bee chestplate animations not working
-- Fix bee chestplate flight not matching older versions
+  - Do `/give @s the_bumblezone:bumble_bee_chestplate_1` and `/give @s the_bumblezone:bumble_bee_chestplate_2` to get both chestplate variants
+  - Holding jump button will allow flight briefly. Wings should flutter when applying flight.
 - Fix Cosmic Crystal laser beam not being full bright on all sides
 - Fix Cosmic Crystal not facing correct direction during some attacks
+  - Do `/give @s the_bumblezone:essence_of_the_bees` and consume right by holding right click.
+  - Then do `/setblock ~3 ~ ~ the_bumblezone:essence_block_white` and touch the block. Cosmic Crystals will spawn.
 
 - Search TODO and verify they are all completed
-- Test the everliving hell out of EVERYTHING (music, functionality, mob, arena, etc)
+- Test the everliving hell out of EVERYTHING (music needs checking)
 - Banner pattern texture change to match vanilla
 - Commission new textures for spawn eggs
 - Make bee pants have waist cube
