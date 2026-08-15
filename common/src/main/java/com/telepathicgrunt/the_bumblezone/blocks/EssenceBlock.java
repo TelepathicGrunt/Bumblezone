@@ -164,7 +164,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
         }
 
         Vec3 center = Vec3.atCenterOf(blockPos);
-        float powerPush = entity instanceof Player player && player.onGround() ? 10 : 1;
+        float powerPush = entity instanceof Player player && player.onGround() ? 0.5f : 0.35f;
         entity.push(
                 (entity.getX() - center.x()) * powerPush,
                 (entity.getY() - center.y()) * powerPush,
