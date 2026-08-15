@@ -10,13 +10,13 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
-import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.stats.Stats;
@@ -33,9 +33,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.item.enchantment.effects.EnchantmentAttributeEffect;
 import net.minecraft.world.item.equipment.ArmorType;
@@ -45,6 +46,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
 
@@ -338,6 +340,25 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
             }
         }
         return itemId;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
+        super.appendHoverText(itemStack, context, display, builder, tooltipFlag);
+
+        ItemEnchantments itemEnchantments = itemStack.get(DataComponents.ENCHANTMENTS);
+        if (itemEnchantments != null) {
+            for (Object2IntMap.Entry<Holder<Enchantment>> holderEntry : itemEnchantments.entrySet()) {
+                if (!holderEntry.getKey().value().matchingSlot(EquipmentSlot.FEET) && holderEntry.getKey().value().matchingSlot(EquipmentSlot.MAINHAND)) {
+                    Component component = Component.translatable("item.the_bumblezone.carpenter_bee_boots_mining_enchant_tip")
+                            .withStyle(ChatFormatting.ITALIC)
+                            .withStyle(ChatFormatting.DARK_GRAY);
+
+                    builder.accept(component);
+                    break;
+                }
+            }
+        }
     }
 
     public static ItemStack getEntityBeeBoots(LivingEntity entity) {

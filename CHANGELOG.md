@@ -6,7 +6,6 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
 - Fix bee chestplate flight not matching older versions
 - Fix Cosmic Crystal laser beam not being full bright on all sides
 - Fix Cosmic Crystal not facing correct direction during some attacks
-- Make Carpenter Bee Boots mining enchants say they are for feet instead of hand.
 
 - Search TODO and verify they are all completed
 - Test the everliving hell out of EVERYTHING (music, functionality, mob, arena, etc)
