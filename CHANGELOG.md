@@ -4,7 +4,6 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
   - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/particles/TradeHintParticle.java
 - Fix bee chestplate animations not working
 - Fix bee chestplate flight not matching older versions
-- Fix Essence Block shaders being all black
 - Fix Cosmic Crystal laser beam not being full bright on all sides
 - Fix Cosmic Crystal not facing correct direction during some attacks
 - Fix Green Essence Arena Rootmin's Dirt Block trajectory being glitchy

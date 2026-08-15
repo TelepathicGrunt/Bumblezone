@@ -27,7 +27,7 @@ public class EssenceBlockShader {
             .withFragmentShader(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "core/rendertype_bumblezone_essence"))
             .withSampler("Sampler0")
             .withSampler("Sampler1")
-            .withVertexFormat(DefaultVertexFormat.POSITION, VertexFormat.Mode.QUADS)
+            .withVertexFormat(DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS)
             .withDepthStencilState(DepthStencilState.DEFAULT)
             .buildSnippet();
 

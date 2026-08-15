@@ -10,8 +10,6 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
-import net.minecraft.client.renderer.rendertype.RenderType;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.util.ARGB;
@@ -21,10 +19,8 @@ import org.joml.Vector3f;
 import org.joml.Vector3fc;
 import org.jspecify.annotations.Nullable;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 
 public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBlockEntity, EssenceBlockEntityRendererState> {
@@ -65,7 +61,7 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 
 	public void submit(EssenceBlockEntityRendererState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
 		if (!BzClientConfigs.disableEssenceBlockShaders) {
-			submitCube(state, EssenceBlockShader.BUMBLEZONE_ESSENCE_RENDERTYPE, poseStack, submitNodeCollector);
+			submitCube(state, poseStack, submitNodeCollector);
 		}
 	}
 
@@ -73,9 +69,9 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 		return 256;
 	}
 
-	protected static void submitCube(EssenceBlockEntityRendererState state, RenderType renderType, PoseStack poseStack, SubmitNodeCollector submitNodeCollector) {
+	protected static void submitCube(EssenceBlockEntityRendererState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector) {
 		if (!state.facesToShow.isEmpty()) {
-			submitNodeCollector.submitCustomGeometry(poseStack, renderType, (pose, buffer) -> {
+			submitNodeCollector.submitCustomGeometry(poseStack, EssenceBlockShader.BUMBLEZONE_ESSENCE_RENDERTYPE, (pose, buffer) -> {
 				for (Direction direction : state.facesToShow) {
 					for (Vector3fc faceVertex : FACES.get(direction)) {
 						float red = ARGB.red(state.colorInt) / 255f;
