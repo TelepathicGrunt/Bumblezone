@@ -42,7 +42,7 @@ dependencies {
     compileOnly("dev.architectury:architectury-neoforge:${project.architectury}") { transitive = false  }
     compileOnly("me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config}") { transitive = false  }
     compileOnly("noobanidus.mods:lootr-neoforge:${project.lootr}") { transitive = false  }
-    compileOnly("curse.maven:backpacked-352835:${project.backpacked_file_id}") { transitive = false  }
+    compileOnly("com.mrcrayfish:backpacked-common:${project.backpacked}") { transitive = false  }
 }
 
 neoForge {

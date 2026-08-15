@@ -121,6 +121,21 @@ allprojects {
                 includeGroupAndSubgroups("cc.cassian")
             }
         }
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = "MrCrayfish (GitHub)"
+                    url = "https://maven.pkg.github.com/MrCrayfish/Maven"
+                    credentials {
+                        username = providers.environmentVariable('GITHUB_USERNAME').get()
+                        password = providers.environmentVariable('GITHUB_KEY').get()
+                    }
+                }
+            }
+            filter {
+                includeGroupAndSubgroups("com.mrcrayfish")
+            }
+        }
     }
 
     tasks.register('buildAndRelease') {
