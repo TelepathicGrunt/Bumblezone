@@ -13,7 +13,6 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
 - Search TODO and verify they are all completed
 - Test the everliving hell out of EVERYTHING (music needs checking)
 - Commission new textures for spawn eggs
-- Make bee pants have waist cube
 - run oxipng to shrink texture sizes
 
 

@@ -194,6 +194,8 @@ public class BeeArmorModel extends HumanoidModel<HumanoidRenderState> {
         PartDefinition root = mesh.getRoot();
         setupBlankBodyDefaults(root);
 
+        root.addOrReplaceChild("body", CubeListBuilder.create().texOffs(40, 55).addBox(-4.5F, 8.06F, -2.5F, 9.0F, 4.0F, 5.0F, new CubeDeformation(-0.05F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
         PartDefinition right_leg_main = root.addOrReplaceChild("right_leg", CubeListBuilder.create().addBox(0, 0, 0, 0, 0, 0, new CubeDeformation(0).extend(-0.1F)), PartPose.offset(-1.9F, 12.0F, 0));
         PartDefinition right_leg = right_leg_main.addOrReplaceChild("true_right_leg", CubeListBuilder.create().texOffs(20, 37).addBox(-2.75F, 0, -2.5F, 5.0F, 8.0F, 5.0F, new CubeDeformation(0)), PartPose.offset(0, 0, 0));
         right_leg.addOrReplaceChild("pollen_right", CubeListBuilder.create().texOffs(40, 37).addBox(1.005F, 1.25F, -2.995F, 4.0F, 4.0F, 6.0F, new CubeDeformation(0)), PartPose.offset(-4.0F, 0, 0));
@@ -286,6 +288,8 @@ public class BeeArmorModel extends HumanoidModel<HumanoidRenderState> {
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition root = mesh.getRoot();
         setupBlankBodyDefaults(root);
+
+        root.addOrReplaceChild("body", CubeListBuilder.create().texOffs(40, 55).addBox(-4.5F, 8.06F, -2.5F, 9.0F, 4.0F, 5.0F, new CubeDeformation(-0.05F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         PartDefinition right_leg_main = root.addOrReplaceChild("right_leg", CubeListBuilder.create().addBox(0, 0, 0, 0, 0, 0, new CubeDeformation(0)), PartPose.offset(-1.9F, 12.0F, 0));
         PartDefinition right_leg = right_leg_main.addOrReplaceChild("true_right_leg", CubeListBuilder.create().texOffs(0, 37).addBox(-2.5F, 0, -2.5F, 5.0F, 8.0F, 5.0F, new CubeDeformation(0)), PartPose.offset(0, 0, 0));
