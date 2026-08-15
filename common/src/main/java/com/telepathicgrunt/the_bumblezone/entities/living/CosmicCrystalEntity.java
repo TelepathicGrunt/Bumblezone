@@ -92,8 +92,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class CosmicCrystalEntity extends LivingEntity {
-    public static final EntityDataSerializer<CosmicCrystalState> COSMIC_CRYSTAL_STATE_SERIALIZER = EntityDataSerializer.forValueType(CosmicCrystalState.STREAM_CODEC);
-    private static final EntityDataAccessor<CosmicCrystalState> COSMIC_CRYSTAL_STATE = SynchedEntityData.defineId(CosmicCrystalEntity.class, COSMIC_CRYSTAL_STATE_SERIALIZER);
+    private static final EntityDataAccessor<CosmicCrystalState> COSMIC_CRYSTAL_STATE = SynchedEntityData.defineId(CosmicCrystalEntity.class, BzEntities.COSMIC_CRYSTAL_STATE_SERIALIZER);
     private static final EntityDataAccessor<Integer> INITIAL_ROTATION_ANIMATION_TIMESPAN = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> STATE_TIMESPAN = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> LASER_START_DELAY = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.INT);
@@ -403,7 +402,9 @@ public class CosmicCrystalEntity extends LivingEntity {
         output.putInt("animationTimeTick", this.animationTimeTick);
         output.putInt("prevAnimationTick", this.prevAnimationTick);
 
-        output.store("targetEntityUUID", UUIDUtil.CODEC, this.targetEntityUUID);
+        if (this.targetEntityUUID != null) {
+            output.store("targetEntityUUID", UUIDUtil.CODEC, this.targetEntityUUID);
+        }
         output.store("prevLookAngle", Vec3.CODEC, this.prevLookAngle);
 
         output.putBoolean("NoAI", this.noAI);
@@ -777,14 +778,16 @@ public class CosmicCrystalEntity extends LivingEntity {
         }
     }
 
-    private void lookAtCurrent(Vec3 vec3) {
-        Vec3 vec32 = EntityAnchorArgument.Anchor.EYES.apply(this);
-        double d = vec3.x - vec32.x;
-        double e = vec3.y - vec32.y;
-        double f = vec3.z - vec32.z;
-        double g = Math.sqrt(d * d + f * f);
-        this.setXRot(Mth.wrapDegrees((float)(-(Mth.atan2(e, g) * 57.2957763671875))));
-        this.setYRot(Mth.wrapDegrees((float)(Mth.atan2(f, d) * 57.2957763671875) - 90.0f));
+    private void lookAtCurrent(Vec3 targetPos) {
+        Vec3 crystalPos = EntityAnchorArgument.Anchor.EYES.apply(this);
+        double xDiff = targetPos.x - crystalPos.x;
+        double yDiff = targetPos.y - crystalPos.y;
+        double zDiff = targetPos.z - crystalPos.z;
+        double diffMagn = Math.sqrt(xDiff * xDiff + zDiff * zDiff);
+        float xRotD = (float)(-(Mth.atan2(yDiff, diffMagn) * 180.0F / (float)Math.PI));
+        float yRotD = (float)(Mth.atan2(zDiff, xDiff) * 180.0F / (float)Math.PI) - 90.0F;
+        this.setXRot(Mth.wrapDegrees(xRotD));
+        this.setYRot(Mth.wrapDegrees(yRotD));
         this.setYHeadRot(this.getYRot());
     }
 

@@ -117,6 +117,11 @@ public class Bumblezone {
     public static final Identifier MOD_DIMENSION_ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, Bumblezone.MODID);
     public static final Logger LOGGER = LogUtils.getLogger();
 
+    public static void earlyInit() {
+        BzRegisterDataSerializersEvent.EVENT.addListener(Bumblezone::registerDataSerializers);
+        BzRegisterEntityAttributesEvent.EVENT.addListener(BzEntities::registerEntityAttributes);
+    }
+
     public static void init() {
         BzTags.initTags();
 
@@ -152,11 +157,9 @@ public class Bumblezone {
         BzAddBuiltinResourcePacks.EVENT.addListener(Bumblezone::setupBuiltInResourcePack);
         BzAddBuiltinDataPacks.EVENT.addListener(Bumblezone::setupBuiltInDataPack);
         BzSetupEvent.EVENT.addListener(Bumblezone::setup);
-        BzRegisterDataSerializersEvent.EVENT.addListener(Bumblezone::registerDataSerializers);
         BzFinalSetupEvent.EVENT.addListener(Bumblezone::onFinalSetup); //run after all mods
         BzRegisterFlammabilityEvent.EVENT.addListener(Bumblezone::onRegisterFlammablity);
         BzAddCreativeTabEntriesEvent.EVENT.addListener(BzCreativeTabs::addCreativeTabEntries);
-        BzRegisterEntityAttributesEvent.EVENT.addListener(BzEntities::registerEntityAttributes);
         BzRegisterSpawnPlacementsEvent.EVENT.addListener(BzEntities::registerEntitySpawnRestrictions);
         BzDatapackSyncEvent.EVENT.addListener(QueenRandomizerTradesSyncPacket::sendToClient);
         BzDatapackSyncEvent.EVENT.addListener(QueenMainTradesSyncPacket::sendToClient);
@@ -217,9 +220,10 @@ public class Bumblezone {
     }
 
     private static void registerDataSerializers(BzRegisterDataSerializersEvent event) {
-        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "queen_pose"), BeeQueenEntity.QUEEN_POSE_SERIALIZER);
-        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "rootmin_pose"), RootminEntity.ROOTMIN_POSE_SERIALIZER);
-        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "cosmic_crystal_state"), CosmicCrystalEntity.COSMIC_CRYSTAL_STATE_SERIALIZER);
+        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "queen_pose"), BzEntities.QUEEN_POSE_SERIALIZER);
+        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "rootmin_pose"), BzEntities.ROOTMIN_POSE_SERIALIZER);
+        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "cosmic_crystal_state"), BzEntities.COSMIC_CRYSTAL_STATE_SERIALIZER);
+        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "uuid_entity_data_serializer"), BzEntities.UUID_ENTITY_DATA_SERIALIZER);
     }
 
     private static void onFinalSetup(final BzFinalSetupEvent event) {

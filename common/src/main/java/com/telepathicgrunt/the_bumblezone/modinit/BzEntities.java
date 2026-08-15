@@ -5,10 +5,13 @@ import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistries;
 import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
+import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalState;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenState;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminState;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.VariantBeeEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.BeeStingerEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.DirtPelletEntity;
@@ -54,6 +57,9 @@ public class BzEntities {
     public static final RegistryEntry<EntityType<PurpleSpikeEntity>> PURPLE_SPIKE_ENTITY = ENTITIES.register("purple_spike_entity", () -> PlatformService.INSTANCE.createEntityType(PurpleSpikeEntity::new, MobCategory.MISC, 1F, 1F, 0F, 4, 20, "purple_spike_entity"));
     public static final RegistryEntry<EntityType<CosmicCrystalEntity>> COSMIC_CRYSTAL_ENTITY = ENTITIES.register("cosmic_crystal_entity", () -> PlatformService.INSTANCE.createEntityType(CosmicCrystalEntity::new, MobCategory.MISC, 1F, 2f, 1f, 8, 3, "cosmic_crystal_entity"));
 
+    public static final EntityDataSerializer<CosmicCrystalState> COSMIC_CRYSTAL_STATE_SERIALIZER = EntityDataSerializer.forValueType(CosmicCrystalState.STREAM_CODEC);
+    public static final EntityDataSerializer<BeeQueenState> QUEEN_POSE_SERIALIZER = EntityDataSerializer.forValueType(BeeQueenState.STREAM_CODEC);
+    public static final EntityDataSerializer<RootminState> ROOTMIN_POSE_SERIALIZER = EntityDataSerializer.forValueType(RootminState.STREAM_CODEC);
     public static final EntityDataSerializer<Optional<UUID>> UUID_ENTITY_DATA_SERIALIZER = EntityDataSerializer.forValueType(UUIDUtil.STREAM_CODEC.apply(ByteBufCodecs::optional));
 
     public static void registerEntitySpawnRestrictions(BzRegisterSpawnPlacementsEvent event) {

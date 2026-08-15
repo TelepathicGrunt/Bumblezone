@@ -17,6 +17,7 @@ import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import com.telepathicgrunt.the_bumblezone.items.FlowerHeadwearHelmet;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -100,8 +101,7 @@ import java.util.UUID;
 public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity {
 
    private static final EntityDataAccessor<Optional<BlockState>> FLOWER_BLOCK_STATE = SynchedEntityData.defineId(RootminEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_STATE);
-   public static final EntityDataSerializer<RootminState> ROOTMIN_POSE_SERIALIZER = EntityDataSerializer.forValueType(RootminState.STREAM_CODEC);
-   private static final EntityDataAccessor<RootminState> ROOTMIN_POSE = SynchedEntityData.defineId(RootminEntity.class, ROOTMIN_POSE_SERIALIZER);
+   private static final EntityDataAccessor<RootminState> ROOTMIN_POSE = SynchedEntityData.defineId(RootminEntity.class, BzEntities.ROOTMIN_POSE_SERIALIZER);
    private static final EntityDataAccessor<Boolean> ROOTMIN_SHIELD = SynchedEntityData.defineId(RootminEntity.class, EntityDataSerializers.BOOLEAN);
    protected static final EntityDataAccessor<Optional<EntityReference<LivingEntity>>> OWNER_UUID = SynchedEntityData.defineId(RootminEntity.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
 

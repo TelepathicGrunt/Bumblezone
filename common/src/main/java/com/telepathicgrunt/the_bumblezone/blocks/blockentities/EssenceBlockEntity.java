@@ -466,7 +466,9 @@ public class EssenceBlockEntity extends BlockEntity {
 
     private void saveFieldsToTag(ValueOutput valueOutput) {
         valueOutput.putBoolean(BEATEN_TAG, this.beaten);
-        valueOutput.store(UUID_TAG, UUIDUtil.CODEC, this.uuid);
+        if (this.uuid != null) {
+            valueOutput.store(UUID_TAG, UUIDUtil.CODEC, this.uuid);
+        }
         valueOutput.putInt(EVENT_TIMER_TAG, this.eventTimer);
         valueOutput.putInt(EXTRA_EVENT_TRACKING_PROGRESS_TAG, this.extraEventTrackingProgress);
         valueOutput.putFloat(PROGRESS_TAG, this.eventBar.getProgress());

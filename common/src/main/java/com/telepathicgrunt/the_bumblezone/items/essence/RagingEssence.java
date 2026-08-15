@@ -69,7 +69,7 @@ public class RagingEssence extends AbilityEssenceItem {
     }
 
     public static short getRageState(ItemStack itemStack) {
-        return itemStack.get(BzDataComponents.RAGING_ESSENCE_STATE_DATA.get()).rageStateLevel();
+        return itemStack.getOrDefault(BzDataComponents.RAGING_ESSENCE_STATE_DATA.get(), new RagingEssenceStateData()).rageStateLevel();
     }
 
     public static void setEmpoweredTimestamp(ItemStack itemStack, long empoweredTimestamp) {
@@ -77,7 +77,7 @@ public class RagingEssence extends AbilityEssenceItem {
     }
 
     public static long getEmpoweredTimestamp(ItemStack itemStack) {
-        return itemStack.get(BzDataComponents.RAGING_ESSENCE_TIMER_DATA.get()).empoweredTimestamp();
+        return itemStack.getOrDefault(BzDataComponents.RAGING_ESSENCE_TIMER_DATA.get(), new RagingEssenceTimerData()).empoweredTimestamp();
     }
 
     public static void setCurrentTargets(ItemStack itemStack, List<UUID> targetsToKill) {
@@ -85,7 +85,7 @@ public class RagingEssence extends AbilityEssenceItem {
     }
 
     public static List<UUID> getCurrentTargets(ItemStack itemStack) {
-        return new ArrayList<>(itemStack.get(BzDataComponents.RAGING_ESSENCE_CURRENT_TARGET_DATA.get()).currentTargets());
+        return new ArrayList<>(itemStack.getOrDefault(BzDataComponents.RAGING_ESSENCE_CURRENT_TARGET_DATA.get(), new RagingEssenceCurrentTargetData()).currentTargets());
     }
 
     @Override

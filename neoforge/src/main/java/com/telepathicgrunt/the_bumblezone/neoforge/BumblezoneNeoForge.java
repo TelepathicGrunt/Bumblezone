@@ -21,6 +21,7 @@ public class BumblezoneNeoForge {
 
         NeoForgeModuleInitializer.init();
 
+        Bumblezone.earlyInit();
         Bumblezone.init();
 
         BzGlobalLootModifier.GLM.register(modEventBus);

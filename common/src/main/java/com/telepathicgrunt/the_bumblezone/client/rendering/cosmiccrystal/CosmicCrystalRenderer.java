@@ -272,7 +272,7 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
                 .setColor(red, green, blue, 255)
                 .setUv(ux, uz)
                 .setOverlay(OverlayTexture.NO_OVERLAY)
-                .setLight(0xF000F0)
+                .setLight(0xFFFFFF)
                 .setNormal(pose, 0.0f, 1.0f, 0.0f);
     }
 

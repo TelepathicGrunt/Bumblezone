@@ -22,7 +22,7 @@ public class CosmicCrystalModel extends EntityModel<CosmicCrystalRenderState> {
     private final KeyframeAnimation idleAnimation;
 
     public CosmicCrystalModel(ModelPart root) {
-        super(root, RenderTypes::entityTranslucent);
+        super(root, RenderTypes::entityTranslucentEmissive);
         this.body = root.getChild("body");
         this.spikes = root.getChild("laser").getChild("spikes");
         this.charging = root.getChild("laser").getChild("charging");

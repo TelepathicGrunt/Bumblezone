@@ -15,6 +15,7 @@ import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAcces
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -105,11 +106,10 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     public final AnimationState attackAnimationState = new AnimationState();
     public final AnimationState itemThrownAnimationState = new AnimationState();
     public final AnimationState itemRejectAnimationState = new AnimationState();
-    public static final EntityDataSerializer<BeeQueenState> QUEEN_POSE_SERIALIZER = EntityDataSerializer.forValueType(BeeQueenState.STREAM_CODEC);
     private static final EntityDataAccessor<Integer> THROWCOOLDOWN = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> BEESPAWNCOOLDOWN = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Long> ANGER_END_TIME = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.LONG);
-    private static final EntityDataAccessor<BeeQueenState> QUEEN_POSE = SynchedEntityData.defineId(BeeQueenEntity.class, QUEEN_POSE_SERIALIZER);
+    private static final EntityDataAccessor<BeeQueenState> QUEEN_POSE = SynchedEntityData.defineId(BeeQueenEntity.class, BzEntities.QUEEN_POSE_SERIALIZER);
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(60, 120);
     private EntityReference<LivingEntity> persistentAngerTarget;
     private int underWaterTicks;
