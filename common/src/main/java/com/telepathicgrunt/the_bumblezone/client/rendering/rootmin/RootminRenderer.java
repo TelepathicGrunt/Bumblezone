@@ -69,7 +69,7 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminRenderSta
             state.flowerLightCoords = this.getPackedLightCoords(entity, partialTicks);
         }
 
-        if (entity.getFlowerBlock().getBlock() instanceof DoublePlantBlock) {
+        if (entity.getFlowerBlock() != null && entity.getFlowerBlock().getBlock() instanceof DoublePlantBlock) {
             this.resolver.update(state.tallFlowerHalf, entity.getFlowerBlock().setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER), BlockDisplayContext.create());
             state.doubleFlowerLightCoords = this.getLightCoordsAbove(entity, partialTicks, 2);
         } else {
