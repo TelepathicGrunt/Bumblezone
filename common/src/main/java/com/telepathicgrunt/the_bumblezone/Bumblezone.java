@@ -118,7 +118,7 @@ public class Bumblezone {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public static void earlyInit() {
-        BzRegisterDataSerializersEvent.EVENT.addListener(Bumblezone::registerDataSerializers);
+        BzRegisterDataSerializersEvent.EVENT.addListener(BzEntities::registerDataSerializers);
         BzRegisterEntityAttributesEvent.EVENT.addListener(BzEntities::registerEntityAttributes);
     }
 
@@ -217,13 +217,6 @@ public class Bumblezone {
             BzItems.setupDispenserBehaviors();
 		});
         MessageHandler.init();
-    }
-
-    private static void registerDataSerializers(BzRegisterDataSerializersEvent event) {
-        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "queen_pose"), BzEntities.QUEEN_POSE_SERIALIZER);
-        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "rootmin_pose"), BzEntities.ROOTMIN_POSE_SERIALIZER);
-        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "cosmic_crystal_state"), BzEntities.COSMIC_CRYSTAL_STATE_SERIALIZER);
-        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "uuid_entity_data_serializer"), BzEntities.UUID_ENTITY_DATA_SERIALIZER);
     }
 
     private static void onFinalSetup(final BzFinalSetupEvent event) {

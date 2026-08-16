@@ -21,7 +21,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
-import com.telepathicgrunt.the_bumblezone.packets.TradeHintParticleSpawnPacket;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
@@ -34,7 +33,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.Identifier;
@@ -110,12 +108,15 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     private static final EntityDataAccessor<Integer> BEESPAWNCOOLDOWN = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Long> ANGER_END_TIME = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.LONG);
     private static final EntityDataAccessor<BeeQueenState> QUEEN_POSE = SynchedEntityData.defineId(BeeQueenEntity.class, BzEntities.QUEEN_POSE_SERIALIZER);
+    private static final EntityDataAccessor<ItemStack> WANT_ITEM_FOR_TRADE_HINT = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.ITEM_STACK);
+    private static final EntityDataAccessor<List<ItemStack>> SLICED_REWARD_ITEMS_FOR_TRADE_HINT = SynchedEntityData.defineId(BeeQueenEntity.class, BzEntities.ITEM_STACK_LIST_DATA_SERIALIZER);
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(60, 120);
     private EntityReference<LivingEntity> persistentAngerTarget;
     private int underWaterTicks;
     private int poseTicks;
     private int tradeHintCooldown = 0;
     private boolean isSpecialDay = false;
+    public int tradeHintTimeRemaining = 0;
     private static final Lazy<WeightedTradeResult> ESSENCE_DROP = Lazy.lazy(() -> new WeightedTradeResult(null, Optional.of(List.of(BzItems.ESSENCE_OF_THE_BEES.get().getDefaultInstance())), 1, 1000, 1));
 
     public BeeQueenEntity(EntityType<? extends BeeQueenEntity> type, Level world) {
@@ -129,6 +130,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         builder.define(ANGER_END_TIME, 0L);
         builder.define(BEESPAWNCOOLDOWN, 0);
         builder.define(QUEEN_POSE, BeeQueenState.NONE);
+        builder.define(WANT_ITEM_FOR_TRADE_HINT, ItemStack.EMPTY);
+        builder.define(SLICED_REWARD_ITEMS_FOR_TRADE_HINT, List.of());
     }
 
     @Override
@@ -141,6 +144,15 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
 
         super.onSyncedDataUpdated(entityDataAccessor);
+
+        if (WANT_ITEM_FOR_TRADE_HINT.equals(entityDataAccessor)) {
+            if (this.getWantItemForTradeHint().isEmpty()) {
+                this.tradeHintTimeRemaining = 0;
+            }
+            else {
+                this.tradeHintTimeRemaining = TRADE_HINT_PARTICLE_LIFETIME;
+            }
+        }
     }
 
     private void setAnimationState(BeeQueenState pose, BeeQueenState poseToCheckFor, AnimationState animationState) {
@@ -202,6 +214,22 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     public BeeQueenState getQueenPose() {
         return this.entityData.get(QUEEN_POSE);
+    }
+
+    public void setWantItemForTradeHint(ItemStack itemStack) {
+        this.entityData.set(WANT_ITEM_FOR_TRADE_HINT, itemStack);
+    }
+
+    public ItemStack getWantItemForTradeHint() {
+        return this.entityData.get(WANT_ITEM_FOR_TRADE_HINT);
+    }
+
+    public void setSlicedRewardItemsForTradeHint(List<ItemStack> stackList) {
+        this.entityData.set(SLICED_REWARD_ITEMS_FOR_TRADE_HINT, stackList);
+    }
+
+    public List<ItemStack> getSlicedRewardItemsForTradeHint() {
+        return this.entityData.get(SLICED_REWARD_ITEMS_FOR_TRADE_HINT);
     }
 
     @Override
@@ -352,6 +380,12 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     @Override
     public void tick() {
         super.tick();
+        if (this.level().isClientSide()) {
+            if (this.tradeHintTimeRemaining > 0) {
+                this.tradeHintTimeRemaining--;
+            }
+        }
+
         if (this.isAlive()) {
             this.idleAnimationState.startIfStopped(this.tickCount);
         }
@@ -443,7 +477,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                             }
                             Collections.shuffle(allRewardItems);
                             slicedRewardItems = allRewardItems.subList(0, Math.min(maximumRewardsToShowAtATime, allRewardItems.size()));
-                            TradeHintParticleSpawnPacket.sendToClient(this, wantItem, slicedRewardItems);
+                            this.setWantItemForTradeHint(wantItem == null ? ItemStack.EMPTY : wantItem.getDefaultInstance());
+                            this.setSlicedRewardItemsForTradeHint(slicedRewardItems);
                             this.tradeHintCooldown = TRADE_HINT_PARTICLE_LIFETIME + 20;
                             break;
                         }

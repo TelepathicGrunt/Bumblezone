@@ -24,9 +24,6 @@ import org.joml.Vector3f;
 // CLIENT-SIDED
 public class PileOfPollenRenderer {
 
-    private static final Identifier TEXTURE_POLLEN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/pile_of_pollen/pile_of_pollen.png");
-    private static final Identifier TEXTURE_POLLEN_SUSPICIOUS = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/pile_of_pollen/pile_of_pollen_suspicious_1.png");
-
     public static boolean pileOfPollenOverlay(BzBlockRenderedOnScreenEvent event) {
         BlockState blockState = event.state();
         if (event.type().equals(BzBlockRenderedOnScreenEvent.Type.BLOCK) && blockState.is(BzTags.POLLEN_BLOCKS)) {

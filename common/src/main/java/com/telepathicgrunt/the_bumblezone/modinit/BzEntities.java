@@ -21,21 +21,33 @@ import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PurpleSpikeEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.SentryWatcherEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterDataSerializersEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterEntityAttributesEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterSpawnPlacementsEvent;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementRequirements;
+import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.animal.bee.Bee;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.Heightmap;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -61,6 +73,7 @@ public class BzEntities {
     public static final EntityDataSerializer<BeeQueenState> QUEEN_POSE_SERIALIZER = EntityDataSerializer.forValueType(BeeQueenState.STREAM_CODEC);
     public static final EntityDataSerializer<RootminState> ROOTMIN_POSE_SERIALIZER = EntityDataSerializer.forValueType(RootminState.STREAM_CODEC);
     public static final EntityDataSerializer<Optional<UUID>> UUID_ENTITY_DATA_SERIALIZER = EntityDataSerializer.forValueType(UUIDUtil.STREAM_CODEC.apply(ByteBufCodecs::optional));
+    public static final EntityDataSerializer<List<ItemStack>> ITEM_STACK_LIST_DATA_SERIALIZER = EntityDataSerializer.forValueType(ItemStack.STREAM_CODEC.apply(ByteBufCodecs.list()));
 
     public static void registerEntitySpawnRestrictions(BzRegisterSpawnPlacementsEvent event) {
         event.register(HONEY_SLIME.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
@@ -78,5 +91,13 @@ public class BzEntities {
         event.register(BEE_QUEEN.get(), BeeQueenEntity.getAttributeBuilder());
         event.register(ROOTMIN.get(), RootminEntity.getAttributeBuilder());
         event.register(COSMIC_CRYSTAL_ENTITY.get(), CosmicCrystalEntity.getAttributeBuilder());
+    }
+
+    public static void registerDataSerializers(BzRegisterDataSerializersEvent event) {
+        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "queen_pose"), BzEntities.QUEEN_POSE_SERIALIZER);
+        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "rootmin_pose"), BzEntities.ROOTMIN_POSE_SERIALIZER);
+        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "cosmic_crystal_state"), BzEntities.COSMIC_CRYSTAL_STATE_SERIALIZER);
+        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "uuid_entity_data_serializer"), BzEntities.UUID_ENTITY_DATA_SERIALIZER);
+        event.register(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "item_stack_list_data_serializer"), BzEntities.ITEM_STACK_LIST_DATA_SERIALIZER);
     }
 }

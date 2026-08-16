@@ -27,6 +27,5 @@ public class MessageHandler {
         DEFAULT_CHANNEL.register(SyncHorseOwnerUUIDPacketFromServer.TYPE);
         DEFAULT_CHANNEL.register(SyncBeehemothSpeedConfigFromServer.TYPE);
         DEFAULT_CHANNEL.register(MusicPacketFromServer.TYPE);
-        DEFAULT_CHANNEL.register(TradeHintParticleSpawnPacket.TYPE);
     }
 }
