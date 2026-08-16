@@ -1,9 +1,5 @@
 TODO: DO NOT RELEASE UNTIL COMPLETED
 
-- Make Trade Hint pop-up work in Bee Queen Renderer.
-  - common/src/main/java/com/telepathicgrunt/the_bumblezone/client/rendering/beequeen/BeeQueenRenderer.java
-  - Spawn Bee Queen in 1.21.1 and look at the mob. A pop-up chat bubble with 2 items rendering in it will appear.
-  - The bill-boarding and animation of the pop-up is needed to be replicated.
 - Fix bee chestplate animations not working
   - Do `/give @s the_bumblezone:bumble_bee_chestplate_1` and `/give @s the_bumblezone:bumble_bee_chestplate_2` to get both chestplate variants
   - Holding jump button will allow flight briefly. Wings should flutter when applying flight.

@@ -18,8 +18,6 @@ import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -71,7 +69,8 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenRender
             state.slicedRewardItems.add(itemStackRenderState);
         }
         state.tradeHintTimeRemaining = entity.tradeHintTimeRemaining;
-        state.animationProgress = getAnimationProgressForRemainingTime(state.tradeHintTimeRemaining, state.ageInTicks, state.animationProgress);
+        state.tradeHintAnimationProgress = getAnimationProgressForRemainingTime(state.tradeHintTimeRemaining);
+        state.prevTradeHintAnimationProgress = getAnimationProgressForRemainingTime(state.tradeHintTimeRemaining + 1);
     }
 
     @Override
@@ -88,23 +87,17 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenRender
         }
 
         if (state.tradeHintTimeRemaining > 0 && !state.wantItem.isEmpty() && !state.slicedRewardItems.isEmpty()) {
-            float offset = 1 - state.animationProgress;
+            float animationProgressToUse = Mth.lerp(state.ageInTicks - ((int)state.ageInTicks), state.prevTradeHintAnimationProgress, state.tradeHintAnimationProgress);
+            float offset = 1 - animationProgressToUse;
             Vector3f offsetVec = new Vector3f(-offset, -offset, 0.0F);
 
-            Vec3 vec3 = camera.pos;
-    //        Vec2 frontOffset = (new Vec2((float) (vec3.x() - this.x), (float) (vec3.z() - this.z))).normalized();
-    //        float x = (float)(Mth.lerp(partialTick, this.xo, this.x) - vec3.x()) + offsetVec.x() + frontOffset.x;
-    //        float y = (float)(Mth.lerp(partialTick, this.yo, this.y) - vec3.y()) + offsetVec.y();
-    //        float z = (float)(Mth.lerp(partialTick, this.zo, this.z) - vec3.z()) + offsetVec.z() + frontOffset.y;
             float x = 0;
             float y = 4.5f;
             float z = 0;
 
-    //        poseStack.translate(x, y, z);
-    //        poseStack.scale(state.animationProgress, state.animationProgress, state.animationProgress);
-
             poseStack.pushPose();
-            poseStack.translate(x, y, z);
+            poseStack.translate(x + offsetVec.x(), y + offsetVec.y(), z + offsetVec.z());
+            poseStack.scale(animationProgressToUse, animationProgressToUse, animationProgressToUse);
             poseStack.mulPose(camera.orientation);
 
             submitNodeCollector.submitCustomGeometry(poseStack, SPEECH_BUBBLE_RENDER_TYPE, (pose, buffer) -> {
@@ -151,23 +144,28 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenRender
         poseStack.last().normal().set(normalToUse); // set normal for lighting
     }
 
-    private float getAnimationProgressForRemainingTime(long remainingTime, float partialTick, float pastAnimationProgress) {
+    private float getAnimationProgressForRemainingTime(int remainingTime) {
         float animationProgress = 1;
-        float animationChangeTime = 20F;
+        if (remainingTime <= 0) {
+            return animationProgress;
+        }
 
-        if (remainingTime <= animationChangeTime) {
-            float currentProgress = remainingTime / animationChangeTime;
+        int maxLifetime = BeeQueenEntity.TRADE_HINT_PARTICLE_LIFETIME;
+        float beginningAnimationLength = 20f;
+        float endingAnimationLength = 10f;
+
+        if (remainingTime > maxLifetime - beginningAnimationLength) {
+            float currentProgress = (maxLifetime - remainingTime) / beginningAnimationLength;
             float c1 = 1.70158F;
             float c3 = c1 + 1;
             float calcSize = (float) (1 + c3 * Math.pow(currentProgress - 1, 3) + c1 * Math.pow(currentProgress - 1, 2));
-            animationProgress = Mth.lerp(partialTick, pastAnimationProgress, calcSize);
+            animationProgress = calcSize;
         }
-        else if (BeeQueenEntity.TRADE_HINT_PARTICLE_LIFETIME - remainingTime <= (animationChangeTime / 2)) {
-            float currentProgress = (BeeQueenEntity.TRADE_HINT_PARTICLE_LIFETIME - remainingTime) / (animationChangeTime / 2);
+        else if (remainingTime <= endingAnimationLength) {
+            float currentProgress = remainingTime / endingAnimationLength;
             float calcSize = (float) (1 - Math.cos((currentProgress * Math.PI) / 2));
-            animationProgress = Mth.lerp(partialTick, pastAnimationProgress, calcSize);
+            animationProgress = calcSize;
         }
-
         return animationProgress;
     }
 
