@@ -7,6 +7,7 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
 - Fix Cosmic Crystal not facing correct direction during some attacks
   - Do `/give @s the_bumblezone:essence_of_the_bees` and consume right by holding right click.
   - Then do `/setblock ~3 ~ ~ the_bumblezone:essence_block_white` and touch the block. Cosmic Crystals will spawn.
+- Fix compile error with backpacked
 
 - Test the everliving hell out of EVERYTHING (music needs checking)
 - Commission new textures for spawn eggs
