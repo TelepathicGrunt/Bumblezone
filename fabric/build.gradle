@@ -66,6 +66,9 @@ dependencies {
     compileOnly("me.shedaniel:RoughlyEnoughItems-fabric:${project.rei}") { transitive = false }
     compileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei}")
 
+    compileOnly("com.mrcrayfish:backpacked-fabric:${project.backpacked}") { transitive = false  }
+    compileOnly("com.mrcrayfish:framework-fabric:${project.framework}") { transitive = false }
+
 //    localRuntime("com.telepathicgrunt:CommandStructures-Fabric:${project.commandstructures_fabric}")
 //    localRuntime("com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_fabric}")
 }
