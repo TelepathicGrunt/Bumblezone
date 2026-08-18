@@ -11,13 +11,13 @@ import net.minecraft.world.entity.player.Player;
 
 import java.util.function.Consumer;
 
-public record BumbleBeeChestplateFlyingPacket(byte isFlying) implements Packet<BumbleBeeChestplateFlyingPacket> {
+public record BumbleBeeChestplateFlyingPacket(boolean isFlying) implements Packet<BumbleBeeChestplateFlyingPacket> {
 
     public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "bumblebee_chestplate_flying");
     public static final ServerboundPacketType<BumbleBeeChestplateFlyingPacket> TYPE = new BumbleBeeChestplateFlyingPacket.Handler();
 
     public static void sendToServer(boolean isFlying) {
-        MessageHandler.DEFAULT_CHANNEL.sendToServer(new BumbleBeeChestplateFlyingPacket((byte) (isFlying ? 1 : 0)));
+        MessageHandler.DEFAULT_CHANNEL.sendToServer(new BumbleBeeChestplateFlyingPacket(isFlying));
     }
 
     @Override
@@ -29,12 +29,12 @@ public record BumbleBeeChestplateFlyingPacket(byte isFlying) implements Packet<B
 
         @Override
         public void encode(BumbleBeeChestplateFlyingPacket message, RegistryFriendlyByteBuf buffer) {
-            buffer.writeByte(message.isFlying);
+            buffer.writeBoolean(message.isFlying());
         }
 
         @Override
         public BumbleBeeChestplateFlyingPacket decode(RegistryFriendlyByteBuf buffer) {
-            return new BumbleBeeChestplateFlyingPacket(buffer.readByte());
+            return new BumbleBeeChestplateFlyingPacket(buffer.readBoolean());
         }
 
         @Override
