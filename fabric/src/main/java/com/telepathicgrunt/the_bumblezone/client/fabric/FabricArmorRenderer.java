@@ -31,9 +31,13 @@ public class FabricArmorRenderer implements ArmorRenderer {
     @Override
     public void render(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, ItemStack itemStack, HumanoidRenderState humanoidRenderState, EquipmentSlot slot, int light, HumanoidModel<HumanoidRenderState> contextModel) {
         if (provider instanceof ArmorModelProvider armorModelProvider) {
-            Model model = provider.getFinalModel(itemStack, slot, contextModel);
+            Model<? super HumanoidRenderState> model = provider.getFinalModel(itemStack, slot, contextModel);
             if (model == null) {
                 return;
+            }
+
+            if(model instanceof BeeArmorModel beeArmorModel) {
+                beeArmorModel.setupAnim(humanoidRenderState);
             }
 
             Identifier armorTexture = armorModelProvider.getArmorTexture(itemStack);
@@ -66,10 +70,6 @@ public class FabricArmorRenderer implements ArmorRenderer {
                         OverlayTexture.NO_OVERLAY,
                         0,
                         null);
-            }
-
-            if (model instanceof BeeArmorModel beeArmorModel) {
-                beeArmorModel.setupAnimByStack(humanoidRenderState, itemStack);
             }
         }
     }
