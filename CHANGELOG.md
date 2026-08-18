@@ -4,6 +4,7 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
   - Do `/give @s the_bumblezone:bumble_bee_chestplate_1` and `/give @s the_bumblezone:bumble_bee_chestplate_2` to get both chestplate variants
   - Holding jump button will allow flight briefly. Wings should flutter when applying flight.
 - Fix Cosmic Crystal laser beam not being full bright on all sides
+- Fix Cosmic Crystal laser beam not causing screenshaking when near.
 - Fix Cosmic Crystal not facing correct direction during some attacks
   - Do `/give @s the_bumblezone:essence_of_the_bees` and consume right by holding right click.
   - Then do `/setblock ~3 ~ ~ the_bumblezone:essence_block_white` and touch the block. Cosmic Crystals will spawn.

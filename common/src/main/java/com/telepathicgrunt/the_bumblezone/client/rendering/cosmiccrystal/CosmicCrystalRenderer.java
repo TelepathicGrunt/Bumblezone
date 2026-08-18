@@ -222,7 +222,7 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
 
             float uv2 = -1.0f + (state.ageInTicks * -0.2f % 1.0f);
             float uv1 = state.laser.laserLength * 2.5f + uv2;
-            collector.submitCustomGeometry(poseStack, RenderTypes.entityTranslucentEmissive(LASER_LOCATION), (pose, vertexConsumer) -> {
+            collector.submitCustomGeometry(poseStack, RenderTypes.entityTranslucentEmissive(LASER_LOCATION, false), (pose, vertexConsumer) -> {
                 vertex(vertexConsumer, pose, x1, y1, z1, red2, green2, blue2, ux1, uv1);
                 vertex(vertexConsumer, pose, x1, y2, z1, red, green, blue, ux1, uv2);
                 vertex(vertexConsumer, pose, x2, y2, z2, red, green, blue, ux2, uv2);
@@ -272,7 +272,7 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
                 .setColor(red, green, blue, 255)
                 .setUv(ux, uz)
                 .setOverlay(OverlayTexture.NO_OVERLAY)
-                .setLight(0xFFFFFF)
+                .setLight(0xFFFFFFFF)
                 .setNormal(pose, 0.0f, 1.0f, 0.0f);
     }
 
