@@ -89,8 +89,8 @@ dependencies {
 //    runtimeOnly("com.telepathicgrunt:CommandStructures-Neoforge:${project.commandstructures_neoforge}")
 //    runtimeOnly("com.telepathicgrunt:StructureVoidToggle-Neoforge:${project.structurevoidtoggle_neoforge}")
 
-    compileOnly("com.mrcrayfish:backpacked-neoforge:${project.backpacked}") { transitive = false  }
-    compileOnly("com.mrcrayfish:framework-neoforge:${project.framework}") { transitive = false }
+    compileOnly("curse.maven:backpacked-352835:${project.backpacked_file_id}") { transitive = false  }
+    compileOnly("curse.maven:framework-549225:${project.framework_file_id}") { transitive = false }
 
     compileOnly("curse.maven:framedblocks-441647:${project.framedblocks_file_id}") { transitive = false }
 }
