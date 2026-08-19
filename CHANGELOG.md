@@ -5,6 +5,9 @@ Tiny optimization for Sentry Watcher/Cosmic Crystal.
 
 Reduced duration of Purple Spike's poison effect.
 
+#### Items:
+Honeybee Leggings now have a waist and one variant of the leggings will render the waist above Bumblezone's chestplates (but under all other chestplates)
+
 #### Structures:
 Slightly reduced enemy mob speed boosts from Blue and Red Essence Arenas.
 

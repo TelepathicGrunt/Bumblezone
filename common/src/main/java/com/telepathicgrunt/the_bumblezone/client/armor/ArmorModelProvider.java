@@ -32,7 +32,7 @@ public interface ArmorModelProvider {
         return "minecraft:textures/models/armor/leather_layer_1.png";
     }
 
-    @NotNull HumanoidModel<?> getModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<?> original);
+    HumanoidModel<?> getModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<?> original);
 
     default @NotNull Model getFinalModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<?> original) {
         HumanoidModel<?> replacement = this.getModel(entity, stack, slot, original);

@@ -403,8 +403,14 @@ public class BumblezoneClient {
         event.register(StingerSpearModel.LAYER_LOCATION, StingerSpearModel::createLayer);
         event.register(BeeStingerModel.LAYER_LOCATION, BeeStingerModel::createLayer);
         event.register(HoneyCrystalShardModel.LAYER_LOCATION, HoneyCrystalShardModel::createLayer);
-        event.register(BeeArmorModel.VARIANT_1_LAYER_LOCATION, BeeArmorModel::createVariant1);
-        event.register(BeeArmorModel.VARIANT_2_LAYER_LOCATION, BeeArmorModel::createVariant2);
+        event.register(BeeArmorModel.VARIANT_1_ARMOR_LAYER_LOCATIONS.get(0), BeeArmorModel::createVariant1Head);
+        event.register(BeeArmorModel.VARIANT_1_ARMOR_LAYER_LOCATIONS.get(1), BeeArmorModel::createVariant1Chestplate);
+        event.register(BeeArmorModel.VARIANT_1_ARMOR_LAYER_LOCATIONS.get(2), BeeArmorModel::createVariant1Leggings);
+        event.register(BeeArmorModel.VARIANT_1_ARMOR_LAYER_LOCATIONS.get(3), BeeArmorModel::createVariant1Boots);
+        event.register(BeeArmorModel.VARIANT_2_ARMOR_LAYER_LOCATIONS.get(0), BeeArmorModel::createVariant2Head);
+        event.register(BeeArmorModel.VARIANT_2_ARMOR_LAYER_LOCATIONS.get(1), BeeArmorModel::createVariant2Chestplate);
+        event.register(BeeArmorModel.VARIANT_2_ARMOR_LAYER_LOCATIONS.get(2), BeeArmorModel::createVariant2Leggings);
+        event.register(BeeArmorModel.VARIANT_2_ARMOR_LAYER_LOCATIONS.get(3), BeeArmorModel::createVariant2Boots);
         event.register(FlowerHeadwearModel.FLOWER_HEADWEAR_LAYER_LOCATION, FlowerHeadwearModel::createBodyLayer);
         event.register(ElectricRingModel.LAYER_LOCATION, ElectricRingModel::createBodyLayer);
         event.register(PurpleSpikeModel.LAYER_LOCATION, PurpleSpikeModel::createBodyLayer);
