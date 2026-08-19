@@ -10,7 +10,6 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -24,11 +23,9 @@ import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.entity.EntityTypeTest;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.HashSet;
@@ -238,7 +235,7 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
 
     // FIXME this probably needs to be called during camera setup event
     private static final double LASER_SCREENSHAKE_RADIUS = 10.0D;
-    public static void laserScreenShake(ClientLevel level, Camera camera, float partialTicks, CameraOrientation orientation) {
+    public static void laserScreenShake(Level level, Camera camera, float partialTicks, CameraOrientation orientation) {
         var cameraEntity = Objects.requireNonNullElse(camera.entity(), Minecraft.getInstance().player);
         var lasers = level.getEntities(EntityTypeTest.forClass(CosmicCrystalEntity.class), cameraEntity.getBoundingBox().inflate(LASER_SCREENSHAKE_RADIUS), ((Predicate<CosmicCrystalEntity>) CosmicCrystalEntity::isLaserFiring).and(EntitySelector.ENTITY_STILL_ALIVE.and(EntitySelector.NO_SPECTATORS)));
 
@@ -271,19 +268,16 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
             float intensity = (float) (0.175d * percentageToCenter * percentageToCenter * percentageToCenter);
             double currentMillisecond = System.currentTimeMillis() % (360 * spinSlowdown);
             double angle = (currentMillisecond / spinSlowdown);
-            orientation.setYaw(orientation.getYaw() + (Mth.sin(angle) * intensity * 30)); // FIXME those values need adjusting
+            orientation.bz$setYaw(orientation.bz$getYaw() + (Mth.sin(angle) * intensity * 30)); // FIXME those values need adjusting
         }
     }
 
     public interface CameraOrientation {
-        float getYaw();
-        void setYaw(float yaw);
+        float bz$getYaw();
+        void bz$setYaw(float yaw);
 
-        float getPitch();
-        void setPitch(float pitch);
-
-        float getRoll();
-        void setRoll(float roll);
+        float bz$getPitch();
+        void bz$setPitch(float pitch);
     }
 
     private static void vertex(VertexConsumer vertexConsumer, PoseStack.Pose pose, float x, float y, float z, int red, int green, int blue, float ux, float uz) {
