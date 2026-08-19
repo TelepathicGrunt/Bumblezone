@@ -30,7 +30,8 @@ forge*changelog.txt
 .factorypath
 
 # songs
-*.ogg
+/common/src/main/resources/assets/the_bumblezone/sounds/ambience
+/common/src/main/resources/assets/the_bumblezone/sounds/music
 
 # Misc
 CHANGELOG_OLD.md
