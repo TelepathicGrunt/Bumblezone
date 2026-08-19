@@ -42,6 +42,7 @@ import net.minecraft.client.model.object.equipment.ElytraModel;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
@@ -149,7 +150,7 @@ public class NeoForgeClientEventManager {
                     return original;
                 }
 
-                return Objects.requireNonNullElse(provider.getFinalModel(itemStack, null, (HumanoidModel<?>) original), original);
+                return Objects.requireNonNullElse(provider.getFinalModel(itemStack, null, (HumanoidModel<? super HumanoidRenderState>) original), original);
             }
 
             @Override
