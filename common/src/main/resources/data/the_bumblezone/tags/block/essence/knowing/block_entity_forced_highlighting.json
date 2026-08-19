@@ -7,6 +7,8 @@
     "minecraft:beacon",
     "minecraft:conduit",
     "minecraft:spawner",
+    "minecraft:trial_spawner",
+    "minecraft:vault",
     {
       "id": "apotheosis:boss_spawner",
       "required": false

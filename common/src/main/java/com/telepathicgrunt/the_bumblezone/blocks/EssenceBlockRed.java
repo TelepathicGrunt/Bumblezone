@@ -248,7 +248,7 @@ public class EssenceBlockRed extends EssenceBlock {
                     if (livingEntityAttributeSpeed != null) {
                         livingEntityAttributeSpeed.addPermanentModifier(new AttributeModifier(
                                 ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence_arena_speed_boost"),
-                                isEssenced ? 0.05 : 0.065,
+                                isEssenced ? 0.04 : 0.06,
                                 AttributeModifier.Operation.ADD_VALUE));
                     }
 
@@ -256,7 +256,7 @@ public class EssenceBlockRed extends EssenceBlock {
                     if (livingEntityAttributeFlyingSpeed != null) {
                         livingEntityAttributeFlyingSpeed.addPermanentModifier(new AttributeModifier(
                                 ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence_arena_flying_speed_boost"),
-                                0.065,
+                                0.03,
                                 AttributeModifier.Operation.ADD_VALUE));
                     }
 

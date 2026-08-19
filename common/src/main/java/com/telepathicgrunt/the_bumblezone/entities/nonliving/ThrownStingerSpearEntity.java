@@ -21,6 +21,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -110,7 +112,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         float damageAmount = StingerSpearItem.BASE_THROWN_DAMAGE;
         DamageSource damageSource = this.damageSources().trident(this, owner == null ? this : owner);
         if (level instanceof ServerLevel serverLevel) {
-            damageAmount += EnchantmentHelper.modifyDamage(serverLevel, this.getWeaponItem(), entity, damageSource, damageAmount);
+            damageAmount = EnchantmentHelper.modifyDamage(serverLevel, this.getWeaponItem(), entity, damageSource, damageAmount);
         }
 
         DamageSource damagesource = damageSources().trident(this, owner == null ? this : owner);
@@ -154,7 +156,16 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
     @Override
     protected void doPostHurtEffects(LivingEntity victim) {
        if (!victim.getType().is(EntityTypeTags.UNDEAD)) {
-           PotentPoisonEnchantmentApplication.doPostAttackBoostedPoison(this.getPickupItemStackOrigin(), victim);
+           boolean potentPoisonApplied = PotentPoisonEnchantmentApplication.doPostAttackBoostedPoison(this.getPickupItemStackOrigin(), victim);
+           if (!potentPoisonApplied) {
+               victim.addEffect(new MobEffectInstance(
+                       MobEffects.POISON,
+                       100,
+                       0,
+                       false,
+                       true,
+                       true));
+           }
 
             if (this.getOwner() instanceof ServerPlayer serverPlayer) {
                 BzCriterias.STINGER_SPEAR_POISONING_TRIGGER.get().trigger(serverPlayer);

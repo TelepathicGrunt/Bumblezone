@@ -189,7 +189,7 @@ public class PurpleSpikeEntity extends Entity {
 
                             livingEntity.addEffect(new MobEffectInstance(
                                     MobEffects.POISON,
-                                    200,
+                                    50,
                                     1,
                                     true,
                                     true,

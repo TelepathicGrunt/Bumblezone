@@ -10,8 +10,12 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.stats.Stats;
@@ -20,16 +24,26 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.minecraft.world.item.enchantment.effects.EnchantmentAttributeEffect;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.List;
 
 public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
 
@@ -95,7 +109,7 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
                     float miningProgress = (float) (timeDiff + 1);
 
                     float blockDestroyTime = belowBlockState.getDestroySpeed(level, belowBlockPos);
-                    float playerMiningSpeed = getPlayerDestroySpeed(player, ((beeWearablesCount - 1) * 0.1F) + 0.3F);
+                    float playerMiningSpeed = getPlayerDestroySpeed(player, itemStack, ((beeWearablesCount - 1) * 0.1F) + 0.45F);
                     int finalMiningProgress = (int) ((miningProgress * playerMiningSpeed) / blockDestroyTime);
 
                     if (!(finalMiningProgress == 0 && playerMiningSpeed < 0.001f) && (finalMiningProgress != lastSentState)) {
@@ -253,9 +267,33 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
         }
     }
 
-    public static float getPlayerDestroySpeed(Player player, float currentSpeed) {
-        if (currentSpeed > 1.0F) {
-            currentSpeed += (float)player.getAttributeValue(Attributes.MINING_EFFICIENCY);
+    public static float getPlayerDestroySpeed(Player player, ItemStack itemStack, float currentSpeed) {
+        ItemEnchantments itemEnchantments = itemStack.get(DataComponents.ENCHANTMENTS);
+        if (itemEnchantments != null) {
+            double enchantmentMiningBoost = 0;
+            for (Object2IntMap.Entry<Holder<Enchantment>> holderEntry : itemEnchantments.entrySet()) {
+                List<EnchantmentAttributeEffect> effects = holderEntry.getKey().value().getEffects(EnchantmentEffectComponents.ATTRIBUTES);
+                for (EnchantmentAttributeEffect enchantmentAttributeEffect : effects) {
+                    if (Attributes.MINING_EFFICIENCY.is(enchantmentAttributeEffect.attribute())) {
+                        if (AttributeModifier.Operation.ADD_VALUE == enchantmentAttributeEffect.operation()) {
+                            enchantmentMiningBoost += enchantmentAttributeEffect.getModifier(holderEntry.getIntValue(), EquipmentSlotGroup.HAND).amount();
+                        }
+                    }
+                }
+
+                double baseEnchantmentMiningBoost = enchantmentMiningBoost;
+                for (EnchantmentAttributeEffect enchantmentAttributeEffect : effects) {
+                    if (Attributes.MINING_EFFICIENCY.is(enchantmentAttributeEffect.attribute())) {
+                        if (AttributeModifier.Operation.ADD_MULTIPLIED_BASE == enchantmentAttributeEffect.operation()) {
+                            enchantmentMiningBoost += baseEnchantmentMiningBoost * enchantmentAttributeEffect.getModifier(holderEntry.getIntValue(), EquipmentSlotGroup.HAND).amount();
+                        }
+                        else if (AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL == enchantmentAttributeEffect.operation()) {
+                            enchantmentMiningBoost += enchantmentAttributeEffect.getModifier(holderEntry.getIntValue(), EquipmentSlotGroup.HAND).amount();
+                        }
+                    }
+                }
+            }
+            currentSpeed += (float) Attributes.MINING_EFFICIENCY.value().sanitizeValue(enchantmentMiningBoost);
         }
 
         if (MobEffectUtil.hasDigSpeed(player)) {
@@ -306,6 +344,25 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
             }
         }
         return itemId;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        super.appendHoverText(itemStack, context, tooltipComponents, tooltipFlag);
+
+        ItemEnchantments itemEnchantments = itemStack.get(DataComponents.ENCHANTMENTS);
+        if (itemEnchantments != null) {
+            for (Object2IntMap.Entry<Holder<Enchantment>> holderEntry : itemEnchantments.entrySet()) {
+                if (!holderEntry.getKey().value().matchingSlot(EquipmentSlot.FEET) && holderEntry.getKey().value().matchingSlot(EquipmentSlot.MAINHAND)) {
+                    Component component = Component.translatable("item.the_bumblezone.carpenter_bee_boots_mining_enchant_tip")
+                            .withStyle(ChatFormatting.ITALIC)
+                            .withStyle(ChatFormatting.DARK_GRAY);
+
+                    tooltipComponents.add(component);
+                    break;
+                }
+            }
+        }
     }
 
     public static ItemStack getEntityBeeBoots(LivingEntity entity) {
