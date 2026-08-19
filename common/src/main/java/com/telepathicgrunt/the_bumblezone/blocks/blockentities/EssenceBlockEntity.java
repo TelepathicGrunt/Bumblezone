@@ -492,13 +492,11 @@ public class EssenceBlockEntity extends BlockEntity {
     }
 
     public static EssenceBlockEntity getEssenceBlockAtLocation(Level level, ResourceKey<Level> targetLevel, BlockPos targetBlockPos, UUID targetEssenceUUID) {
-        if (targetEssenceUUID != null && level != null && targetBlockPos != null) {
-            if (level.dimension().equals(targetLevel)) {
-                BlockEntity blockEntity = level.getBlockEntity(targetBlockPos);
-                if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity && essenceBlockEntity.getEventTimer() > 0) {
-                    if (essenceBlockEntity.getUUID().equals(targetEssenceUUID)) {
-                        return essenceBlockEntity;
-                    }
+        if (targetEssenceUUID != null && level != null && targetBlockPos != null && level.dimension().equals(targetLevel)) {
+            BlockEntity blockEntity = level.getBlockEntity(targetBlockPos);
+            if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity && essenceBlockEntity.getEventTimer() > 0) {
+                if (essenceBlockEntity.getUUID().equals(targetEssenceUUID)) {
+                    return essenceBlockEntity;
                 }
             }
         }

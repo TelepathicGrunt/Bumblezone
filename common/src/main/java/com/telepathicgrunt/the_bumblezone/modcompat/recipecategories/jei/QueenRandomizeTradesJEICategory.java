@@ -62,7 +62,7 @@ public class QueenRandomizeTradesJEICategory implements IRecipeCategory<JEIQueen
 
     @Override
     public void draw(JEIQueenRandomizerTradesInfo recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        guiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_colors", recipe.tagSize()), 86, 10, 0xFF808080, false);
+        guiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_colors", recipe.tagSize()), 86, 10, CommonColors.GRAY, false);
 
         if (recipe.tagInAndOut() != null) {
             tagIcon.draw(guiGraphics, 11, 11);

@@ -12,6 +12,8 @@ Fixed Carpenter Bee Boots to give mining boost from boot's Efficiency enchantmen
 
 Carpenter Bee Boots tooltip now clarifies mining enchantments applies to when mining by feet.
 
+Honeybee Leggings now have a waist and one variant of the leggings will render the waist above Bumblezone's chestplates (but under all other chestplates)
+
 Added Trials Spawners and Vaults as blocks that Knowing Essence can highlight.
 
 Fixed thrown Dirt Pellet not being in `minecraft:redirectable_projectile` entity type tag.

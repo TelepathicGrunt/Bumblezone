@@ -13,7 +13,7 @@ public class BumbleBeeChestplateFlyingPacketHandleBody {
         if(!itemStack.isEmpty()) {
             BumbleBeeChestplateData bumbleBeeChestplateData = itemStack.get(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get());
             itemStack.set(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get(), new BumbleBeeChestplateData(
-                    message.isFlying() != 0,
+                    message.isFlying(),
                     bumbleBeeChestplateData.flyCounter(),
                     bumbleBeeChestplateData.forcedMaxFlyingTickTime(),
                     bumbleBeeChestplateData.requiredWearablesCountForForcedFlyingTime()

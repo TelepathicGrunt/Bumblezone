@@ -141,7 +141,7 @@ public class CosmicCrystalEntity extends LivingEntity {
     }
 
     public void setEssenceController(UUID essenceController) {
-        this.entityData.set(ESSENCE_CONTROLLER_UUID, Optional.of(essenceController));
+        this.entityData.set(ESSENCE_CONTROLLER_UUID, Optional.ofNullable(essenceController));
     }
 
     public BlockPos getEssenceControllerBlockPos() {
