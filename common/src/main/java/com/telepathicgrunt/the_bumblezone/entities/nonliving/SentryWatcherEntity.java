@@ -846,22 +846,9 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       else {
          List<Entity> list = this.level().getEntities(this, this.getBoundingBox(), EntitySelector.pushableBy(this));
          if (!list.isEmpty()) {
-            int i = this.level().getGameRules().getInt(GameRules.RULE_MAX_ENTITY_CRAMMING);
-            int j;
-            if (i > 0 && list.size() > i - 1 && this.random.nextInt(4) == 0) {
-               j = 0;
-
-               for (Entity entity : list) {
-                  if (!entity.isPassenger()) {
-                     ++j;
-                  }
-               }
-            }
-
-            for(j = 0; j < list.size(); ++j) {
-               Entity entity = list.get(j);
-               this.doPush(entity);
-            }
+             for (Entity entity : list) {
+                 this.doPush(entity);
+             }
          }
       }
    }

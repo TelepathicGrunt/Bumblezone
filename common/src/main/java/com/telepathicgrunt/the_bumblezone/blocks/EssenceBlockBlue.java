@@ -240,7 +240,7 @@ public class EssenceBlockBlue extends EssenceBlock {
                     livingEntityAttributeSpeed.addPermanentModifier(new AttributeModifier(
                             UUID.fromString("39ca0496-fa37-488f-8199-c4779f1afe0c"),
                             "Essence Arena Speed Boost",
-                            isEssenced ? 0.04 : 0.08,
+                            isEssenced ? 0.02 : 0.04,
                             AttributeModifier.Operation.ADDITION));
                 }
 
@@ -338,7 +338,7 @@ public class EssenceBlockBlue extends EssenceBlock {
                         drowned.addEffect(new MobEffectInstance(
                                 MobEffects.MOVEMENT_SPEED,
                                 Integer.MAX_VALUE,
-                                4,
+                                1,
                                 false,
                                 false,
                                 true));

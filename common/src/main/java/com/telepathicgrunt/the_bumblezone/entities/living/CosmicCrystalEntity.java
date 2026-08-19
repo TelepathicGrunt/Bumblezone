@@ -1351,25 +1351,14 @@ public class CosmicCrystalEntity extends LivingEntity {
         }
         List<Entity> list = this.level().getEntities(this, this.getBoundingBox(), EntitySelector.pushableBy(this));
         if (!list.isEmpty()) {
-            int entityIndex;
-            int maxCrammingLimit = this.level().getGameRules().getInt(GameRules.RULE_MAX_ENTITY_CRAMMING);
-            if (maxCrammingLimit > 0 && list.size() > maxCrammingLimit - 1 && this.random.nextInt(4) == 0) {
-                entityIndex = 0;
-                for (Entity entity : list) {
-                    if (entity.isPassenger()) continue;
-                    ++entityIndex;
-                }
-            }
-
-            for (entityIndex = 0; entityIndex < list.size(); ++entityIndex) {
-                Entity entity = list.get(entityIndex);
+            for (Entity entity : list) {
                 this.doPush(entity);
 
                 if (entity instanceof LivingEntity livingEntity && !(entity instanceof CosmicCrystalEntity)) {
                     if (physicalHurtAttack(livingEntity)) continue;
 
                     Vec3 center = livingEntity.getBoundingBox().getCenter();
-                    ((ServerLevel)this.level()).sendParticles(
+                    ((ServerLevel) this.level()).sendParticles(
                             ParticleTypes.END_ROD,
                             center.x() + this.random.nextGaussian() / 5,
                             center.y() + this.random.nextGaussian() / 2.5,

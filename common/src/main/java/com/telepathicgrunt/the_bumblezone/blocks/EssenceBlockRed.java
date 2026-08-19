@@ -228,7 +228,7 @@ public class EssenceBlockRed extends EssenceBlock {
                         livingEntityAttributeSpeed.addPermanentModifier(new AttributeModifier(
                                 UUID.fromString("39ca0496-fa37-488f-8199-c4779f1afe0c"),
                                 "Essence Arena Speed Boost",
-                                isEssenced ? 0.05 : 0.065,
+                                isEssenced ? 0.04 : 0.06,
                                 AttributeModifier.Operation.ADDITION));
                     }
 
@@ -237,7 +237,7 @@ public class EssenceBlockRed extends EssenceBlock {
                         livingEntityAttributeFlyingSpeed.addPermanentModifier(new AttributeModifier(
                                 UUID.fromString("c762c216-0a3a-11ee-be56-0242ac120002"),
                                 "Essence Arena Flying Speed Boost",
-                                0.065,
+                                0.03,
                                 AttributeModifier.Operation.ADDITION));
                     }
 
