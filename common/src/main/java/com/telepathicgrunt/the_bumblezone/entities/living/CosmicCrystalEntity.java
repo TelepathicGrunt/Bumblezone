@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.living;
 
+import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.blocks.EssenceBlockWhite;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
@@ -63,6 +64,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -1747,6 +1749,24 @@ public class CosmicCrystalEntity extends LivingEntity {
                 }
             }
         }
+    }
+
+    public @Nullable Pair<Vec3, Vec3> getLaserPositions(float partialTick) {
+        if(!this.isLaserFiring()) {
+            return null;
+        }
+
+        Vec3 startPos = this.getEyePosition(partialTick);
+        Vec3 lerpedLook = this.getViewVector(partialTick);
+        Vec3 endPos = startPos.add(lerpedLook.scale(50));
+
+        HitResult hitResult = this.level().clip(new ClipContext(startPos, endPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+
+        if (hitResult.getType() != HitResult.Type.MISS) {
+            endPos = hitResult.getLocation();
+        }
+
+        return Pair.of(startPos, endPos);
     }
 
     private void spawnFancyParticle(Vec3 center) {

@@ -11,7 +11,9 @@
     "items.ItemExtensionMixin",
     "world.StructureTemplateAccessor"
   ],
-  "client": [],
+  "client": [
+    "client.CameraOrientationAccessor"
+  ],
   "injectors": {
     "defaultRequire": 1
   },

@@ -7,8 +7,10 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalState;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -22,11 +24,16 @@ import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.HashSet;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEntity, CosmicCrystalRenderState, CosmicCrystalModel> {
     private static final Identifier SKIN = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/cosmic_crystal.png");
@@ -58,33 +65,18 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
         state.freezing = entity.getTicksFrozen() > 0;
         state.currentHealthState = Math.min(1, (Math.min(1, entity.getHealth() / entity.getMaxHealth()) * 0.45f) + 0.6f);
         state.activeEffects = new HashSet<>(entity.getActiveEffectsMap().keySet());
-        state.pos = entity.position();
 
         //laser shenanigans
-        Vec3 startPos = entity.getEyePosition();
-        Vec3 prevLookAngle = entity.prevLookAngle;
-        Vec3 lookAngle = entity.getLookAngle();
+        if(state.firing) {
+            var laserPositions = entity.getLaserPositions(partialTick);
+            Vec3 vectToTarget = laserPositions.getSecond().subtract(laserPositions.getFirst());
 
-        Vec3 lerpedLook = new Vec3(
-                Mth.lerp(partialTick, prevLookAngle.x(), lookAngle.x()),
-                Mth.lerp(partialTick, prevLookAngle.y(), lookAngle.y()),
-                Mth.lerp(partialTick, prevLookAngle.z(), lookAngle.z())
-        );
-        Vec3 endPos = lerpedLook.scale(50).add(startPos);
-
-        HitResult hitResult = entity.level().clip(new ClipContext(startPos, endPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity));
-
-        if (hitResult.getType() != HitResult.Type.MISS) {
-            endPos = hitResult.getLocation().subtract(lookAngle);
+            state.laser.uniqueValue = entity.getUUID().getLeastSignificantBits() % 1000000;
+            state.laser.lookAngle = entity.getViewVector(partialTick);
+            state.laser.laserLength = (float) vectToTarget.length() - 0.01f;
+            state.laser.vecToTarget = vectToTarget.normalize();
+            state.laser.positions = laserPositions;
         }
-
-        Vec3 vectToTarget = endPos.subtract(startPos);
-
-        state.laser.uniqueValue = entity.getUUID().getLeastSignificantBits() % 1000000;
-        state.laser.lookAngle = lookAngle;
-        state.laser.laserLength = (float) vectToTarget.length() - 0.01f;
-        state.laser.vecToTarget = vectToTarget.normalize();
-        state.laser.endPos = endPos;
     }
 
     @Override
@@ -241,27 +233,57 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
                 vertex(vertexConsumer, pose, x6, y1, z8, red2, green2, blue2, 0.5f, as);
             });
             poseStack.popPose();
-
-            laserScreenShake(state, state.laser.endPos, camera);
         }
     }
 
-    private static void laserScreenShake(CosmicCrystalRenderState state, Vec3 endPos, CameraRenderState camera) {
-        double distance1 = state.pos.distanceTo(camera.pos);
-        double distance2 = endPos.distanceTo(camera.pos);
-        double minDistance = Math.min(distance1, distance2);
-        double threshold = 10;
+    // FIXME this probably needs to be called during camera setup event
+    private static final double LASER_SCREENSHAKE_RADIUS = 10.0D;
+    public static void laserScreenShake(ClientLevel level, Camera camera, float partialTicks, CameraOrientation orientation) {
+        var cameraEntity = Objects.requireNonNullElse(camera.entity(), Minecraft.getInstance().player);
+        var lasers = level.getEntities(EntityTypeTest.forClass(CosmicCrystalEntity.class), cameraEntity.getBoundingBox().inflate(LASER_SCREENSHAKE_RADIUS), ((Predicate<CosmicCrystalEntity>) CosmicCrystalEntity::isLaserFiring).and(EntitySelector.ENTITY_STILL_ALIVE.and(EntitySelector.NO_SPECTATORS)));
 
-        if (minDistance <= threshold) {
-            double percentageToCenter = 1 - (minDistance / threshold);
+        double closestLaserDistance = Double.MAX_VALUE;
+        CosmicCrystalEntity closestLaser = null;
+        for (CosmicCrystalEntity laser : lasers) {
+            var positions = laser.getLaserPositions(partialTicks);
+
+            // project camera entity position onto laser segment to find closest point
+            var laserDirection = positions.getSecond().subtract(positions.getFirst());
+            var distStart = positions.getFirst().subtract(cameraEntity.position());
+            var distEnd = positions.getSecond().subtract(cameraEntity.position());
+
+            var dot = distStart.dot(distEnd);
+            var t = Mth.clamp(dot / laserDirection.lengthSqr(), 0.0D, 1.0D);
+
+            var hit = positions.getFirst().add(laserDirection.scale(t));
+            var dist = cameraEntity.distanceToSqr(hit);
+
+            if(closestLaser == null || dist < closestLaserDistance) {
+                closestLaser = laser;
+                closestLaserDistance = dist;
+            }
+        }
+
+        if (closestLaserDistance <= LASER_SCREENSHAKE_RADIUS * LASER_SCREENSHAKE_RADIUS) {
+            double percentageToCenter = 1.0D - (Math.sqrt(closestLaserDistance) / LASER_SCREENSHAKE_RADIUS);
 
             double spinSlowdown = 0.15d + (0.3d * (1 - percentageToCenter * percentageToCenter));
             float intensity = (float) (0.175d * percentageToCenter * percentageToCenter * percentageToCenter);
             double currentMillisecond = System.currentTimeMillis() % (360 * spinSlowdown);
-            double degrees = (currentMillisecond / spinSlowdown);
-            float angle = (float) Math.toRadians(degrees);
-            camera.yRot = (camera.yRot + (Mth.sin(angle) * intensity));
+            double angle = (currentMillisecond / spinSlowdown);
+            orientation.setYaw(orientation.getYaw() + (Mth.sin(angle) * intensity * 30)); // FIXME those values need adjusting
         }
+    }
+
+    public interface CameraOrientation {
+        float getYaw();
+        void setYaw(float yaw);
+
+        float getPitch();
+        void setPitch(float pitch);
+
+        float getRoll();
+        void setRoll(float roll);
     }
 
     private static void vertex(VertexConsumer vertexConsumer, PoseStack.Pose pose, float x, float y, float z, int red, int green, int blue, float ux, float uz) {
