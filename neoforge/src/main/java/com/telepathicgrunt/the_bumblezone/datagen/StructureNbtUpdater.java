@@ -20,7 +20,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -50,7 +49,7 @@ public class StructureNbtUpdater implements DataProvider {
     }
 
     @Override
-    public @NotNull CompletableFuture<?> run(@Nonnull CachedOutput cache) {
+    public @NotNull CompletableFuture<?> run(@NotNull CachedOutput cache) {
         try {
             for (var entry : resources.listResources(basePath, $ -> true).entrySet()) {
                 if (entry.getKey().getNamespace().equals(modid)) {
@@ -94,9 +93,8 @@ public class StructureNbtUpdater implements DataProvider {
         return template.save(new CompoundTag());
     }
 
-    @Nonnull
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return "Update structure files in " + basePath;
     }
 }
