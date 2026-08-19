@@ -49,6 +49,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -394,14 +395,12 @@ public class EssenceBlockEntity extends BlockEntity {
         super.setRemoved();
     }
 
-    public static EssenceBlockEntity getEssenceBlockAtLocation(Level level, ResourceKey<Level> targetLevel, BlockPos targetBlockPos, UUID targetEssenceUUID) {
-        if (targetEssenceUUID != null && level != null && targetBlockPos != null) {
-            if (level.dimension().equals(targetLevel)) {
-                BlockEntity blockEntity = level.getBlockEntity(targetBlockPos);
-                if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity && essenceBlockEntity.getEventTimer() > 0) {
-                    if (essenceBlockEntity.getUUID().equals(targetEssenceUUID)) {
-                        return essenceBlockEntity;
-                    }
+    public static EssenceBlockEntity getEssenceBlockAtLocation(@Nullable Level level, ResourceKey<Level> targetLevel, @Nullable BlockPos targetBlockPos, @Nullable UUID targetEssenceUUID) {
+        if (targetEssenceUUID != null && level != null && targetBlockPos != null && level.dimension() == targetLevel) {
+            EssenceBlockEntity blockEntity = level.getBlockEntity(targetBlockPos, BzBlockEntities.ESSENCE_BLOCK.get()).orElse(null);
+            if (blockEntity != null && blockEntity.getEventTimer() > 0) {
+                if (blockEntity.getUUID().equals(targetEssenceUUID)) {
+                    return blockEntity;
                 }
             }
         }

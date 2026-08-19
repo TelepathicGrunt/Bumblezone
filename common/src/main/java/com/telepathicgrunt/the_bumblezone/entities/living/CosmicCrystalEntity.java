@@ -24,7 +24,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.Identifier;
@@ -80,8 +79,8 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -140,12 +139,13 @@ public class CosmicCrystalEntity extends LivingEntity {
                 .add(Attributes.FOLLOW_RANGE, MAX_RANGE);
     }
 
+    @Nullable
     public UUID getEssenceController() {
         return this.entityData.get(ESSENCE_CONTROLLER_UUID).orElse(null);
     }
 
     public void setEssenceController(UUID essenceController) {
-        this.entityData.set(ESSENCE_CONTROLLER_UUID, Optional.of(essenceController));
+        this.entityData.set(ESSENCE_CONTROLLER_UUID, Optional.ofNullable(essenceController));
     }
 
     public BlockPos getEssenceControllerBlockPos() {
