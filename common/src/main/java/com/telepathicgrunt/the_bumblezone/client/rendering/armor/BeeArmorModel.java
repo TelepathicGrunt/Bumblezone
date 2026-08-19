@@ -52,39 +52,39 @@ public class BeeArmorModel extends HumanoidModel<HumanoidRenderState> {
     @Override
     public void setupAnim(HumanoidRenderState state) {
         super.setupAnim(state);
-
-        if (((HumanoidRenderStateInterface)state).theBumblezone$isChestplateFlying()) {
-            double currentProg = Math.abs(Math.sin(state.ageInTicks));
-            System.out.println("aaa " + currentProg + " /// " + Mth.lerp(currentProg, -5.5f, 1.5f));
-            leftWing.yRot = -45;
-            leftWing.xRot = (float) Mth.lerp(currentProg, -0.5f, 1.5f);
-            rightWing.yRot = 45;
-            rightWing.xRot = (float) Mth.lerp(currentProg, -0.5f, 1.5f);
-            if (((HumanoidRenderStateInterface)state).theBumblezone$getChestplateVariant() == 2) {
-                rightWing.zRot = 0f;
-                leftWing.yRot = -44.5f;
+        if(state instanceof HumanoidRenderStateInterface itf) {
+            if (itf.theBumblezone$isChestplateFlying()) {
+                float currentProg = Mth.abs(Mth.sin(state.ageInTicks));
+                leftWing.yRot = -45;
+                leftWing.xRot = Mth.lerp(currentProg, -0.5f, 1.5f);
+                rightWing.yRot = 45;
+                rightWing.xRot = Mth.lerp(currentProg, -0.5f, 1.5f);
+                if (itf.theBumblezone$getChestplateVariant() == 2) {
+                    rightWing.zRot = 0f;
+                    leftWing.yRot = -44.5f;
+                }
             }
-        }
-        else if (((HumanoidRenderStateInterface)state).theBumblezone$getChestplateVariant() == 2) {
-            leftWing.yRot = -0.2f;
-            leftWing.xRot = -0.15f;
-            rightWing.yRot = 0.2f;
-            rightWing.xRot = -0.2f;
-            rightWing.zRot = -0.5f;
-        }
-        else {
-            leftWing.yRot = -0.6f;
-            leftWing.xRot = -0.2f;
-            rightWing.yRot = 0.6f;
-            rightWing.xRot = -0.2f;
-        }
+            else if (itf.theBumblezone$getChestplateVariant() == 2) {
+                leftWing.yRot = -0.2f;
+                leftWing.xRot = -0.15f;
+                rightWing.yRot = 0.2f;
+                rightWing.xRot = -0.2f;
+                rightWing.zRot = -0.5f;
+            }
+            else {
+                leftWing.yRot = -0.6f;
+                leftWing.xRot = -0.2f;
+                rightWing.yRot = 0.6f;
+                rightWing.xRot = -0.2f;
+            }
 
-        if (((HumanoidRenderStateInterface) state).theBumblezone$isLeggingsPollinated()) {
-            leftPollen.visible = true;
-            rightPollen.visible = true;
-        } else {
-            leftPollen.visible = false;
-            rightPollen.visible = false;
+            if (itf.theBumblezone$isLeggingsPollinated()) {
+                leftPollen.visible = true;
+                rightPollen.visible = true;
+            } else {
+                leftPollen.visible = false;
+                rightPollen.visible = false;
+            }
         }
     }
 
