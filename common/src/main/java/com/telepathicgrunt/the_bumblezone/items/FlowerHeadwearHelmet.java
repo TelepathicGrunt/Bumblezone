@@ -25,7 +25,7 @@ import net.minecraft.world.level.Level;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class FlowerHeadwearHelmet extends BzArmor implements ItemExtension {
-    public static ResourceKey<EquipmentAsset> FLOWER_HEADWEAR_EQUIPMENT_ASSET_ID = ResourceKey.create(EquipmentAssets.ROOT_ID, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "flower_headwear"));
+    public static final ResourceKey<EquipmentAsset> FLOWER_HEADWEAR_EQUIPMENT_ASSET_ID = ResourceKey.create(EquipmentAssets.ROOT_ID, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "flower_headwear"));
 
     public FlowerHeadwearHelmet(Properties properties) {
         super(properties
