@@ -12,6 +12,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.CommonColors;
 import net.minecraft.util.random.Weighted;
 
 import java.util.List;
@@ -69,7 +70,7 @@ public class RRVQueenTradesRecipe implements ReliableClientRecipe {
 
     @Override
     public void renderRecipe(RecipeViewScreen screen, RecipePosition recipePosition, GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        guiGraphics.text(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", this.reward.value().xpReward), 100, 11, 0xFF808080, false);
+        guiGraphics.text(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", this.reward.value().xpReward), 100, 11, CommonColors.GRAY, false);
 
         double percentValue = ((double)(this.reward.value().weight) / this.reward.value().getTotalWeight()) * 100D;
         if (this.reward.value().tagKey.isPresent()) {
@@ -82,7 +83,7 @@ public class RRVQueenTradesRecipe implements ReliableClientRecipe {
         else {
             percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
         }
-        guiGraphics.text(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded), 38 - (percentValue < 1 ? 6 : (percentRounded.length() * 3)), 11, 0xFF808080, false);
+        guiGraphics.text(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded), 38 - (percentValue < 1 ? 6 : (percentRounded.length() * 3)), 11, CommonColors.GRAY, false);
 
         if (this.input.tagKey().isPresent()) {
             guiGraphics.blit(RRVQueenTradesRecipeType.TAG_ICON, 11, 11, 27, 27, 0, 16, 0, 16);

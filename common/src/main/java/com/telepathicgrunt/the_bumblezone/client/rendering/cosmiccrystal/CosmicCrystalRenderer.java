@@ -191,10 +191,10 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
             poseStack.pushPose();
 
             float n = (float)Math.acos(state.laser.vecToTarget.y);
-            float o = (float)Math.atan2(state.laser.vecToTarget.z, state.laser.vecToTarget.x);
+            float o = (float)Mth.atan2(state.laser.vecToTarget.z, state.laser.vecToTarget.x);
             poseStack.translate(state.laser.lookAngle.x(), eyeY + state.laser.lookAngle.y(), state.laser.lookAngle.z());
-            poseStack.mulPose(Axis.YP.rotationDegrees((1.5707964f - o) * 57.295776f));
-            poseStack.mulPose(Axis.XP.rotationDegrees(n * 57.295776f));
+            poseStack.mulPose(Axis.YP.rotation(Mth.HALF_PI - o));
+            poseStack.mulPose(Axis.XP.rotation(n));
             float q = state.ageInTicks * 0.05f * -1.5f;
             float v = 0.2f;
             float w2 = 0.5f;
@@ -207,20 +207,20 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
             float x5 = Mth.cos(q + 5.4977875f) * w2;
             float z7 = Mth.sin(q + 5.4977875f) * w2;
 
-            float x1 = Mth.cos(q + (float)Math.PI) * v;
-            float z1 = Mth.sin(q + (float)Math.PI) * v;
+            float x1 = Mth.cos(q + Mth.PI) * v;
+            float z1 = Mth.sin(q + Mth.PI) * v;
             float x2 = Mth.cos(q + 0.0f) * v;
             float z2 = Mth.sin(q + 0.0f) * v;
-            float x3 = Mth.cos(q + 1.5707964f) * v;
-            float z3 = Mth.sin(q + 1.5707964f) * v;
+            float x3 = Mth.cos(q + Mth.HALF_PI) * v;
+            float z3 = Mth.sin(q + Mth.HALF_PI) * v;
             float x4 = Mth.cos(q + 4.712389f) * v;
             float z4 = Mth.sin(q + 4.712389f) * v;
             float y1 = state.laser.laserLength;
             float y2 = 0.0f;
-            float ux1 = 0.4999f;
+            float ux1 = 0.5f;
             float ux2 = 0.0f;
 
-            float uv2 = -1.0f + (state.ageInTicks * -0.2f % 1.0f);
+            float uv2 = (state.ageInTicks * -0.2f % 1.0f) - 1.0f;
             float uv1 = state.laser.laserLength * 2.5f + uv2;
             collector.submitCustomGeometry(poseStack, RenderTypes.entityTranslucentEmissive(LASER_LOCATION, false), (pose, vertexConsumer) -> {
                 vertex(vertexConsumer, pose, x1, y1, z1, red2, green2, blue2, ux1, uv1);
@@ -247,22 +247,20 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
     }
 
     private static void laserScreenShake(CosmicCrystalRenderState state, Vec3 endPos, CameraRenderState camera) {
-        if (camera != null) {
-            double distance1 = state.pos.distanceTo(camera.pos);
-            double distance2 = endPos.distanceTo(camera.pos);
-            double minDistance = Math.min(distance1, distance2);
-            double threshold = 10;
+        double distance1 = state.pos.distanceTo(camera.pos);
+        double distance2 = endPos.distanceTo(camera.pos);
+        double minDistance = Math.min(distance1, distance2);
+        double threshold = 10;
 
-            if (minDistance <= threshold) {
-                double percentageToCenter = 1 - (minDistance / threshold);
+        if (minDistance <= threshold) {
+            double percentageToCenter = 1 - (minDistance / threshold);
 
-                double spinSlowdown = 0.15d + (0.3d * (1 - percentageToCenter * percentageToCenter));
-                float intensity = (float) (0.175d * percentageToCenter * percentageToCenter * percentageToCenter);
-                double currentMillisecond = System.currentTimeMillis() % (360 * spinSlowdown);
-                double degrees = (currentMillisecond / spinSlowdown);
-                float angle = (float) (degrees * Mth.DEG_TO_RAD);
-                camera.yRot = (camera.yRot + (Mth.sin(angle) * intensity));
-            }
+            double spinSlowdown = 0.15d + (0.3d * (1 - percentageToCenter * percentageToCenter));
+            float intensity = (float) (0.175d * percentageToCenter * percentageToCenter * percentageToCenter);
+            double currentMillisecond = System.currentTimeMillis() % (360 * spinSlowdown);
+            double degrees = (currentMillisecond / spinSlowdown);
+            float angle = (float) Math.toRadians(degrees);
+            camera.yRot = (camera.yRot + (Mth.sin(angle) * intensity));
         }
     }
 
