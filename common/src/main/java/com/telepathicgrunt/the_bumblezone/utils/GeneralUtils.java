@@ -371,6 +371,27 @@ public class GeneralUtils {
 
     //////////////////////////////////////////////
 
+    public static int getFirstSurfaceYFromPos(LevelReader worldView, BlockPos pos) {
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+        mutable.set(pos);
+        ChunkAccess currentChunk = worldView.getChunk(mutable);
+        BlockState currentState = currentChunk.getBlockState(mutable);
+
+        if (!isReplaceableByStructures(currentState)) {
+            while (mutable.getY() >= worldView.getMinBuildHeight() && !isReplaceableByStructures(currentState)) {
+                mutable.move(Direction.DOWN);
+                currentState = currentChunk.getBlockState(mutable);
+            }
+        }
+
+        while(mutable.getY() >= worldView.getMinBuildHeight() && isReplaceableByStructures(currentState)) {
+            mutable.move(Direction.DOWN);
+            currentState = currentChunk.getBlockState(mutable);
+        }
+
+        return mutable.getY();
+    }
+
     public static int getFirstLandYFromPos(LevelReader worldView, BlockPos pos) {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         mutable.set(pos);
