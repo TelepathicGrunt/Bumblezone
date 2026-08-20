@@ -1,4 +1,4 @@
-### **(V.7.15.4 Changes) (1.21.1 Minecraft)**
+### **(V.7.16.0 Changes) (1.21.1 Minecraft)**
 
 #### Teleportation:
 Fixed bug where teleporting Bumblezone born entities out of Bumblezone does not put them at top land at 0, 0 spot in Overworld.
