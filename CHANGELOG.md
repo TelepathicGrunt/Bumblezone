@@ -32,3 +32,5 @@ Slightly reduced enemy mob speed boosts from Blue and Red Essence Arenas.
 
 #### Music/Sounds:
 Lowered Bumblezone dimension's buzzing ambience sound a little
+
+(NeoForge): Fixed a variety of music playing/stopping issues.

@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.neoforge;
 
 import com.teamresourceful.resourcefullib.common.registry.RegistryEntry;
+import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
 import com.telepathicgrunt.the_bumblezone.client.screens.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.client.armor.ArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.neoforge.DimensionFog;
@@ -201,6 +202,7 @@ public class NeoForgeClientEventManager {
 
     private static void onClientTickPost(ClientTickEvent.Post event) {
         StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer());
+        MusicHandler.tickMusicFader();
     }
 
     public static void onBlockScreen(RenderBlockScreenEffectEvent event) {

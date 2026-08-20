@@ -114,7 +114,7 @@ public class MusicHandler {
                     m.getSoundManager().stop(BzSounds.SEMPITERNAL_SANCTUM.get().getLocation(), SoundSource.MUSIC);
 
                     return true;
-                }) ;
+                });
             }
         }
         else if (!play && ANGRY_BEE_MUSIC != null) {
