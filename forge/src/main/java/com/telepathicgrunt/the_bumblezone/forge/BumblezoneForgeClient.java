@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.forge;
 
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
+import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
 import com.telepathicgrunt.the_bumblezone.client.forge.DimensionFog;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.EssenceOverlay;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
@@ -160,6 +161,7 @@ public class BumblezoneForgeClient {
     private static void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
             StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer());
+            MusicHandler.tickMusicFader();
         }
     }
 

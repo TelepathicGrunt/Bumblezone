@@ -4,6 +4,7 @@ import com.google.common.util.concurrent.AtomicDouble;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.forge.BzConfigHandler;
 import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
+import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
@@ -401,6 +402,7 @@ public class BumblezoneForge {
 
     private static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
+            BeeAggression.playerTick(event.player);
             EntityTeleportationHookup.playerTick(event.player);
         }
     }

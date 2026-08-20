@@ -15,5 +15,10 @@ Honeybee Leggings now have a waist and one variant of the leggings will render t
 #### Structures:
 Slightly reduced enemy mob speed boosts from Blue and Red Essence Arenas.
 
+#### Effects:
+(Forge): Fixed Wrath of the Hive not changing music, not changing fog color, not respecting Peaceful mode, and not respecting allowWrathOfTheHiveOutsideBumblezone. Now all fixed.
+
 #### Music/Sounds:
 Lowered Bumblezone dimension's buzzing ambience sound a little
+
+(Forge): Fixed a variety of music playing/stopping issues.
