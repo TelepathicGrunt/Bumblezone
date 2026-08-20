@@ -4,6 +4,7 @@ import com.google.common.util.concurrent.AtomicDouble;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.neoforge.BzGeneralConfig;
 import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
+import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.neoforge.DisableFlightAttribute;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
@@ -358,6 +359,7 @@ public class NeoForgeEventManager {
     }
 
     private static void onPlayerTick(PlayerTickEvent.Post event) {
+        BeeAggression.playerTick(event.getEntity());
         EntityTeleportationHookup.playerTick(event.getEntity());
     }
 
