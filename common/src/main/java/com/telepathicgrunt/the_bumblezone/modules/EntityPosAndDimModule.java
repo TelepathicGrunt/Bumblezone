@@ -53,7 +53,7 @@ public class EntityPosAndDimModule implements Module<EntityPosAndDimModule> {
     }
 
     public boolean hasPos() {
-        return nonBZPosition != null;
+        return nonBZPosition.isPresent();
     }
 
     @Override

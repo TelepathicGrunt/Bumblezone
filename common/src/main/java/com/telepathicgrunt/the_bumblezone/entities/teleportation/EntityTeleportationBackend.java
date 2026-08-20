@@ -12,6 +12,7 @@ import com.telepathicgrunt.the_bumblezone.modules.EntityPosAndDimModule;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -44,7 +45,7 @@ public class EntityTeleportationBackend {
 
         if (BzDimensionConfigs.forceBumblezoneOriginMobToOverworldCenter &&
             capOptional.isPresent() &&
-            capOptional.orElseThrow(RuntimeException::new).getNonBZPos() == null)
+            capOptional.orElseThrow(RuntimeException::new).getNonBZPos().isEmpty())
         {
             destination.getChunk(BlockPos.ZERO);
             int heightMapY = destination.getHeight(Heightmap.Types.MOTION_BLOCKING, 0, 0);
@@ -53,6 +54,12 @@ public class EntityTeleportationBackend {
                 return new Vec3(0.5d, heightMapY + 0.5d, 0.5d);
             }
             else {
+                int landY = GeneralUtils.getFirstSurfaceYFromPos(destination, new BlockPos(0, heightMapY - 1, 0));
+
+                if (landY > destination.getMinBuildHeight()) {
+                    return new Vec3(0.5d, landY, 0.5d);
+                }
+
                 return new Vec3(0.5d, (chunkGenerator.getMinY() + chunkGenerator.getGenDepth()) / 2d, 0.5d);
             }
         }

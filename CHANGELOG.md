@@ -1,5 +1,11 @@
 ### **(V.7.15.4 Changes) (1.21.1 Minecraft)**
 
+#### Teleportation:
+Fixed bug where teleporting Bumblezone born entities out of Bumblezone does not put them at top land at 0, 0 spot in Overworld.
+
+When teleporting Bumblezone born entities out of Bumblezone and 0, 0 spot in overworld has a roof at max height, the mod will 
+ now try and search for a surface under that roof to teleport entity to.
+
 #### Entities:
 Tiny optimization for Sentry Watcher/Cosmic Crystal.
 
