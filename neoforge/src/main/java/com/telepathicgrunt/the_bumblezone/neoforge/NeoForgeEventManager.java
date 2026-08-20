@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.neoforge;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.telepathicgrunt.the_bumblezone.configs.neoforge.BzGeneralConfig;
 import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
+import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.neoforge.DisableFlightAttribute;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationHookup;
@@ -62,6 +63,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Items;
@@ -367,6 +369,7 @@ public class NeoForgeEventManager {
     }
 
     private static void onPlayerTick(PlayerTickEvent.Post event) {
+        BeeAggression.playerTick(event.getEntity());
         EntityTeleportationHookup.playerTick(event.getEntity());
     }
 

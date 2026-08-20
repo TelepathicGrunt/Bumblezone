@@ -27,13 +27,8 @@ Fixed thrown Dirt Pellet not being in `minecraft:redirectable_projectile` entity
 #### Structures:
 Slightly reduced enemy mob speed boosts from Blue and Red Essence Arenas.
 
+#### Effects:
+(NeoForge): Fixed Wrath of the Hive not changing music, not changing fog color, not respecting Peaceful mode, and not respecting allowWrathOfTheHiveOutsideBumblezone. Now all fixed.
 
-### **(V.7.15.3 Changes) (1.21.1 Minecraft)**
-
-#### Fluids:
-Honey Fluid and Royal Jelly Fluid will not replaced waterlogged blocks that have a collision shape anymore when touching.
-
-Placing Amethyst Cluster block into Sugar Water will waterlog the Amethyst Cluster block.
-
-#### Lang:
-es_ar.json lang file updated by Texaliuz
+#### Music/Sounds:
+Lowered Bumblezone dimension's buzzing ambience sound a little
