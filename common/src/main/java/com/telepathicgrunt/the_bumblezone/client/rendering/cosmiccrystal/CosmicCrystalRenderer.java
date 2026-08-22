@@ -236,6 +236,10 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
     // FIXME this probably needs to be called during camera setup event
     private static final double LASER_SCREENSHAKE_RADIUS = 10.0D;
     public static void laserScreenShake(Level level, Camera camera, float partialTicks, CameraOrientation orientation) {
+        if(Minecraft.getInstance().isPaused()) {
+            return;
+        }
+
         var cameraEntity = Objects.requireNonNullElse(camera.entity(), Minecraft.getInstance().player);
         var lasers = level.getEntities(EntityTypeTest.forClass(CosmicCrystalEntity.class), cameraEntity.getBoundingBox().inflate(LASER_SCREENSHAKE_RADIUS), ((Predicate<CosmicCrystalEntity>) CosmicCrystalEntity::isLaserFiring).and(EntitySelector.ENTITY_STILL_ALIVE.and(EntitySelector.NO_SPECTATORS)));
 
