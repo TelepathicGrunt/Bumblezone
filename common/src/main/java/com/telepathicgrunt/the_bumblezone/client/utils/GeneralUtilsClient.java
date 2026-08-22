@@ -4,17 +4,21 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.rendertype.RenderSetup;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Util;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
 
 public class GeneralUtilsClient {
 
@@ -89,5 +93,24 @@ public class GeneralUtilsClient {
     public static boolean isAdvancedToolTipActive() {
         Minecraft minecraft = Minecraft.getInstance();
         return minecraft != null && minecraft.options.advancedItemTooltips;
+    }
+
+    ///////////////////////////////////////
+
+    private static final BiFunction<Identifier, Boolean, RenderType> LASER_RENDER_TYPE = Util.memoize((texture, affectsOutline) -> {
+        var state = RenderSetup.builder(RenderPipelines.BEACON_BEAM_TRANSLUCENT)
+                .withTexture("Sampler0", texture)
+                .useLightmap()
+                .useOverlay()
+                .affectsCrumbling()
+                .sortOnUpload()
+                .setOutline(affectsOutline ? RenderSetup.OutlineProperty.AFFECTS_OUTLINE : RenderSetup.OutlineProperty.NONE)
+                .createRenderSetup();
+
+        return RenderType.create("bz$entity_translucent_laser", state);
+    });
+
+    public static RenderType renderTypeCrystalLaser(Identifier texture, boolean affectsOutline) {
+        return LASER_RENDER_TYPE.apply(texture, affectsOutline);
     }
 }

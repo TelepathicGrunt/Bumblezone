@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalState;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -13,13 +14,13 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
@@ -211,23 +212,26 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
 
             float uv2 = (state.ageInTicks * -0.2f % 1.0f) - 1.0f;
             float uv1 = state.laser.laserLength * 2.5f + uv2;
-            collector.submitCustomGeometry(poseStack, RenderTypes.entityTranslucentEmissive(LASER_LOCATION, false), (pose, vertexConsumer) -> {
-                vertex(vertexConsumer, pose, x1, y1, z1, red2, green2, blue2, ux1, uv1);
-                vertex(vertexConsumer, pose, x1, y2, z1, red, green, blue, ux1, uv2);
-                vertex(vertexConsumer, pose, x2, y2, z2, red, green, blue, ux2, uv2);
-                vertex(vertexConsumer, pose, x2, y1, z2, red2, green2, blue2, ux2, uv1);
-                vertex(vertexConsumer, pose, x3, y1, z3, red2, green2, blue2, ux1, uv1);
-                vertex(vertexConsumer, pose, x3, y2, z3, red, green, blue, ux1, uv2);
-                vertex(vertexConsumer, pose, x4, y2, z4, red, green, blue, ux2, uv2);
-                vertex(vertexConsumer, pose, x4, y1, z4, red2, green2, blue2, ux2, uv1);
+
+            int light = LightCoordsUtil.FULL_BRIGHT;
+
+            collector.submitCustomGeometry(poseStack, GeneralUtilsClient.renderTypeCrystalLaser(LASER_LOCATION, false), (pose, vertexConsumer) -> {
+                vertex(vertexConsumer, pose, x1, y1, z1, red2, green2, blue2, light, ux1, uv1);
+                vertex(vertexConsumer, pose, x1, y2, z1, red, green, blue, light, ux1, uv2);
+                vertex(vertexConsumer, pose, x2, y2, z2, red, green, blue, light, ux2, uv2);
+                vertex(vertexConsumer, pose, x2, y1, z2, red2, green2, blue2, light, ux2, uv1);
+                vertex(vertexConsumer, pose, x3, y1, z3, red2, green2, blue2, light, ux1, uv1);
+                vertex(vertexConsumer, pose, x3, y2, z3, red, green, blue, light, ux1, uv2);
+                vertex(vertexConsumer, pose, x4, y2, z4, red, green, blue, light, ux2, uv2);
+                vertex(vertexConsumer, pose, x4, y1, z4, red2, green2, blue2, light, ux2, uv1);
                 float as = 0.0f;
                 if (Mth.floor(state.ageInTicks) % 4 < 2) {
                     as = 0.5f;
                 }
-                vertex(vertexConsumer, pose, x7, y1, z5, red2, green2, blue2, 0.5f, as + 0.5f);
-                vertex(vertexConsumer, pose, z9, y1, z6, red2, green2, blue2, 1.0f, as + 0.5f);
-                vertex(vertexConsumer, pose, x5, y1, z7, red2, green2, blue2, 1.0f, as);
-                vertex(vertexConsumer, pose, x6, y1, z8, red2, green2, blue2, 0.5f, as);
+                vertex(vertexConsumer, pose, x7, y1, z5, red2, green2, blue2, light, 0.5f, as + 0.5f);
+                vertex(vertexConsumer, pose, z9, y1, z6, red2, green2, blue2, light, 1.0f, as + 0.5f);
+                vertex(vertexConsumer, pose, x5, y1, z7, red2, green2, blue2, light, 1.0f, as);
+                vertex(vertexConsumer, pose, x6, y1, z8, red2, green2, blue2, light, 0.5f, as);
             });
             poseStack.popPose();
         }
@@ -284,13 +288,13 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
         void bz$setPitch(float pitch);
     }
 
-    private static void vertex(VertexConsumer vertexConsumer, PoseStack.Pose pose, float x, float y, float z, int red, int green, int blue, float ux, float uz) {
+    private static void vertex(VertexConsumer vertexConsumer, PoseStack.Pose pose, float x, float y, float z, int red, int green, int blue, int light, float ux, float uz) {
         vertexConsumer
                 .addVertex(pose, x, y, z)
-                .setColor(red, green, blue, 255)
+                .setColor(ARGB.color(red, green, blue))
                 .setUv(ux, uz)
                 .setOverlay(OverlayTexture.NO_OVERLAY)
-                .setLight(0xFFFFFFFF)
+                .setLight(light)
                 .setNormal(pose, 0.0f, 1.0f, 0.0f);
     }
 
