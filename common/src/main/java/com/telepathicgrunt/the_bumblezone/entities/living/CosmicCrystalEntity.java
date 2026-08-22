@@ -791,6 +791,7 @@ public class CosmicCrystalEntity extends Mob {
         this.setXRot(Mth.wrapDegrees(xRotD));
         this.setYRot(Mth.wrapDegrees(yRotD));
         this.setYHeadRot(this.getYRot());
+        this.setYBodyRot(this.getYRot());
     }
 
     private void setupTargetForTrackingStates() {
