@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
 import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.model.EntityModel;
@@ -8,7 +9,6 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
@@ -22,7 +22,7 @@ public class CosmicCrystalModel extends EntityModel<CosmicCrystalRenderState> {
     private final KeyframeAnimation idleAnimation;
 
     public CosmicCrystalModel(ModelPart root) {
-        super(root, RenderTypes::entityTranslucentEmissive);
+        super(root, texture -> GeneralUtilsClient.renderTypeCrystal(texture, true));
         this.body = root.getChild("body");
         this.spikes = root.getChild("laser").getChild("spikes");
         this.charging = root.getChild("laser").getChild("charging");

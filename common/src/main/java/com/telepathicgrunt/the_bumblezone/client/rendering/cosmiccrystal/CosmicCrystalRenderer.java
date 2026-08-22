@@ -215,7 +215,7 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
 
             int light = LightCoordsUtil.FULL_BRIGHT;
 
-            collector.submitCustomGeometry(poseStack, GeneralUtilsClient.renderTypeCrystalLaser(LASER_LOCATION, false), (pose, vertexConsumer) -> {
+            collector.submitCustomGeometry(poseStack, GeneralUtilsClient.renderTypeCrystal(LASER_LOCATION, false), (pose, vertexConsumer) -> {
                 vertex(vertexConsumer, pose, x1, y1, z1, red2, green2, blue2, light, ux1, uv1);
                 vertex(vertexConsumer, pose, x1, y2, z1, red, green, blue, light, ux1, uv2);
                 vertex(vertexConsumer, pose, x2, y2, z2, red, green, blue, light, ux2, uv2);

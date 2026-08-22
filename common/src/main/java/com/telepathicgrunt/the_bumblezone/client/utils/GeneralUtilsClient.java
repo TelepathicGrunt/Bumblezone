@@ -97,8 +97,8 @@ public class GeneralUtilsClient {
 
     ///////////////////////////////////////
 
-    private static final BiFunction<Identifier, Boolean, RenderType> LASER_RENDER_TYPE = Util.memoize((texture, affectsOutline) -> {
-        var state = RenderSetup.builder(RenderPipelines.BEACON_BEAM_TRANSLUCENT)
+    private static final BiFunction<Identifier, Boolean, RenderType> CRYSTAL_RENDER_TYPE = Util.memoize((texture, affectsOutline) -> {
+        var state = RenderSetup.builder(RenderPipelines.OPAQUE_PARTICLE)
                 .withTexture("Sampler0", texture)
                 .useLightmap()
                 .useOverlay()
@@ -107,10 +107,10 @@ public class GeneralUtilsClient {
                 .setOutline(affectsOutline ? RenderSetup.OutlineProperty.AFFECTS_OUTLINE : RenderSetup.OutlineProperty.NONE)
                 .createRenderSetup();
 
-        return RenderType.create("bz$entity_translucent_laser", state);
+        return RenderType.create("bz$entity_crystal_translucent", state);
     });
 
-    public static RenderType renderTypeCrystalLaser(Identifier texture, boolean affectsOutline) {
-        return LASER_RENDER_TYPE.apply(texture, affectsOutline);
+    public static RenderType renderTypeCrystal(Identifier texture, boolean affectsOutline) {
+        return CRYSTAL_RENDER_TYPE.apply(texture, affectsOutline);
     }
 }
