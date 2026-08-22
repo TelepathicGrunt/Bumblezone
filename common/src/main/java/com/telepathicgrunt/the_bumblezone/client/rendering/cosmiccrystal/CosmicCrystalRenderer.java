@@ -237,7 +237,6 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
         }
     }
 
-    // FIXME this probably needs to be called during camera setup event
     private static final double LASER_SCREENSHAKE_RADIUS = 10.0D;
     public static void laserScreenShake(Level level, Camera camera, float partialTicks, CameraOrientation orientation) {
         if(Minecraft.getInstance().isPaused()) {
