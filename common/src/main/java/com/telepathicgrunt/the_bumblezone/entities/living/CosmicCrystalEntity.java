@@ -92,7 +92,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class CosmicCrystalEntity extends LivingEntity {
+public class CosmicCrystalEntity extends Mob {
     private static final EntityDataAccessor<CosmicCrystalState> COSMIC_CRYSTAL_STATE = SynchedEntityData.defineId(CosmicCrystalEntity.class, BzEntities.COSMIC_CRYSTAL_STATE_SERIALIZER);
     private static final EntityDataAccessor<Integer> INITIAL_ROTATION_ANIMATION_TIMESPAN = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> STATE_TIMESPAN = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.INT);

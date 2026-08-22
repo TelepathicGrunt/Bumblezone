@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 import com.telepathicgrunt.the_bumblezone.commands.DebugDevOpCommands;
 import com.telepathicgrunt.the_bumblezone.commands.NonOpCommands;
 import com.telepathicgrunt.the_bumblezone.commands.OpCommands;
+import com.telepathicgrunt.the_bumblezone.commands.debug.DebugSpawnLaserCommand;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.BzRegisterCommandsEvent;
 
 public class BzCommands {
@@ -10,5 +11,6 @@ public class BzCommands {
         NonOpCommands.createCommand(event);
         OpCommands.createCommand(event);
         DebugDevOpCommands.createCommand(event);
+        DebugSpawnLaserCommand.createCommand(event);
     }
 }
