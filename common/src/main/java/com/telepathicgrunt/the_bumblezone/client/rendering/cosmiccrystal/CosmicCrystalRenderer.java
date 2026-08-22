@@ -257,10 +257,9 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
 
             // project camera entity position onto laser segment to find closest point
             var laserDirection = positions.getSecond().subtract(positions.getFirst());
-            var distStart = positions.getFirst().subtract(cameraEntity.position());
-            var distEnd = positions.getSecond().subtract(cameraEntity.position());
+            var distStart = cameraEntity.position().subtract(positions.getFirst());
 
-            var dot = distStart.dot(distEnd);
+            var dot = laserDirection.dot(distStart);
             var t = Mth.clamp(dot / laserDirection.lengthSqr(), 0.0D, 1.0D);
 
             var hit = positions.getFirst().add(laserDirection.scale(t));
