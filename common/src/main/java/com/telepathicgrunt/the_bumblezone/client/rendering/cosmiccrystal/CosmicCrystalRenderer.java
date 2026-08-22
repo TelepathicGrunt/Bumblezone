@@ -295,6 +295,11 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
     }
 
     @Override
+    protected boolean affectedByCulling(CosmicCrystalEntity entity) {
+        return false;
+    }
+
+    @Override
     public Identifier getTextureLocation(CosmicCrystalRenderState state) {
         return SKIN;
     }
