@@ -216,25 +216,29 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
             int light = LightCoordsUtil.FULL_BRIGHT;
 
             collector.submitCustomGeometry(poseStack, GeneralUtilsClient.renderTypeCrystal(LASER_LOCATION, false), (pose, vertexConsumer) -> {
-                vertex(vertexConsumer, pose, x1, y1, z1, red2, green2, blue2, light, ux1, uv1);
-                vertex(vertexConsumer, pose, x1, y2, z1, red, green, blue, light, ux1, uv2);
-                vertex(vertexConsumer, pose, x2, y2, z2, red, green, blue, light, ux2, uv2);
-                vertex(vertexConsumer, pose, x2, y1, z2, red2, green2, blue2, light, ux2, uv1);
-                vertex(vertexConsumer, pose, x3, y1, z3, red2, green2, blue2, light, ux1, uv1);
-                vertex(vertexConsumer, pose, x3, y2, z3, red, green, blue, light, ux1, uv2);
-                vertex(vertexConsumer, pose, x4, y2, z4, red, green, blue, light, ux2, uv2);
-                vertex(vertexConsumer, pose, x4, y1, z4, red2, green2, blue2, light, ux2, uv1);
+                quad(pose, vertexConsumer, x1, y1, z1, red2, green2, blue2, light, ux1, uv1, y2, red, green, blue, uv2, x2, z2, ux2);
+                quad(pose, vertexConsumer, x3, y1, z3, red2, green2, blue2, light, ux1, uv1, y2, red, green, blue, uv2, x4, z4, ux2);
                 float as = 0.0f;
                 if (Mth.floor(state.ageInTicks) % 4 < 2) {
                     as = 0.5f;
                 }
-                vertex(vertexConsumer, pose, x7, y1, z5, red2, green2, blue2, light, 0.5f, as + 0.5f);
-                vertex(vertexConsumer, pose, z9, y1, z6, red2, green2, blue2, light, 1.0f, as + 0.5f);
-                vertex(vertexConsumer, pose, x5, y1, z7, red2, green2, blue2, light, 1.0f, as);
-                vertex(vertexConsumer, pose, x6, y1, z8, red2, green2, blue2, light, 0.5f, as);
+                quad(pose, vertexConsumer, x7, y1, z5, red2, green2, blue2, light, 0.5f, as + 0.5f, y1, red2, green2, blue2, as + 0.5f, x5, z7, 1.0f);
             });
             poseStack.popPose();
         }
+    }
+
+    private static void quad(PoseStack.Pose pose, VertexConsumer vertexConsumer, float x1, float y1, float z1, int red2, int green2, int blue2, int light, float ux1, float uv1, float y2, int red, int green, int blue, float uv2, float x2, float z2, float ux2) {
+        vertex(vertexConsumer, pose, x1, y1, z1, red2, green2, blue2, light, ux1, uv1);
+        vertex(vertexConsumer, pose, x1, y2, z1, red, green, blue, light, ux1, uv2);
+        vertex(vertexConsumer, pose, x2, y2, z2, red, green, blue, light, ux2, uv2);
+        vertex(vertexConsumer, pose, x2, y1, z2, red2, green2, blue2, light, ux2, uv1);
+
+        // draw opposite side in reverse winding order
+        vertex(vertexConsumer, pose, x1, y1, z1, red2, green2, blue2, light, ux1, uv1);
+        vertex(vertexConsumer, pose, x2, y1, z2, red2, green2, blue2, light, ux2, uv1);
+        vertex(vertexConsumer, pose, x2, y2, z2, red, green, blue, light, ux2, uv2);
+        vertex(vertexConsumer, pose, x1, y2, z1, red, green, blue, light, ux1, uv2);
     }
 
     private static final double LASER_SCREENSHAKE_RADIUS = 10.0D;
