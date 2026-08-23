@@ -15,7 +15,7 @@ Special thanks to all those who helped me out with questions about the porting!
 
 Also thanks to XFactHD who did the Framed Blocks compatibility porting work, 
  GizmoTheMoonPig for porting entity renderers, 
- and to Upcraft for fixing Bee Armor and Cosmic Crystal rendering! 
+ and to Up for fixing Bee Armor and Cosmic Crystal rendering! 
 
 #### Mod Compat:
 Brand-new compatibility has been added for Reliable Recipe Viewer mod (RRV).

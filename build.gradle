@@ -1,3 +1,5 @@
+import bumblezone.OptimizePng
+
 plugins {
     id 'idea'
     id 'maven-publish'
@@ -278,33 +280,23 @@ subprojects {
         changelog = changeLogFile.exists() ? changeLogFile.text : ""
     }
 
-    task optimizePng {
+    tasks.register('optimizePng', OptimizePng, {
         def pngPatterns = ["**/*.png"]
-        doFirst {
-            println 'Executing oxipng task...'
+
+        //Minimize any PNGs in the source sets
+        println 'Executing oxipng task...'
+        for (dir in sourceSets.main.resources.srcDirs) {
+            inputFiles.from(fileTree(dir: dir, includes: pngPatterns))
         }
-        doLast {
-            //Ensure the logo is minimized (we add this file to each jar)
-            //Minimize any PNGs in the source sets
-            for (dir in sourceSets.main.resources.srcDirs) {
-                fileTree(dir: dir, includes: pngPatterns).each { minimizePNGFile(it) }
-            }
-            println 'Finished oxipng task...'
-        }
-    }
+        println 'Finished oxipng task...'
+
+        notCompatibleWithConfigurationCache('Up to date check is not currently compatible with the configuration cache')
+        outputs.upToDateWhen { true }
+    })
 }
 
 tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
-}
-
-//Minimize/optimize all png files, requires optipng on the PATH
-// Credits: BrainStone
-void minimizePNGFile(File file) {
-    exec {
-        executable "./oxipng.exe"
-        args "-o", "6", "-i", "0", "--strip", "all", "-a", "-Z", file
-    }
 }
 
 // IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
