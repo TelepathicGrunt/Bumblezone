@@ -163,16 +163,16 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
             float redSin = Mth.sin(radianColor);
             float greenSin = Mth.sin(radianColor + 30);
             float blueSin = Mth.sin(radianColor + 60);
-            int red = baseBrightness + (int) (redSin * colorStrength);
-            int green = baseBrightness + (int) (greenSin * colorStrength);
-            int blue = baseBrightness + (int) (blueSin * colorStrength);
+            int red2 = baseBrightness + (int) (redSin * colorStrength);
+            int green2 = baseBrightness + (int) (greenSin * colorStrength);
+            int blue2 = baseBrightness + (int) (blueSin * colorStrength);
 
             float redSin2 = Mth.cos(radianColor);
             float greenSin2 = Mth.cos(radianColor + 30);
             float blueSin2 = Mth.cos(radianColor + 60);
-            int red2 = baseBrightness + (int) (redSin2 * colorStrength);
-            int green2 = baseBrightness + (int) (greenSin2 * colorStrength);
-            int blue2 = baseBrightness + (int) (blueSin2 * colorStrength);
+            int red1 = baseBrightness + (int) (redSin2 * colorStrength);
+            int green1 = baseBrightness + (int) (greenSin2 * colorStrength);
+            int blue1 = baseBrightness + (int) (blueSin2 * colorStrength);
 
             float eyeY = state.eyeHeight;
             if (state.crystalState == CosmicCrystalState.SWEEP_LASER || state.crystalState == CosmicCrystalState.TRACKING_LASER) {
@@ -189,12 +189,12 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
             float v = 0.2f;
             float w2 = 0.5f;
             float z5 = Mth.sin(q + 2.3561945f) * w2;
-            float x7 = Mth.cos(q + 2.3561945f) * w2;
-            float z9 = Mth.cos(q + 0.7853982f) * w2;
+            float x5 = Mth.cos(q + 2.3561945f) * w2;
+            float x6 = Mth.cos(q + 0.7853982f) * w2;
             float z6 = Mth.sin(q + 0.7853982f) * w2;
-            float x6 = Mth.cos(q + 3.926991f) * w2;
+            float x8 = Mth.cos(q + 3.926991f) * w2;
             float z8 = Mth.sin(q + 3.926991f) * w2;
-            float x5 = Mth.cos(q + 5.4977875f) * w2;
+            float x7 = Mth.cos(q + 5.4977875f) * w2;
             float z7 = Mth.sin(q + 5.4977875f) * w2;
 
             float x1 = Mth.cos(q + Mth.PI) * v;
@@ -216,29 +216,59 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
             int light = LightCoordsUtil.FULL_BRIGHT;
 
             collector.submitCustomGeometry(poseStack, GeneralUtilsClient.renderTypeCrystal(LASER_LOCATION, false), (pose, vertexConsumer) -> {
-                quad(pose, vertexConsumer, x1, y1, z1, red2, green2, blue2, light, ux1, uv1, y2, red, green, blue, uv2, x2, z2, ux2);
-                quad(pose, vertexConsumer, x3, y1, z3, red2, green2, blue2, light, ux1, uv1, y2, red, green, blue, uv2, x4, z4, ux2);
+                quad(pose, vertexConsumer, light, x1, y1, z1, red1, green1, blue1, ux1, uv1, x2, y2, z2, red2, green2, blue2, ux2, uv2);
+                quad(pose, vertexConsumer, light, x3, y1, z3, red1, green1, blue1, ux1, uv1, x4, y2, z4, red2, green2, blue2, ux2, uv2);
                 float as = 0.0f;
                 if (Mth.floor(state.ageInTicks) % 4 < 2) {
                     as = 0.5f;
                 }
-                quad(pose, vertexConsumer, x7, y1, z5, red2, green2, blue2, light, 0.5f, as + 0.5f, y1, red2, green2, blue2, as + 0.5f, x5, z7, 1.0f);
+                perpendicularQuad(pose, vertexConsumer, light, y1, x5, z5, x6, z6, x7, z7, x8, z8, red1, green1, blue1, red1, green1, blue1, 0.5f, as, 1.0f, as + 0.5f);
             });
             poseStack.popPose();
         }
     }
 
-    private static void quad(PoseStack.Pose pose, VertexConsumer vertexConsumer, float x1, float y1, float z1, int red2, int green2, int blue2, int light, float ux1, float uv1, float y2, int red, int green, int blue, float uv2, float x2, float z2, float ux2) {
-        vertex(vertexConsumer, pose, x1, y1, z1, red2, green2, blue2, light, ux1, uv1);
-        vertex(vertexConsumer, pose, x1, y2, z1, red, green, blue, light, ux1, uv2);
-        vertex(vertexConsumer, pose, x2, y2, z2, red, green, blue, light, ux2, uv2);
+    private static void perpendicularQuad(PoseStack.Pose pose, VertexConsumer vertexConsumer, int light,
+                             float y1,
+                             float x1, float z1,
+                             float x2, float z2,
+                             float x3, float z3,
+                             float x4, float z4,
+                             int red1, int green1, int blue1,
+                             int red2, int green2, int blue2,
+                             float ux1, float uv1,
+                             float ux2, float uv2)
+    {
+        vertex(vertexConsumer, pose, x1, y1, z1, red1, green1, blue1, light, ux1, uv1);
         vertex(vertexConsumer, pose, x2, y1, z2, red2, green2, blue2, light, ux2, uv1);
+        vertex(vertexConsumer, pose, x3, y1, z3, red2, green2, blue2, light, ux2, uv2);
+        vertex(vertexConsumer, pose, x4, y1, z4, red1, green1, blue1, light, ux1, uv2);
 
         // draw opposite side in reverse winding order
-        vertex(vertexConsumer, pose, x1, y1, z1, red2, green2, blue2, light, ux1, uv1);
-        vertex(vertexConsumer, pose, x2, y1, z2, red2, green2, blue2, light, ux2, uv1);
-        vertex(vertexConsumer, pose, x2, y2, z2, red, green, blue, light, ux2, uv2);
-        vertex(vertexConsumer, pose, x1, y2, z1, red, green, blue, light, ux1, uv2);
+        vertex(vertexConsumer, pose, x4, y1, z4, red1, green1, blue1, light, ux1, uv1);
+        vertex(vertexConsumer, pose, x3, y1, z3, red1, green1, blue1, light, ux1, uv2);
+        vertex(vertexConsumer, pose, x2, y1, z2, red2, green2, blue2, light, ux2, uv2);
+        vertex(vertexConsumer, pose, x1, y1, z1, red2, green2, blue2, light, ux2, uv1);
+    }
+
+    private static void quad(PoseStack.Pose pose, VertexConsumer vertexConsumer, int light,
+                             float x1, float y1, float z1,
+                             int red1, int green1, int blue1,
+                             float ux1, float uv1,
+                             float x2, float y2, float z2,
+                             int red2, int green2, int blue2,
+                             float ux2, float uv2)
+    {
+        vertex(vertexConsumer, pose, x1, y1, z1, red1, green1, blue1, light, ux1, uv1);
+        vertex(vertexConsumer, pose, x1, y2, z1, red2, green2, blue2, light, ux1, uv2);
+        vertex(vertexConsumer, pose, x2, y2, z2, red2, green2, blue2, light, ux2, uv2);
+        vertex(vertexConsumer, pose, x2, y1, z2, red1, green1, blue1, light, ux2, uv1);
+
+        // draw opposite side in reverse winding order
+        vertex(vertexConsumer, pose, x1, y1, z1, red1, green1, blue1, light, ux1, uv1);
+        vertex(vertexConsumer, pose, x2, y1, z2, red1, green1, blue1, light, ux2, uv1);
+        vertex(vertexConsumer, pose, x2, y2, z2, red2, green2, blue2, light, ux2, uv2);
+        vertex(vertexConsumer, pose, x1, y2, z1, red2, green2, blue2, light, ux1, uv2);
     }
 
     private static final double LASER_SCREENSHAKE_RADIUS = 10.0D;
@@ -275,7 +305,7 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
             double percentageToCenter = 1.0D - (Math.sqrt(closestLaserDistance) / LASER_SCREENSHAKE_RADIUS);
 
             double spinSlowdown = 0.15d + (0.3d * (1 - percentageToCenter * percentageToCenter));
-            float intensity = (float) (0.175d * percentageToCenter * percentageToCenter * percentageToCenter);
+            float intensity = (float) (0.015d * percentageToCenter * percentageToCenter * percentageToCenter);
             double currentMillisecond = System.currentTimeMillis() % (360 * spinSlowdown);
             double angle = (currentMillisecond / spinSlowdown);
             orientation.bz$setYaw(orientation.bz$getYaw() + (Mth.sin(angle) * intensity * 30)); // FIXME those values need adjusting

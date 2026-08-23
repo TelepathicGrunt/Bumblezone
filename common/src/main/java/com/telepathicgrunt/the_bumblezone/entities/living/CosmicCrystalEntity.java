@@ -1732,8 +1732,8 @@ public class CosmicCrystalEntity extends LivingEntity {
             return null;
         }
 
-        Vec3 startPos = this.getEyePosition(partialTick);
         Vec3 lerpedLook = this.getViewVector(partialTick);
+        Vec3 startPos = this.getEyePosition(partialTick).add(lerpedLook);
         Vec3 endPos = startPos.add(lerpedLook.scale(50));
 
         HitResult hitResult = this.level().clip(new ClipContext(startPos, endPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
