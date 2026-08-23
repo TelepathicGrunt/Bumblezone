@@ -14,16 +14,22 @@ public class BzArmor extends Item implements ItemExtension {
         super(properties);
     }
 
+    // Fired on serverside only
     @Override
     public void inventoryTick(ItemStack itemStack, ServerLevel level, Entity entity, EquipmentSlot equipmentSlot) {
+        this.bz$onArmorTickWrapper(itemStack, level, entity, equipmentSlot);
+    }
+
+    // Called in inventoryTick for serverside and in ItemStackMixin for clientside ticks.
+    public void bz$onArmorTickWrapper(ItemStack itemStack, Level level, Entity entity, EquipmentSlot equipmentSlot) {
         if (entity instanceof Player player &&
-            equipmentSlot != EquipmentSlot.MAINHAND &&
-            equipmentSlot != EquipmentSlot.OFFHAND &&
-            player.getItemBySlot(equipmentSlot) == itemStack)
+                equipmentSlot != EquipmentSlot.MAINHAND &&
+                equipmentSlot != EquipmentSlot.OFFHAND &&
+                player.getItemBySlot(equipmentSlot) == itemStack)
         {
             this.bz$onArmorTick(itemStack, level, player);
         }
     }
 
-    public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) { }
+    public void bz$onArmorTick(ItemStack itemstack, Level level, Player player) { }
 }

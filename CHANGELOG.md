@@ -2,6 +2,7 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
 
 - Test the everliving hell out of EVERYTHING (music needs checking)
 - Commission new textures for spawn eggs
+- Get new song for wrath of the hive effect
 - run oxipng to shrink texture sizes
 
 

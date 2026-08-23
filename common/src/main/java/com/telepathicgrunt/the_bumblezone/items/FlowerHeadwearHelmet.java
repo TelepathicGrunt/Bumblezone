@@ -39,7 +39,7 @@ public class FlowerHeadwearHelmet extends BzArmor implements ItemExtension {
     }
 
     @Override
-    public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) {
+    public void bz$onArmorTick(ItemStack itemstack, Level level, Player player) {
         if (player.getCooldowns().isOnCooldown(itemstack)) {
             return;
         }
@@ -55,7 +55,7 @@ public class FlowerHeadwearHelmet extends BzArmor implements ItemExtension {
                 }
             }
 
-            if (!world.isClientSide() &&
+            if (!level.isClientSide() &&
                 player.getRandom().nextFloat() < 0.002f &&
                 itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
             {

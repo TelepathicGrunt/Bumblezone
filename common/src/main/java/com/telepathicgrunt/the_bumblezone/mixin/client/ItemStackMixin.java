@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+// Fired on clientside only (Registered to client mixins json)
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
 
@@ -25,7 +26,7 @@ public abstract class ItemStackMixin {
             owner instanceof Player player &&
             this.getItem() instanceof BeeArmor beeArmor)
         {
-            beeArmor.bz$onArmorTick((ItemStack) (Object) this, clientLevel, player);
+            beeArmor.bz$onArmorTickWrapper((ItemStack) (Object) this, clientLevel, player, slot);
         }
     }
 

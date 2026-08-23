@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.LivingEntityFlyingSoundInstance;
 import com.telepathicgrunt.the_bumblezone.items.datacomponents.BumbleBeeChestplateData;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
@@ -40,7 +41,7 @@ public class BumbleBeeChestplate extends BeeArmor {
     }
 
     @Override
-    public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) {
+    public void bz$onArmorTick(ItemStack itemstack, Level level, Player player) {
         BumbleBeeChestplateData chestplateData = itemstack.getComponents().get(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get());
         if (chestplateData == null) {
             return;
@@ -66,7 +67,7 @@ public class BumbleBeeChestplate extends BeeArmor {
         Optional<Integer> finalRequiredWearablesCountForForcedFlyingTime = chestplateData.requiredWearablesCountForForcedFlyingTime();
 
         int flyCounter = chestplateData.flyCounter();
-        if (world.isClientSide()) {
+        if (level.isClientSide()) {
             if (flyCounter > 0 && !player.onGround() && !player.isInWater() && ((LivingEntityAccessor)player).bumblezone$isJumping() && !player.getAbilities().flying && !player.isPassenger() && !player.onClimbable()) {
                 if (!isFlying) {
                     LivingEntityFlyingSoundInstance.playSound(player, BzSounds.BUMBLE_BEE_CHESTPLATE_FLYING.get());
@@ -109,7 +110,7 @@ public class BumbleBeeChestplate extends BeeArmor {
                 }
 
                 finalFlyCounter = flyCounter - 1;
-                if (!world.isClientSide() && player.getRandom().nextFloat() < 0.0025f) {
+                if (!level.isClientSide() && player.getRandom().nextFloat() < 0.0025f) {
                     itemstack.hurtAndBreak(1, player, EquipmentSlot.CHEST);
                 }
 
