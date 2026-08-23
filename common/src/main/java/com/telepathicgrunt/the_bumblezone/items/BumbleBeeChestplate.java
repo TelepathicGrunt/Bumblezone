@@ -152,8 +152,8 @@ public class BumbleBeeChestplate extends BeeArmor {
     }
 
     public static boolean isFlying(ItemStack itemStack) {
-        return itemStack.getItem() instanceof BumbleBeeChestplate &&
-                itemStack.get(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get()).isFlying();
+        var data = itemStack.get(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get());
+        return data != null && data.isFlying();
     }
 
     public static int getVariant(ItemStack itemStack) {

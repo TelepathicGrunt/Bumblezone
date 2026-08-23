@@ -9,11 +9,7 @@ import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.VineBlockAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
-import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
-import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
 import com.telepathicgrunt.the_bumblezone.services.PlatformService;
@@ -50,7 +46,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -188,7 +183,8 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
 
         if (entity instanceof LivingEntity livingEntity) {
             ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(livingEntity);
-            if (!entity.isShiftKeyDown() && !beeLeggings.isEmpty()) {
+            var pollinationData = beeLeggings.get(BzDataComponents.HONEY_BEE_LEGGINGS_DATA.get());
+            if (pollinationData != null && !entity.isShiftKeyDown()) {
                 HoneyBeeLeggings.setPollinated(beeLeggings);
             }
         }

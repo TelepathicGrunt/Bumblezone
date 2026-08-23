@@ -1,21 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.armor;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.items.BumbleBeeChestplate;
-import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,43 +52,33 @@ public class BeeArmorModel extends HumanoidModel<HumanoidRenderState> {
     @Override
     public void setupAnim(HumanoidRenderState state) {
         super.setupAnim(state);
-    }
-
-    public void setupAnimByStack(HumanoidRenderState state, ItemStack itemStack) {
-        this.setupAnim(state);
-
-        if (itemStack.getItem() instanceof BumbleBeeChestplate) {
-            if (((HumanoidRenderStateInterface)state).theBumblezone$isChestplateFlying()) {
-                long time = System.currentTimeMillis();
-                double currentProg = Math.abs(Math.sin(time / 40d));
+        if(state instanceof HumanoidRenderStateInterface itf) {
+            if (itf.theBumblezone$isChestplateFlying()) {
+                float currentProg = Mth.abs(Mth.sin(state.ageInTicks));
                 leftWing.yRot = -45;
-                leftWing.xRot = (float) Mth.lerp(currentProg, -0.5f, 1.5f);
+                leftWing.xRot = Mth.lerp(currentProg, -0.5f, 1.5f);
                 rightWing.yRot = 45;
-                rightWing.xRot = (float) Mth.lerp(currentProg, -0.5f, 1.5f);
-                if (((HumanoidRenderStateInterface)state).theBumblezone$getChestplateVariant() == 2) {
+                rightWing.xRot = Mth.lerp(currentProg, -0.5f, 1.5f);
+                if (itf.theBumblezone$getChestplateVariant() == 2) {
                     rightWing.zRot = 0f;
                     leftWing.yRot = -44.5f;
                 }
             }
-            else {
-                if (((HumanoidRenderStateInterface)state).theBumblezone$getChestplateVariant() == 2) {
-                    leftWing.yRot = -0.2f;
-                    leftWing.xRot = -0.15f;
-                    rightWing.yRot = 0.2f;
-                    rightWing.xRot = -0.2f;
-                    rightWing.zRot = -0.5f;
-                }
-                else {
-                    leftWing.yRot = -0.6f;
-                    leftWing.xRot = -0.2f;
-                    rightWing.yRot = 0.6f;
-                    rightWing.xRot = -0.2f;
-                }
+            else if (itf.theBumblezone$getChestplateVariant() == 2) {
+                leftWing.yRot = -0.2f;
+                leftWing.xRot = -0.15f;
+                rightWing.yRot = 0.2f;
+                rightWing.xRot = -0.2f;
+                rightWing.zRot = -0.5f;
             }
-        }
+            else {
+                leftWing.yRot = -0.6f;
+                leftWing.xRot = -0.2f;
+                rightWing.yRot = 0.6f;
+                rightWing.xRot = -0.2f;
+            }
 
-        if (itemStack.getItem() instanceof HoneyBeeLeggings) {
-            if (((HumanoidRenderStateInterface) state).theBumblezone$isLeggingsPollinated()) {
+            if (itf.theBumblezone$isLeggingsPollinated()) {
                 leftPollen.visible = true;
                 rightPollen.visible = true;
             } else {

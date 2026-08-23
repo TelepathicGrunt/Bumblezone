@@ -15,6 +15,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.CommonColors;
 
 public class JEIQueenTradesCategory implements IRecipeCategory<JEIQueenTradesInfo> {
 
@@ -67,7 +68,7 @@ public class JEIQueenTradesCategory implements IRecipeCategory<JEIQueenTradesInf
     @Override
     public void draw(JEIQueenTradesInfo recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         this.background.draw(guiGraphics);
-        guiGraphics.text(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", recipe.reward.value().xpReward), 100, 11, 0xFF808080, false);
+        guiGraphics.text(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", recipe.reward.value().xpReward), 100, 11, CommonColors.GRAY, false);
 
         double percentValue = ((double)(recipe.reward.value().weight) / recipe.reward.value().getTotalWeight()) * 100D;
         if (recipe.reward.value().tagKey.isPresent() && recipe.outputFocused) {
@@ -81,7 +82,7 @@ public class JEIQueenTradesCategory implements IRecipeCategory<JEIQueenTradesInf
         else {
             percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
         }
-        guiGraphics.text(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded), 38 - (percentValue < 1 ? 6 : (percentRounded.length() * 3)), 11, 0xFF808080, false);
+        guiGraphics.text(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded), 38 - (percentValue < 1 ? 6 : (percentRounded.length() * 3)), 11, CommonColors.GRAY, false);
 
         if (recipe.input.tagKey().isPresent()) {
             tagIcon.draw(guiGraphics, 11, 11);
