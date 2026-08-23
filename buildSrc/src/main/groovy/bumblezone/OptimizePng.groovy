@@ -43,7 +43,10 @@ abstract class OptimizePng extends DefaultTask {
                     "-i", "off",
                     "--strip", "all",
                     "-a",
-                    "-z",
+                    "-f", "0,1,2,3,4,5,6,7,8,9",
+                    "--zopfli",
+                    "--zi", "50",
+                    "--ziwi", "5",
                     file) }
         }
     }
