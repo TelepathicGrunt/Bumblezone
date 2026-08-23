@@ -290,7 +290,6 @@ subprojects {
         }
         println 'Finished oxipng task...'
 
-        notCompatibleWithConfigurationCache('Up to date check is not currently compatible with the configuration cache')
         outputs.upToDateWhen { true }
     })
 }
