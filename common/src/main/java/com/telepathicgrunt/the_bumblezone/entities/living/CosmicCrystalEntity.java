@@ -557,20 +557,18 @@ public class CosmicCrystalEntity extends LivingEntity {
 
     private void orbitMovement() {
         if (this.getEssenceControllerBlockPos() != null) {
-            Vec3 orbitPosition;
-            if (isOrbitState(this.getCosmicCrystalState())) {
-                orbitPosition = this.getEssenceControllerBlockPos().getCenter().add(0, -1, 0);
-
-                if (this.getCosmicCrystalState() == CosmicCrystalState.HORIZONTAL_LASER && this.targetEntity != null) {
-                    Vec3 targetPos = this.targetEntity.position().add(0, this.targetEntity.getBbHeight() / 2, 0);
-                    Vec3 diffFromNow = this.prevTargetPosition.subtract(targetPos).scale(0.97);
-                    this.prevTargetPosition = diffFromNow.add(targetPos);
-
-                    orbitPosition = new Vec3(orbitPosition.x(), this.prevTargetPosition.y() - 1, orbitPosition.z());
-                }
-            }
-            else {
+            if (!isOrbitState(this.getCosmicCrystalState())) {
                 return;
+            }
+            
+            Vec3 orbitPosition = this.getEssenceControllerBlockPos().getCenter().add(0, -1, 0);
+
+            if (this.getCosmicCrystalState() == CosmicCrystalState.HORIZONTAL_LASER && this.targetEntity != null) {
+                Vec3 targetPos = this.targetEntity.position().add(0, this.targetEntity.getBbHeight() / 2, 0);
+                Vec3 diffFromNow = this.prevTargetPosition.subtract(targetPos).scale(0.97);
+                this.prevTargetPosition = diffFromNow.add(targetPos);
+
+                orbitPosition = new Vec3(orbitPosition.x(), this.prevTargetPosition.y() - 1, orbitPosition.z());
             }
 
             float orbitOffsetDegrees = this.getOrbitOffsetDegrees() * Mth.DEG_TO_RAD;
