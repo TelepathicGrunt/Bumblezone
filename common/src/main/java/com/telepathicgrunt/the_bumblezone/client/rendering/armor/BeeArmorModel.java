@@ -55,27 +55,31 @@ public class BeeArmorModel extends HumanoidModel<HumanoidRenderState> {
         if(state instanceof HumanoidRenderStateInterface itf) {
             if (itf.theBumblezone$isChestplateFlying()) {
                 float currentProg = Mth.abs(Mth.sin(state.ageInTicks));
-                leftWing.yRot = -45;
-                leftWing.xRot = Mth.lerp(currentProg, -0.5f, 1.5f);
-                rightWing.yRot = 45;
-                rightWing.xRot = Mth.lerp(currentProg, -0.5f, 1.5f);
-                if (itf.theBumblezone$getChestplateVariant() == 2) {
-                    rightWing.zRot = 0f;
-                    leftWing.yRot = -44.5f;
+                if (itf.theBumblezone$getChestplateVariant() == 1) {
+                    leftWing.yRot = 0.35f;
+                    rightWing.yRot = -0.35f;
                 }
-            }
-            else if (itf.theBumblezone$getChestplateVariant() == 2) {
-                leftWing.yRot = -0.2f;
-                leftWing.xRot = -0.15f;
-                rightWing.yRot = 0.2f;
-                rightWing.xRot = -0.2f;
-                rightWing.zRot = -0.5f;
+                else {
+                    leftWing.yRot = 0.75f;
+                    rightWing.yRot = -0.75f;
+
+                    leftWing.zRot = 0.1f;
+                    rightWing.zRot = -0.1f;
+                }
+                leftWing.xRot = Mth.lerp(currentProg, -0.5f, 1.5f);
+                rightWing.xRot = Mth.lerp(currentProg, -0.5f, 1.5f);
             }
             else {
-                leftWing.yRot = -0.6f;
-                leftWing.xRot = -0.2f;
-                rightWing.yRot = 0.6f;
-                rightWing.xRot = -0.2f;
+                leftWing.yRot = 0f;
+                rightWing.yRot = 0f;
+
+                leftWing.xRot = 0f;
+                rightWing.xRot = 0f;
+
+                if (itf.theBumblezone$getChestplateVariant() == 2) {
+                    leftWing.zRot = -0.6134f;
+                    rightWing.zRot = 0.6134f;
+                }
             }
 
             if (itf.theBumblezone$isLeggingsPollinated()) {

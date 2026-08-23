@@ -560,7 +560,7 @@ public class CosmicCrystalEntity extends LivingEntity {
             if (!isOrbitState(this.getCosmicCrystalState())) {
                 return;
             }
-            
+
             Vec3 orbitPosition = this.getEssenceControllerBlockPos().getCenter().add(0, -1, 0);
 
             if (this.getCosmicCrystalState() == CosmicCrystalState.HORIZONTAL_LASER && this.targetEntity != null) {
