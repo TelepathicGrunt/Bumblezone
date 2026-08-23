@@ -25,10 +25,10 @@ public class DebugSpawnLaserCommand {
                     source.getLevel(),
                     crystal -> {
                         crystal.setPos(source.getPosition());
-                        crystal.setNoAi(true);
+//                        crystal.setNoAi(true);
                         crystal.setInvulnerable(true);
                         if(sourceEntity instanceof LivingEntity livingEntity) {
-                            crystal.setTarget(livingEntity);
+                            crystal.setTargetEntityUUID(livingEntity.getUUID());
                         }
 
                         crystal.setCosmicCrystalState(CosmicCrystalState.TRACKING_LASER);
