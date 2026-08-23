@@ -14,6 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.CommonColors;
 
 public class JEIQueenRandomizeTradesCategory implements IRecipeCategory<JEIQueenRandomizerTradesInfo> {
 
@@ -66,7 +67,7 @@ public class JEIQueenRandomizeTradesCategory implements IRecipeCategory<JEIQueen
     @Override
     public void draw(JEIQueenRandomizerTradesInfo recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         this.background.draw(guiGraphics);
-        guiGraphics.text(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_colors", recipe.tagSize()), 86, 10, 0xFF808080, false);
+        guiGraphics.text(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_colors", recipe.tagSize()), 86, 10, CommonColors.GRAY, false);
 
         if (recipe.tagInAndOut() != null) {
             tagIcon.draw(guiGraphics, 11, 11);

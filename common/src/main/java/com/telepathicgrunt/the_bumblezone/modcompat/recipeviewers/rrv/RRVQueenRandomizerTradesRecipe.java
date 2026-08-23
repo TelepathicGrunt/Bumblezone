@@ -10,6 +10,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.CommonColors;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -64,7 +65,7 @@ public class RRVQueenRandomizerTradesRecipe implements ReliableClientRecipe {
 
     @Override
     public void renderRecipe(RecipeViewScreen screen, RecipePosition recipePosition, GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        guiGraphics.text(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_colors", this.tagSize), 86, 11, 0xFF808080, false);
+        guiGraphics.text(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_colors", this.tagSize), 86, 11, CommonColors.GRAY, false);
 
         if (this.tagInAndOut != null) {
             guiGraphics.blit(RRVQueenRandomizerTradesRecipeType.TAG_ICON, 11, 11, 27, 27, 0, 16, 0, 16);

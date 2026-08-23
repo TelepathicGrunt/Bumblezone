@@ -22,7 +22,7 @@ public class NeoForgeModuleInitializer {
     public static void init() {
         ModuleRegistry.register(new ModuleRegistrar() {
             @Override
-            public <T extends com.telepathicgrunt.the_bumblezone.modules.base.Module<T>> void registerPlayerModule(ModuleHolder<T> moduleHolder, boolean runDataCloneForPlayer) {
+            public <T extends Module<T>> void registerPlayerModule(ModuleHolder<T> moduleHolder, boolean runDataCloneForPlayer) {
                 ModuleRegistryValue<?> moduleRegistryValue = new ModuleRegistryValue<>(moduleHolder.id(), moduleHolder.codec(), moduleHolder.factory());
                 PLAYER_ENTITY_MODULES.add(moduleRegistryValue);
                 if (runDataCloneForPlayer) {
@@ -31,7 +31,7 @@ public class NeoForgeModuleInitializer {
             }
 
             @Override
-            public <T extends com.telepathicgrunt.the_bumblezone.modules.base.Module<T>> void registerLivingEntityModule(ModuleHolder<T> moduleHolder,  boolean runDataCloneForPlayer) {
+            public <T extends Module<T>> void registerLivingEntityModule(ModuleHolder<T> moduleHolder,  boolean runDataCloneForPlayer) {
                 ModuleRegistryValue<?> moduleRegistryValue = new ModuleRegistryValue<>(moduleHolder.id(), moduleHolder.codec(), moduleHolder.factory());
                 LIVING_ENTITY_MODULES.add(moduleRegistryValue);
                 if (runDataCloneForPlayer) {

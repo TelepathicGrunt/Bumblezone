@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal;
 
+import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalState;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.core.Holder;
@@ -33,6 +34,6 @@ public class CosmicCrystalRenderState extends LivingEntityRenderState {
 		public Vec3 lookAngle;
 		public float laserLength;
 		public Vec3 vecToTarget;
-		public Vec3 endPos;
+		public Pair<Vec3, Vec3> positions;
 	}
 }

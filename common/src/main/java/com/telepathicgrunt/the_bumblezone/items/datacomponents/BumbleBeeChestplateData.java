@@ -34,4 +34,8 @@ public record BumbleBeeChestplateData(boolean isFlying, int flyCounter, Optional
                 !this.forcedMaxFlyingTickTime().equals(forcedMaxFlyingTickTime) ||
                 !this.requiredWearablesCountForForcedFlyingTime().equals(requiredWearablesCountForForcedFlyingTime);
     }
+
+    public BumbleBeeChestplateData withFlying(boolean isFlying) {
+        return new BumbleBeeChestplateData(isFlying, this.flyCounter(), this.forcedMaxFlyingTickTime(), this.requiredWearablesCountForForcedFlyingTime());
+    }
 }

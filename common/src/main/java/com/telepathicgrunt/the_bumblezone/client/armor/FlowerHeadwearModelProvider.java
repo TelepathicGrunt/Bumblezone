@@ -5,10 +5,9 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.armor.FlowerHeadwearM
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,7 +21,7 @@ public class FlowerHeadwearModelProvider implements ArmorModelProvider {
     }
 
     @Override
-    public @NotNull HumanoidModel<?> getModel(ItemStack stack, @Nullable EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
+    public @NotNull HumanoidModel<? super HumanoidRenderState> getModel(ItemStack stack, @Nullable EquipmentSlot equipmentSlot, HumanoidModel<? super HumanoidRenderState> original) {
         if (this.model == null) {
             ModelPart layer = Minecraft.getInstance().getEntityModels().bakeLayer(FlowerHeadwearModel.FLOWER_HEADWEAR_LAYER_LOCATION);
             this.model = new FlowerHeadwearModel(layer);

@@ -1,10 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.neoforge;
 
+import com.hollingsworth.arsnouveau.common.camera.CameraEvents;
+import com.hollingsworth.arsnouveau.common.camera.ClientCameraEvents;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.armor.ArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.neoforge.DimensionFog;
 import com.telepathicgrunt.the_bumblezone.client.neoforge.NeoforgeArmorProviders;
 import com.telepathicgrunt.the_bumblezone.client.rendering.MobEffectRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal.CosmicCrystalRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.EssenceOverlay;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceStructureMessage;
@@ -42,6 +45,7 @@ import net.minecraft.client.model.object.equipment.ElytraModel;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
@@ -53,20 +57,7 @@ import net.minecraft.world.item.component.DyedItemColor;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
-import net.neoforged.neoforge.client.event.InputEvent;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.neoforged.neoforge.client.event.RegisterConditionalItemModelPropertyEvent;
-import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
-import net.neoforged.neoforge.client.event.RegisterRangeSelectItemModelPropertyEvent;
-import net.neoforged.neoforge.client.event.RenderBlockScreenEffectEvent;
-import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import net.neoforged.neoforge.client.event.ScreenEvent;
+import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.IClientMobEffectExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
@@ -89,6 +80,7 @@ public class NeoForgeClientEventManager {
         eventBus.addListener(NeoForgeClientEventManager::onBlockRenderStageRendering);
         eventBus.addListener(NeoForgeClientEventManager::onGuiRendering);
         eventBus.addListener(EventPriority.HIGHEST, true, DimensionFog::fogThicknessAdjustments);
+        eventBus.addListener(NeoForgeClientEventManager::onCameraSetup);
 
         modEventBus.addListener(NeoForgeClientEventManager::onClientSetup);
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterParticles);
@@ -149,7 +141,7 @@ public class NeoForgeClientEventManager {
                     return original;
                 }
 
-                return Objects.requireNonNullElse(provider.getFinalModel(itemStack, null, (HumanoidModel<?>) original), original);
+                return Objects.requireNonNullElse(provider.getFinalModel(itemStack, null, (HumanoidModel<? super HumanoidRenderState>) original), original);
             }
 
             @Override
@@ -197,6 +189,17 @@ public class NeoForgeClientEventManager {
 
     private static void onClientTickPost(ClientTickEvent.Post event) {
         StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer());
+    }
+
+    private static void onCameraSetup(ViewportEvent.ComputeCameraAngles event) {
+        var level = Minecraft.getInstance().level;
+        if(level == null) {
+            return;
+        }
+
+        var camera = event.getCamera();
+        float partialTick = (float) event.getPartialTick(); // this is always a float but NF did an oops
+        CosmicCrystalRenderer.laserScreenShake(level, camera, partialTick, (CosmicCrystalRenderer.CameraOrientation) event);
     }
 
     public static void onBlockScreen(RenderBlockScreenEffectEvent event) {

@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,18 +16,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class HumanoidMobRendererMixin {
 
     @Inject(method = "extractHumanoidRenderState(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/renderer/entity/state/HumanoidRenderState;FLnet/minecraft/client/renderer/item/ItemModelResolver;)V",
-            at = @At(value = "HEAD"),
+            at = @At(value = "RETURN"),
             require = 0 // Not important. No crashy
     )
     private static void bumblezone$armorStateForRendering(LivingEntity entity, HumanoidRenderState state, float partialTicks, ItemModelResolver itemModelResolver, CallbackInfo ci) {
-        ItemStack beeChestplate = BumbleBeeChestplate.getEntityBeeChestplate(entity);
-        if (beeChestplate != null) {
-            ((HumanoidRenderStateInterface)state).theBumblezone$setChestplateVariant(BumbleBeeChestplate.getVariant(beeChestplate));
-            ((HumanoidRenderStateInterface)state).theBumblezone$setIsChestplateFlying(BumbleBeeChestplate.isFlying(beeChestplate));
-        }
-        ItemStack beeLegging = HoneyBeeLeggings.getEntityBeeLegging(entity);
-        if (beeLegging != null) {
-            ((HumanoidRenderStateInterface)state).theBumblezone$setIsLeggingsPollinated(HoneyBeeLeggings.isPollinated(beeLegging));
-        }
+        ((HumanoidRenderStateInterface) state).theBumblezone$setChestplateVariant(BumbleBeeChestplate.getVariant(state.chestEquipment));
+        ((HumanoidRenderStateInterface) state).theBumblezone$setIsChestplateFlying(BumbleBeeChestplate.isFlying(state.chestEquipment));
+        ((HumanoidRenderStateInterface) state).theBumblezone$setIsLeggingsPollinated(HoneyBeeLeggings.isPollinated(state.legsEquipment));
     }
 }

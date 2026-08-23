@@ -30,47 +30,41 @@ public class FabricArmorRenderer implements ArmorRenderer {
 
     @Override
     public void render(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, ItemStack itemStack, HumanoidRenderState humanoidRenderState, EquipmentSlot slot, int light, HumanoidModel<HumanoidRenderState> contextModel) {
-        if (provider instanceof ArmorModelProvider armorModelProvider) {
-            Model model = provider.getFinalModel(itemStack, slot, contextModel);
-            if (model == null) {
-                return;
-            }
+        Model<? super HumanoidRenderState> model = provider.getFinalModel(itemStack, slot, contextModel);
+        if (model == null) {
+            return;
+        }
 
-            Identifier armorTexture = armorModelProvider.getArmorTexture(itemStack);
+        Identifier armorTexture = provider.getArmorTexture(itemStack);
 
-            if (itemStack.has(DataComponents.DYED_COLOR) || itemStack.is(BzItems.FLOWER_HEADWEAR.get())) {
-                int dyeColor = DyedItemColor.getOrDefault(itemStack, itemStack.is(BzItems.FLOWER_HEADWEAR.get()) ? -1682375 : 0);
-                submitNodeCollector.order(1).submitModel(
-                        TransformCopyingModel.create(contextModel, model, false),
-                        Pair.of(humanoidRenderState, humanoidRenderState),
-                        poseStack,
-                        RenderTypes.armorCutoutNoCull(armorTexture),
-                        light,
-                        OverlayTexture.NO_OVERLAY,
-                        dyeColor,
-                        null,
-                        0,
-                        null);
-            }
-            else {
-                ArmorRenderer.submitTransformCopyingModel(
-                        contextModel,
-                        humanoidRenderState,
-                        model,
-                        humanoidRenderState,
-                        false,
-                        submitNodeCollector,
-                        poseStack,
-                        RenderTypes.armorCutoutNoCull(armorTexture),
-                        light,
-                        OverlayTexture.NO_OVERLAY,
-                        0,
-                        null);
-            }
-
-            if (model instanceof BeeArmorModel beeArmorModel) {
-                beeArmorModel.setupAnimByStack(humanoidRenderState, itemStack);
-            }
+        if (itemStack.is(BzItems.FLOWER_HEADWEAR.get())) {
+            int dyeColor = DyedItemColor.getOrDefault(itemStack, itemStack.is(BzItems.FLOWER_HEADWEAR.get()) ? 0xFFE65439 : 0);
+            submitNodeCollector.order(1).submitModel(
+                    TransformCopyingModel.create(contextModel, model, true),
+                    Pair.of(humanoidRenderState, humanoidRenderState),
+                    poseStack,
+                    RenderTypes.armorCutoutNoCull(armorTexture),
+                    light,
+                    OverlayTexture.NO_OVERLAY,
+                    dyeColor,
+                    null,
+                    0,
+                    null);
+        }
+        else {
+            ArmorRenderer.submitTransformCopyingModel(
+                    contextModel,
+                    humanoidRenderState,
+                    model,
+                    humanoidRenderState,
+                    true,
+                    submitNodeCollector,
+                    poseStack,
+                    RenderTypes.armorCutoutNoCull(armorTexture),
+                    light,
+                    OverlayTexture.NO_OVERLAY,
+                    0,
+                    null);
         }
     }
 
