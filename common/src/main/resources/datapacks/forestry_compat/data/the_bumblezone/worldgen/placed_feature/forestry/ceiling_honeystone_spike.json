@@ -1,5 +1,5 @@
 {
-  "feature": "the_bumblezone:forestry/honey_comb_spike",
+  "feature": "the_bumblezone:forestry/ceiling_honeystone_spike",
   "placement": [
     {
       "type": "minecraft:count",
@@ -8,7 +8,7 @@
         "distribution": [
           {
             "data": 0,
-            "weight": 29
+            "weight": 49
           },
           {
             "data": 1,
@@ -21,9 +21,8 @@
       "type": "minecraft:in_square"
     },
     {
-      "type": "the_bumblezone:roofed_dimension_surface_placement",
-      "min_height": 30,
-      "max_water_depth": 10
+      "type": "the_bumblezone:roofed_dimension_ceiling_placement",
+      "max_height": 240
     },
     {
       "type": "minecraft:block_predicate_filter",
@@ -31,7 +30,7 @@
         "type": "minecraft:matching_block_tag",
         "offset": [
           0,
-          -1,
+          1,
           0
         ],
         "tag": "the_bumblezone:two_tone_spikes/honey_tipped_allowed_base"

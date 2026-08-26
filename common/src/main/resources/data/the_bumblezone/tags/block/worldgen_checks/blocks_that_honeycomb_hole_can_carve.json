@@ -22,6 +22,38 @@
     {
       "id": "buzzier_bees:honeycomb_tiles",
       "required": false
+    },
+    {
+      "id": "forestry:cobbled_honeystone",
+      "required": false
+    },
+    {
+      "id": "forestry:honeystone_bricks",
+      "required": false
+    },
+    {
+      "id": "forestry:honeystone",
+      "required": false
+    },
+    {
+      "id": "forestry:cobbled_honeystone",
+      "required": false
+    },
+    {
+      "id": "forestry:polished_honeystone",
+      "required": false
+    },
+    {
+      "id": "forestry:wax_block",
+      "required": false
+    },
+    {
+      "id": "forestry:wax_bricks",
+      "required": false
+    },
+    {
+      "id": "forestry:chiseled_wax_bricks",
+      "required": false
     }
   ]
 }

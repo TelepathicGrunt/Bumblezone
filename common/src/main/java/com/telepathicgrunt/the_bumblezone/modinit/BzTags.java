@@ -48,6 +48,7 @@ public class BzTags {
     public static final TagKey<Block> CANDLE_WICKS = TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "candle_wicks"));
     public static final TagKey<Block> CANDLE_BASES = TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "candle_bases"));
     public static final TagKey<Block> CAVE_EDGE_BLOCKS_FOR_MODDED_COMPATS = TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "worldgen_checks/cave_edge_blocks_for_modded_compats"));
+    public static final TagKey<Block> CAVE_EDGE_REGULAR_BLOCKS = TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "worldgen_checks/cave_edge_regular_blocks"));
     public static final TagKey<Block> STRING_CURTAINS = TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "string_curtains"));
     public static final TagKey<Block> CRYSTALLINE_FLOWER_CAN_SURVIVE_ON = TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower/can_be_placed_on"));
     public static final TagKey<Block> WATERLOGGABLE_BLOCKS_WHEN_PLACED_IN_FLUID = TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "sugar_water/waterloggable_blocks_when_placed_in_fluid"));

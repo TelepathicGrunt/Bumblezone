@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "forestry:cobbled_honeystone",
+      "required": false
+    },
+    {
+      "id": "forestry:honeystone_bricks",
+      "required": false
+    },
+    {
+      "id": "forestry:honeystone",
+      "required": false
+    },
+    {
+      "id": "forestry:cobbled_honeystone",
+      "required": false
+    }
+  ]
+}

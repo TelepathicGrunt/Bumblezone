@@ -1,0 +1,15 @@
+{
+  "type": "the_bumblezone:two_tone_spike_feature",
+  "config": {
+    "allowed_base_block_copies": "the_bumblezone:two_tone_spikes/wax_tipped_allowed_base",
+    "tip_blocks": [
+      "forestry:wax_block",
+      "forestry:wax_bricks"
+    ],
+    "height_range": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 32,
+      "min_inclusive": 24
+    }
+  }
+}
