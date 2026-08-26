@@ -2,7 +2,6 @@ TODO: DO NOT RELEASE UNTIL COMPLETED
 
 - Test the everliving hell out of EVERYTHING (music needs checking)
 - Get new song for wrath of the hive effect
-- run oxipng to shrink texture sizes
 
 
 ### **(V.7.9.0 Changes) (26.1.2 Minecraft)**
