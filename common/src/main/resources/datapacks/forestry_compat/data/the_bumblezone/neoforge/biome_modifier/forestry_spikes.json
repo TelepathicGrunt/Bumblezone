@@ -1,0 +1,7 @@
+{
+    "type": "the_bumblezone:mod_compat_additions_modifier",
+    "biomes": "#the_bumblezone:the_bumblezone",
+    "feature": "#the_bumblezone:forestry_spikes",
+    "step": "underground_ores",
+    "required_mod": "forestry"
+}

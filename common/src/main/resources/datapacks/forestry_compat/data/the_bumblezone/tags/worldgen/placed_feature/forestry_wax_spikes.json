@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "the_bumblezone:forestry/floor_wax_spike",
+      "required": false
+    }
+  ]
+}

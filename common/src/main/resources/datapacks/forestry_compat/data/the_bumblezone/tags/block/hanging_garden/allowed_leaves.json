@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "forestry:dogwood_default_leaves",
+      "required": false
+    },
+    {
+      "id": "forestry:jacaranda_default_leaves",
+      "required": false
+    },
+    {
+      "id": "forestry:beech_default_leaves",
+      "required": false
+    }
+  ]
+}

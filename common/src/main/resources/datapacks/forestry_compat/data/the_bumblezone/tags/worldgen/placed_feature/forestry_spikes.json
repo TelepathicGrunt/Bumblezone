@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "the_bumblezone:forestry/ceiling_honeystone_spike",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:forestry/ceiling_cobbled_honeystone_spike",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:forestry/ceiling_honeystone_bricks_spike",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:forestry/floor_honeystone_spike",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:forestry/floor_cobbled_honeystone_spike",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:forestry/floor_honeystone_bricks_spike",
+      "required": false
+    }
+  ]
+}

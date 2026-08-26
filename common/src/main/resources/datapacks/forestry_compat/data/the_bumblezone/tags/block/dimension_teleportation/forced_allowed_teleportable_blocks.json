@@ -1,0 +1,57 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "forestry:bee_house",
+      "required": false
+    },
+    {
+      "id": "forestry:apiary",
+      "required": false
+    },
+    {
+      "id": "forestry:forest_hive",
+      "required": false
+    },
+    {
+      "id": "forestry:meadows_hive",
+      "required": false
+    },
+    {
+      "id": "forestry:modest_hive",
+      "required": false
+    },
+    {
+      "id": "forestry:tropical_hive",
+      "required": false
+    },
+    {
+      "id": "forestry:ender_hive",
+      "required": false
+    },
+    {
+      "id": "forestry:wintry_hive",
+      "required": false
+    },
+    {
+      "id": "forestry:marshy_hive",
+      "required": false
+    },
+    {
+      "id": "forestry:savanna_hive",
+      "required": false
+    },
+    {
+      "id": "forestry:lush_hive",
+      "required": false
+    },
+    {
+      "id": "forestry:aquatic_hive",
+      "required": false
+    },
+    {
+      "id": "forestry:nether_hive",
+      "required": false
+    }
+  ]
+}

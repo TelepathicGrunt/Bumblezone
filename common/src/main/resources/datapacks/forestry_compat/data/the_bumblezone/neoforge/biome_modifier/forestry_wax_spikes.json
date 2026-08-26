@@ -1,7 +1,7 @@
 {
     "type": "the_bumblezone:mod_compat_additions_modifier",
-    "biomes": "#the_bumblezone:the_bumblezone",
-    "feature": "#the_bumblezone:forestry_combs",
+    "biomes": "#the_bumblezone:crystal_canyon",
+    "feature": "#the_bumblezone:forestry_wax_spikes",
     "step": "underground_ores",
     "required_mod": "forestry"
 }

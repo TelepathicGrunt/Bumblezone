@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "the_bumblezone:forestry/chiseled_wax_bricks_blob",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:forestry/polished_honeystone_blob",
+      "required": false
+    }
+  ]
+}

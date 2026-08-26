@@ -9,13 +9,16 @@ import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
 import com.telepathicgrunt.the_bumblezone.utils.UnsafeBulkSectionAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.SectionPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -177,6 +180,8 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
             }
         }
 
+        List<Holder<Block>> moddedCaveEdgeBlocks = BuiltInRegistries.BLOCK.getOrCreateTag(BzTags.CAVE_EDGE_BLOCKS_FOR_MODDED_COMPATS).stream().toList();
+
         int orgX = context.origin().getX();
         int orgY = context.origin().getY();
         int orgZ = context.origin().getZ();
@@ -215,7 +220,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                     double finalNoise = noise1 * noise1 + noise2 * noise2;
 
                     if (finalNoise < 0.0014f) {
-                        hexagon(level, bulkSectionAccess, context.chunkGenerator(), mutableBlockPos, context.random(), noise1);
+                        hexagon(level, bulkSectionAccess, context.chunkGenerator(), mutableBlockPos, context.random(), noise1, moddedCaveEdgeBlocks);
                     }
                     else z = zSkipping(z, finalNoise);
                 }
@@ -255,7 +260,15 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
         return z;
     }
 
-    private static void hexagon(WorldGenLevel world, UnsafeBulkSectionAccess bulkSectionAccess, ChunkGenerator generator, BlockPos position, RandomSource random, double noise) {
+    private static void hexagon(
+            WorldGenLevel level,
+            UnsafeBulkSectionAccess bulkSectionAccess,
+            ChunkGenerator generator,
+            BlockPos position,
+            RandomSource random,
+            double noise,
+            List<Holder<Block>> moddedCaveEdgeBlocks)
+    {
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
         BlockState blockState;
         int index = (int) (((noise * 0.5D) + 0.5D) * 7);
@@ -267,28 +280,31 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                 if (posResult != 0) {
                     mutableBlockPos.set(position).move(x - 7, 0, z - 5);
                     blockState = bulkSectionAccess.getBlockState(mutableBlockPos);
-                    carveAtBlock(world, bulkSectionAccess, generator, random, mutableBlockPos, tempMutable, blockState, posResult);
+                    carveAtBlock(level, bulkSectionAccess, generator, random, mutableBlockPos, tempMutable, blockState, posResult, moddedCaveEdgeBlocks, noise);
 
                     mutableBlockPos.set(position).move(0, x - 7, z - 5);
                     blockState = bulkSectionAccess.getBlockState(mutableBlockPos);
-                    carveAtBlock(world, bulkSectionAccess, generator, random, mutableBlockPos, tempMutable, blockState, posResult);
+                    carveAtBlock(level, bulkSectionAccess, generator, random, mutableBlockPos, tempMutable, blockState, posResult, moddedCaveEdgeBlocks, noise);
 
                     mutableBlockPos.set(position).move(z - 5, x - 7, 0);
                     blockState = bulkSectionAccess.getBlockState(mutableBlockPos);
-                    carveAtBlock(world, bulkSectionAccess, generator, random, mutableBlockPos, tempMutable, blockState, posResult);
+                    carveAtBlock(level, bulkSectionAccess, generator, random, mutableBlockPos, tempMutable, blockState, posResult, moddedCaveEdgeBlocks, noise);
                 }
             }
         }
     }
 
-    private static void carveAtBlock(WorldGenLevel world,
-                                     UnsafeBulkSectionAccess bulkSectionAccess,
-                                     ChunkGenerator generator,
-                                     RandomSource random,
-                                     BlockPos blockPos,
-                                     BlockPos.MutableBlockPos mutable,
-                                     BlockState blockState,
-                                     int posResult)
+    private static void carveAtBlock(
+            WorldGenLevel level,
+            UnsafeBulkSectionAccess bulkSectionAccess,
+            ChunkGenerator generator,
+            RandomSource random,
+            BlockPos blockPos,
+            BlockPos.MutableBlockPos mutable,
+            BlockState blockState,
+            int posResult,
+            List<Holder<Block>> moddedCaveEdgeBlocks,
+            double noise)
     {
         if (blockState.canOcclude() && !blockState.canBeReplaced() && !blockState.is(BzTags.FORCE_CAVE_TO_NOT_CARVE)) {
             boolean isNextToAir = shouldCloseOff(bulkSectionAccess, blockPos, mutable);
@@ -304,19 +320,19 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                     }
 
                     if (blockState.hasBlockEntity()) {
-                        world.getChunk(blockPos).removeBlockEntity(blockPos);
+                        level.getChunk(blockPos).removeBlockEntity(blockPos);
                     }
                 }
                 else {
                     bulkSectionAccess.setBlockState(blockPos, Blocks.CAVE_AIR.defaultBlockState(), false);
 
                     if (blockState.hasBlockEntity()) {
-                        world.getChunk(blockPos).removeBlockEntity(blockPos);
+                        level.getChunk(blockPos).removeBlockEntity(blockPos);
                     }
 
                     BlockPos abovePos = blockPos.above();
                     BlockState aboveState = bulkSectionAccess.getBlockState(abovePos);
-                    if (!aboveState.isAir() && !aboveState.isCollisionShapeFullBlock(world, abovePos)) {
+                    if (!aboveState.isAir() && !aboveState.isCollisionShapeFullBlock(level, abovePos)) {
                         bulkSectionAccess.setBlockState(blockPos, Blocks.CAVE_AIR.defaultBlockState(), false);
 
                         if (aboveState.getBlock() instanceof DoublePlantBlock && aboveState.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.LOWER) {
@@ -326,15 +342,29 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                 }
             }
             else if (posResult == 1) {
-                if (random.nextInt(3) == 0) {
-                    bulkSectionAccess.setBlockState(blockPos, Blocks.HONEYCOMB_BLOCK.defaultBlockState(), false);
+                if (moddedCaveEdgeBlocks.isEmpty()) {
+                    if (random.nextInt(3) == 0) {
+                        bulkSectionAccess.setBlockState(blockPos, Blocks.HONEYCOMB_BLOCK.defaultBlockState(), false);
+                    }
+                    else {
+                        bulkSectionAccess.setBlockState(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), false);
+                    }
                 }
                 else {
-                    bulkSectionAccess.setBlockState(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), false);
+                    if (random.nextInt(20) != 0 && noise < 0d) {
+                        if (random.nextInt(3) == 0) {
+                            bulkSectionAccess.setBlockState(blockPos, Blocks.HONEYCOMB_BLOCK.defaultBlockState(), false);
+                        } else {
+                            bulkSectionAccess.setBlockState(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), false);
+                        }
+                    }
+                    else {
+                        bulkSectionAccess.setBlockState(blockPos, moddedCaveEdgeBlocks.get(random.nextInt(moddedCaveEdgeBlocks.size())).value().defaultBlockState(), false);
+                    }
                 }
 
                 if (blockState.hasBlockEntity()) {
-                    world.getChunk(blockPos).removeBlockEntity(blockPos);
+                    level.getChunk(blockPos).removeBlockEntity(blockPos);
                 }
             }
         }

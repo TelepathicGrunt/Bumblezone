@@ -1,0 +1,56 @@
+{
+  "feature": "the_bumblezone:forestry/floor_wax_spike",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": {
+        "type": "minecraft:weighted_list",
+        "distribution": [
+          {
+            "data": 0,
+            "weight": 9
+          },
+          {
+            "data": 1,
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "the_bumblezone:roofed_dimension_surface_placement",
+      "min_height": 30,
+      "max_water_depth": 10
+    },
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:matching_block_tag",
+        "offset": [
+          0,
+          -1,
+          0
+        ],
+        "tag": "the_bumblezone:two_tone_spikes/wax_tipped_allowed_base"
+      }
+    },
+    {
+      "type": "the_bumblezone:structure_disallow_by_tag",
+      "disallow_tag": "the_bumblezone:no_giant_spikes",
+      "piecewise_check": true
+    },
+    {
+      "type": "the_bumblezone:structure_disallow_by_tag",
+      "disallow_tag": "the_bumblezone:throne_pillar",
+      "piecewise_check": true,
+      "min_y": 126,
+      "max_y": 150
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

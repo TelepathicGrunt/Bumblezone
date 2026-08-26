@@ -1,0 +1,77 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "forestry:willow_log",
+      "required": false
+    },
+    {
+      "id": "forestry:camelthorn_log",
+      "required": false
+    },
+    {
+      "id": "forestry:baobab_log",
+      "required": false
+    },
+    {
+      "id": "forestry:mahogany_log",
+      "required": false
+    },
+    {
+      "id": "forestry:sour_cherry_log",
+      "required": false
+    },
+    {
+      "id": "forestry:palm_log",
+      "required": false
+    },
+    {
+      "id": "forestry:plum_log",
+      "required": false
+    },
+    {
+      "id": "forestry:maple_log",
+      "required": false
+    },
+    {
+      "id": "forestry:fir_log",
+      "required": false
+    },
+    {
+      "id": "forestry:beech_log",
+      "required": false
+    },
+    {
+      "id": "forestry:feijoa_log",
+      "required": false
+    },
+    {
+      "id": "forestry:dogwood_log",
+      "required": false
+    },
+    {
+      "id": "forestry:ginkgo_log",
+      "required": false
+    },
+    {
+      "id": "forestry:dogwood_log",
+      "required": false
+    },
+    {
+      "id": "forestry:pewen_log",
+      "required": false
+    },
+    {
+      "id": "forestry:pear_log",
+      "required": false
+    },
+    {
+      "id": "forestry:kauri_log",
+      "required": false
+    },
+    {
+      "id": "forestry:jacaranda_log",
+      "required": false
+    }
+  ]
+}

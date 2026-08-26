@@ -34,3 +34,9 @@ Slightly reduced enemy mob speed boosts from Blue and Red Essence Arenas.
 Lowered Bumblezone dimension's buzzing ambience sound a little
 
 (NeoForge): Fixed a variety of music playing/stopping issues.
+
+#### Mod Compat:
+Fixed and improved compat with Forestry. Now Bumblezone dimension spawns with spikes that have Forestry's blocks, 
+ cave surfaces have Forestry's blocks, and trees in hanging Gardens will have some of Forestry's blocks. In addition,
+ Forestry's hive blocks are now usable to teleport into Bumblezone. The Forestry Compat datapack is now no longer
+ force enabled, instead enabled by default but players can disable it during world creation screen or in-game.

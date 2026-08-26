@@ -3,7 +3,7 @@
   "config": {
     "allowed_base_block_copies": "the_bumblezone:two_tone_spikes/honey_tipped_allowed_base",
     "tip_blocks": [
-      "forestry:block_bee_comb_dripping"
+      "forestry:honeystone_bricks"
     ],
     "height_range": {
       "type": "minecraft:uniform",

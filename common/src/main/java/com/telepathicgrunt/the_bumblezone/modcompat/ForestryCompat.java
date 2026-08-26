@@ -13,7 +13,7 @@ public class ForestryCompat implements ModCompat {
             addBuiltinDataPacks.add(
                 ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "forestry_compat"),
                 Component.literal("Bumblezone - Forestry Compat"),
-                BzAddBuiltinDataPacks.PackMode.FORCE_ENABLED
+                BzAddBuiltinDataPacks.PackMode.ENABLED_BY_DEFAULT
             )
         );
 
