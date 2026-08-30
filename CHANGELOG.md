@@ -24,6 +24,9 @@ Added Trials Spawners and Vaults as blocks that Knowing Essence can highlight.
 
 Fixed thrown Dirt Pellet not being in `minecraft:redirectable_projectile` entity type tag.
 
+#### Blocks:
+Fixed Suspicious Pile of Pollen so it is now brushable when the Brush is in the offhand slot.
+
 #### Structures:
 Slightly reduced enemy mob speed boosts from Blue and Red Essence Arenas.
 
