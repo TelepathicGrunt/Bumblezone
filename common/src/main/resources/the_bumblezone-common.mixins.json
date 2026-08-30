@@ -40,7 +40,6 @@
     "entities.BeeEntityMixin",
     "entities.BeePathfindingMixin",
     "entities.EntityAccessor",
-    "entities.EntityCollisionContextAccessor",
     "entities.EntityFluidInteractionAccessor",
     "entities.EntityMixin",
     "entities.EntityTypeMixin",
