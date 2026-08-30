@@ -12,6 +12,9 @@ Reduced duration of Purple Spike's poison effect.
 #### Items:
 Honeybee Leggings now have a waist and one variant of the leggings will render the waist above Bumblezone's chestplates (but under all other chestplates)
 
+#### Blocks:
+Fixed Suspicious Pile of Pollen so it is now brushable when the Brush is in the offhand slot.
+
 #### Structures:
 Slightly reduced enemy mob speed boosts from Blue and Red Essence Arenas.
 

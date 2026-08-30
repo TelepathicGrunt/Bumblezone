@@ -39,7 +39,6 @@
     "entities.BeeHiveGoalMixin",
     "entities.BeePathfindingMixin",
     "entities.EntityAccessor",
-    "entities.EntityCollisionContextAccessor",
     "entities.EntityMixin",
     "entities.EntityTypeMixin",
     "entities.ExperienceOrbAccessor",

@@ -2,10 +2,8 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.StateFocusedBrushableBlockEntity;
-import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityCollisionContextAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -117,9 +115,8 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
     public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         if (context instanceof EntityCollisionContext ctx) {
             Entity entity = ctx.getEntity();
-            if (entity != null && entity.getType() != BzEntities.POLLEN_PUFF_ENTITY.get()) {
-                context.isHoldingItem(Items.AIR);
-                ItemStack heldItem = ((EntityCollisionContextAccessor)ctx).bumblezone$getHeldItem();
+            if (entity instanceof LivingEntity livingEntity) {
+                ItemStack heldItem =  livingEntity.getUseItem();
                 if (heldItem != null &&
                     !heldItem.isEmpty() &&
                     (PlatformHooks.isToolAction(heldItem, BrushItem.class, "brush_brush") ||
