@@ -98,4 +98,6 @@ public class BzModCompatibilityConfigs {
 	public static boolean allowLootrCompat = true;
 
 	public static boolean allowCreateLimestoneForHoneyLavaCompat = true;
+
+	public static boolean allowForestryCompat = true;
 }

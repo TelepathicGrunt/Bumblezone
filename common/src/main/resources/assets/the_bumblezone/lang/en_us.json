@@ -1247,6 +1247,7 @@
   "the_bumblezone.midnightconfig.allowGoodallBottledBeesRevivingEmptyBroodBlock": "Allow Goodall's Bottled Bee Revive Brood Blocks Compat",
   "the_bumblezone.midnightconfig.allowLootrCompat": "Allow loot Cocoons to have compat with Lootr",
   "the_bumblezone.midnightconfig.allowCreateLimestoneForHoneyLavaCompat": "Allow Honey/Lava interaction to spawn Create's Limestone",
+  "the_bumblezone.midnightconfig.allowForestryCompat": "Allow loading of internal Forestry Compat Datapack",
   "the_bumblezone.midnightconfig.clientComment": "§o§6    Client Section",
   "the_bumblezone.midnightconfig.useBackupModelForVariantBee": "Use Backup Model For Variant Bee",
   "the_bumblezone.midnightconfig.playWrathOfHiveEffectMusic": "Play Wrath Of Hive Effect Music",
@@ -1521,6 +1522,8 @@
   "the_bumblezone.configuration.createcompat": "Create Compat",
   "the_bumblezone.configuration.allowcreatelimestoneforhoneylavacompat": "Limestone From Honey",
   "the_bumblezone.configuration.allowcreatelimestoneforhoneylavacompat.tooltip": "Allow Honey/Lava interaction to spawn Create's Limestone",
+  "the_bumblezone.configuration.forestrycompat": "Forestry Compat",
+  "the_bumblezone.configuration.allowforestrycompat": "Forestry Compat Datapack",
 
   "the_bumblezone.configuration.bumblezonefluidoptions": "Fluids",
   "the_bumblezone.configuration.bzhoneyfluidfromhoneybottles": "Honey Bottle Extraction",

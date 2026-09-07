@@ -55,6 +55,8 @@ public class BzModCompatibilityConfig {
 
 	public static ModConfigSpec.BooleanValue allowCreateLimestoneForHoneyLavaCompat;
 
+	public static ModConfigSpec.BooleanValue allowForestryCompat;
+
 	static {
 		ModConfigSpec.Builder configBuilder = new ModConfigSpec.Builder();
 		setupConfig(configBuilder);
@@ -405,6 +407,16 @@ public class BzModCompatibilityConfig {
 				.define("allowCreateLimestoneForHoneyLavaCompat", true);
 
 		builder.pop();
+
+		builder.translation("the_bumblezone.configuration.forestrycompat").push("Forestry Compat");
+
+		allowLootrCompat = builder
+				.comment("----------------------------\n",
+						" Allow loading of internal Forestry Compat Datapack\n")
+				.translation("the_bumblezone.configuration.allowforestrycompat")
+				.define("allowForestryCompat", true);
+
+		builder.pop();
 	}
 
 	public static void copyToCommon() {
@@ -453,5 +465,6 @@ public class BzModCompatibilityConfig {
 
 		BzModCompatibilityConfigs.allowLootrCompat = allowLootrCompat.get();
 		BzModCompatibilityConfigs.allowCreateLimestoneForHoneyLavaCompat = allowCreateLimestoneForHoneyLavaCompat.get();
+		BzModCompatibilityConfigs.allowForestryCompat = allowForestryCompat.get();
 	}
 }
