@@ -1,3 +1,9 @@
+### **(V.7.16.1 Changes) (1.21.1 Minecraft)**
+
+#### Configs:
+(NeoForge): Fixed allowForestryCompat config option crash
+
+
 ### **(V.7.16.0 Changes) (1.21.1 Minecraft)**
 
 #### Teleportation:
