@@ -344,7 +344,7 @@ public class BzModCompatibilityConfig {
 
 		builder.translation("the_bumblezone.configuration.forestrycompat").push("Forestry Compat");
 
-		allowLootrCompat = builder
+		allowForestryCompat = builder
 				.comment("----------------------------\n",
 						" Allow loading of internal Forestry Compat Datapack\n")
 				.translation("the_bumblezone.configuration.allowforestrycompat")
