@@ -1,0 +1,8 @@
+{
+  "comparator_output": 14,
+  "description": {
+    "translate": "jukebox_song.the_bumblezone.string_like_a_bee"
+  },
+  "length_in_seconds": 245.0,
+  "sound_event": "the_bumblezone:music_disc.string_like_a_bee"
+}
