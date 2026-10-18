@@ -1,7 +1,6 @@
 TODO: DO NOT RELEASE UNTIL COMPLETED
 
 - Test the everliving hell out of EVERYTHING (music needs checking)
-- Get new song for wrath of the hive effect
 
 
 ### **(V.7.9.0 Changes) (26.1.2 Minecraft)**
@@ -17,6 +16,9 @@ Also thanks to XFactHD who did the Framed Blocks compatibility porting work,
 
 #### Items:
 New Spawn Egg textures created by Firch!
+
+#### Music/Sounds:
+New songs made by Punpudle that will play when getting Wrath of the Hive effect! The old song that used to play is now deleted.
 
 #### Mod Compat:
 Brand-new compatibility has been added for Reliable Recipe Viewer mod (RRV).
