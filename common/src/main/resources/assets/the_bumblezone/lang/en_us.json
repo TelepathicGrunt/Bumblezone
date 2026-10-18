@@ -535,9 +535,9 @@
   "item.minecraft.tipped_arrow.effect.neurotoxin": "Arrow of Neurotoxin",
   "item.minecraft.tipped_arrow.effect.long_neurotoxin": "Arrow of Neurotoxin",
 
-  "jukebox_song.the_bumblezone.hive_speed_beepop.desc": "Punpudle - Hive-Speed Beepop",
-  "jukebox_song.the_bumblezone.perzzona_hive.desc": "Punpudle - Perzzona Hive",
-  "jukebox_song.the_bumblezone.string_like_a_bee.desc": "Punpudle - String like a Bee",
+  "jukebox_song.the_bumblezone.hive_speed_beepop": "Punpudle - Hive-Speed Beepop",
+  "jukebox_song.the_bumblezone.perzzona_hive": "Punpudle - Perzzona Hive",
+  "jukebox_song.the_bumblezone.string_like_a_bee": "Punpudle - String like a Bee",
   "jukebox_song.the_bumblezone.honey_bee_rat_faced_boy": "Rat Faced Boy - Honey Bee",
   "jukebox_song.the_bumblezone.rivers_of_honey_moserao": "Moserao - Rivers of Honey",
   "jukebox_song.the_bumblezone.la_bee_da_loca": "LudoCrypt - La Bee-da Loca",

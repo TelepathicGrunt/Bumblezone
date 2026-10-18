@@ -279,7 +279,9 @@ public class BzCreativeTabs {
 
         if (event.type() == BzAddCreativeTabEntriesEvent.Type.TOOLS) {
             Stream.of(
-                    BzItems.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV,
+                    BzItems.MUSIC_DISC_HIVE_SPEED_BEEPOP,
+                    BzItems.MUSIC_DISC_PERZZONA_HIVE,
+                    BzItems.MUSIC_DISC_STRING_LIKE_A_BEE,
                     BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY,
                     BzItems.MUSIC_DISC_RIVERS_OF_HONEY_MOSERAO,
                     BzItems.MUSIC_DISC_LA_BEE_DA_LOCA,

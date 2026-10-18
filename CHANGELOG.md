@@ -1,8 +1,3 @@
-TODO: DO NOT RELEASE UNTIL COMPLETED
-
-- Test the everliving hell out of EVERYTHING (music needs checking)
-
-
 ### **(V.7.9.0 Changes) (26.1.2 Minecraft)**
 
 #### Misc:

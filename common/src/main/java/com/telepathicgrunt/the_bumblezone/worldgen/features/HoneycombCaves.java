@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.utils.UnsafeBulkSectionAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -30,7 +31,9 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
@@ -180,7 +183,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
             }
         }
 
-        List<Holder<Block>> moddedCaveEdgeBlocks = BuiltInRegistries.BLOCK.getOrCreateTag(BzTags.CAVE_EDGE_BLOCKS_FOR_MODDED_COMPATS).stream().toList();
+        List<Holder<Block>> moddedCaveEdgeBlocks = BuiltInRegistries.BLOCK.get(BzTags.CAVE_EDGE_BLOCKS_FOR_MODDED_COMPATS).map(holders -> holders.stream().toList()).orElseGet(ArrayList::new);
 
         int orgX = context.origin().getX();
         int orgY = context.origin().getY();
