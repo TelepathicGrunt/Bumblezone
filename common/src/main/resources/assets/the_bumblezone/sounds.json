@@ -98,9 +98,19 @@
   "music.angered_bees": {
     "sounds": [
       {
-        "name": "the_bumblezone:music/flight_of_the_bumblebee_rimsky_korsakov",
+        "name": "the_bumblezone:music/string_like_a_bee_stereo",
         "stream": true,
-        "volume": 0.9
+        "volume": 0.8
+      },
+      {
+        "name": "the_bumblezone:music/perzzona_hive_stereo",
+        "stream": true,
+        "volume": 0.8
+      },
+      {
+        "name": "the_bumblezone:music/hive_speed_beepop_stereo",
+        "stream": true,
+        "volume": 0.8
       }
     ]
   },
@@ -112,10 +122,26 @@
       }
     ]
   },
-  "music_disc.flight_of_the_bumblebee_rimsky_korsakov": {
+  "music_disc.hive_speed_beepop": {
     "sounds": [
       {
-        "name": "the_bumblezone:music/flight_of_the_bumblebee_rimsky_korsakov",
+        "name": "the_bumblezone:music/hive_speed_beepop_mono",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.perzzona_hive": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:music/perzzona_hive_mono",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.string_like_a_bee": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:music/string_like_a_bee_mono",
         "stream": true
       }
     ]

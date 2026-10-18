@@ -42,7 +42,9 @@ public class BzGeneralConfigs {
     public static boolean superCandlesBurnsMobs = true;
     public static boolean keepEssenceOfTheBeesOnRespawning = true;
     public static boolean allowWanderingTraderMusicDiscsTrades = true;
-    public static int musicDiscTimeLengthFlightOfTheBumblebee = 216;
+    public static int musicDiscTimeLengthHiveSpeedBeepop = 230;
+    public static int musicDiscTimeLengthPerzzonaHive = 240;
+    public static int musicDiscTimeLengthStringLikeABee = 245;
     public static int musicDiscTimeLengthHoneyBee = 216;
     public static int musicDiscTimeLengthRiversOfHoney = 224;
     public static int musicDiscTimeLengthBeeLaxingWithTheHomBees = 300;

@@ -32,7 +32,9 @@ public class BzGeneralConfig {
     public static ForgeConfigSpec.BooleanValue beeQueenRespawning;
     public static ForgeConfigSpec.BooleanValue beeQueenGroundPickup;
     public static ForgeConfigSpec.BooleanValue allowWanderingTraderMusicDiscsTrades;
-    public static ForgeConfigSpec.IntValue musicDiscTimeLengthFlightOfTheBumblebee;
+    public static ForgeConfigSpec.IntValue musicDiscTimeLengthHiveSpeedBeepop;
+    public static ForgeConfigSpec.IntValue musicDiscTimeLengthPerzzonaHive;
+    public static ForgeConfigSpec.IntValue musicDiscTimeLengthStringLikeABee;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthHoneyBee;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthRiversOfHoney;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthBeeLaxingWithTheHomBees;
@@ -328,12 +330,26 @@ public class BzGeneralConfig {
                 .translation("the_bumblezone.config.allowwanderingtradermusicdiscstrades")
                 .define("allowWanderingTraderMusicDiscsTrades", true);
 
-        musicDiscTimeLengthFlightOfTheBumblebee = builder
+        musicDiscTimeLengthHiveSpeedBeepop = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " How long in seconds this music disc will be playing music.",
                         " This is used for the server to know when to make Allays stop dancing when Jukebox stops playing this music disc.\n")
-                .translation("the_bumblezone.config.musicdisctimelengthflightofthebumblebee")
-                .defineInRange("musicDiscTimeLengthFlightOfTheBumblebee", 84, 0 , 1000000);
+                .translation("the_bumblezone.config.musicdisctimelengthhivespeedbeepop")
+                .defineInRange("musicDiscTimeLengthHiveSpeedBeepop", 230, 0 , 1000000);
+
+        musicDiscTimeLengthPerzzonaHive = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How long in seconds this music disc will be playing music.",
+                        " This is used for the server to know when to make Allays stop dancing when Jukebox stops playing this music disc.\n")
+                .translation("the_bumblezone.config.musicdisctimelengthperzzonahive")
+                .defineInRange("musicDiscTimeLengthPerzzonaHive", 240, 0 , 1000000);
+
+        musicDiscTimeLengthStringLikeABee = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How long in seconds this music disc will be playing music.",
+                        " This is used for the server to know when to make Allays stop dancing when Jukebox stops playing this music disc.\n")
+                .translation("the_bumblezone.config.musicdisctimelengthstringlikeabee")
+                .defineInRange("musicDiscTimeLengthStringLikeABee", 245, 0 , 1000000);
 
         musicDiscTimeLengthHoneyBee = builder
                 .comment(" \n-----------------------------------------------------\n",
@@ -595,7 +611,9 @@ public class BzGeneralConfig {
         BzGeneralConfigs.beeQueenRespawning = beeQueenRespawning.get();
         BzGeneralConfigs.beeQueenGroundPickup = beeQueenGroundPickup.get();
         BzGeneralConfigs.allowWanderingTraderMusicDiscsTrades = allowWanderingTraderMusicDiscsTrades.get();
-        BzGeneralConfigs.musicDiscTimeLengthFlightOfTheBumblebee = musicDiscTimeLengthFlightOfTheBumblebee.get();
+        BzGeneralConfigs.musicDiscTimeLengthHiveSpeedBeepop = musicDiscTimeLengthHiveSpeedBeepop.get();
+        BzGeneralConfigs.musicDiscTimeLengthPerzzonaHive = musicDiscTimeLengthPerzzonaHive.get();
+        BzGeneralConfigs.musicDiscTimeLengthStringLikeABee = musicDiscTimeLengthStringLikeABee.get();
         BzGeneralConfigs.musicDiscTimeLengthHoneyBee = musicDiscTimeLengthHoneyBee.get();
         BzGeneralConfigs.musicDiscTimeLengthRiversOfHoney = musicDiscTimeLengthRiversOfHoney.get();
         BzGeneralConfigs.musicDiscTimeLengthBeeLaxingWithTheHomBees = musicDiscTimeLengthBeeLaxingWithTheHomBees.get();

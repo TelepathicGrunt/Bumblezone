@@ -291,7 +291,21 @@
       "required": true
     },
     {
-      "id": "the_bumblezone:music_disc_flight_of_the_bumblebee_rimsky_korsakov",
+      "id": "the_bumblezone:music_disc_hive_speed_beepop",
+      "count": 1,
+      "xp_reward": 15,
+      "weight": 3,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_perzzona_hive",
+      "count": 1,
+      "xp_reward": 15,
+      "weight": 3,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_string_like_a_bee",
       "count": 1,
       "xp_reward": 15,
       "weight": 3,

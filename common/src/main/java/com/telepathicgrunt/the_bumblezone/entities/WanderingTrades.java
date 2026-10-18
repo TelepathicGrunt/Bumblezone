@@ -15,7 +15,27 @@ public class WanderingTrades {
 
         event.addRareTrade(new GeneralUtils.BasicItemTrade(
                 Items.EMERALD,
-                BzItems.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV.get(),
+                BzItems.MUSIC_DISC_HIVE_SPEED_BEEPOP.get(),
+                20,
+                1,
+                1,
+                10,
+                0.5F
+        ));
+
+        event.addRareTrade(new GeneralUtils.BasicItemTrade(
+                Items.EMERALD,
+                BzItems.MUSIC_DISC_PERZZONA_HIVE.get(),
+                20,
+                1,
+                1,
+                10,
+                0.5F
+        ));
+
+        event.addRareTrade(new GeneralUtils.BasicItemTrade(
+                Items.EMERALD,
+                BzItems.MUSIC_DISC_STRING_LIKE_A_BEE.get(),
                 20,
                 1,
                 1,

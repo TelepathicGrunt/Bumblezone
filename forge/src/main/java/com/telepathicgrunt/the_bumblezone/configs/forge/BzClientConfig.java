@@ -222,7 +222,7 @@ public class BzClientConfig {
 
         playWrathOfHiveEffectMusic = builder
                 .comment(" \n-----------------------------------------------------\n",
-                        " If on, Flight of the Bumblebee by Rimsky Korsakov will play when you have Wrath of the Hive effect on.\n")
+                        " If on, custom songs will play when you have Wrath of the Hive effect on.\n")
                 .translation("the_bumblezone.config.playwrathofhiveeffectmusic")
                 .define("playWrathOfHiveEffectMusic", true);
 

@@ -39,12 +39,32 @@
         ]
       }
     },
-    "obtain_music_disc_flight_of_the_bumblebee_rimsky_korsakov": {
+    "obtain_music_disc_hive_speed_beepop": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:music_disc_flight_of_the_bumblebee_rimsky_korsakov"]
+            "items": ["the_bumblezone:music_disc_hive_speed_beepop"]
+          }
+        ]
+      }
+    },
+    "obtain_music_disc_perzzona_hive": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:music_disc_perzzona_hive"]
+          }
+        ]
+      }
+    },
+    "obtain_music_disc_string_like_a_bee": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:music_disc_string_like_a_bee"]
           }
         ]
       }
@@ -148,7 +168,13 @@
       "obtain_music_disc_rivers_of_honey_moserao"
     ],
     [
-      "obtain_music_disc_flight_of_the_bumblebee_rimsky_korsakov"
+      "obtain_music_disc_hive_speed_beepop"
+    ],
+    [
+      "obtain_music_disc_perzzona_hive"
+    ],
+    [
+      "obtain_music_disc_string_like_a_bee"
     ],
     [
       "obtain_music_disc_la_bee_da_loca"

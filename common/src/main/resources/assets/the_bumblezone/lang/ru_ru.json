@@ -296,7 +296,6 @@
   "item.the_bumblezone.banner_pattern_eyes.desc": "Глаза",
   "item.the_bumblezone.banner_pattern_arrows": "Узор флага",
   "item.the_bumblezone.banner_pattern_arrows.desc": "Цикл",
-  "item.the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov": "Пластинка",
   "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy": "Пластинка",
   "item.the_bumblezone.music_disc_honey_bee_rat_faced_boy.download": "https://acidburp.bandcamp.com/track/honey-bee",
   "item.the_bumblezone.music_disc_rivers_of_honey_moserao": "Пластинка",
@@ -465,7 +464,6 @@
   "item.minecraft.tipped_arrow.effect.neurotoxin": "Стрела паралича",
   "item.minecraft.tipped_arrow.effect.long_neurotoxin": "Стрела паралича",
 
-  "jukebox_song.the_bumblezone.flight_of_the_bumblebee_rimsky_korsakov": "Римский Корсаков - Полёт шмеля",
   "jukebox_song.the_bumblezone.honey_bee_rat_faced_boy": "Rat Faced Boy - Honey Bee",
   "jukebox_song.the_bumblezone.rivers_of_honey_moserao": "Moserao - Rivers of Honey",
   "jukebox_song.the_bumblezone.la_bee_da_loca": "LudoCrypt - La Bee-da Loca",
@@ -1066,7 +1064,6 @@
   "the_bumblezone.banner_pattern_eyes.description": " Узор флага с изображением глаз, который может быть найден в некоторых структурах и изредка в подозрительных блоках пыльцы.",
   "the_bumblezone.banner_pattern_peace.description": " Узор флага с изображением эмблемы, который может быть найден в некоторых структурах и изредка в подозрительных блоках пыльцы.",
   "the_bumblezone.banner_pattern_arrows.description": " Узор флага с изображением стрелок, который может быть найден в некоторых структурах и изредка в подозрительных блоках пыльцы.",
-  "the_bumblezone.music_disc_flight_of_the_bumblebee_rimsky_korsakov.description": " Если прислушаться, можно услышать жужжание роя злых пчёл... Эта редкая пластинка может быть куплена у странствующего торговца, или найдена в некоторых структурах! Песня является MIDI версией Полёта шмеля от Римского-Корсакова.",
   "the_bumblezone.music_disc_honey_bee_rat_faced_boy.description": " Наслаждайтесь замечательной музыкой с пчёлами, про пчёл! Эта редкая пластинка может быть куплена у странствующего торговца, или найдена в некоторых структурах. Песня является версией Honey Bee от Rat Faced Boy и вы можете купить её здесь: https://acidburp.bandcamp.com/track/honey-bee Можете поддержать авторов ваших любимых песен!",
   "the_bumblezone.music_disc_rivers_of_honey_moserao.description": " Насладитесь красотами Жужжилища, слушая спокойную музыку на этой пластинке! Эта редкая пластинка может быть куплена у странствующего торговца, или найдена в некоторых структурах Жужжилища! Песня является версией Rivers of Honey от Moserao и вы можете купить её здесь: https://moserao.bandcamp.com/track/rivers-of-honey-2 Можете поддержать авторов ваших любимых песен!",
   "the_bumblezone.music_disc_la_bee_da_loca.description": " Пластинка содержит плавную мелодию, что хорошо подойдёт вам при исследовании Жужжилища! Эта редкая пластинка может быть куплена у странствующего торговца, или найдена в некоторых структурах. Песня является версией La Bee-da Loca от LudoCrypt и вы можете купить её здесь: https://ludocrypt.bandcamp.com/track/la-bee-da-loca Можете поддержать авторов ваших любимых песен!",
