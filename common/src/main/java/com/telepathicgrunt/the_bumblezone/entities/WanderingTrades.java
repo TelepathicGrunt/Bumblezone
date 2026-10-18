@@ -22,7 +22,7 @@ public class WanderingTrades {
                 0.5F
         ));
 
-        event.addRareTrade(new GeneralUtils.BasicItemTrade(
+        event.addRareTrade(new BasicItemTrade(
                 Items.EMERALD,
                 BzItems.MUSIC_DISC_PERZZONA_HIVE.get(),
                 20,
@@ -32,7 +32,7 @@ public class WanderingTrades {
                 0.5F
         ));
 
-        event.addRareTrade(new GeneralUtils.BasicItemTrade(
+        event.addRareTrade(new BasicItemTrade(
                 Items.EMERALD,
                 BzItems.MUSIC_DISC_STRING_LIKE_A_BEE.get(),
                 20,
