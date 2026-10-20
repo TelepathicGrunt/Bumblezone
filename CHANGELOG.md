@@ -1,3 +1,9 @@
+### **(V.7.18.1 Changes) (26.1.2 Minecraft)**
+
+#### Mod Compat:
+Fixed some built-in compat datapacks not being parsed properly due to outdated pack.mcmeta files.
+
+
 ### **(V.7.18.0 Changes) (26.1.2 Minecraft)**
 
 #### Misc:
