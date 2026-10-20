@@ -339,7 +339,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
 
     public static PotionCandleRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
         String group = buffer.readUtf();
-        int resultCount = buffer.readInt();
+        int resultCount = buffer.readVarInt();
         ShapedRecipePattern pattern = ShapedRecipePattern.STREAM_CODEC.decode(buffer);
         List<Ingredient> shapelessRecipe = Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buffer);
         int maxPotionRead = buffer.readVarInt();

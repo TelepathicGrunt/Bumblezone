@@ -1,5 +1,8 @@
 ### **(V.7.18.1 Changes) (26.1.2 Minecraft)**
 
+#### Items:
+Fixed Potion Candle custom recipe breaking during parsing from packet.
+
 #### Mod Compat:
 Fixed some built-in compat datapacks not being parsed properly due to outdated pack.mcmeta files.
 
