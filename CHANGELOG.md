@@ -7,6 +7,8 @@ Added Bee Queen Trade that turns Jukeboxes and Note Blocks into Bumblezone Music
 
 Fixed Bee Queen trades not weighting the possible resultant items properly
 
+Fixed Bee Queen speech bubble showing items too dark
+
 #### Structures:
 Increased rates of Banner Patterns in Sempiternal Sanctum's loot tables and in all Suspicious Pile Of Pollen loot tables.
 

@@ -113,9 +113,6 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenRender
                 buffer.addVertex(pose, TRADE_HINT_VERTEX_POSITIONS[3].x(), TRADE_HINT_VERTEX_POSITIONS[3].y(), TRADE_HINT_VERTEX_POSITIONS[3].z()).setColor(ARGB.white(255)).setUv(u0, v1).setOverlay(OverlayTexture.NO_OVERLAY).setLight(lightCoords).setNormal(pose, 0.0f, -1.0f, 0.0f);
             });
 
-            Quaternionf reverseQuad = new Quaternionf(0, 0, 0, 1);
-            reverseQuad.rotateAxis(Mth.PI, 0 , 1, 0); // flip around y-axis because block items were facing backwards
-
             // Want item rendering
             poseStack.pushPose();
             setupPoseStack(poseStack, 0.31F, 0.43F, -0.001F);
@@ -140,7 +137,7 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenRender
     {
         poseStack.last().pose().translate(xOffset, yOffset, zOffset); // move to correct spot on sprite
         poseStack.last().pose().scale(0.5F, 0.5F, 0.001F); // scale to correct size on the sprite at location
-        Quaternionf normalToUse = new Quaternionf(-0.3F, 0F, 0F, 1F); // Controls the lighting on the items...
+        Quaternionf normalToUse = new Quaternionf(-1F, 0F, 0F, 1F); // Controls the lighting on the items...
         poseStack.last().normal().set(normalToUse); // set normal for lighting
     }
 
