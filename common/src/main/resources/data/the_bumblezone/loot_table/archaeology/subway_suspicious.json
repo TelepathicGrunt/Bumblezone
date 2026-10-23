@@ -72,6 +72,16 @@
           "weight": 2
         },
         {
+          "name": "the_bumblezone:banner_pattern_bee",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_honeycombs",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
           "name": "minecraft:flower_banner_pattern",
           "type": "minecraft:item",
           "weight": 1
