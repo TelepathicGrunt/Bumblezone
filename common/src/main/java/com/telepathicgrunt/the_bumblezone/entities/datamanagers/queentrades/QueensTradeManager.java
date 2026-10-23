@@ -340,7 +340,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
             }
 
             WeightedList.Builder<WeightedTradeResult> builder = WeightedList.builder();
-            resultItems.forEach(builder::add);
+            resultItems.forEach(tradeResult -> builder.add(tradeResult, tradeResult.getWeight()));
             temp.put(specialDaysEntry, builder.build());
             tempSpecialDaysQueenTrades.put(item, temp);
         }
@@ -368,7 +368,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
             }
 
             WeightedList.Builder<WeightedTradeResult> builder = WeightedList.builder();
-            existingTrades.forEach(builder::add);
+            existingTrades.forEach(tradeResult -> builder.add(tradeResult, tradeResult.getWeight()));
             tempQueenTrades.put(item, Pair.of(builder.build(), key));
         }
     }

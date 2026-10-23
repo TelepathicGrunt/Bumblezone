@@ -5,6 +5,8 @@ Added Bee Queen Trade that turns Looms into Bumblezone Banner Patterns
 
 Added Bee Queen Trade that turns Jukeboxes and Note Blocks into Bumblezone Music Discs
 
+Fixed Bee Queen trades not weighting the possible resultant items properly
+
 #### Structures:
 Increased rates of Banner Patterns in Sempiternal Sanctum's loot tables and in all Suspicious Pile Of Pollen loot tables.
 
