@@ -1,0 +1,126 @@
+{
+  "wants": [
+    {
+      "id": "minecraft:jukebox",
+      "required": true
+    },
+    {
+      "id": "minecraft:note_block",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "the_bumblezone:music_disc_hive_speed_beepop",
+      "count": 1,
+      "xp_reward": 5,
+      "weight": 6,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_perzzona_hive",
+      "count": 1,
+      "xp_reward": 5,
+      "weight": 6,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_string_like_a_bee",
+      "count": 1,
+      "xp_reward": 5,
+      "weight": 6,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_honey_bee_rat_faced_boy",
+      "count": 1,
+      "xp_reward": 5,
+      "weight": 6,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_rivers_of_honey_moserao",
+      "count": 1,
+      "xp_reward": 5,
+      "weight": 6,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_la_bee_da_loca",
+      "count": 1,
+      "xp_reward": 5,
+      "weight": 6,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_bee_laxing_with_the_hom_bees",
+      "count": 1,
+      "xp_reward": 5,
+      "weight": 6,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_bee_ware_of_the_temple",
+      "count": 1,
+      "xp_reward": 15,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_knowing_renren",
+      "count": 1,
+      "xp_reward": 15,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_radiance_renren",
+      "count": 1,
+      "xp_reward": 15,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_life_renren",
+      "count": 1,
+      "xp_reward": 15,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_a_last_first_last",
+      "count": 1,
+      "xp_reward": 15,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_drowning_in_despair",
+      "count": 1,
+      "xp_reward": 15,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_beenna_box",
+      "count": 1,
+      "xp_reward": 15,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "windswept:music_disc_bumblebee",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 3,
+      "required": false
+    },
+    {
+      "id": "llamarama:flight_of_the_bumble_llama",
+      "count": 1,
+      "xp_reward": 8,
+      "weight": 3,
+      "required": false
+    }
+  ]
+}

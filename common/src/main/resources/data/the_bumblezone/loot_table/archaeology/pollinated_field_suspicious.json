@@ -290,6 +290,16 @@
           ]
         },
         {
+          "name": "the_bumblezone:banner_pattern_bee",
+          "type": "minecraft:item",
+          "weight": 10
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_honeycombs",
+          "type": "minecraft:item",
+          "weight": 10
+        },
+        {
           "type": "minecraft:item",
           "name": "the_bumblezone:stingless_bee_helmet_1",
           "weight": 7,

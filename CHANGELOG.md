@@ -1,3 +1,17 @@
+### **(V.7.18.2 Changes) (26.1.2 Minecraft)**
+
+#### Entities:
+Added Bee Queen Trade that turns Looms into Bumblezone Banner Patterns
+
+Added Bee Queen Trade that turns Jukeboxes and Note Blocks into Bumblezone Music Discs
+
+#### Structures:
+Increased rates of Banner Patterns in Sempiternal Sanctum's loot tables and in all Suspicious Pile Of Pollen loot tables.
+
+#### Music:
+Adjusted textures of new music discs slightly
+
+
 ### **(V.7.18.1 Changes) (26.1.2 Minecraft)**
 
 #### Items:

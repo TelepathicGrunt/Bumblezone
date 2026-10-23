@@ -176,7 +176,7 @@
         {
           "name": "the_bumblezone:banner_pattern_arrows",
           "type": "minecraft:item",
-          "weight": 6,
+          "weight": 15,
           "quality": 1
         },
         {

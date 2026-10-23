@@ -192,6 +192,16 @@
           ]
         },
         {
+          "name": "the_bumblezone:banner_pattern_bee",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_honeycombs",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
           "name": "minecraft:brown_candle",
           "type": "minecraft:item",
           "weight": 1
