@@ -1,5 +1,8 @@
 ### **(V.7.18.2 Changes) (26.1.2 Minecraft)**
 
+#### Dimension:
+Set the Bumblezone dimension up with a copy of Overworld timelines but with the sky effects disabled. Fixes Bumblezone having sunrise/sunset sky colors when it should not have said colors.
+
 #### Entities:
 Added Bee Queen Trade that turns Looms into Bumblezone Banner Patterns
 

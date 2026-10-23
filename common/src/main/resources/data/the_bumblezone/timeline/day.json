@@ -1,0 +1,99 @@
+{
+  "clock": "minecraft:overworld",
+  "period_ticks": 24000,
+  "time_markers": {},
+  "tracks": {
+    "minecraft:audio/firefly_bush_sounds": {
+      "keyframes": [
+        {
+          "ticks": 12600,
+          "value": true
+        },
+        {
+          "ticks": 23401,
+          "value": false
+        }
+      ],
+      "modifier": "or"
+    },
+    "minecraft:gameplay/bees_stay_in_hive": {
+      "keyframes": [
+        {
+          "ticks": 12542,
+          "value": true
+        },
+        {
+          "ticks": 23460,
+          "value": false
+        }
+      ],
+      "modifier": "or"
+    },
+    "minecraft:gameplay/cat_waking_up_gift_chance": {
+      "ease": "constant",
+      "keyframes": [
+        {
+          "ticks": 362,
+          "value": 0.0
+        },
+        {
+          "ticks": 23667,
+          "value": 0.7
+        }
+      ],
+      "modifier": "maximum"
+    },
+    "minecraft:gameplay/creaking_active": {
+      "keyframes": [
+        {
+          "ticks": 12600,
+          "value": true
+        },
+        {
+          "ticks": 23401,
+          "value": false
+        }
+      ],
+      "modifier": "or"
+    },
+    "minecraft:gameplay/eyeblossom_open": {
+      "keyframes": [
+        {
+          "ticks": 12600,
+          "value": true
+        },
+        {
+          "ticks": 23401,
+          "value": false
+        }
+      ]
+    },
+    "minecraft:gameplay/monsters_burn": {
+      "keyframes": [
+        {
+          "ticks": 12542,
+          "value": false
+        },
+        {
+          "ticks": 23460,
+          "value": true
+        }
+      ],
+      "modifier": "or"
+    },
+    "minecraft:gameplay/turtle_egg_hatch_chance": {
+      "ease": "constant",
+      "keyframes": [
+        {
+          "ticks": 21062,
+          "value": 1.0
+        },
+        {
+          "ticks": 21905,
+          "value": 0.002
+        }
+      ],
+      "modifier": "maximum"
+    }
+  }
+}
