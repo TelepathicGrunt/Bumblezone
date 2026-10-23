@@ -7,57 +7,73 @@
   ],
   "possible_rewards": [
     {
-      "id": "the_bumblezone:banner_pattern_bee",
-      "count": 1,
+      "item": {
+        "id": "the_bumblezone:banner_pattern_bee",
+        "count": 1
+      },
       "xp_reward": 5,
       "weight": 18,
       "required": true
     },
     {
-      "id": "the_bumblezone:banner_pattern_honeycombs",
-      "count": 1,
+      "item": {
+        "id": "the_bumblezone:banner_pattern_honeycombs",
+        "count": 1
+      },
       "xp_reward": 5,
       "weight": 18,
       "required": true
     },
     {
-      "id": "the_bumblezone:banner_pattern_swords",
-      "count": 1,
+      "item": {
+        "id": "the_bumblezone:banner_pattern_swords",
+        "count": 1
+      },
       "xp_reward": 5,
       "weight": 1,
       "required": true
     },
     {
-      "id": "the_bumblezone:banner_pattern_sun",
-      "count": 1,
+      "item": {
+        "id": "the_bumblezone:banner_pattern_sun",
+        "count": 1
+      },
       "xp_reward": 5,
       "weight": 1,
       "required": true
     },
     {
-      "id": "the_bumblezone:banner_pattern_pluses",
-      "count": 1,
+      "item": {
+        "id": "the_bumblezone:banner_pattern_pluses",
+        "count": 1
+      },
       "xp_reward": 5,
       "weight": 1,
       "required": true
     },
     {
-      "id": "the_bumblezone:banner_pattern_eyes",
-      "count": 1,
+      "item": {
+        "id": "the_bumblezone:banner_pattern_eyes",
+        "count": 1
+      },
       "xp_reward": 5,
       "weight": 1,
       "required": true
     },
     {
-      "id": "the_bumblezone:banner_pattern_peace",
-      "count": 1,
+      "item": {
+        "id": "the_bumblezone:banner_pattern_peace",
+        "count": 1
+      },
       "xp_reward": 5,
       "weight": 1,
       "required": true
     },
     {
-      "id": "the_bumblezone:banner_pattern_arrows",
-      "count": 1,
+      "item": {
+        "id": "the_bumblezone:banner_pattern_arrows",
+        "count": 1
+      },
       "xp_reward": 5,
       "weight": 1,
       "required": true
