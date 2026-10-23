@@ -12,6 +12,8 @@ Fixed Bee Queen trades not weighting the possible resultant items properly
 
 Fixed Bee Queen speech bubble showing items too dark
 
+Fixed Bee Queen speech bubble being mirrored when it shouldn't
+
 #### Structures:
 Increased rates of Banner Patterns in Sempiternal Sanctum's loot tables and in all Suspicious Pile Of Pollen loot tables.
 

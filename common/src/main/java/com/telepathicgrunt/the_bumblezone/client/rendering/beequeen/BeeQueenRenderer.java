@@ -89,13 +89,14 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenRender
         if (state.tradeHintTimeRemaining > 0 && !state.wantItem.isEmpty() && !state.slicedRewardItems.isEmpty()) {
             float animationProgressToUse = Mth.lerp(state.ageInTicks - ((int)state.ageInTicks), state.prevTradeHintAnimationProgress, state.tradeHintAnimationProgress);
             float offset = 1 - animationProgressToUse;
-            Vector3f offsetVec = new Vector3f(-offset, -offset, 0.0F);
+            Vector3f offsetVec = new Vector3f(offset, -offset, 0.0F);
 
             float x = 0;
             float y = 4.5f;
             float z = 0;
 
             poseStack.pushPose();
+
             poseStack.translate(x + offsetVec.x(), y + offsetVec.y(), z + offsetVec.z());
             poseStack.scale(animationProgressToUse, animationProgressToUse, animationProgressToUse);
             poseStack.mulPose(camera.orientation);
@@ -107,21 +108,21 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenRender
                 float v1 = 1;
                 int lightCoords = 255;
 
-                buffer.addVertex(pose, TRADE_HINT_VERTEX_POSITIONS[0].x(), TRADE_HINT_VERTEX_POSITIONS[0].y(), TRADE_HINT_VERTEX_POSITIONS[0].z()).setColor(ARGB.white(255)).setUv(u1, v1).setOverlay(OverlayTexture.NO_OVERLAY).setLight(lightCoords).setNormal(pose, 0.0f, -1.0f, 0.0f);
-                buffer.addVertex(pose, TRADE_HINT_VERTEX_POSITIONS[1].x(), TRADE_HINT_VERTEX_POSITIONS[1].y(), TRADE_HINT_VERTEX_POSITIONS[1].z()).setColor(ARGB.white(255)).setUv(u1, v0).setOverlay(OverlayTexture.NO_OVERLAY).setLight(lightCoords).setNormal(pose, 0.0f, -1.0f, 0.0f);
-                buffer.addVertex(pose, TRADE_HINT_VERTEX_POSITIONS[2].x(), TRADE_HINT_VERTEX_POSITIONS[2].y(), TRADE_HINT_VERTEX_POSITIONS[2].z()).setColor(ARGB.white(255)).setUv(u0, v0).setOverlay(OverlayTexture.NO_OVERLAY).setLight(lightCoords).setNormal(pose, 0.0f, -1.0f, 0.0f);
-                buffer.addVertex(pose, TRADE_HINT_VERTEX_POSITIONS[3].x(), TRADE_HINT_VERTEX_POSITIONS[3].y(), TRADE_HINT_VERTEX_POSITIONS[3].z()).setColor(ARGB.white(255)).setUv(u0, v1).setOverlay(OverlayTexture.NO_OVERLAY).setLight(lightCoords).setNormal(pose, 0.0f, -1.0f, 0.0f);
+                buffer.addVertex(pose, TRADE_HINT_VERTEX_POSITIONS[0].x(), TRADE_HINT_VERTEX_POSITIONS[0].y(), TRADE_HINT_VERTEX_POSITIONS[0].z()).setColor(ARGB.white(255)).setUv(u0, v1).setOverlay(OverlayTexture.NO_OVERLAY).setLight(lightCoords).setNormal(pose, 0.0f, -1.0f, 0.0f);
+                buffer.addVertex(pose, TRADE_HINT_VERTEX_POSITIONS[1].x(), TRADE_HINT_VERTEX_POSITIONS[1].y(), TRADE_HINT_VERTEX_POSITIONS[1].z()).setColor(ARGB.white(255)).setUv(u0, v0).setOverlay(OverlayTexture.NO_OVERLAY).setLight(lightCoords).setNormal(pose, 0.0f, -1.0f, 0.0f);
+                buffer.addVertex(pose, TRADE_HINT_VERTEX_POSITIONS[2].x(), TRADE_HINT_VERTEX_POSITIONS[2].y(), TRADE_HINT_VERTEX_POSITIONS[2].z()).setColor(ARGB.white(255)).setUv(u1, v0).setOverlay(OverlayTexture.NO_OVERLAY).setLight(lightCoords).setNormal(pose, 0.0f, -1.0f, 0.0f);
+                buffer.addVertex(pose, TRADE_HINT_VERTEX_POSITIONS[3].x(), TRADE_HINT_VERTEX_POSITIONS[3].y(), TRADE_HINT_VERTEX_POSITIONS[3].z()).setColor(ARGB.white(255)).setUv(u1, v1).setOverlay(OverlayTexture.NO_OVERLAY).setLight(lightCoords).setNormal(pose, 0.0f, -1.0f, 0.0f);
             });
 
             // Want item rendering
             poseStack.pushPose();
-            setupPoseStack(poseStack, 0.31F, 0.43F, -0.001F);
+            setupPoseStack(poseStack, -0.31F, 0.43F, -0.001F);
             renderItem(state.wantItem, poseStack, submitNodeCollector);
             poseStack.popPose();
 
             // Reward item rendering
             poseStack.pushPose();
-            setupPoseStack(poseStack, -0.31F, -0.13F, -0.001F);
+            setupPoseStack(poseStack, 0.31F, -0.13F, -0.001F);
             ItemStackRenderState slicedRewardItemStackRenderState = state.slicedRewardItems.get((state.tradeHintTimeRemaining / TRADE_REWARD_CYCLE_TIME) % state.slicedRewardItems.size());
             renderItem(slicedRewardItemStackRenderState, poseStack, submitNodeCollector);
             poseStack.popPose();
