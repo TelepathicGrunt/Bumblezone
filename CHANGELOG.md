@@ -1,3 +1,9 @@
+### **(V.7.18.3 Changes) (26.1.2 Minecraft)**
+
+#### Entities:
+Fixed several mod compat and holiday Bee Queen trades
+
+
 ### **(V.7.18.2 Changes) (26.1.2 Minecraft)**
 
 #### Dimension:
