@@ -1,3 +1,9 @@
+### **(V.7.17.2 Changes) (1.21.1 Minecraft)**
+
+#### Entities:
+Fixed several mod compat and holiday Bee Queen trades
+
+
 ### **(V.7.17.1 Changes) (1.21.1 Minecraft)**
 
 #### Entities:
