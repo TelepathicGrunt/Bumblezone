@@ -409,7 +409,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     for (Player player : nearbyPlayers) {
                         if (isLookingAtMeClose(player)) {
                             Item wantItem = null;
-                            List<WeightedTradeResult> tradeResults = null;
+                            List<WeightedTradeResult> tradeResults = new ArrayList<>();
 
                             if (getIsSpecialDay()) {
                                 Optional<List<Item>> specialDayItem = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItem();
@@ -426,7 +426,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                                 }
                             }
 
-                            if (wantItem == null || tradeResults == null) {
+                            if ((wantItem == null || tradeResults.isEmpty()) && !QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.isEmpty()) {
                                 ObjectSet<Item> keySet = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.keySet();
                                 wantItem = keySet.stream().skip(this.random.nextInt(keySet.size())).findFirst().orElse(null);
                                 tradeResults = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.get(wantItem).unwrap();
