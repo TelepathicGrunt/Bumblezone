@@ -6,9 +6,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.QuartPos;
 import net.minecraft.core.SectionPos;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,14 +19,21 @@ import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.Nullable;
 
 public class UnsafeBulkSectionAccess {
-    private final LevelAccessor level;
+    private final ServerLevelAccessor level;
+    private final ServerLevel serverLevel;
     private final Long2ObjectMap<LevelChunkSection> acquiredSections = new Long2ObjectOpenHashMap<LevelChunkSection>();
     @Nullable
     private LevelChunkSection lastSection;
     private long lastSectionKey;
 
-    public UnsafeBulkSectionAccess(LevelAccessor levelAccessor) {
+    public UnsafeBulkSectionAccess(ServerLevelAccessor levelAccessor) {
         this.level = levelAccessor;
+        if (this.level instanceof ServerLevel serverLevel1) {
+            this.serverLevel = serverLevel1;
+        }
+        else {
+            this.serverLevel = this.level.getLevel();
+        }
     }
 
     @Nullable
@@ -87,12 +94,16 @@ public class UnsafeBulkSectionAccess {
             return false;
         }
 
-        chunkSection.setBlockState(
+        BlockState oldState = chunkSection.setBlockState(
                 SectionPos.sectionRelative(blockPos.getX()),
                 SectionPos.sectionRelative(blockPos.getY()),
                 SectionPos.sectionRelative(blockPos.getZ()),
                 state,
                 lockSection);
+
+        if (oldState != null) {
+            this.serverLevel.onBlockStateChange(blockPos, oldState, state);
+        }
 
         return true;
     }
@@ -107,8 +118,12 @@ public class UnsafeBulkSectionAccess {
         int y = SectionPos.sectionRelative(blockPos.getY());
         int z = SectionPos.sectionRelative(blockPos.getZ());
 
-        BlockState oldState = chunkSection.getBlockState(x, y, z);
-        chunkSection.setBlockState(x, y, z, state, lockSection);
+        BlockState oldState = chunkSection.setBlockState(x, y, z, state, lockSection);
+
+        if (oldState != null) {
+            this.serverLevel.onBlockStateChange(blockPos, oldState, state);
+        }
+
         return oldState;
     }
 }
