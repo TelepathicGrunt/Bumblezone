@@ -3,6 +3,9 @@
 #### Entities:
 Fixed some Regions Unexplored mod compat Bee Queen trades
 
+#### Dimension:
+Adjusted some worldgen code to avoid some orphaned point of interest block data
+
 
 ### **(V.7.18.3 Changes) (26.1.2 Minecraft)**
 
