@@ -1,3 +1,9 @@
+### **(V.7.17.3 Changes) (1.21.1 Minecraft)**
+
+#### Entities:
+Fixed some Regions Unexplored mod compat Bee Queen trades
+
+
 ### **(V.7.17.2 Changes) (1.21.1 Minecraft)**
 
 #### Entities:

@@ -8,7 +8,7 @@
   "possible_rewards": [
     {
       "item": {
-        "id": "minecraft:oak_branch",
+        "id": "regions_unexplored:oak_branch",
         "count": 1
       },
       "xp_reward": 0,
