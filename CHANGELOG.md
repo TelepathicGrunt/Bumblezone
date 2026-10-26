@@ -3,6 +3,8 @@
 #### Entities:
 Fixed some Regions Unexplored mod compat Bee Queen trades
 
+Fixed crash when looking at Bee Queen when all bee Queen trades are removed
+
 #### Dimension:
 Adjusted some worldgen code to avoid some orphaned point of interest block data
 
