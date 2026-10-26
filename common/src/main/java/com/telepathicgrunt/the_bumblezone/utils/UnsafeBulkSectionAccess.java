@@ -102,7 +102,7 @@ public class UnsafeBulkSectionAccess {
                 lockSection);
 
         if (oldState != null) {
-            this.serverLevel.onBlockStateChange(blockPos, oldState, state);
+            this.serverLevel.updatePOIOnBlockStateChange(blockPos, oldState, state);
         }
 
         return true;
@@ -121,7 +121,7 @@ public class UnsafeBulkSectionAccess {
         BlockState oldState = chunkSection.setBlockState(x, y, z, state, lockSection);
 
         if (oldState != null) {
-            this.serverLevel.onBlockStateChange(blockPos, oldState, state);
+            this.serverLevel.updatePOIOnBlockStateChange(blockPos, oldState, state);
         }
 
         return oldState;
