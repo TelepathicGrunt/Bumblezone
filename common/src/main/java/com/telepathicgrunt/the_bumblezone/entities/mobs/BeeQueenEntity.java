@@ -75,6 +75,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.throwableitemprojectile.Snowball;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -117,7 +118,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     private int tradeHintCooldown = 0;
     private boolean isSpecialDay = false;
     public int tradeHintTimeRemaining = 0;
-    private static final Lazy<WeightedTradeResult> ESSENCE_DROP = Lazy.lazy(() -> new WeightedTradeResult(null, Optional.of(List.of(BzItems.ESSENCE_OF_THE_BEES.get().getDefaultInstance())), 1, 1000, 1));
+    private static final Lazy<WeightedTradeResult> ESSENCE_DROP = Lazy.lazy(() -> new WeightedTradeResult(null, Optional.of(List.of(new ItemStackTemplate(BzItems.ESSENCE_OF_THE_BEES.get(), 1))), 1, 1000, 1));
 
     public BeeQueenEntity(EntityType<? extends BeeQueenEntity> type, Level world) {
         super(type, world);
@@ -473,7 +474,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                             List<ItemStack> allRewardItems = new ArrayList<>();
                             List<ItemStack> slicedRewardItems;
                             for (Weighted<WeightedTradeResult> weightedTradeResult : tradeResults) {
-                                allRewardItems.addAll(weightedTradeResult.value().getItems());
+                                allRewardItems.addAll(weightedTradeResult.value().getItems().stream().map(ItemStackTemplate::create).toList());
                             }
                             Collections.shuffle(allRewardItems);
                             slicedRewardItems = allRewardItems.subList(0, Math.min(maximumRewardsToShowAtATime, allRewardItems.size()));
@@ -806,7 +807,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
 
         int remainingItemToSpawn = reward.count * rewardMultiplier;
-        ItemStack chosenItem = reward.getItems().get(random.nextInt(reward.getItems().size()));
+        ItemStack chosenItem = reward.getItems().get(random.nextInt(reward.getItems().size())).create();
         int itemStackMaxSize = chosenItem.getMaxStackSize();
         while (remainingItemToSpawn > 0) {
             ItemStack rewardItem = chosenItem.copyWithCount(1);

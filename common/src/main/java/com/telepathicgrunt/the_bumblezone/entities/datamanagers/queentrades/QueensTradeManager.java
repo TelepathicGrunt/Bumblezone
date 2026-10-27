@@ -119,10 +119,10 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
         ).apply(instance, instance.stable(TradeWantEntry::new)));
     }
 
-    public record TradeResultEntry(Optional<TagKey<Item>> tagKey, List<ItemStack> resultItems, int count, int xpReward, int weight) {
+    public record TradeResultEntry(Optional<TagKey<Item>> tagKey, List<ItemStackTemplate> resultItems, int count, int xpReward, int weight) {
         public static final MapCodec<TradeResultEntry> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
                 TagKey.codec(Registries.ITEM).optionalFieldOf("tagkey").forGetter(e -> e.tagKey),
-                ItemStack.CODEC.listOf().fieldOf("wantItems").forGetter(e -> e.resultItems),
+                ItemStackTemplate.CODEC.listOf().fieldOf("wantItems").forGetter(e -> e.resultItems),
                 Codec.intRange(1, 64).fieldOf("count").forGetter(e -> e.count),
                 ExtraCodecs.NON_NEGATIVE_INT.fieldOf("xp_reward").forGetter(e -> e.xpReward),
                 ExtraCodecs.POSITIVE_INT.fieldOf("weight").forGetter(e -> e.weight)
@@ -229,7 +229,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
                 }
 
                 List<Weighted<WeightedTradeResult>> tradeResults = tempQueenTradesFirstPass.get(item).getFirst().unwrap();
-                if (tradeResults.stream().anyMatch(r -> r.value().getItems().stream().anyMatch(t -> !wantSet.contains(t.getItem())))) {
+                if (tradeResults.stream().anyMatch(r -> r.value().getItems().stream().anyMatch(t -> !wantSet.contains(t.item().value())))) {
                     for (Item item2 : wantSet) {
                         tempQueenTradesFirstPass.put(item2, Pair.of(tempQueenTradesFirstPass.get(item2).getFirst(), null));
                     }
@@ -310,7 +310,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
                         Bumblezone.LOGGER.error("Trade result tag is set to required but " + rawTradeOutputEntry + " tag entry does not exist.");
                     }
                 }
-                else tag.ifPresent(holders -> tradeResultEntries.add(new TradeResultEntry(Optional.of(tagKey), holders.stream().map(i -> i.value().getDefaultInstance()).collect(Collectors.toCollection(ArrayList::new)), rawTradeOutputEntry.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
+                else tag.ifPresent(holders -> tradeResultEntries.add(new TradeResultEntry(Optional.of(tagKey), holders.stream().map(i -> new ItemStackTemplate(i.value(), 1)).collect(Collectors.toCollection(ArrayList::new)), rawTradeOutputEntry.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
             }
             else {
                 if (rawTradeOutputEntry.itemStackTemplate().isEmpty() || rawTradeOutputEntry.itemStackTemplate().get().item().is(AIR) || rawTradeOutputEntry.itemStackTemplate().get().count() <= 0) {
@@ -318,7 +318,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
                         Bumblezone.LOGGER.error("Trade result entry is set to required but " + rawTradeOutputEntry + " itemStackTemplate entry does not exist.");
                     }
                 }
-                else rawTradeOutputEntry.itemStackTemplate().ifPresent(itemStackTemplate -> tradeResultEntries.add(new TradeResultEntry(Optional.empty(), List.of(new ItemStack(itemStackTemplate.item(), itemStackTemplate.count(), itemStackTemplate.components())), itemStackTemplate.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
+                else rawTradeOutputEntry.itemStackTemplate().ifPresent(itemStackTemplate -> tradeResultEntries.add(new TradeResultEntry(Optional.empty(), List.of(new ItemStackTemplate(itemStackTemplate.item(), itemStackTemplate.count(), itemStackTemplate.components())), itemStackTemplate.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
             }
         }
 
@@ -379,7 +379,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
             if (tempQueenTrades.containsKey(item)) {
                 List<WeightedTradeResult> existingTrades = new ArrayList<>();
                 tempQueenTrades.get(item).getFirst().unwrap().forEach(existingTrade -> existingTrades.add(existingTrade.value()));
-                existingTrades.add(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items.stream().map(Item::getDefaultInstance).toList()), 1, 0 , 1));
+                existingTrades.add(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items.stream().map(i -> new ItemStackTemplate(i, 1)).toList()), 1, 0 , 1));
 
                 WeightedList.Builder<WeightedTradeResult> builder = WeightedList.builder();
                 existingTrades.forEach(builder::add);
@@ -387,7 +387,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
             }
             else {
                 WeightedList.Builder<WeightedTradeResult> builder = WeightedList.builder();
-                builder.add(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items.stream().map(Item::getDefaultInstance).toList()), 1, 0 , 1));
+                builder.add(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items.stream().map(i -> new ItemStackTemplate(i, 1)).toList()), 1, 0 , 1));
                 tempQueenTrades.put(item, Pair.of(builder.build(), tradeRandomizeEntry.tagKey.orElse(null)));
             }
         }

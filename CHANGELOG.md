@@ -1,9 +1,23 @@
 ### **(V.7.18.4 Changes) (26.1.2 Minecraft)**
 
+#### Misc:
+
+(Fabric): Fixed unable to launch server
+
 #### Entities:
 Fixed some Regions Unexplored mod compat Bee Queen trades
 
 Fixed crash when looking at Bee Queen when all bee Queen trades are removed
+
+Fixed Bee Queen speech bubble movement
+
+(NeoForge): Fixed Bee Queen trades not loading on server
+
+#### Blocks:
+
+(NeoForge): Fixed Crystalline Flower data not loading on server
+
+(NeoForge): Fixed Potion Candle data not loading on server
 
 #### Dimension:
 Adjusted some worldgen code to avoid some orphaned point of interest block data

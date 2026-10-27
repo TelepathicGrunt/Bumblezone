@@ -179,11 +179,6 @@ public class FabricEventManager {
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, _) ->
                 BzDatapackSyncEvent.EVENT.invoke(new BzDatapackSyncEvent(player)));
 
-        ClientRecipeSynchronizedEvent.EVENT.register((_, synchronizedRecipes) -> {
-            PotionCandleRecipeSyncData.POTION_CANDLE_FROM_SUPER_CANDLES = synchronizedRecipes.get(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles")));
-            PotionCandleRecipeSyncData.POTION_CANDLE_FROM_STRING_AND_CARVABLE_WAX = synchronizedRecipes.get(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax")));
-        });
-
         AttackBlockCallback.EVENT.register(FabricEventManager::onItemAttackBlock);
         UseBlockCallback.EVENT.register(FabricEventManager::onItemUseOnBlock);
         UseItemCallback.EVENT.register(FabricEventManager::onItemUse);

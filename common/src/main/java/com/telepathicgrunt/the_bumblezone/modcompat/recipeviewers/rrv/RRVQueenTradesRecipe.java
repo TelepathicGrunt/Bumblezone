@@ -14,6 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.CommonColors;
 import net.minecraft.util.random.Weighted;
+import net.minecraft.world.item.ItemStackTemplate;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class RRVQueenTradesRecipe implements ReliableClientRecipe {
         this.reward = reward;
         this.id = id;
         this.inputSlotContent = input.tagKey().isPresent() ? SlotContent.of(input.tagKey().get()) : SlotContent.of(input.item());
-        this.ouputSlotContent = reward.value().tagKey.isPresent() ? SlotContent.of(reward.value().tagKey.get()) : SlotContent.of(reward.value().getItems());
+        this.ouputSlotContent = reward.value().tagKey.isPresent() ? SlotContent.of(reward.value().tagKey.get()) : SlotContent.of(reward.value().getItems().stream().map(ItemStackTemplate::create).toList());
     }
 
     @Override

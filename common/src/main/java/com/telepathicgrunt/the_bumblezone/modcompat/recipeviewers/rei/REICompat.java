@@ -37,6 +37,7 @@ import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.ShapedRecipe;
@@ -71,7 +72,7 @@ public class REICompat implements REIClientPlugin {
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades.isEmpty()) {
             for (Pair<MainTradeRowInput, WeightedList<WeightedTradeResult>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades) {
                 for (Weighted<WeightedTradeResult> weightedTradeResult : trade.getSecond().unwrap()) {
-                    List<ItemStack> rewardCollection = weightedTradeResult.value().getItems();
+                    List<ItemStack> rewardCollection = weightedTradeResult.value().getItems().stream().map(ItemStackTemplate::create).toList();
                     registry.add(new REIQueenTradesInfo(
                             trade.getFirst().tagKey().isPresent() ? Collections.singletonList(EntryIngredients.ofItemTag(trade.getFirst().tagKey().get())) : Collections.singletonList(EntryIngredients.of(trade.getFirst().item())),
                             trade.getFirst().tagKey().orElse(null),

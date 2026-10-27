@@ -97,9 +97,9 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenRender
 
             poseStack.pushPose();
 
+            poseStack.mulPose(camera.orientation);
             poseStack.translate(x + offsetVec.x(), y + offsetVec.y(), z + offsetVec.z());
             poseStack.scale(animationProgressToUse, animationProgressToUse, animationProgressToUse);
-            poseStack.mulPose(camera.orientation);
 
             submitNodeCollector.submitCustomGeometry(poseStack, SPEECH_BUBBLE_RENDER_TYPE, (pose, buffer) -> {
                 float u0 = 0;

@@ -16,6 +16,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.CommonColors;
+import net.minecraft.world.item.ItemStackTemplate;
 
 public class JEIQueenTradesCategory implements IRecipeCategory<JEIQueenTradesInfo> {
 
@@ -116,7 +117,7 @@ public class JEIQueenTradesCategory implements IRecipeCategory<JEIQueenTradesInf
             builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).add(recipe.input.item().getDefaultInstance());
         }
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addItemStacks(recipe.reward.value().getItems());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addItemStacks(recipe.reward.value().getItems().stream().map(ItemStackTemplate::create).toList());
         recipe.outputFocused = !focuses.isEmpty() && focuses.getAllFocuses().get(0).getRole() == RecipeIngredientRole.OUTPUT;
     }
 }

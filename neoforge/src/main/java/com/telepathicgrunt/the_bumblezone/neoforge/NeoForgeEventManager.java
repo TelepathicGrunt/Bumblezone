@@ -132,6 +132,7 @@ public class NeoForgeEventManager {
         eventBus.addListener(NeoForgeEventManager::onInteractEntity);
         eventBus.addListener(NeoForgeEventManager::onBreakSpeed);
         eventBus.addListener(NeoForgeEventManager::onTagsUpdateClientReceived);
+        eventBus.addListener(NeoForgeEventManager::onTagsUpdateServerLoad);
         eventBus.addListener(NeoForgeEventManager::onLevelTickPost);
         eventBus.addListener(NeoForgeEventManager::onAddReloadListeners);
         eventBus.addListener(NeoForgeEventManager::onDatapackSync);
@@ -299,6 +300,10 @@ public class NeoForgeEventManager {
     }
 
     private static void onTagsUpdateClientReceived(TagsUpdatedEvent.ClientPacketReceived event) {
+        BzTagsUpdatedEvent.EVENT.invoke(new BzTagsUpdatedEvent(event.getRegistries()));
+    }
+
+    private static void onTagsUpdateServerLoad(TagsUpdatedEvent.ServerDataLoad event) {
         BzTagsUpdatedEvent.EVENT.invoke(new BzTagsUpdatedEvent(event.getRegistries()));
     }
 
