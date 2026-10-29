@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleporta
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerBreakSpeedEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerEntityInteractEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -63,7 +64,7 @@ public abstract class PlayerMixin extends Entity {
             cancellable = true)
     private void bumblezone$setUnderwater(CallbackInfoReturnable<Boolean> cir) {
         if(!cir.getReturnValue()) {
-            this.wasUnderwater = this.isEyeInFluid(BzTags.SPECIAL_HONEY_LIKE);
+            this.wasUnderwater = PlatformService.INSTANCE.isEyeInFluid(this, BzTags.SPECIAL_HONEY_LIKE);
             if(this.wasUnderwater) {
                 cir.setReturnValue(true);
             }

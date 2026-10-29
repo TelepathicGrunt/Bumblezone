@@ -82,7 +82,9 @@ public interface PlatformService {
 
     void afterBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player);
 
-    double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidData... fluids);
+    double getFluidHeight(Entity entity, TagKey<Fluid> tagKey);
+
+    boolean isEyeInFluid(Entity entity, TagKey<Fluid> tagKey);
 
     boolean isEyesInNoFluid(Entity entity);
 

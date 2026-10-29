@@ -62,9 +62,9 @@ public abstract class EntityMixin implements EntityLootDropInterface {
 
     @ModifyArg(method = "<init>",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/EntityFluidInteraction;<init>(Ljava/util/Set;)V"))
-    private Set<TagKey<Fluid>> bumblezone$injectBzFluidForInteractions(Set<TagKey<Fluid>> fluids) {
+    private Set<TagKey<Fluid>> bumblezone$injectBzHoneyForInteractions(Set<TagKey<Fluid>> fluids) {
         Set<TagKey<Fluid>> mergedSet = new HashSet<>();
-        Collections.addAll(mergedSet, BzTags.BZ_HONEY_FLUID, BzTags.ROYAL_JELLY_FLUID, BzTags.SUGAR_WATER_FLUID);
+        Collections.addAll(mergedSet, BzTags.SPECIAL_HONEY_LIKE);
         mergedSet.addAll(fluids);
         return mergedSet;
     }

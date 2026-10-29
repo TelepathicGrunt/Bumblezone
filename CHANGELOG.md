@@ -1,7 +1,16 @@
+### **(V.7.18.5 Changes) (26.1.2 Minecraft)**
+
+#### Fluids:
+Fixed Sugar Water, Honey, And Royal Jelly fluid behaviors with entities.
+
+(NeoForge): Fixed crash when bees touched vanilla fluids due to fluid interaction patches neoforge did that my mixin clashed with.
+
+NOTE: If on NeoForge, update to 26.1.2.125 NeoForge when it releases to fix Honey Fluid/Royal Jelly Fluid overlay when inside the fluid.
+
+
 ### **(V.7.18.4 Changes) (26.1.2 Minecraft)**
 
 #### Misc:
-
 (Fabric): Fixed unable to launch server
 
 #### Entities:
@@ -14,7 +23,6 @@ Fixed Bee Queen speech bubble movement
 (NeoForge): Fixed Bee Queen trades not loading on server
 
 #### Blocks:
-
 (NeoForge): Fixed Crystalline Flower data not loading on server
 
 (NeoForge): Fixed Potion Candle data not loading on server

@@ -196,8 +196,13 @@ public class FabricPlatformService implements PlatformService {
     }
     
     @Override
-    public double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidData... fluids) {
-        return entity.getFluidHeight(fallback);
+    public double getFluidHeight(Entity entity, TagKey<Fluid> tagKey) {
+        return entity.getFluidHeight(tagKey);
+    }
+
+    @Override
+    public boolean isEyeInFluid(Entity entity, TagKey<Fluid> tagKey) {
+        return entity.isEyeInFluid(tagKey);
     }
     
     @Override

@@ -28,5 +28,5 @@ sourcesUrl="${sources_url}"
 "${mod_id}" = [
     { modId = "neoforge", type = "required", versionRange = "*", ordering = "NONE", side = "BOTH" },
     { modId = "minecraft", type = "required", versionRange = "[26.1,)", ordering = "NONE", side = "BOTH" },
-    { modId = "resourcefullib", type = "required", versionRange = "[3.0.11,)", ordering = "NONE", side = "BOTH" },
+    { modId = "resourcefullib", type = "required", versionRange = "[4.0.2,)", ordering = "NONE", side = "BOTH" },
 ]

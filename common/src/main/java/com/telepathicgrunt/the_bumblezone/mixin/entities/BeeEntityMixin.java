@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.entities;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeeFlowerHeadwearTemptGoal;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.GoalSelector;
@@ -47,7 +48,7 @@ public abstract class BeeEntityMixin extends Entity {
             at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/entity/animal/bee/Bee;isInWater()Z", shift = At.Shift.AFTER),
             require = 0)
     private void bumblezone$honeyFluidNotDrown(CallbackInfo ci) {
-        if(this.underWaterTicks >= 10 && this.getFluidHeight(BzTags.SPECIAL_HONEY_LIKE) > 0) {
+        if(this.underWaterTicks >= 10 && PlatformService.INSTANCE.getFluidHeight(this, BzTags.SPECIAL_HONEY_LIKE) > 0) {
             this.underWaterTicks = 9;
         }
     }

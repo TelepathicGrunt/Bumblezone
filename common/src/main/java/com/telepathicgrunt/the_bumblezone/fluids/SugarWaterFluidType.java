@@ -10,6 +10,7 @@ public class SugarWaterFluidType {
     public static FluidProperties.Builder create() {
 
         return FluidProperties.builder()
+                .isWaterLike(true)
                 .supportsBoating(true)
                 .canHydrate(true)
                 .canDrown(true)

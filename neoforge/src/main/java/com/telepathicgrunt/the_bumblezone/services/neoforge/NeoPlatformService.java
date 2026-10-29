@@ -10,7 +10,9 @@ import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityFluidInteractionA
 import com.telepathicgrunt.the_bumblezone.mixin.entities.TrackerAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.neoforge.world.StructureTemplateAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
@@ -182,8 +184,35 @@ public class NeoPlatformService implements PlatformService {
     }
     
     @Override
-    public double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidData... fluids) {
-        return entity.getFluidHeight(fallback);
+    public double getFluidHeight(Entity entity, TagKey<Fluid> tagKey) {
+        if (tagKey == BzTags.SPECIAL_HONEY_LIKE) {
+            double fluidHeight = entity.getFluidHeight(NeoForgeRegistries.FLUID_TYPES.get(BzFluids.HONEY_FLUID_TYPE.get().id()).get().value());
+            if (fluidHeight > 0) {
+                return fluidHeight;
+            }
+            return entity.getFluidHeight(NeoForgeRegistries.FLUID_TYPES.get(BzFluids.ROYAL_JELLY_FLUID_TYPE.get().id()).get().value());
+        }
+        else if (tagKey == BzTags.SUGAR_WATER_FLUID) {
+            return entity.getFluidHeight(NeoForgeRegistries.FLUID_TYPES.get(BzFluids.SUGAR_WATER_FLUID_TYPE.get().id()).get().value());
+        }
+
+        return 0;
+    }
+
+    @Override
+    public boolean isEyeInFluid(Entity entity, TagKey<Fluid> tagKey) {
+        if (tagKey == BzTags.SPECIAL_HONEY_LIKE) {
+            boolean eyeInFluid = entity.isEyeInFluid(NeoForgeRegistries.FLUID_TYPES.get(BzFluids.HONEY_FLUID_TYPE.get().id()).get().value());
+            if (eyeInFluid) {
+                return eyeInFluid;
+            }
+            return entity.isEyeInFluid(NeoForgeRegistries.FLUID_TYPES.get(BzFluids.ROYAL_JELLY_FLUID_TYPE.get().id()).get().value());
+        }
+        else if (tagKey == BzTags.SUGAR_WATER_FLUID) {
+            return entity.isEyeInFluid(NeoForgeRegistries.FLUID_TYPES.get(BzFluids.SUGAR_WATER_FLUID_TYPE.get().id()).get().value());
+        }
+
+        return false;
     }
     
     @Override

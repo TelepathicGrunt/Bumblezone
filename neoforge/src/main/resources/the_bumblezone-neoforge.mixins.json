@@ -7,6 +7,8 @@
     "blocks.FireBlockInvoker",
     "blocks.FireBlockMixin",
     "blocks.SuperCandleMixin",
+    "entities.EntityFluidInteractionMixin",
+    "entities.EntityMixin",
     "items.BzArrowItemMixin",
     "items.ItemExtensionMixin",
     "world.StructureTemplateAccessor"

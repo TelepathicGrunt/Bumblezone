@@ -60,7 +60,7 @@ public abstract class LivingEntityMixin {
     @ModifyExpressionValue(method = "baseTick()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isEyeInFluid(Lnet/minecraft/tags/TagKey;)Z"))
     private boolean bumblezone$breathing(boolean original) {
         if (!original) {
-            return ((LivingEntity) (Object) this).isEyeInFluid(BzTags.SPECIAL_HONEY_LIKE);
+            return PlatformService.INSTANCE.isEyeInFluid((Entity)(Object)this, BzTags.SPECIAL_HONEY_LIKE);
         }
         return original;
     }
@@ -74,16 +74,12 @@ public abstract class LivingEntityMixin {
         return equipmentSlot;
     }
 
-    // make jumping in honey and sugar water weaker
+    // make jumping in honey weaker
     @WrapOperation(method = "aiStep()V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getFluidHeight(Lnet/minecraft/tags/TagKey;)D", ordinal = 1),
             require = 0)
     private double bumblezone$customFluidJumpWeaker(LivingEntity livingEntity, TagKey<Fluid> tagKey, Operation<Double> original) {
-        double newFluidHeight = PlatformService.INSTANCE.getFluidHeight(livingEntity, BzTags.SPECIAL_HONEY_LIKE, BzFluids.HONEY_FLUID_TYPE.get(), BzFluids.ROYAL_JELLY_FLUID_TYPE.get());
-        if(newFluidHeight > 0) {
-            return newFluidHeight;
-        }
-        newFluidHeight = PlatformService.INSTANCE.getFluidHeight(livingEntity, BzTags.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID_TYPE.get());
+        double newFluidHeight = PlatformService.INSTANCE.getFluidHeight(livingEntity, BzTags.SPECIAL_HONEY_LIKE);
         if(newFluidHeight > 0) {
             return newFluidHeight;
         }

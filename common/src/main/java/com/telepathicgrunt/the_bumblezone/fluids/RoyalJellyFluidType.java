@@ -10,6 +10,7 @@ public class RoyalJellyFluidType {
     public static FluidProperties.Builder create() {
 
         return FluidProperties.builder()
+                .isWaterLike(false)
                 .supportsBoating(true)
                 .canHydrate(false)
                 .canDrown(true)
