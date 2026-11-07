@@ -13,10 +13,8 @@
           "Name": "productivebees:configurable_comb"
         },
         "state_nbt": {
-          "type": "productivebees:glowing",
-          "components": {
-            "productivebees:bee_type": "productivebees:glowing"
-          }
+          "type": "productivebees:dusts/glowing",
+          "components": {}
         }
       }
     ]

@@ -13,10 +13,8 @@
           "Name": "productivebees:configurable_comb"
         },
         "state_nbt": {
-          "type": "productivebees:copper",
-          "components": {
-            "productivebees:bee_type": "productivebees:copper"
-          }
+          "type": "productivebees:raw_materials/copper",
+          "components": {}
         }
       }
     ]

@@ -14,9 +14,7 @@
         },
         "state_nbt": {
           "type": "productivebees:skeletal",
-          "components": {
-            "productivebees:bee_type": "productivebees:skeletal"
-          }
+          "components": {}
         }
       }
     ]

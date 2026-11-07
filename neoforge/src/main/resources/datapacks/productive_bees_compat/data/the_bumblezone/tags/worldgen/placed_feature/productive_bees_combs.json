@@ -2,7 +2,19 @@
   "replace": false,
   "values": [
     {
+      "id": "the_bumblezone:productivebees/amethyst_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:productivebees/amethyst_comb_vein_high",
+      "required": false
+    },
+    {
       "id": "the_bumblezone:productivebees/blazing_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:productivebees/butcher_comb_vein",
       "required": false
     },
     {
@@ -22,10 +34,6 @@
       "required": false
     },
     {
-      "id": "the_bumblezone:productivebees/ghostly_comb_vein",
-      "required": false
-    },
-    {
       "id": "the_bumblezone:productivebees/glowing_comb_vein",
       "required": false
     },
@@ -42,11 +50,23 @@
       "required": false
     },
     {
+      "id": "the_bumblezone:productivebees/lava_comb_vein",
+      "required": false
+    },
+    {
       "id": "the_bumblezone:productivebees/magmatic_comb_vein",
       "required": false
     },
     {
       "id": "the_bumblezone:productivebees/redstone_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:productivebees/shroom_brown_shroom_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:productivebees/shroom_red_shroom_comb_vein",
       "required": false
     },
     {

@@ -13,10 +13,8 @@
           "Name": "productivebees:configurable_comb"
         },
         "state_nbt": {
-          "type": "productivebees:lapis",
-          "components": {
-            "productivebees:bee_type": "productivebees:lapis"
-          }
+          "type": "productivebees:gem/lapis",
+          "components": {}
         }
       }
     ]

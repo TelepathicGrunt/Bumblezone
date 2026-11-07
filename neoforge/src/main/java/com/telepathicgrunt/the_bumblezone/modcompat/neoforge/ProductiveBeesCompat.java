@@ -60,7 +60,7 @@ public class ProductiveBeesCompat implements ModCompat {
     private static final GeneralUtils.Lazy<List<Identifier>> SPIDER_DUNGEON_HONEYCOMBS = new GeneralUtils.Lazy<>(() ->
             BeeRegistries.allRegistered().toList().stream().filter(e -> {
                 int primary = e.value().primaryColor();
-                return BzModCompatibilityConfigs.allowedCombsForDungeons.contains(e.getKey().toString()) &&
+                return BzModCompatibilityConfigs.allowedCombsForDungeons.contains(e.getKey().identifier().toString()) &&
                         e.value().createComb() &&
                         (colorsAreClose(GeneralUtils.colorToInt(106, 127, 0), primary, 150) ||
                         colorsAreClose(GeneralUtils.colorToInt(129, 198, 0), primary, 150) ||
@@ -69,14 +69,14 @@ public class ProductiveBeesCompat implements ModCompat {
 
     private static final GeneralUtils.Lazy<List<Identifier>> BEE_DUNGEON_HONEYCOMBS = new GeneralUtils.Lazy<>(() ->
             BeeRegistries.allRegistered().toList().stream().filter(e ->
-                BzModCompatibilityConfigs.allowedCombsForDungeons.contains(e.getKey().toString()) &&
+                BzModCompatibilityConfigs.allowedCombsForDungeons.contains(e.getKey().identifier().toString()) &&
                     e.value().createComb() &&
-                    !SPIDER_DUNGEON_HONEYCOMBS.getOrFillFromInternal().contains(e.getKey())
+                    !SPIDER_DUNGEON_HONEYCOMBS.getOrFillFromInternal().contains(e.getKey().identifier())
             ).map(e -> e.getKey().identifier()).toList());
 
     private static final GeneralUtils.Lazy<List<Identifier>> ALL_BEES = new GeneralUtils.Lazy<>(() ->
             BeeRegistries.allRegistered().toList().stream()
-                    .filter(e -> BzModCompatibilityConfigs.allowedBees.contains(e.toString()))
+                    .filter(e -> BzModCompatibilityConfigs.allowedBees.contains(e.getKey().identifier().toString()))
                     .map(e ->  e.getKey().identifier())
                     .toList());
 

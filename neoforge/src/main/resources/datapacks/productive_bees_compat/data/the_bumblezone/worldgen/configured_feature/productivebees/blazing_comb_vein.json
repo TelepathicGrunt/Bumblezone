@@ -13,10 +13,8 @@
           "Name": "productivebees:configurable_comb"
         },
         "state_nbt": {
-          "type": "productivebees:blazing",
-          "components": {
-            "productivebees:bee_type": "productivebees:blazing"
-          }
+          "type": "productivebees:dusts/blazing",
+          "components": {}
         }
       }
     ]

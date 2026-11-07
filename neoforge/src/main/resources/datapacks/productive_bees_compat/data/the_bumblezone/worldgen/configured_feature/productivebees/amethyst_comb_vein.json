@@ -1,7 +1,7 @@
 {
   "type": "the_bumblezone:blockentity_combs",
   "config": {
-    "size": 13,
+    "size": 7,
     "discard_chance_on_air_exposure": 0,
     "targets": [
       {
@@ -13,10 +13,8 @@
           "Name": "productivebees:configurable_comb"
         },
         "state_nbt": {
-          "type": "productivebees:ghostly",
-          "components": {
-            "productivebees:bee_type": "productivebees:ghostly"
-          }
+          "type": "productivebees:gems/amethyst",
+          "components": {}
         }
       }
     ]

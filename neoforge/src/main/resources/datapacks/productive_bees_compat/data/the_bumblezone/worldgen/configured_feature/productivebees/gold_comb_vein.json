@@ -13,10 +13,8 @@
           "Name": "productivebees:configurable_comb"
         },
         "state_nbt": {
-          "type": "productivebees:gold",
-          "components": {
-            "productivebees:bee_type": "productivebees:gold"
-          }
+          "type": "productivebees:raw_materials/gold",
+          "components": {}
         }
       }
     ]

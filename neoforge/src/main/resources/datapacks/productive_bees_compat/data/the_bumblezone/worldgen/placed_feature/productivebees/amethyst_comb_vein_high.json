@@ -1,9 +1,9 @@
 {
-  "feature": "the_bumblezone:productivebees/ghostly_comb_vein",
+  "feature": "the_bumblezone:productivebees/amethyst_comb_vein",
   "placement": [
     {
       "type": "minecraft:rarity_filter",
-      "chance": 21
+      "chance": 9
     },
     {
       "type": "minecraft:in_square"
@@ -13,7 +13,7 @@
       "height": {
         "type": "minecraft:uniform",
         "min_inclusive": {
-          "below_top": 126
+          "below_top": 46
         },
         "max_inclusive": {
           "below_top": 10

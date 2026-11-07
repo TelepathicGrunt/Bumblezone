@@ -13,10 +13,8 @@
           "Name": "productivebees:configurable_comb"
         },
         "state_nbt": {
-          "type": "productivebees:crystalline",
-          "components": {
-            "productivebees:bee_type": "productivebees:crystalline"
-          }
+          "type": "productivebees:gems/crystalline",
+          "components": {}
         }
       }
     ]
