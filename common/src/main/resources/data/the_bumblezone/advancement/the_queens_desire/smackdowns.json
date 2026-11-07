@@ -25,7 +25,7 @@
     "dirt_pellet_extra_damage_kills": {
       "trigger": "the_bumblezone:dirt_pellet_extra_damage_kills",
       "conditions": {
-        "target_count": 6
+        "target_count": 4
       }
     }
   },
