@@ -33,8 +33,7 @@ public class BzCriterias {
     public static final RegistryEntry<CounterTrigger> BEE_STINGER_SHOOTER_TRIGGER = CRITERION_TRIGGERS.register("bee_stinger_shooter", CounterTrigger::new);
     public static final RegistryEntry<GenericTrigger> BEE_QUEEN_FIRST_TRADE_TRIGGER = CRITERION_TRIGGERS.register("bee_queen_first_trade", GenericTrigger::new);
     public static final RegistryEntry<CounterTrigger> BEE_QUEEN_TRADING_TRIGGER = CRITERION_TRIGGERS.register("bee_queen_trading", CounterTrigger::new);
-    public static final RegistryEntry<CounterTrigger> BEEHIVE_CRAFTED_TRIGGER = CRITERION_TRIGGERS.register("beehive_crafted", CounterTrigger::new);
-    public static final RegistryEntry<GenericTrigger> BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER = CRITERION_TRIGGERS.register("bumble_bee_chestplate_max_flight", GenericTrigger::new);
+     public static final RegistryEntry<GenericTrigger> BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER = CRITERION_TRIGGERS.register("bumble_bee_chestplate_max_flight", GenericTrigger::new);
     public static final RegistryEntry<GenericTrigger> BUZZING_BRIEFCASE_FULL_TRIGGER = CRITERION_TRIGGERS.register("buzzing_briefcase_full", GenericTrigger::new);
     public static final RegistryEntry<GenericTrigger> BUZZING_BRIEFCASE_HEAL_TRIGGER = CRITERION_TRIGGERS.register("buzzing_briefcase_heal", GenericTrigger::new);
     public static final RegistryEntry<GenericTrigger> BUZZING_BRIEFCASE_RELEASE_TRIGGER = CRITERION_TRIGGERS.register("buzzing_briefcase_release", GenericTrigger::new);
@@ -45,6 +44,7 @@ public class BzCriterias {
     public static final RegistryEntry<GenericTrigger> CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER = CRITERION_TRIGGERS.register("cleanup_sticky_honey_residue", GenericTrigger::new);
     public static final RegistryEntry<GenericTrigger> COMB_CUTTER_EXTRA_DROPS_TRIGGER = CRITERION_TRIGGERS.register("comb_cutter_extra_drops", GenericTrigger::new);
     public static final RegistryEntry<GenericTrigger> CRYSTAL_CANNON_FULL_TRIGGER = CRITERION_TRIGGERS.register("crystal_cannon_full", GenericTrigger::new);
+    public static final RegistryEntry<CounterTrigger> DIRT_PELLET_EXTRA_DAMAGE_KILLS_TRIGGER = CRITERION_TRIGGERS.register("dirt_pellet_extra_damage_kills", CounterTrigger::new);
     public static final RegistryEntry<GenericTrigger> ENCHANT_CRYSTALLINE_FLOWER_TRIGGER = CRITERION_TRIGGERS.register("enchant_crystalline_flower", GenericTrigger::new);
     public static final RegistryEntry<ItemSpecificTrigger> ESSENCE_EVENT_REWARD_TRIGGER = CRITERION_TRIGGERS.register("essence_event_reward", ItemSpecificTrigger::new);
     public static final RegistryEntry<GenericTrigger> EXTEND_STRING_CURTAIN_TRIGGER = CRITERION_TRIGGERS.register("extend_string_curtain", GenericTrigger::new);

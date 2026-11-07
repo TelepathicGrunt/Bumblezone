@@ -143,7 +143,7 @@ public class NonOpCommands {
                 case QUEENS_DESIRED_CRAFTED_BEEHIVE -> 
                         PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability ->
                                 player.sendSystemMessage(
-                                        Component.translatable("command.the_bumblezone.queens_desired_crafted_beehive", serverPlayer.getDisplayName(), capability.craftedBeehives)));
+                                        Component.translatable("command.the_bumblezone.queens_desired_crafted_beehive", serverPlayer.getDisplayName(), capability.dirtPelletExtraDamageKills)));
                 case QUEENS_DESIRED_BEES_BRED ->
                         PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability ->
                                 player.sendSystemMessage(

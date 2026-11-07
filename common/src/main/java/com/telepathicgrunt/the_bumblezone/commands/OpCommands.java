@@ -263,7 +263,7 @@ public class OpCommands {
 
             switch (dataArg) {
                 case QUEENS_DESIRED_CRAFTED_BEEHIVE -> PlatformService.INSTANCE.getModule(targetPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> commandSourceStack.sendSuccess(
-                        () -> Component.translatable("command.the_bumblezone.queens_desired_crafted_beehive", targetPlayer.getDisplayName(), capability.craftedBeehives),
+                        () -> Component.translatable("command.the_bumblezone.queens_desired_crafted_beehive", targetPlayer.getDisplayName(), capability.dirtPelletExtraDamageKills),
                         false));
                 case QUEENS_DESIRED_BEES_BRED -> PlatformService.INSTANCE.getModule(targetPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> commandSourceStack.sendSuccess(
                         () -> Component.translatable("command.the_bumblezone.queens_desired_bees_bred", targetPlayer.getDisplayName(), capability.beesBred),

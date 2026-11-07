@@ -34,10 +34,10 @@
         "target_advancement": "the_bumblezone:the_queens_desire/fighting_the_swarm"
       }
     },
-    "flooding_the_housing_market": {
+    "smackdowns": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
-        "target_advancement": "the_bumblezone:the_queens_desire/flooding_the_housing_market"
+        "target_advancement": "the_bumblezone:the_queens_desire/smackdowns"
       }
     },
     "honey_drunk": {
@@ -127,7 +127,7 @@
       "fighting_the_swarm"
     ],
     [
-      "flooding_the_housing_market"
+      "smackdowns"
     ],
     [
       "honey_drunk"

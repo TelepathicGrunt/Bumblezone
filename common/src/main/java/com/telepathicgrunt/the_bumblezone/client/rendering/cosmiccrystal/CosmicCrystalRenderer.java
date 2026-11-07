@@ -308,7 +308,7 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
             float intensity = (float) (0.015d * percentageToCenter * percentageToCenter * percentageToCenter);
             double currentMillisecond = System.currentTimeMillis() % (360 * spinSlowdown);
             double angle = (currentMillisecond / spinSlowdown);
-            orientation.bz$setYaw(orientation.bz$getYaw() + (Mth.sin(angle) * intensity * 30)); // FIXME those values need adjusting
+            orientation.bz$setYaw(orientation.bz$getYaw() + (Mth.sin(angle) * intensity * 30));
         }
     }
 

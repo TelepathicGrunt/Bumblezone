@@ -5,10 +5,10 @@
       "id": "the_bumblezone:bee_queen_spawn_egg"
     },
     "title": {
-      "translate": "advancements.the_bumblezone.the_queens_desire.flooding_the_housing_market.title"
+      "translate": "advancements.the_bumblezone.the_queens_desire.smackdowns.title"
     },
     "description": {
-      "translate": "advancements.the_bumblezone.the_queens_desire.flooding_the_housing_market.description"
+      "translate": "advancements.the_bumblezone.the_queens_desire.smackdowns.description"
     },
     "frame": "challenge",
     "show_toast": true,
@@ -22,8 +22,8 @@
     ]
   },
   "criteria": {
-    "beehive_crafted": {
-      "trigger": "the_bumblezone:beehive_crafted",
+    "dirt_pellet_extra_damage_kills": {
+      "trigger": "the_bumblezone:dirt_pellet_extra_damage_kills",
       "conditions": {
         "target_count": 6
       }
@@ -31,7 +31,7 @@
   },
   "requirements": [
     [
-      "beehive_crafted"
+      "dirt_pellet_extra_damage_kills"
     ]
   ],
   "sends_telemetry_event": false

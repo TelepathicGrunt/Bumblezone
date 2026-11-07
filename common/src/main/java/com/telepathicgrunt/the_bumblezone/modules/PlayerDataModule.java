@@ -10,22 +10,22 @@ import net.minecraft.resources.Identifier;
 
 public class PlayerDataModule implements Module<PlayerDataModule> {
     public static final MapCodec<PlayerDataModule> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-            Codec.BOOL.fieldOf("isBeeEssenced").forGetter(module -> module.isBeeEssenced),
-            Codec.BOOL.fieldOf("gottenWelcomed").forGetter(module -> module.gottenWelcomed),
-            Codec.BOOL.fieldOf("gottenWelcomedInDimension").forGetter(module -> module.gottenWelcomedInDimension),
-            Codec.BOOL.fieldOf("receivedEssencePrize").forGetter(module -> module.receivedEssencePrize),
-            Codec.LONG.fieldOf("tradeResetPrimedTime").forGetter(module -> module.tradeResetPrimedTime),
-            Codec.INT.fieldOf("craftedBeehives").forGetter(module -> module.craftedBeehives),
-            Codec.INT.fieldOf("beesBred").forGetter(module -> module.beesBred),
-            Codec.INT.fieldOf("flowersSpawned").forGetter(module -> module.flowersSpawned),
-            Codec.INT.fieldOf("honeyBottleDrank").forGetter(module -> module.honeyBottleDrank),
-            Codec.INT.fieldOf("beeStingersFired").forGetter(module -> module.beeStingersFired),
-            Codec.INT.fieldOf("beeSaved").forGetter(module -> module.beeSaved),
-            Codec.INT.fieldOf("pollenPuffHits").forGetter(module -> module.pollenPuffHits),
-            Codec.INT.fieldOf("honeySlimeBred").forGetter(module -> module.honeySlimeBred),
-            Codec.INT.fieldOf("beesFed").forGetter(module -> module.beesFed),
-            Codec.INT.fieldOf("queenBeeTrade").forGetter(module -> module.queenBeeTrade),
-            Codec.unboundedMap(Identifier.CODEC, Codec.INT).fieldOf("mobsKilledTracker")
+            Codec.BOOL.lenientOptionalFieldOf("isBeeEssenced", false).forGetter(module -> module.isBeeEssenced),
+            Codec.BOOL.lenientOptionalFieldOf("gottenWelcomed", false).forGetter(module -> module.gottenWelcomed),
+            Codec.BOOL.lenientOptionalFieldOf("gottenWelcomedInDimension", false).forGetter(module -> module.gottenWelcomedInDimension),
+            Codec.BOOL.lenientOptionalFieldOf("receivedEssencePrize", false).forGetter(module -> module.receivedEssencePrize),
+            Codec.LONG.lenientOptionalFieldOf("tradeResetPrimedTime", 0L).forGetter(module -> module.tradeResetPrimedTime),
+            Codec.INT.lenientOptionalFieldOf("dirtPelletExtraDamageKills", 0).forGetter(module -> module.dirtPelletExtraDamageKills),
+            Codec.INT.lenientOptionalFieldOf("beesBred", 0).forGetter(module -> module.beesBred),
+            Codec.INT.lenientOptionalFieldOf("flowersSpawned", 0).forGetter(module -> module.flowersSpawned),
+            Codec.INT.lenientOptionalFieldOf("honeyBottleDrank", 0).forGetter(module -> module.honeyBottleDrank),
+            Codec.INT.lenientOptionalFieldOf("beeStingersFired", 0).forGetter(module -> module.beeStingersFired),
+            Codec.INT.lenientOptionalFieldOf("beeSaved", 0).forGetter(module -> module.beeSaved),
+            Codec.INT.lenientOptionalFieldOf("pollenPuffHits", 0).forGetter(module -> module.pollenPuffHits),
+            Codec.INT.lenientOptionalFieldOf("honeySlimeBred", 0).forGetter(module -> module.honeySlimeBred),
+            Codec.INT.lenientOptionalFieldOf("beesFed", 0).forGetter(module -> module.beesFed),
+            Codec.INT.lenientOptionalFieldOf("queenBeeTrade", 0).forGetter(module -> module.queenBeeTrade),
+            Codec.unboundedMap(Identifier.CODEC, Codec.INT).lenientOptionalFieldOf("mobsKilledTracker", new Object2IntOpenHashMap<>())
                     .xmap(Object2IntOpenHashMap::new, Object2IntOpenHashMap::new).forGetter(module -> module.mobsKilledTracker)
     ).apply(instance, PlayerDataModule::new));
 
@@ -36,7 +36,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
     public boolean gottenWelcomedInDimension;
     public boolean receivedEssencePrize;
     public long tradeResetPrimedTime;
-    public int craftedBeehives;
+    public int dirtPelletExtraDamageKills;
     public int beesBred;
     public int flowersSpawned;
     public int honeyBottleDrank;
@@ -53,7 +53,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
                             boolean gottenWelcomedInDimension,
                             boolean receivedEssencePrize,
                             long tradeResetPrimedTime,
-                            int craftedBeehives,
+                            int dirtPelletExtraDamageKills,
                             int beesBred,
                             int flowersSpawned,
                             int honeyBottleDrank,
@@ -69,7 +69,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
         this.gottenWelcomedInDimension = gottenWelcomedInDimension;
         this.receivedEssencePrize = receivedEssencePrize;
         this.tradeResetPrimedTime = tradeResetPrimedTime;
-        this.craftedBeehives = craftedBeehives;
+        this.dirtPelletExtraDamageKills = dirtPelletExtraDamageKills;
         this.beesBred = beesBred;
         this.flowersSpawned = flowersSpawned;
         this.honeyBottleDrank = honeyBottleDrank;
@@ -88,7 +88,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
         this.gottenWelcomedInDimension = false;
         this.receivedEssencePrize = false;
         this.tradeResetPrimedTime = -1000;
-        this.craftedBeehives = 0;
+        this.dirtPelletExtraDamageKills = 0;
         this.beesBred = 0;
         this.flowersSpawned = 0;
         this.honeyBottleDrank = 0;
@@ -104,7 +104,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
     public void resetAllTrackerStats() {
         receivedEssencePrize = false;
         tradeResetPrimedTime = -1000;
-        craftedBeehives = 0;
+        dirtPelletExtraDamageKills = 0;
         beesBred = 0;
         flowersSpawned = 0;
         honeyBottleDrank = 0;

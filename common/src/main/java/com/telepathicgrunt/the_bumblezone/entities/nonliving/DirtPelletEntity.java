@@ -3,12 +3,15 @@ package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
+import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
@@ -214,6 +217,7 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
         EntityType<?> type = entity.getType();
         Identifier identifier = BuiltInRegistries.ENTITY_TYPE.getKey(type);
         int damage = 1;
+        boolean extraDamageBoost = false;
 
         if (entity instanceof DirtPelletEntity hitDirtPelletEntity) {
             if (!this.level().isClientSide()) {
@@ -226,10 +230,12 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
         if (!entity.is(BzTags.DIRT_PELLET_FORCE_NO_EXTRA_DAMAGE)) {
             if (entity.is(BzTags.DIRT_PELLET_EXTRA_DAMAGE)) {
                 damage = 6;
+                extraDamageBoost = true;
             }
             else if (!identifier.getNamespace().equals("minecraft") && !identifier.getNamespace().equals(Bumblezone.MODID)) {
                 if (entity instanceof FlyingAnimal || (entity instanceof Mob mob && mob.getMoveControl() instanceof FlyingMoveControl)) {
                     damage = 6;
+                    extraDamageBoost = true;
                 }
             }
         }
@@ -278,6 +284,13 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
                 -Mth.sin((float) yRotHitRadian),
                 -Mth.cos((float) yRotHitRadian)
             );
+
+            if (extraDamageBoost && livingEntity.isDeadOrDying() && this.getOwner() instanceof ServerPlayer serverPlayer) {
+                PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
+                    module.dirtPelletExtraDamageKills++;
+                    BzCriterias.DIRT_PELLET_EXTRA_DAMAGE_KILLS_TRIGGER.get().trigger(serverPlayer, module.dirtPelletExtraDamageKills);
+                });
+            }
 
             if (this.eventBased && this.level() instanceof ServerLevel serverLevel) {
                 for(Holder<MobEffect> mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
