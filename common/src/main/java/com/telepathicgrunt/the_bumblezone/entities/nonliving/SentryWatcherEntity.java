@@ -333,9 +333,10 @@ public class SentryWatcherEntity extends Entity implements Enemy {
     @Override
     public InteractionResult interact(Player player, InteractionHand interactionHand, Vec3 location) {
         if (player != null &&
-                interactionHand == InteractionHand.MAIN_HAND &&
-                this.getOwner() != null &&
-                (this.getOwner().matches(player) || this.getOwner().getUUID().equals(SentryWatcherSpawnEgg.DISPENSER_OWNER_UUID))) {
+            interactionHand == InteractionHand.MAIN_HAND &&
+            this.getOwner() != null &&
+            (this.getOwner().matches(player) || this.getOwner().getUUID().equals(SentryWatcherSpawnEgg.DISPENSER_OWNER_UUID)))
+        {
             if (this.tickCount - this.lastRightClicked < 40) {
                 GeneralUtils.givePlayerItem(player, interactionHand, BzItems.SENTRY_WATCHER_SPAWN_EGG.get().getDefaultInstance(), false, false);
                 this.remove(RemovalReason.DISCARDED);
@@ -653,7 +654,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
         else if (entity.is(BzTags.SENTRY_WATCHER_ACTIVATES_WHEN_SEEN)) {
             return true;
         }
-        else if (entity instanceof Player player && (player.isCreative() || player.getUUID().equals(this.getOwner().getUUID()))) {
+        else if (entity instanceof Player player && (player.isCreative() || (this.getOwner() != null && player.getUUID().equals(this.getOwner().getUUID())))) {
             return false;
         }
 

@@ -1,6 +1,8 @@
 ### **(V.7.18.7 Changes) (26.1.2 Minecraft)**
 
 #### Entities:
+Fixed crash with Sentry Watchers seeing mobs/players
+
 Dirt Pellet now deals extra damage to Happy Ghast and to modded mobs that return true for Entity#isFlyingVehicle().
 
 
