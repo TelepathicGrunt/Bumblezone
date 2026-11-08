@@ -233,7 +233,10 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
                 extraDamageBoost = true;
             }
             else if (!identifier.getNamespace().equals("minecraft") && !identifier.getNamespace().equals(Bumblezone.MODID)) {
-                if (entity instanceof FlyingAnimal || (entity instanceof Mob mob && mob.getMoveControl() instanceof FlyingMoveControl)) {
+                if (entity instanceof FlyingAnimal ||
+                    (entity instanceof Mob mob && mob.getMoveControl() instanceof FlyingMoveControl) ||
+                    entity.isFlyingVehicle())
+                {
                     damage = 6;
                     extraDamageBoost = true;
                 }

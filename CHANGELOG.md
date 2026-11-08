@@ -1,3 +1,9 @@
+### **(V.7.18.7 Changes) (26.1.2 Minecraft)**
+
+#### Entities:
+Dirt Pellet now deals extra damage to Happy Ghast and to modded mobs that return true for Entity#isFlyingVehicle().
+
+
 ### **(V.7.18.6 Changes) (26.1.2 Minecraft)**
 
 #### Advancements:
