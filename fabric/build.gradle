@@ -158,22 +158,24 @@ loom {
             setConfigName("Fabric Client")
 
             if (project.hasProperty('mc_uuid')) {
-                programArg("--uuid=${project.findProperty('mc_uuid')}")
+                getProgramArguments().add("--uuid=${project.findProperty('mc_uuid')}")
             }
 
             if (project.hasProperty('mc_username')) {
-                programArg("--username=${project.findProperty('mc_username')}")
+                getProgramArguments().add("--username=${project.findProperty('mc_username')}")
             }
 
             if (project.hasProperty('mc_java_agent_path')) {
-                vmArg("-javaagent:${project.findProperty('mc_java_agent_path')}")
+                getJvmArguments().add("-javaagent:${project.findProperty('mc_java_agent_path')}")
             }
+            getJvmArguments().add('-Dmixin.debug.export=true')
         }
 
         server {
             server()
             setConfigName("Fabric Server")
-            programArg('--nogui')
+            getProgramArguments().add('--nogui')
+            getJvmArguments().add('-Dmixin.debug.export=true')
         }
     }
 }

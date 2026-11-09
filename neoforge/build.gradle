@@ -201,13 +201,15 @@ neoForge {
             if (project.hasProperty('mc_java_agent_path')) {
                 jvmArgument("-javaagent:${project.findProperty('mc_java_agent_path')}")
             }
+
+            jvmArgument('-Dmixin.debug.export=true')
         }
 
         server {
             server()
-            //systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
             systemProperty("terminal.ansi", "true")
             programArguments.add('--nogui')
+            jvmArgument('-Dmixin.debug.export=true')
         }
 
         serverData {
