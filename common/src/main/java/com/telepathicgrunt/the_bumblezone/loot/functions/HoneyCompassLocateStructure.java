@@ -116,10 +116,14 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
 
     private void setCompassFoundLocationData(WeakReference<ItemStack> itemStackWeakReference, LootContext lootContext, BlockPos blockPos) {
         ItemStack itemStack = itemStackWeakReference.get();
-        if (itemStack != null && blockPos != null) {
+        if (itemStack != null && !itemStack.isEmpty() && blockPos != null) {
             HoneyCompassStateData oldHoneyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
             HoneyCompassBaseData oldHoneyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
             HoneyCompassTargetData oldHoneyCompassTargetData = itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
+
+            if (oldHoneyCompassStateData == null || oldHoneyCompassBaseData == null || oldHoneyCompassTargetData == null) {
+                return; // The captured stack may have been consumed or changed while locating.
+            }
 
             HoneyCompass.setCompassStateData(oldHoneyCompassStateData, oldHoneyCompassStateData.locked(), Optional.empty(), false, false, oldHoneyCompassStateData.locatedSpecialStructure(), itemStack);
             HoneyCompass.setCompassBaseData(oldHoneyCompassBaseData, "structure", itemStack);
