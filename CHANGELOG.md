@@ -1,3 +1,9 @@
+### **(V.7.18.8 Changes) (26.1.2 Minecraft)**
+
+#### Structures:
+Tweaked what modded blocks shows in Hanging Gardens
+
+
 ### **(V.7.18.7 Changes) (26.1.2 Minecraft)**
 
 #### Entities:
