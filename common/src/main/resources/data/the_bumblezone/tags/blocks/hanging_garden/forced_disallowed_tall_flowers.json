@@ -98,6 +98,18 @@
       "required": false
     },
     {
+      "id": "productivefarming:motherwort",
+      "required": false
+    },
+    {
+      "id": "productivefarming:cattail",
+      "required": false
+    },
+    {
+      "id": "productivefarming:stinging_nettle",
+      "required": false
+    },
+    {
       "id": "undergarden:tall_shimmerweed",
       "required": false
     },

@@ -4,6 +4,10 @@
     "minecraft:birch_log",
     "minecraft:cherry_log",
     {
+      "id": "aether_ii:wisproot_log",
+      "required": false
+    },
+    {
       "id": "ars_nouveau:purple_archwood_log",
       "required": false
     },
@@ -141,6 +145,10 @@
     },
     {
       "id": "terrestria:rainbow_eucalyptus_log",
+      "required": false
+    },
+    {
+      "id": "thaumaturge:log_silverwood",
       "required": false
     },
     {
