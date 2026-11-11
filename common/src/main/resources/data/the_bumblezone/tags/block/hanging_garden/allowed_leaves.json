@@ -5,6 +5,18 @@
     "minecraft:flowering_azalea_leaves",
     "minecraft:cherry_leaves",
     {
+      "id": "aether_ii:greatoak_leaves",
+      "required": false
+    },
+    {
+      "id": "aether_ii:skypine_leaves",
+      "required": false
+    },
+    {
+      "id": "aether_ii:wisptop_leaves",
+      "required": false
+    },
+    {
       "id": "atmospheric:flowering_morado_leaves",
       "required": false
     },

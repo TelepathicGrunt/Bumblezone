@@ -4,6 +4,18 @@
     "minecraft:wither_rose",
     "minecraft:azure_bluet",
     {
+      "id": "aether_ii:pluracian",
+      "required": false
+    },
+    {
+      "id": "aether_ii:carrion_cutting",
+      "required": false
+    },
+    {
+      "id": "aether_ii:blade_poa",
+      "required": false
+    },
+    {
       "id": "alchemists_garden:cloudelion",
       "required": false
     },
@@ -93,6 +105,10 @@
     },
     {
       "id": "aoa3:dawn_flower",
+      "required": false
+    },
+    {
+      "id": "arsmagicalegacy:tarma_root",
       "required": false
     },
     {
@@ -613,6 +629,30 @@
     },
     {
       "id": "pokecube_legends:polluting_blossom",
+      "required": false
+    },
+    {
+      "id": "productivefarming:dahlia",
+      "required": false
+    },
+    {
+      "id": "productivefarming:wither_rose",
+      "required": false
+    },
+    {
+      "id": "productivefarming:black_bearded_iris",
+      "required": false
+    },
+    {
+      "id": "productivefarming:hellebore",
+      "required": false
+    },
+    {
+      "id": "productivefarming:sea_holly",
+      "required": false
+    },
+    {
+      "id": "productivefarming:motherwort",
       "required": false
     },
     {
