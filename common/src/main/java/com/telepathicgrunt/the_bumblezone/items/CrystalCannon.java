@@ -90,7 +90,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
     @Override
     public void releaseUsing(ItemStack crystalCannon, Level level, LivingEntity livingEntity, int currentDuration) {
         if (!level.isClientSide()) {
-            ItemStack mutableCrystalCannon = livingEntity.getItemInHand(InteractionHand.MAIN_HAND);
+            ItemStack mutableCrystalCannon = livingEntity.getItemInHand(livingEntity.getUsedItemHand());
 
             int numberOfCrystals = getNumberOfCrystals(mutableCrystalCannon);
             int remainingDuration = this.getUseDuration(mutableCrystalCannon, livingEntity) - currentDuration;
@@ -108,7 +108,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
                     }
 
                     level.playSound(null, livingEntity.blockPosition(), BzSounds.CRYSTAL_CANNON_FIRES.get(), SoundSource.PLAYERS, 1.0F, (livingEntity.getRandom().nextFloat() * 0.2F) + 0.6F);
-                    mutableCrystalCannon.hurtAndBreak(1, livingEntity, EquipmentSlot.MAINHAND);
+                    mutableCrystalCannon.hurtAndBreak(1, livingEntity, livingEntity.getUsedItemHand());
 
                     if(numberOfCrystals >= 3 && livingEntity instanceof ServerPlayer serverPlayer) {
                         BzCriterias.CRYSTAL_CANNON_FULL_TRIGGER.get().trigger(serverPlayer);
@@ -116,7 +116,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
                 }
 
                 // Consume one extra durability
-                mutableCrystalCannon.hurtAndBreak(1, livingEntity, EquipmentSlot.MAINHAND);
+                mutableCrystalCannon.hurtAndBreak(1, livingEntity, livingEntity.getUsedItemHand());
             }
         }
     }

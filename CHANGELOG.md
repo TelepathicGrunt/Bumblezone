@@ -15,6 +15,8 @@ Optimized Buzzing Briefcase menu clicks to not send button click to server if pl
 
 Fixed crash if player tries to release a bee from Briefcase while it is in offhand slot
 
+Fixed Bee Cannon and Crystal Cannon not working in offhand slot
+
 #### Blocks:
 Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsumeItemUI` config options are respected on serverside for Crystalline Flower.
 

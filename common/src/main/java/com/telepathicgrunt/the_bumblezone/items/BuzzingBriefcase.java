@@ -114,10 +114,7 @@ public class BuzzingBriefcase extends Item {
 
             boolean isVictimBeelike = BeeAggression.isBeelikeEntity(victim);
             ItemStack briefcaseItem = null;
-
-            if (player.swingingArm != null && player.getItemInHand(player.swingingArm).getItem() instanceof BuzzingBriefcase) briefcaseItem = player.getItemInHand(player.swingingArm);
-            else if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof BuzzingBriefcase) briefcaseItem = player.getItemInHand(InteractionHand.MAIN_HAND);
-            else if (player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof BuzzingBriefcase) briefcaseItem = player.getItemInHand(InteractionHand.OFF_HAND);
+            if (player.getItemInHand(player.getUsedItemHand()).getItem() instanceof BuzzingBriefcase) briefcaseItem = player.getItemInHand(player.getUsedItemHand());
             if (briefcaseItem == null) return;
 
             List<Entity> releasedBees = dumpBees(briefcaseItem, player, player.isCrouching() ? -1 : 0, false);
