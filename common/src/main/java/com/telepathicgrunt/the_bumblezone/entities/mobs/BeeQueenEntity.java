@@ -454,13 +454,15 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                                 if (specialDayItem.isEmpty()) {
                                     setIsSpecialDay(false);
                                 }
-                                wantItem = specialDayItem.get().get(this.random.nextInt(specialDayItem.get().size()));
-                                Optional<Pair<QueensTradeManager.SpecialDaysEntry, WeightedList<WeightedTradeResult>>> specialDayRewards = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItems(wantItem);
-                                if (specialDayRewards.isEmpty()) {
-                                    setIsSpecialDay(false);
-                                }
                                 else {
-                                    tradeResults = specialDayRewards.get().getSecond().unwrap();
+                                    wantItem = specialDayItem.get().get(this.random.nextInt(specialDayItem.get().size()));
+                                    Optional<Pair<QueensTradeManager.SpecialDaysEntry, WeightedList<WeightedTradeResult>>> specialDayRewards = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItems(wantItem);
+                                    if (specialDayRewards.isEmpty()) {
+                                        setIsSpecialDay(false);
+                                    }
+                                    else {
+                                        tradeResults = specialDayRewards.get().getSecond().unwrap();
+                                    }
                                 }
                             }
 
