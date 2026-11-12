@@ -22,6 +22,8 @@ Optimized Buzzing Briefcase menu clicks to not deserialize all bees in briefcase
 
 Optimized Buzzing Briefcase menu clicks to not send button click to server if player clicks an action button without the required inventory item it needs.
 
+Fixed crash if player tries to release a bee from Briefcase while it is in offhand slot
+
 #### Recipes:
 Fixed possible crash if `the_bumblezone:container_shapeless_recipe_bz` gets an item with null crafting remainder
 
