@@ -70,7 +70,7 @@ public class BeeCannon extends Item implements ItemExtension {
     @Override
     public boolean releaseUsing(ItemStack beeCannon, Level level, LivingEntity livingEntity, int currentDuration) {
         if (!level.isClientSide() && livingEntity instanceof Player player) {
-            ItemStack mutableBeeCannon = player.getItemInHand(InteractionHand.MAIN_HAND);
+            ItemStack mutableBeeCannon = player.getItemInHand(livingEntity.getUsedItemHand());
 
             int numberOfBees = getNumberOfBees(mutableBeeCannon);
             int remainingDuration = this.getUseDuration(mutableBeeCannon, livingEntity) - currentDuration;
@@ -128,7 +128,7 @@ public class BeeCannon extends Item implements ItemExtension {
                         }
                     }
 
-                    mutableBeeCannon.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+                    mutableBeeCannon.hurtAndBreak(1, player, livingEntity.getUsedItemHand());
                 });
 
                 level.playSound(null, player.blockPosition(), BzSounds.BEE_CANNON_FIRES.get(), SoundSource.PLAYERS, 1.0F, (player.getRandom().nextFloat() * 0.2F) + 0.6F);
