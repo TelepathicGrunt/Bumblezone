@@ -3,6 +3,9 @@
 #### Structures:
 Tweaked what modded blocks shows in Hanging Gardens
 
+#### Fluids:
+Fixed crash when a block is changed next to Sugar Water Bubble Column
+
 #### Entities:
 Fixed Bee Queen crash if queen picks up a trade item that was not dropped by an entity.
 

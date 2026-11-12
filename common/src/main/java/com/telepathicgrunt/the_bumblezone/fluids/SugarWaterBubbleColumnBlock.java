@@ -70,16 +70,21 @@ public class SugarWaterBubbleColumnBlock extends BubbleColumnBlock {
     @Override
     public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, Orientation orientation, boolean notify) {
         level.scheduleTick(blockPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(level));
-        if (!blockState.canSurvive(level, blockPos) || orientation.getDirections().contains(Direction.DOWN) || orientation.getDirections().contains(Direction.UP)) {
+        if (!blockState.canSurvive(level, blockPos) ||
+            orientation == null ||
+            orientation.getDirections().contains(Direction.DOWN) ||
+            orientation.getDirections().contains(Direction.UP))
+        {
             boolean ticked = false;
-            if (orientation.getDirections().contains(Direction.DOWN)) {
+            if (orientation == null || orientation.getDirections().contains(Direction.DOWN)) {
                 BlockState sideState = level.getBlockState(blockPos.below());
                 if (!sideState.is(Blocks.BUBBLE_COLUMN) && canExistIn(sideState)) {
                     level.scheduleTick(blockPos, BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK.get(), 5);
+                    ticked = true;
                 }
             }
 
-            if (!ticked && orientation.getDirections().contains(Direction.UP)) {
+            if (!ticked && (orientation == null || orientation.getDirections().contains(Direction.UP))) {
                 BlockState sideState = level.getBlockState(blockPos.above());
                 if (!sideState.is(Blocks.BUBBLE_COLUMN) && canExistIn(sideState)) {
                     level.scheduleTick(blockPos, BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK.get(), 5);
