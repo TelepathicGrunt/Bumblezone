@@ -66,100 +66,102 @@ public class BuzzingBriefcaseMenu extends AbstractContainerMenu {
 
         Inventory inventory = player.getInventory();
         ItemStack briefcase = container.getItem(0);
-        List<Entity> beesStored = BuzzingBriefcase.getBeesStored(player.level(), briefcase, false);
 
-        if (beeIndex < beesStored.size() && beesStored.get(beeIndex) instanceof Bee bee) {
-            if (buttonPressed == RELEASE_ID) {
+        Entity beeStored = BuzzingBriefcase.getSpecificBeesStored(player.level(), briefcase, beeIndex, false);
+        if (!(beeStored instanceof Bee bee)) {
+            return false;
+        }
 
-                BuzzingBriefcase.dumpBees(player, beeIndex, true);
+        if (buttonPressed == RELEASE_ID) {
+
+            BuzzingBriefcase.dumpBees(player, beeIndex, true);
+            container.setChanged();
+            return true;
+        }
+        else if (buttonPressed == HEALTH_ID && bee.getHealth() < bee.getMaxHealth()) {
+            int honeyBottleSlotIndex = inventory.findSlotMatchingItem(Items.HONEY_BOTTLE.getDefaultInstance());
+            ItemStack playerHoneyBottleStack = inventory.getItem(honeyBottleSlotIndex);
+
+            if (!playerHoneyBottleStack.isEmpty()) {
+                bee.heal(2);
+
+                if (player instanceof ServerPlayer serverPlayer) {
+                    BzCriterias.BUZZING_BRIEFCASE_HEAL_TRIGGER.trigger(serverPlayer);
+                }
+
+                if (!player.getAbilities().instabuild) {
+                    playerHoneyBottleStack.shrink(1);
+                    if (playerHoneyBottleStack.isEmpty()) {
+                        inventory.add(honeyBottleSlotIndex, Items.GLASS_BOTTLE.getDefaultInstance());
+                    }
+                    else if (!inventory.add(Items.GLASS_BOTTLE.getDefaultInstance())) {
+                        // drops result item if inventory is full
+                        player.drop(Items.GLASS_BOTTLE.getDefaultInstance(), false);
+                    }
+                }
+
+                BuzzingBriefcase.overrwriteBees(briefcase, beesStored);
                 container.setChanged();
                 return true;
             }
-            else if (buttonPressed == HEALTH_ID && bee.getHealth() < bee.getMaxHealth()) {
-                int honeyBottleSlotIndex = inventory.findSlotMatchingItem(Items.HONEY_BOTTLE.getDefaultInstance());
-                ItemStack playerHoneyBottleStack = inventory.getItem(honeyBottleSlotIndex);
+        }
+        else if (buttonPressed == STINGER_ID && bee.hasStung()) {
+            int stingerSlotIndex = inventory.findSlotMatchingItem(BzItems.BEE_STINGER.get().getDefaultInstance());
+            ItemStack playerStingerStack = inventory.getItem(stingerSlotIndex);
 
-                if (!playerHoneyBottleStack.isEmpty()) {
-                    bee.heal(2);
+            if (!playerStingerStack.isEmpty()) {
+                ((BeeEntityInvoker)bee).bumblezone$callSetHasStung(false);
 
-                    if (player instanceof ServerPlayer serverPlayer) {
-                        BzCriterias.BUZZING_BRIEFCASE_HEAL_TRIGGER.trigger(serverPlayer);
-                    }
-
-                    if (!player.getAbilities().instabuild) {
-                        playerHoneyBottleStack.shrink(1);
-                        if (playerHoneyBottleStack.isEmpty()) {
-                            inventory.add(honeyBottleSlotIndex, Items.GLASS_BOTTLE.getDefaultInstance());
-                        }
-                        else if (!inventory.add(Items.GLASS_BOTTLE.getDefaultInstance())) {
-                            // drops result item if inventory is full
-                            player.drop(Items.GLASS_BOTTLE.getDefaultInstance(), false);
-                        }
-                    }
-
-                    BuzzingBriefcase.overrwriteBees(briefcase, beesStored);
-                    container.setChanged();
-                    return true;
+                if (!player.getAbilities().instabuild) {
+                    playerStingerStack.shrink(1);
                 }
+
+                BuzzingBriefcase.overrwriteBeesAtIndex(briefcase, player.level(), beeStored, beeIndex);
+                container.setChanged();
+
+                if (player instanceof ServerPlayer serverPlayer) {
+                    PlayerDataHandler.onBeesSaved(serverPlayer);
+                }
+                return true;
             }
-            else if (buttonPressed == STINGER_ID && bee.hasStung()) {
-                int stingerSlotIndex = inventory.findSlotMatchingItem(BzItems.BEE_STINGER.get().getDefaultInstance());
-                ItemStack playerStingerStack = inventory.getItem(stingerSlotIndex);
+        }
+        else if (buttonPressed == GROW_UP_ID && bee.isBaby()) {
+            int honeyBottleSlotIndex = inventory.findSlotMatchingItem(Items.HONEY_BOTTLE.getDefaultInstance());
+            ItemStack playerHoneyBottleStack = inventory.getItem(honeyBottleSlotIndex);
 
-                if (!playerStingerStack.isEmpty()) {
-                    ((BeeEntityInvoker)bee).bumblezone$callSetHasStung(false);
+            if (!playerHoneyBottleStack.isEmpty()) {
+                bee.setBaby(false);
 
-                    if (!player.getAbilities().instabuild) {
-                        playerStingerStack.shrink(1);
+                if (!player.getAbilities().instabuild) {
+                    playerHoneyBottleStack.shrink(1);
+                    if (playerHoneyBottleStack.isEmpty()) {
+                        inventory.add(honeyBottleSlotIndex, Items.GLASS_BOTTLE.getDefaultInstance());
                     }
-
-                    BuzzingBriefcase.overrwriteBees(briefcase, beesStored);
-                    container.setChanged();
-
-                    if (player instanceof ServerPlayer serverPlayer) {
-                        PlayerDataHandler.onBeesSaved(serverPlayer);
+                    else if (!inventory.add(Items.GLASS_BOTTLE.getDefaultInstance())) {
+                        // drops result item if inventory is full
+                        player.drop(Items.GLASS_BOTTLE.getDefaultInstance(), false);
                     }
-                    return true;
                 }
+
+                BuzzingBriefcase.overrwriteBeesAtIndex(briefcase, player.level(), beeStored, beeIndex);
+                container.setChanged();
+                return true;
             }
-            else if (buttonPressed == GROW_UP_ID && bee.isBaby()) {
-                int honeyBottleSlotIndex = inventory.findSlotMatchingItem(Items.HONEY_BOTTLE.getDefaultInstance());
-                ItemStack playerHoneyBottleStack = inventory.getItem(honeyBottleSlotIndex);
+        }
+        else if (buttonPressed == POLLEN_ID && !bee.hasNectar()) {
+            int pollenSlotIndex = inventory.findSlotMatchingItem(BzItems.POLLEN_PUFF.get().getDefaultInstance());
+            ItemStack playerPollenStack = inventory.getItem(pollenSlotIndex);
 
-                if (!playerHoneyBottleStack.isEmpty()) {
-                    bee.setBaby(false);
+            if (!playerPollenStack.isEmpty()) {
+                ((BeeEntityInvoker)bee).bumblezone$callSetHasNectar(true);
 
-                    if (!player.getAbilities().instabuild) {
-                        playerHoneyBottleStack.shrink(1);
-                        if (playerHoneyBottleStack.isEmpty()) {
-                            inventory.add(honeyBottleSlotIndex, Items.GLASS_BOTTLE.getDefaultInstance());
-                        }
-                        else if (!inventory.add(Items.GLASS_BOTTLE.getDefaultInstance())) {
-                            // drops result item if inventory is full
-                            player.drop(Items.GLASS_BOTTLE.getDefaultInstance(), false);
-                        }
-                    }
-
-                    BuzzingBriefcase.overrwriteBees(briefcase, beesStored);
-                    container.setChanged();
-                    return true;
+                if (!player.getAbilities().instabuild) {
+                    playerPollenStack.shrink(1);
                 }
-            }
-            else if (buttonPressed == POLLEN_ID && !bee.hasNectar()) {
-                int pollenSlotIndex = inventory.findSlotMatchingItem(BzItems.POLLEN_PUFF.get().getDefaultInstance());
-                ItemStack playerPollenStack = inventory.getItem(pollenSlotIndex);
 
-                if (!playerPollenStack.isEmpty()) {
-                    ((BeeEntityInvoker)bee).bumblezone$callSetHasNectar(true);
-
-                    if (!player.getAbilities().instabuild) {
-                        playerPollenStack.shrink(1);
-                    }
-
-                    BuzzingBriefcase.overrwriteBees(briefcase, beesStored);
-                    container.setItem(0, briefcase);
-                    return true;
-                }
+                BuzzingBriefcase.overrwriteBeesAtIndex(briefcase, player.level(), beeStored, beeIndex);
+                container.setItem(0, briefcase);
+                return true;
             }
         }
 

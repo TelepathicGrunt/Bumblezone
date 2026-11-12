@@ -34,6 +34,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -289,7 +290,8 @@ public class BuzzingBriefcase extends Item {
     }
 
     public static Entity getSpecificBeesStored(Level level, ItemStack briefcaseItem, int beeIndex, boolean removeFromList) {
-        if (getNumberOfBees(briefcaseItem) > 0) {
+        int numberOfBees = getNumberOfBees(briefcaseItem);
+        if (numberOfBees > 0 && beeIndex < numberOfBees) {
             CompoundTag briefcaseTag = briefcaseItem.getOrCreateTag();
             ListTag beeList = briefcaseTag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
             if (beeIndex < beeList.size()) {
@@ -313,6 +315,17 @@ public class BuzzingBriefcase extends Item {
         CompoundTag briefcaseTag = briefcaseItem.getOrCreateTag();
         briefcaseTag.remove(TAG_BEES);
         briefcaseTag.remove(TAG_VARANT_BEES);
+        bees.forEach(bee -> tryAddBee(briefcaseItem, bee));
+    }
+
+    public static void overrwriteBeesAtIndex(ItemStack briefcaseItem, Level level, Entity modifiedBee, int index) {
+        List<Entity> bees = BuzzingBriefcase.getBeesStored(level, briefcaseItem, false);
+        if (index < 0 || index >= bees.size()) {
+            return;
+        }
+
+        briefcaseItem.set(BzDataComponents.BUZZING_BRIEFCASE_DATA.get(), CustomData.of(new CompoundTag()));
+        bees.set(index, modifiedBee);
         bees.forEach(bee -> tryAddBee(briefcaseItem, bee));
     }
 
