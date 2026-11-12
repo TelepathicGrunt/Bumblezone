@@ -8,6 +8,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.UUID;
 
@@ -16,8 +17,11 @@ public record SyncHorseOwnerUUIDPacketFromServer(int horseId, UUID ownerUUID) im
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "sync_horse_owner_uuid_from_server");
     static final Handler HANDLER = new Handler();
 
-    public static void sendToClient(Entity entity, int horseId, UUID ownerUUID) {
-        MessageHandler.DEFAULT_CHANNEL.sendToPlayersInLevel(new SyncHorseOwnerUUIDPacketFromServer(horseId, ownerUUID), entity.level());
+    public static void sendToClient(Entity entity, int horseId, UUID ownerUUID, UUID requestingPlayerUuid) {
+        Player requestingPlayerByUUID = entity.level().getPlayerByUUID(requestingPlayerUuid);
+        if (requestingPlayerByUUID != null) {
+            MessageHandler.DEFAULT_CHANNEL.sendToPlayer(new SyncHorseOwnerUUIDPacketFromServer(horseId, ownerUUID), requestingPlayerByUUID);
+        }
     }
 
     @Override

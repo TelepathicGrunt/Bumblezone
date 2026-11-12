@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -12,13 +13,15 @@ import net.minecraft.world.entity.animal.horse.AbstractHorse;
 
 import java.util.UUID;
 
-public record SyncHorseOwnerUUIDPacketToServer(UUID horseUUID) implements Packet<SyncHorseOwnerUUIDPacketToServer> {
+public record SyncHorseOwnerUUIDPacketToServer(UUID horseUUID, UUID requestingPlayerUuid) implements Packet<SyncHorseOwnerUUIDPacketToServer> {
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "sync_horse_owner_uuid_to_server");
     static final Handler HANDLER = new Handler();
 
     public static void sendToServer(UUID horseUUID) {
-        MessageHandler.DEFAULT_CHANNEL.sendToServer(new SyncHorseOwnerUUIDPacketToServer(horseUUID));
+        if (Minecraft.getInstance().player != null) {
+            MessageHandler.DEFAULT_CHANNEL.sendToServer(new SyncHorseOwnerUUIDPacketToServer(horseUUID, Minecraft.getInstance().player.getUUID()));
+        }
     }
 
     @Override
@@ -36,11 +39,12 @@ public record SyncHorseOwnerUUIDPacketToServer(UUID horseUUID) implements Packet
         @Override
         public void encode(SyncHorseOwnerUUIDPacketToServer message, FriendlyByteBuf buffer) {
             buffer.writeUUID(message.horseUUID());
+            buffer.writeUUID(message.requestingPlayerUuid());
         }
 
         @Override
         public SyncHorseOwnerUUIDPacketToServer decode(FriendlyByteBuf buffer) {
-            return new SyncHorseOwnerUUIDPacketToServer(buffer.readUUID());
+            return new SyncHorseOwnerUUIDPacketToServer(buffer.readUUID(), buffer.readUUID());
         }
 
         @Override
@@ -48,7 +52,7 @@ public record SyncHorseOwnerUUIDPacketToServer(UUID horseUUID) implements Packet
             return (player, level) -> {
                 Entity entity = ((ServerLevel)level).getEntity(message.horseUUID());
                 if (entity instanceof AbstractHorse abstractHorse && abstractHorse.getOwnerUUID() != null) {
-                    SyncHorseOwnerUUIDPacketFromServer.sendToClient(abstractHorse, abstractHorse.getId(), abstractHorse.getOwnerUUID());
+                    SyncHorseOwnerUUIDPacketFromServer.sendToClient(abstractHorse, abstractHorse.getId(), abstractHorse.getOwnerUUID(), message.requestingPlayerUuid());
                 }
             };
         }
