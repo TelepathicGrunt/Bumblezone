@@ -300,6 +300,9 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     public boolean clickMenuButton(Player player, int id) {
         // drain xp 1
         if (id == -2) {
+            if (!BzGeneralConfigs.crystallineFlowerConsumeExperienceUI) {
+                return false;
+            }
             drainPlayerXPLevel(1);
             if (!player.level().isClientSide()) {
                 setupResultSlot();
@@ -309,6 +312,9 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         }
         // drain xp 2
         else if (id == -3) {
+            if (!BzGeneralConfigs.crystallineFlowerConsumeExperienceUI) {
+                return false;
+            }
             drainPlayerXPLevel(2);
             if (!player.level().isClientSide()) {
                 setupResultSlot();
@@ -318,6 +324,9 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         }
         // drain xp 3
         else if (id == -4) {
+            if (!BzGeneralConfigs.crystallineFlowerConsumeExperienceUI) {
+                return false;
+            }
             drainPlayerXPLevel(3);
             if (!player.level().isClientSide()) {
                 setupResultSlot();
@@ -327,6 +336,9 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         }
         // confirm consume
         else if (id == -5) {
+            if (!BzGeneralConfigs.crystallineFlowerConsumeItemUI) {
+                return false;
+            }
             consumeItem();
             if (!player.level().isClientSide()) {
                 setupResultSlot();
