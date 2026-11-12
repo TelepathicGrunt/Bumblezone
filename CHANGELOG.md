@@ -18,6 +18,8 @@ Adjusted packet logic for syncing horse owner to clients from server so that it 
  Reduces server load every time a horse is spawned into client's loaded chunks.
  Servers running v7.19.0 Bumblezone means clients must also update to v7.19.0 or else the adjusted packet will explode on server or client.
 
+Optimized Buzzing Briefcase menu clicks to not deserialize all bees in briefcase before validating if the button's action can proceed.
+
 #### Recipes:
 Fixed possible crash if `the_bumblezone:container_shapeless_recipe_bz` gets an item with null crafting remainder
 
