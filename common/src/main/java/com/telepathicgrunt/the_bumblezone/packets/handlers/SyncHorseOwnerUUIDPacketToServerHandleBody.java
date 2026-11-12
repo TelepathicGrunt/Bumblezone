@@ -11,7 +11,7 @@ public class SyncHorseOwnerUUIDPacketToServerHandleBody {
     public static void handle(SyncHorseOwnerUUIDPacketToServer message, Player player) {
         Entity entity = ((ServerLevel)player.level()).getEntity(message.horseUUID());
         if (entity instanceof AbstractHorse abstractHorse && abstractHorse.getOwnerUUID() != null) {
-            SyncHorseOwnerUUIDPacketFromServer.sendToClient(abstractHorse, abstractHorse.getId(), abstractHorse.getOwnerUUID());
+            SyncHorseOwnerUUIDPacketFromServer.sendToClient(abstractHorse, abstractHorse.getId(), abstractHorse.getOwnerUUID(), message.requestingPlayerUuid());
         }
     }
 }
