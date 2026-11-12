@@ -15,5 +15,8 @@ Optimized Buzzing Briefcase menu clicks to not send button click to server if pl
 
 Fixed crash if player tries to release a bee from Briefcase while it is in offhand slot
 
+#### Blocks:
+Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsumeItemUI` config options are respected on serverside for Crystalline Flower.
+
 #### Recipes:
 Fixed possible crash if `the_bumblezone:container_shapeless_recipe_bz` gets an item with null crafting remainder
