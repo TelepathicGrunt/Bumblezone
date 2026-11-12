@@ -742,7 +742,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     mouseY - (mainY + 22) >= 0.0D &&
                     mouseY - (mainY + 22) < 11.0D)
             {
-                if (bee.getHealth() < bee.getMaxHealth()) {
+                if (bee.getHealth() < bee.getMaxHealth() && inventory.contains(Items.HONEY_BOTTLE.getDefaultInstance())) {
                     sendButtonPressToMenu((beeIndex * BuzzingBriefcaseMenu.NUMBER_OF_BUTTONS) + BuzzingBriefcaseMenu.HEALTH_ID);
 
                     int honeyBottleSlotIndex = inventory.findSlotMatchingItem(Items.HONEY_BOTTLE.getDefaultInstance());
@@ -766,7 +766,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     mouseY - (mainY + 22) >= 0.0D &&
                     mouseY - (mainY + 22) < 11.0D)
             {
-                if (bee.hasStung()) {
+                if (bee.hasStung() && inventory.contains(BzItems.BEE_STINGER.get().getDefaultInstance())) {
                     sendButtonPressToMenu((beeIndex * BuzzingBriefcaseMenu.NUMBER_OF_BUTTONS) + BuzzingBriefcaseMenu.STINGER_ID);
 
                     int stingerSlotIndex = inventory.findSlotMatchingItem(BzItems.BEE_STINGER.get().getDefaultInstance());
@@ -787,7 +787,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     mouseY - (mainY + 33) >= 0.0D &&
                     mouseY - (mainY + 33) < 11.0D)
             {
-                if (bee.isBaby()) {
+                if (bee.isBaby() && inventory.contains(Items.HONEY_BOTTLE.getDefaultInstance())) {
                     sendButtonPressToMenu((beeIndex * BuzzingBriefcaseMenu.NUMBER_OF_BUTTONS) + BuzzingBriefcaseMenu.GROW_UP_ID);
 
                     int honeyBottleSlotIndex = inventory.findSlotMatchingItem(Items.HONEY_BOTTLE.getDefaultInstance());
@@ -811,7 +811,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     mouseY - (mainY + 33) >= 0.0D &&
                     mouseY - (mainY + 33) < 11.0D)
             {
-                if (!bee.hasNectar() && bee.getType().is(BzTags.BUZZING_BRIEFCASE_CAN_POLLINATE)) {
+                if (!bee.hasNectar() && bee.is(BzTags.BUZZING_BRIEFCASE_CAN_POLLINATE) && inventory.contains(BzItems.POLLEN_PUFF.get().getDefaultInstance())) {
                     sendButtonPressToMenu((beeIndex * BuzzingBriefcaseMenu.NUMBER_OF_BUTTONS) + BuzzingBriefcaseMenu.POLLEN_ID);
 
                     int pollenSlotIndex = inventory.findSlotMatchingItem(BzItems.POLLEN_PUFF.get().getDefaultInstance());
