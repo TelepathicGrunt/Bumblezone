@@ -91,7 +91,7 @@ public class BuzzingBriefcase extends Item {
             return numberOfBees > 0 ? InteractionResult.SUCCESS : null;
         }
 
-        List<Entity> releasedBees = dumpBees(player, player.isCrouching() ? -1 : 0, false);
+        List<Entity> releasedBees = dumpBees(briefcaseItem, player, player.isCrouching() ? -1 : 0, false);
 
         if(player instanceof ServerPlayer serverPlayer && !releasedBees.isEmpty()) {
             BzCriterias.BUZZING_BRIEFCASE_RELEASE_TRIGGER.get().trigger(serverPlayer);
@@ -113,7 +113,14 @@ public class BuzzingBriefcase extends Item {
             }
 
             boolean isVictimBeelike = BeeAggression.isBeelikeEntity(victim);
-            List<Entity> releasedBees = dumpBees(player, player.isCrouching() ? -1 : 0, false);
+            ItemStack briefcaseItem = null;
+
+            if (player.swingingArm != null && player.getItemInHand(player.swingingArm).getItem() instanceof BuzzingBriefcase) briefcaseItem = player.getItemInHand(player.swingingArm);
+            else if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof BuzzingBriefcase) briefcaseItem = player.getItemInHand(InteractionHand.MAIN_HAND);
+            else if (player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof BuzzingBriefcase) briefcaseItem = player.getItemInHand(InteractionHand.OFF_HAND);
+            if (briefcaseItem == null) return;
+
+            List<Entity> releasedBees = dumpBees(briefcaseItem, player, player.isCrouching() ? -1 : 0, false);
             for (Entity entity : releasedBees) {
                 if (entity instanceof NeutralMob neutralMob && !isVictimBeelike) {
                     neutralMob.setTarget(victim);
@@ -169,10 +176,8 @@ public class BuzzingBriefcase extends Item {
         }
     }
 
-    public static List<Entity> dumpBees(Player player, int beeIndex, boolean releaseAtPlayer) {
+    public static List<Entity> dumpBees(ItemStack briefcaseItem, Player player, int beeIndex, boolean releaseAtPlayer) {
         Level level = player.level();
-        ItemStack briefcaseItem = player.getItemInHand(InteractionHand.MAIN_HAND);
-
         int numberOfBees = getNumberOfBees(briefcaseItem);
         if (numberOfBees > 0) {
             List<Entity> bees = new ArrayList<>();
