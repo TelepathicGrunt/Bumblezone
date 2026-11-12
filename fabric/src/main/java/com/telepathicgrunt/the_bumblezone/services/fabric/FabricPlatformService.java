@@ -55,6 +55,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -138,7 +139,8 @@ public class FabricPlatformService implements PlatformService {
 
     @Override
     public ItemStack getCraftingRemainder(ItemStack stack) {
-        final ItemStack itemStack = stack.getItem().getCraftingRemainder().create();
+        ItemStackTemplate craftingRemainder = stack.getCraftingRemainder();
+        final ItemStack itemStack = craftingRemainder != null ? craftingRemainder.create() : ItemStack.EMPTY;
         return itemStack == ItemStack.EMPTY ? ItemStack.EMPTY : new ItemStack(itemStack.getItem());
     }
 

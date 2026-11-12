@@ -3,6 +3,9 @@
 #### Structures:
 Tweaked what modded blocks shows in Hanging Gardens
 
+#### Recipes:
+Fixed possible crash if `the_bumblezone:container_shapeless_recipe_bz` gets an item with null crafting remainder
+
 
 ### **(V.7.18.7 Changes) (26.1.2 Minecraft)**
 
