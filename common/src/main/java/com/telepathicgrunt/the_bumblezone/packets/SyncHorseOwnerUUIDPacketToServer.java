@@ -5,6 +5,7 @@ import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.teamresourceful.resourcefullib.common.network.base.ServerboundPacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.packets.handlers.SyncHorseOwnerUUIDPacketToServerHandleBody;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
@@ -12,13 +13,15 @@ import net.minecraft.world.entity.player.Player;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public record SyncHorseOwnerUUIDPacketToServer(UUID horseUUID) implements Packet<SyncHorseOwnerUUIDPacketToServer> {
+public record SyncHorseOwnerUUIDPacketToServer(UUID horseUUID, UUID requestingPlayerUuid) implements Packet<SyncHorseOwnerUUIDPacketToServer> {
 
     public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "sync_horse_owner_uuid_to_server");
     public static final ServerboundPacketType<SyncHorseOwnerUUIDPacketToServer> TYPE = new SyncHorseOwnerUUIDPacketToServer.Handler();
 
     public static void sendToServer(UUID horseUUID) {
-        MessageHandler.DEFAULT_CHANNEL.sendToServer(new SyncHorseOwnerUUIDPacketToServer(horseUUID));
+        if (Minecraft.getInstance().player != null) {
+            MessageHandler.DEFAULT_CHANNEL.sendToServer(new SyncHorseOwnerUUIDPacketToServer(horseUUID, Minecraft.getInstance().player.getUUID()));
+        }
     }
 
     @Override
@@ -31,11 +34,12 @@ public record SyncHorseOwnerUUIDPacketToServer(UUID horseUUID) implements Packet
         @Override
         public void encode(SyncHorseOwnerUUIDPacketToServer message, RegistryFriendlyByteBuf buffer) {
             buffer.writeUUID(message.horseUUID());
+            buffer.writeUUID(message.requestingPlayerUuid());
         }
 
         @Override
         public SyncHorseOwnerUUIDPacketToServer decode(RegistryFriendlyByteBuf buffer) {
-            return new SyncHorseOwnerUUIDPacketToServer(buffer.readUUID());
+            return new SyncHorseOwnerUUIDPacketToServer(buffer.readUUID(), buffer.readUUID());
         }
 
         @Override

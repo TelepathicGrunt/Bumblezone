@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.telepathicgrunt.the_bumblezone.packets.SyncHorseOwnerUUIDPacketFromServer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.equine.AbstractHorse;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,7 +17,7 @@ public class AbstractHorseMixin {
     private void bumblezone$syncHorseUUID2(LivingEntity livingEntity, CallbackInfo ci) {
         AbstractHorse abstractHorse = ((AbstractHorse)(Object)this);
         if (!abstractHorse.level().isClientSide() && abstractHorse.getOwnerReference() != null) {
-            SyncHorseOwnerUUIDPacketFromServer.sendToClient(abstractHorse, abstractHorse.getId(), abstractHorse.getOwnerReference().getUUID());
+            SyncHorseOwnerUUIDPacketFromServer.sendToClient(abstractHorse, abstractHorse.getId(), abstractHorse.getOwnerReference().getUUID(), abstractHorse.getOwnerReference().getUUID());
         }
     }
 }

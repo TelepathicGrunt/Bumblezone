@@ -1,4 +1,4 @@
-### **(V.7.18.8 Changes) (26.1.2 Minecraft)**
+### **(V.7.19.0 Changes) (26.1.2 Minecraft)**
 
 #### Structures:
 Tweaked what modded blocks shows in Hanging Gardens
@@ -13,6 +13,10 @@ Fixed super edge case crash if Bee Queen holiday trade timeframe ends and player
 
 #### Items:
 Fixed crash when having two of the same endgame essence items in inventory and one goes into cooldown.
+
+Adjusted packet logic for syncing horse owner to clients from server so that it no longer broadcasts to all players.
+ Reduces server load every time a horse is spawned into client's loaded chunks.
+ Servers running v7.19.0 Bumblezone means clients must also update to v7.19.0 or else the adjusted packet will explode on server or client.
 
 #### Recipes:
 Fixed possible crash if `the_bumblezone:container_shapeless_recipe_bz` gets an item with null crafting remainder

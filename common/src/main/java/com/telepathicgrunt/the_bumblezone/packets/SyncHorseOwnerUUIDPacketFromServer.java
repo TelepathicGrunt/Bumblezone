@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.packets.handlers.SyncHorseOwnerUUIDPac
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.UUID;
 
@@ -16,8 +17,11 @@ public record SyncHorseOwnerUUIDPacketFromServer(int horseId, UUID ownerUUID) im
     public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "sync_horse_owner_uuid_from_server");
     public static final ClientboundPacketType<SyncHorseOwnerUUIDPacketFromServer> TYPE = new SyncHorseOwnerUUIDPacketFromServer.Handler();
 
-    public static void sendToClient(Entity entity, int horseId, UUID ownerUUID) {
-        MessageHandler.DEFAULT_CHANNEL.sendToPlayersInLevel(new SyncHorseOwnerUUIDPacketFromServer(horseId, ownerUUID), entity.level());
+    public static void sendToClient(Entity entity, int horseId, UUID ownerUUID, UUID requestingPlayerUuid) {
+        Player requestingPlayerByUUID = entity.level().getPlayerByUUID(requestingPlayerUuid);
+        if (requestingPlayerByUUID != null) {
+            MessageHandler.DEFAULT_CHANNEL.sendToPlayer(new SyncHorseOwnerUUIDPacketFromServer(horseId, ownerUUID), requestingPlayerByUUID);
+        }
     }
 
     @Override
