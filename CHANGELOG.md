@@ -3,6 +3,9 @@
 #### Structures:
 Tweaked what modded blocks shows in Hanging Gardens
 
+#### Entities:
+Fixed Bee Queen crash if queen picks up a trade item that was not dropped by an entity.
+
 #### Recipes:
 Fixed possible crash if `the_bumblezone:container_shapeless_recipe_bz` gets an item with null crafting remainder
 

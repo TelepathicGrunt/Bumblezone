@@ -580,7 +580,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             if (specialDayItems.isPresent()) {
                 Optional<WeightedTradeResult> reward = specialDayItems.get().getSecond().getRandom(this.random);
                 if (reward.isPresent()) {
-                    spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), ((ItemEntityAccessor) itemEntity).bumblezone$getThrower().getUUID(), specialDayItems.get().getFirst());
+                    EntityReference<Entity> entityReference = ((ItemEntityAccessor) itemEntity).bumblezone$getThrower();
+                    spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), entityReference != null ? entityReference.getUUID() : null, specialDayItems.get().getFirst());
                     tradedItems++;
                 }
             }
@@ -593,7 +594,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
                 Optional<WeightedTradeResult> reward = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.get(item).getRandom(this.random);
                 if (reward.isPresent()) {
-                    spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), ((ItemEntityAccessor) itemEntity).bumblezone$getThrower().getUUID());
+                    EntityReference<Entity> entityReference = ((ItemEntityAccessor) itemEntity).bumblezone$getThrower();
+                    spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), entityReference != null ? entityReference.getUUID() : null);
                     tradedItems++;
                 }
             }
