@@ -6,6 +6,9 @@ Tweaked what modded blocks shows in Hanging Gardens
 #### Entities:
 Fixed Bee Queen crash if queen picks up a trade item that was not dropped by an entity.
 
+#### Items:
+Fixed crash when having two of the same endgame essence items in inventory and one goes into cooldown.
+
 #### Recipes:
 Fixed possible crash if `the_bumblezone:container_shapeless_recipe_bz` gets an item with null crafting remainder
 

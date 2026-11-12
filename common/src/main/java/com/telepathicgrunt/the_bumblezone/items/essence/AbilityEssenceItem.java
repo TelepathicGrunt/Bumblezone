@@ -108,12 +108,14 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
             else {
                 if (serverPlayer.getCooldowns().isOnCooldown(itemStack)) {
                     ItemCooldowns.CooldownInstance cooldownInstance = ((ItemCooldownsAccessor)serverPlayer.getCooldowns()).bumblezone$getCooldowns().get(itemStack.getItem());
-                    int tempCooldownTime = ((ItemCooldownsAccessor)serverPlayer.getCooldowns()).bumblezone$getTickCount() - cooldownInstance.startTime();
+                    if (cooldownInstance != null) {
+                        int tempCooldownTime = ((ItemCooldownsAccessor)serverPlayer.getCooldowns()).bumblezone$getTickCount() - cooldownInstance.startTime();
 
-                    if (tempCooldownTime > 5) {
-                        forcedCooldown = true;
-                        cooldownTime = tempCooldownTime;
-                        isActive = false;
+                        if (tempCooldownTime > 5) {
+                            forcedCooldown = true;
+                            cooldownTime = tempCooldownTime;
+                            isActive = false;
+                        }
                     }
                 }
                 else {
