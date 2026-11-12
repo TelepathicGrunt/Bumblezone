@@ -80,6 +80,7 @@ public class BuzzingBriefcaseMenu extends AbstractContainerMenu {
         }
         else if (buttonPressed == HEALTH_ID && bee.getHealth() < bee.getMaxHealth()) {
             int honeyBottleSlotIndex = inventory.findSlotMatchingItem(Items.HONEY_BOTTLE.getDefaultInstance());
+            if (honeyBottleSlotIndex < 0) { return false; }
             ItemStack playerHoneyBottleStack = inventory.getItem(honeyBottleSlotIndex);
 
             if (!playerHoneyBottleStack.isEmpty()) {
@@ -107,6 +108,7 @@ public class BuzzingBriefcaseMenu extends AbstractContainerMenu {
         }
         else if (buttonPressed == STINGER_ID && bee.hasStung()) {
             int stingerSlotIndex = inventory.findSlotMatchingItem(BzItems.BEE_STINGER.get().getDefaultInstance());
+            if (stingerSlotIndex < 0) { return false; }
             ItemStack playerStingerStack = inventory.getItem(stingerSlotIndex);
 
             if (!playerStingerStack.isEmpty()) {
@@ -127,6 +129,7 @@ public class BuzzingBriefcaseMenu extends AbstractContainerMenu {
         }
         else if (buttonPressed == GROW_UP_ID && bee.isBaby()) {
             int honeyBottleSlotIndex = inventory.findSlotMatchingItem(Items.HONEY_BOTTLE.getDefaultInstance());
+            if (honeyBottleSlotIndex < 0) { return false; }
             ItemStack playerHoneyBottleStack = inventory.getItem(honeyBottleSlotIndex);
 
             if (!playerHoneyBottleStack.isEmpty()) {
@@ -150,6 +153,7 @@ public class BuzzingBriefcaseMenu extends AbstractContainerMenu {
         }
         else if (buttonPressed == POLLEN_ID && !bee.hasNectar()) {
             int pollenSlotIndex = inventory.findSlotMatchingItem(BzItems.POLLEN_PUFF.get().getDefaultInstance());
+            if (pollenSlotIndex < 0) { return false; }
             ItemStack playerPollenStack = inventory.getItem(pollenSlotIndex);
 
             if (!playerPollenStack.isEmpty()) {
