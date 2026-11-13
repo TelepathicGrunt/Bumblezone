@@ -313,7 +313,7 @@ public class HoneycombBrood extends ProperFacingBlock {
     @Override
     public BlockState playerWillDestroy(Level world, BlockPos position, BlockState state, Player playerEntity) {
         if (world instanceof ServerLevel serverLevel && serverLevel.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
-            if (EnchantmentHelper.hasTag(playerEntity.getMainHandItem(), EnchantmentTags.PREVENTS_BEE_SPAWNS_WHEN_MINING)) {
+            if (!EnchantmentHelper.hasTag(playerEntity.getMainHandItem(), EnchantmentTags.PREVENTS_BEE_SPAWNS_WHEN_MINING)) {
                 BlockState blockState = world.getBlockState(position);
                 int stage = blockState.getValue(STAGE);
                 if (stage == 3) {
