@@ -25,7 +25,6 @@ import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemAttackBlockE
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.fabric.fabricapi.BiomeModificationContextImplMixin;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.jei.datamanager.PotionCandleRecipeSyncData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -34,7 +33,6 @@ import com.telepathicgrunt.the_bumblezone.services.fabric.FabricPlatformService;
 import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
-import net.fabricmc.fabric.api.client.recipe.v1.sync.ClientRecipeSynchronizedEvent;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
@@ -67,7 +65,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.packs.PackType;
@@ -148,7 +145,7 @@ public class FabricEventManager {
         BzSetupEvent.EVENT.invoke(new BzSetupEvent(Runnable::run));
         BzFinalSetupEvent.EVENT.invoke(new BzFinalSetupEvent(Runnable::run));
 
-        ServerTickEvents.END_LEVEL_TICK.register(BzWorldSavedData::tick);
+        ServerTickEvents.START_SERVER_TICK.register(BzWorldSavedData::tick);
 
         ServerLifecycleEvents.SERVER_STARTING.register((minecraftServer) -> {
             BzServerGoingToStartEvent.EVENT.invoke(new BzServerGoingToStartEvent(minecraftServer));
