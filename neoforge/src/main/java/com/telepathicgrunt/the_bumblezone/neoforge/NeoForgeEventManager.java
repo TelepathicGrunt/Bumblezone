@@ -101,10 +101,10 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
-import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.event.village.WandererTradesEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
 import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -329,10 +329,8 @@ public class NeoForgeEventManager {
         };
     }
 
-    private static void onLevelTickPost(LevelTickEvent.Post event) {
-        if (event.getLevel() instanceof ServerLevel serverLevel) {
-            BzWorldSavedData.tick(serverLevel);
-        }
+    private static void onLevelTickPost(ServerTickEvent.Post event) {
+        BzWorldSavedData.tick(event.getServer());
     }
 
     private static void onAddReloadListeners(AddReloadListenerEvent event) {

@@ -158,7 +158,7 @@ public class FabricEventManager {
 
         BzRegisterDataSerializersEvent.EVENT.invoke(new BzRegisterDataSerializersEvent((id, serializer) -> EntityDataSerializers.registerSerializer(serializer)));
 
-        ServerTickEvents.END_WORLD_TICK.register(BzWorldSavedData::tick);
+        ServerTickEvents.START_SERVER_TICK.register(BzWorldSavedData::tick);
 
         ServerLifecycleEvents.SERVER_STARTING.register((minecraftServer) -> {
             BzServerGoingToStartEvent.EVENT.invoke(new BzServerGoingToStartEvent(minecraftServer));
