@@ -67,6 +67,8 @@ Pollen Puff hitting tall flowers will now not have the top half of the newly dup
 
 Fixed drinking Bee Soup giving Bee Bread's effects instead of the intended effects for Bee Soup
 
+Fixed Honey Crystal Shield max durability not increasing correctly when repaired
+
 #### Blocks:
 Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsumeItemUI` config options are respected on serverside for Crystalline Flower.
 
