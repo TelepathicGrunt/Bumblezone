@@ -69,7 +69,7 @@ public interface SuperCandle {
                 for (int i = 0; i < chunkAccess.getMaxBuildHeight() - mutableBlockPos.getY(); i++) {
                     BlockState currentState = chunkAccess.getBlockState(mutableBlockPos);
                     if (currentState.getBlock() instanceof SuperCandle) {
-                        levelAccessor.setBlock(blockPos, currentState.setValue(BlockStateProperties.WATERLOGGED, true), 3);
+                        levelAccessor.setBlock(mutableBlockPos, currentState.setValue(BlockStateProperties.WATERLOGGED, true), 3);
                     }
                     else {
                         break;
