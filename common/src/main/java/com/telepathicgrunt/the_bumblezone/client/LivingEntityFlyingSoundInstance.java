@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -13,7 +14,7 @@ import java.util.WeakHashMap;
 
 public class LivingEntityFlyingSoundInstance extends AbstractTickableSoundInstance {
     protected final LivingEntity livingEntity;
-    private static final WeakHashMap<Entity, SoundInstance> activeSounds = new WeakHashMap<>();
+    private static final WeakHashMap<Entity, Identifier> activeSounds = new WeakHashMap<>();
 
     public LivingEntityFlyingSoundInstance(LivingEntity livingEntity, SoundEvent soundEvent, SoundSource soundSource) {
         super(soundEvent, soundSource, SoundInstance.createUnseededRandom());
@@ -66,14 +67,14 @@ public class LivingEntityFlyingSoundInstance extends AbstractTickableSoundInstan
     public static void playSound(LivingEntity livingEntity, SoundEvent soundEvent) {
         if(!activeSounds.containsKey(livingEntity)) {
             LivingEntityFlyingSoundInstance beesoundinstance = new LivingEntityFlyingSoundInstance(livingEntity, soundEvent, SoundSource.NEUTRAL);
-            activeSounds.put(livingEntity, beesoundinstance);
+            activeSounds.put(livingEntity, beesoundinstance.identifier);
             Minecraft.getInstance().getSoundManager().queueTickingSound(beesoundinstance);
         }
     }
 
     public static void stopSound(LivingEntity livingEntity, SoundEvent soundEvent) {
         if(activeSounds.containsKey(livingEntity)) {
-            Minecraft.getInstance().getSoundManager().stop(activeSounds.get(livingEntity));
+            Minecraft.getInstance().getSoundManager().stop(activeSounds.get(livingEntity), SoundSource.NEUTRAL);
             activeSounds.remove(livingEntity);
         }
     }
