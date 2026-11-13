@@ -81,16 +81,6 @@ import java.util.stream.Collectors;
 public class FabricEventManager {
 
     public static void init() {
-        AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) -> {
-            ModContainer container = getModPack(id);
-            ResourceManagerHelper.registerBuiltinResourcePack(
-                    new ResourceLocation(container.getMetadata().getId(), id.getPath()),
-                    container,
-                    displayName,
-                    toType(mode)
-            );
-        }));
-
         FabricBaseEventManager.init();
 
         RegisterDataSerializersEvent.EVENT.invoke(new RegisterDataSerializersEvent((id, serializer) -> EntityDataSerializers.registerSerializer(serializer)));
@@ -140,6 +130,18 @@ public class FabricEventManager {
                         }
                     });
         }
+    }
+
+    public static void afterModInit() {
+        AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) -> {
+            ModContainer container = getModPack(id);
+            ResourceManagerHelper.registerBuiltinResourcePack(
+                    new ResourceLocation(container.getMetadata().getId(), id.getPath()),
+                    container,
+                    displayName,
+                    toType(mode)
+            );
+        }));
     }
 
     private static ModContainer getModPack(ResourceLocation pack) {
