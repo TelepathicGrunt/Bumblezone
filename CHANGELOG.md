@@ -20,6 +20,8 @@ Fixed Rootmins not attacking `the_bumblezone:rootmin/targets` tagged entities on
 
 Made Rootmins not try and run away from other Rootmins
 
+Fixed Rootmins not getting curious about players wearing Bumblezone armor
+
 Fixed Honey Slime jump speed. 
  (Note: Honey Slimes already spawned before this update might now jump farther than intended due to previously saved MOVEMENT_SPEED attribute value)
 
