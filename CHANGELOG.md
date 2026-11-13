@@ -48,6 +48,8 @@ Fixed Honeycomb Brood Blocks not actually growing/spawning bees by random ticks
 
 Crystalline Flower now absorbs the true full Experience Orb amount by factoring in the orb's size (count)
 
+Fixed weird bug where placing a Super Candle/Potion Candle with wick waterlogged will replace that top candle with below Super Candle/Potion Candle block instead.
+
 #### Structures:
 Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable and fluid blocks outside the arena bounds
 
