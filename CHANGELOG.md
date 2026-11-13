@@ -19,6 +19,9 @@ Fixed Rootmins not attacking `the_bumblezone:rootmin/targets` tagged entities on
 
 Made Rootmins not try and run away from other Rootmins
 
+Fixed Honey Slime jump speed. 
+ (Note: Honey Slimes already spawned before this update might now jump farther than intended due to previously saved MOVEMENT_SPEED attribute value)
+
 #### Items:
 Adjusted packet logic for syncing horse owner to clients from server so that it no longer broadcasts to all players.
  Reduces server load every time a horse is spawned into client's loaded chunks.
