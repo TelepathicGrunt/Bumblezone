@@ -87,6 +87,8 @@ Added safety net so that if Sempiternal Sanctum arena fails to save the pre-aren
 Fixed arena entity saving so that Purple Sempiternal Sanctum arena event will place Purple Spike Entities in correct 
  locations after closing world and re-entering during the arena event.
 
+Made it so if `repeatableEssenceEvents` is true, beating the arena event again grants 1/4th xp of the first time completion amount
+
 Tweaked what modded blocks shows in Hanging Gardens
 
 #### Recipes:
