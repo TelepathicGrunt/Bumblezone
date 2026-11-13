@@ -31,6 +31,8 @@ Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsum
 
 Fixed crash if Crystalline Flower has 2 or more books in it, and you enchant a book while scrolled down in list of enchantments and resultant list of enchantments is between 1 and 3.
 
+Fixed Crystalline Flower crash if one sets up `bz_crystalline_flower_data` in a way to have consumed items give 0 xp to flower.
+
 #### Structures:
 Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable and fluid blocks outside the arena bounds
 
