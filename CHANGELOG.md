@@ -39,3 +39,6 @@ Added safety net so that if Sempiternal Sanctum arena fails to save the pre-aren
 
 #### Recipes:
 Fixed possible crash if `the_bumblezone:container_shapeless_recipe_bz` gets an item with null crafting remainder
+
+#### Features:
+Fixed infinite loop if one sets the `size` field to 1 or 0 for `the_bumblezone:blockentity_combs` feature
