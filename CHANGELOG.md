@@ -63,6 +63,10 @@ Crystalline Flower now absorbs the true full Experience Orb amount by factoring 
 
 Fixed weird bug where placing a Super Candle/Potion Candle with wick waterlogged will replace that top candle with below Super Candle/Potion Candle block instead.
 
+Super Candle/Potion Candle wicks now can be replaced by flowing fluids and pistons
+
+Replacing the lit wicks of Super Candle/Potion Candle will not leave the base block still lit.
+
 #### Structures:
 Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable and fluid blocks outside the arena bounds
 

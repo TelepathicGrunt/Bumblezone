@@ -37,7 +37,7 @@ public interface SuperCandle {
 
         boolean wickSpotAvaliableAbove = false;
         if (wickPosition == null) {
-            if (!aboveState.is(BzTags.CANDLE_WICKS) && (aboveState.canBeReplaced() || aboveState.isAir())) {
+            if (!aboveState.is(BzTags.CANDLE_WICKS) && (aboveState.isAir() || (aboveState.canBeReplaced() && (aboveState.getFluidState().isEmpty() || aboveState.getFluidState().isSource())))) {
                 wickPosition = blockPos.above();
                 wickSpotAvaliableAbove = true;
             }
