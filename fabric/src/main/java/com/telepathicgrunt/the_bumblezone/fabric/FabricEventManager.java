@@ -124,27 +124,6 @@ public class FabricEventManager {
     });
 
     public static void init() {
-        BzAddBuiltinResourcePacks.EVENT.invoke(new BzAddBuiltinResourcePacks((id, displayName, mode) -> {
-            ModContainer container = getModPack(id);
-            ResourceManagerHelper.registerBuiltinResourcePack(
-                    ResourceLocation.fromNamespaceAndPath(container.getMetadata().getId(), id.getPath()),
-                    container,
-                    displayName,
-                    toType(mode)
-            );
-        }));
-
-        BzAddBuiltinDataPacks.EVENT.invoke(new BzAddBuiltinDataPacks((id, displayName, mode) -> {
-            ModContainer container = getModPack(id);
-            ResourceManagerHelperImpl.registerBuiltinResourcePack(
-                    ResourceLocation.fromNamespaceAndPath(container.getMetadata().getId(), id.getPath()),
-                    "datapacks/" + id.getPath(),
-                    container,
-                    displayName,
-                    toType(mode)
-            );
-        }));
-
         ItemGroupEvents.MODIFY_ENTRIES_ALL.register((tab, entries) ->
                 BzAddCreativeTabEntriesEvent.EVENT.invoke(new BzAddCreativeTabEntriesEvent(
                         TYPES.getOrDefault(BuiltInRegistries.CREATIVE_MODE_TAB.getResourceKey(tab).orElse(null), BzAddCreativeTabEntriesEvent.Type.CUSTOM),
@@ -234,6 +213,29 @@ public class FabricEventManager {
                         }
                     });
         }
+    }
+
+    public static void afterModInit() {
+        BzAddBuiltinResourcePacks.EVENT.invoke(new BzAddBuiltinResourcePacks((id, displayName, mode) -> {
+            ModContainer container = getModPack(id);
+            ResourceManagerHelper.registerBuiltinResourcePack(
+                    ResourceLocation.fromNamespaceAndPath(container.getMetadata().getId(), id.getPath()),
+                    container,
+                    displayName,
+                    toType(mode)
+            );
+        }));
+
+        BzAddBuiltinDataPacks.EVENT.invoke(new BzAddBuiltinDataPacks((id, displayName, mode) -> {
+            ModContainer container = getModPack(id);
+            ResourceManagerHelperImpl.registerBuiltinResourcePack(
+                    ResourceLocation.fromNamespaceAndPath(container.getMetadata().getId(), id.getPath()),
+                    "datapacks/" + id.getPath(),
+                    container,
+                    displayName,
+                    toType(mode)
+            );
+        }));
     }
 
     private static ModContainer getModPack(ResourceLocation pack) {

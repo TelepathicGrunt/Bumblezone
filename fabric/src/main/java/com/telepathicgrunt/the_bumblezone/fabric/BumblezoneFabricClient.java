@@ -13,5 +13,6 @@ public class BumblezoneFabricClient implements ClientModInitializer {
 
         // Mod compat has to run after all mod's main init.
         FabricModChecker.setupModCompat();
+        FabricEventManager.afterModInit();
     }
 }

@@ -9,5 +9,6 @@ public class BumblezoneFabricServer implements DedicatedServerModInitializer {
     public void onInitializeServer() {
         // Mod compat has to run after all mod's main init.
         FabricModChecker.setupModCompat();
+        FabricEventManager.afterModInit();
     }
 }
