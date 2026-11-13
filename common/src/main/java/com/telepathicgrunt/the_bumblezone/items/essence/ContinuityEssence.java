@@ -19,16 +19,12 @@ import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
-import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.Filterable;
 import net.minecraft.server.network.FilteredText;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
@@ -44,9 +40,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.WrittenBookContent;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.Vec3;
 
@@ -54,7 +47,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -159,41 +151,14 @@ public class ContinuityEssence extends AbilityEssenceItem {
     private static void respawn(ItemStack stack, ContinuityEssence continuityEssence, ServerPlayer serverPlayer, MinecraftServer server, DamageSource damageSource) {
         ResourceKey<Level> oldDimension = serverPlayer.level().dimension();
         BlockPos oldPosition = serverPlayer.blockPosition();
-        ResourceKey<Level> respawnDimension = serverPlayer.getRespawnConfig() != null ? serverPlayer.getRespawnConfig().respawnData().dimension() : Level.OVERWORLD;
-        BlockPos respawningLinkedPosition = serverPlayer.getRespawnConfig() != null ? serverPlayer.getRespawnConfig().respawnData().pos() : server.overworld().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, BlockPos.ZERO);
 
-        ServerLevel desiredDestination = server.getLevel(respawnDimension);
-        Optional<Vec3> optionalRespawnPoint = desiredDestination != null ?
-                Optional.of(serverPlayer.findRespawnPositionAndUseSpawnBlock(true, TeleportTransition.DO_NOTHING).position()) : Optional.empty();
+        TeleportTransition respawnInfo = serverPlayer.findRespawnPositionAndUseSpawnBlock(false, TeleportTransition.DO_NOTHING);
 
-        ServerLevel finalDestination = desiredDestination != null ? desiredDestination : server.overworld();
-
-        if (optionalRespawnPoint.isEmpty()) {
-            serverPlayer.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.NO_RESPAWN_BLOCK_AVAILABLE, 0.0f));
-        }
-
-        Vec3 playerRespawnPosition;
-        BlockPos playerRespawnBlockPos;
-        boolean isRespawnAnchor;
-        if (optionalRespawnPoint.isPresent()) {
-            playerRespawnPosition = optionalRespawnPoint.get();
-            playerRespawnBlockPos = BlockPos.containing(playerRespawnPosition);
-
-            BlockState blockState = finalDestination.getBlockState(respawningLinkedPosition);
-            isRespawnAnchor = blockState.is(Blocks.RESPAWN_ANCHOR);
-        }
-        else {
-            playerRespawnPosition = finalDestination.getRespawnData().pos().getCenter();
-            playerRespawnBlockPos = finalDestination.getRespawnData().pos();
-
-            isRespawnAnchor = false;
-        }
+        ServerLevel finalDestination = respawnInfo.newLevel();
+        Vec3 playerRespawnPosition = respawnInfo.position();
+        BlockPos playerRespawnBlockPos = BlockPos.containing(playerRespawnPosition);
 
         BzWorldSavedData.queueEntityToGenericTeleport(serverPlayer, finalDestination.dimension(), playerRespawnBlockPos, () -> {
-            if (isRespawnAnchor) {
-                serverPlayer.connection.send(new ClientboundSoundPacket(SoundEvents.RESPAWN_ANCHOR_DEPLETE, SoundSource.BLOCKS, respawningLinkedPosition.getX(), respawningLinkedPosition.getY(), respawningLinkedPosition.getZ(), 1.0f, 1.0f, finalDestination.getRandom().nextLong()));
-            }
-
             playerReset(serverPlayer);
 
             ItemStack respawnedPlayerStack = serverPlayer.getOffhandItem();
