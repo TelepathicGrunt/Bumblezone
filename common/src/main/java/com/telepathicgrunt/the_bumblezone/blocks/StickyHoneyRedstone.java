@@ -73,7 +73,7 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
     @Deprecated
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
-        updateState(level, blockPos, blockState, 0);
+        updateState(level, blockPos, blockState, blockState.getValue(POWERED) ? 1 : 0);
         super.entityInside(blockState, level, blockPos, entity, effectApplier, isPrecise);
     }
 
