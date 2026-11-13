@@ -116,6 +116,9 @@ Improved `the_bumblezone:remove_floating_blocks_processor` processor for feature
 #### Enchantments:
 Made Potent Poison's `the_bumblezone:poison` data component not accept 0 for enchant intervals fields
 
+#### Effects:
+Fixed case where Wrath of the Hive effect at level 3 or higher would remove itself if it fails to spawn a bee during 1 attempt
+
 #### Sounds:
 Fixed memory leak with buzzing sound instance for Bumble Bee Chestplate and Beehemoth still retaining client worlds after exiting a world
 

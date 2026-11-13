@@ -99,7 +99,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
                     // Grab a nearby air materialposition a bit away
                     BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(entity, 30, 10);
                     if(!serverLevel.getBlockState(spawnBlockPos).isAir()) {
-                        return false;
+                        return true;
                     }
 
                     Bee bee = EntityType.BEE.create(serverLevel, EntitySpawnReason.EVENT);
