@@ -137,3 +137,5 @@ Fixed JEI mod compat
 Fixed REI mod compat
 
 NOTE: Potion Candle recipes in recipe viewer mods are not quite correct for the potion input at the moment. This will be looked at and corrected if possible in future.
+
+(NeoForge): Fixed it so if non-Bumblezone modded bee spawns in Bumblezone dimension, the original bee is canceled so that only the  non-Bumblezone modded bee spawns in its place 
