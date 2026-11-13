@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.decoration.ItemFrame;
@@ -22,7 +23,7 @@ public class SwapItemFrameContents {
 
                 checkedFluidConfig = BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid;
                 Optional<Fluid> fluid = BuiltInRegistries.FLUID.getOptional(new ResourceLocation(BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid));
-                if (fluid.isPresent()) {
+                if (fluid.isPresent() && fluid.get().is(BzTags.BZ_HONEY_FLUID)) {
                     Optional<Item> itemOptional = BuiltInRegistries.ITEM.stream()
                             .filter(item -> item instanceof BucketItem bucketItem && PlatformHooks.getBucketItemFluid(bucketItem) == fluid.get())
                             .findFirst();

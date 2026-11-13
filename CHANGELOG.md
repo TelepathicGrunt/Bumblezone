@@ -24,3 +24,6 @@ Added safety net so that if Sempiternal Sanctum arena fails to save the pre-aren
 
 #### Features:
 Fixed infinite loop if one sets the `size` field to 1 or 0 for `the_bumblezone:blockentity_combs` feature
+
+#### Configs:
+Fixed infinite loop if one sets `alternativeFluidToReplaceHoneyFluid` to Bumblezone's own Honey Fluid. Why would you do that? No idea. Don't do that.
