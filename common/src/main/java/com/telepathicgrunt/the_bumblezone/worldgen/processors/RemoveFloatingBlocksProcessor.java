@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 
 import com.mojang.serialization.MapCodec;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
@@ -32,12 +33,13 @@ public class RemoveFloatingBlocksProcessor extends StructureProcessor {
         if (structureBlockInfoWorld.state().isAir() || !structureBlockInfoWorld.state().getFluidState().isEmpty()) {
             BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(structureBlockInfoWorld.pos());
 
-            // set the block in the world so that canPlaceAt's result changes
             ChunkAccess cachedChunk = levelReader.getChunk(mutable);
             BlockState aboveWorldState = cachedChunk.getBlockState(mutable.move(Direction.UP));
-
             if (!aboveWorldState.isAir() && !aboveWorldState.canOcclude()) {
-                if (aboveWorldState.hasBlockEntity()) {
+
+                // set the air/fluid block in the world so that canPlaceAt's result changes
+                BlockState worldState = cachedChunk.getBlockState(mutable.move(Direction.DOWN));
+                if (worldState.hasBlockEntity()) {
                     cachedChunk.removeBlockEntity(mutable);
                 }
                 cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state(), false);
@@ -45,7 +47,7 @@ public class RemoveFloatingBlocksProcessor extends StructureProcessor {
                 // detects the invalidly placed blocks
                 mutable.move(Direction.UP);
                 aboveWorldState = cachedChunk.getBlockState(mutable);
-                while (mutable.getY() < levelReader.getHeight() && !aboveWorldState.canSurvive(levelReader, mutable)) {
+                while (mutable.getY() < levelReader.getHeight() && (!aboveWorldState.canSurvive(levelReader, mutable) || aboveWorldState.is(BzBlocks.HONEY_COCOON.get()))) {
                     if (aboveWorldState.hasBlockEntity()) {
                         cachedChunk.removeBlockEntity(mutable);
                     }

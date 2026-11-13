@@ -62,6 +62,8 @@ Fixed infinite loop if one sets the `size` field to 1 or 0 for `the_bumblezone:b
 
 Fixed crash with `the_bumblezone:floral_fill_with_rootmin` feature if `rootminFlowerTag` is empty or if `disallowedRootminFlowerTag` causes the final list of blocks to be empty
 
+Improved `the_bumblezone:remove_floating_blocks_processor` processor for features so that it will better target floating plants, Pile of Pollen, and Honey Cocoons better.
+
 #### Enchantments:
 Made Potent Poison's `the_bumblezone:poison` data component not accept 0 for enchant intervals fields
 
