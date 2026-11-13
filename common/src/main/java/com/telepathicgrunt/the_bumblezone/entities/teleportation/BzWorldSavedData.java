@@ -95,10 +95,11 @@ public class BzWorldSavedData extends SavedData {
 		return QUEUED_ENTITIES_TO_GENERIC_TELEPORT.stream().anyMatch(entry -> entry.getEntity().equals(entity));
 	}
 
-	public static void tick(ServerLevel world) {
-		RUNNABLES_FOR_NEXT_TICK.removeIf(r -> r.executeTick(world));
+	public static void tick(MinecraftServer minecraftServer) {
 
-		if(QUEUED_ENTITIES_TO_GENERIC_TELEPORT.size() > 0) {
+		RUNNABLES_FOR_NEXT_TICK.removeIf(r -> r.executeTick(minecraftServer));
+
+		if(!QUEUED_ENTITIES_TO_GENERIC_TELEPORT.isEmpty()) {
 			Set<Entity> teleportedEntities = new HashSet<>();
 			for (QueuedEntityData entry : QUEUED_ENTITIES_TO_GENERIC_TELEPORT) {
 				ResourceKey<Level> destinationKey = entry.getDestination();
@@ -114,7 +115,7 @@ public class BzWorldSavedData extends SavedData {
 			QUEUED_ENTITIES_TO_GENERIC_TELEPORT.removeIf(entry -> teleportedEntities.contains(entry.getEntity()));
 		}
 
-		if(QUEUED_ENTITIES_TO_TELEPORT_FOR_BUMBLEZONE.size() > 0) {
+		if(!QUEUED_ENTITIES_TO_TELEPORT_FOR_BUMBLEZONE.isEmpty()) {
 			Set<Entity> teleportedEntities = new HashSet<>();
 			for (QueuedEntityData entry : QUEUED_ENTITIES_TO_TELEPORT_FOR_BUMBLEZONE) {
 				if (!entry.getIsCurrentTeleporting()) {
@@ -403,8 +404,8 @@ public class BzWorldSavedData extends SavedData {
 	}
 
 	private record NextTickRunnable(long targetTick, Runnable runnable) {
-		public boolean executeTick(ServerLevel serverLevel) {
-			if (serverLevel.getGameTime() >= targetTick()) {
+		public boolean executeTick(MinecraftServer minecraftServer) {
+			if (minecraftServer.getTickCount() >= targetTick()) {
 				runnable.run();
 				return true;
 			}
