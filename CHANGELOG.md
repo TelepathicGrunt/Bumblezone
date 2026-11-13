@@ -44,6 +44,8 @@ Reduced amount of particles that Sentry Watcher generates on client when it is c
 
 Sentry Watcher fully respects the 80 block distance it can charge through instead of going excessively further due to bad coordinate calculation
 
+Fixed incorrect Sentry Watcher health and armor damaging when it attacks a player or mob
+
 Adjusted mob spawning on chunk creation for Bumblezone dimension. Beehemoths now spawn more often as a result
 
 #### Items:
