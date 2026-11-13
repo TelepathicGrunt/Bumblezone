@@ -19,6 +19,8 @@ Fixed Bee Queen crash if queen picks up a trade item that was not dropped by an 
 
 Fixed super edge case crash if Bee Queen holiday trade timeframe ends and player looks at queen before hourly trade refresh happens.
 
+Bee Queen now gives rewards for entire stack of dropped items for holiday trades instead of a bugged single reward.
+
 Fixed Beehemoth walking far too slow on the ground when riding one
 
 Removed logging I had forgotten about from when I was debugging Beehemoth riding controls
