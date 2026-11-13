@@ -4,6 +4,9 @@
 Fixed teleporting to and from Bumblezone using the wrong ticket. Causing the destination chunk to remain loaded forever until server restart.
  Now the right ticket is used so the chunk is only loaded for 300 ticks for teleporting purposes.
 
+Fixed issue where if player enters Bumblezone from non-Overworld dimension, rides a mount that originated in Bumblezone,  and try to exit Bumblezone dimension,
+ the bug would've spawned player and mount in Overworld instead of the player's original non-Overworld dimension.
+
 #### Fluids:
 Fixed crash when a block is changed next to Sugar Water Bubble Column
 
