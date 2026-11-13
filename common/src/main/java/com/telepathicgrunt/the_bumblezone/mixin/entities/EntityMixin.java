@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -29,10 +30,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -132,23 +130,22 @@ public abstract class EntityMixin implements EntityLootDropInterface {
         }
     }
 
-    @Inject(method = "isAlliedTo(Lnet/minecraft/world/entity/Entity;)Z",
-            at = @At(value = "RETURN"),
-            cancellable = true)
-    private void bumblezone$preventAngerableAtPlayer2(Entity comparer, CallbackInfoReturnable<Boolean> cir) {
+    @WrapMethod(method = "isAlliedTo(Lnet/minecraft/world/entity/Entity;)Z")
+    private boolean bumblezone$preventAngerableAtPlayer2(Entity other, Operation<Boolean> original) {
         Entity current = (Entity) (Object) this;
-        if (current instanceof Mob || comparer instanceof Mob) {
+        if (current instanceof Mob || other instanceof Mob) {
             if (current instanceof Player player && CalmingEssence.IsCalmingEssenceActive(player)) {
-                if (!comparer.is(BzTags.CALMING_ALLOW_ANGER_THROUGH)) {
-                    cir.setReturnValue(false);
+                if (!other.is(BzTags.CALMING_ALLOW_ANGER_THROUGH)) {
+                    return true;
                 }
             }
-            else if (comparer instanceof Player player && CalmingEssence.IsCalmingEssenceActive(player)) {
+            else if (other instanceof Player player && CalmingEssence.IsCalmingEssenceActive(player)) {
                 if (!current.is(BzTags.CALMING_ALLOW_ANGER_THROUGH)) {
-                    cir.setReturnValue(false);
+                    return true;
                 }
             }
         }
+        return original.call(other);
     }
 
     @WrapOperation(method = "lambda$checkInsideBlocks$0(ILjava/util/concurrent/atomic/AtomicInteger;ZLnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lit/unimi/dsi/fastutil/longs/LongSet;ZLnet/minecraft/world/phys/AABB;Lnet/minecraft/world/entity/InsideBlockEffectApplier$StepBasedCollector;Lnet/minecraft/core/BlockPos;I)Z",

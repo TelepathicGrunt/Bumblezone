@@ -58,6 +58,8 @@ Fixed Bee Cannon and Crystal Cannon not working in offhand slot
 Fixed issue where if you were bound to a now-depleted Respawn Anchor in another dimension and your death is prevented by
  Essence of Continuity, now you will spawn at the correct respawn-safe dimension and location instead of way off coordinates that could've result in death.
 
+Fixed Essence of Calming can mess with pre-existing player-mob alliances in a negative way
+
 Fixed Carpenter Bee Boots not properly handling mined block entities.
  (Beehives's bees were previously deleted when mined with these boots. Not anymore)
 
