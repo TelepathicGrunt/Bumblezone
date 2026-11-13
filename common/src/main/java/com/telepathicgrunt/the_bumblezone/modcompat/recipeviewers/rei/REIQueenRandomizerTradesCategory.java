@@ -23,8 +23,12 @@ public class REIQueenRandomizerTradesCategory implements DisplayCategory<REIQuee
 	private final Renderer icon;
 	private final Component localizedName;
 
+	public static final Identifier CATEGORY_ICON = Identifier.fromNamespaceAndPath("the_bumblezone", "textures/gui/recipe_viewer/bee_queen_randomize_trades.png");
+	public static final Identifier TAG_ICON = Identifier.fromNamespaceAndPath("the_bumblezone", "textures/gui/recipe_viewer/tag_icon.png");
+	public static final Identifier BACKGROUND = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/recipe_viewer/queen_randomizer_trades_layout.png");
+
 	public REIQueenRandomizerTradesCategory() {
-		this.icon = new REIQueenEggIconRenderer(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/recipe_viewer/bee_queen_randomize_trades.png"));
+		this.icon = new REIQueenEggIconRenderer(CATEGORY_ICON);
 		this.localizedName = Component.translatable("the_bumblezone.recipe_viewers.bee_queen_color_randomizing_trades");
 	}
 
@@ -60,15 +64,15 @@ public class REIQueenRandomizerTradesCategory implements DisplayCategory<REIQuee
 		Rectangle bounds = origin.getBounds();
 		bounds.translate(4, 4);
 
-		widgets.add(Widgets.createTexturedWidget(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/recipe_viewer/queen_randomizer_trades_layout.png"), new Rectangle(bounds.getX(), bounds.getY(), RECIPE_WIDTH, RECIPE_HEIGHT)));
-		widgets.add(Widgets.createSlot(new Rectangle(bounds.getX() + 5, bounds.getY() + 5, 18, 18)).entries(display.getInputEntries().get(0)).markInput().disableBackground());
-		widgets.add(Widgets.createSlot(new Rectangle(bounds.getX() + 63, bounds.getY() + 5, 18, 18)).entries(display.getOutputEntries().get(0)).markInput().disableBackground());
+		widgets.add(Widgets.createTexturedWidget(BACKGROUND, new Rectangle(bounds.getX(), bounds.getY(), RECIPE_WIDTH, RECIPE_HEIGHT), 0, 0, RECIPE_WIDTH, RECIPE_HEIGHT));
+		widgets.add(Widgets.createSlot(new Rectangle(bounds.getX() + 5, bounds.getY() + 5, 18, 18)).entries(display.getInputEntries().get(0)).markInput());
+		widgets.add(Widgets.createSlot(new Rectangle(bounds.getX() + 63, bounds.getY() + 5, 18, 18)).entries(display.getOutputEntries().get(0)).markInput());
 
 		widgets.add(Widgets.createLabel(new Point(bounds.getX() + 86, bounds.getY() + 10), Component.translatable("the_bumblezone.recipe_viewers.queen_trade_colors", display.getOutputEntries().get(0).size())).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
 
 		if (display.getInOutTag() != null) {
 			widgets.add(Widgets.withTranslate(Widgets.createTexturedWidget(
-				Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/recipe_viewer/tag_icon.png"),
+				TAG_ICON,
 				new Rectangle(
 					bounds.getX() + 11,
 					bounds.getY() + 11,

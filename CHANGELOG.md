@@ -98,3 +98,7 @@ Fixed infinite loop if one sets `alternativeFluidToReplaceHoneyFluid` to Bumblez
 Fixed broken Reliable Recipe Viewer mod compat
 
 Fixed JEI mod compat
+
+Fixed REI mod compat
+
+NOTE: Potion Candle recipes in recipe viewer mods are not quite correct for the potion input at the moment. This will be looked at and corrected if possible in future.

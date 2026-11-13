@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items.recipes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.PotionCandleBlockEntity;
 import com.telepathicgrunt.the_bumblezone.blocks.datamanagers.PotionCandleDataManager;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
@@ -14,10 +15,13 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
@@ -28,6 +32,7 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.Level;
@@ -50,6 +55,9 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     private final boolean allowSplashPotions;
     private final boolean allowLingeringPotions;
     private final int maxLevelCap;
+
+    public static final ResourceKey<Recipe<?>> FROM_SUPER_CANDLES_POTION_CANDLE_RECIPE = ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles"));
+    public static final ResourceKey<Recipe<?>> FROM_STRING_AND_CARVABLE_WAX_POTION_CANDLE_RECIPE = ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax"));
 
     public PotionCandleRecipe(
             String group,

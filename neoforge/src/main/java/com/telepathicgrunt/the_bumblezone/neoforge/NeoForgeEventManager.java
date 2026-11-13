@@ -40,6 +40,7 @@ import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.fluids.neoforge.BzFluidBottlesWrapper;
+import com.telepathicgrunt.the_bumblezone.items.recipes.PotionCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.mixin.neoforge.blocks.FireBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.neoforge.NeoForgeModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.jei.datamanager.PotionCandleRecipeSyncData;
@@ -61,6 +62,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
@@ -335,11 +337,13 @@ public class NeoForgeEventManager {
                 event.getPlayerList().getPlayers().forEach(player -> BzDatapackSyncEvent.EVENT.invoke(new BzDatapackSyncEvent(player)));
             }
         }
+
+        event.sendRecipes(RecipeType.CRAFTING);
     }
 
     private static void onRecipesReceived(RecipesReceivedEvent event) {
-        PotionCandleRecipeSyncData.POTION_CANDLE_FROM_SUPER_CANDLES = event.getRecipeMap().byKey(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles")));
-        PotionCandleRecipeSyncData.POTION_CANDLE_FROM_STRING_AND_CARVABLE_WAX = event.getRecipeMap().byKey(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax")));
+        PotionCandleRecipeSyncData.POTION_CANDLE_FROM_SUPER_CANDLES = event.getRecipeMap().byKey(PotionCandleRecipe.FROM_SUPER_CANDLES_POTION_CANDLE_RECIPE);
+        PotionCandleRecipeSyncData.POTION_CANDLE_FROM_STRING_AND_CARVABLE_WAX = event.getRecipeMap().byKey(PotionCandleRecipe.FROM_STRING_AND_CARVABLE_WAX_POTION_CANDLE_RECIPE);
     }
 
     private static void onEntityVisibility(LivingEvent.LivingVisibilityEvent event) {

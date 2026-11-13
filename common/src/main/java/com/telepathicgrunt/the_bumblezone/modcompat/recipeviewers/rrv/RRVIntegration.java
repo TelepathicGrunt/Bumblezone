@@ -17,7 +17,6 @@ import com.telepathicgrunt.the_bumblezone.items.recipes.PotionCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.modcompat.FakePotionCandleRecipeCreator;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.MainTradeRowInput;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.RandomizeTradeRowInput;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.jei.datamanager.PotionCandleRecipeSyncData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCreativeTabs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -25,18 +24,14 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
@@ -45,23 +40,21 @@ import net.minecraft.world.level.material.Fluid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class RRVIntegration implements ReliableRecipeViewerClientPlugin {
-    private static final ResourceKey<Recipe<?>> FROM_SUPER_CANDLES_POTION_CANDLE_RECIPE = ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles"));
-    private static final ResourceKey<Recipe<?>> FROM_STRING_AND_CARVABLE_WAX_POTION_CANDLE_RECIPE = ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax"));
+
     @Override
     public void onIntegrationInitialize() {
         ItemView.addClientRecipeProvider(recipeList -> {
             ClientRecipeManager.INSTANCE.getRecipesForType(RecipeType.CRAFTING)
                     .stream()
-                        .filter(r -> r.id().equals(FROM_SUPER_CANDLES_POTION_CANDLE_RECIPE))
+                        .filter(r -> r.id().equals(PotionCandleRecipe.FROM_SUPER_CANDLES_POTION_CANDLE_RECIPE))
                     .findFirst()
                     .ifPresent(craftingRecipeRecipeHolder -> registerExtraRecipes(craftingRecipeRecipeHolder, recipeList, true));
 
             ClientRecipeManager.INSTANCE.getRecipesForType(RecipeType.CRAFTING)
                     .stream()
-                        .filter(r -> r.id().equals(FROM_STRING_AND_CARVABLE_WAX_POTION_CANDLE_RECIPE))
+                        .filter(r -> r.id().equals(PotionCandleRecipe.FROM_STRING_AND_CARVABLE_WAX_POTION_CANDLE_RECIPE))
                     .findFirst()
                     .ifPresent(craftingRecipeRecipeHolder -> registerExtraRecipes(craftingRecipeRecipeHolder, recipeList, false));
 

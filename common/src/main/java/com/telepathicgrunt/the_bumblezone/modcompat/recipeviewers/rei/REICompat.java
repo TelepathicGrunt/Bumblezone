@@ -26,6 +26,8 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
+import me.shedaniel.rei.forge.REIPluginClient;
+import me.shedaniel.rei.impl.client.registry.display.DisplayRegistryImpl;
 import me.shedaniel.rei.plugin.client.BuiltinClientPlugin;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.HolderSet;
@@ -47,6 +49,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+@REIPluginClient
 public class REICompat implements REIClientPlugin {
 
     public static final CategoryIdentifier<REIQueenTradesInfo> QUEEN_TRADES = CategoryIdentifier.of(Bumblezone.MODID, "queen_trades");
@@ -61,13 +64,13 @@ public class REICompat implements REIClientPlugin {
             addInfo(BzFluids.HONEY_FLUID.get());
         }
 
-        if (PotionCandleRecipeSyncData.POTION_CANDLE_FROM_SUPER_CANDLES != null) {
-            registerExtraRecipes(PotionCandleRecipeSyncData.POTION_CANDLE_FROM_SUPER_CANDLES, registry, true);
-        }
-
-        if (PotionCandleRecipeSyncData.POTION_CANDLE_FROM_STRING_AND_CARVABLE_WAX != null) {
-            registerExtraRecipes(PotionCandleRecipeSyncData.POTION_CANDLE_FROM_STRING_AND_CARVABLE_WAX, registry, false);
-        }
+//        if (PotionCandleRecipeSyncData.POTION_CANDLE_FROM_SUPER_CANDLES != null) {
+//            registerExtraRecipes(PotionCandleRecipeSyncData.POTION_CANDLE_FROM_SUPER_CANDLES, registry, true);
+//        }
+//
+//        if (PotionCandleRecipeSyncData.POTION_CANDLE_FROM_STRING_AND_CARVABLE_WAX != null) {
+//            registerExtraRecipes(PotionCandleRecipeSyncData.POTION_CANDLE_FROM_STRING_AND_CARVABLE_WAX, registry, false);
+//        }
 
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades.isEmpty()) {
             for (Pair<MainTradeRowInput, WeightedList<WeightedTradeResult>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades) {
@@ -157,7 +160,7 @@ public class REICompat implements REIClientPlugin {
     private static void registerExtraRecipes(RecipeHolder<?> baseRecipe, DisplayRegistry registry, boolean oneRecipeOnly) {
         if (baseRecipe.value() instanceof PotionCandleRecipe potionCandleRecipe) {
             List<ShapedRecipe> extraRecipes = FakePotionCandleRecipeCreator.constructFakeRecipes(potionCandleRecipe, oneRecipeOnly);
-            extraRecipes.forEach(registry::add);
+            extraRecipes.forEach(recipe -> registry.add(recipe));
         }
     }
 

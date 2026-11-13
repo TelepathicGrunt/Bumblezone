@@ -35,6 +35,9 @@
         ],
         "rrv_client": [
             "com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.rrv.RRVIntegration"
+        ],
+        "rei_client": [
+            "com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.rei.REICompat"
         ]
     },
     "mixins": [

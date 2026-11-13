@@ -19,6 +19,7 @@ import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterKeyMappingEven
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterMenuScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterParticleEvent;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
+import com.telepathicgrunt.the_bumblezone.items.recipes.PotionCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.jei.datamanager.PotionCandleRecipeSyncData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
@@ -84,8 +85,8 @@ public class FabricClientEventManager {
         });
 
         ClientRecipeSynchronizedEvent.EVENT.register((_, synchronizedRecipes) -> {
-            PotionCandleRecipeSyncData.POTION_CANDLE_FROM_SUPER_CANDLES = synchronizedRecipes.get(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles")));
-            PotionCandleRecipeSyncData.POTION_CANDLE_FROM_STRING_AND_CARVABLE_WAX = synchronizedRecipes.get(ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax")));
+            PotionCandleRecipeSyncData.POTION_CANDLE_FROM_SUPER_CANDLES = synchronizedRecipes.get(PotionCandleRecipe.FROM_SUPER_CANDLES_POTION_CANDLE_RECIPE);
+            PotionCandleRecipeSyncData.POTION_CANDLE_FROM_STRING_AND_CARVABLE_WAX = synchronizedRecipes.get(PotionCandleRecipe.FROM_STRING_AND_CARVABLE_WAX_POTION_CANDLE_RECIPE);
         });
 
         ClientTickEvents.END_CLIENT_TICK.register((mc) -> StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer()));
