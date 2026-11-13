@@ -65,6 +65,8 @@ Fixed Carpenter Bee Boots not properly handling mined block entities.
 
 Pollen Puff hitting tall flowers will now not have the top half of the newly duplicated tall flower replace existing block
 
+Fixed drinking Bee Soup giving Bee Bread's effects instead of the intended effects for Bee Soup
+
 #### Blocks:
 Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsumeItemUI` config options are respected on serverside for Crystalline Flower.
 

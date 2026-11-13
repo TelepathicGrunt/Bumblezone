@@ -9,7 +9,7 @@ public class BeeSoup extends Item {
         super(properties
                 .craftRemainder(Items.BOWL)
                 .usingConvertsTo(Items.BOWL)
-                .food(BzFoodAndConsumables.BEE_SOUP_FOOD, BzFoodAndConsumables.BEE_BREAD_CONSUME));
+                .food(BzFoodAndConsumables.BEE_SOUP_FOOD, BzFoodAndConsumables.BEE_SOUP_CONSUME));
     }
 
 }
