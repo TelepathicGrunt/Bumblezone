@@ -230,12 +230,20 @@ public class HoneycombBrood extends ProperFacingBlock {
         }
     }
 
-
-    @SuppressWarnings("deprecation")
     @Override
-    public void tick(BlockState state, ServerLevel world, BlockPos position, RandomSource random) {
-        super.tick(state, world, position, random);
-        if (!world.hasChunksAt(position, position))
+    protected void randomTick(BlockState state, ServerLevel level, BlockPos position, RandomSource random) {
+        super.randomTick(state, level, position, random);
+        broodGrowth(state, level, position, random);
+    }
+
+    @Override
+    public void tick(BlockState state, ServerLevel level, BlockPos position, RandomSource random) {
+        super.tick(state, level, position, random);
+        broodGrowth(state, level, position, random);
+    }
+
+    private void broodGrowth(BlockState state, ServerLevel level, BlockPos position, RandomSource random) {
+        if (!level.hasChunksAt(position, position))
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
 
         List<LivingEntity> nearbyEntities = null;
