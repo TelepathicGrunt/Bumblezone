@@ -159,8 +159,9 @@ public class EntityTeleportationHookup {
                 }
             }
             else {
-                checkAndCorrectStoredDimension(livingEntity.getControllingPassenger());
-                Optional<EntityPosAndDimModule> capOptional = PlatformService.INSTANCE.getModule(livingEntity, ModuleRegistry.ENTITY_POS_AND_DIM);
+                LivingEntity rider = livingEntity.getControllingPassenger();
+                checkAndCorrectStoredDimension(rider);
+                Optional<EntityPosAndDimModule> capOptional = PlatformService.INSTANCE.getModule(rider, ModuleRegistry.ENTITY_POS_AND_DIM);
                 if (capOptional.isPresent()) {
                     EntityPosAndDimModule capability = capOptional.orElseThrow(RuntimeException::new);
                     worldKey = ResourceKey.create(Registries.DIMENSION, capability.getNonBZDim());
