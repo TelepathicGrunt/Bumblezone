@@ -9,6 +9,11 @@ Fixed issue where if player enters Bumblezone from non-Overworld dimension, ride
 
 Adjusted teleportation queue logic to run only during server tick instead of all dimension ticks.
 
+#### Entities:
+Fixed possible issue where in presence of multiple players, Cosmic Crystal Entity could track wrong player on client compared to server
+
+Fixed visual issue where Cosmic Crystal Entity spazzes out when tracking spinning attack ends
+
 #### Items:
 Fixed shot Honey Crystal Shard crashing when it hits an entity while Fabric Twilight Forest is on.
 
