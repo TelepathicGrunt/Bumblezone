@@ -20,7 +20,7 @@ public class RRVQueenTradesRecipeType implements ReliableClientRecipeType {
     public static final int RECIPE_HEIGHT = 28;
     public static final Identifier CATEGORY_ICON = Identifier.fromNamespaceAndPath("the_bumblezone", "textures/gui/recipe_viewer/bee_queen_trades.png");
     public static final Identifier TAG_ICON = Identifier.fromNamespaceAndPath("the_bumblezone", "textures/gui/recipe_viewer/tag_icon.png");
-    public static final Identifier BACKGROUND = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/recipe_viewer/rrv_queen_trades_layout.png");
+    public static final Identifier BACKGROUND = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/recipe_viewer/queen_trades_layout.png");
 
     @Override
     public Component getDisplayName() {

@@ -96,3 +96,5 @@ Fixed infinite loop if one sets `alternativeFluidToReplaceHoneyFluid` to Bumblez
 
 #### Mod Compat:
 Fixed broken Reliable Recipe Viewer mod compat
+
+Fixed JEI mod compat

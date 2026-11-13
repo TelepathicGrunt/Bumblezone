@@ -57,7 +57,17 @@ public class DrawableResource implements IDrawableStatic {
         int y = yOffset + this.paddingTop + maskTop;
         int width = this.width - maskRight - maskLeft;
         int height = this.height - maskBottom - maskTop;
-        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.identifier, x, y, width, height);
+        guiGraphics.blit(
+                RenderPipelines.GUI_TEXTURED,
+                this.identifier,
+                x,
+                y,
+                0,
+                0,
+                width,
+                height,
+                width,
+                height);
     }
 }
 
