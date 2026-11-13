@@ -9,4 +9,10 @@ public interface ExperienceOrbAccessor {
 
     @Accessor("value")
     void bumblezone$setValue(int value);
+
+    @Accessor("count")
+    int bumblezone$getCount();
+
+    @Accessor("count")
+    void bumblezone$setCount(int countIn);
 }
