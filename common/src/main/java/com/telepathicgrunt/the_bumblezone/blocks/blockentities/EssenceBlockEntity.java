@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
+import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.EssenceBlock;
 import com.telepathicgrunt.the_bumblezone.bossbars.ServerEssenceEvent;

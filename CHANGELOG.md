@@ -57,6 +57,9 @@ Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable 
 
 Added safety net so that if Sempiternal Sanctum arena fails to save the pre-arena area, the arena event will not start.
 
+Fixed arena entity saving so that Purple Sempiternal Sanctum arena event will place Purple Spike Entities in correct 
+ locations after closing world and re-entering during the arena event.
+
 Tweaked what modded blocks shows in Hanging Gardens
 
 #### Recipes:
