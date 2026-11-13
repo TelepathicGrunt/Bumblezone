@@ -85,8 +85,7 @@ public class EssenceBlockPurple extends EssenceBlock {
             for (UUID playerUUID : essenceBlockEntity.getPlayerInArena()) {
                 Player player = serverLevel.getServer().getPlayerList().getPlayer(playerUUID);
                 if (player != null) {
-                    breakClimbablesAndPlatforms(serverLevel, player);
-
+                    breakClimbablesAndPlatforms(serverLevel, player, blockPos, essenceBlockEntity);
                 }
             }
         }
@@ -146,13 +145,21 @@ public class EssenceBlockPurple extends EssenceBlock {
         essenceBlockEntity.getEventBar().setProgress((float) essenceBlockEntity.getEventTimer() / getEventTimeFrame());
     }
 
-    private static void breakClimbablesAndPlatforms(ServerLevel serverLevel, Player player) {
-        int maxX = (int) Math.ceil(player.getBoundingBox().maxX);
-        int maxY = (int) Math.ceil(player.getBoundingBox().maxY);
-        int maxZ = (int) Math.ceil(player.getBoundingBox().maxZ);
-        int minX = (int) Math.floor(player.getBoundingBox().minX);
-        int minY = (int) Math.floor(player.getBoundingBox().minY);
-        int minZ = (int) Math.floor(player.getBoundingBox().minZ);
+    private static void breakClimbablesAndPlatforms(ServerLevel serverLevel, Player player, BlockPos blockPos, EssenceBlockEntity essenceBlockEntity) {
+        if (player.isDeadOrDying() ||
+            (Math.abs(player.blockPosition().getX() - blockPos.getX()) > (essenceBlockEntity.getArenaSize().getX() / 2) ||
+            Math.abs(player.blockPosition().getY() - blockPos.getY()) > (essenceBlockEntity.getArenaSize().getY() / 2) ||
+            Math.abs(player.blockPosition().getZ() - blockPos.getZ()) > (essenceBlockEntity.getArenaSize().getZ() / 2)))
+        {
+            return;
+        }
+
+        int maxX = Math.min((int) Math.ceil(player.getBoundingBox().maxX), blockPos.getX() + (essenceBlockEntity.getArenaSize().getX() / 2));
+        int maxY = Math.min((int) Math.ceil(player.getBoundingBox().maxY), blockPos.getY() + (essenceBlockEntity.getArenaSize().getY() / 2));
+        int maxZ = Math.min((int) Math.ceil(player.getBoundingBox().maxZ), blockPos.getZ() + (essenceBlockEntity.getArenaSize().getZ() / 2));
+        int minX = Math.max((int) Math.floor(player.getBoundingBox().minX), blockPos.getX() - (essenceBlockEntity.getArenaSize().getX() / 2));
+        int minY = Math.max((int) Math.floor(player.getBoundingBox().minY), blockPos.getY() - (essenceBlockEntity.getArenaSize().getY() / 2));
+        int minZ = Math.max((int) Math.floor(player.getBoundingBox().minZ), blockPos.getZ() - (essenceBlockEntity.getArenaSize().getZ() / 2));
 
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
         for (int x = minX; x <= maxX; x++) {

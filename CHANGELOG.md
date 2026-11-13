@@ -16,3 +16,6 @@ Fixed issue where if you were bound to a now-depleted Respawn Anchor in another 
 
 #### Blocks:
 Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsumeItemUI` config options are respected on serverside for Crystalline Flower.
+
+#### Structures:
+Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable and fluid blocks outside the arena bounds
