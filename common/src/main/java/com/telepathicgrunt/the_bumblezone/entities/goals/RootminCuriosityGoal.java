@@ -19,11 +19,13 @@ public class RootminCuriosityGoal extends Goal {
     protected LivingEntity inspect = null;
     protected int exposingTiming = 0;
     protected int curiosityWaiting = 0;
+    protected int counter = 0;
 
     public RootminCuriosityGoal(RootminEntity pathfinderMob) {
         this.mob = pathfinderMob;
         this.setFlags(EnumSet.of(Flag.MOVE));
         this.targetConditions = TargetingConditions.forCombat().range(this.mob.getAttributeValue(Attributes.FOLLOW_RANGE)).selector(null);
+        counter = (int)(this.mob.getUUID().getLeastSignificantBits() % 20);
     }
 
     protected AABB getTargetSearchArea(double d) {
@@ -32,6 +34,7 @@ public class RootminCuriosityGoal extends Goal {
 
     @Override
     public boolean canUse() {
+        counter++;
         if (this.mob.getRootminPose() != RootminState.ENTITY_TO_BLOCK || this.mob.animationTimeBetweenHiding != 0) {
             return false;
         }
@@ -44,7 +47,7 @@ public class RootminCuriosityGoal extends Goal {
             return false;
         }
 
-        if (this.mob.getUUID().getLeastSignificantBits() + this.mob.tickCount % 20 != 0) {
+        if (counter % 20 != 0) {
             return false;
         }
 
