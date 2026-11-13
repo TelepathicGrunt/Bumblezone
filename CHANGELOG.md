@@ -60,5 +60,8 @@ Fixed possible crash if `the_bumblezone:container_shapeless_recipe_bz` gets an i
 #### Features:
 Fixed infinite loop if one sets the `size` field to 1 or 0 for `the_bumblezone:blockentity_combs` feature
 
+#### Enchantments:
+Made Potent Poison's `the_bumblezone:poison` data component not accept 0 for enchant intervals fields
+
 #### Configs:
 Fixed infinite loop if one sets `alternativeFluidToReplaceHoneyFluid` to Bumblezone's own Honey Fluid. Why would you do that? No idea. Don't do that.
