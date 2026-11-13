@@ -77,6 +77,7 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
 
     public void setBookSlotItems(ItemStack bookSlotItems) {
         this.bookSlotItems = bookSlotItems;
+        this.setChanged();
     }
 
     public ItemStack getConsumeSlotItems() {
@@ -86,6 +87,7 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
     public void setConsumeSlotItems(ItemStack consumeSlotItems) {
         this.consumeSlotItems = consumeSlotItems;
         setPillar(0);
+        this.setChanged();
     }
 
     public void syncPillar() {
