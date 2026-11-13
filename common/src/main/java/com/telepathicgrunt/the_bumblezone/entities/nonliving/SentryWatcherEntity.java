@@ -551,7 +551,8 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          }
       }
       if (this.hasActivated()) {
-         if (this.horizontalCollision && this.getDeltaMovement().horizontalDistance() < 0.0001f) {
+         if (Math.sqrt(this.position().distanceToSqr(this.activatedStart.x, this.position().y(), this.activatedStart.z)) > MAX_CHARGING_DISTANCE)
+         {
             deactivate();
 
             double pastSpeed = this.prevVelocity.horizontalDistance();
