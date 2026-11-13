@@ -31,7 +31,7 @@ public class CrystallineFlowerDataManager extends SimpleJsonResourceReloadListen
     public record ItemConsumeData(TagKey<Item> tag, int xp, boolean maxXp) {
         public static final Codec<ItemConsumeData> ENTRY_CODEC = RecordCodecBuilder.create((instance) -> instance.group(
                 TagKey.codec(Registries.ITEM).fieldOf("tag").forGetter(i -> i.tag),
-                ExtraCodecs.NON_NEGATIVE_INT.fieldOf("xp_granted").orElse(1).forGetter(i -> i.xp),
+                ExtraCodecs.POSITIVE_INT.fieldOf("xp_granted").orElse(1).forGetter(i -> i.xp),
                 Codec.BOOL.fieldOf("max_xp_granted").orElse(false).forGetter(i -> i.maxXp)
         ).apply(instance, instance.stable(ItemConsumeData::new)));
     }
