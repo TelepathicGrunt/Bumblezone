@@ -15,6 +15,8 @@ Fixed visual issue where Cosmic Crystal Entity spazzes out when tracking spinnin
 Fixed issue where if player enters Bumblezone from non-Overworld dimension, rides a mount that originated in Bumblezone, and try to exit Bumblezone dimension,
  the bug would've spawned player and mount in Overworld instead of the player's original non-Overworld dimension.
 
+Fixed Rootmins not attacking `the_bumblezone:rootmin/targets` tagged entities on their own
+
 #### Items:
 Adjusted packet logic for syncing horse owner to clients from server so that it no longer broadcasts to all players.
  Reduces server load every time a horse is spawned into client's loaded chunks.
