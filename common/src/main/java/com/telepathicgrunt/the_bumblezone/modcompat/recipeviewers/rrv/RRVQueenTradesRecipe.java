@@ -87,11 +87,11 @@ public class RRVQueenTradesRecipe implements ReliableClientRecipe {
         guiGraphics.text(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded), 38 - (percentValue < 1 ? 6 : (percentRounded.length() * 3)), 11, CommonColors.GRAY, false);
 
         if (this.input.tagKey().isPresent()) {
-            guiGraphics.blit(RRVQueenTradesRecipeType.TAG_ICON, 11, 11, 27, 27, 0, 16, 0, 16);
+            guiGraphics.blit(RRVQueenTradesRecipeType.TAG_ICON, 11, 11, 27, 27, 0, 1, 0, 1);
         }
 
         if (this.reward.value().tagKey.isPresent()) {
-            guiGraphics.blit(RRVQueenTradesRecipeType.TAG_ICON, 69, 11, 85, 27, 0, 16, 0, 16);
+            guiGraphics.blit(RRVQueenTradesRecipeType.TAG_ICON, 69, 11, 85, 27, 0, 1, 0, 1);
         }
     }
 }

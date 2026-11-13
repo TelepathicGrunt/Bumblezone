@@ -68,8 +68,8 @@ public class RRVQueenRandomizerTradesRecipe implements ReliableClientRecipe {
         guiGraphics.text(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_colors", this.tagSize), 86, 11, CommonColors.GRAY, false);
 
         if (this.tagInAndOut != null) {
-            guiGraphics.blit(RRVQueenRandomizerTradesRecipeType.TAG_ICON, 11, 11, 27, 27, 0, 16, 0, 16);
-            guiGraphics.blit(RRVQueenRandomizerTradesRecipeType.TAG_ICON, 69, 11, 85, 27, 0, 16, 0, 16);
+            guiGraphics.blit(RRVQueenRandomizerTradesRecipeType.TAG_ICON, 11, 11, 27, 27, 0, 1, 0, 1);
+                guiGraphics.blit(RRVQueenRandomizerTradesRecipeType.TAG_ICON, 69, 11, 85, 27, 0, 1, 0, 1);
         }
     }
 }

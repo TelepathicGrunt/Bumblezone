@@ -18,8 +18,9 @@ public class RRVQueenRandomizerTradesRecipeType implements ReliableClientRecipeT
     protected static final ReliableClientRecipeType INSTANCE = new RRVQueenRandomizerTradesRecipeType();
     public static final int RECIPE_WIDTH = 136;
     public static final int RECIPE_HEIGHT = 28;
-    public static final Identifier ICON = Identifier.fromNamespaceAndPath("the_bumblezone", "textures/gui/recipe_viewer/bee_queen_randomize_trades.png");
+    public static final Identifier CATEGORY_ICON = Identifier.fromNamespaceAndPath("the_bumblezone", "textures/gui/recipe_viewer/bee_queen_randomize_trades.png");
     public static final Identifier TAG_ICON = Identifier.fromNamespaceAndPath("the_bumblezone", "textures/gui/recipe_viewer/tag_icon.png");
+    public static final Identifier BACKGROUND = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/recipe_viewer/rrv_queen_randomizer_trades_layout.png");
 
     @Override
     public Component getDisplayName() {
@@ -38,7 +39,7 @@ public class RRVQueenRandomizerTradesRecipeType implements ReliableClientRecipeT
 
     @Override
     public @Nullable Identifier getGuiTexture() {
-        return Identifier.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/recipe_viewer/queen_randomizer_trades_layout.png");
+        return BACKGROUND;
     }
 
     @Override
@@ -49,7 +50,7 @@ public class RRVQueenRandomizerTradesRecipeType implements ReliableClientRecipeT
     @Override
     public void placeSlots(RecipeViewMenu.SlotDefinition slotDefinition) {
         slotDefinition.addItemSlot(0, 6, 6);
-        slotDefinition.addItemSlot(1, 69, 6);
+        slotDefinition.addItemSlot(1, 64, 6);
     }
 
     @Override
@@ -65,7 +66,7 @@ public class RRVQueenRandomizerTradesRecipeType implements ReliableClientRecipeT
     /// Takes priority over getIcon
     @Override
     public void renderIcon(RecipeViewScreen screen, int x, int y, GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        guiGraphics.blit(ICON, 0, 0, 16, 16, 0, 16, 0, 16);
+        guiGraphics.blit(CATEGORY_ICON, x, y, x + 16, y + 16, 0, 1, 0, 1);
     }
 
     @Override

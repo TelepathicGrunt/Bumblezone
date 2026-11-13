@@ -25,14 +25,18 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
@@ -41,18 +45,25 @@ import net.minecraft.world.level.material.Fluid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class RRVIntegration implements ReliableRecipeViewerClientPlugin {
+    private static final ResourceKey<Recipe<?>> FROM_SUPER_CANDLES_POTION_CANDLE_RECIPE = ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles"));
+    private static final ResourceKey<Recipe<?>> FROM_STRING_AND_CARVABLE_WAX_POTION_CANDLE_RECIPE = ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax"));
     @Override
     public void onIntegrationInitialize() {
         ItemView.addClientRecipeProvider(recipeList -> {
-            if (PotionCandleRecipeSyncData.POTION_CANDLE_FROM_SUPER_CANDLES != null) {
-                registerExtraRecipes(PotionCandleRecipeSyncData.POTION_CANDLE_FROM_SUPER_CANDLES, recipeList, true);
-            }
+            ClientRecipeManager.INSTANCE.getRecipesForType(RecipeType.CRAFTING)
+                    .stream()
+                        .filter(r -> r.id().equals(FROM_SUPER_CANDLES_POTION_CANDLE_RECIPE))
+                    .findFirst()
+                    .ifPresent(craftingRecipeRecipeHolder -> registerExtraRecipes(craftingRecipeRecipeHolder, recipeList, true));
 
-            if (PotionCandleRecipeSyncData.POTION_CANDLE_FROM_STRING_AND_CARVABLE_WAX != null) {
-                registerExtraRecipes(PotionCandleRecipeSyncData.POTION_CANDLE_FROM_STRING_AND_CARVABLE_WAX, recipeList, false);
-            }
+            ClientRecipeManager.INSTANCE.getRecipesForType(RecipeType.CRAFTING)
+                    .stream()
+                        .filter(r -> r.id().equals(FROM_STRING_AND_CARVABLE_WAX_POTION_CANDLE_RECIPE))
+                    .findFirst()
+                    .ifPresent(craftingRecipeRecipeHolder -> registerExtraRecipes(craftingRecipeRecipeHolder, recipeList, false));
 
             int beeQueenTradeIndex = 0;
             if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades.isEmpty()) {
@@ -90,7 +101,9 @@ public class RRVIntegration implements ReliableRecipeViewerClientPlugin {
                             tagData.rrvItems()));
                 }
             }
+        });
 
+        ItemView.addClientReloadCallback(() -> {
             List<ItemStack> hangingGardensFlowers = GeneralUtils.convertBlockTagsToItemStacks(BzTags.HANGING_GARDEN_ALLOWED_FLOWERS_BLOCKS, BzTags.HANGING_GARDEN_FORCED_DISALLOWED_FLOWERS_BLOCKS);
             hangingGardensFlowers.addAll(GeneralUtils.convertBlockTagsToItemStacks(BzTags.HANGING_GARDEN_ALLOWED_TALL_FLOWERS_BLOCKS, BzTags.HANGING_GARDEN_FORCED_DISALLOWED_TALL_FLOWERS_BLOCKS));
 
@@ -99,14 +112,14 @@ public class RRVIntegration implements ReliableRecipeViewerClientPlugin {
                     Pair.of(".crystalline_flower_can_be_placed_on.description",
                             GeneralUtils.convertBlockTagsToItemStacks(BzTags.CRYSTALLINE_FLOWER_CAN_SURVIVE_ON, null))
             );
-        });
 
-        BzCreativeTabs.CUSTOM_CREATIVE_TAB_ITEMS.forEach(item -> addInfo(item.get()));
-        addInfo(BzFluids.SUGAR_WATER_FLUID.get());
-        addInfo(BzFluids.ROYAL_JELLY_FLUID.get());
-        if (BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid.isEmpty()) {
-            addInfo(BzFluids.HONEY_FLUID.get());
-        }
+            BzCreativeTabs.CUSTOM_CREATIVE_TAB_ITEMS.forEach(item -> addInfo(item.get()));
+            addInfo(BzFluids.SUGAR_WATER_FLUID.get());
+            addInfo(BzFluids.ROYAL_JELLY_FLUID.get());
+            if (BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid.isEmpty()) {
+                addInfo(BzFluids.HONEY_FLUID.get());
+            }
+        });
     }
 
     private static void addInfo(Item item) {
@@ -140,38 +153,35 @@ public class RRVIntegration implements ReliableRecipeViewerClientPlugin {
     }
 
     private static void registerExtraRecipes(RecipeHolder<?> baseRecipe, List<ReliableClientRecipe> recipeList, boolean oneRecipeOnly) {
-        ClientRecipeManager.INSTANCE.getRecipesForType(RecipeType.CRAFTING)
-            .forEach(_ -> {
-                if (baseRecipe.value() instanceof PotionCandleRecipe potionCandleRecipe) {
-                    List<ShapedRecipe> extraRecipes = FakePotionCandleRecipeCreator.constructFakeRecipes(potionCandleRecipe, oneRecipeOnly);
-                    for (int i = 0; i < extraRecipes.size(); i++) {
-                        Identifier identifier =  Identifier.fromNamespaceAndPath(baseRecipe.id().identifier().getNamespace(), baseRecipe.id().identifier().getPath() + "_" + i);
-                        ShapedRecipe shapedRecipe = extraRecipes.get(i);
+        if (baseRecipe.value() instanceof PotionCandleRecipe potionCandleRecipe) {
+            List<ShapedRecipe> extraRecipes = FakePotionCandleRecipeCreator.constructFakeRecipes(potionCandleRecipe, oneRecipeOnly);
+            for (int i = 0; i < extraRecipes.size(); i++) {
+                Identifier identifier =  Identifier.fromNamespaceAndPath(baseRecipe.id().identifier().getNamespace(), baseRecipe.id().identifier().getPath() + "_" + i);
+                ShapedRecipe shapedRecipe = extraRecipes.get(i);
 
-                        HashMap<Integer, SlotContent> ingredients = new HashMap<>();
-                        int ingredientIndex = 0;
-                        for (int y = 0; y < 3; y++) {
-                            for (int x = 0; x < 3; x++) {
+                HashMap<Integer, SlotContent> ingredients = new HashMap<>();
+                int ingredientIndex = 0;
+                for (int y = 0; y < 3; y++) {
+                    for (int x = 0; x < 3; x++) {
 
-                                if (x >= shapedRecipe.getWidth() || y >= shapedRecipe.getHeight()) {
-                                    continue;
-                                }
-
-                                if (shapedRecipe.getIngredients().get(ingredientIndex).isPresent())
-                                    ingredients.put(x + y * 3, SlotContent.of(shapedRecipe.getIngredients().get(ingredientIndex).get()));
-
-                                ingredientIndex++;
-                            }
+                        if (x >= shapedRecipe.getWidth() || y >= shapedRecipe.getHeight()) {
+                            continue;
                         }
-                        recipeList.add(new CraftingClientRecipe
-                                .Builder(identifier, ingredients)
-                                .setSize(shapedRecipe.getWidth(), shapedRecipe.getHeight())
-                                .setResult(shapedRecipe.result)
-                                .build()
-                        );
+
+                        if (shapedRecipe.getIngredients().get(ingredientIndex).isPresent())
+                            ingredients.put(x + y * 3, SlotContent.of(shapedRecipe.getIngredients().get(ingredientIndex).get()));
+
+                        ingredientIndex++;
                     }
                 }
-            });
+                recipeList.add(new CraftingClientRecipe
+                        .Builder(identifier, ingredients)
+                        .setSize(shapedRecipe.getWidth(), shapedRecipe.getHeight())
+                        .setResult(shapedRecipe.result)
+                        .build()
+                );
+            }
+        }
     }
 
     record TagData(int listSize, List<ItemStack> rrvItems, Ingredient rrvIngredient){}

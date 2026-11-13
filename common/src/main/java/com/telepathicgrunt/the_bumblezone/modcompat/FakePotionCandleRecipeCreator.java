@@ -99,6 +99,7 @@ public class FakePotionCandleRecipeCreator {
             Optional<Ingredient> ingredient = fakedShapedIngredientsMutable.get(i);
             if (ingredient.isEmpty()) {
                 if (currentShapelessIndex >= shapelessRecipeSize) {
+                    // TODO: How the hell do I shove an itemstack into an ingredient for these fake recipe viewer recipes
                     fakedShapedIngredientsMutable.set(i, Optional.of(Ingredient.of(potionStack.getItem())));
                     break;
                 }
