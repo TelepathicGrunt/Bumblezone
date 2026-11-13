@@ -27,6 +27,9 @@ public class CrystallineFlowerEnchantmentPacketHandleBody {
                 if (!CrystallineFlowerScreen.enchantmentsAvailable.containsKey(crystallineFlowerMenu.selectedEnchantment) && !CrystallineFlowerScreen.enchantmentsAvailableSortedList.isEmpty()) {
                     CrystallineFlowerScreen.resetScroll = true;
                 }
+                if (CrystallineFlowerScreen.enchantmentsAvailableSortedList.size() <= 3) {
+                    CrystallineFlowerScreen.resetScroll = true;
+                }
             }
         }
     }
