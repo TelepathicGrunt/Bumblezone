@@ -26,6 +26,9 @@ Fixed Bee Cannon and Crystal Cannon not working in offhand slot
 Fixed issue where if you were bound to a now-depleted Respawn Anchor in another dimension and your death is prevented by
  Essence of Continuity, now you will spawn at the correct respawn-safe dimension and location instead of way off coordinates that could've result in death.
 
+Fixed Carpenter Bee Boots not properly handling mined block entities.
+ (Beehives's bees were previously deleted when mined with these boots. Not anymore)
+
 #### Blocks:
 Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsumeItemUI` config options are respected on serverside for Crystalline Flower.
 

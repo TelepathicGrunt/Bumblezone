@@ -129,11 +129,10 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
                             return;
                         }
 
+                        BlockEntity blockEntity = belowBlockState.hasBlockEntity() ? level.getBlockEntity(belowBlockPos) : null;
                         boolean blockBroken = level.destroyBlock(belowBlockPos, false, player);
 
                         if (blockBroken) {
-                            BlockEntity blockEntity = belowBlockState.hasBlockEntity() ? level.getBlockEntity(belowBlockPos) : null;
-
                             belowBlockState.getBlock().playerDestroy(
                                     level,
                                     player,
