@@ -1,5 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.fluids.neoforge;
 
+import com.telepathicgrunt.the_bumblezone.configs.neoforge.BzGeneralConfig;
+import com.telepathicgrunt.the_bumblezone.items.RoyalJellyBottle;
+import com.telepathicgrunt.the_bumblezone.items.SugarWaterBottle;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
@@ -32,7 +35,15 @@ public class BzFluidBottlesWrapper extends ItemAccessResourceHandler<FluidResour
 
     @Override
     protected FluidResource getResourceFrom(ItemResource accessResource, int index) {
-        return FluidResource.of(getFluid());
+        if (accessResource.value() instanceof RoyalJellyBottle ||
+            accessResource.value() instanceof SugarWaterBottle ||
+            (BzGeneralConfig.bzHoneyFluidFromHoneyBottles.get() && accessResource.value() == Items.HONEY_BOTTLE))
+        {
+            return FluidResource.of(getFluid());
+        }
+        else {
+            return FluidResource.EMPTY;
+        }
     }
 
     @Override
