@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.QuartPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -12,6 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -44,16 +46,20 @@ public abstract class ExperienceOrbMixin extends Entity {
             return;
         }
 
-        double distanceThreshold = 8;
+        int distanceThreshold = 1;
 
         bumblezone$trackedCrystalFlowerCooldown--;
         if (this.bumblezone$trackedCrystalFlower == null && bumblezone$trackedCrystalFlowerCooldown <= 0) {
             BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
             Set<LevelChunk> chunksInRange = new HashSet<>();
-            for (int x = (int) -distanceThreshold; x <= distanceThreshold; x += distanceThreshold) {
-                for (int z = (int) -distanceThreshold; z <= distanceThreshold; z += distanceThreshold) {
+            for (int x = -distanceThreshold; x <= distanceThreshold; x += distanceThreshold) {
+                for (int z = -distanceThreshold; z <= distanceThreshold; z += distanceThreshold) {
                     mutableBlockPos.set(this.getX() + x, 0, this.getZ() + z);
-                    ChunkAccess chunk = this.level().getChunk(mutableBlockPos);
+                    ChunkAccess chunk = this.level().getChunk(
+                            QuartPos.toSection(mutableBlockPos.getX()),
+                            QuartPos.toSection(mutableBlockPos.getZ()),
+                            ChunkStatus.FULL,
+                            false);
                     if(chunk instanceof LevelChunk) chunksInRange.add((LevelChunk)chunk);
                 }
             }
