@@ -70,5 +70,8 @@ Improved `the_bumblezone:remove_floating_blocks_processor` processor for feature
 #### Enchantments:
 Made Potent Poison's `the_bumblezone:poison` data component not accept 0 for enchant intervals fields
 
+#### Sounds:
+Fixed memory leak with buzzing sound instance for Bumble Bee Chestplate and Beehemoth still retaining client worlds after exiting a world
+
 #### Configs:
 Fixed infinite loop if one sets `alternativeFluidToReplaceHoneyFluid` to Bumblezone's own Honey Fluid. Why would you do that? No idea. Don't do that.
