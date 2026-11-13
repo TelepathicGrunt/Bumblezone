@@ -42,6 +42,8 @@ Honey Slime with their honey taken is now optimized to not try and sync an int e
 
 Reduced amount of particles that Sentry Watcher generates on client when it is charging at speed
 
+Sentry Watcher fully respects the 80 block distance it can charge through instead of going excessively further due to bad coordinate calculation
+
 Adjusted mob spawning on chunk creation for Bumblezone dimension. Beehemoths now spawn more often as a result
 
 #### Items:

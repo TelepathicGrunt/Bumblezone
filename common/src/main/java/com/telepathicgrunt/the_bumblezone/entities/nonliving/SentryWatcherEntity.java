@@ -362,8 +362,9 @@ public class SentryWatcherEntity extends Entity implements Enemy {
         }
 
         if (this.hasActivated() &&
-                this.activatedStart != null &&
-                Math.abs(this.position().horizontalDistance() - this.activatedStart.horizontalDistance()) > MAX_CHARGING_DISTANCE) {
+            this.activatedStart != null &&
+            Math.sqrt(this.position().distanceToSqr(this.activatedStart.x, this.position().y(), this.activatedStart.z)) > MAX_CHARGING_DISTANCE)
+        {
             deactivate();
         }
 
