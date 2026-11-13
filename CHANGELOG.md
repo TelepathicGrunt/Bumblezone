@@ -6,6 +6,8 @@ Tweaked what modded blocks shows in Hanging Gardens
 Adjusted teleportation queue logic to run only during server tick instead of all dimension ticks.
 
 #### Entities:
+Bee Queen now gives rewards for entire stack of dropped items for holiday trades instead of a bugged single reward.
+
 Fixed possible issue where in presence of multiple players, Cosmic Crystal Entity could track wrong player on client compared to server
 
 Fixed visual issue where Cosmic Crystal Entity spazzes out when tracking spinning attack ends
