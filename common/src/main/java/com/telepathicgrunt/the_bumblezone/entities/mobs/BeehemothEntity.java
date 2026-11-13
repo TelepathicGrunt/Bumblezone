@@ -758,7 +758,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Play
                 }
 
                 if(this.onGround()) {
-                    forwardSpeed *= 0.025f;
+                    forwardSpeed *= 0.20f;
                     verticalSpeed -= 0.5f;
                 }
                 else if (wasOnGround) {

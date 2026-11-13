@@ -15,6 +15,8 @@ Fixed Bee Queen crash if queen picks up a trade item that was not dropped by an 
 
 Fixed super edge case crash if Bee Queen holiday trade timeframe ends and player looks at queen before hourly trade refresh happens.
 
+Fixed Beehemoth walking far too slow on the ground when riding one
+
 #### Items:
 Fixed crash when having two of the same endgame essence items in inventory and one goes into cooldown.
 
