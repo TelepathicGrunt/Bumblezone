@@ -94,6 +94,7 @@ public class BzWorldSavedData extends SavedData {
 		}
 
 		RUNNABLES_FOR_NEXT_TICK.removeIf(r -> r.executeTick(world));
+		MinecraftServer minecraftServer = world.getLevel().getServer();
 
 		if(QUEUED_ENTITIES_TO_GENERIC_TELEPORT.size() > 0) {
 			Set<Entity> teleportedEntities = new HashSet<>();
@@ -102,7 +103,7 @@ public class BzWorldSavedData extends SavedData {
 				BlockPos destinationPos = entry.getDestinationPos();
 				Entity entity = entry.getEntity();
 
-				ServerLevel destination = world.getLevel().getServer().getLevel(destinationKey);
+				ServerLevel destination = minecraftServer.getLevel(destinationKey);
 				baseTeleporting(entity, destinationPos.getCenter(), destination, teleportedEntities, entity);
 				entry.runnable.run();
 			}
@@ -122,10 +123,10 @@ public class BzWorldSavedData extends SavedData {
 							serverPlayer.sendOverlayMessage(Component.translatable("system.the_bumblezone.teleporting_into_bz"));
 						}
 
-						ThreadExecutor.dimensionDestinationSearch(world.getServer(), () -> {
+						ThreadExecutor.dimensionDestinationSearch(minecraftServer, () -> {
 								try {
-									ServerLevel bumblezoneWorld = world.getServer().getLevel(BzDimension.BZ_WORLD_KEY);
-									return Optional.of(EntityTeleportationBackend.getBzCoordinate(entry.getEntity(), world, bumblezoneWorld));
+									ServerLevel bumblezoneWorld = minecraftServer.getLevel(BzDimension.BZ_WORLD_KEY);
+									return Optional.of(EntityTeleportationBackend.getBzCoordinate(entry.getEntity(), entry.getEntity().level(), bumblezoneWorld));
 								}
 								catch (Throwable e){
 									Bumblezone.LOGGER.error("Bumblezone: Failed to teleport entity. Error:", e);
@@ -139,9 +140,9 @@ public class BzWorldSavedData extends SavedData {
 							serverPlayer.sendOverlayMessage(Component.translatable("system.the_bumblezone.teleporting_out_of_bz"));
 						}
 
-						ThreadExecutor.dimensionDestinationSearch(world.getServer(), () -> {
+						ThreadExecutor.dimensionDestinationSearch(minecraftServer, () -> {
 								try {
-									ServerLevel destination = world.getLevel().getServer().getLevel(destinationKey);
+									ServerLevel destination = minecraftServer.getLevel(destinationKey);
 									return Optional.of(EntityTeleportationBackend.destPostFromOutOfBoundsTeleport(entry.getEntity(), destination));
 								}
 								catch (Throwable e){
@@ -158,7 +159,7 @@ public class BzWorldSavedData extends SavedData {
 					if(teleportedEntities.contains(entity)) continue;
 
 					ResourceKey<Level> destinationKey = entry.getDestination();
-					ServerLevel destination = world.getLevel().getServer().getLevel(destinationKey);
+					ServerLevel destination = minecraftServer.getLevel(destinationKey);
 
 					if (entry.getDestinationPosFound().isPresent()) {
 						Vec3 destinationPos = entry.getDestinationPosFound().get();

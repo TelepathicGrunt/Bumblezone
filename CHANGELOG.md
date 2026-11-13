@@ -9,6 +9,8 @@ Fixed issue where if player enters Bumblezone from non-Overworld dimension, ride
 
 Adjusted teleportation queue logic to run only during Overworld level tick instead of all dimension ticks.
 
+Fixed incorrect coordinate scaling that can rarely happen when teleporting to Bumblezone.
+
 #### Fluids:
 Fixed crash when a block is changed next to Sugar Water Bubble Column
 
