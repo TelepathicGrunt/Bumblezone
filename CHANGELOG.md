@@ -19,3 +19,5 @@ Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsum
 
 #### Structures:
 Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable and fluid blocks outside the arena bounds
+
+Added safety net so that if Sempiternal Sanctum arena fails to save the pre-arena area, the arena event will not start.
