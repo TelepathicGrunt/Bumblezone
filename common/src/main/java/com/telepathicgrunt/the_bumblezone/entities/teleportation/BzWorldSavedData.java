@@ -40,6 +40,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.WorldDimensions;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.phys.Vec3;
 
@@ -88,6 +89,10 @@ public class BzWorldSavedData extends SavedData {
 	}
 
 	public static void tick(ServerLevel world) {
+		if (world.dimension() != Level.OVERWORLD) {
+			return;
+		}
+
 		RUNNABLES_FOR_NEXT_TICK.removeIf(r -> r.executeTick(world));
 
 		if(QUEUED_ENTITIES_TO_GENERIC_TELEPORT.size() > 0) {

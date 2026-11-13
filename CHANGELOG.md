@@ -7,6 +7,8 @@ Fixed teleporting to and from Bumblezone using the wrong ticket. Causing the des
 Fixed issue where if player enters Bumblezone from non-Overworld dimension, rides a mount that originated in Bumblezone,  and try to exit Bumblezone dimension,
  the bug would've spawned player and mount in Overworld instead of the player's original non-Overworld dimension.
 
+Adjusted teleportation queue logic to run only during Overworld level tick instead of all dimension ticks.
+
 #### Fluids:
 Fixed crash when a block is changed next to Sugar Water Bubble Column
 
