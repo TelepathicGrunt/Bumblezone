@@ -69,6 +69,8 @@ Fixed drinking Bee Soup giving Bee Bread's effects instead of the intended effec
 
 Fixed Honey Crystal Shield max durability not increasing correctly when repaired
 
+Fixed Floral Headwear on Armor Stands were not attracting 50% of bees. Now all 100% of bees will swoon over this item.
+
 #### Blocks:
 Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsumeItemUI` config options are respected on serverside for Crystalline Flower.
 
