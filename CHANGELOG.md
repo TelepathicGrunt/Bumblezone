@@ -13,6 +13,9 @@ Optimized Buzzing Briefcase menu clicks to not deserialize all bees in briefcase
 
 Optimized Buzzing Briefcase menu clicks to not send button click to server if player clicks an action button without the required inventory item it needs.
 
+Fixed Carpenter Bee Boots not properly handling mined block entities.
+ (Beehives's bees were previously deleted when mined with these boots. Not anymore)
+
 #### Blocks:
 Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsumeItemUI` config options are respected on serverside for Crystalline Flower.
 
