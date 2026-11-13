@@ -38,6 +38,8 @@ Fixed Rootmins not getting curious about players wearing Bumblezone armor
 Fixed Honey Slime jump speed. 
  (Note: Honey Slimes already spawned before this update might now jump farther than intended due to previously saved MOVEMENT_SPEED attribute value)
 
+Honey Slime with their honey taken is now optimized to not try and sync an int every tick
+
 Reduced amount of particles that Sentry Watcher generates on client when it is charging at speed
 
 Adjusted mob spawning on chunk creation for Bumblezone dimension. Beehemoths now spawn more often as a result

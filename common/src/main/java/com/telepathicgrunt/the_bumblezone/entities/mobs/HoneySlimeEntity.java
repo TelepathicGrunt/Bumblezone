@@ -78,7 +78,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
      */
 
     private static final EntityDataAccessor<Boolean> IN_HONEY = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Integer> IN_HONEY_GROWTH_TIME = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Long> IN_HONEY_GROWTH_END_TIME = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.LONG);
     private static final EntityDataAccessor<Long> ANGER_END_TIME = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.LONG);
     private static final UniformInt MAX_ANGER_DURATION = TimeUtil.rangeOfSeconds(22, 36);
     private EntityReference<LivingEntity> persistentAngerTarget;
@@ -120,7 +120,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
        super.defineSynchedData(builder);
        builder.define(IN_HONEY, true);
-       builder.define(IN_HONEY_GROWTH_TIME, 0);
+       builder.define(IN_HONEY_GROWTH_END_TIME, 0L);
        builder.define(ANGER_END_TIME, 0L);
     }
 
@@ -143,7 +143,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
     public void addAdditionalSaveData(ValueOutput output) {
         super.addAdditionalSaveData(output);
         output.putBoolean("inHoney", this.isInHoney());
-        output.putInt("inHoneyGrowthTimer", this.getInHoneyGrowthTime());
+        output.putLong("inHoneyGrowthTimer", this.getInHoneyGrowthEndTime());
         output.putBoolean("wasOnGround", this.wasOnGround);
     }
 
@@ -151,7 +151,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
     public void readAdditionalSaveData(ValueInput input) {
        super.readAdditionalSaveData(input);
        this.setInHoney(input.getBooleanOr("inHoney", false));
-       this.setInHoneyGrowthTime(input.getIntOr("inHoneyGrowthTimer", 0));
+       this.setInHoneyGrowthEndTime(input.getIntOr("inHoneyGrowthTimer", 0));
        this.wasOnGround = input.getBooleanOr("wasOnGround", true);
     }
 
@@ -234,12 +234,12 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
        this.entityData.set(IN_HONEY, value);
     }
 
-    public int getInHoneyGrowthTime() {
-       return this.entityData.get(IN_HONEY_GROWTH_TIME);
+    public long getInHoneyGrowthEndTime() {
+       return this.entityData.get(IN_HONEY_GROWTH_END_TIME);
     }
 
-    public void setInHoneyGrowthTime(int value) {
-       this.entityData.set(IN_HONEY_GROWTH_TIME, value);
+    public void setInHoneyGrowthEndTime(long value) {
+       this.entityData.set(IN_HONEY_GROWTH_END_TIME, value);
     }
 
     @Override
@@ -265,11 +265,10 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
        return super.mobInteract(player, hand);
     }
 
-
     private void getHoneyFromSlime(LivingEntity entity) {
        if (entity instanceof HoneySlimeEntity) {
           this.setInHoney(false);
-          this.setInHoneyGrowthTime(-14400);
+          this.setInHoneyGrowthEndTime(this.level().getGameTime() + 14400L);
        }
     }
 
@@ -308,8 +307,6 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
        super.aiStep();
        if (this.isAlive()) {
           if (!isInHoney()) {
-             setInHoneyGrowthTime(getInHoneyGrowthTime() + 1);
-
              if(HONEY_BASED_BLOCKS.isEmpty()) {
                 HONEY_BASED_BLOCKS.addAll(Stream.of(
                                 Blocks.HONEY_BLOCK,
@@ -320,12 +317,16 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
                         .collect(Collectors.toCollection(HashSet::new)));
              }
 
-             if(!this.level().isClientSide() && HONEY_BASED_BLOCKS.contains(this.level().getBlockState(this.blockPosition().below()).getBlock())) {
-                if(this.random.nextFloat() < 0.001)
-                   setInHoneyGrowthTime(0);
+             if (!this.level().isClientSide() && HONEY_BASED_BLOCKS.contains(this.level().getBlockState(this.blockPosition().below()).getBlock())) {
+                if(this.random.nextFloat() < 0.001) {
+                    setInHoneyGrowthEndTime(0);
+                }
              }
+
+              if (this.level().getGameTime() >= getInHoneyGrowthEndTime()) {
+                  setInHoney(true);
+              }
           }
-          setInHoney(getInHoneyGrowthTime() >= 0);
        }
     }
 
