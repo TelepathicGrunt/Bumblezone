@@ -63,6 +63,8 @@ Fixed crash when hovering over Potion Candle with effects in a GUI
 
 Fixed Potion Candle block losing its data when broken into item form
 
+Fixed Honeycomb Brood Blocks not actually growing/spawning bees by random ticks
+
 #### Structures:
 Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable and fluid blocks outside the arena bounds
 
