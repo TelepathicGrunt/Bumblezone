@@ -29,6 +29,8 @@ Fixed possible issue where in presence of multiple players, Cosmic Crystal Entit
 
 Fixed visual issue where Cosmic Crystal Entity spazzes out when tracking spinning attack ends
 
+Fixed Rootmins not attacking `the_bumblezone:rootmin/targets` tagged entities on their own
+
 #### Items:
 Fixed crash when having two of the same endgame essence items in inventory and one goes into cooldown.
 
