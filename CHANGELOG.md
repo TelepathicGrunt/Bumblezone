@@ -5,6 +5,11 @@ Tweaked what modded blocks shows in Hanging Gardens
 
 Adjusted teleportation queue logic to run only during server tick instead of all dimension ticks.
 
+#### Entities:
+Fixed possible issue where in presence of multiple players, Cosmic Crystal Entity could track wrong player on client compared to server
+
+Fixed visual issue where Cosmic Crystal Entity spazzes out when tracking spinning attack ends
+
 #### Items:
 Adjusted packet logic for syncing horse owner to clients from server so that it no longer broadcasts to all players.
  Reduces server load every time a horse is spawned into client's loaded chunks.

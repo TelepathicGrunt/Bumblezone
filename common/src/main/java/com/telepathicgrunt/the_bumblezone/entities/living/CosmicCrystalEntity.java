@@ -97,6 +97,7 @@ public class CosmicCrystalEntity extends LivingEntity {
     private static final EntityDataAccessor<Optional<BlockPos>> ESSENCE_CONTROLLER_BLOCK_POS = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
     private static final EntityDataAccessor<String> ESSENCE_CONTROLLER_DIMENSION = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Boolean> SHIELD = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Optional<UUID>> TARGET_ENTITY_UUID = SynchedEntityData.defineId(CosmicCrystalEntity.class, BzEntities.UUID_ENTITY_DATA_SERIALIZER);
     private static final Vec3 UP_VECT = new Vec3(0, 1, 0);
     private static final Vec3 POSITIVE_X_VECT = new Vec3(1, 0, 0);
     public static final int MAX_RANGE = 30;
@@ -105,7 +106,6 @@ public class CosmicCrystalEntity extends LivingEntity {
     public final AnimationState idleAnimationState = new AnimationState();
     private final NonNullList<ItemStack> armorItems = NonNullList.withSize(0, ItemStack.EMPTY);
 
-    private UUID targetEntityUUID = null;
     private Entity targetEntity = null;
     private Vec3 prevTargetPosition = new Vec3(0, 0, 0);
 
@@ -139,6 +139,15 @@ public class CosmicCrystalEntity extends LivingEntity {
 
     public void setEssenceController(UUID essenceController) {
         this.entityData.set(ESSENCE_CONTROLLER_UUID, Optional.ofNullable(essenceController));
+    }
+
+    @Nullable
+    public UUID getTargetEntityUUID() {
+        return this.entityData.get(TARGET_ENTITY_UUID).orElse(null);
+    }
+
+    public void setTargetEntityUUID(UUID targetEntityUuid) {
+        this.entityData.set(TARGET_ENTITY_UUID, Optional.ofNullable(targetEntityUuid));
     }
 
     public BlockPos getEssenceControllerBlockPos() {
@@ -314,13 +323,6 @@ public class CosmicCrystalEntity extends LivingEntity {
         return this.entityData.get(SECOND_PHASE);
     }
 
-    public void setTargetEntityUUID(UUID targetEntityUUID) {
-        this.targetEntityUUID = targetEntityUUID;
-    }
-
-    public UUID getTargetEntityUUID() {
-        return this.targetEntityUUID;
-    }
 
     public void setShield(boolean shield) {
         this.entityData.set(SHIELD, shield);
@@ -347,6 +349,7 @@ public class CosmicCrystalEntity extends LivingEntity {
         this.entityData.define(ESSENCE_CONTROLLER_BLOCK_POS, Optional.empty());
         this.entityData.define(ESSENCE_CONTROLLER_DIMENSION, "");
         this.entityData.define(SHIELD, false);
+        this.entityData.define(TARGET_ENTITY_UUID, Optional.empty());
     }
 
     @Override
@@ -777,11 +780,10 @@ public class CosmicCrystalEntity extends LivingEntity {
             Vec3 targetPos;
             if (this.currentStateTimeTick > windDownPhase) {
                 double antiProgress = Math.min((this.currentStateTimeTick - windDownPhase) / windDownDuration, 1);
-                float spinStrength = (float) (1 - antiProgress);
                 targetPos = new Vec3(
-                        Mth.lerp(antiProgress, Mth.sin(this.currentStateTimeTick * 40 * Mth.DEG_TO_RAD) * spinStrength, 0),
+                        Mth.lerp(antiProgress, Mth.sin(this.currentStateTimeTick * 40 * Mth.DEG_TO_RAD), 0),
                         Mth.lerp(antiProgress, 1, 0),
-                        Mth.lerp(antiProgress, Mth.cos(this.currentStateTimeTick * 40 * Mth.DEG_TO_RAD) * spinStrength, 0));
+                        Mth.lerp(antiProgress, Mth.cos(this.currentStateTimeTick * 40 * Mth.DEG_TO_RAD), 0));
             }
             else {
                 targetPos = new Vec3(
