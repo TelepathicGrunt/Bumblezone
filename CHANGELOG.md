@@ -46,6 +46,8 @@ Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsum
 
 Fixed crash if Crystalline Flower has 2 or more books in it, and you enchant a book while scrolled down in list of enchantments and resultant list of enchantments is between 1 and 3.
 
+Fixed Crystalline Flower not marking itself as changed for chunk data saving when adding/removing items from flower's GUI.
+
 Fixed Crystalline Flower crash if one sets up `bz_crystalline_flower_data` in a way to have consumed items give 0 xp to flower.
 
 Fixed crash when hovering over Potion Candle with effects in a GUI
