@@ -108,3 +108,6 @@ Fixed memory leak with buzzing sound instance for Bumble Bee Chestplate and Beeh
 
 #### Configs:
 Fixed infinite loop if one sets `alternativeFluidToReplaceHoneyFluid` to Bumblezone's own Honey Fluid. Why would you do that? No idea. Don't do that.
+
+#### Mod Compat:
+(NeoForge): Fixed it so if non-Bumblezone modded bee spawns in Bumblezone dimension, the original bee is canceled so that only the  non-Bumblezone modded bee spawns in its place 
