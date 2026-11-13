@@ -23,6 +23,8 @@ Made Rootmins not try and run away from other Rootmins
 Fixed Honey Slime jump speed. 
  (Note: Honey Slimes already spawned before this update might now jump farther than intended due to previously saved MOVEMENT_SPEED attribute value)
 
+Reduced amount of particles that Sentry Watcher generates on client when it is charging at speed
+
 #### Items:
 Fixed shot Honey Crystal Shard crashing when it hits an entity while Fabric Twilight Forest is on.
 
