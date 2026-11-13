@@ -18,6 +18,8 @@ Fixed visual issue where Cosmic Crystal Entity spazzes out when tracking spinnin
 
 Fixed Rootmins not attacking `the_bumblezone:rootmin/targets` tagged entities on their own
 
+Made Rootmins not try and run away from other Rootmins
+
 #### Items:
 Fixed shot Honey Crystal Shard crashing when it hits an entity while Fabric Twilight Forest is on.
 
