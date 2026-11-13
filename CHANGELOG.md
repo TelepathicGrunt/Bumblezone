@@ -31,7 +31,7 @@ Fixed visual issue where Cosmic Crystal Entity spazzes out when tracking spinnin
 
 Fixed Rootmins not attacking `the_bumblezone:rootmin/targets` tagged entities on their own
 
-Made Rootmins not try and run away from other Rootmins
+Made Rootmins stop panic running from entities not in `the_bumblezone:rootmin/panic_avoid` entity tag
 
 Fixed Rootmins not getting curious about players wearing Bumblezone armor
 
