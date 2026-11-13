@@ -255,8 +255,19 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             }
             ServerPlayer fakePlayer = PlatformHooks.getFakePlayer((ServerLevel) this.level(), gameProfile);
             if(blockstate.getBlock() instanceof DoublePlantBlock) {
-                blockstate = blockstate.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
                 isTallPlant = true;
+                try {
+                    BlockPlaceContext blockPlaceContext = new BlockPlaceContext(
+                            fakePlayer,
+                            InteractionHand.MAIN_HAND,
+                            ItemStack.EMPTY,
+                            new BlockHitResult(Vec3.atCenterOf(newPos.above()), Direction.UP, newPos, false)
+                    );
+                    blockstate = blockstate.getBlock().getStateForPlacement(blockPlaceContext);
+                }
+                catch (Exception e) {
+                    Bumblezone.LOGGER.error("Pollen Puff: Unable to call getStateForPlacement for the following block: {} - Will use original default blockstate instead.", blockstate);
+                }
             }
             else if(blockstate.getBlock() instanceof VineBlock vineBlock) {
                 for(Direction direction : Direction.Plane.HORIZONTAL) {
@@ -278,10 +289,10 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 catch (Exception e) {
                     Bumblezone.LOGGER.error("Pollen Puff: Unable to call getStateForPlacement for the following block: {} - Will use original default blockstate instead.", blockstate);
                 }
+            }
 
-                if (blockstate == null || blockstate.is(Blocks.AIR)) {
-                    return false;
-                }
+            if (blockstate == null || blockstate.is(Blocks.AIR)) {
+                return false;
             }
 
             boolean isFlowerAmount = false;
