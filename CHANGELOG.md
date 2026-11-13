@@ -99,6 +99,9 @@ Fixed Potion Candle block losing its data when broken into item form
 
 Fixed Honeycomb Brood Blocks not actually growing/spawning bees by random ticks
 
+Silk Touch now prevents max stage Honeycomb Brood Blocks from spawning a bee when broken.
+ Inversely, non-Silk touch mining will make max stage Honeycomb Brood Blocks spawn a bee.
+
 Fixed weird bug where placing a Super Candle/Potion Candle with wick waterlogged will replace that top candle with below Super Candle/Potion Candle block instead.
 
 Super Candle/Potion Candle wicks now can be replaced by flowing fluids and pistons
