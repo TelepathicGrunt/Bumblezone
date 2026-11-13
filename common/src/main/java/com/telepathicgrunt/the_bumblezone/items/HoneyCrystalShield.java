@@ -102,8 +102,9 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
         }
         // strengthen on significant repair
         else if (damageCaused > itemStack.getMaxDamage() / 5) {
-            itemStack.set(BzDataComponents.HONEY_CRYSTAL_SHIELD_CURRENT_LEVEL_DATA.get(), new HoneyCrystalShieldCurrentLevelData(Math.min(honeyCrystalShieldDefinedLevelsData.maxLevel(), shieldLevel + 1)));
-            itemStack.set(DataComponents.MAX_DAMAGE, itemStack.getMaxDamage() + honeyCrystalShieldDefinedLevelsData.getDurabilityForLevel(shieldLevel));
+            int newShieldLevel = Math.min(honeyCrystalShieldDefinedLevelsData.maxLevel(), shieldLevel + 1);
+            itemStack.set(BzDataComponents.HONEY_CRYSTAL_SHIELD_CURRENT_LEVEL_DATA.get(), new HoneyCrystalShieldCurrentLevelData(newShieldLevel));
+            itemStack.set(DataComponents.MAX_DAMAGE, honeyCrystalShieldDefinedLevelsData.getDurabilityForLevel(newShieldLevel));
         }
 
         itemStack.set(DataComponents.DAMAGE, Mth.clamp(newDamage, 0, itemStack.getMaxDamage()));

@@ -19,7 +19,7 @@ public record HoneyCrystalShieldDefinedLevelsData(List<Integer> shieldDurability
             HoneyCrystalShieldDefinedLevelsData::new);
 
     public HoneyCrystalShieldDefinedLevelsData(int initialDurability) {
-        this(List.of(initialDurability, 20, 45, 75, 110, 150, 195, 245, 316, 632));
+        this(List.of(initialDurability, 60, 85, 120, 170, 225, 285, 350, 430, 640));
     }
 
     public int maxLevel() {
