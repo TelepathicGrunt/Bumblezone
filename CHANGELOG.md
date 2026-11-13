@@ -34,6 +34,8 @@ Fixed issue where if you were bound to a now-depleted Respawn Anchor in another 
 Fixed Carpenter Bee Boots not properly handling mined block entities.
  (Beehives's bees were previously deleted when mined with these boots. Not anymore)
 
+Pollen Puff hitting tall flowers will now not have the top half of the newly duplicated tall flower replace existing block
+
 #### Blocks:
 Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsumeItemUI` config options are respected on serverside for Crystalline Flower.
 
