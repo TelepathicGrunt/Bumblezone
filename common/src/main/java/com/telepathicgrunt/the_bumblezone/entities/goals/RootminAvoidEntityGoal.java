@@ -75,7 +75,10 @@ public class RootminAvoidEntityGoal extends Goal {
         else {
             this.toAvoid = this.mob.level()
                     .getNearestEntity(
-                            this.mob.level().getEntitiesOfClass(LivingEntity.class, this.mob.getBoundingBox().inflate(this.maxDist, 3.0, this.maxDist), livingEntity -> !(livingEntity instanceof RootminEntity)),
+                            this.mob.level().getEntitiesOfClass(
+                                    LivingEntity.class,
+                                    this.mob.getBoundingBox().inflate(this.maxDist, 3.0, this.maxDist),
+                                    livingEntity -> livingEntity.is(avoidTag)),
                             this.avoidEntityTargeting,
                             this.mob,
                             this.mob.getX(),
