@@ -45,6 +45,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.redstone.Orientation;
@@ -74,7 +75,9 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
                 .lightLevel((blockState) -> blockState.getValue(LIT) ? (isSoul ? SOUL_LIGHT_LEVEL : NORMAL_LIGHT_LEVEL) : 0)
                 .replaceable()
                 .noCollision()
-                .noLootTable());
+                .noLootTable()
+                .pushReaction(PushReaction.DESTROY)
+                .forceSolidOff());
 
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
         this.isSoul = isSoul;
@@ -123,10 +126,8 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
 
     @Override
     protected void affectNeighborsAfterRemoval(BlockState blockState, ServerLevel level, BlockPos blockPos, boolean pushed) {
-        if (!blockState.is(BzTags.CANDLE_WICKS) || !blockState.is(BzTags.CANDLE_WICKS)) {
-            setBelowLit(level, blockPos, false);
-        }
         super.affectNeighborsAfterRemoval(blockState, level, blockPos, false);
+        setBelowLit(level, blockPos, false);
     }
 
     @Override
@@ -148,21 +149,25 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
 
     @Override
     public boolean canPlaceLiquid(@Nullable LivingEntity livingEntity, BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
-        return !blockState.getValue(WATERLOGGED) && fluid.is(FluidTags.WATER) && fluid.defaultFluidState().isSource();
+        return !blockState.getValue(WATERLOGGED) && fluid.is(FluidTags.WATER);
     }
 
     @Override
     public boolean placeLiquid(LevelAccessor level, BlockPos pos, BlockState state, FluidState fluidState) {
-        if (!state.getValue(WATERLOGGED) && fluidState.is(FluidTags.WATER) && fluidState.isSource()) {
-            BlockState blockstate = state.setValue(WATERLOGGED, Boolean.TRUE);
-            if (state.getValue(LIT)) {
-                extinguish(null, blockstate, level, pos);
+        if (!state.getValue(WATERLOGGED) && fluidState.is(FluidTags.WATER)) {
+            if (fluidState.isSource()) {
+                BlockState blockstate = state.setValue(WATERLOGGED, Boolean.TRUE);
+                if (state.getValue(LIT)) {
+                    extinguish(null, blockstate, level, pos);
+                }
+                else {
+                    level.setBlock(pos, blockstate, 3);
+                }
             }
             else {
-                level.setBlock(pos, blockstate, 3);
+                level.setBlock(pos, fluidState.createLegacyBlock(), 3);
             }
-
-            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+            level.scheduleTick(pos, fluidState.getType(), fluidState.getType().getTickDelay(level));
             return true;
         }
         else {
@@ -354,17 +359,26 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
     }
 
     public static void attemptCandleLighting(LevelAccessor levelAccessor, BlockPos blockPos) {
-        BlockState currentState = levelAccessor.getBlockState(blockPos);
+        BlockPos candleBasePos = blockPos;
+        BlockPos wickPos = blockPos.above();
+        BlockPos belowBasePos = blockPos.below();
+
+        BlockState currentState = levelAccessor.getBlockState(candleBasePos);
         if (currentState.is(BzTags.CANDLE_BASES)) {
-            currentState = levelAccessor.getBlockState(blockPos.above());
+            currentState = levelAccessor.getBlockState(wickPos);
+        }
+        else if (currentState.getBlock() instanceof SuperCandleWick) {
+            wickPos = blockPos;
+            candleBasePos = blockPos.below();
+            belowBasePos = blockPos.below(2);
         }
 
         if (currentState.getBlock() instanceof SuperCandleWick && !currentState.getValue(LIT) && !currentState.getValue(WATERLOGGED)) {
-            boolean isBelowSoul = isSoulBelowInRange(levelAccessor, blockPos.below());
+            boolean isBelowSoul = isSoulBelowInRange(levelAccessor, belowBasePos);
             Block wickBlock = isBelowSoul ? BzBlocks.SUPER_CANDLE_WICK_SOUL.get() : BzBlocks.SUPER_CANDLE_WICK.get();
-            levelAccessor.setBlock(blockPos, wickBlock.defaultBlockState().setValue(LIT, true), 11);
-            levelAccessor.playSound(null, blockPos, BzSounds.SUPER_CANDLE_WICK_LIT.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-            setBelowLit(levelAccessor, blockPos, true);
+            levelAccessor.setBlock(wickPos, wickBlock.defaultBlockState().setValue(LIT, true), 11);
+            levelAccessor.playSound(null, wickPos, BzSounds.SUPER_CANDLE_WICK_LIT.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+            setBelowLit(levelAccessor, wickPos, true);
         }
     }
 }
