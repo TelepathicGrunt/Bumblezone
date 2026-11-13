@@ -33,6 +33,9 @@ Fixed Rootmins not attacking `the_bumblezone:rootmin/targets` tagged entities on
 
 Made Rootmins not try and run away from other Rootmins
 
+Fixed Honey Slime jump speed. 
+ (Note: Honey Slimes already spawned before this update might now jump farther than intended due to previously saved MOVEMENT_SPEED attribute value)
+
 #### Items:
 Fixed crash when having two of the same endgame essence items in inventory and one goes into cooldown.
 

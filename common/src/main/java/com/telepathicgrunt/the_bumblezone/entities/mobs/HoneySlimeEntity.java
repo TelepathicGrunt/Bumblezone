@@ -158,7 +158,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
     public static AttributeSupplier.Builder getAttributeBuilder() {
  	 return Mob.createMobAttributes()
               .add(Attributes.MAX_HEALTH, 8.0D)
-              .add(Attributes.MOVEMENT_SPEED, 2.0D)
+              .add(Attributes.MOVEMENT_SPEED, 1.0D)
               .add(Attributes.ATTACK_DAMAGE, 1.0D)
               .add(Attributes.TEMPT_RANGE, 16.0);
     }
@@ -172,7 +172,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
        this.reapplyPosition();
        this.refreshDimensions();
        Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(isBaby ? 2 : 8);
-       Objects.requireNonNull(this.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue((0.2F + 0.1F * (float)(isBaby ? 1 : 2))*2);
+       Objects.requireNonNull(this.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue((0.2F + 0.1F * (float)(isBaby ? 1 : 2)) * 1);
        Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(isBaby ? 1 : 3);
        if (resetHealth) {
           this.setHealth(this.getMaxHealth());
