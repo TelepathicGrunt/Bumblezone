@@ -46,6 +46,10 @@ Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsum
 
 Fixed crash if Crystalline Flower has 2 or more books in it, and you enchant a book while scrolled down in list of enchantments and resultant list of enchantments is between 1 and 3.
 
+Fixed crash when hovering over Potion Candle with effects in a GUI
+
+Fixed Potion Candle block losing its data when broken into item form
+
 #### Structures:
 Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable and fluid blocks outside the arena bounds
 

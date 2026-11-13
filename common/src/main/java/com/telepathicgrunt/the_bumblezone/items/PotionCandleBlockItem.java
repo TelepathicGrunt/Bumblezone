@@ -60,8 +60,8 @@ public class PotionCandleBlockItem extends BlockItem {
                 Optional<MobEffect> mobEffect = BuiltInRegistries.MOB_EFFECT.getOptional(rl);
                 if (mobEffect.isPresent()) {
                     componentConsumer.accept(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.status_effect", mobEffect.get().getDisplayName())));
-                    componentConsumer.accept(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.amplifier", blockEntityTag.getInt(PotionCandleBlockEntity.EFFECT_LEVEL_TAG))));
-                    componentConsumer.accept(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.range", blockEntityTag.getInt(PotionCandleBlockEntity.RANGE_TAG))));
+                    componentConsumer.accept(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.amplifier", blockEntityTag.getInt(PotionCandleBlockEntity.EFFECT_LEVEL_TAG).orElse(0))));
+                    componentConsumer.accept(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.range", blockEntityTag.getInt(PotionCandleBlockEntity.RANGE_TAG).orElse(0))));
 
                     if (blockEntityTag.contains(PotionCandleBlockEntity.INFINITE_TAG) && blockEntityTag.getBoolean(PotionCandleBlockEntity.INFINITE_TAG).orElse(false)) {
                         componentConsumer.accept(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.max_duration", Component.translatable("item.the_bumblezone.potion_candle.infinite"))));
