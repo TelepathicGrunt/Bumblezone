@@ -45,6 +45,8 @@ Fixed Crystalline Flower not marking itself as changed for chunk data saving whe
 
 Fixed Crystalline Flower crash if one sets up `bz_crystalline_flower_data` in a way to have consumed items give 0 xp to flower.
 
+Fixed Honeycomb Brood Blocks not actually growing/spawning bees by random ticks
+
 #### Structures:
 Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable and fluid blocks outside the arena bounds
 
