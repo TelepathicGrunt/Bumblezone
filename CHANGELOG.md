@@ -64,6 +64,8 @@ Fixed Crystalline Flower crash if one sets up `bz_crystalline_flower_data` in a 
 Made it so Experience Orbs looking for Crystalline Flower will not load nearby chunks that are ungenerated/unloaded for better performance.
  And reduce the range Experience Orbs searches for flower from 8 chunks to 1 chunk radius. I think I thought I was doing 8 block radius...
 
+Crystalline Flower now absorbs the true full Experience Orb amount by factoring in the orb's size (count)
+
 Fixed crash when hovering over Potion Candle with effects in a GUI
 
 Fixed Potion Candle block losing its data when broken into item form
