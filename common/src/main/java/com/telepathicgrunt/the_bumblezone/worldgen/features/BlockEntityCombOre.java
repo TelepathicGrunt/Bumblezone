@@ -30,12 +30,17 @@ public class BlockEntityCombOre extends Feature<NbtOreConfiguration> {
 
 	@Override
 	public boolean place(FeaturePlaceContext<NbtOreConfiguration> context) {
+		if (context.config().size == 0) {
+			return false;
+		}
+
 		BlockPos.MutableBlockPos blockposMutable = new BlockPos.MutableBlockPos();
 		BlockState blockToReplace;
 		float angleOfRotation = (float) (Math.PI * context.random().nextFloat());
 		float sinOfAngle = Mth.sin(angleOfRotation);
 		float cosOfAngle = Mth.cos(angleOfRotation);
 		float size = context.config().size * 0.5f;
+
 		ChunkAccess cachedChunk;
 		float stretchedFactor = 0.7f;
 		if (context.config().size < 10) stretchedFactor = 1;
@@ -52,7 +57,7 @@ public class BlockEntityCombOre extends Feature<NbtOreConfiguration> {
 			return false;
 		}
 
-		if (!IsNearSolidSurface(context, maxY, minY, size, blockposMutable)) {
+		if (!IsNearSolidSurface(context, maxY, minY, Math.max(size, 1), blockposMutable)) {
 			return false;
 		}
 
