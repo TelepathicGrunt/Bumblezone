@@ -24,6 +24,8 @@ Fixed Honey Slime jump speed.
 
 Reduced amount of particles that Sentry Watcher generates on client when it is charging at speed
 
+Adjusted mob spawning on chunk creation for Bumblezone dimension. Beehemoths now spawn more often as a result
+
 #### Items:
 Adjusted packet logic for syncing horse owner to clients from server so that it no longer broadcasts to all players.
  Reduces server load every time a horse is spawned into client's loaded chunks.
