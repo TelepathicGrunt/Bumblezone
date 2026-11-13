@@ -78,3 +78,5 @@ Fixed memory leak with buzzing sound instance for Bumble Bee Chestplate and Beeh
 
 #### Configs:
 Fixed infinite loop if one sets `alternativeFluidToReplaceHoneyFluid` to Bumblezone's own Honey Fluid. Why would you do that? No idea. Don't do that.
+
+Fixed it so `ragingEssenceStrengthLevels` config is actually read now
