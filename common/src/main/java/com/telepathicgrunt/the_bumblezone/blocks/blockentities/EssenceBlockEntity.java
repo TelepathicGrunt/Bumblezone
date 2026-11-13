@@ -331,7 +331,7 @@ public class EssenceBlockEntity extends BlockEntity {
 
                                 int xpReward = essenceBlock.getEssenceXpReward();
                                 if (essenceBlockEntity.isBeaten()) {
-                                    xpReward = (int) (xpReward * 0.1d);
+                                    xpReward = (int) (xpReward * 0.25d);
                                 }
                                 serverPlayer.giveExperiencePoints(xpReward);
                                 essenceBlock.awardPlayerWinStat(serverPlayer);
@@ -369,6 +369,9 @@ public class EssenceBlockEntity extends BlockEntity {
 
             if (!essenceBlockEntity.getPlayerInArena().isEmpty() && won && !BzGeneralConfigs.repeatableEssenceEvents) {
                 serverLevel.setBlock(blockPos, BzBlocks.HEAVY_AIR.get().defaultBlockState(), 3);
+            }
+            else {
+                essenceBlockEntity.setBeaten(true);
             }
         }, () -> Bumblezone.LOGGER.error("Bumblezone Essence Block failed to restore area from saved NBT - {} - {} - Location: {}", essenceBlockEntity, blockState, essenceBlockEntity.getSavedNbtLocationAsString()));
 
