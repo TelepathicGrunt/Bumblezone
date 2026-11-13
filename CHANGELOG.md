@@ -25,6 +25,8 @@ Fixed Honey Slime jump speed.
 
 Reduced amount of particles that Sentry Watcher generates on client when it is charging at speed
 
+Adjusted mob spawning on chunk creation for Bumblezone dimension. Beehemoths now spawn more often as a result
+
 #### Items:
 Fixed shot Honey Crystal Shard crashing when it hits an entity while Fabric Twilight Forest is on.
 
