@@ -19,7 +19,6 @@ import net.minecraft.network.protocol.game.ClientboundSetExperiencePacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ChunkLevel;
-import net.minecraft.server.level.DistanceManager;
 import net.minecraft.server.level.FullChunkStatus;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -351,7 +350,7 @@ public class BzWorldSavedData extends SavedData {
 
 		if(teleportedEntity != null) {
 			ChunkPos chunkpos = ChunkPos.containing(BlockPos.containing(destinationPosition.x, destinationPosition.y, destinationPosition.z));
-            destination.getChunkSource().addTicket(new Ticket(TicketType.PLAYER_LOADING, ChunkLevel.byStatus(FullChunkStatus.ENTITY_TICKING)), chunkpos);
+            destination.getChunkSource().addTicket(new Ticket(TicketType.PORTAL, ChunkLevel.byStatus(FullChunkStatus.ENTITY_TICKING)), chunkpos);
 
 			if(vehicle != null) {
 				teleportedEntity.startRiding(vehicle);

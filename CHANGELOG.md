@@ -1,7 +1,8 @@
 ### **(V.7.19.0 Changes) (26.1.2 Minecraft)**
 
-#### Structures:
-Tweaked what modded blocks shows in Hanging Gardens
+#### Teleportation:
+Fixed teleporting to and from Bumblezone using the wrong ticket. Causing the destination chunk to remain loaded forever until server restart.
+ Now the right ticket is used so the chunk is only loaded for 300 ticks for teleporting purposes.
 
 #### Fluids:
 Fixed crash when a block is changed next to Sugar Water Bubble Column
@@ -38,6 +39,8 @@ Fixed crash if Crystalline Flower has 2 or more books in it, and you enchant a b
 Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable and fluid blocks outside the arena bounds
 
 Added safety net so that if Sempiternal Sanctum arena fails to save the pre-arena area, the arena event will not start.
+
+Tweaked what modded blocks shows in Hanging Gardens
 
 #### Recipes:
 Fixed possible crash if `the_bumblezone:container_shapeless_recipe_bz` gets an item with null crafting remainder
