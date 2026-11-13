@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
+import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.EssenceBlock;
 import com.telepathicgrunt.the_bumblezone.bossbars.ServerEssenceEvent;
@@ -426,7 +427,7 @@ public class EssenceBlockEntity extends BlockEntity {
         valueInput.read(PLAYERS_IN_ARENA_TAG, UUIDUtil.CODEC_SET).ifPresent(uuidSet -> this.playerInArena.addAll(uuidSet));
 
         this.eventEntitiesInArena.clear();
-        valueInput.read(EVENT_ENTITIES_IN_ARENA_TAG, UUIDUtil.CODEC_SET).ifPresent(uuidSet -> this.eventEntitiesInArena.addAll(uuidSet.stream().map(EventEntities::new).toList()));
+        valueInput.read(EVENT_ENTITIES_IN_ARENA_TAG, Codec.list(UUIDUtil.CODEC)).ifPresent(uuidList -> this.eventEntitiesInArena.addAll(uuidList.stream().map(EventEntities::new).toList()));
 
         this.arenaSize = valueInput.read(ARENA_SIZE_TAG, BlockPos.CODEC).orElse(BlockPos.ZERO);
 
@@ -473,7 +474,7 @@ public class EssenceBlockEntity extends BlockEntity {
         valueOutput.putFloat(PROGRESS_TAG, this.eventBar.getProgress());
 
         valueOutput.store(PLAYERS_IN_ARENA_TAG, UUIDUtil.CODEC_SET, new HashSet<>(this.playerInArena));
-        valueOutput.store(EVENT_ENTITIES_IN_ARENA_TAG, UUIDUtil.CODEC_SET, this.eventEntitiesInArena.stream().map(EventEntities::uuid).collect(Collectors.toSet()));
+        valueOutput.store(EVENT_ENTITIES_IN_ARENA_TAG, Codec.list(UUIDUtil.CODEC), this.eventEntitiesInArena.stream().map(EventEntities::uuid).toList());
 
         valueOutput.store(ARENA_SIZE_TAG, BlockPos.CODEC, this.arenaSize);
     }
