@@ -1,8 +1,6 @@
 ### **(V.7.19.0 Changes) (1.20.1 Minecraft)**
 
-#### Structures:
-Tweaked what modded blocks shows in Hanging Gardens
-
+#### Teleportation:
 Adjusted teleportation queue logic to run only during server tick instead of all dimension ticks.
 
 #### Entities:
@@ -65,6 +63,10 @@ Optimized Sticky Honey Redstone to not keep calculating redstone signal every ti
 Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable and fluid blocks outside the arena bounds
 
 Added safety net so that if Sempiternal Sanctum arena fails to save the pre-arena area, the arena event will not start.
+
+Made it so if `repeatableEssenceEvents` is true, beating the arena event again grants 1/4th xp of the first time completion amount
+
+Tweaked what modded blocks shows in Hanging Gardens
 
 #### Features:
 Fixed infinite loop if one sets the `size` field to 1 or 0 for `the_bumblezone:blockentity_combs` feature
