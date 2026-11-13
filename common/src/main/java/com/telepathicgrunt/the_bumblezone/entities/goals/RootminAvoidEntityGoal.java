@@ -73,15 +73,15 @@ public class RootminAvoidEntityGoal extends Goal {
             }
         }
         else {
-            this.toAvoid = this.mob.level().getNearestEntity(this.mob.level().getEntitiesOfClass(
-                            LivingEntity.class,
-                            this.mob.getBoundingBox().inflate(this.maxDist, 3.0, this.maxDist),
-                            livingEntity -> livingEntity.getType().is(this.avoidTag)),
-                    this.avoidEntityTargeting,
-                    this.mob,
-                    this.mob.getX(),
-                    this.mob.getY(),
-                    this.mob.getZ());
+            this.toAvoid = this.mob.level()
+                    .getNearestEntity(
+                            this.mob.level().getEntitiesOfClass(LivingEntity.class, this.mob.getBoundingBox().inflate(this.maxDist, 3.0, this.maxDist), livingEntity -> !(livingEntity instanceof RootminEntity)),
+                            this.avoidEntityTargeting,
+                            this.mob,
+                            this.mob.getX(),
+                            this.mob.getY(),
+                            this.mob.getZ()
+                    );
         }
 
         if (this.toAvoid == null) {

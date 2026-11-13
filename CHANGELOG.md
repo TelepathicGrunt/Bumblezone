@@ -17,6 +17,8 @@ Fixed issue where if player enters Bumblezone from non-Overworld dimension, ride
 
 Fixed Rootmins not attacking `the_bumblezone:rootmin/targets` tagged entities on their own
 
+Made Rootmins not try and run away from other Rootmins
+
 #### Items:
 Adjusted packet logic for syncing horse owner to clients from server so that it no longer broadcasts to all players.
  Reduces server load every time a horse is spawned into client's loaded chunks.
