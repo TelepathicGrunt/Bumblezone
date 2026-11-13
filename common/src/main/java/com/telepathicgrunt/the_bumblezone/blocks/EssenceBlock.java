@@ -209,9 +209,13 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                         Bumblezone.LOGGER.error("Bumblezone Essence Block failed to create the NBT file to save area - {} - {} - {} - Location: {} - Error: {}", blockState, blockPos, getArenaNbt(), essenceBlockEntity.getSavedNbtLocationAsString(), exception);
                         return;
                     }
-                    savingStructureTemplate.fillFromWorld(serverLevel, blockPos.offset(negativeHalfLengths), size, !PLACEMENT_SETTINGS.getOrFillFromInternal().isIgnoreEntities(), List.of(essenceBlock));
                     try {
-                        structureTemplateManager.save(essenceBlockEntity.getSavedNbtLocation());
+                        savingStructureTemplate.fillFromWorld(serverLevel, blockPos.offset(negativeHalfLengths), size, !PLACEMENT_SETTINGS.getOrFillFromInternal().isIgnoreEntities(), List.of(essenceBlock));
+                        boolean saved = structureTemplateManager.save(essenceBlockEntity.getSavedNbtLocation());
+                        if (!saved) {
+                            Bumblezone.LOGGER.error("Bumblezone Essence Block failed to save area into NBT file - {} - {} - {} - Location: {} - Error: {}", blockState, blockPos, getArenaNbt(), essenceBlockEntity.getSavedNbtLocationAsString(), "StructureTemplateManager$save returned failure result");
+                            return;
+                        }
                     }
                     catch (Exception exception) {
                         Bumblezone.LOGGER.error("Bumblezone Essence Block failed to save area into NBT file - {} - {} - {} - Location: {} - Error: {}", blockState, blockPos, getArenaNbt(), essenceBlockEntity.getSavedNbtLocationAsString(), exception);
