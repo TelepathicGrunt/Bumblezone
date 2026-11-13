@@ -31,7 +31,7 @@ public class BeeFlowerHeadwearTemptGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (this.mob.getPersistentAngerTarget() != null || this.mob.tickCount % 2 == 0) {
+        if (this.mob.getPersistentAngerTarget() != null) {
             return false;
         }
 
