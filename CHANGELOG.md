@@ -23,6 +23,10 @@ Fixed Beehemoth walking far too slow on the ground when riding one
 
 Removed logging I had forgotten about from when I was debugging Beehemoth riding controls
 
+Fixed possible issue where in presence of multiple players, Cosmic Crystal Entity could track wrong player on client compared to server
+
+Fixed visual issue where Cosmic Crystal Entity spazzes out when tracking spinning attack ends
+
 #### Items:
 Fixed crash when having two of the same endgame essence items in inventory and one goes into cooldown.
 
