@@ -72,8 +72,8 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
     */
 
    private static final EntityDataAccessor<Boolean> IN_HONEY = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.BOOLEAN);
-   private static final EntityDataAccessor<Integer> IN_HONEY_GROWTH_TIME = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.INT);
-   private static final EntityDataAccessor<Integer> ANGRY_TIMER = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.INT);
+   private static final EntityDataAccessor<Long> IN_HONEY_GROWTH_END_TIME = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.LONG);
+   private static final EntityDataAccessor<Long> ANGER_END_TIME = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.LONG);
    private static final UniformInt MAX_ANGER_DURATION = TimeUtil.rangeOfSeconds(22, 36);
    private UUID target_UUID;
 
@@ -114,8 +114,8 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
    protected void defineSynchedData(SynchedEntityData.Builder builder) {
       super.defineSynchedData(builder);
       builder.define(IN_HONEY, true);
-      builder.define(IN_HONEY_GROWTH_TIME, 0);
-      builder.define(ANGRY_TIMER, 0);
+      builder.define(IN_HONEY_GROWTH_END_TIME, 0L);
+      builder.define(ANGER_END_TIME, 0L);
    }
 
    @Override
@@ -137,7 +137,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
    public void addAdditionalSaveData(CompoundTag compound) {
       super.addAdditionalSaveData(compound);
       compound.putBoolean("inHoney", this.isInHoney());
-      compound.putInt("inHoneyGrowthTimer", this.getInHoneyGrowthTime());
+      compound.putLong("inHoneyGrowthTimer", this.getInHoneyGrowthEndTime());
       compound.putBoolean("wasOnGround", this.wasOnGround);
    }
 
@@ -145,7 +145,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
    public void readAdditionalSaveData(CompoundTag compound) {
       super.readAdditionalSaveData(compound);
       this.setInHoney(compound.getBoolean("inHoney"));
-      this.setInHoneyGrowthTime(compound.getInt("inHoneyGrowthTimer"));
+      this.setInHoneyGrowthEndTime(compound.getLong("inHoneyGrowthTimer"));
       this.wasOnGround = compound.getBoolean("wasOnGround");
    }
 
@@ -246,12 +246,12 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
       this.entityData.set(IN_HONEY, value);
    }
 
-   public int getInHoneyGrowthTime() {
-      return this.entityData.get(IN_HONEY_GROWTH_TIME);
+   public long getInHoneyGrowthEndTime() {
+      return this.entityData.get(IN_HONEY_GROWTH_END_TIME);
    }
 
-   public void setInHoneyGrowthTime(int value) {
-      this.entityData.set(IN_HONEY_GROWTH_TIME, value);
+   public void setInHoneyGrowthEndTime(long value) {
+      this.entityData.set(IN_HONEY_GROWTH_END_TIME, value);
    }
 
    @Override
