@@ -149,7 +149,7 @@ public abstract class RoyalJellyFluid extends BzFluid {
             if(bottomFluidLevel == 0) {
                 BlockPos belowBlockPos = blockPos.below();
                 BlockState belowBlockState = serverLevel.getBlockState(belowBlockPos);
-                FluidState belowFluidState = this.getNewLiquid(serverLevel, belowBlockPos, belowBlockState);
+                FluidState belowFluidState = belowBlockState.getFluidState();
 
                 if (this.canMaybePassThrough(serverLevel, blockPos, blockState, Direction.DOWN, belowBlockPos, belowBlockState, belowFluidState)) {
                     FluidState newBelowFluid = this.getNewLiquid(serverLevel, belowBlockPos, belowBlockState);
