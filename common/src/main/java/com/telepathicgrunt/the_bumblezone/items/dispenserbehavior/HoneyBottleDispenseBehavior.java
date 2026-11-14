@@ -85,6 +85,9 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior {
                 else
                     stack = new ItemStack(Items.GLASS_BOTTLE);
             }
+            else {
+                DROP_ITEM_BEHAVIOR.dispense(source, new ItemStack(Items.GLASS_BOTTLE));
+            }
         }
         else {
             // If it instanceof DefaultDispenseItemBehavior, call dispenseStack directly to avoid

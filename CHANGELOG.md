@@ -164,5 +164,7 @@ Fixed infinite loop if one sets `alternativeFluidToReplaceHoneyFluid` to Bumblez
 
 Fixed it so `ragingEssenceStrengthLevels` config is actually read now
 
+Made `dispensersDropGlassBottles` config option work for Honey Bottles filling Porous Honeycomb Block from Dispensers
+
 #### Mod Compat:
 (NeoForge): Fixed it so if non-Bumblezone modded bee spawns in Bumblezone dimension, the original bee is canceled so that only the  non-Bumblezone modded bee spawns in its place 
