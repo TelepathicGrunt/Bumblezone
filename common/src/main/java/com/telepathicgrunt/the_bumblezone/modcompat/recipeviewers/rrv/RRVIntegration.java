@@ -86,6 +86,7 @@ public class RRVIntegration implements ReliableRecipeViewerClientPlugin {
                         cacheRvvData.put(itemTagKey, tagData);
                     }
 
+                    beeQueenTradeIndex++;
                     recipeList.add(new RRVQueenRandomizerTradesRecipe(
                             Identifier.fromNamespaceAndPath(Bumblezone.MODID, "/bee_queen_randomizer_trade_" + beeQueenTradeIndex),
                             itemTagKey,
