@@ -42,6 +42,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.chunk.LevelChunkSection;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.levelgen.Aquifer;
 import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.DensityFunctions;
@@ -407,7 +408,9 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
             Holder<Biome> holder = region.getBiome(chunkpos.getWorldPosition().atY(region.getMaxY() - 1));
             WorldgenRandom worldgenrandom = new WorldgenRandom(new LegacyRandomSource(RandomSupport.generateUniqueSeed()));
             worldgenrandom.setDecorationSeed(region.getSeed(), chunkpos.getMinBlockX(), chunkpos.getMinBlockZ());
-            spawnNonBeeMobsForChunkGeneration(region, holder, chunkpos, worldgenrandom);
+            if (region.getServer() == null || region.getServer().getGameRules().get(GameRules.SPAWN_MOBS)) {
+                spawnNonBeeMobsForChunkGeneration(region, holder, chunkpos, worldgenrandom);
+            }
         }
     }
 

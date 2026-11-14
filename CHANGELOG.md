@@ -50,6 +50,8 @@ Sentry Watcher fully respects the 80 block distance it can charge through instea
 
 Fixed incorrect Sentry Watcher health and armor damaging when it attacks a player or mob
 
+Have Bumblezone chunk generation respect SPAWN_MOBS gamerule for mobs spawned on chunk creation
+
 Adjusted mob spawning on chunk creation for Bumblezone dimension. Beehemoths now spawn more often as a result
 
 Beehemoths no longer get full health healing when they are unloaded and then loaded back in
