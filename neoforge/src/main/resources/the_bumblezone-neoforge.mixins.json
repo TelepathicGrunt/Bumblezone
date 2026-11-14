@@ -14,7 +14,8 @@
     "world.StructureTemplateAccessor"
   ],
   "client": [
-    "client.CameraOrientationAccessor"
+    "client.CameraOrientationAccessor",
+    "client.ClientPacketListenerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

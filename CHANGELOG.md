@@ -13,6 +13,8 @@ Fixed incorrect coordinate scaling that can rarely happen when teleporting to Bu
 
 (NeoForge): Bumblezone exit coordinates saved on player will now persist through player death and respawn
 
+(NeoForge): Fixed missing Bumblezone teleport screen when entering its dimension
+
 #### Fluids:
 Fixed crash when a block is changed next to Sugar Water Bubble Column
 
