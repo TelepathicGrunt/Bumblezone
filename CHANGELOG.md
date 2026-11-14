@@ -164,6 +164,8 @@ Fixed Royal Jelly Fluid and Honey Fluid flowing downward to not duplicate block 
 
 Fixed Royal Jelly Fluid and Honey Fluid overlay when in fluid from being messed up when player is below Y = 0; and made the fluid fog work again
 
+Source Honey Fluid healing hurt bees will change to level 7 Honey Fluid instead of level 1.
+
 Fixed case where vanilla Bubble Column won't be supported on Sugar Water Bubble Column
 
 #### Structures:
