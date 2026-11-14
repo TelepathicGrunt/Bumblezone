@@ -55,7 +55,7 @@ import java.util.Optional;
 
 
 public abstract class EssenceBlock extends BaseEntityBlock implements BlockExtension {
-    private static final VoxelShape ALMOST_BLOCK = Block.box(0.0001, 0.0001, 0.0001, 0.9999, 0.9999, 0.9999);
+    private static final VoxelShape ALMOST_BLOCK = Block.box(0.001, 0.001, 0.001, 15.999, 15.999, 15.999);
 
     public static final GeneralUtils.Lazy<StructurePlaceSettings> PLACEMENT_SETTINGS = new GeneralUtils.Lazy<>(() ->
             new StructurePlaceSettings()
