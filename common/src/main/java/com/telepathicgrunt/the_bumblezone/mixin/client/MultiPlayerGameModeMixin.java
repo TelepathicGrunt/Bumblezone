@@ -10,7 +10,6 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(MultiPlayerGameMode.class)
 public class MultiPlayerGameModeMixin {
-
     @WrapOperation(method = "destroyBlock(Lnet/minecraft/core/BlockPos;)Z",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;isAir()Z"),
             require = 0)
@@ -24,7 +23,11 @@ public class MultiPlayerGameModeMixin {
         return isAir;
     }
 
-    @WrapOperation(method = "lambda$startDestroyBlock$1(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;I)Lnet/minecraft/network/protocol/Packet;",
+    @WrapOperation(
+            method = {
+                "lambda$startDestroyBlock$1(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;I)Lnet/minecraft/network/protocol/Packet;",
+                "lambda$startDestroyBlock$1(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;I)Lnet/minecraft/network/protocol/Packet;"
+            },
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;isAir()Z"),
             require = 0)
     private boolean bumblezone$allowSpecialAirDestroy2(BlockState blockState, Operation<Boolean> operation) {
