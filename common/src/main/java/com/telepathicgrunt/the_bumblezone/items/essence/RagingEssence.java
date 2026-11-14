@@ -43,7 +43,7 @@ public class RagingEssence extends AbilityEssenceItem {
     private static final Supplier<Integer> abilityUseAmount = () -> BzGeneralConfigs.ragingEssenceAbilityUse;
 
     private static final int radius = 24;
-    private static final int trackingRange = radius * radius * 4;
+    private static final int trackingRange = radius * radius * 6;
     private static final int maxEmpoweredTimeFramePer5Ticks = 75;
     private static final int maxCurrentTargets = 4;
 
@@ -171,7 +171,7 @@ public class RagingEssence extends AbilityEssenceItem {
                         Entity entity = serverPlayer.serverLevel().getEntity(uuid);
 
                         // An entity is out of range. Break chain.
-                        if (entity == null || entity.distanceToSqr(serverPlayer.position()) > trackingRange * trackingRange) {
+                        if (entity == null || entity.distanceToSqr(serverPlayer.position()) > trackingRange) {
                             resetRage(stack, serverPlayer);
                             return;
                         }
