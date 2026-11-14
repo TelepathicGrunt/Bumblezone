@@ -176,3 +176,5 @@ Made `dispensersDropGlassBottles` config option work for Honey Bottles filling P
 (Forge): Fixed it so if non-Bumblezone modded bee spawns in Bumblezone dimension, the original bee is canceled so that only the non-Bumblezone modded bee spawns in its place 
 
 Fixed empty Productive Bees's Bee Cages being able to revive Honeycomb Brood Blocks from Dispensers
+
+Updated fluid tag compat for Create
