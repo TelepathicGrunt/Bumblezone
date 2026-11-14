@@ -172,7 +172,8 @@ public class HeavyAir extends Block {
     }
 
     @Deprecated
-    public void onExplosionHit(BlockState blockState, Level level, BlockPos blockPos, Explosion explosion, BiConsumer<ItemStack, BlockPos> biConsumer) {
+    @Override
+    public void onExplosionHit(BlockState blockState, ServerLevel level, BlockPos blockPos, Explosion explosion, BiConsumer<ItemStack, BlockPos> biConsumer) {
         if (explosion.getBlockInteraction() == Explosion.BlockInteraction.TRIGGER_BLOCK) {
             return;
         }

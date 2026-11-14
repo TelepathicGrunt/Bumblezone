@@ -139,6 +139,8 @@ Carving Carvable Wax block now preserves its facing property
 
 Windy Air now plays its ambient sound properly
 
+Explosions now removes Heavy Air and Windy Air again
+
 #### Fluids:
 Fixed Royal Jelly Fluid and Honey Fluid overlay when in fluid from being messed up when player is below Y = 0
 
