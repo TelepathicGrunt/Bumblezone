@@ -238,10 +238,10 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                     BlockPos abovePos = blockPos.above();
                     BlockState aboveState = bulkSectionAccess.getBlockState(abovePos);
                     if (!aboveState.isAir() && !aboveState.isCollisionShapeFullBlock(level, abovePos)) {
-                        bulkSectionAccess.setBlockState(blockPos, Blocks.CAVE_AIR.defaultBlockState(), false);
+                        bulkSectionAccess.setBlockState(abovePos, Blocks.CAVE_AIR.defaultBlockState(), false);
 
                         if (aboveState.getBlock() instanceof DoublePlantBlock && aboveState.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.LOWER) {
-                            bulkSectionAccess.setBlockState(abovePos, Blocks.CAVE_AIR.defaultBlockState(), false);
+                            bulkSectionAccess.setBlockState(abovePos.above(), Blocks.CAVE_AIR.defaultBlockState(), false);
                         }
                     }
                 }
