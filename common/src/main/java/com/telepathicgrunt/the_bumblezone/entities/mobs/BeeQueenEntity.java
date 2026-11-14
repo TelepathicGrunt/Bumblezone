@@ -543,6 +543,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     if (reward.isPresent()) {
                         spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), ((ItemEntityAccessor) itemEntity).bumblezone$getThrower(), specialDayItems.get().getFirst());
                         tradedItems++;
+                        didSpecialDayTrade = true;
                     }
                 }
             }
