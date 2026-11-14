@@ -49,7 +49,7 @@ public class BzBiomeSource extends BiomeSource implements BiomeManager.NoiseBiom
     public static final ResourceLocation POLLINATED_PILLAR = new ResourceLocation(Bumblezone.MODID, "pollinated_pillar");
     public static final ResourceLocation CRYSTAL_CANYON = new ResourceLocation(Bumblezone.MODID, "crystal_canyon");
 
-    private final long seed;
+    private final long seed; // Todo: how do we get the seed from world creation?...
     private final Layer biomeSampler;
     public final HolderSet<Biome> blobBiomes;
     public final HolderSet<Biome> rareBlobBiomes;
@@ -87,16 +87,6 @@ public class BzBiomeSource extends BiomeSource implements BiomeManager.NoiseBiom
     @Override
     public Set<Holder<Biome>> possibleBiomes() {
         return this.lazyPossibleBiomes.getOrCompute(() -> Stream.concat(Stream.concat(blobBiomes.stream(), mainBiomes.stream()), rareBlobBiomes.stream()).collect(Collectors.toSet()));
-    }
-
-    public static <T extends Area, C extends BigContext<T>> AreaFactory<T> stack(long seed, AreaTransformer1 parent, AreaFactory<T> incomingArea, int count, LongFunction<C> contextFactory) {
-        AreaFactory<T> LayerFactory = incomingArea;
-
-        for (int i = 0; i < count; ++i) {
-            LayerFactory = parent.run(contextFactory.apply(seed + (long) i), LayerFactory);
-        }
-
-        return LayerFactory;
     }
 
     public static Layer buildWorldProcedure(long seed, HolderSet<Biome> blobBiomes, HolderSet<Biome> rareBlobBiomes) {
