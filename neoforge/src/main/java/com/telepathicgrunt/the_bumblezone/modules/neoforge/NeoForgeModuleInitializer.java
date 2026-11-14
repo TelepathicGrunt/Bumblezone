@@ -41,10 +41,17 @@ public class NeoForgeModuleInitializer {
         });
 
         for (var value : LIVING_ENTITY_MODULES) {
-            AttachmentType.Builder<?> builder = getAttachmentTypeBuilder(value);
             BzAttachmentTypes.ATTACHMENT_TYPES.register(
                     value.factory.get().id().getPath(),
-                    builder::build
+                    () ->  {
+                        AttachmentType.Builder<?> builder = getAttachmentTypeBuilder(value);
+
+                        if (PERSIST_PLAYER_DATA_SAVE_MODULES.contains(value)) {
+                            builder.copyOnDeath();
+                        }
+
+                        return builder.build();
+                    }
             );
         }
         for (var value : PLAYER_ENTITY_MODULES) {

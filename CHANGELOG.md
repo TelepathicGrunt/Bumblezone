@@ -11,6 +11,8 @@ Adjusted teleportation queue logic to run only during server tick instead of all
 
 Fixed incorrect coordinate scaling that can rarely happen when teleporting to Bumblezone.
 
+(NeoForge): Bumblezone exit coordinates saved on player will now persist through player death and respawn
+
 #### Fluids:
 Fixed crash when a block is changed next to Sugar Water Bubble Column
 
