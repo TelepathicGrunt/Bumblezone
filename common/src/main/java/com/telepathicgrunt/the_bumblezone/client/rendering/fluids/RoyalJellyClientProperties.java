@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.fluids.base.FluidProperties;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Vector3f;
@@ -30,8 +31,8 @@ public class RoyalJellyClientProperties {
                     Entity entity = camera.getEntity();
                     BlockState state = level.getBlockState(entity != null ? BlockPos.containing(entity.getEyePosition(1)) : camera.getBlockPosition());
                     if (state.hasProperty(HoneyFluidBlock.BOTTOM_LEVEL)) {
-                        double yEye = Math.abs(entity != null ? entity.getEyePosition(1).y() : camera.getPosition().y());
-                        double yOffset = yEye - ((int)yEye);
+                        double yEye = entity != null ? entity.getEyePosition(1).y() : camera.position().y();
+                        double yOffset = yEye - Mth.floor(yEye);
                         if (state.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8D > yOffset + 0.1) {
                             return fogColor;
                         }
@@ -54,8 +55,8 @@ public class RoyalJellyClientProperties {
                     if (entity != null) {
                         BlockState state = entity.level().getBlockState(BlockPos.containing(entity.getEyePosition(1)));
                         if (state.hasProperty(HoneyFluidBlock.BOTTOM_LEVEL)) {
-                            double yEye = Math.abs(entity.getEyePosition(1).y());
-                            double yOffset = yEye - ((int)yEye);
+                            double yEye = entity.getEyePosition(1).y();
+                            double yOffset = yEye - Mth.floor(yEye);
                             if (state.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8D > yOffset + 0.1) {
                                 return;
                             }
