@@ -136,6 +136,6 @@ public class TwoToneSpikeFeature extends Feature<TwoToneSpikeFeatureConfig> {
             currentY += directionSign;
         }
 
-        return false;
+        return true;
     }
 }
