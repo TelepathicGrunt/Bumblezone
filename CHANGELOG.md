@@ -103,7 +103,8 @@ Fixed Crystalline Flower not marking itself as changed for chunk data saving whe
 Fixed Crystalline Flower crash if one sets up `bz_crystalline_flower_data` in a way to have consumed items give 0 xp to flower.
 
 Made it so Experience Orbs looking for Crystalline Flower will not load nearby chunks that are ungenerated/unloaded for better performance.
- And reduce the range Experience Orbs searches for flower from 8 chunks to 1 chunk radius. I think I thought I was doing 8 block radius...
+
+Experience Orbs will stop tracking a Crystalline Flower that reached max tier or was removed
 
 Crystalline Flower now absorbs the true full Experience Orb amount by factoring in the orb's size (count)
 

@@ -84,9 +84,19 @@ public abstract class ExperienceOrbMixin extends Entity {
             }
 
             BlockState state = this.level().getBlockState(this.bumblezone$trackedCrystalFlower);
-            if(state.getBlock() instanceof CrystallineFlower) {
-                double speedFactor = 1.0D - Math.sqrt(sqrDistance) / distanceThreshold;
-                this.setDeltaMovement(this.getDeltaMovement().add(vec3.normalize().scale(speedFactor * speedFactor * 0.11D)));
+            if (state.getBlock() instanceof CrystallineFlower) {
+                if (this.level().getBlockEntity(this.bumblezone$trackedCrystalFlower) instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity &&
+                    !crystallineFlowerBlockEntity.isMaxTier())
+                {
+                    this.bumblezone$trackedCrystalFlower = null;
+                }
+                else {
+                    double speedFactor = 1.0D - Math.sqrt(sqrDistance) / distanceThreshold;
+                    this.setDeltaMovement(this.getDeltaMovement().add(vec3.normalize().scale(speedFactor * speedFactor * 0.11D)));
+                }
+            }
+            else {
+                this.bumblezone$trackedCrystalFlower = null;
             }
         }
     }
