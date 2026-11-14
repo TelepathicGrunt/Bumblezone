@@ -28,6 +28,8 @@ Honey Slime with their honey taken is now optimized to not try and sync an int e
 
 Baby Honey Slimes spawned during worldgen now get the proper baby health and other attributes instead of adult values
 
+Honey Slime now is affected by Thorns properly
+
 Reduced amount of particles that Sentry Watcher generates on client when it is charging at speed
 
 Sentry Watcher fully respects the 80 block distance it can charge through instead of going excessively further due to bad coordinate calculation

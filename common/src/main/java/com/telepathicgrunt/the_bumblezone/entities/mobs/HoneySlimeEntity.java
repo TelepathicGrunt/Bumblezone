@@ -53,6 +53,7 @@ import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -231,7 +232,6 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
             }
          }
       }
-
       super.remove(removalReason);
    }
 
@@ -394,7 +394,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
          int i = 2;
          if (this.distanceToSqr(entityIn) < 0.6D * (double) i * 0.6D * (double) i && this.hasLineOfSight(entityIn) && entityIn.hurt(damageSources().mobAttack(this), this.getAttackStrength())) {
             this.playSound(BzSounds.HONEY_SLIME_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            this.dealDamage(entityIn);
+            EnchantmentHelper.doPostAttackEffects(level, target, damageSource);
          }
       }
    }
