@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.client.fabric.FabricArmorRenderer;
 import com.telepathicgrunt.the_bumblezone.client.fabric.GlisteringHoneyCrystalModels;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
+import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockColorEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzRegisterBlockEntityRendererEvent;
@@ -33,6 +34,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.DimensionRenderingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
@@ -85,6 +87,9 @@ public class FabricClientEventManager {
         ClientTickEvents.END_CLIENT_TICK.register((mc) -> {
             StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer());
             MusicHandler.tickMusicFader();
+            if (Minecraft.getInstance().player != null) {
+                BeeAggression.clientMainPlayerTick(Minecraft.getInstance().player);
+            }
         });
     }
 
