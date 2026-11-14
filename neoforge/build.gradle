@@ -203,6 +203,7 @@ neoForge {
             }
 
             jvmArgument('-Dmixin.debug.export=true')
+            jvmArgument('-XX:+AllowEnhancedClassRedefinition')
         }
 
         server {
@@ -210,6 +211,7 @@ neoForge {
             systemProperty("terminal.ansi", "true")
             programArguments.add('--nogui')
             jvmArgument('-Dmixin.debug.export=true')
+            jvmArgument('-XX:+AllowEnhancedClassRedefinition')
         }
 
         serverData {

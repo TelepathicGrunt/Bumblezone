@@ -169,6 +169,7 @@ loom {
                 getJvmArguments().add("-javaagent:${project.findProperty('mc_java_agent_path')}")
             }
             getJvmArguments().add('-Dmixin.debug.export=true')
+            getJvmArguments().add('-XX:+AllowEnhancedClassRedefinition')
         }
 
         server {
@@ -176,6 +177,7 @@ loom {
             setConfigName("Fabric Server")
             getProgramArguments().add('--nogui')
             getJvmArguments().add('-Dmixin.debug.export=true')
+            getJvmArguments().add('-XX:+AllowEnhancedClassRedefinition')
         }
     }
 }
