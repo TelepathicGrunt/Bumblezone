@@ -387,7 +387,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
                 existingTrades.add(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items.stream().map(i -> new ItemStackTemplate(i, 1)).toList()), 1, 0 , 1));
 
                 WeightedList.Builder<WeightedTradeResult> builder = WeightedList.builder();
-                existingTrades.forEach(builder::add);
+                existingTrades.forEach(existingTrade -> builder.add(existingTrade, existingTrade.getWeight()));
                 tempQueenTrades.put(item, Pair.of(builder.build(), null));
             }
             else {
