@@ -180,7 +180,7 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
                 bulkSectionAccess.setBlockState(position, BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int)Math.max(Math.min((noise + 1D) * 3D, 8), 1)), false);
                 world.scheduleTick(position, BzBlocks.PILE_OF_POLLEN.get(), 0);
 
-                int carveHeight = Math.abs((int) ((noise * 1000) % 0.8D)) * 4 + 2;
+                int carveHeight = 2;
                 for (int i = 0; i < carveHeight; i++) {
                     position.move(Direction.UP);
 
