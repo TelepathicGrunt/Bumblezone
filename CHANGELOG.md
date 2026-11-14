@@ -126,6 +126,8 @@ Fixed it so Royal Jelly Fluid and Honey Fluid flowing downward does not turn sou
 
 Fixed Royal Jelly Fluid and Honey Fluid flowing downward to not duplicate block drops like torches
 
+Fixed case where vanilla Bubble Column won't be supported on Sugar Water Bubble Column
+
 #### Structures:
 Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable and fluid blocks outside the arena bounds
 
