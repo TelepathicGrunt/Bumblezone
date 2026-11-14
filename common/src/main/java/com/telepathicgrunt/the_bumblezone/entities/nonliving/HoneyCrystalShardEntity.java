@@ -40,9 +40,6 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
                 this.makeParticle(1);
             }
         }
-        else if (this.isInGround() && this.inGroundTime != 0 && this.inGroundTime >= 600) {
-            this.level().broadcastEntityEvent(this, (byte)0);
-        }
     }
 
     private void makeParticle(int particlesToSpawn) {
