@@ -130,6 +130,9 @@ Made `the_bumblezone:bee_aggression_in_dimension/wrath_activating_items_when_pic
 #### Sounds:
 Fixed memory leak with buzzing sound instance for Bumble Bee Chestplate and Beehemoth still retaining client worlds after exiting a world
 
+#### Commands:
+Fix command suggestions getting messed up when switching between `bumblezone_modify_data` and `bumblezone_read_data`
+
 #### Configs:
 Fixed infinite loop if one sets `alternativeFluidToReplaceHoneyFluid` to Bumblezone's own Honey Fluid. Why would you do that? No idea. Don't do that.
 
