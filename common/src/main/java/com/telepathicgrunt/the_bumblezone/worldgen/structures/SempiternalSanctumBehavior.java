@@ -37,55 +37,53 @@ public class SempiternalSanctumBehavior {
 
     //Apply mining fatigue when in sanctum
     public static void runStructureMessagesAndFatigue(ServerPlayer serverPlayer) {
-        StructureManager structureManager = ((ServerLevel)serverPlayer.level()).structureManager();
+        StructureManager structureManager = serverPlayer.level().structureManager();
         StructureStart detectedStructure = structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.SEMPITERNAL_SANCTUMS);
         if (detectedStructure.isValid()) {
-            if (EssenceOfTheBees.hasEssence(serverPlayer)) {
-                if (!PLAYERS_IN_SANCTUMS.contains(serverPlayer.getUUID())) {
-                    BlockPos structureCenter = detectedStructure.getBoundingBox().getCenter().below(20);
+            PLAYERS_IN_SANCTUMS.add(serverPlayer.getUUID());
 
-                    // Only display message if sanctum is active with essence block
-                    if (!serverPlayer.level().getBlockState(structureCenter).is(BzTags.ESSENCE_BLOCKS)) {
+            if (EssenceOfTheBees.hasEssence(serverPlayer)) {
+                BlockPos structureCenter = detectedStructure.getBoundingBox().getCenter().below(20);
+
+                // Only display message if sanctum is active with essence block
+                if (!serverPlayer.level().getBlockState(structureCenter).is(BzTags.ESSENCE_BLOCKS)) {
+                    return;
+                }
+
+                // Don't send message if player logs in while in structure.
+                if (serverPlayer.tickCount > 40) {
+                    ResourceLocation resourceLocation = serverPlayer.level().registryAccess()
+                            .registry(Registries.STRUCTURE).get()
+                            .getKey(detectedStructure.getStructure());
+
+                    ChatFormatting color;
+                    if (resourceLocation == null) {
                         return;
                     }
-
-                    PLAYERS_IN_SANCTUMS.add(serverPlayer.getUUID());
-
-                    // Don't send message if player logs in while in structure.
-                    if (serverPlayer.tickCount > 40) {
-                        ResourceLocation resourceLocation = serverPlayer.level().registryAccess()
-                                .registry(Registries.STRUCTURE).get()
-                                .getKey(detectedStructure.getStructure());
-
-                        ChatFormatting color;
-                        if (resourceLocation == null) {
-                            return;
-                        }
-                        else if (resourceLocation.getPath().contains("_red")) {
-                            color = ChatFormatting.RED;
-                        }
-                        else if (resourceLocation.getPath().contains("_yellow")) {
-                            color = ChatFormatting.YELLOW;
-                        }
-                        else if (resourceLocation.getPath().contains("_green")) {
-                            color = ChatFormatting.GREEN;
-                        }
-                        else if (resourceLocation.getPath().contains("_blue")) {
-                            color = ChatFormatting.BLUE;
-                        }
-                        else if (resourceLocation.getPath().contains("_purple")) {
-                            color = ChatFormatting.LIGHT_PURPLE;
-                        }
-                        else {
-                            color = ChatFormatting.WHITE;
-                        }
-
-                        Component message = Component.translatable("system.the_bumblezone." + resourceLocation.getPath())
-                                .withStyle(ChatFormatting.BOLD)
-                                .withStyle(color);
-
-                        serverPlayer.displayClientMessage(message, true);
+                    else if (resourceLocation.getPath().contains("_red")) {
+                        color = ChatFormatting.RED;
                     }
+                    else if (resourceLocation.getPath().contains("_yellow")) {
+                        color = ChatFormatting.YELLOW;
+                    }
+                    else if (resourceLocation.getPath().contains("_green")) {
+                        color = ChatFormatting.GREEN;
+                    }
+                    else if (resourceLocation.getPath().contains("_blue")) {
+                        color = ChatFormatting.BLUE;
+                    }
+                    else if (resourceLocation.getPath().contains("_purple")) {
+                        color = ChatFormatting.LIGHT_PURPLE;
+                    }
+                    else {
+                        color = ChatFormatting.WHITE;
+                    }
+
+                    Component message = Component.translatable("system.the_bumblezone." + resourceLocation.getPath())
+                            .withStyle(ChatFormatting.BOLD)
+                            .withStyle(color);
+
+                    serverPlayer.displayClientMessage(message, true);
                 }
 
                 BzCriterias.SEMPITERNAL_SANCTUM_ENTER_WITH_BEE_ESSENCE_TRIGGER.get().trigger(serverPlayer);
