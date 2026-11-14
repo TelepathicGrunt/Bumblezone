@@ -57,6 +57,8 @@ Pollen Puff hitting tall flowers will now not have the top half of the newly dup
 
 Fixed Floral Headwear on Armor Stands were not attracting 50% of bees. Now all 100% of bees will swoon over this item.
 
+Fixed thrown Stinger Spears with Neurotoxin not breaking when they run out of durability on hit
+
 Bee Stinger does not get consumed now if used on a bee that has a stinger already
 
 Shot Bee Stingers and Crystal Shards now doesn't fire unused `broadcastEntityEvent`. Reduces server packet load.
