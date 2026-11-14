@@ -177,6 +177,8 @@ Windy Air now plays its ambient sound properly
 
 Explosions now removes Heavy Air and Windy Air again
 
+Crystalline Flower and Honey Cocoon inventory drops now respects BLOCK_DROPS gamerule instead of SPAWN_MOBS gamerule
+
 #### Fluids:
 Fixed it so Royal Jelly Fluid and Honey Fluid flowing downward does not turn source fluid blocks of these fluids into non-source fluid blocks
 

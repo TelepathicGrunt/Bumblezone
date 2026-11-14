@@ -243,7 +243,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
     @Override
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
-        if (blockState.getValue(WATERLOGGED) && serverLevel.getGameRules().get(GameRules.MOB_DROPS)) {
+        if (blockState.getValue(WATERLOGGED) && serverLevel.getGameRules().get(GameRules.BLOCK_DROPS)) {
             BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
             if (blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
                 if (!honeyCocoonBlockEntity.isUnpackedLoottable() || blockState.getValue(IS_LOOT_CONTAINER)) {
