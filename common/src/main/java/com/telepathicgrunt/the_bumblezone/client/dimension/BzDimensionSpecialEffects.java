@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.ARGB;
@@ -44,11 +45,15 @@ public class BzDimensionSpecialEffects {
             colorFactor *= (BzDimensionConfigs.fogBrightnessPercentage / 100);
         }
 
-        if (WrathOfTheHiveEffect.ACTIVE_WRATH && REDDISH_FOG_TINT < 0.3f) {
-            REDDISH_FOG_TINT += 0.0025f;
+        if (WrathOfTheHiveEffect.ACTIVE_WRATH) {
+            if (REDDISH_FOG_TINT < 0.3f) {
+                REDDISH_FOG_TINT += (0.0000000005f * Minecraft.getInstance().getFrameTimeNs());
+                REDDISH_FOG_TINT = Math.min(REDDISH_FOG_TINT, 0.3f);
+            }
         }
         else if (REDDISH_FOG_TINT > 0) {
-            REDDISH_FOG_TINT -= 0.0025f;
+            REDDISH_FOG_TINT -= (0.0000000005f * Minecraft.getInstance().getFrameTimeNs());
+            REDDISH_FOG_TINT = Math.max(REDDISH_FOG_TINT, 0f);
         }
 
         int red = (int)(Math.min(Math.min(0.54f * colorFactor, 0.65f + REDDISH_FOG_TINT) * 255, 255));
