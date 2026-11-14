@@ -5,6 +5,8 @@ import com.telepathicgrunt.the_bumblezone.items.essence.KnowingEssence;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
+import it.unimi.dsi.fastutil.longs.LongSet;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.client.Camera;
@@ -117,8 +119,8 @@ public class KnowingEssenceLootBlockOutlining {
                     CACHED_CHUNK_DATA.put(chunkPosLong, new ObjectArrayList<>());
                     CACHED_CHUNK_POS.add(chunkPosLong);
 
-                    blockEntityScan(chunk, chunkPosLong);
-                    blockScan(chunk, chunkPosLong);
+                    LongOpenHashSet recordedPos = blockEntityScan(chunk, chunkPosLong);
+                    blockScan(chunk, chunkPosLong, recordedPos);
                 }
             }
 
@@ -135,7 +137,8 @@ public class KnowingEssenceLootBlockOutlining {
         }
     }
 
-    private static void blockEntityScan(LevelChunk chunk, long chunkPosLong) {
+    private static LongOpenHashSet blockEntityScan(LevelChunk chunk, long chunkPosLong) {
+        LongOpenHashSet recordedPos = new LongOpenHashSet();
         for (Map.Entry<BlockPos, BlockEntity> blockEntityEntry : chunk.getBlockEntities().entrySet()) {
             BlockEntity blockEntity = blockEntityEntry.getValue();
             BlockState blockState = blockEntity.getBlockState();
@@ -173,14 +176,17 @@ public class KnowingEssenceLootBlockOutlining {
                         red,
                         green,
                         blue));
+
+                recordedPos.add(BlockPos.asLong(lootBlockPos.getX() & 15, lootBlockPos.getY() & 15, lootBlockPos.getZ() & 15));
             }
             else {
                 CACHED_NONTARGET_BLOCKS.add(block);
             }
         }
+        return recordedPos;
     }
 
-    private static void blockScan(LevelChunk chunk, long chunkPosLong) {
+    private static void blockScan(LevelChunk chunk, long chunkPosLong, LongOpenHashSet recordedPos) {
         for (int i = 0; i < chunk.getSectionsCount(); i++) {
             LevelChunkSection levelChunkSection = chunk.getSection(i);
             if (!levelChunkSection.hasOnlyAir() &&
@@ -194,6 +200,9 @@ public class KnowingEssenceLootBlockOutlining {
                 for (int sectionX = 0; sectionX < 16; sectionX++) {
                     for (int sectionZ = 0; sectionZ < 16; sectionZ++) {
                         for (int sectionY = 0; sectionY < 16; sectionY++) {
+                            if (recordedPos.contains(BlockPos.asLong(sectionX, sectionY, sectionZ))) {
+                                continue;
+                            }
 
                             BlockState blockState = levelChunkSection.getBlockState(sectionX, sectionY, sectionZ);
                             Block block = blockState.getBlock();
