@@ -258,7 +258,7 @@
           "weight": 1
         },
         {
-          "name": "minecraft:trim_templates",
+          "name": "c:trim_templates",
           "type": "minecraft:tag",
           "expand": true,
           "weight": 1
