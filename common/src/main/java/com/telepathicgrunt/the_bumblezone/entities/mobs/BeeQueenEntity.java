@@ -689,7 +689,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
         boolean traded = false;
 
-        if (QueensTradeManager.QUEENS_TRADE_MANAGER.specialDayQueenTrades.containsKey(item)) {
+        if (getIsSpecialDay() && QueensTradeManager.QUEENS_TRADE_MANAGER.specialDayQueenTrades.containsKey(item)) {
             Optional<Pair<QueensTradeManager.SpecialDaysEntry, WeightedList<WeightedTradeResult>>> specialDayItems = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItems(item);
             if (specialDayItems.isPresent()) {
                 if (this.level().isClientSide()) {
