@@ -78,6 +78,8 @@ Crystalline Flower now absorbs the true full Experience Orb amount by factoring 
 
 Crystalline Flower fixed to not consume more items from an itemstack than needed to max out flower tier
 
+Fixed tier 1 Crystalline Flower showing level 1 enchantments already on input enchanted book
+
 Fixed weird bug where placing a Super Candle/Potion Candle with wick waterlogged will replace that top candle with below Super Candle/Potion Candle block instead.
 
 Super Candle/Potion Candle wicks now can be replaced by flowing fluids and pistons
