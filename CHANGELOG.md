@@ -35,6 +35,8 @@ Made Rootmins stop panic running from entities not in `the_bumblezone:rootmin/pa
 
 Fixed Rootmins not getting curious about players wearing Bumblezone armor
 
+Rootmins set to different scale attribute sizes now will have proper hitboxes
+
 Fixed Honey Slime jump speed. 
  (Note: Honey Slimes already spawned before this update might now jump farther than intended due to previously saved MOVEMENT_SPEED attribute value)
 
