@@ -6,7 +6,7 @@
       "count": 6
     },
     {
-      "count": 1,
+      "count": 2,
       "height_range": {
         "type": "minecraft:uniform",
         "max_inclusive": 240,

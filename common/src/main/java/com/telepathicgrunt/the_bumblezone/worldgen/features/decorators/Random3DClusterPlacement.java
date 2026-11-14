@@ -52,7 +52,7 @@ public class Random3DClusterPlacement extends RepeatingPlacement {
         // finds the origin of the 16x16x16 area we will be picking from
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
 
-        for (int chunkNum = 0; chunkNum <= this.count(random, blockPos); chunkNum++) {
+        for (int chunkNum = 0; chunkNum < this.count(random, blockPos); chunkNum++) {
 
             // Tries 24 times to find a chunk's center that is in air
             // Nice quick way to only generate clusters of residue within a chunk without
