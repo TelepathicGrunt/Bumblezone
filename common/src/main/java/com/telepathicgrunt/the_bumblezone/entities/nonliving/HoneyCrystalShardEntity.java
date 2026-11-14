@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ColorParticleOption;
@@ -25,12 +26,14 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
         super(entityType, level);
         this.setBaseDamage(4);
         this.setCritArrow(true);
+        this.pickup = Pickup.DISALLOWED;
     }
 
     public HoneyCrystalShardEntity(Level level, LivingEntity livingEntity, ItemStack ammo, @Nullable ItemStack weapon) {
         super(BzEntities.HONEY_CRYSTAL_SHARD.get(), livingEntity, level, ammo, weapon);
         this.setBaseDamage(4);
         this.setCritArrow(true);
+        this.pickup = Pickup.DISALLOWED;
     }
 
     public void tick() {
@@ -65,13 +68,8 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
     }
 
     @Override
-    protected ItemStack getPickupItem() {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
     protected ItemStack getDefaultPickupItem() {
-        return ItemStack.EMPTY;
+        return BzItems.HONEY_CRYSTAL_SHARDS.get().getDefaultInstance();
     }
 
     @Override
