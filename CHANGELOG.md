@@ -171,6 +171,8 @@ Improved `the_bumblezone:remove_floating_blocks_processor` processor for feature
 #### Enchantments:
 Made Potent Poison's `the_bumblezone:poison` data component not accept 0 for enchant intervals fields
 
+Neurotoxin enchant now properly checks the right item when an item with it attacks a mob
+
 #### Effects:
 Fixed case where Wrath of the Hive effect at level 3 or higher would remove itself if it fails to spawn a bee during 1 attempt
 
