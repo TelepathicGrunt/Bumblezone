@@ -181,7 +181,9 @@ public class CarvableWax extends ProperFacingBlock {
                 }
             }
 
-            return BzBlocks.CARVABLE_WAX.get().defaultBlockState().setValue(CARVING, blockState.getValue(CARVING).next());
+            return BzBlocks.CARVABLE_WAX.get().defaultBlockState()
+                    .setValue(CARVING, blockState.getValue(CARVING).next())
+                    .setValue(FACING, blockState.getValue(FACING));
         }
 
         return null;
