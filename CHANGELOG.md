@@ -70,6 +70,8 @@ Adjusted mob spawning on chunk creation for Bumblezone dimension. Beehemoths now
 
 Beehemoths no longer get full health healing when they are unloaded and then loaded back in
 
+(Fabric): Fixed possible crash when registering keybinds for Beehemoth if certain other mods are on
+
 Fixed `useBackupModelForVariantBee` config for Variant Bees to make baby form have correct model shape
 
 #### Items:
