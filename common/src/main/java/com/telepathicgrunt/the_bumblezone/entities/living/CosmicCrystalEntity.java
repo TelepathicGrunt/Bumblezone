@@ -661,11 +661,6 @@ public class CosmicCrystalEntity extends LivingEntity {
                 double targetStrength = 0.94 - difficultyMultiplier;
                 Vec3 diffFromNow = this.prevTargetPosition.subtract(targetPos).scale(targetStrength);
                 this.prevTargetPosition = diffFromNow.add(targetPos);
-
-                if (diffFromNow.length() > 3d) {
-                    diffFromNow.scale(3d / diffFromNow.length());
-                }
-
                 desiredLookPosition = diffFromNow.add(targetPos);
             }
         }
