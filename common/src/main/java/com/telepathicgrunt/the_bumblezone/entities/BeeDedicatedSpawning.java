@@ -114,7 +114,7 @@ public final class BeeDedicatedSpawning {
                     }
                 }
 
-                for (int i = nearbyBees; i <= beesPerPlayer; i++) {
+                for (int i = nearbyBees; i < beesPerPlayer; i++) {
                     BlockPos newBeePos = GeneralUtils.getRandomBlockposWithinRange(serverPlayer, 45, 20);
 
                     if (!level.shouldTickBlocksAt(newBeePos) || !level.getBlockState(newBeePos).isAir()) {
