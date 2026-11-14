@@ -84,6 +84,8 @@ Fixed issue where if you were bound to a now-depleted Respawn Anchor in another 
 
 Fixed Essence of Calming can mess with pre-existing player-mob alliances in a negative way
 
+Fixed crash when two of the same essence is on and one gets depleted
+
 Fixed Carpenter Bee Boots not properly handling mined block entities.
  (Beehives's bees were previously deleted when mined with these boots. Not anymore)
 

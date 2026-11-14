@@ -107,7 +107,7 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
             }
             else {
                 if (serverPlayer.getCooldowns().isOnCooldown(itemStack)) {
-                    ItemCooldowns.CooldownInstance cooldownInstance = ((ItemCooldownsAccessor)serverPlayer.getCooldowns()).bumblezone$getCooldowns().get(itemStack.getItem());
+                    ItemCooldowns.CooldownInstance cooldownInstance = ((ItemCooldownsAccessor)serverPlayer.getCooldowns()).bumblezone$getCooldowns().get(serverPlayer.getCooldowns().getCooldownGroup(itemStack));
                     if (cooldownInstance != null) {
                         int tempCooldownTime = ((ItemCooldownsAccessor)serverPlayer.getCooldowns()).bumblezone$getTickCount() - cooldownInstance.startTime();
 
