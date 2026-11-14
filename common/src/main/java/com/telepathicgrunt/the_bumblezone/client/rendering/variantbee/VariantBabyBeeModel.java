@@ -1,14 +1,19 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.variantbee;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.client.model.animal.bee.BeeModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.resources.Identifier;
 
 public class VariantBabyBeeModel extends BeeModel {
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(Bumblezone.MODID, "variant_bee_baby"), "main");
+
     public VariantBabyBeeModel(ModelPart root) {
         super(root);
     }

@@ -50,6 +50,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.sentrywatcher.SentryW
 import com.telepathicgrunt.the_bumblezone.client.rendering.sentrywatcher.SentryWatcherRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.variantbee.VariantBabyBeeModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.variantbee.VariantBeeModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.variantbee.VariantBeeRenderer;
 import com.telepathicgrunt.the_bumblezone.client.screens.BuzzingBriefcaseScreen;
@@ -182,6 +183,7 @@ public class BumblezoneClient {
     public static void registerEntityLayers(BzRegisterEntityLayersEvent event) {
         if (BzClientConfigs.useBackupModelForVariantBee) {
             event.register(VariantBeeModel.LAYER_LOCATION, VariantBeeModel::createBodyLayer);
+            event.register(VariantBabyBeeModel.LAYER_LOCATION, VariantBabyBeeModel::createBodyLayer);
         }
 
         event.register(BeehemothModel.LAYER_LOCATION, BeehemothModel::createBodyLayer);

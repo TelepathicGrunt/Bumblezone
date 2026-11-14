@@ -22,7 +22,7 @@ public class VariantBeeRenderer extends AgeableMobRenderer<VariantBeeEntity, Bee
                         new VariantBeeModel(context.bakeLayer(VariantBeeModel.LAYER_LOCATION)) :
                         new AdultBeeModel(context.bakeLayer(ModelLayers.BEE)),
                 BzClientConfigs.useBackupModelForVariantBee ?
-                        new VariantBabyBeeModel(context.bakeLayer(VariantBeeModel.LAYER_LOCATION)) :
+                        new VariantBabyBeeModel(context.bakeLayer(VariantBabyBeeModel.LAYER_LOCATION)) :
                         new BabyBeeModel(context.bakeLayer(ModelLayers.BEE_BABY)),
                 0.4f);
     }
