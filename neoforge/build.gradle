@@ -222,12 +222,17 @@ neoForge {
             if (project.hasProperty('mc_java_agent_path')) {
                 jvmArgument("-javaagent:${project.findProperty('mc_java_agent_path')}")
             }
+
+            jvmArgument('-Dmixin.debug.export=true')
+            jvmArgument('-XX:+AllowEnhancedClassRedefinition')
         }
 
         server {
             server()
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
             programArguments.add('--nogui')
+            jvmArgument('-Dmixin.debug.export=true')
+            jvmArgument('-XX:+AllowEnhancedClassRedefinition')
         }
 
         data {
