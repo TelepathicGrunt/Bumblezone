@@ -358,6 +358,7 @@ public class StringCurtain extends Block {
         while (aboveState.is(BzTags.STRING_CURTAINS) && world.isInWorldBounds(mutableBlockPos)) {
             world.blockUpdated(mutableBlockPos, aboveState.getBlock());
             mutableBlockPos.move(Direction.UP);
+            aboveState = world.getBlockState(mutableBlockPos.move(Direction.UP));
         }
     }
 
