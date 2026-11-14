@@ -1,3 +1,9 @@
+### **(V.7.19.1 Changes) (26.1.2 Minecraft)**
+
+#### Items:
+Fixed shot Honey Crystal Shard crashing if someone tries to get it's NBT data on client side.
+
+
 ### **(V.7.19.0 Changes) (26.1.2 Minecraft)**
 
 > Transparency: Since it appears people aren't reporting bugs and issues with this mod and the need to get Bumblezone more stable for servers and players,
