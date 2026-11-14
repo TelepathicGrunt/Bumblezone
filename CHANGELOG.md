@@ -5,7 +5,7 @@
 > asked that the report have no solutions and no advice. Only a strict report of problems which then I manually investigated each and every one 
 > of them, determined if legit and worth a fix, thought up the fix myself, applied the fix and verified the fix works.
 > Took over 34 hours to fully go through the entire reports and fix/test everything over the course of about 3 days, and I am tired man.
-> Bumblezone still has NO AI generated code because using AI to generate features and content for a hobby takes away the fun of the hobby.
+> Bumblezone still has NO AI generated code and NO AI generated assets because using AI to generate features and content for a hobby takes away the fun from the hobby.
 > Applicable fixes will be backported to 1.21.1 and 1.20.1 when I recover from this marathon of fixing issues.
 
 #### Teleportation:
