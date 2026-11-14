@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Doubles;
 import com.mojang.datafixers.util.Pair;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.mixin.world.JigsawJunctionAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.StructureCheckAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.StructureManagerAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.world.SinglePoolElementAccessor;
@@ -69,6 +71,7 @@ import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureCheck;
 import net.minecraft.world.level.levelgen.structure.StructureCheckResult;
@@ -77,6 +80,7 @@ import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.placement.ConcentricRingsStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
+import net.minecraft.world.level.levelgen.structure.pools.JigsawJunction;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
@@ -363,6 +367,13 @@ public class GeneralUtils {
 
         for (StructurePiece structurePiece : pieces) {
             structurePiece.move(xOffset, 0, zOffset);
+
+            if (structurePiece instanceof PoolElementStructurePiece poolElementStructurePiece) {
+                for (JigsawJunction jigsawJunction : poolElementStructurePiece.getJunctions()) {
+                    ((JigsawJunctionAccessor)jigsawJunction).bumblezone$setSourceX(jigsawJunction.getSourceX() + xOffset);
+                    ((JigsawJunctionAccessor)jigsawJunction).bumblezone$setSourceZ(jigsawJunction.getSourceZ() + zOffset);
+                }
+            }
         }
     }
 

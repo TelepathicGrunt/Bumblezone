@@ -3,6 +3,7 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "world.JigsawJunctionAccessor",
     "blocks.AmethystClusterBlockMixin",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",
