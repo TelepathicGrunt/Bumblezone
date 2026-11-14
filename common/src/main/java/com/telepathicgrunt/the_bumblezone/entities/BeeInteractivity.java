@@ -70,8 +70,7 @@ public class BeeInteractivity {
             ItemStack itemstack = playerEntity.getItemInHand(hand);
             ResourceLocation itemRL = BuiltInRegistries.ITEM.getKey(itemstack.getItem());
 
-            if (itemstack.is(BzItems.BEE_STINGER.get())) {
-                beeEntity.hasStung();
+            if (itemstack.is(BzItems.BEE_STINGER.get()) && beeEntity.hasStung()) {
                 ((BeeEntityInvoker)beeEntity).bumblezone$callSetHasStung(false);
                 GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, false, true);
 
