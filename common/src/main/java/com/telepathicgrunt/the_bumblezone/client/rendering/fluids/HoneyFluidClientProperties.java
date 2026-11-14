@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.fog.FogData;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
@@ -79,8 +80,8 @@ public class HoneyFluidClientProperties {
                 Entity entity = camera.entity();
                 BlockState state = level.getBlockState(entity != null ? BlockPos.containing(entity.getEyePosition(1)) : camera.blockPosition());
                 if (state.hasProperty(HoneyFluidBlock.BOTTOM_LEVEL)) {
-                    double yEye = Math.abs(entity != null ? entity.getEyePosition(1).y() : camera.position().y());
-                    double yOffset = yEye - ((int)yEye);
+                    double yEye = entity != null ? entity.getEyePosition(1).y() : camera.position().y();
+                    double yOffset = yEye - Mth.floor(yEye);
                     if (state.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8D > yOffset + 0.1) {
                         return fluidFogColor;
                     }
@@ -105,16 +106,18 @@ public class HoneyFluidClientProperties {
                 if (entity != null) {
                     BlockState state = entity.level().getBlockState(BlockPos.containing(entity.getEyePosition(1)));
                     if (state.hasProperty(HoneyFluidBlock.BOTTOM_LEVEL)) {
-                        double yEye = Math.abs(entity.getEyePosition(1).y());
-                        double yOffset = yEye - ((int)yEye);
+                        double yEye = entity.getEyePosition(1).y();
+                        double yOffset = yEye - Mth.floor(yEye);
                         if (state.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8D > yOffset + 0.1) {
                             return data;
                         }
                     }
                 }
 
-                data.environmentalStart = 0.35f;
-                data.renderDistanceEnd = 4f;
+                data.environmentalStart = 1f;
+                data.environmentalEnd = 8f;
+                data.renderDistanceStart = 1f;
+                data.renderDistanceEnd = 8f;
                 return data;
             }
         };

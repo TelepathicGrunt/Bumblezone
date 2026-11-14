@@ -143,6 +143,8 @@ Fixed it so Royal Jelly Fluid and Honey Fluid flowing downward does not turn sou
 
 Fixed Royal Jelly Fluid and Honey Fluid flowing downward to not duplicate block drops like torches
 
+Fixed Royal Jelly Fluid and Honey Fluid overlay when in fluid from being messed up when player is below Y = 0; and made the fluid fog work again
+
 Fixed case where vanilla Bubble Column won't be supported on Sugar Water Bubble Column
 
 #### Structures:
