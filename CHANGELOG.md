@@ -230,6 +230,8 @@ Fixed it so `ragingEssenceStrengthLevels` config is actually read now
 Made `dispensersDropGlassBottles` config option work for Honey Bottles filling Porous Honeycomb Block from Dispensers
 
 #### Mod Compat:
+Fixed empty Productive Bees's Bee Cages being able to revive Honeycomb Brood Blocks from Dispensers
+
 Fixed broken Reliable Recipe Viewer mod compat
 
 Fixed JEI mod compat
