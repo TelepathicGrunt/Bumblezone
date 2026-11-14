@@ -861,8 +861,8 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    protected AABB makeBoundingBox() {
       if (this.getRootminPose() == RootminState.BLOCK_TO_ENTITY || this.getRootminPose() == RootminState.ENTITY_TO_BLOCK) {
          AABB currentAABB = super.makeBoundingBox();
-         float target = this.getRootminPose() == RootminState.BLOCK_TO_ENTITY ? 1.56f : 1f;
-         float from = this.getRootminPose() == RootminState.BLOCK_TO_ENTITY ? 1f : 1.56f;
+         float target = (this.getRootminPose() == RootminState.BLOCK_TO_ENTITY ? 1.56f : 1f) * this.getScale();
+         float from = (this.getRootminPose() == RootminState.BLOCK_TO_ENTITY ? 1f : 1.56f) * this.getScale();
          float percentage = (20f - this.animationTimeBetweenHiding) / 20f;
          currentAABB = currentAABB.setMaxY(Mth.lerp(percentage, from + currentAABB.minY, target + currentAABB.minY));
          return currentAABB;
@@ -873,7 +873,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
    @Override
    protected EntityDimensions getDefaultDimensions(Pose pose) {
       EntityDimensions defaultDimensions = super.getDefaultDimensions(pose);
-      return defaultDimensions.withEyeHeight(defaultDimensions.height() - 0.575f).scale(this.getScale());
+      return defaultDimensions.withEyeHeight(defaultDimensions.height() - 0.575f);
    }
 
    @Override
