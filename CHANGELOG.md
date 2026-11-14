@@ -93,6 +93,8 @@ Made it so Experience Orbs looking for Crystalline Flower will not load nearby c
 
 Crystalline Flower now absorbs the true full Experience Orb amount by factoring in the orb's size (count)
 
+Crystalline Flower fixed to not consume more items from an itemstack than needed to max out flower tier
+
 Fixed crash when hovering over Potion Candle with effects in a GUI
 
 Fixed Potion Candle block losing its data when broken into item form
