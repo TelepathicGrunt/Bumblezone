@@ -55,6 +55,8 @@ Fixed Floral Headwear on Armor Stands were not attracting 50% of bees. Now all 1
 
 Bee Stinger does not get consumed now if used on a bee that has a stinger already
 
+Shot Bee Stingers and Crystal Shards now doesn't fire unused `broadcastEntityEvent`. Reduces server packet load.
+
 #### Blocks:
 Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsumeItemUI` config options are respected on serverside for Crystalline Flower.
 
