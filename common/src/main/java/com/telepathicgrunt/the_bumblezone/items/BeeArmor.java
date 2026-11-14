@@ -48,6 +48,9 @@ public abstract class BeeArmor extends BzArmor {
                     if (ModChecker.backpackedPresent) {
                         return BackpackedCompat.isBackpackedHoneyThemedOrOtherItem(itemStack);
                     }
+                    else {
+                        return true;
+                    }
                 }
                 return false;
             });
