@@ -10,7 +10,6 @@ import com.telepathicgrunt.the_bumblezone.items.recipes.PotionCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.modcompat.FakePotionCandleRecipeCreator;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.MainTradeRowInput;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.RandomizeTradeRowInput;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.jei.datamanager.PotionCandleRecipeSyncData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCreativeTabs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -26,8 +25,6 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import me.shedaniel.rei.forge.REIPluginClient;
-import me.shedaniel.rei.impl.client.registry.display.DisplayRegistryImpl;
 import me.shedaniel.rei.plugin.client.BuiltinClientPlugin;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.HolderSet;
@@ -49,14 +46,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-@REIPluginClient
-public class REICompat implements REIClientPlugin {
+public class REICompat  {
 
     public static final CategoryIdentifier<REIQueenTradesInfo> QUEEN_TRADES = CategoryIdentifier.of(Bumblezone.MODID, "queen_trades");
     public static final CategoryIdentifier<REIQueenRandomizerTradesInfo> QUEEN_RANDOMIZE_TRADES = CategoryIdentifier.of(Bumblezone.MODID, "queen_color_randomizer_trades");
 
-    @Override
-    public void registerDisplays(DisplayRegistry registry) {
+    public static void registerDisplays(DisplayRegistry registry) {
         BzCreativeTabs.CUSTOM_CREATIVE_TAB_ITEMS.forEach(item -> addInfo(item.get()));
         addInfo(BzFluids.SUGAR_WATER_FLUID.get());
         addInfo(BzFluids.ROYAL_JELLY_FLUID.get());
@@ -164,8 +159,7 @@ public class REICompat implements REIClientPlugin {
         }
     }
 
-    @Override
-    public void registerCategories(CategoryRegistry registry) {
+    public static void registerCategories(CategoryRegistry registry) {
         registry.add(new REIQueenTradesCategory());
         registry.add(new REIQueenRandomizerTradesCategory());
 
@@ -173,8 +167,7 @@ public class REICompat implements REIClientPlugin {
         registry.addWorkstations(QUEEN_RANDOMIZE_TRADES, EntryStacks.of(BzItems.BEE_QUEEN_SPAWN_EGG.get()));
     }
 
-    @Override
-    public void registerScreens(ScreenRegistry registry) {
+    public static void registerScreens(ScreenRegistry registry) {
         registry.registerDecider(new OverlayDecider() {
             @Override
             public <R extends Screen> boolean isHandingScreen(Class<R> screen) {
