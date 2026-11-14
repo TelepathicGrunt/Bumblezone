@@ -46,6 +46,8 @@ Optimized Buzzing Briefcase menu clicks to not deserialize all bees in briefcase
 
 Optimized Buzzing Briefcase menu clicks to not send button click to server if player clicks an action button without the required inventory item it needs.
 
+Fixed Buzzing Briefcase able to release bees through walls when attacking an enemy
+
 Fixed Essence of Calming can mess with pre-existing player-mob alliances in a negative way
 
 Fixed Carpenter Bee Boots not properly handling mined block entities.

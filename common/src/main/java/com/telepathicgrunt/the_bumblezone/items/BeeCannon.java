@@ -1,5 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -76,14 +79,10 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
                     finalPos = hitResult.getLocation();
                 }
 
-                EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(
-                        level,
+                HitResult visualHitResult = ProjectileUtil.getHitResultOnViewVector(
                         player,
-                        playerEyePos,
-                        finalPos,
-                        player.getBoundingBox().expandTowards(maxDistanceDirection),
-                        entity -> !entity.isInvisibleTo(player),
-                        1);
+                        entity -> entity != player && !entity.isInvisibleTo(player) && !BeeAggression.isBeelikeEntity(entity),
+                        playerEyePos.distanceTo(finalPos));
 
                 bees.forEach(bee -> {
                     bee.moveTo(playerEyePos.x(),
@@ -95,7 +94,7 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
                     level.addFreshEntity(bee);
 
                     if (bee instanceof NeutralMob neutralMob &&
-                        entityHitResult != null &&
+                        visualHitResult instanceof EntityHitResult entityHitResult &&
                         entityHitResult.getType() != HitResult.Type.MISS &&
                         entityHitResult.getEntity() instanceof LivingEntity targetEntity
                         && !(targetEntity instanceof Bee))
