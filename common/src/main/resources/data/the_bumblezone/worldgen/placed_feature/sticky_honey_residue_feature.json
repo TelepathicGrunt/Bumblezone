@@ -6,7 +6,7 @@
       "type": "minecraft:rarity_filter"
     },
     {
-      "count": 1,
+      "count": 2,
       "allow_underwater": false,
       "type": "the_bumblezone:random_3d_cluster_placement"
     },
