@@ -95,7 +95,9 @@ Optimized Sticky Honey Redstone to not keep calculating redstone signal every ti
 
 Fixed weird speed boost that happens when going through different sized Pile of Pollen blocks
 
-Fixed String Curtain
+Fixed String Curtain on change, sending a block update to entire vertical column to world top
+
+Fixed edge case where Royal Jelly Block couldn't be pulled by piston when it should. Now it should properly behave as a pull-only block
 
 #### Structures:
 Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable and fluid blocks outside the arena bounds
