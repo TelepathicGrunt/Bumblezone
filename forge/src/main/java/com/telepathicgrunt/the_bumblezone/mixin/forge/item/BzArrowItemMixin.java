@@ -20,11 +20,11 @@ public class BzArrowItemMixin extends ArrowItem {
         throw new RuntimeException();
     }
 
-    public boolean isInfinite(ItemStack stack, ItemStack bow, Player player) {
-        OptionalBoolean infiniteResult = bz$isInfinite(stack, bow, player);
+    public boolean isInfinite(ItemStack stack, ItemStack bow, LivingEntity shooter) {
+        OptionalBoolean infiniteResult = bz$isInfinite(stack, bow, shooter);
         if (infiniteResult.isPresent()) {
             return infiniteResult.get();
         }
-        return super.isInfinite(stack, bow, player);
+        return super.isInfinite(stack, bow, shooter);
     }
 }
