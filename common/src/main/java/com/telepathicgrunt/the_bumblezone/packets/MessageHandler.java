@@ -24,6 +24,7 @@ public class MessageHandler {
         DEFAULT_CHANNEL.register(UpdateFallingBlockPacket.TYPE);
         DEFAULT_CHANNEL.register(QueenMainTradesSyncPacket.TYPE);
         DEFAULT_CHANNEL.register(QueenRandomizerTradesSyncPacket.TYPE);
+        DEFAULT_CHANNEL.register(QueenClientHandTradesSyncPacket.TYPE);
         DEFAULT_CHANNEL.register(SyncHorseOwnerUUIDPacketFromServer.TYPE);
         DEFAULT_CHANNEL.register(SyncBeehemothSpeedConfigFromServer.TYPE);
         DEFAULT_CHANNEL.register(MusicPacketFromServer.TYPE);

@@ -94,6 +94,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzSurfaceRules;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
+import com.telepathicgrunt.the_bumblezone.packets.QueenClientHandTradesSyncPacket;
 import com.telepathicgrunt.the_bumblezone.packets.QueenMainTradesSyncPacket;
 import com.telepathicgrunt.the_bumblezone.packets.QueenRandomizerTradesSyncPacket;
 import com.telepathicgrunt.the_bumblezone.packets.SyncBeehemothSpeedConfigFromServer;
@@ -163,6 +164,7 @@ public class Bumblezone {
         BzRegisterSpawnPlacementsEvent.EVENT.addListener(BzEntities::registerEntitySpawnRestrictions);
         BzDatapackSyncEvent.EVENT.addListener(QueenRandomizerTradesSyncPacket::sendToClient);
         BzDatapackSyncEvent.EVENT.addListener(QueenMainTradesSyncPacket::sendToClient);
+        BzDatapackSyncEvent.EVENT.addListener(QueenClientHandTradesSyncPacket::sendToClient);
         BzDatapackSyncEvent.EVENT.addListener(SyncBeehemothSpeedConfigFromServer::sendToClient);
         BzRegisterBrewingRecipeEvent.EVENT.addListener(BzRecipes::registerBrewingStandRecipes);
 

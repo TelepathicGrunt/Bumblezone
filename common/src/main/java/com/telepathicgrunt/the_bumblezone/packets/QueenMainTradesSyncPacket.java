@@ -1,7 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.packets;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
 import com.teamresourceful.resourcefullib.common.network.Packet;
@@ -25,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedList<WeightedTradeResult>>> recipeViewerMainTrades) implements Packet<QueenMainTradesSyncPacket> {
-    public static Gson gson = new GsonBuilder().create();
-
     public static final Identifier ID = Identifier.fromNamespaceAndPath(Bumblezone.MODID, "queen_main_trades_sync_packet");
     public static final ClientboundPacketType<QueenMainTradesSyncPacket> TYPE = new QueenMainTradesSyncPacket.Handler();
 

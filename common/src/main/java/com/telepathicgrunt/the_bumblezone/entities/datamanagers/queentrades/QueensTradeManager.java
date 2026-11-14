@@ -28,9 +28,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
-import net.minecraft.world.item.Items;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -56,6 +54,26 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
     public Object2ObjectOpenHashMap<Item, Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedList<WeightedTradeResult>>> specialDayQueenTrades = new Object2ObjectOpenHashMap<>();
     public List<RandomizeTradeRowInput> recipeViewerRandomizerTrades = new ArrayList<>();
     public List<Pair<MainTradeRowInput, WeightedList<WeightedTradeResult>>> recipeViewerMainTrades = new ArrayList<>();
+    public static Set<Item> CLIENT_ALLOWED_MAIN_TRADE_ITEMS = new HashSet<>();
+    public static Set<Item> CLIENT_ALLOWED_SPECIAL_TRADE_ITEMS = new HashSet<>();
+
+    public static boolean containsMainTradeItem(Item item, boolean isClientSide) {
+        if (isClientSide) {
+            return CLIENT_ALLOWED_MAIN_TRADE_ITEMS.contains(item);
+        }
+        else {
+            return QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.containsKey(item);
+        }
+    }
+
+    public static boolean containsSpecialTradeItem(Item item, boolean isClientSide) {
+        if (isClientSide) {
+            return CLIENT_ALLOWED_SPECIAL_TRADE_ITEMS.contains(item);
+        }
+        else {
+            return QueensTradeManager.QUEENS_TRADE_MANAGER.specialDayQueenTrades.containsKey(item);
+        }
+    }
 
     public record TradeCollection(
         Optional<SpecialDaysEntry> specialDaysEntry,
@@ -273,6 +291,8 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener<QueensT
         this.rawTrades.clear();
 
         this.recipeViewerMainTrades.sort(Comparator.comparing(item -> BuiltInRegistries.ITEM.getKey(item.getFirst().item())));
+        QueensTradeManager.CLIENT_ALLOWED_MAIN_TRADE_ITEMS = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.keySet();
+        QueensTradeManager.CLIENT_ALLOWED_SPECIAL_TRADE_ITEMS = QueensTradeManager.QUEENS_TRADE_MANAGER.specialDayQueenTrades.keySet();
     }
 
     private static TradeWantEntry getInputTradeEntry(RawTradeInputEntry rawTradeInputEntry) {

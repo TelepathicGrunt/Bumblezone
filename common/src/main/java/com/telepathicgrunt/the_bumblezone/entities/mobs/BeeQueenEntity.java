@@ -689,12 +689,13 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
         boolean traded = false;
 
-        if (getIsSpecialDay() && QueensTradeManager.QUEENS_TRADE_MANAGER.specialDayQueenTrades.containsKey(item)) {
+        if (getIsSpecialDay() && QueensTradeManager.containsSpecialTradeItem(item, this.level().isClientSide())) {
+            if (this.level().isClientSide()) {
+                return InteractionResult.SUCCESS;
+            }
+
             Optional<Pair<QueensTradeManager.SpecialDaysEntry, WeightedList<WeightedTradeResult>>> specialDayItems = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItems(item);
             if (specialDayItems.isPresent()) {
-                if (this.level().isClientSide()) {
-                    return InteractionResult.SUCCESS;
-                }
 
                 Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
                 Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
@@ -710,7 +711,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             }
         }
 
-        if (!traded && QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.containsKey(item)) {
+        if (!traded && QueensTradeManager.containsMainTradeItem(item, this.level().isClientSide())) {
             if (this.level().isClientSide()) {
                 return InteractionResult.SUCCESS;
             }
