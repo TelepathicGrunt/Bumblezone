@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.fabric;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
 import com.telepathicgrunt.the_bumblezone.client.fabric.FabricArmorRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.client.screens.DimensionTeleportingScreen;
@@ -89,7 +90,10 @@ public class FabricClientEventManager {
             PotionCandleRecipeSyncData.POTION_CANDLE_FROM_STRING_AND_CARVABLE_WAX = synchronizedRecipes.get(PotionCandleRecipe.FROM_STRING_AND_CARVABLE_WAX_POTION_CANDLE_RECIPE);
         });
 
-        ClientTickEvents.END_CLIENT_TICK.register((mc) -> StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer()));
+        ClientTickEvents.END_CLIENT_TICK.register((mc) -> {
+            StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer());
+            MusicHandler.tickMusicFader();
+        });
         ScreenEvents.BEFORE_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
             if (screen instanceof LevelLoadingScreen levelLoadingScreen &&
                 client.player != null &&

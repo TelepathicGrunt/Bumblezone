@@ -12,7 +12,6 @@
     "client.GuiMixin",
     "client.KeyboardHandlerMixin",
     "client.KeyMappingAccessor",
-    "client.PlayerTickClientMixin",
     "client.ScreenEffectRendererMixin",
     "mods.MidnightConfigScreenMixin"
   ],
