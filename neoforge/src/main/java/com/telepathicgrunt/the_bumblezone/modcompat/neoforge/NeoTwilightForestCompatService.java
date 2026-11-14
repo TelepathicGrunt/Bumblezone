@@ -7,7 +7,9 @@ import net.minecraft.world.entity.Entity;
 import java.util.Optional;
 
 public class NeoTwilightForestCompatService implements TwilightForestCompatService {
-    public Optional<CompoundTag> getPersistentData(Entity entity) {
-        return Optional.of(entity.getPersistentData());
+    private static final String ENDER_BOW_ATTACHED_TAG = "twilightforest:ender";
+
+    public boolean getEnderArrowData(Entity entity) {
+        return Optional.of(entity.getPersistentData()).orElse(new CompoundTag()).getBoolean(ENDER_BOW_ATTACHED_TAG).orElse(false) ;
     }
 }

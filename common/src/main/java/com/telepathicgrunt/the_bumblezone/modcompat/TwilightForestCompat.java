@@ -15,7 +15,6 @@ import net.minecraft.world.phys.HitResult;
 import java.util.EnumSet;
 
 public class TwilightForestCompat implements ModCompat {
-	private static final String ENDER_BOW_ATTACHED_TAG = "twilightforest:ender";
 	private static final Identifier ENDER_BOW_RL = Identifier.fromNamespaceAndPath("twilightforest", "ender_bow");
 
 	public TwilightForestCompat() {
@@ -26,7 +25,7 @@ public class TwilightForestCompat implements ModCompat {
 	public InteractionResult isProjectileTeleportHandled(HitResult hitResult, Entity owner, Projectile projectile) {
 		if (hitResult instanceof EntityHitResult entityHitResult &&
 			projectile != null &&
-			TwilightForestCompatService.INSTANCE.getPersistentData(projectile).orElse(new CompoundTag()).getBoolean(ENDER_BOW_ATTACHED_TAG).orElse(false) &&
+			TwilightForestCompatService.INSTANCE.getEnderArrowData(projectile) &&
 			GeneralUtils.isInTag(BuiltInRegistries.ITEM, BzTags.ITEM_SPECIAL_DEDICATED_COMPAT, BuiltInRegistries.ITEM.get(ENDER_BOW_RL)))
 		{
 			return EntityTeleportationHookup.runEntityHitCheck(entityHitResult, owner, projectile) ? InteractionResult.SUCCESS : InteractionResult.PASS;

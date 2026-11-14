@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface TwilightForestCompatService {
     TwilightForestCompatService INSTANCE = GeneralUtils.loadService(TwilightForestCompatService.class);
 
-    Optional<CompoundTag> getPersistentData(Entity entity);
+    boolean getEnderArrowData(Entity entity);
 }
