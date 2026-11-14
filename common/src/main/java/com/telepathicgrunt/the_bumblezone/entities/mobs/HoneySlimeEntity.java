@@ -107,8 +107,9 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
 
    @Override
    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, SpawnGroupData spawnDataIn, CompoundTag dataTag) {
+      SpawnGroupData spawnGroupData = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
       this.setupHoneySlime(this.isBaby(), true);
-      return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+      return spawnGroupData;
    }
 
    @Override
