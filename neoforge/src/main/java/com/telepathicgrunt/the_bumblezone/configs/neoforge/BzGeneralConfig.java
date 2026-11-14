@@ -522,6 +522,7 @@ public class BzGeneralConfig {
         BzGeneralConfigs.moddedBeeLootInjection = moddedBeeLootInjection.get();
         BzGeneralConfigs.glisteringHoneyBrewingRecipe = glisteringHoneyBrewingRecipe.get();
         BzGeneralConfigs.beeStingerBrewingRecipe = beeStingerBrewingRecipe.get();
+        BzGeneralConfigs.beeSoupBrewingRecipe = beeSoupBrewingRecipe.get();
         BzGeneralConfigs.nearbyBeesPerPlayerInBz = nearbyBeesPerPlayerInBz.get();
         BzGeneralConfigs.dispensersDropGlassBottles = dispensersDropGlassBottles.get();
         BzGeneralConfigs.broodBlocksBeeSpawnCapacity = broodBlocksBeeSpawnCapacity.get();

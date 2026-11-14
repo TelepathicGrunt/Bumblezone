@@ -211,6 +211,8 @@ Fixed it so `ragingEssenceStrengthLevels` config is actually read now
 
 Made `dispensersDropGlassBottles` config option work for Honey Bottles filling Porous Honeycomb Block from Dispensers
 
+(NeoForge): Fixed `beeSoupBrewingRecipe` config not applying
+
 #### Advancements:
 Fixed many advancement icons not having right icon looks and fixed a few advancement trigger conditions
 
