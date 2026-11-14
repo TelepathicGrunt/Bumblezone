@@ -107,6 +107,8 @@ Fixed arena entity saving so that Purple Sempiternal Sanctum arena event will pl
 
 Made it so if `repeatableEssenceEvents` is true, beating the arena event again grants 1/4th xp of the first time completion amount
 
+Fixed Cell Maze having a room completely flooded with Sugar Water
+
 Tweaked what modded blocks shows in Hanging Gardens
 
 #### Recipes:
