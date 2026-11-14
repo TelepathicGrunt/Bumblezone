@@ -55,7 +55,7 @@ public class BeeDungeonProcessor extends StructureProcessor {
                 return structureBlockInfoWorld;
             }
             String metadata = compoundTag.getString("metadata").orElse("");
-            BlockState belowBlock = levelReader.getChunk(worldPos).getBlockState(worldPos);
+            BlockState belowBlock = levelReader.getBlockState(worldPos.below());
 
             if (metadata.isEmpty()) {
                 nbt = null;
