@@ -395,7 +395,7 @@ public class OptimizedJigsawManager {
 
                 StructurePoolElement candidatePiece = chosenPiecePair.getFirst();
                 if (candidatePiece == EmptyPoolElement.INSTANCE) {
-                    return null;
+                    return EmptyPoolElement.INSTANCE;
                 }
 
                 // If rigid and target position is already an invalid spot, do not run rest of logic.
