@@ -40,6 +40,7 @@ public class MusicHandler {
         }
     }
 
+    // TODO: clear on disconnect
     private static final Map<ResourceLocation, MusicFader> MUSIC_FADERS = new HashMap<>();
     private static SoundInstance ANGRY_BEE_MUSIC = null;
     private static SoundInstance SEMPITERNAL_SANCTUM_MUSIC = null;
