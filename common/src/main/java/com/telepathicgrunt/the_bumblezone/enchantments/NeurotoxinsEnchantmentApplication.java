@@ -42,7 +42,6 @@ public class NeurotoxinsEnchantmentApplication {
         LivingEntity attacker = null;
         if (event.source().getEntity() instanceof LivingEntity livingEntity) {
             attacker = livingEntity;
-            attackingItem = attacker.getMainHandItem();
         }
 
         if (event.source().is(DamageTypeTags.IS_PROJECTILE)) {
@@ -50,6 +49,9 @@ public class NeurotoxinsEnchantmentApplication {
            if (projectile instanceof AbstractArrow abstractArrow) {
                attackingItem = ((AbstractArrowAccessor)abstractArrow).bumblezone$callGetPickupItem();
            }
+        }
+        else if (attacker != null) {
+            attackingItem = attacker.getUseItem();
         }
 
         if (attackingItem != null && !attackingItem.isEmpty()) {
