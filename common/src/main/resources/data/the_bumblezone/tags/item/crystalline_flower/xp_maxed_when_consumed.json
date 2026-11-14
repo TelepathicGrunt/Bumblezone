@@ -10,6 +10,10 @@
       "required": false
     },
     {
+      "id": "the_bumblezone:essence_of_the_bees",
+      "required": false
+    },
+    {
       "id": "#the_bumblezone:essence_items",
       "required": false
     }
