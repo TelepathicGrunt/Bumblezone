@@ -117,6 +117,8 @@ Fixed edge case where Royal Jelly Block couldn't be pulled by piston when it sho
 Carving Carvable Wax block now preserves its facing property
 
 #### Fluids:
+Fixed Royal Jelly Fluid and Honey Fluid overlay when in fluid from being messed up when player is below Y = 0
+
 Fixed case where vanilla Bubble Column won't be supported on Sugar Water Bubble Column
 
 #### Structures:
