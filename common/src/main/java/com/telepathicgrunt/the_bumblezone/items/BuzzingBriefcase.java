@@ -193,16 +193,12 @@ public class BuzzingBriefcase extends Item {
                 if (!releaseAtPlayer) {
                     finalPos = playerEyePos.add(maxDistanceDirection);
 
-                    EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(
-                            level,
+                    HitResult entityHitResult = ProjectileUtil.getHitResultOnViewVector(
                             player,
-                            playerEyePos,
-                            finalPos,
-                            player.getBoundingBox().expandTowards(maxDistanceDirection),
-                            entity -> !entity.isInvisibleTo(player) && !BeeAggression.isBeelikeEntity(entity),
-                            0.25f);
+                            entity -> entity != player && !entity.isInvisibleTo(player) && !BeeAggression.isBeelikeEntity(entity),
+                            playerEyePos.distanceTo(finalPos));
 
-                    if (entityHitResult != null && entityHitResult.getType() != HitResult.Type.MISS) {
+                    if (entityHitResult instanceof EntityHitResult && entityHitResult.getType() != HitResult.Type.MISS) {
                         finalPos = entityHitResult.getLocation();
                     }
                     else {
