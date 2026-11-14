@@ -107,6 +107,8 @@ Bee Stinger does not get consumed now if used on a bee that has a stinger alread
 
 Shot Bee Stingers and Crystal Shards now doesn't fire unused `broadcastEntityEvent`. Reduces server packet load.
 
+(NeoForge): Fixed Bee Stingers being consumed when fired from Infinity enchanted Bow
+
 #### Blocks:
 Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsumeItemUI` config options are respected on serverside for Crystalline Flower.
 
