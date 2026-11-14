@@ -69,6 +69,8 @@ Replacing the lit wicks of Super Candle/Potion Candle will not leave the base bl
 Optimized Sticky Honey Redstone to not keep calculating redstone signal every tick an entity is touching it
  if there was no change in redstone power since last tick.
 
+Fixed weird speed boost that happens when going through different sized Pile of Pollen blocks
+
 #### Structures:
 Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable and fluid blocks outside the arena bounds
 
