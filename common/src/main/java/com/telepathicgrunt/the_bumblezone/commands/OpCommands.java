@@ -50,8 +50,6 @@ import java.util.stream.Collectors;
 
 public class OpCommands {
     private static final ResourceKey<Registry<Registry<?>>> ROOT_REGISTRY_KEY = ResourceKey.createRegistryKey(Identifier.withDefaultNamespace("root"));
-    private static MinecraftServer currentMinecraftServer = null;
-    private static Set<String> cachedSuggestion = new HashSet<>();
 
     enum DATA_BOOLEAN_WRITE_ARG {
         IS_BEE_ESSENCED
@@ -168,28 +166,15 @@ public class OpCommands {
     }
 
     private static Set<String> methodBooleanWriteSuggestions(CommandContext<CommandSourceStack> cs) {
-        if (currentMinecraftServer == cs.getSource().getServer()) {
-            return cachedSuggestion;
-        }
-
         Set<String> suggestedStrings = new HashSet<>();
         Arrays.stream(DATA_BOOLEAN_WRITE_ARG.values()).forEach(e -> suggestedStrings.add(e.name().toLowerCase(Locale.ROOT)));
-
-        currentMinecraftServer = cs.getSource().getServer();
-        cachedSuggestion = suggestedStrings;
         return suggestedStrings;
     }
 
     private static Set<String> methodReadSuggestions(CommandContext<CommandSourceStack> cs) {
-        if (currentMinecraftServer == cs.getSource().getServer()) {
-            return cachedSuggestion;
-        }
-
         Set<String> suggestedStrings = new HashSet<>();
         Arrays.stream(DATA_READ_ARG.values()).forEach(e -> suggestedStrings.add(e.name().toLowerCase(Locale.ROOT)));
 
-        currentMinecraftServer = cs.getSource().getServer();
-        cachedSuggestion = suggestedStrings;
         return suggestedStrings;
     }
 
