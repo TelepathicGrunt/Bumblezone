@@ -36,7 +36,6 @@ public class EssenceOfTheBees extends Item {
 
     @Override
     public ItemStack finishUsingItem(ItemStack itemStack, Level level, LivingEntity livingEntity) {
-        super.finishUsingItem(itemStack, level, livingEntity);
         if (livingEntity instanceof ServerPlayer serverPlayer) {
             if (hasEssence(serverPlayer)) {
                 Component message = Component.translatable("item.the_bumblezone.essence_of_the_bees.already_essenced").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD);
@@ -67,6 +66,7 @@ public class EssenceOfTheBees extends Item {
                 }
             }
         }
+        super.finishUsingItem(itemStack, level, livingEntity);
         return itemStack;
     }
 
