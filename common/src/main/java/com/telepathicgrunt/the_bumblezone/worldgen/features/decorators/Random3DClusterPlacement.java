@@ -66,7 +66,7 @@ public class Random3DClusterPlacement extends RepeatingPlacement {
                                 random.nextInt(4) + 8);
 
                 BlockState state = placementContext.getBlockState(mutableBlockPos);
-                if (state.isAir() || (this.allowUnderwater && !state.getFluidState().is(FluidTags.WATER))) {
+                if (state.isAir() || (this.allowUnderwater && state.getFluidState().is(FluidTags.WATER))) {
                     mutableBlockPos.set(blockPos.getX(), mutableBlockPos.getY(), blockPos.getZ());
                     break;
                 }
