@@ -9,6 +9,8 @@ Fixed issue where if player enters Bumblezone from non-Overworld dimension, ride
 
 Adjusted teleportation queue logic to run only during server tick instead of all dimension ticks.
 
+(NeoForge): Bumblezone exit coordinates saved on player will now persist through player death and respawn
+
 #### Entities:
 Bee Queen now gives rewards for entire stack of dropped items for holiday trades instead of a bugged single reward.
 
