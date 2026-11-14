@@ -81,6 +81,8 @@ Fixed Floral Headwear on Armor Stands were not attracting 50% of bees. Now all 1
 
 Stinger Spear enchanted with Potent Poison level 3 and above now inflicts higher poison levels as intended
 
+Bee Stinger does not get consumed now if used on a bee that has a stinger already
+
 #### Blocks:
 Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsumeItemUI` config options are respected on serverside for Crystalline Flower.
 
