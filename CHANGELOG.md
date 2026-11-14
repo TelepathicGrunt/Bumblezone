@@ -175,6 +175,8 @@ Fixed Honey Cocoon not respecting Silk Touch when mined
 
 Windy Air now plays its ambient sound properly
 
+Explosions now removes Heavy Air and Windy Air again
+
 #### Fluids:
 Fixed it so Royal Jelly Fluid and Honey Fluid flowing downward does not turn source fluid blocks of these fluids into non-source fluid blocks
 
