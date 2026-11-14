@@ -1,26 +1,45 @@
 package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.piston.PistonStructureResolver;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(PistonStructureResolver.class)
 public class PistonStructureResolverMixin {
 
+    @Unique
+    private Direction bumblezone$originalPushDirection;
+
     @Mutable
     @Final
     @Shadow
     private Direction pushDirection;
+
+    @Mutable
+    @Final
+    @Shadow
+    private boolean extending;
+
+    @Inject(method = "<init>(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Z)V",
+            at = @At(value = "TAIL"))
+    private void bumblezone$recordPushDirection(Level level, BlockPos pistonPos, Direction direction, boolean extending, CallbackInfo ci) {
+        this.bumblezone$originalPushDirection = this.pushDirection;
+    }
 
     // allow royal jelly block to be pullable only
     @Inject(method = "addBlockLine(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z",
@@ -32,7 +51,10 @@ public class PistonStructureResolverMixin {
                                                 CallbackInfoReturnable<Boolean> cir,
                                                 BlockState blockState)
     {
-        if (blockState.is(BzBlocks.ROYAL_JELLY_BLOCK.get())) {
+        if (!this.extending &&
+            blockState.is(BzBlocks.ROYAL_JELLY_BLOCK.get()) &&
+            this.bumblezone$originalPushDirection == this.pushDirection)
+        {
             this.pushDirection = this.pushDirection.getOpposite();
         }
     }
@@ -47,8 +69,23 @@ public class PistonStructureResolverMixin {
                                                       CallbackInfoReturnable<Boolean> cir,
                                                       BlockState blockState)
     {
-        if (blockState.is(BzBlocks.ROYAL_JELLY_BLOCK.get())) {
+        if (!this.extending &&
+            blockState.is(BzBlocks.ROYAL_JELLY_BLOCK.get()) &&
+            this.bumblezone$originalPushDirection == this.pushDirection)
+        {
             this.pushDirection = this.pushDirection.getOpposite();
         }
+    }
+
+    // allow royal jelly block to be pullable only
+    @WrapMethod(method = "addBlockLine(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z")
+    private boolean bumblezone$pullableOnlyBlocks4(BlockPos start, Direction direction, Operation<Boolean> original)
+    {
+        boolean result = original.call(start, direction);
+        // Set push direction back to normal so iterating the next part of the branch checks the correct direction
+        if (this.bumblezone$originalPushDirection != this.pushDirection) {
+            this.pushDirection = this.bumblezone$originalPushDirection;
+        }
+        return result;
     }
 }

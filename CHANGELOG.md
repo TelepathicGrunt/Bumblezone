@@ -119,6 +119,8 @@ Fixed weird speed boost that happens when going through different sized Pile of 
 
 Fixed String Curtain on change, sending a block update to entire vertical column to world top
 
+Fixed edge case where Royal Jelly Block couldn't be pulled by piston when it should. Now it should properly behave as a pull-only block
+
 #### Fluids:
 Fixed it so Royal Jelly Fluid and Honey Fluid flowing downward does not turn source fluid blocks of these fluids into non-source fluid blocks
 
