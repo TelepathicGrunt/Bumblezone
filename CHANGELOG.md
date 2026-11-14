@@ -100,6 +100,8 @@ Crystalline Flower now absorbs the true full Experience Orb amount by factoring 
 
 Crystalline Flower fixed to not consume more items from an itemstack than needed to max out flower tier
 
+Fixed tier 1 Crystalline Flower showing level 1 enchantments already on input enchanted book
+
 Fixed Honeycomb Brood Blocks not actually growing/spawning bees by random ticks
 
 Silk Touch now prevents max stage Honeycomb Brood Blocks from spawning a bee when broken.
