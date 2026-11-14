@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.FogRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
@@ -49,11 +50,15 @@ public class BzDimensionSpecialEffects extends DimensionSpecialEffects {
             colorFactor *= (BzDimensionConfigs.fogBrightnessPercentage / 100);
         }
 
-        if (WrathOfTheHiveEffect.ACTIVE_WRATH && REDDISH_FOG_TINT < 0.38f) {
-            REDDISH_FOG_TINT += 0.00001f;
+        if (WrathOfTheHiveEffect.ACTIVE_WRATH) {
+            if (REDDISH_FOG_TINT < 0.3f) {
+                REDDISH_FOG_TINT += (0.0000000005f * Minecraft.getInstance().getFrameTimeNs());
+                REDDISH_FOG_TINT = Math.min(REDDISH_FOG_TINT, 0.3f);
+            }
         }
         else if (REDDISH_FOG_TINT > 0) {
-            REDDISH_FOG_TINT -= 0.00001f;
+            REDDISH_FOG_TINT -= (0.0000000005f * Minecraft.getInstance().getFrameTimeNs());
+            REDDISH_FOG_TINT = Math.max(REDDISH_FOG_TINT, 0f);
         }
 
         // Divide by 255 to make values between 0 and 1
