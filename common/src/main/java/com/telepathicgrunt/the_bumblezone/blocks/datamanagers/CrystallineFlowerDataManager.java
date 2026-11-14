@@ -58,6 +58,7 @@ public class CrystallineFlowerDataManager extends SimpleJsonResourceReloadListen
     protected void apply(Map<Identifier, FlowerData> loader, ResourceManager manager, ProfilerFiller profiler) {
         itemToXp.clear();
         disallowConsume.clear();
+        allowNormalConsumption = true;
         loader.forEach((fileIdentifier, flowerData) -> cachedFlowerData.add(flowerData));
     }
 
