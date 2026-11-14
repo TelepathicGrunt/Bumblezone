@@ -175,10 +175,10 @@ public class CrystallineFlower extends BaseEntityBlock {
 
                 int xpPerCount = getXpPerItem(stack);
                 int itemCount = stack.getCount();
-                int xpForStack = itemCount * xpPerCount;
+                long xpForStack = (long) itemCount * xpPerCount;
 
                 int xpToHighestAvailableTier = getXpToHighestAvailableTier(crystallineFlowerBlockEntity, tiersToMax, obstructedAbove);
-                int xpGranted = Math.min(xpToHighestAvailableTier, xpForStack);
+                int xpGranted = (int)Math.min(xpToHighestAvailableTier, xpForStack);
                 int consumedItemCount = (int) Math.ceil(xpGranted / (float)xpPerCount);
                 if (consumedItemCount == 0) {
                     return;

@@ -73,9 +73,12 @@ Fixed Crystalline Flower crash if one sets up `bz_crystalline_flower_data` in a 
 Made it so Experience Orbs looking for Crystalline Flower will not load nearby chunks that are ungenerated/unloaded for better performance.
  And reduce the range Experience Orbs searches for flower from 8 chunks to 1 chunk radius. I think I thought I was doing 8 block radius...
 
-Fixed Honeycomb Brood Blocks not actually growing/spawning bees by random ticks
 
 Crystalline Flower now absorbs the true full Experience Orb amount by factoring in the orb's size (count)
+
+Crystalline Flower fixed to not consume more items from an itemstack than needed to max out flower tier
+
+Fixed Honeycomb Brood Blocks not actually growing/spawning bees by random ticks
 
 Silk Touch now prevents max stage Honeycomb Brood Blocks from spawning a bee when broken.
  Inversely, non-Silk touch mining will make max stage Honeycomb Brood Blocks spawn a bee.
