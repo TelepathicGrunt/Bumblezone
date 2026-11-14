@@ -261,20 +261,21 @@ public class BeeAggression {
             }
         }
 
-        //Makes the fog redder when this effect is active
-        if (playerEntity.level().isClientSide()) {
-            boolean wrathEffect = playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.holder());
-            if (wrathEffect) {
-                MusicHandler.playStopAngryBeeMusic(playerEntity, BzClientConfigs.playWrathOfHiveEffectMusic);
-            }
+    }
 
-            if (!WrathOfTheHiveEffect.ACTIVE_WRATH && wrathEffect) {
-                WrathOfTheHiveEffect.ACTIVE_WRATH = true;
-            }
-            else if (WrathOfTheHiveEffect.ACTIVE_WRATH && !wrathEffect) {
-                MusicHandler.playStopAngryBeeMusic(playerEntity, false);
-                WrathOfTheHiveEffect.ACTIVE_WRATH = false;
-            }
+    public static void clientMainPlayerTick(Player playerEntity) {
+        //Makes the fog redder when this effect is active
+        boolean wrathEffect = playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.holder());
+        if (wrathEffect) {
+            MusicHandler.playStopAngryBeeMusic(playerEntity, BzClientConfigs.playWrathOfHiveEffectMusic);
+        }
+
+        if (!WrathOfTheHiveEffect.ACTIVE_WRATH && wrathEffect) {
+            WrathOfTheHiveEffect.ACTIVE_WRATH = true;
+        }
+        else if (WrathOfTheHiveEffect.ACTIVE_WRATH && !wrathEffect) {
+            MusicHandler.playStopAngryBeeMusic(playerEntity, false);
+            WrathOfTheHiveEffect.ACTIVE_WRATH = false;
         }
     }
 

@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenc
 import com.telepathicgrunt.the_bumblezone.client.screens.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.client.screens.LevelLoadingScreenInterface;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
+import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzHookupConditionalItemModelPropertiesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzHookupItemTintSourcesEvent;
@@ -33,6 +34,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemTintSources;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -93,6 +95,9 @@ public class FabricClientEventManager {
         ClientTickEvents.END_CLIENT_TICK.register((mc) -> {
             StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer());
             MusicHandler.tickMusicFader();
+            if (Minecraft.getInstance().player != null) {
+                BeeAggression.clientMainPlayerTick(Minecraft.getInstance().player);
+            }
         });
         ScreenEvents.BEFORE_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
             if (screen instanceof LevelLoadingScreen levelLoadingScreen &&

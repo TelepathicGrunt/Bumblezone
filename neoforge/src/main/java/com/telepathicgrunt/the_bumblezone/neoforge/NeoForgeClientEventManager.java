@@ -16,6 +16,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.essence.RadianceEssen
 import com.telepathicgrunt.the_bumblezone.client.screens.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.client.screens.LevelLoadingScreenInterface;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
+import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.events.client.BzBlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.BzHookupConditionalItemModelPropertiesEvent;
@@ -191,6 +192,9 @@ public class NeoForgeClientEventManager {
     private static void onClientTickPost(ClientTickEvent.Post event) {
         StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer());
         MusicHandler.tickMusicFader();
+        if (Minecraft.getInstance().player != null) {
+            BeeAggression.clientMainPlayerTick(Minecraft.getInstance().player);
+        }
     }
 
     private static void onCameraSetup(ViewportEvent.ComputeCameraAngles event) {
