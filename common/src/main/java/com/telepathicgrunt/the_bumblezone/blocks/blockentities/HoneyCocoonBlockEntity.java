@@ -207,6 +207,10 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
         return this.lootTableSeed;
     }
 
+    // Stop hardcoded container inventory item dropping behavior
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {}
+
     @Override
     public void loadAdditional(ValueInput valueInput) {
         super.loadAdditional(valueInput);

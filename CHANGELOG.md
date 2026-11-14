@@ -155,6 +155,8 @@ Fixed edge case where Royal Jelly Block couldn't be pulled by piston when it sho
 
 Carving Carvable Wax block now preserves its facing property
 
+Fixed Honey Cocoon not respecting Silk Touch when mined
+
 #### Fluids:
 Fixed it so Royal Jelly Fluid and Honey Fluid flowing downward does not turn source fluid blocks of these fluids into non-source fluid blocks
 
