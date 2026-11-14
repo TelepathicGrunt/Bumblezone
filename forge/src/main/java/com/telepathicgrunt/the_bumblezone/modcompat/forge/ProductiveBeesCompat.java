@@ -100,6 +100,10 @@ public class ProductiveBeesCompat implements ModCompat {
         BroodBlockModdedCompatDispenseBehavior newDispenseBehavior = new BroodBlockModdedCompatDispenseBehavior(
                 ((DispenserBlockInvoker) Blocks.DISPENSER).bumblezone$invokeGetDispenseMethod(new ItemStack(containerItem)),
                 (originalModdedDispenseBehavior, blockSource, itemStack, serverLevel, blockPos, blockState) -> {
+                    if (!isFilledBeeCageItem(itemStack)) {
+                        return itemStack;
+                    }
+
                     serverLevel.setBlockAndUpdate(blockPos, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
                         .setValue(HoneycombBrood.FACING, blockState.getValue(EmptyHoneycombBrood.FACING))
                         .setValue(HoneycombBrood.STAGE, ProductiveBeesCompat.isFilledBabyBeeCageItem(itemStack) ? 2 : 3));
