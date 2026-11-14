@@ -157,6 +157,6 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
             currentY += directionSign;
         }
 
-        return false;
+        return true;
     }
 }

@@ -173,7 +173,7 @@ public class WebBridge extends Feature<NoneFeatureConfiguration> {
             }
         }
 
-        return false;
+        return true;
     }
 
     private boolean validSpace(BlockState blockState) {
