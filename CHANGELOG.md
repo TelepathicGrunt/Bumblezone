@@ -176,6 +176,8 @@ Made Potent Poison's `the_bumblezone:poison` data component not accept 0 for enc
 #### Effects:
 Fixed case where Wrath of the Hive effect at level 3 or higher would remove itself if it fails to spawn a bee during 1 attempt
 
+Made `the_bumblezone:bee_aggression_in_dimension/wrath_activating_items_when_picked_up` item tag functional again for Wrath of the Hive
+
 #### Sounds:
 Fixed memory leak with buzzing sound instance for Bumble Bee Chestplate and Beehemoth still retaining client worlds after exiting a world
 
