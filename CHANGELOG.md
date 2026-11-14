@@ -136,6 +136,8 @@ Fixed String Curtain on change, sending a block update to entire vertical column
 
 Fixed edge case where Royal Jelly Block couldn't be pulled by piston when it should. Now it should properly behave as a pull-only block
 
+Carving Carvable Wax block now preserves its facing property
+
 #### Fluids:
 Fixed it so Royal Jelly Fluid and Honey Fluid flowing downward does not turn source fluid blocks of these fluids into non-source fluid blocks
 
