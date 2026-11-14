@@ -104,8 +104,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     public final AnimationState itemThrownAnimationState = new AnimationState();
     public final AnimationState itemRejectAnimationState = new AnimationState();
     public static final EntityDataSerializer<BeeQueenPose> QUEEN_POSE_SERIALIZER = EntityDataSerializer.simpleEnum(BeeQueenPose.class);
-    private static final EntityDataAccessor<Integer> THROWCOOLDOWN = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> BEESPAWNCOOLDOWN = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Long> THROW_COOLDOWN_END_TIME = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.LONG);
+    private static final EntityDataAccessor<Long> BEE_SPAWN_COOLDOWN_END_TIME = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.LONG);
     private static final EntityDataAccessor<Integer> REMAINING_ANGER_TIME = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<BeeQueenPose> QUEEN_POSE = SynchedEntityData.defineId(BeeQueenEntity.class, QUEEN_POSE_SERIALIZER);
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(60, 120);
@@ -123,9 +123,9 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(THROWCOOLDOWN, 0);
+        this.entityData.define(THROW_COOLDOWN_END_TIME, 0L);
         this.entityData.define(REMAINING_ANGER_TIME, 0);
-        this.entityData.define(BEESPAWNCOOLDOWN, 0);
+        this.entityData.define(BEE_SPAWN_COOLDOWN_END_TIME, 0L);
         this.entityData.define(QUEEN_POSE, BeeQueenPose.NONE);
     }
 
@@ -167,16 +167,16 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putInt("throwcooldown", getThrowCooldown());
-        tag.putInt("beespawncooldown", getBeeSpawnCooldown());
+        output.putLong("throw_cooldown_end_time", getThrowCooldownEndTime());
+        output.putLong("bee_spawn_cooldown_end_time", getBeeSpawnCooldown());
         this.addPersistentAngerSaveData(tag);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        setThrowCooldown(tag.getInt("throwcooldown"));
-        setBeeSpawnCooldown(tag.getInt("beespawncooldown"));
+        setThrowCooldown(input.getLong("throw_cooldown_end_time"));
+        setBeeSpawnCooldown(input.getLong("bee_spawn_cooldown_end_time"));
 
         this.readPersistentAngerSaveData(this.level(), tag);
     }
@@ -457,12 +457,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             return;
         }
 
-        int beeCooldown = this.getBeeSpawnCooldown();
-        if (beeCooldown <= 0 &&
+        if (this.level().getGameTime() >= getBeeSpawnCooldown() &&
             !this.isImmobile() &&
             this.level().getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING))
         {
-            this.setBeeSpawnCooldown(this.random.nextInt(50) + 75);
+            this.setBeeSpawnCooldown(this.level().getGameTime() + this.random.nextInt(50) + 75);
 
             // Grab a nearby air materialposition a bit away
             BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(this, 5, 0);
@@ -502,9 +501,6 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             this.spawnAngryParticles(6);
             setQueenPose(BeeQueenPose.ATTACKING);
         }
-        else {
-            this.setBeeSpawnCooldown(beeCooldown - 1);
-        }
     }
 
     private void performGroundTrades() {
@@ -512,12 +508,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             return;
         }
 
-        int throwCooldown = getThrowCooldown();
-        if (throwCooldown > 0) {
-            setThrowCooldown(throwCooldown - 1);
-        }
-
-        if ((this.level().getGameTime() + this.getUUID().getLeastSignificantBits()) % 20 == 0 && throwCooldown <= 0) {
+        if ((this.level().getGameTime() + this.getUUID().getLeastSignificantBits()) % 20 == 0 && this.level().getGameTime() >= getThrowCooldownEndTime()) {
             Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
             Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
             AABB scanArea = this.getBoundingBox().deflate(0.45, 0.9, 0.45).move(forwardVect.x() * 0.5d, -0.95, forwardVect.z() * 0.5d);
@@ -580,7 +571,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             setQueenPose(BeeQueenPose.ITEM_REJECT);
         }
 
-        setThrowCooldown(50);
+        setThrowCooldown(this.level().getGameTime() + tradeCooldown);
 
         if (tradedItems > 0 && itemEntity.getOwner() != null) {
             if (level().getPlayerByUUID(itemEntity.getOwner().getUUID()) instanceof ServerPlayer serverPlayer) {
@@ -685,7 +676,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 setQueenPose(BeeQueenPose.ITEM_REJECT);
             }
             else {
-                setThrowCooldown(50);
+                setThrowCooldown(this.level().getGameTime() + tradeCooldown);
                 stack.shrink(1);
                 player.setItemInHand(hand, stack);
 
@@ -873,20 +864,20 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         return 90;
     }
 
-    public int getThrowCooldown() {
-        return this.entityData.get(THROWCOOLDOWN);
+    public long getThrowCooldownEndTime() {
+        return this.entityData.get(THROW_COOLDOWN_END_TIME);
     }
 
-    public void setThrowCooldown(Integer cooldown) {
-        this.entityData.set(THROWCOOLDOWN, cooldown);
+    public void setThrowCooldown(long cooldownEndTime) {
+        this.entityData.set(THROW_COOLDOWN_END_TIME, cooldownEndTime);
     }
 
-    public int getBeeSpawnCooldown() {
-        return this.entityData.get(BEESPAWNCOOLDOWN);
+    public long getBeeSpawnCooldown() {
+        return this.entityData.get(BEE_SPAWN_COOLDOWN_END_TIME);
     }
 
-    public void setBeeSpawnCooldown(Integer cooldown) {
-        this.entityData.set(BEESPAWNCOOLDOWN, cooldown);
+    public void setBeeSpawnCooldown(long cooldown) {
+        this.entityData.set(BEE_SPAWN_COOLDOWN_END_TIME, cooldown);
     }
 
     @Override
