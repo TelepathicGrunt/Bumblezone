@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.SlimeRenderState;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.resources.Identifier;
@@ -28,9 +29,13 @@ public class HoneySlimeRendering extends MobRenderer<HoneySlimeEntity, HoneySlim
 
     @Override
     public void submit(HoneySlimeRenderState state, PoseStack poseStack, SubmitNodeCollector collector, CameraRenderState camera) {
-        this.shadowRadius = 0.25F * (state.isBaby ? 1f : 2f);
         poseStack.translate(0, -0.0001f, 0);
         super.submit(state, poseStack, collector, camera);
+    }
+
+    @Override
+    protected float getShadowRadius(HoneySlimeRenderState state) {
+        return 0.25F * (state.isBaby ? 1f : 2f);
     }
 
     // unused. Dont ask how the scaling even works automatically

@@ -44,6 +44,8 @@ Honey Slime with their honey taken is now optimized to not try and sync an int e
 
 Baby Honey Slimes spawned during worldgen now get the proper baby health and other attributes instead of adult values
 
+Fixed Honey Slime shadow size getting messed up if there are adult and baby forms present in world at same time
+
 Reduced amount of particles that Sentry Watcher generates on client when it is charging at speed
 
 Sentry Watcher fully respects the 80 block distance it can charge through instead of going excessively further due to bad coordinate calculation
