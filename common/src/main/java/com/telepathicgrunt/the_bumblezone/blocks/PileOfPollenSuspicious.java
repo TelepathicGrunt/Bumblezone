@@ -244,7 +244,7 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
                     reduction.getFirst() != entity.tickCount ||
                     (reduction.getSecond() < layerValueMinusOne && reduction.getFirst() == entity.tickCount))
             {
-                int diffInLayer = reduction == null ? layerValueMinusOne : layerValueMinusOne - reduction.getSecond();
+                int diffInLayer = reduction == null ? layerValueMinusOne : Math.max(layerValueMinusOne - reduction.getSecond(), 0);
                 slowFallSpeed(entity, blockPos, diffInLayer);
                 APPLIED_FALL_REDUCTION_FOR_ENTITY.put(entity.getStringUUID(), Pair.of(entity.tickCount, layerValueMinusOne));
             }

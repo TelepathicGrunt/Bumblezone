@@ -349,10 +349,10 @@ public class PileOfPollen extends FallingBlock {
 
             Pair<Integer, Integer> reduction = APPLIED_FALL_REDUCTION_FOR_ENTITY.getOrDefault(entity.getStringUUID(), null);
             if (reduction == null ||
-                    reduction.getFirst() != entity.tickCount ||
-                    (reduction.getSecond() < layerValueMinusOne && reduction.getFirst() == entity.tickCount))
+                reduction.getFirst() != entity.tickCount ||
+                (reduction.getSecond() < layerValueMinusOne && reduction.getFirst() == entity.tickCount))
             {
-                int diffInLayer = reduction == null ? layerValueMinusOne : layerValueMinusOne - reduction.getSecond();
+                int diffInLayer = reduction == null ? layerValueMinusOne : Math.max(layerValueMinusOne - reduction.getSecond(), 0);
                 slowFallSpeed(entity, blockPos, diffInLayer);
                 APPLIED_FALL_REDUCTION_FOR_ENTITY.put(entity.getStringUUID(), Pair.of(entity.tickCount, layerValueMinusOne));
             }
