@@ -80,6 +80,8 @@ Super Candle/Potion Candle wicks now can be replaced by flowing fluids and pisto
 
 Replacing the lit wicks of Super Candle/Potion Candle will not leave the base block still lit.
 
+Lighting Super Candle/Potion Candle by Dispenser with Flint and Steel will now decrease Flint and Steel durability
+
 Optimized Sticky Honey Redstone to not keep calculating redstone signal every tick an entity is touching it
  if there was no change in redstone power since last tick.
 

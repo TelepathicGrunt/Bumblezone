@@ -11,6 +11,7 @@ import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -35,6 +36,7 @@ public class FlintAndSteelDispenseBehavior extends OptionalDispenseItemBehavior 
         if (SuperCandle.canBeLit(level, blockstate, dispenseBlockPos)) {
             boolean successfulLit = SuperCandleWick.setLit(level, level.getBlockState(dispenseBlockPos.above()), dispenseBlockPos.above(), true);
             this.setSuccess(successfulLit);
+            stack.hurtAndBreak(1, level, null, (_) -> {});
         }
         else {
             // If it instanceof DefaultDispenseItemBehavior, call dispenseStack directly to avoid
