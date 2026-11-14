@@ -30,6 +30,8 @@ Sentry Watcher fully respects the 80 block distance it can charge through instea
 
 Adjusted mob spawning on chunk creation for Bumblezone dimension. Beehemoths now spawn more often as a result
 
+Beehemoths no longer get full health healing when they are unloaded and then loaded back in
+
 #### Items:
 Adjusted packet logic for syncing horse owner to clients from server so that it no longer broadcasts to all players.
  Reduces server load every time a horse is spawned into client's loaded chunks.
