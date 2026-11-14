@@ -14,6 +14,10 @@ Adjusted teleportation queue logic to run only during server tick instead of all
 #### Entities:
 Bee Queen now gives rewards for entire stack of dropped items for holiday trades instead of a bugged single reward.
 
+Bee Queen is now optimized to not try and sync ints every tick when in trade cooldown or bee spawn cooldown
+
+Fixed Bee Queen unable to summon bees below Y = 0 or above Y = 256
+
 Fixed possible issue where in presence of multiple players, Cosmic Crystal Entity could track wrong player on client compared to server
 
 Fixed visual issue where Cosmic Crystal Entity spazzes out when tracking spinning attack ends
