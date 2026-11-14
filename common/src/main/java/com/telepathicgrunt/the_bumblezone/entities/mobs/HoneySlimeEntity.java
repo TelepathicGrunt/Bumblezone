@@ -197,16 +197,16 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
                 float xOffset = ((float)(currentNewSlime % 2) - 0.5F) * 0.5F;
                 float zOffset = ((float)(currentNewSlime / 2) - 0.5F) * 0.5F;
                 if (isInHoney()) {
-                    this.convertTo(BzEntities.HONEY_SLIME.get(), new ConversionParams(ConversionType.SPLIT_ON_DEATH, false, false, team), EntitySpawnReason.TRIGGERED, honeySlime -> {
+                    children.add(this.convertTo(BzEntities.HONEY_SLIME.get(), new ConversionParams(ConversionType.SPLIT_ON_DEATH, false, false, team), EntitySpawnReason.TRIGGERED, honeySlime -> {
                         honeySlime.setupHoneySlime(true, true);
                         honeySlime.snapTo(this.getX() + xOffset, this.getY() + 0.5, this.getZ() + zOffset, this.random.nextFloat() * 360.0F, 0.0F);
-                    });
+                    }));
                 }
                 else {
-                    this.convertTo(EntityType.SLIME, new ConversionParams(ConversionType.SPLIT_ON_DEATH, false, false, team), EntitySpawnReason.TRIGGERED, slime -> {
+                    children.add(this.convertTo(EntityType.SLIME, new ConversionParams(ConversionType.SPLIT_ON_DEATH, false, false, team), EntitySpawnReason.TRIGGERED, slime -> {
                         slime.setSize(1, true);
                         slime.snapTo(this.getX() + xOffset, this.getY() + 0.5, this.getZ() + zOffset, this.random.nextFloat() * 360.0F, 0.0F);
-                    });
+                    }));
                 }
              }
 
