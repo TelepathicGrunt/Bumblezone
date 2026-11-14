@@ -70,10 +70,6 @@ public class RoyalJellyBlock extends HalfTransparentBlock implements BlockExtens
         return OptionalBoolean.EMPTY;
     }
 
-    public static boolean isValidMoveDirection(Direction pushDirection, Direction pistonDirection) {
-        return pushDirection == null || pushDirection != pistonDirection;
-    }
-
     private static boolean doesEntityDoHoneyBlockSlideEffects(Entity entity) {
         return entity instanceof LivingEntity || entity instanceof AbstractMinecart || entity instanceof PrimedTnt || entity instanceof Boat;
     }
