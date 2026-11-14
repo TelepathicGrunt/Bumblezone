@@ -27,6 +27,10 @@ Bee Queen now gives rewards for entire stack of dropped items for holiday trades
 
 Fixed Bee Queen giving double rewards for certain items when right-click trading
 
+Bee Queen is now optimized to not try and sync ints every tick when in trade cooldown or bee spawn cooldown
+
+Fixed Bee Queen unable to summon bees below Y = 0 or above Y = 256
+
 Fixed Beehemoth walking far too slow on the ground when riding one
 
 Removed logging I had forgotten about from when I was debugging Beehemoth riding controls
