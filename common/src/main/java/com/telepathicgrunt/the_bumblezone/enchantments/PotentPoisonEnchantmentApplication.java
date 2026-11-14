@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.enchantments;
 
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.enchantments.datacomponents.PoisonMarker;
+import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -42,13 +43,24 @@ public class PotentPoisonEnchantmentApplication {
 
         PoisonMarker poisonMarker = enchantmentAndLevel.getFirst();
         if (!victim.getType().is(EntityTypeTags.UNDEAD)) {
-            victim.addEffect(new MobEffectInstance(
-                    MobEffects.POISON,
-                    100 + (poisonMarker.bonusDurationAmount() * ((enchantmentAndLevel.getSecond() + 1) / poisonMarker.enchantLevelIntervalForBonusDuration())), // 200, 300, 300 duration
-                    (int)(poisonMarker.poisonLevelPerEnchantLevel() * enchantmentAndLevel.getSecond()), // 0, 1, 2, 3 level poison
-                    false,
-                    true,
-                    true));
+            if (enchantedItem.getItem() instanceof StingerSpearItem) {
+                victim.addEffect(new MobEffectInstance(
+                        MobEffects.POISON,
+                        100 + (poisonMarker.bonusDurationAmountStingerSpear() * ((enchantmentAndLevel.getSecond() + 1) / poisonMarker.enchantLevelIntervalForBonusDurationStingerSpear())), // 200, 300, 300 duration
+                        (int)(poisonMarker.poisonLevelPerEnchantLevelStingerSpear() * enchantmentAndLevel.getSecond()), // 0, 1, 2, 3 level poison
+                        false,
+                        true,
+                        true));
+            }
+            else {
+                victim.addEffect(new MobEffectInstance(
+                        MobEffects.POISON,
+                        100 + (poisonMarker.bonusDurationAmount() * ((enchantmentAndLevel.getSecond() + 1) / poisonMarker.enchantLevelIntervalForBonusDuration())), // 200, 300, 300 duration
+                        (int)(poisonMarker.poisonLevelPerEnchantLevel() * enchantmentAndLevel.getSecond()), // 0, 1, 1, 2 level poison
+                        false,
+                        true,
+                        true));
+            }
 
             return true;
         }
