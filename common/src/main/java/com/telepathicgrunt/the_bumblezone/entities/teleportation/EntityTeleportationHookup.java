@@ -250,14 +250,16 @@ public class EntityTeleportationHookup {
                 double minYThreshold = Integer.MIN_VALUE;
                 double maxYThreshold = Integer.MAX_VALUE;
 
-                if (hitEntity.is(BzTags.TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_HIGH)) {
+                if (!hitEntity.is(BzTags.TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_LOW))
+                {
                     minYThreshold = entityBoundHeight / 2;
                 }
-                if (hitEntity.is(BzTags.TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_HIGH)) {
+                if (!hitEntity.is(BzTags.TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_HIGH))
+                {
                     maxYThreshold = entityBoundHeight / 2;
                 }
 
-                if (minYThreshold != maxYThreshold && (relativeHitY > maxYThreshold || relativeHitY < minYThreshold)) {
+                if (minYThreshold == maxYThreshold || (relativeHitY > minYThreshold || relativeHitY < maxYThreshold)) {
                     return false;
                 }
 
