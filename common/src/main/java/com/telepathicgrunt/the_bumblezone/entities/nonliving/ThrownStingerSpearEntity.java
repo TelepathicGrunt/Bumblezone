@@ -225,7 +225,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         }
 
         dealtDamage = compoundTag.getBoolean("DealtDamage");
-        this.entityData.set(ID_LOYALTY, (byte) EnchantmentHelper.getLoyalty(spearItem));
+        this.entityData.set(ID_LOYALTY, spearItem != null ? (byte) EnchantmentHelper.getLoyalty(spearItem) : 0);
         this.entityData.set(ID_FOIL, compoundTag.getBoolean("IsFoil"));
     }
 
