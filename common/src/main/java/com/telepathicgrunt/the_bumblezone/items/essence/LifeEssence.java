@@ -340,7 +340,7 @@ public class LifeEssence extends AbilityEssenceItem {
         world.sendParticles(
                 ParticleTypes.HAPPY_VILLAGER,
                 location.x(),
-                location.y() + 1,
+                location.y() + 0.45f,
                 location.z(),
                 2,
                 random.nextGaussian() * 0.2D,
