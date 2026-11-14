@@ -170,9 +170,18 @@ public class WindyAir extends ProperFacingBlock {
                     pushPower.y() + (randomSource.nextGaussian() * 0.003d),
                     pushPower.z() + (randomSource.nextGaussian() * 0.003d));
 
-            Player nearestPlayer = level.getNearestPlayer(blockPos.getX(), blockPos.getY(), blockPos.getZ(), 3, true);
+        }
+
+        if (randomSource.nextFloat() < 0.1f) {
+            Player nearestPlayer = level.getNearestPlayer(blockPos.getX(), blockPos.getY(), blockPos.getZ(), 3, false);
             if (nearestPlayer != null) {
-                level.playSound(null, blockPos, BzSounds.WINDY_AIR_BLOWS.get(), SoundSource.AMBIENT, (randomSource.nextFloat() * 0.05F) + 0.5F, (randomSource.nextFloat() * 0.1F) + 0.8F);
+                level.playLocalSound(
+                        blockPos,
+                        BzSounds.WINDY_AIR_BLOWS.get(),
+                        SoundSource.AMBIENT,
+                        (randomSource.nextFloat() * 0.05F) + 0.5F,
+                        (randomSource.nextFloat() * 0.1F) + 0.8F,
+                        false);
             }
         }
     }
