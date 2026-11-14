@@ -99,7 +99,9 @@ Added safety net so that if Sempiternal Sanctum arena fails to save the pre-aren
 
 Made it so if `repeatableEssenceEvents` is true, beating the arena event again grants 1/4th xp of the first time completion amount
 
-Fixed it where teleporting out of an Sempiternal Sanctum arena event into another dimension could retain the arena boss bar and music.
+Fixed bug where teleporting out of a Sempiternal Sanctum arena event into another dimension could retain the arena boss bar and music.
+
+Fixed bug where players who had not consumed Essence of the Bees would have Sempiternal Sanctum music playing forever after leaving structure
 
 Tweaked what modded blocks shows in Hanging Gardens
 
