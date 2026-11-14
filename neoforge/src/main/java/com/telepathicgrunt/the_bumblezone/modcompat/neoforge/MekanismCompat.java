@@ -70,7 +70,10 @@ public class MekanismCompat implements ModCompat {
 			}
 
 			if (player instanceof ServerPlayer) {
-				IModuleContainer moduleContainer = Objects.requireNonNull(IModuleHelper.INSTANCE.getModuleContainer(chestplate));
+				IModuleContainer moduleContainer = IModuleHelper.INSTANCE.getModuleContainer(chestplate);
+				if (moduleContainer == null) {
+					return;
+				}
 
 				IModule<?> jetpackUnit = moduleContainer.getUnchecked(JETPACK_UNIT);
 				if (jetpackUnit != null && jetpackUnit.isEnabled()) {
