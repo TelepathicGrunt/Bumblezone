@@ -115,10 +115,12 @@ Optimized Sticky Honey Redstone to not keep calculating redstone signal every ti
 
 Fixed weird speed boost that happens when going through different sized Pile of Pollen blocks
 
-Fixed String Curtain
+Fixed String Curtain on change, sending a block update to entire vertical column to world top
 
 #### Fluids:
 Fixed it so Royal Jelly Fluid and Honey Fluid flowing downward does not turn source fluid blocks of these fluids into non-source fluid blocks
+
+Fixed Royal Jelly Fluid and Honey Fluid flowing downward to not duplicate block drops like torches
 
 #### Structures:
 Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable and fluid blocks outside the arena bounds

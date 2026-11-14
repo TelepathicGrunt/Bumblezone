@@ -159,7 +159,6 @@ public abstract class HoneyFluid extends BzFluid {
                     Fluid newBelowFluidType = newBelowFluid.getType();
                     if (belowFluidState.canBeReplacedWith(serverLevel, belowBlockPos, newBelowFluidType, Direction.DOWN)
                             && canHoldSpecificFluid(serverLevel, belowBlockPos, belowBlockState, newBelowFluidType)) {
-                        this.spreadDown(serverLevel, belowBlockPos, belowBlockState, Direction.DOWN, belowFluidState);
                         this.spreadTo(serverLevel, belowBlockPos, belowBlockState, Direction.DOWN, newBelowFluid);
                         if (((FlowingFluidAccessor)this).bumblezone$callSourceNeighborCount(serverLevel, blockPos) >= 3) {
                             ((FlowingFluidAccessor)this).bumblezone$callSpreadToSides(serverLevel, blockPos, fluidState, blockState);
