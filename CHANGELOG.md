@@ -35,6 +35,8 @@ Fixed incorrect Sentry Watcher health and armor damaging when it attacks a playe
 
 Adjusted mob spawning on chunk creation for Bumblezone dimension. Beehemoths now spawn more often as a result
 
+Beehemoths no longer get full health healing when they are unloaded and then loaded back in
+
 #### Items:
 Fixed shot Honey Crystal Shard crashing when it hits an entity while Fabric Twilight Forest is on.
 
