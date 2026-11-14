@@ -160,7 +160,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Play
     public void readAdditionalSaveData(ValueInput input) {
         super.readAdditionalSaveData(input);
         setQueen(input.getBooleanOr("queen", false));
-        setFriendship(input.getIntOr("friendship", 0));
+        setFriendship(input.getIntOr("friendship", 0), false);
     }
 
     @Override
@@ -213,17 +213,17 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Play
         return this.entityData.get(FRIENDSHIP);
     }
 
-    public void setFriendship(Integer newFriendship) {
-        this.entityData.set(FRIENDSHIP, Math.min(Math.max(newFriendship, -100), getMaxFriendshipThreshold()));
-        setMaxHealth();
+    public void setFriendship(Integer newFriendship, boolean heal) {
+        this.entityData.set(FRIENDSHIP, Math.clamp(newFriendship, -100, getMaxFriendshipThreshold()));
+        setMaxHealth(heal);
     }
 
     public void addFriendship(Integer deltaFriendship) {
-        this.entityData.set(FRIENDSHIP, Math.min(Math.max(getFriendship() + deltaFriendship, -100), getMaxFriendshipThreshold()));
-        setMaxHealth();
+        this.entityData.set(FRIENDSHIP, Math.clamp(getFriendship() + deltaFriendship, -100, getMaxFriendshipThreshold()));
+        setMaxHealth(true);
     }
 
-    public void setMaxHealth() {
+    public void setMaxHealth(boolean heal) {
         int healthBoost;
 
         if (this.isQueen()) {
@@ -255,7 +255,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Play
                         healthBoost,
                         AttributeModifier.Operation.ADD_VALUE));
 
-                if (oldHealthBoost < healthBoost) {
+                if (oldHealthBoost < healthBoost && heal) {
                     this.heal(healthBoost - oldHealthBoost);
                 }
             }
@@ -493,7 +493,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Play
 
                 if (this.random.nextFloat() < tameChance) {
                     tame(player);
-                    setFriendship(friendshipAmount);
+                    setFriendship(friendshipAmount, true);
                     setOrderedToSit(true);
                     this.level().broadcastEntityEvent(this, (byte) 7);
                 }
