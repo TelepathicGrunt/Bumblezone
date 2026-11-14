@@ -85,6 +85,9 @@ Made it so if `repeatableEssenceEvents` is true, beating the arena event again g
 
 Tweaked what modded blocks shows in Hanging Gardens
 
+#### Loot:
+Fixed `the_bumblezone:honey_compass_locate_structure` loot function's `search_radius` and `skip_existing_chunks` fields not being respected
+
 #### Features:
 Fixed infinite loop if one sets the `size` field to 1 or 0 for `the_bumblezone:blockentity_combs` feature
 
