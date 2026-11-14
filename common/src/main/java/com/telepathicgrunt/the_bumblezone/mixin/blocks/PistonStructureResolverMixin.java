@@ -1,5 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import dev.architectury.injectables.annotations.PlatformOnly;
 import net.minecraft.core.BlockPos;
@@ -21,51 +24,43 @@ public class PistonStructureResolverMixin {
     @Mutable
     @Final
     @Shadow
-    private Direction pushDirection;
+    private boolean extending;
 
     // allow royal jelly block to be pullable only
-    @PlatformOnly("forge")
-    @Inject(method = "addBlockLine(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;isEmptyBlock(Lnet/minecraft/core/BlockPos;)Z", ordinal = 0),
-            locals = LocalCapture.CAPTURE_FAILSOFT
-    )
-    private void bumblezone$pullableOnlyBlocks2_forge(BlockPos blockPos,
-                                                      Direction direction,
-                                                      CallbackInfoReturnable<Boolean> cir,
-                                                      BlockState blockState)
+    @Inject(method = "resolve()Z",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/piston/PistonBaseBlock;isPushable(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;ZLnet/minecraft/core/Direction;)Z", ordinal = 0),
+            locals = LocalCapture.CAPTURE_FAILSOFT,
+            cancellable = true)
+    private void bumblezone$pullableOnlyBlocks2(CallbackInfoReturnable<Boolean> cir, @Local(name = "nextState") BlockState nextState)
     {
-        if (blockState.is(BzBlocks.ROYAL_JELLY_BLOCK.get())) {
-            this.pushDirection = this.pushDirection.getOpposite();
+        if (this.extending &&
+            nextState.is(BzBlocks.ROYAL_JELLY_BLOCK.get()))
+        {
+            cir.setReturnValue(false);
         }
     }
 
-    @PlatformOnly({"fabric"})
-    @Inject(method = "addBlockLine(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;isAir()Z", ordinal = 0),
-            locals = LocalCapture.CAPTURE_FAILSOFT
-    )
-    private void bumblezone$pullableOnlyBlocks2_fabric(BlockPos blockPos,
-                                                   Direction direction,
-                                                   CallbackInfoReturnable<Boolean> cir,
-                                                   BlockState blockState)
+    @WrapOperation(method = "resolve()Z",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/piston/PistonBaseBlock;isPushable(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;ZLnet/minecraft/core/Direction;)Z"))
+    private boolean bumblezone$pullableOnlyBlocks3(BlockState state, Level level, BlockPos pos, Direction direction, boolean allowDestroyable, Direction connectionDirection, Operation<Boolean> original)
     {
-        if (blockState.is(BzBlocks.ROYAL_JELLY_BLOCK.get())) {
-            this.pushDirection = this.pushDirection.getOpposite();
+        if (this.extending &&
+            state.is(BzBlocks.ROYAL_JELLY_BLOCK.get()))
+        {
+            return false;
         }
+        return original.call(state, level, pos, direction, allowDestroyable, connectionDirection);
     }
 
-    // allow royal jelly block to be pullable only
-    @Inject(method = "addBlockLine(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z",
-            at = @At(value = "INVOKE", target = "Ljava/util/List;size()I", ordinal = 0, remap = false),
-            locals = LocalCapture.CAPTURE_FAILSOFT
-    )
-    private void bumblezone$pullableOnlyBlocks3(BlockPos blockPos,
-                                                      Direction direction,
-                                                      CallbackInfoReturnable<Boolean> cir,
-                                                      BlockState blockState)
+    @WrapOperation(method = "addBlockLine(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/piston/PistonBaseBlock;isPushable(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;ZLnet/minecraft/core/Direction;)Z"))
+    private boolean bumblezone$pullableOnlyBlocks4(BlockState state, Level level, BlockPos pos, Direction direction, boolean allowDestroyable, Direction connectionDirection, Operation<Boolean> original)
     {
-        if (blockState.is(BzBlocks.ROYAL_JELLY_BLOCK.get())) {
-            this.pushDirection = this.pushDirection.getOpposite();
+        if (this.extending &&
+            state.is(BzBlocks.ROYAL_JELLY_BLOCK.get()))
+        {
+            return false;
         }
+        return original.call(state, level, pos, direction, allowDestroyable, connectionDirection);
     }
 }
