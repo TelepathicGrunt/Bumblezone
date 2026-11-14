@@ -264,6 +264,8 @@ Made `dispensersDropGlassBottles` config option work for Honey Bottles filling P
 #### Mod Compat:
 Fixed empty Productive Bees's Bee Cages being able to revive Honeycomb Brood Blocks from Dispensers
 
+Updated fluid tag compat for Create for when it updates
+
 Fixed broken Reliable Recipe Viewer mod compat
 
 Fixed JEI mod compat
