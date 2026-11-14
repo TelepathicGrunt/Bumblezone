@@ -54,6 +54,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -377,14 +378,14 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
         return fallDistance + 1.0E-6 - this.getAttributeValue(Attributes.SAFE_FALL_DISTANCE);
     }
 
-    protected void dealDamage(LivingEntity entityIn) {
-       if (this.isAlive()) {
-          int i = 2;
-          if (this.distanceToSqr(entityIn) < 0.6D * (double) i * 0.6D * (double) i && this.hasLineOfSight(entityIn) && entityIn.hurtOrSimulate(damageSources().mobAttack(this), this.getAttackStrength())) {
-             this.playSound(BzSounds.HONEY_SLIME_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-             this.dealDamage(entityIn);
-          }
-       }
+    protected void dealDamage(LivingEntity target) {
+        if (this.level() instanceof ServerLevel level && this.isAlive() && this.isWithinMeleeAttackRange(target) && this.hasLineOfSight(target)) {
+            DamageSource damageSource = this.damageSources().mobAttack(this);
+            if (target.hurtServer(level, damageSource, this.getAttackStrength())) {
+                this.playSound(BzSounds.HONEY_SLIME_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+                EnchantmentHelper.doPostAttackEffects(level, target, damageSource);
+            }
+        }
     }
 
     public boolean canDamagePlayer() {
