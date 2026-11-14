@@ -237,7 +237,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
         dealtDamage = compoundTag.getBoolean("DealtDamage");
-        this.entityData.set(ID_LOYALTY, this.getLoyaltyFromItem(this.getWeaponItem()));
+        this.entityData.set(ID_LOYALTY, this.getWeaponItem() != null ? this.getLoyaltyFromItem(this.getWeaponItem()) : 0);
         this.entityData.set(ID_FOIL, compoundTag.getBoolean("IsFoil"));
     }
 
