@@ -244,7 +244,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
     protected void readAdditionalSaveData(ValueInput input) {
         super.readAdditionalSaveData(input);
         this.dealtDamage = input.getBooleanOr("DealtDamage", false);
-        this.entityData.set(ID_LOYALTY, this.getLoyaltyFromItem(this.getWeaponItem()));
+        this.entityData.set(ID_LOYALTY, this.getWeaponItem() != null ? this.getLoyaltyFromItem(this.getWeaponItem()) : 0);
         this.entityData.set(ID_FOIL, input.getBooleanOr("IsFoil", false));
     }
 
