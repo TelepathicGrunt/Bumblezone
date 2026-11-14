@@ -99,6 +99,9 @@ Fixed String Curtain on change, sending a block update to entire vertical column
 
 Fixed edge case where Royal Jelly Block couldn't be pulled by piston when it should. Now it should properly behave as a pull-only block
 
+#### Fluids:
+Fixed case where vanilla Bubble Column won't be supported on Sugar Water Bubble Column
+
 #### Structures:
 Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable and fluid blocks outside the arena bounds
 
