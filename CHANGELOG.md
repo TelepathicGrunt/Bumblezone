@@ -190,6 +190,8 @@ Fixed infinite loop if one sets `alternativeFluidToReplaceHoneyFluid` to Bumblez
 
 Fixed it so `ragingEssenceStrengthLevels` config is actually read now
 
+Made `dispensersDropGlassBottles` config option work for Honey Bottles filling Porous Honeycomb Block from Dispensers
+
 #### Mod Compat:
 Fixed broken Reliable Recipe Viewer mod compat
 
