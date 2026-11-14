@@ -63,6 +63,8 @@ Shot Bee Stingers and Crystal Shards now doesn't fire unused `broadcastEntityEve
 
 (NeoForge): Fixed Bee Stingers being consumed when fired from Infinity enchanted Bow
 
+Trying to consume Essence of the Bees item while already essenced won't consume the item now
+
 #### Blocks:
 Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsumeItemUI` config options are respected on serverside for Crystalline Flower.
 
