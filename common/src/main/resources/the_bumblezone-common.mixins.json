@@ -18,7 +18,6 @@
     "blocks.FlowingFluidAccessor",
     "blocks.FrogspawnBlockMixin",
     "blocks.LilyPadBlockMixin",
-    "blocks.PistonBaseBlockMixin",
     "blocks.PistonMovingBlockEntityMixin",
     "blocks.PistonStructureResolverMixin",
     "blocks.PointedDripstoneBlockMixin",

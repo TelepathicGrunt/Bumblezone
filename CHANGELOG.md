@@ -144,7 +144,8 @@ Fixed weird speed boost that happens when going through different sized Pile of 
 
 Fixed String Curtain on change, sending a block update to entire vertical column to world top
 
-Fixed edge case where Royal Jelly Block couldn't be pulled by piston when it should. Now it should properly behave as a pull-only block
+Fixed edge case where Royal Jelly Block couldn't be pulled by piston when it should or able to delete blocks.
+ Now it should properly behave as a pull-only block
 
 Carving Carvable Wax block now preserves its facing property
 
