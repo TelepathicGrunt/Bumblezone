@@ -4,6 +4,8 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.EssenceBlock;
 import com.telepathicgrunt.the_bumblezone.bossbars.ServerEssenceEvent;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.items.datacomponents.CrystallineFlowerData;
+import com.telepathicgrunt.the_bumblezone.mixin.gameplay.ServerBossEventAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -24,6 +26,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -44,12 +47,16 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 public class EssenceBlockEntity extends BlockEntity {
@@ -338,8 +345,17 @@ public class EssenceBlockEntity extends BlockEntity {
                 }
                 else {
                     essenceBlockEntity.getPlayerInArena().remove(playerUUID);
-                    essenceBlockEntity.getEventBar().removePlayer(serverPlayer);
                     essenceBlockEntity.setChanged();
+
+                    // Do not do enhance for loop or else concurrent modification exception crash
+                    Set<ServerPlayer> playerSetFromBossBar = ((ServerBossEventAccessor) essenceBlockEntity.getEventBar()).bumblezone$getPlayers();
+                    for (@NotNull Iterator<ServerPlayer> it = playerSetFromBossBar.iterator(); it.hasNext(); ) {
+                        ServerPlayer player = it.next();
+                        if (player.getUUID() == playerUUID) {
+                            it.remove();
+                            break;
+                        }
+                    }
                 }
             }
             if (essenceBlockEntity.getPlayerInArena().isEmpty()) {

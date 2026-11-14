@@ -83,6 +83,8 @@ Added safety net so that if Sempiternal Sanctum arena fails to save the pre-aren
 
 Made it so if `repeatableEssenceEvents` is true, beating the arena event again grants 1/4th xp of the first time completion amount
 
+Fixed it where teleporting out of an Sempiternal Sanctum arena event into another dimension could retain the arena boss bar and music.
+
 Tweaked what modded blocks shows in Hanging Gardens
 
 #### Loot:

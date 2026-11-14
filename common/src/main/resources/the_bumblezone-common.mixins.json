@@ -3,6 +3,7 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "gameplay.ServerBossEventAccessor",
     "blocks.AmethystClusterBlockMixin",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",
@@ -80,6 +81,7 @@
     "util.Vec3Accessor",
     "util.WeightedRandomListAccessor",
     "world.BiomeManagerAccessor",
+    "world.JigsawJunctionAccessor",
     "world.LevelMixin",
     "world.NoiseChunkAccessor",
     "world.NoiseChunkMixin",
