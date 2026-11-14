@@ -418,10 +418,10 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
         boolean isBaby = beeState.beeEntity().isBaby();
         if (beeState.beeEntity().getType() == EntityType.BEE) {
             if (isBaby) {
-                renderVanillaBeeIcon(guiGraphics, mainX, mainY, beeState, BEE_VANILLA_NORMAL_BABY_ICON, BEE_VANILLA_POLLINATED_BABY_ICON, BEE_VANILLA_STINGERLESS_BABY_ICON, BEE_VANILLA_POLLINATED_STINGERLESS_BABY_ICON);
+                renderVanillaBeeIcon(guiGraphics, mainX, mainY, beeState, BEE_VANILLA_NORMAL_BABY_ICON, BEE_VANILLA_STINGERLESS_BABY_ICON, BEE_VANILLA_POLLINATED_BABY_ICON, BEE_VANILLA_POLLINATED_STINGERLESS_BABY_ICON);
             }
             else {
-                renderVanillaBeeIcon(guiGraphics, mainX, mainY, beeState, BEE_VANILLA_NORMAL_ICON, BEE_VANILLA_POLLINATED_ICON, BEE_VANILLA_STINGERLESS_ICON, BEE_VANILLA_POLLINATED_STINGERLESS_ICON);
+                renderVanillaBeeIcon(guiGraphics, mainX, mainY, beeState, BEE_VANILLA_NORMAL_ICON, BEE_VANILLA_STINGERLESS_ICON, BEE_VANILLA_POLLINATED_ICON, BEE_VANILLA_POLLINATED_STINGERLESS_ICON);
             }
         }
         else {

@@ -71,6 +71,8 @@ Fixed crash if player tries to release a bee from Briefcase while it is in offha
 
 Fixed Buzzing Briefcase able to release bees through walls when attacking an enemy
 
+Fixed Buzzing Briefcase showing incorrect icon for stored vanilla bees without stingers or with pollen
+
 Fixed Bee Cannon and Crystal Cannon not working in offhand slot
 
 Fixed issue where if you were bound to a now-depleted Respawn Anchor in another dimension and your death is prevented by
