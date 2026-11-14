@@ -191,7 +191,8 @@ public class HoneyFluidBlock extends LiquidBlock implements FluidGetter {
                 beeEntity.heal(diff);
                 BlockState currentState = world.getBlockState(position);
                 if (currentState.is(BzFluids.HONEY_FLUID_BLOCK.get())) {
-                    world.setBlock(position, currentState.setValue(HoneyFluidBlock.LEVEL, Math.max(currentState.getValue(HoneyFluidBlock.LEVEL) - (int) Math.ceil(diff), 1)), 3);
+                    int originalLevel = currentState.getFluidState().isSource() ? 8 : currentState.getValue(HoneyFluidBlock.LEVEL);
+                    world.setBlock(position, currentState.setValue(HoneyFluidBlock.LEVEL, Math.max(originalLevel - (int) Math.ceil(diff), 1)), 3);
                 }
             }
         }

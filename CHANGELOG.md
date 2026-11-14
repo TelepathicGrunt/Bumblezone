@@ -126,6 +126,8 @@ Carving Carvable Wax block now preserves its facing property
 #### Fluids:
 Fixed Royal Jelly Fluid and Honey Fluid overlay when in fluid from being messed up when player is below Y = 0
 
+Source Honey Fluid healing hurt bees will change to level 7 Honey Fluid instead of level 1.
+
 Fixed case where vanilla Bubble Column won't be supported on Sugar Water Bubble Column
 
 #### Structures:
