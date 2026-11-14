@@ -43,7 +43,12 @@ public abstract class BeeArmor extends BzArmor {
         for (ModCompat compat : ModChecker.CUSTOM_EQUIPMENT_SLOTS_COMPATS) {
             beeWearablesCount += compat.getNumberOfMatchingEquippedItemsInCustomSlots(entity, (itemStack) -> {
                 if (itemStack.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_WEARABLES)) {
-                    return !ModChecker.backpackedPresent || BackpackedCompat.isBackpackedHoneyThemedOrOtherItem(itemStack);
+                    if (ModChecker.backpackedPresent) {
+                        return BackpackedCompat.isBackpackedHoneyThemedOrOtherItem(itemStack);
+                    }
+                    else {
+                        return true;
+                    }
                 }
                 return false;
             });
