@@ -75,6 +75,8 @@ Fixed Floral Headwear on Armor Stands were not attracting 50% of bees. Now all 1
 
 Stinger Spear enchanted with Potent Poison level 3 and above now inflicts higher poison levels as intended
 
+Fixed thrown Stinger Spears with Neurotoxin not breaking when they run out of durability on hit
+
 Bee Stinger does not get consumed now if used on a bee that has a stinger already
 
 Shot Bee Stingers and Crystal Shards now doesn't fire unused `broadcastEntityEvent`. Reduces server packet load.
