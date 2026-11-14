@@ -98,12 +98,7 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
         boolean flag = fluidstate.is(FluidTags.WATER) && fluidstate.isSource();
         return super.getStateForPlacement(context).setValue(WATERLOGGED, flag);
     }
-
-    @Override
-    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        return Block.canSupportCenter(level, pos.below(), Direction.UP);
-    }
-
+    
     @Override
     public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         SuperCandle.placeWickIfPossible(world, pos, false);

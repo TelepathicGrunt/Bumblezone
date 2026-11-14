@@ -79,11 +79,6 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
     }
 
     @Override
-    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        return Block.canSupportCenter(level, pos.below(), Direction.UP);
-    }
-
-    @Override
     public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         SuperCandle.placeWickIfPossible(world, pos, false);
         super.neighborChanged(blockstate, world, pos, block, fromPos, notify);
