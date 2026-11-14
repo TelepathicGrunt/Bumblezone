@@ -69,6 +69,8 @@ Optimized Buzzing Briefcase menu clicks to not send button click to server if pl
 
 Fixed crash if player tries to release a bee from Briefcase while it is in offhand slot
 
+Fixed Buzzing Briefcase able to release bees through walls when attacking an enemy
+
 Fixed Bee Cannon and Crystal Cannon not working in offhand slot
 
 Fixed issue where if you were bound to a now-depleted Respawn Anchor in another dimension and your death is prevented by
