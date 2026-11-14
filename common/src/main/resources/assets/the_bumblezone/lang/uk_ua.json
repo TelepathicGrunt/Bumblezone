@@ -697,7 +697,6 @@
   "command.the_bumblezone.have_bee_essence": "%s має активну есенцію бджіл!",
   "command.the_bumblezone.does_not_have_bee_essence": "%s не має активну есенцію бджіл...",
   "command.the_bumblezone.queens_desired_not_active": "%s спершу потрібно розпочати гілку досягнень «Бажання королеви», щоб ця команда мала сенс...",
-  "command.the_bumblezone.queens_desired_crafted_beehive": "%s змайстрував(ла) %s вуликів для досягнення «Бажання королеви»",
   "command.the_bumblezone.queens_desired_bees_bred": "%s розмножив(ла) %s бджіл для досягнення «Бажання королеви»",
   "command.the_bumblezone.queens_desired_flowers_spawned": "%s виростив(ла) %s квітів кинутою пилковою кулькою для досягнення «Бажання королеви»",
   "command.the_bumblezone.queens_desired_honey_bottle_drank": "%s випив(ла) %s пляшок меду для досягнення «Бажання королеви»",

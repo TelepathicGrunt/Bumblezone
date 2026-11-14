@@ -258,7 +258,6 @@
   "command.the_bumblezone.have_bee_essence": "당신에게는 벌의 정수가 이미 부여되어 있습니다!",
   "command.the_bumblezone.does_not_have_bee_essence": "당신에게는 벌의 정수가 부여되어 있지 않습니다...",
   "command.the_bumblezone.queens_desired_not_active": "이 명령어를 사용 가능하게 하려면 먼저 여왕벌의 퀘스트 발전 과제를 시작해야 합니다...",
-  "command.the_bumblezone.queens_desired_crafted_beehive": "You crafted %s beehives for Queens Desire advancement",
   "command.the_bumblezone.queens_desired_bees_bred": "You bred %s bees for Queens Desire advancement",
   "command.the_bumblezone.queens_desired_flowers_spawned": "You spawned %s flowers from thrown Pollen Puff for Queens Desire advancement",
   "command.the_bumblezone.queens_desired_honey_bottle_drank": "You drank %s Honey Bottles for Queens Desire advancement",

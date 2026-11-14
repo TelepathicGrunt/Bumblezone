@@ -732,7 +732,6 @@
   "command.the_bumblezone.have_bee_essence": "¡%s tiene activa la Esencia de Abeja!",
   "command.the_bumblezone.does_not_have_bee_essence": "%s no tiene activa la Esencia de Abeja...",
   "command.the_bumblezone.queens_desired_not_active": "%s tiene que empezar el avance Deseo de la Reina antes de que este comando tenga sentido...",
-  "command.the_bumblezone.queens_desired_crafted_beehive": "%s fabricó %s colmenas para el avance Deseo de la Reina",
   "command.the_bumblezone.queens_desired_bees_bred": "%s crió %s abejas para el avance Deseo de la Reina",
   "command.the_bumblezone.queens_desired_flowers_spawned": "%s generó %s flores lanzando Esponjapolen para el avance Deseo de la Reina",
   "command.the_bumblezone.queens_desired_honey_bottle_drank": "%s tomó %s botellas de miel para el avance Deseo de la Reina",

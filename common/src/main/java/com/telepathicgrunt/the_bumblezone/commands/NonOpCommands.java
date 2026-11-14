@@ -32,7 +32,7 @@ public class NonOpCommands {
     private static Set<String> cachedSuggestion = new HashSet<>();
     enum DATA_ARG {
         IS_BEE_ESSENCED,
-        QUEENS_DESIRED_CRAFTED_BEEHIVE,
+        QUEENS_DESIRED_DIRT_PELLET_FLYING_MOB_KILLS,
         QUEENS_DESIRED_BEES_BRED,
         QUEENS_DESIRED_FLOWERS_SPAWNED,
         QUEENS_DESIRED_HONEY_BOTTLE_DRANK,
@@ -140,10 +140,10 @@ public class NonOpCommands {
             }
 
             switch (dataArg) {
-                case QUEENS_DESIRED_CRAFTED_BEEHIVE -> 
+                case QUEENS_DESIRED_DIRT_PELLET_FLYING_MOB_KILLS ->
                         PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability ->
                                 player.sendSystemMessage(
-                                        Component.translatable("command.the_bumblezone.queens_desired_crafted_beehive", serverPlayer.getDisplayName(), capability.dirtPelletExtraDamageKills)));
+                                        Component.translatable("command.the_bumblezone.queens_desired_dirt_pellet_flying_mob_kills", serverPlayer.getDisplayName(), capability.dirtPelletExtraDamageKills)));
                 case QUEENS_DESIRED_BEES_BRED ->
                         PlatformService.INSTANCE.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability ->
                                 player.sendSystemMessage(

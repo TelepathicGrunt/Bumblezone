@@ -702,7 +702,6 @@
   "command.the_bumblezone.have_bee_essence": "%s có Tinh Chất Ong đang hoạt động!",
   "command.the_bumblezone.does_not_have_bee_essence": "%s không có Tinh Chất Ong đang hoạt động...",
   "command.the_bumblezone.queens_desired_not_active": "%s cần bắt đầu tiến trình Queens Desire trước khi lệnh này có ý nghĩa...",
-  "command.the_bumblezone.queens_desired_crafted_beehive": "%s đã chế tạo %s tổ ong cho tiến trình Queens Desire",
   "command.the_bumblezone.queens_desired_bees_bred": "%s đã lai tạo %s con ong cho tiến trình Queens Desire",
   "command.the_bumblezone.queens_desired_flowers_spawned": "%s đã sinh ra %s hoa từ việc ném Cục Phấn Hoa cho tiến trình Queens Desire",
   "command.the_bumblezone.queens_desired_honey_bottle_drank": "%s đã uống %s chai mật ong cho tiến trình Queens Desire",

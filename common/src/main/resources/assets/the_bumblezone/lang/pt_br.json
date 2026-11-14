@@ -726,7 +726,6 @@
   "command.the_bumblezone.have_bee_essence": "%s tem a Essência de Abelha ativa!",
   "command.the_bumblezone.does_not_have_bee_essence": "%s não tem a Essência de Abelha ativa...",
   "command.the_bumblezone.queens_desired_not_active": "%s precisa iniciar a conquista do Desejo da Rainha primeiro para que este comando faça sentido...",
-  "command.the_bumblezone.queens_desired_crafted_beehive": "%s criou %s colmeias para a conquista do Desejo da Rainha",
   "command.the_bumblezone.queens_desired_bees_bred": "%s procriou %s abelhas para a conquista do Desejo da Rainha",
   "command.the_bumblezone.queens_desired_flowers_spawned": "%s gerou %s flores de Sopro de Pólen jogado para a conquista do Desejo da Rainha",
   "command.the_bumblezone.queens_desired_honey_bottle_drank": "%s bebeu %s Frascos de Mel para a conquista do Desejo da Rainha",

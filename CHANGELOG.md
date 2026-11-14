@@ -197,6 +197,8 @@ Fixed memory leak with buzzing sound instance for Bumble Bee Chestplate and Beeh
 #### Commands:
 Fix command suggestions getting messed up when switching between `bumblezone_modify_data` and `bumblezone_read_data`
 
+Fixed `bumblezone_modify_data` and `bumblezone_read_data` so that they now report `dirt_pellet_flying_mob_kills` properly for a given player
+
 #### Configs:
 Fixed infinite loop if one sets `alternativeFluidToReplaceHoneyFluid` to Bumblezone's own Honey Fluid. Why would you do that? No idea. Don't do that.
 

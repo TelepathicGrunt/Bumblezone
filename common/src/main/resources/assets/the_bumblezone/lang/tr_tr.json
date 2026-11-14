@@ -723,7 +723,6 @@
   "command.the_bumblezone.have_bee_essence": "%s Arı Özü aktif!",
   "command.the_bumblezone.does_not_have_bee_essence": "%s Arı Özü aktif değil...",
   "command.the_bumblezone.queens_desired_not_active": "%s bu komutun anlamlı olması için önce Kraliçe'nin Arzusu başarımını başlatmalı...",
-  "command.the_bumblezone.queens_desired_crafted_beehive": "%s, Kraliçe'nin Arzusu başarımı için %s arı kovanı üretti",
   "command.the_bumblezone.queens_desired_bees_bred": "%s, Kraliçe'nin Arzusu başarımı için %s arı üretti",
   "command.the_bumblezone.queens_desired_flowers_spawned": "%s, Kraliçe'nin Arzusu başarımı için atılan Polen Püskürmesinden %s çiçek doğurdu",
   "command.the_bumblezone.queens_desired_honey_bottle_drank": "%s, Kraliçe'nin Arzusu başarımı için %s Bal Şişesi içti",

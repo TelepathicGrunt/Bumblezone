@@ -806,7 +806,7 @@
   "command.the_bumblezone.have_bee_essence": "%s has Bee Essence active!",
   "command.the_bumblezone.does_not_have_bee_essence": "%s does not have Bee Essence active...",
   "command.the_bumblezone.queens_desired_not_active": "%s needs to start Queens Desire advancement first for this command to make sense...",
-  "command.the_bumblezone.queens_desired_crafted_beehive": "%s crafted %s beehives for Queens Desire advancement",
+  "command.the_bumblezone.queens_desired_dirt_pellet_flying_mob_kills": "%s killed %s flying mobs with Dirt Pellets for Queens Desire advancement",
   "command.the_bumblezone.queens_desired_bees_bred": "%s bred %s bees for Queens Desire advancement",
   "command.the_bumblezone.queens_desired_flowers_spawned": "%s spawned %s flowers from thrown Pollen Puff for Queens Desire advancement",
   "command.the_bumblezone.queens_desired_honey_bottle_drank": "%s drank %s Honey Bottles for Queens Desire advancement",

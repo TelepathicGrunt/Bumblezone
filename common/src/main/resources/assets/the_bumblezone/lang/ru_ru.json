@@ -730,7 +730,6 @@
   "command.the_bumblezone.have_bee_essence": "%s под действием Эссенции пчёл!",
   "command.the_bumblezone.does_not_have_bee_essence": "%s не под действием Эссенции пчёл...",
   "command.the_bumblezone.queens_desired_not_active": "%s сперва должны начать Королевские желания, тогда команда будет осмысленна...",
-  "command.the_bumblezone.queens_desired_crafted_beehive": "%s создали %s ульев для достижения Королевских желаний",
   "command.the_bumblezone.queens_desired_bees_bred": "%s скрестили %s пчёл для достижения Королевских желаний",
   "command.the_bumblezone.queens_desired_flowers_spawned": "%s создали %s цветов с помощью пыльцы для достижения Королевских желаний",
   "command.the_bumblezone.queens_desired_honey_bottle_drank": "%s выпили %s бутылочек мёда для достижения Королевских желаний",

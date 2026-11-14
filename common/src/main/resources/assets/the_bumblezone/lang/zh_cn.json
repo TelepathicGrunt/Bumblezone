@@ -726,7 +726,6 @@
     "command.the_bumblezone.have_bee_essence": "%s 激活了蜜蜂精华！",
     "command.the_bumblezone.does_not_have_bee_essence": "%s 没有激活蜜蜂精华...",
     "command.the_bumblezone.queens_desired_not_active": "%s 需要先开始女王的渴望进阶，才能使用此命令...",
-    "command.the_bumblezone.queens_desired_crafted_beehive": "%s 为女王的渴望进阶制作了 %s 个蜂箱",
     "command.the_bumblezone.queens_desired_bees_bred": "%s 为女王的渴望进阶繁殖了 %s 只蜜蜂",
     "command.the_bumblezone.queens_desired_flowers_spawned": "%s 通过投掷花粉球，在女王的渴望进阶中生成了 %s 朵花",
     "command.the_bumblezone.queens_desired_honey_bottle_drank": "%s 喝了 %s 瓶蜂蜜，以获得女王的渴望进阶",

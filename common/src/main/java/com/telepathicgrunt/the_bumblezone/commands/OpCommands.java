@@ -30,7 +30,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Util;
@@ -57,7 +56,7 @@ public class OpCommands {
 
     enum DATA_READ_ARG {
         IS_BEE_ESSENCED,
-        QUEENS_DESIRED_CRAFTED_BEEHIVE,
+        QUEENS_DESIRED_DIRT_PELLET_FLYING_MOB_KILLS,
         QUEENS_DESIRED_BEES_BRED,
         QUEENS_DESIRED_FLOWERS_SPAWNED,
         QUEENS_DESIRED_HONEY_BOTTLE_DRANK,
@@ -247,8 +246,8 @@ public class OpCommands {
             }
 
             switch (dataArg) {
-                case QUEENS_DESIRED_CRAFTED_BEEHIVE -> PlatformService.INSTANCE.getModule(targetPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> commandSourceStack.sendSuccess(
-                        () -> Component.translatable("command.the_bumblezone.queens_desired_crafted_beehive", targetPlayer.getDisplayName(), capability.dirtPelletExtraDamageKills),
+                case QUEENS_DESIRED_DIRT_PELLET_FLYING_MOB_KILLS -> PlatformService.INSTANCE.getModule(targetPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> commandSourceStack.sendSuccess(
+                        () -> Component.translatable("command.the_bumblezone.queens_desired_dirt_pellet_flying_mob_kills", targetPlayer.getDisplayName(), capability.dirtPelletExtraDamageKills),
                         false));
                 case QUEENS_DESIRED_BEES_BRED -> PlatformService.INSTANCE.getModule(targetPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> commandSourceStack.sendSuccess(
                         () -> Component.translatable("command.the_bumblezone.queens_desired_bees_bred", targetPlayer.getDisplayName(), capability.beesBred),
