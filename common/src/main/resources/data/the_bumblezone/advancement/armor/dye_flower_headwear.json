@@ -25,7 +25,7 @@
     "dye_flower_headwear": {
       "trigger": "minecraft:recipe_crafted",
       "conditions": {
-        "recipe_id": "minecraft:armor_dye",
+        "recipe_id": "the_bumblezone:flower_headwear_dyed",
         "ingredients": [
           {
             "items": [

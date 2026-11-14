@@ -174,6 +174,8 @@ Fixed `the_bumblezone:honey_compass_locate_structure` loot function's `search_ra
 #### Recipes:
 Fixed possible crash if `the_bumblezone:container_shapeless_recipe_bz` gets an item with null crafting remainder
 
+Fixed crafting `the_bumblezone:flower_headwear_dyed` recipe does not grant `the_bumblezone:armor/dye_flower_headwear` advancement
+
 #### Features:
 Fixed infinite loop if one sets the `size` field to 1 or 0 for `the_bumblezone:blockentity_combs` feature
 
