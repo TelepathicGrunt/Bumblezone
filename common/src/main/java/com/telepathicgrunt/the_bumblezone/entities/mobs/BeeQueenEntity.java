@@ -586,6 +586,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         EntityReference<Entity> entityReference = ((ItemEntityAccessor) itemEntity).bumblezone$getThrower();
                         spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), entityReference != null ? entityReference.getUUID() : null, specialDayItems.get().getFirst());
                         tradedItems++;
+                        didSpecialDayTrade = true;
                     }
                 }
             }
