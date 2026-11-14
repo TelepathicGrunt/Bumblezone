@@ -569,7 +569,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     this.level(),
                     this.getX() + (sideVect.x() * 1.75) + (forwardVect.x() * 1),
                     this.getY() + 0.3,
-                    this.getZ() + (sideVect.z() * 1.75) + (forwardVect.x() * 1),
+                    this.getZ() + (sideVect.z() * 1.75) + (forwardVect.z() * 1),
                     itemEntity.getItem(),
                     (this.random.nextFloat() - 0.5f) / 10 + forwardVect.x() / 3,
                     0.4f,
@@ -791,7 +791,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     this.level(),
                     this.getX() + (sideVect.x() * 0.9d) + (forwardVect.x() * 1),
                     this.getY() + 0.3d,
-                    this.getZ() + (sideVect.z() * 0.9d) + (forwardVect.x() * 1),
+                    this.getZ() + (sideVect.z() * 0.9d) + (forwardVect.z() * 1),
                     rewardItem,
                     (this.random.nextFloat() - 0.5f) / 10 + forwardVect.x() / 4d,
                     0.3f,
@@ -805,7 +805,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         serverLevel,
                         new Vec3(this.getX() + (forwardVect.x() * 1),
                                 this.getY() + 0.3,
-                                this.getZ() + (forwardVect.x() * 1)),
+                                this.getZ() + (forwardVect.z() * 1)),
                         reward.xpReward);
             }
         }
