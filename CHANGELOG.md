@@ -105,6 +105,9 @@ Fixed bug where players who had not consumed Essence of the Bees would have Semp
 
 Tweaked what modded blocks shows in Hanging Gardens
 
+#### Music:
+(Fabric): Fix Bumblezone music fading being sped up when there's multiple players together
+
 #### Loot:
 Fixed `the_bumblezone:honey_compass_locate_structure` loot function's `search_radius` and `skip_existing_chunks` fields not being respected
 
