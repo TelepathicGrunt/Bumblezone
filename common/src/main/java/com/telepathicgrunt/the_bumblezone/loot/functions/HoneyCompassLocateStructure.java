@@ -108,7 +108,7 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
 
                 WeakReference<ItemStack> weakRefItemStack = new WeakReference<>(itemStack);
                 if (structure != null) {
-                    ThreadExecutor.locate(lootContext.getLevel(), searchId, structure, blockPos, 100, false)
+                    ThreadExecutor.locate(lootContext.getLevel(), searchId, structure, blockPos, this.searchRadius, this.skipKnownStructures)
                             .thenOnServerThread(foundPos -> setCompassFoundLocationData(weakRefItemStack, lootContext, foundPos));
                 }
             }

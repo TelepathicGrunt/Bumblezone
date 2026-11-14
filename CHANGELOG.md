@@ -116,6 +116,9 @@ Fixed Cell Maze having a room completely flooded with Sugar Water
 
 Tweaked what modded blocks shows in Hanging Gardens
 
+#### Loot:
+Fixed `the_bumblezone:honey_compass_locate_structure` loot function's `search_radius` and `skip_existing_chunks` fields not being respected
+
 #### Recipes:
 Fixed possible crash if `the_bumblezone:container_shapeless_recipe_bz` gets an item with null crafting remainder
 
