@@ -136,7 +136,9 @@ Added safety net so that if Sempiternal Sanctum arena fails to save the pre-aren
 Fixed arena entity saving so that Purple Sempiternal Sanctum arena event will place Purple Spike Entities in correct 
  locations after closing world and re-entering during the arena event.
 
-Made it so if `repeatableEssenceEvents` is true, beating the arena event again grants 1/4th xp of the first time completion amount
+Made it so if `repeatableEssenceEvents` is true, beating the Sempiternal Sanctum arena event again grants 1/4th xp of the first time completion amount
+
+Fixed it where teleporting out of an Sempiternal Sanctum arena event into another dimension could retain the arena boss bar and music.
 
 Fixed Cell Maze having a room completely flooded with Sugar Water
 
