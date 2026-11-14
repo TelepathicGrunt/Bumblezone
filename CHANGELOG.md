@@ -87,6 +87,8 @@ Fixed weird speed boost that happens when going through different sized Pile of 
 
 Fixed String Curtain on change, sending a block update to entire vertical column to world top
 
+Carving Carvable Wax block now preserves its facing property
+
 #### Fluids:
 Fixed case where vanilla Bubble Column won't be supported on Sugar Water Bubble Column
 

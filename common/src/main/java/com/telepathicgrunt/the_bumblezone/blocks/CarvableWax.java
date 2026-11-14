@@ -143,8 +143,11 @@ public class CarvableWax extends ProperFacingBlock {
             (PlatformHooks.isToolAction(itemstack, ShearsItem.class, "shears_carve") ||
             PlatformHooks.isToolAction(itemstack, SwordItem.class, "sword_dig")))
         {
-            world.setBlock(position, BzBlocks.CARVABLE_WAX.get().defaultBlockState().setValue(CARVING, blockState.getValue(CARVING).next()), 3);
-            this.spawnDestroyParticles(world, playerEntity, position,blockState);
+            BlockState newState = BzBlocks.CARVABLE_WAX.get().defaultBlockState()
+                    .setValue(CARVING, blockState.getValue(CARVING).next())
+                    .setValue(FACING, blockState.getValue(FACING));
+            world.setBlock(position, newState, 3);
+            this.spawnDestroyParticles(world, playerEntity, position, blockState);
 
             playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
             if (playerEntity instanceof ServerPlayer serverPlayer) {
