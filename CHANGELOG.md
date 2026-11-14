@@ -94,6 +94,8 @@ Optimized Sticky Honey Redstone to not keep calculating redstone signal every ti
 
 Fixed weird speed boost that happens when going through different sized Pile of Pollen blocks
 
+Fixed String Curtain
+
 #### Fluids:
 Fixed it so Royal Jelly Fluid and Honey Fluid flowing downward does not turn source fluid blocks of these fluids into non-source fluid blocks
 
