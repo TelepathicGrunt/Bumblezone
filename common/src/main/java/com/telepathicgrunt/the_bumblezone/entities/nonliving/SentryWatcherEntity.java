@@ -494,7 +494,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       }
       else if (this.level().isClientSide()) {
          if (this.hasActivated() && this.onGround() && (Math.abs(this.getDeltaMovement().x()) > 0.001d || Math.abs(this.getDeltaMovement().z()) > 0.001d)) {
-            int particlesToSpawn = (int) (1 + Math.abs(this.getDeltaMovement().x() * 50) + Math.abs(this.getDeltaMovement().z() + 50));
+            int particlesToSpawn = (int) (1 + Math.abs(this.getDeltaMovement().x() * 12) + Math.abs(this.getDeltaMovement().z() * 12));
             for (int i = 0; i < particlesToSpawn; i++) {
                this.level().addParticle(ParticleTypes.SMOKE,
                        this.position().x() + random.nextGaussian() * 0.6d,
