@@ -148,7 +148,7 @@ public abstract class RoyalJellyFluid extends BzFluid {
                 BlockState blockState = world.getBlockState(blockPos);
                 BlockPos belowBlockPos = blockPos.below();
                 BlockState belowBlockState = world.getBlockState(belowBlockPos);
-                FluidState belowFluidState = belowBlockState.getFluidState();
+                FluidState belowFluidState = this.getNewLiquid(world, belowBlockPos, belowBlockState);
                 if (!belowBlockState.getFluidState().is(BzTags.ROYAL_JELLY_FLUID) &&
                     this.canSpreadTo(world, blockPos, blockState, Direction.DOWN, belowBlockPos, belowBlockState, world.getFluidState(belowBlockPos), belowFluidState.getType())) {
 

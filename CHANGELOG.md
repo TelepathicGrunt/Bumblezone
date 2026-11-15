@@ -73,7 +73,6 @@ Fixed Crystalline Flower crash if one sets up `bz_crystalline_flower_data` in a 
 Made it so Experience Orbs looking for Crystalline Flower will not load nearby chunks that are ungenerated/unloaded for better performance.
  And reduce the range Experience Orbs searches for flower from 8 chunks to 1 chunk radius. I think I thought I was doing 8 block radius...
 
-
 Crystalline Flower now absorbs the true full Experience Orb amount by factoring in the orb's size (count)
 
 Crystalline Flower fixed to not consume more items from an itemstack than needed to max out flower tier
@@ -95,9 +94,6 @@ Optimized Sticky Honey Redstone to not keep calculating redstone signal every ti
 Fixed weird speed boost that happens when going through different sized Pile of Pollen blocks
 
 Fixed String Curtain
-
-#### Fluids:
-Fixed it so Royal Jelly Fluid and Honey Fluid flowing downward does not turn source fluid blocks of these fluids into non-source fluid blocks
 
 #### Structures:
 Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable and fluid blocks outside the arena bounds
