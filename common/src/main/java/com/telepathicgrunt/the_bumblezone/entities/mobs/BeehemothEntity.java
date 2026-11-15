@@ -158,9 +158,9 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Play
 
     @Override
     public void readAdditionalSaveData(ValueInput input) {
+        setFriendship(input.getIntOr("friendship", 0), false);
         super.readAdditionalSaveData(input);
         setQueen(input.getBooleanOr("queen", false));
-        setFriendship(input.getIntOr("friendship", 0), false);
     }
 
     @Override
