@@ -80,7 +80,8 @@ public class PlatformHooksImpl {
 
     @Contract(pure = true)
     public static ItemStack getCraftingRemainder(ItemStack stack) {
-        return stack.getCraftingRemainingItem();
+        ItemStack craftingRemainder = stack.getCraftingRemainingItem();
+        return craftingRemainder != null ? craftingRemainder : ItemStack.EMPTY;
     }
 
     @Contract(pure = true)
