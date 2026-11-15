@@ -5,6 +5,8 @@ Fixed case where Honey Slime without honey could gain honey right away if unload
 
 Fixed tamed Beehemoth getting health capped to untamed max amount when they get loaded in
 
+Fixed bug that caused Owned Sentry Watchers to be able to destroy blocks and unowned Sentry Watchers couldn't
+
 #### Items:
 Added Bumblezone buckets to bottom of Tools tab
 

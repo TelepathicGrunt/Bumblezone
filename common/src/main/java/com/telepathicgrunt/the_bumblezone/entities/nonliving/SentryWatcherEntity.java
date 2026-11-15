@@ -1017,7 +1017,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             }
         }
 
-        if (min != null && this.getOwner() != null) {
+        if (min != null && this.getOwner() == null) {
             boolean canDemolish = true;
             double totalhardness = 0;
             int alwaysDestroyCounter = 0;
