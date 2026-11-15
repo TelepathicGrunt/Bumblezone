@@ -154,10 +154,10 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
+        setFriendship(tag.getInt("friendship"), false);
         super.readAdditionalSaveData(tag);
         setSaddled(tag.getBoolean("saddled"));
         setQueen(tag.contains("queen") && tag.getBoolean("queen"));
-        setFriendship(tag.getInt("friendship"), false);
     }
 
     @Override
