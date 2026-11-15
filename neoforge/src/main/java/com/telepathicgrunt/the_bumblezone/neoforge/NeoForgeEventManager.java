@@ -131,7 +131,7 @@ public class NeoForgeEventManager {
         eventBus.addListener(NeoForgeEventManager::onBreakSpeed);
         eventBus.addListener(NeoForgeEventManager::onTagsUpdateClientReceived);
         eventBus.addListener(NeoForgeEventManager::onTagsUpdateServerLoad);
-        eventBus.addListener(NeoForgeEventManager::onLevelTickPost);
+        eventBus.addListener(NeoForgeEventManager::onServerTick);
         eventBus.addListener(NeoForgeEventManager::onAddReloadListeners);
         eventBus.addListener(NeoForgeEventManager::onDatapackSync);
         eventBus.addListener(NeoForgeEventManager::onRecipesReceived);
@@ -318,7 +318,7 @@ public class NeoForgeEventManager {
         };
     }
 
-    private static void onLevelTickPost(ServerTickEvent.Post event) {
+    private static void onServerTick(ServerTickEvent.Post event) {
         BzWorldSavedData.tick(event.getServer());
     }
 
