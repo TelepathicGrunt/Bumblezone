@@ -34,7 +34,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -311,20 +310,22 @@ public class BuzzingBriefcase extends Item {
         return null;
     }
 
-    public static void overrwriteBees(ItemStack briefcaseItem, List<Entity> bees) {
+    public static void overwriteBees(ItemStack briefcaseItem, List<Entity> bees) {
         CompoundTag briefcaseTag = briefcaseItem.getOrCreateTag();
         briefcaseTag.remove(TAG_BEES);
         briefcaseTag.remove(TAG_VARANT_BEES);
         bees.forEach(bee -> tryAddBee(briefcaseItem, bee));
     }
 
-    public static void overrwriteBeesAtIndex(ItemStack briefcaseItem, Level level, Entity modifiedBee, int index) {
+    public static void overwriteBeesAtIndex(ItemStack briefcaseItem, Level level, Entity modifiedBee, int index) {
         List<Entity> bees = BuzzingBriefcase.getBeesStored(level, briefcaseItem, false);
         if (index < 0 || index >= bees.size()) {
             return;
         }
 
-        briefcaseItem.set(BzDataComponents.BUZZING_BRIEFCASE_DATA.get(), CustomData.of(new CompoundTag()));
+        CompoundTag briefcaseTag = briefcaseItem.getOrCreateTag();
+        briefcaseTag.remove(TAG_BEES);
+        briefcaseTag.remove(TAG_VARANT_BEES);
         bees.set(index, modifiedBee);
         bees.forEach(bee -> tryAddBee(briefcaseItem, bee));
     }
