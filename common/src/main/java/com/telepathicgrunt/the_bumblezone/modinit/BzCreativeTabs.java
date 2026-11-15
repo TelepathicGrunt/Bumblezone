@@ -279,6 +279,10 @@ public class BzCreativeTabs {
 
         if (event.type() == BzAddCreativeTabEntriesEvent.Type.TOOLS) {
             Stream.of(
+                    BzItems.SUGAR_WATER_BUCKET,
+                    BzItems.HONEY_BUCKET,
+                    BzItems.ROYAL_JELLY_BUCKET,
+                    BzItems.BUZZING_BRIEFCASE,
                     BzItems.MUSIC_DISC_HIVE_SPEED_BEEPOP,
                     BzItems.MUSIC_DISC_PERZZONA_HIVE,
                     BzItems.MUSIC_DISC_STRING_LIKE_A_BEE,
@@ -292,8 +296,7 @@ public class BzCreativeTabs {
                     BzItems.MUSIC_DISC_LIFE_RENREN,
                     BzItems.MUSIC_DISC_DROWNING_IN_DESPAIR,
                     BzItems.MUSIC_DISC_KNOWING_RENREN,
-                    BzItems.MUSIC_DISC_A_LAST_FIRST_LAST,
-                    BzItems.BUZZING_BRIEFCASE
+                    BzItems.MUSIC_DISC_A_LAST_FIRST_LAST
             ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
 

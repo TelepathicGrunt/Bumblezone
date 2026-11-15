@@ -5,6 +5,9 @@ Fixed case where Honey Slime without honey could gain honey right away if unload
 
 Fixed tamed Beehemoth getting health capped to untamed max amount when they get loaded in
 
+#### Items:
+Added Bumblezone buckets to bottom of Tools tab
+
 #### Blocks:
 Fixed Crystalline Flower's ability to attract Experience Orbs nearby and max tier flowers will still attract orbs (due to client sync trickiness, figured it was best to still let it attract)
 
