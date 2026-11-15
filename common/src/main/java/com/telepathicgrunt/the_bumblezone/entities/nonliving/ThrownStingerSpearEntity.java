@@ -174,7 +174,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
             if (this.getOwner() instanceof LivingEntity ownerEntity && !victim.getType().is(BzTags.PARALYZED_IMMUNE)) {
                 Pair<ParalyzeMarker, Integer> neurotoxin = NeurotoxinsEnchantmentApplication.getNeurotoxinEnchantLevel(this.getPickupItemStackOrigin());
                 if (neurotoxin != null && neurotoxin.getSecond() > 0 && this.level() instanceof ServerLevel serverLevel) {
-                    this.getPickupItemStackOrigin().hurtAndBreak(neurotoxin.getFirst().durabilityDrainOnValidTargetHit(), serverLevel, ownerEntity instanceof ServerPlayer player ? player : null, _ -> this.kill(serverLevel));
+                    this.getPickupItemStackOrigin().hurtAndBreak(neurotoxin.getFirst().durabilityDrainOnValidTargetHit(), serverLevel, ownerEntity instanceof ServerPlayer player ? player : null, item -> this.kill());
                 }
             }
         }
