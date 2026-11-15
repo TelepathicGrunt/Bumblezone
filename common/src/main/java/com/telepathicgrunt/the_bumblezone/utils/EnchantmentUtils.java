@@ -84,7 +84,7 @@ public class EnchantmentUtils {
 				for(int i = maxLevelForEnchant; i > minLevelAllowed - 1; --i) {
 					if (forceAllowed || level >= enchantment.getMinCost(i)) {
 						EnchantmentInstance enchantmentInstance = new EnchantmentInstance(enchantment, xpTier <= 2 ? 1 : i);
-						if (existingEnchantments.containsKey(enchantment.value()) && existingEnchantments.get(enchantment.value()) >= enchantmentInstance.level()) {
+						if (existingEnchantments.containsKey(enchantment.value()) && existingEnchantments.get(enchantment.value()) >= enchantmentInstance.level) {
 							continue;
 						}
 						if (xpTier > EnchantmentUtils.getEnchantmentTierCost(enchantmentInstance)) {
