@@ -982,8 +982,13 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          this.verticalCollisionBelow = this.verticalCollision && vec3.y < 0.0;
 
          Vec3 deltaMovement = this.getDeltaMovement();
-         if (this.horizontalCollision && (Math.abs(deltaMovement.x()) + Math.abs(deltaMovement.z()) > 0.01)) {
-            destroyBlocksInWay();
+         if (this.horizontalCollision) {
+            if (Math.abs(deltaMovement.x()) + Math.abs(deltaMovement.z()) > 0.01) {
+               destroyBlocksInWay();
+            }
+            else {
+               deactivate();
+            }
          }
 
          if (this.horizontalCollision) {
