@@ -116,7 +116,7 @@ public class BeeCannon extends Item implements ItemExtension {
                         }
                     }
 
-                    mutableBeeCannon.hurtAndBreak(1, player, livingEntity.getUsedItemHand());
+                    mutableBeeCannon.hurtAndBreak(1, player, LivingEntity.getSlotForHand(livingEntity.getUsedItemHand()));
                 });
 
                 level.playSound(null, player.blockPosition(), BzSounds.BEE_CANNON_FIRES.get(), SoundSource.PLAYERS, 1.0F, (player.getRandom().nextFloat() * 0.2F) + 0.6F);

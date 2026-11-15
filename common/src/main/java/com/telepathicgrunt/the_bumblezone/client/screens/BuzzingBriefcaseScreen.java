@@ -811,7 +811,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     mouseY - (mainY + 33) >= 0.0D &&
                     mouseY - (mainY + 33) < 11.0D)
             {
-                if (!bee.hasNectar() && bee.is(BzTags.BUZZING_BRIEFCASE_CAN_POLLINATE) && inventory.contains(BzItems.POLLEN_PUFF.get().getDefaultInstance())) {
+                if (!bee.hasNectar() && bee.getType().is(BzTags.BUZZING_BRIEFCASE_CAN_POLLINATE) && inventory.contains(BzItems.POLLEN_PUFF.get().getDefaultInstance())) {
                     sendButtonPressToMenu((beeIndex * BuzzingBriefcaseMenu.NUMBER_OF_BUTTONS) + BuzzingBriefcaseMenu.POLLEN_ID);
 
                     int pollenSlotIndex = inventory.findSlotMatchingItem(BzItems.POLLEN_PUFF.get().getDefaultInstance());

@@ -2,11 +2,9 @@ package com.telepathicgrunt.the_bumblezone.services.neoforge;
 
 import com.mojang.authlib.GameProfile;
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.entities.neoforge.DisableFlightAttribute;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
-import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
@@ -30,12 +28,8 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.flag.FeatureFlags;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -118,8 +112,8 @@ public class NeoPlatformService implements PlatformService {
 
     @Override
     public ItemStack getCraftingRemainder(ItemStack stack) {
-        ItemStackTemplate craftingRemainder = stack.getCraftingRemainder();
-        return craftingRemainder != null ? craftingRemainder.create() : ItemStack.EMPTY;
+        ItemStack craftingRemainder = stack.getCraftingRemainingItem(); // Can be a null return... somehow
+        return craftingRemainder != null ? craftingRemainder : ItemStack.EMPTY;
     }
 
     @Override

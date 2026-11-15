@@ -24,6 +24,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -85,7 +86,7 @@ public class EntityTeleportationBackend {
         );
     }
 
-    public static Vec3 getBzCoordinate(Entity entity, ServerLevel originalWorld, ServerLevel bumblezoneWorld) {
+    public static Vec3 getBzCoordinate(Entity entity, LevelReader originalWorld, ServerLevel bumblezoneWorld) {
         //converts the position to get the corresponding position in bumblezone dimension
         double coordinateScale = originalWorld.dimensionType().coordinateScale() / bumblezoneWorld.dimensionType().coordinateScale();
 

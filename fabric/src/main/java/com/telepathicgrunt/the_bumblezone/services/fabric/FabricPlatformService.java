@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.mixin.fabric.item.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.items.ItemAccessor;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.fabric.RestrictedPortalsCompat;
-import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
@@ -43,13 +42,9 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.flag.FeatureFlags;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -127,9 +122,8 @@ public class FabricPlatformService implements PlatformService {
 
     @Override
     public ItemStack getCraftingRemainder(ItemStack stack) {
-        ItemStackTemplate craftingRemainder = stack.getCraftingRemainder();
-        final ItemStack itemStack = craftingRemainder != null ? craftingRemainder.create() : ItemStack.EMPTY;
-        return itemStack == ItemStack.EMPTY ? ItemStack.EMPTY : new ItemStack(itemStack.getItem());
+        Item craftingRemainder = stack.getItem().getCraftingRemainingItem();
+        return craftingRemainder != null ? new ItemStack(craftingRemainder) : ItemStack.EMPTY;
     }
 
     @Override
@@ -192,7 +186,7 @@ public class FabricPlatformService implements PlatformService {
     
     @Override
     public boolean isEyesInNoFluid(Entity entity) {
-        return ((com.telepathicgrunt.the_bumblezone.mixin.fabric.entity.EntityAccessor)entity).bumblezone$getFluidOnEyes().isEmpty();
+        return ((FabricEntityAccessor)entity).bumblezone$getFluidOnEyes().isEmpty();
     }
     
     @Override

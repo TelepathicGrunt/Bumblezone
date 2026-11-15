@@ -37,7 +37,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.WrittenBookContent;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.portal.TeleportTransition;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -138,10 +138,10 @@ public class ContinuityEssence extends AbilityEssenceItem {
         ResourceKey<Level> oldDimension = serverPlayer.level().dimension();
         BlockPos oldPosition = serverPlayer.blockPosition();
 
-        TeleportTransition respawnInfo = serverPlayer.findRespawnPositionAndUseSpawnBlock(false, TeleportTransition.DO_NOTHING);
+        DimensionTransition respawnInfo = serverPlayer.findRespawnPositionAndUseSpawnBlock(false, DimensionTransition.DO_NOTHING);
 
         ServerLevel finalDestination = respawnInfo.newLevel();
-        Vec3 playerRespawnPosition = respawnInfo.position();
+        Vec3 playerRespawnPosition = respawnInfo.pos();
         BlockPos playerRespawnBlockPos = BlockPos.containing(playerRespawnPosition);
 
         BzWorldSavedData.queueEntityToGenericTeleport(serverPlayer, finalDestination.dimension(), playerRespawnBlockPos, () -> {
