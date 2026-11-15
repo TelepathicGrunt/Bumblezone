@@ -1,5 +1,7 @@
 ### **(V.7.19.0 Changes) (1.21.1 Minecraft)**
 
+> TLDR: Large amount of bugfixes backported from 26.1.2 MC Bumblezone's v7.19.0 update plus some additional bugs found and fixed for 1.21.1
+
 #### Teleportation:
 Fixed issue where if player enters Bumblezone from non-Overworld dimension, rides a mount that originated in Bumblezone,  and try to exit Bumblezone dimension,
  the bug would've spawned player and mount in Overworld instead of the player's original non-Overworld dimension.
