@@ -74,7 +74,7 @@ public class BuzzingBriefcaseMenu extends AbstractContainerMenu {
 
         if (buttonPressed == RELEASE_ID) {
 
-            BuzzingBriefcase.dumpBees(briefcase, player, beeIndex, true);
+            BuzzingBriefcase.dumpBees(player, beeIndex, true);
             container.setChanged();
             return true;
         }
