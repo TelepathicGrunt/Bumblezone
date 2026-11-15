@@ -189,15 +189,15 @@ public class CrystallineFlower extends BaseEntityBlock {
                 List<Boolean> obstructedAbove = CrystallineFlower.getObstructions(tiersToMax, level, crystallineFlowerBlockEntity.getBlockPos().above(topBlock + 1));
 
                 int xpToHighestAvailableTier = getXpToHighestAvailableTier(crystallineFlowerBlockEntity, tiersToMax, obstructedAbove);
-                int experienceOrbFullXp = experienceOrb.getValue() * ((ExperienceOrbInvoker)experienceOrb).bumblezone$getCount();
+                int experienceOrbFullXp = experienceOrb.getValue() * ((ExperienceOrbAccessor)experienceOrb).bumblezone$getCount();
                 int xpGranted = Math.min(xpToHighestAvailableTier, experienceOrbFullXp);
 
                 crystallineFlowerBlockEntity.addXpAndTier(xpGranted);
 
                 int countDecrement = xpGranted / experienceOrb.getValue();
-                ((ExperienceOrbInvoker)experienceOrb).bumblezone$setCount(((ExperienceOrbInvoker)experienceOrb).bumblezone$getCount() - countDecrement);
-                ((ExperienceOrbInvoker)experienceOrb).bumblezone$setValue(experienceOrb.getValue() - (xpGranted % experienceOrb.getValue()));
-                if (experienceOrb.getValue() <= 0 || ((ExperienceOrbInvoker)experienceOrb).bumblezone$getCount() <= 0) {
+                ((ExperienceOrbAccessor)experienceOrb).bumblezone$setCount(((ExperienceOrbAccessor)experienceOrb).bumblezone$getCount() - countDecrement);
+                ((ExperienceOrbAccessor)experienceOrb).bumblezone$setValue(experienceOrb.getValue() - (xpGranted % experienceOrb.getValue()));
+                if (experienceOrb.getValue() <= 0 || ((ExperienceOrbAccessor)experienceOrb).bumblezone$getCount() <= 0) {
                     experienceOrb.discard();
                 }
 

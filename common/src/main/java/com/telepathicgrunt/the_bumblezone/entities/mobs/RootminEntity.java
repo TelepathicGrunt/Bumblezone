@@ -346,7 +346,7 @@ public class RootminEntity extends PathfinderMob implements Enemy, OwnableEntity
       this.goalSelector.addGoal(7, new RootminHideGoal(this));
       this.goalSelector.addGoal(8, new RootminRangedAttackGoal(this, 1.25, 20, 15, 30.0f));
       this.targetSelector.addGoal(9, new RootminHurtByTargetGoal(this));
-      this.targetSelector.addGoal(10, new RootminNearestAttackableTargetGoal(this, true, (target) -> target.attackable() && target.is(BzTags.ROOTMIN_TARGETS)));
+      this.targetSelector.addGoal(10, new RootminNearestAttackableTargetGoal(this, true, (target) -> target.attackable() && target.getType().is(BzTags.ROOTMIN_TARGETS)));
    }
 
    public static AttributeSupplier.Builder getAttributeBuilder() {
