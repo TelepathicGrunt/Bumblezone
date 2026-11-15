@@ -99,7 +99,7 @@ public class BuzzingBriefcaseMenu extends AbstractContainerMenu {
                     }
                 }
 
-                BuzzingBriefcase.overrwriteBeesAtIndex(briefcase, player.level(), beeStored, beeIndex);
+                BuzzingBriefcase.overwriteBeesAtIndex(briefcase, player.level(), beeStored, beeIndex);
                 container.setChanged();
                 return true;
             }
@@ -116,7 +116,7 @@ public class BuzzingBriefcaseMenu extends AbstractContainerMenu {
                     playerStingerStack.shrink(1);
                 }
 
-                BuzzingBriefcase.overrwriteBeesAtIndex(briefcase, player.level(), beeStored, beeIndex);
+                BuzzingBriefcase.overwriteBeesAtIndex(briefcase, player.level(), beeStored, beeIndex);
                 container.setChanged();
 
                 if (player instanceof ServerPlayer serverPlayer) {
@@ -144,7 +144,7 @@ public class BuzzingBriefcaseMenu extends AbstractContainerMenu {
                     }
                 }
 
-                BuzzingBriefcase.overrwriteBeesAtIndex(briefcase, player.level(), beeStored, beeIndex);
+                BuzzingBriefcase.overwriteBeesAtIndex(briefcase, player.level(), beeStored, beeIndex);
                 container.setChanged();
                 return true;
             }
@@ -161,7 +161,7 @@ public class BuzzingBriefcaseMenu extends AbstractContainerMenu {
                     playerPollenStack.shrink(1);
                 }
 
-                BuzzingBriefcase.overrwriteBeesAtIndex(briefcase, player.level(), beeStored, beeIndex);
+                BuzzingBriefcase.overwriteBeesAtIndex(briefcase, player.level(), beeStored, beeIndex);
                 container.setItem(0, briefcase);
                 return true;
             }

@@ -330,12 +330,12 @@ public class BuzzingBriefcase extends Item {
         return null;
     }
 
-    public static void overrwriteBees(ItemStack briefcaseItem, List<Entity> bees) {
+    public static void overwriteBees(ItemStack briefcaseItem, List<Entity> bees) {
         briefcaseItem.set(BzDataComponents.BUZZING_BRIEFCASE_DATA.get(), CustomData.of(new CompoundTag()));
         bees.forEach(bee -> tryAddBee(briefcaseItem, bee));
     }
 
-    public static void overrwriteBeesAtIndex(ItemStack briefcaseItem, Level level, Entity modifiedBee, int index) {
+    public static void overwriteBeesAtIndex(ItemStack briefcaseItem, Level level, Entity modifiedBee, int index) {
         List<Entity> bees = BuzzingBriefcase.getBeesStored(level, briefcaseItem, false);
         if (index < 0 || index >= bees.size()) {
             return;
