@@ -1,9 +1,6 @@
 ### **(V.7.19.0 Changes) (1.21.1 Minecraft)**
 
 #### Teleportation:
-Fixed teleporting to and from Bumblezone using the wrong ticket. Causing the destination chunk to remain loaded forever until server restart.
- Now the right ticket is used so the chunk is only loaded for 300 ticks for teleporting purposes.
-
 Fixed issue where if player enters Bumblezone from non-Overworld dimension, rides a mount that originated in Bumblezone,  and try to exit Bumblezone dimension,
  the bug would've spawned player and mount in Overworld instead of the player's original non-Overworld dimension.
 
@@ -30,9 +27,6 @@ Fixed Rootmins not getting curious about players wearing Bumblezone armor
 
 Rootmins set to different scale attribute sizes now will have proper hitboxes
 
-Fixed Honey Slime jump speed. 
- (Note: Honey Slimes already spawned before this update might now jump farther than intended due to previously saved MOVEMENT_SPEED attribute value)
-
 Honey Slime with their honey taken is now optimized to not try and sync an int every tick
 
 Baby Honey Slimes spawned during worldgen now get the proper baby health and other attributes instead of adult values
@@ -43,17 +37,13 @@ Reduced amount of particles that Sentry Watcher generates on client when it is c
 
 Sentry Watcher fully respects the 80 block distance it can charge through instead of going excessively further due to bad coordinate calculation
 
-Fixed incorrect Sentry Watcher health and armor damaging when it attacks a player or mob
-
-Have Bumblezone chunk generation respect SPAWN_MOBS gamerule for mobs spawned on chunk creation
+Have Bumblezone chunk generation respect doMobLoot gamerule for mobs spawned on chunk creation
 
 Adjusted mob spawning on chunk creation for Bumblezone dimension. Beehemoths now spawn more often as a result
 
 Beehemoths no longer get full health healing when they are unloaded and then loaded back in
 
 #### Items:
-Fixed shot Honey Crystal Shard crashing when it hits an entity while Fabric Twilight Forest is on.
-
 Adjusted packet logic for syncing horse owner to clients from server so that it no longer broadcasts to all players.
  Reduces server load every time a horse is spawned into client's loaded chunks.
 
@@ -62,8 +52,6 @@ Optimized Buzzing Briefcase menu clicks to not deserialize all bees in briefcase
 Optimized Buzzing Briefcase menu clicks to not send button click to server if player clicks an action button without the required inventory item it needs.
 
 Fixed Buzzing Briefcase able to release bees through walls when attacking an enemy
-
-Fixed Bee Cannon and Crystal Cannon not working in offhand slot
 
 Fixed issue where if you were bound to a now-depleted Respawn Anchor in another dimension and your death is prevented by
  Essence of Continuity, now you will spawn at the correct respawn-safe dimension and location instead of way off coordinates that could've result in death.
@@ -141,8 +129,6 @@ Crystalline Flower inventory drops now respects doTileDrops gamerule instead of 
 
 Windy Air now plays its ambient sound properly
 
-Explosions now removes Heavy Air and Windy Air again
-
 #### Fluids:
 Fixed Royal Jelly Fluid and Honey Fluid overlay when in fluid from being messed up when player is below Y = 0
 
@@ -155,16 +141,11 @@ Fixed issue where Purple Sempiternal Sanctum arena event could remove climbable 
 
 Added safety net so that if Sempiternal Sanctum arena fails to save the pre-arena area, the arena event will not start.
 
-Fixed arena entity saving so that Purple Sempiternal Sanctum arena event will place Purple Spike Entities in correct 
- locations after closing world and re-entering during the arena event.
-
 Made it so if `repeatableEssenceEvents` is true, beating the Sempiternal Sanctum arena event again grants 1/4th xp of the first time completion amount
 
 Fixed bug where teleporting out of a Sempiternal Sanctum arena event into another dimension could retain the arena boss bar and music.
 
 Fixed bug where players who had not consumed Essence of the Bees would have Sempiternal Sanctum music playing forever after leaving structure
-
-Fixed Cell Maze having a room completely flooded with Sugar Water
 
 Tweaked what modded blocks shows in Hanging Gardens
 
@@ -173,9 +154,6 @@ Tweaked what modded blocks shows in Hanging Gardens
 
 #### Loot:
 Fixed `the_bumblezone:honey_compass_locate_structure` loot function's `search_radius` and `skip_existing_chunks` fields not being respected
-
-#### Recipes:
-Fixed possible crash if `the_bumblezone:container_shapeless_recipe_bz` gets an item with null crafting remainder
 
 #### Features:
 Fixed infinite loop if one sets the `size` field to 1 or 0 for `the_bumblezone:blockentity_combs` feature
@@ -217,7 +195,9 @@ Made `dispensersDropGlassBottles` config option work for Honey Bottles filling P
 Fixed many advancement icons not having right icon looks and fixed a few advancement trigger conditions
 
 #### Mod Compat:
-(NeoForge): Fixed it so if non-Bumblezone modded bee spawns in Bumblezone dimension, the original bee is canceled so that only the  non-Bumblezone modded bee spawns in its place 
+(NeoForge): Fixed it so if non-Bumblezone modded bee spawns in Bumblezone dimension, the original bee is canceled so that only the non-Bumblezone modded bee spawns in its place 
+
+(Fabric): Fixed shot Honey Crystal Shard crashing when it hits an entity while Fabric Twilight Forest is on.
 
 Fixed empty Productive Bees's Bee Cages being able to revive Honeycomb Brood Blocks from Dispensers
 

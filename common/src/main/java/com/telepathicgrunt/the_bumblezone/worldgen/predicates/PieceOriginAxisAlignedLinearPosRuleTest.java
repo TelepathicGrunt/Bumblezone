@@ -46,7 +46,7 @@ public class PieceOriginAxisAlignedLinearPosRuleTest extends PosRuleTest {
         float zDist = (float)Math.abs((blockPos.getZ()) * direction.getStepZ());
         int distanceFromOrigin = (int)(xDist + yDist + zDist);
         float randomChance = random.nextFloat();
-        return (double)randomChance <= Mth.clampedLerp(Mth.inverseLerp(distanceFromOrigin, this.minDistance, this.maxDistance), this.minChance, this.maxChance);
+        return (double)randomChance <= Mth.clampedLerp(this.minChance, this.maxChance, Mth.inverseLerp(distanceFromOrigin, this.minDistance, this.maxDistance));
     }
 
     protected PosRuleTestType<?> getType() {

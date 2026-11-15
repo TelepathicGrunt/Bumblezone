@@ -356,7 +356,7 @@ public class BzWorldSavedData extends SavedData {
 		if(teleportedEntity != null) {
 			BlockPos targetPos = BlockPos.containing(destinationPosition.x, destinationPosition.y, destinationPosition.z);
 			ChunkPos chunkpos = new ChunkPos(targetPos);
-			destination.getChunkSource().addRegionTicket(TicketType.PORTAL, chunkpos, 1, targetPos);
+			destination.getChunkSource().addRegionTicket(TicketType.POST_TELEPORT, chunkpos, 1, entity.getId());
 
 			if(vehicle != null) {
 				teleportedEntity.startRiding(vehicle);

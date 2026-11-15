@@ -565,13 +565,13 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                      if (entity instanceof LivingEntity livingEntity) {
                         float oldHealth = livingEntity.getHealth();
                         float maxhealth = Math.max(livingEntity.getHealth(), livingEntity.getMaxHealth());
-                        double healthToLose = Mth.clampedLerp(pastSpeed - 0.2d, maxhealth / 3f, maxhealth - 1);
+                        double healthToLose = Mth.clampedLerp(maxhealth / 3f, maxhealth - 1, pastSpeed - 0.2d);
                         double possibleNewHealth = oldHealth - healthToLose;
                         double newHealth = Math.max(possibleNewHealth, 1);
                         livingEntity.setHealth((float) newHealth);
 
                         if (livingEntity instanceof Player player) {
-                           double armorDamage = Mth.clampedLerp(pastSpeed - 0.2d, 1, 8);
+                           double armorDamage = Mth.clampedLerp(1, 8, pastSpeed - 0.2d);
                            ((LivingEntityAccessor)player).bumblezone$callHurtArmor(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE, this), (float) armorDamage);
                         }
                      }
