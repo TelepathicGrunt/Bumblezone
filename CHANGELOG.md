@@ -11,9 +11,6 @@ Optimized Buzzing Briefcase menu clicks to not deserialize all bees in briefcase
 
 Optimized Buzzing Briefcase menu clicks to not send button click to server if player clicks an action button without the required inventory item it needs.
 
-Fixed issue where if you were bound to a now-depleted Respawn Anchor in another dimension and your death is prevented by
- Essence of Continuity, now you will spawn at the correct respawn-safe dimension and location instead of way off coordinates that could've result in death.
-
 #### Blocks:
 Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsumeItemUI` config options are respected on serverside for Crystalline Flower.
 
