@@ -153,7 +153,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
     public void readAdditionalSaveData(ValueInput input) {
        super.readAdditionalSaveData(input);
        this.setInHoney(input.getBooleanOr("inHoney", false));
-       this.setInHoneyGrowthEndTime(input.getIntOr("inHoneyGrowthTimer", 0));
+       this.setInHoneyGrowthEndTime(input.getLongOr("inHoneyGrowthTimer", 0));
        this.wasOnGround = input.getBooleanOr("wasOnGround", true);
     }
 

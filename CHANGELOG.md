@@ -1,3 +1,9 @@
+### **(V.7.19.2 Changes) (26.1.2 Minecraft)**
+
+#### Entities:
+Fixed case where Honey Slime without honey could gain honey right away if unloaded and loaded again
+
+
 ### **(V.7.19.1 Changes) (26.1.2 Minecraft)**
 
 #### Mod Compat:
