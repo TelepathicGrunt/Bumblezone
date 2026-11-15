@@ -1,26 +1,25 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ServerGamePacketListenerImpl.class)
 public class ServerGamePacketListenerImplMixin {
 
     @Shadow
     public ServerPlayer player;
-
-    @ModifyConstant(method = "handleMoveVehicle(Lnet/minecraft/network/protocol/game/ServerboundMoveVehiclePacket;)V",
-            constant = {@Constant(doubleValue = 100.0, ordinal = 0)})
-    private double bumblezone$expandFlightSpeedCheckForBeehemoth(double constant) {
-        if (player.getRootVehicle() instanceof BeehemothEntity) {
-            return 300; // Do not send speed packet
+    @ModifyExpressionValue(method = "handleMoveVehicle(Lnet/minecraft/network/protocol/game/ServerboundMoveVehiclePacket;)V",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;isSingleplayerOwner()Z"))
+    private boolean bumblezone$expandFlightSpeedCheckForBeehemoth(boolean original, @Local(name = "expectedDist") double expectedDist, @Local(name = "movedDist") double movedDist) {
+        if (!original && player.getRootVehicle() instanceof BeehemothEntity && movedDist - expectedDist <= 300) {
+            return true; // Do not send speed packet
         }
-
-        return constant;
+        return original;
     }
 }

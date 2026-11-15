@@ -1,5 +1,10 @@
 ### **(V.7.19.1 Changes) (26.1.2 Minecraft)**
 
+#### Mod Compat:
+Last update, I cleaned up my mixin to make Beehemoths not be speed checked by server.
+ Apparently the ModifyConstant mixin cannot stack and so it broke with I'm Fast mod that also ModifyConstant the same target. 
+ This update puts back the slightly messy older form of my Mixin so it no longer conflicts with I'm Fast.
+
 #### Items:
 Fixed shot Honey Crystal Shard crashing if someone tries to get it's NBT data on client side.
 
