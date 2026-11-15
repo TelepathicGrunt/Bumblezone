@@ -14,6 +14,8 @@ public class ServerGamePacketListenerImplMixin {
 
     @Shadow
     public ServerPlayer player;
+
+    // DO NOT CHANGE TO ModifyConstant OR ELSE YOU WILL BLOW UP I'm Fast MOD THAT ModifyConstant THE 100 VALUE!
     @ModifyExpressionValue(method = "handleMoveVehicle(Lnet/minecraft/network/protocol/game/ServerboundMoveVehiclePacket;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;isSingleplayerOwner()Z"))
     private boolean bumblezone$expandFlightSpeedCheckForBeehemoth(boolean original, @Local(name = "expectedDist") double expectedDist, @Local(name = "movedDist") double movedDist) {
