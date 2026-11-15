@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.google.common.collect.MapMaker;
 import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.mixin.gameplay.ServerGamePacketListenerImplAccessor;
-import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;

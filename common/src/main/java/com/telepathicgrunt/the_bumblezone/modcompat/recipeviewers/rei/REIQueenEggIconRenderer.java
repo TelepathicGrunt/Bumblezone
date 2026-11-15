@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.recipeviewers.rei;
 
 import me.shedaniel.math.Rectangle;
-import me.shedaniel.rei.api.client.REIRuntime;
 import me.shedaniel.rei.api.client.gui.DisplayRenderer;
 import me.shedaniel.rei.api.client.gui.compat.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;

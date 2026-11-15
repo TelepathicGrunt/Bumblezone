@@ -1,9 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.client.itemproperties.conditional;
 
 import com.mojang.serialization.MapCodec;
-import com.telepathicgrunt.the_bumblezone.items.datacomponents.AbilityEssenceActivityData;
 import com.telepathicgrunt.the_bumblezone.items.essence.AbilityEssenceItem;
-import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperty;
 import net.minecraft.world.entity.LivingEntity;

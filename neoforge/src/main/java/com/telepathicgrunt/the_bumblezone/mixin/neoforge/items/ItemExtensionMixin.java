@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.mixin.neoforge.items;
 
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import net.minecraft.world.item.ItemInstance;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.common.extensions.IItemExtension;
 import org.spongepowered.asm.mixin.Mixin;

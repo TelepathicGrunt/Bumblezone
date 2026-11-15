@@ -7,8 +7,6 @@ import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.storage.TagValueOutput;
 
-import java.util.Optional;
-
 public class FabricTwilightForestCompatService implements TwilightForestCompatService {
     private static final String ENDER_BOW_ATTACHED_TAG = "twilightforest:is_ender_arrow";
 

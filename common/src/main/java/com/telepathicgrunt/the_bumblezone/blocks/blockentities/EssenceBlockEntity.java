@@ -63,7 +63,6 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class EssenceBlockEntity extends BlockEntity {
     private static final String UUID_TAG = "uuid";

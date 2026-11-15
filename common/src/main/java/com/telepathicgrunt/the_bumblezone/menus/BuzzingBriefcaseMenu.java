@@ -18,8 +18,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-import java.util.List;
-
 public class BuzzingBriefcaseMenu extends AbstractContainerMenu {
     public static final int RELEASE_ID = 0;
     public static final int HEALTH_ID = 1;

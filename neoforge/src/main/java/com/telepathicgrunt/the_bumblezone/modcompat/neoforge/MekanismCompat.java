@@ -26,7 +26,6 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.EnumSet;
-import java.util.Objects;
 import java.util.Optional;
 
 public class MekanismCompat implements ModCompat {

@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.LivingEntityFlyingSoundInstance;
 import com.telepathicgrunt.the_bumblezone.items.datacomponents.BumbleBeeChestplateData;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;

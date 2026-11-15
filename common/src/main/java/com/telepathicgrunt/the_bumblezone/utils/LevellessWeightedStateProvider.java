@@ -7,7 +7,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
-import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 
 public class LevellessWeightedStateProvider {
     public static final MapCodec<LevellessWeightedStateProvider> CODEC = RecordCodecBuilder.mapCodec(

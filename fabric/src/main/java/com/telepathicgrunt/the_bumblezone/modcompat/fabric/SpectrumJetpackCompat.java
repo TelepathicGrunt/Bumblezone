@@ -1,19 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.fabric;
 
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
-import net.minecraft.ChatFormatting;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-
-import java.util.EnumSet;
 
 public class SpectrumJetpackCompat implements ModCompat {
 //    private static TagKey<Item> SPECTRUM_JETPACKS;

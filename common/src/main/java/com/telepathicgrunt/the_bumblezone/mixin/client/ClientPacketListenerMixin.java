@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.mixin.client;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.telepathicgrunt.the_bumblezone.client.screens.LevelLoadingScreenInterface;
 import com.telepathicgrunt.the_bumblezone.packets.SyncHorseOwnerUUIDPacketToServer;
-import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;

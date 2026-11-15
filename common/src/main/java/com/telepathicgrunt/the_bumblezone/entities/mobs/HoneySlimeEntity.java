@@ -19,7 +19,6 @@ import com.telepathicgrunt.the_bumblezone.services.PlatformService;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -325,9 +324,9 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
                 }
              }
 
-              if (this.level().getGameTime() >= getInHoneyGrowthEndTime()) {
-                  setInHoney(true);
-              }
+             if (this.level().getGameTime() >= getInHoneyGrowthEndTime()) {
+                 setInHoney(true);
+             }
           }
        }
     }

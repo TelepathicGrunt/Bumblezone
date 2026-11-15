@@ -14,7 +14,6 @@ import com.telepathicgrunt.the_bumblezone.worldgen.dimension.layer.BzBiomePollin
 import com.telepathicgrunt.the_bumblezone.worldgen.dimension.layer.BzBiomeScaleLayer;
 import com.telepathicgrunt.the_bumblezone.worldgen.dimension.layer.vanilla.Area;
 import com.telepathicgrunt.the_bumblezone.worldgen.dimension.layer.vanilla.AreaFactory;
-import com.telepathicgrunt.the_bumblezone.worldgen.dimension.layer.vanilla.AreaTransformer1;
 import com.telepathicgrunt.the_bumblezone.worldgen.dimension.layer.vanilla.BigContext;
 import com.telepathicgrunt.the_bumblezone.worldgen.dimension.layer.vanilla.Layer;
 import com.telepathicgrunt.the_bumblezone.worldgen.dimension.layer.vanilla.LazyArea;

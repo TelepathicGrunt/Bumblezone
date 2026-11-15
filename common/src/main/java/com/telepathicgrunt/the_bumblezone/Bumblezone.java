@@ -1,7 +1,5 @@
 package com.telepathicgrunt.the_bumblezone;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.mojang.logging.LogUtils;
 import com.teamresourceful.resourcefullib.common.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
@@ -18,9 +16,6 @@ import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.PlayerInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.datamanagers.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.entities.datamanagers.queentrades.QueensTradeManager;
-import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
-import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
-import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.EntityTeleportationBackend;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.ItemUseOnBlock;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.ProjectileImpact;

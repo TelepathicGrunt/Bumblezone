@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.mixin.fabric.entities;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Local;
 import com.telepathicgrunt.the_bumblezone.events.player.BzPlayerPickupItemEvent;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;

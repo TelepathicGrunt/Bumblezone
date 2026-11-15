@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.modcompat.fabric;
 
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 
-import static com.telepathicgrunt.the_bumblezone.modcompat.ModChecker.loadupModCompat;
 import static com.telepathicgrunt.the_bumblezone.modcompat.ModChecker.printErrorToLogs;
 
 public class FabricModChecker {

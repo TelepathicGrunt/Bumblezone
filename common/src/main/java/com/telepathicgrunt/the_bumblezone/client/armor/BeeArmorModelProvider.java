@@ -2,7 +2,11 @@ package com.telepathicgrunt.the_bumblezone.client.armor;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.armor.BeeArmorModel;
-import com.telepathicgrunt.the_bumblezone.items.*;
+import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
+import com.telepathicgrunt.the_bumblezone.items.BumbleBeeChestplate;
+import com.telepathicgrunt.the_bumblezone.items.CarpenterBeeBoots;
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
+import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
