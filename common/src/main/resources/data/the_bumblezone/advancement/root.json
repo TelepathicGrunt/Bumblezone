@@ -1,8 +1,12 @@
 {
   "display": {
     "icon": {
-      "nbt": "{\"isCreativeTabIcon\":1b}",
-      "id": "the_bumblezone:honeycomb_brood_block"
+      "id": "the_bumblezone:honeycomb_brood_block",
+      "components": {
+        "minecraft:custom_data": {
+          "isCreativeTabIcon": true
+        }
+      }
     },
     "title": {
       "translate": "advancements.the_bumblezone.root.title"
