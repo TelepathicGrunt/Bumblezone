@@ -63,7 +63,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Items;
@@ -90,7 +89,6 @@ import net.neoforged.neoforge.event.entity.living.BabyEntitySpawnEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.AdvancementEvent;
@@ -139,7 +137,7 @@ public class NeoForgeEventManager {
         eventBus.addListener(NeoForgeEventManager::onInteractEntity);
         eventBus.addListener(NeoForgeEventManager::onBreakSpeed);
         eventBus.addListener(NeoForgeEventManager::onTagsUpdate);
-        eventBus.addListener(NeoForgeEventManager::onLevelTickPost);
+        eventBus.addListener(NeoForgeEventManager::onServerTick);
         eventBus.addListener(NeoForgeEventManager::onAddReloadListeners);
         eventBus.addListener(NeoForgeEventManager::onDatapackSync);
         eventBus.addListener(NeoForgeEventManager::onEntityAttacked);
@@ -329,7 +327,7 @@ public class NeoForgeEventManager {
         };
     }
 
-    private static void onLevelTickPost(ServerTickEvent.Post event) {
+    private static void onServerTick(ServerTickEvent.Post event) {
         BzWorldSavedData.tick(event.getServer());
     }
 
