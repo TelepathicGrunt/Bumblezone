@@ -37,7 +37,7 @@ public class SempiternalSanctumBehavior {
 
     //Apply mining fatigue when in sanctum
     public static void runStructureMessagesAndFatigue(ServerPlayer serverPlayer) {
-        StructureManager structureManager = serverPlayer.level().structureManager();
+        StructureManager structureManager = ((ServerLevel)serverPlayer.level()).structureManager();
         StructureStart detectedStructure = structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.SEMPITERNAL_SANCTUMS);
         if (detectedStructure.isValid()) {
             PLAYERS_IN_SANCTUMS.add(serverPlayer.getUUID());
