@@ -328,8 +328,13 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 resultItems.addAll(existingTrades.unwrap());
             }
 
-            temp.put(specialDaysEntry, WeightedRandomList.create(resultItems));
-            tempSpecialDaysQueenTrades.put(item, temp);
+            if (!tempSpecialDaysQueenTrades.containsKey(item)) {
+                temp.put(specialDaysEntry, WeightedRandomList.create(resultItems));
+                tempSpecialDaysQueenTrades.put(item, temp);
+            }
+            else {
+                tempSpecialDaysQueenTrades.get(item).put(specialDaysEntry, WeightedRandomList.create(resultItems));
+            }
         }
     }
 
