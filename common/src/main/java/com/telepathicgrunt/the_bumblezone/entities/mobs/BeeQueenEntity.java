@@ -497,7 +497,9 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     private void performAngryActions() {
-        if (level().getDifficulty() == Difficulty.PEACEFUL && this.getTarget() instanceof Player) {
+        if (this.getTarget() instanceof Player player &&
+            (level().getDifficulty() == Difficulty.PEACEFUL || player.isSpectator() || player.isCreative()))
+        {
             this.stopBeingAngry();
             return;
         }

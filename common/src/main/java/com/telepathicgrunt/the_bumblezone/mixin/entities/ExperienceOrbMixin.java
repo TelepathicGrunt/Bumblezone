@@ -5,9 +5,11 @@ import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlower
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.QuartPos;
+import net.minecraft.core.SectionPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -46,21 +48,33 @@ public abstract class ExperienceOrbMixin extends Entity {
             return;
         }
 
-        int distanceThreshold = 1;
+        int distanceThreshold = 8;
 
         bumblezone$trackedCrystalFlowerCooldown--;
         if (this.bumblezone$trackedCrystalFlower == null && bumblezone$trackedCrystalFlowerCooldown <= 0) {
-            BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
             Set<LevelChunk> chunksInRange = new HashSet<>();
+            Set<Long> checkedChunkPos = new HashSet<>();
             for (int x = -distanceThreshold; x <= distanceThreshold; x += distanceThreshold) {
                 for (int z = -distanceThreshold; z <= distanceThreshold; z += distanceThreshold) {
-                    mutableBlockPos.set(this.getX() + x, 0, this.getZ() + z);
+                    int chunkX = SectionPos.blockToSectionCoord(this.getBlockX() + x);
+                    int chunkZ = SectionPos.blockToSectionCoord(this.getBlockZ() + z);
+                    long chunkPosAsLong = ChunkPos.pack(chunkX, chunkZ);
+
+                    if (checkedChunkPos.contains(chunkPosAsLong)) {
+                        continue;
+                    }
+
                     ChunkAccess chunk = this.level().getChunk(
-                            QuartPos.toSection(mutableBlockPos.getX()),
-                            QuartPos.toSection(mutableBlockPos.getZ()),
+                            chunkX,
+                            chunkZ,
                             ChunkStatus.FULL,
                             false);
-                    if(chunk instanceof LevelChunk) chunksInRange.add((LevelChunk)chunk);
+
+                    if (chunk instanceof LevelChunk) {
+                        chunksInRange.add((LevelChunk) chunk);
+                    }
+
+                    checkedChunkPos.add(chunkPosAsLong);
                 }
             }
 
@@ -85,15 +99,8 @@ public abstract class ExperienceOrbMixin extends Entity {
 
             BlockState state = this.level().getBlockState(this.bumblezone$trackedCrystalFlower);
             if (state.getBlock() instanceof CrystallineFlower) {
-                if (this.level().getBlockEntity(this.bumblezone$trackedCrystalFlower) instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity &&
-                    !crystallineFlowerBlockEntity.isMaxTier())
-                {
-                    this.bumblezone$trackedCrystalFlower = null;
-                }
-                else {
-                    double speedFactor = 1.0D - Math.sqrt(sqrDistance) / distanceThreshold;
-                    this.setDeltaMovement(this.getDeltaMovement().add(vec3.normalize().scale(speedFactor * speedFactor * 0.11D)));
-                }
+                double speedFactor = 1.0D - Math.sqrt(sqrDistance) / distanceThreshold;
+                this.setDeltaMovement(this.getDeltaMovement().add(vec3.normalize().scale(speedFactor * speedFactor * 0.11D)));
             }
             else {
                 this.bumblezone$trackedCrystalFlower = null;

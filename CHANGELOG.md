@@ -3,6 +3,9 @@
 #### Entities:
 Fixed case where Honey Slime without honey could gain honey right away if unloaded and loaded again
 
+#### Blocks:
+Fixed Crystalline Flower's ability to attract Experience Orbs nearby and max tier flowers will still attract orbs (due to client sync trickiness, figured it was best to still let it attract)
+
 
 ### **(V.7.19.1 Changes) (26.1.2 Minecraft)**
 
