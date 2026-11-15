@@ -137,6 +137,8 @@ Fixed edge case where Royal Jelly Block couldn't be pulled by piston when it sho
 
 Carving Carvable Wax block now preserves its facing property
 
+Crystalline Flower inventory drops now respects doTileDrops gamerule instead of doMobLoot gamerule
+
 Windy Air now plays its ambient sound properly
 
 Explosions now removes Heavy Air and Windy Air again

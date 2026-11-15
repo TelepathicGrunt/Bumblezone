@@ -148,7 +148,7 @@ public class CrystallineFlower extends BaseEntityBlock {
                         !livingEntity.wasExperienceConsumed() &&
                         !((LivingEntityAccessor)livingEntity).bumblezone$callIsAlwaysExperienceDropper() &&
                         livingEntity.shouldDropExperience() &&
-                        level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT))
+                        level.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS))
                     {
                         BlockEntity blockEntity = level.getBlockEntity(pos);
                         if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity && !crystallineFlowerBlockEntity.isMaxTier()) {
