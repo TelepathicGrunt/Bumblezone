@@ -155,10 +155,10 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
+        setFriendship(tag.getInt("friendship"), false);
         super.readAdditionalSaveData(tag);
         setSaddled(tag.getBoolean("saddled"));
         setQueen(tag.contains("queen") && tag.getBoolean("queen"));
-        setFriendship(tag.getInt("friendship"), false);
     }
 
     @Override
@@ -219,12 +219,12 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     public void setFriendship(Integer newFriendship, boolean heal) {
-        this.entityData.set(FRIENDSHIP, Math.clamp(newFriendship, -100, getMaxFriendshipThreshold()));
+        this.entityData.set(FRIENDSHIP, Math.min(Math.max(newFriendship, -100), getMaxFriendshipThreshold()));
         setMaxHealth(heal);
     }
 
     public void addFriendship(Integer deltaFriendship) {
-        this.entityData.set(FRIENDSHIP, Math.clamp(getFriendship() + deltaFriendship, -100, getMaxFriendshipThreshold()));
+        this.entityData.set(FRIENDSHIP,Math.min(Math.max(getFriendship() + deltaFriendship, -100), getMaxFriendshipThreshold()));
         setMaxHealth(true);
     }
 

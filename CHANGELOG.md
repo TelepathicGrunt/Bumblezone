@@ -32,7 +32,7 @@ Reduced amount of particles that Sentry Watcher generates on client when it is c
 
 Sentry Watcher fully respects the 80 block distance it can charge through instead of going excessively further due to bad coordinate calculation
 
-Have Bumblezone chunk generation respect SPAWN_MOBS gamerule for mobs spawned on chunk creation
+Have Bumblezone chunk generation respect doMobSpawning gamerule for mobs spawned on chunk creation
 
 Adjusted mob spawning on chunk creation for Bumblezone dimension. Beehemoths now spawn more often as a result
 

@@ -81,7 +81,6 @@
     "util.Vec3Accessor",
     "util.WeightedRandomListAccessor",
     "world.BiomeManagerAccessor",
-    "world.JigsawJunctionAccessor",
     "world.LevelMixin",
     "world.NoiseChunkAccessor",
     "world.NoiseChunkMixin",

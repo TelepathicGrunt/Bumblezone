@@ -21,7 +21,7 @@ public class ItemEntityMixin {
         ItemStack copy = itemStack.copy();
         boolean addedToInventory = original.call(instance, itemStack);
         if (addedToInventory) {
-            BzPlayerPickupItemEvent.EVENT.invoke(new BzPlayerPickupItemEvent(player, copy));
+            PlayerPickupItemEvent.EVENT.invoke(new PlayerPickupItemEvent(player, copy));
         }
         return addedToInventory;
     }
