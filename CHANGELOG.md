@@ -25,9 +25,6 @@ Fixed Rootmins not getting curious about players wearing Bumblezone armor
 
 Rootmins set to different scale attribute sizes now will have proper hitboxes
 
-Fixed Honey Slime jump speed. 
- (Note: Honey Slimes already spawned before this update might now jump farther than intended due to previously saved MOVEMENT_SPEED attribute value)
-
 Honey Slime with their honey taken is now optimized to not try and sync an int every tick
 
 Baby Honey Slimes spawned during worldgen now get the proper baby health and other attributes instead of adult values
@@ -47,6 +44,8 @@ Adjusted mob spawning on chunk creation for Bumblezone dimension. Beehemoths now
 Beehemoths no longer get full health healing when they are unloaded and then loaded back in
 
 #### Items:
+Added Bumblezone buckets and music discs to bottom of Tools tab
+
 Adjusted packet logic for syncing horse owner to clients from server so that it no longer broadcasts to all players.
  Reduces server load every time a horse is spawned into client's loaded chunks.
 
@@ -174,6 +173,6 @@ Made `dispensersDropGlassBottles` config option work for Honey Bottles filling P
 (Forge): Fixed `beeSoupBrewingRecipe` config not applying
 
 #### Mod Compat:
-(Forge): Fixed it so if non-Bumblezone modded bee spawns in Bumblezone dimension, the original bee is canceled so that only the  non-Bumblezone modded bee spawns in its place 
+(Forge): Fixed it so if non-Bumblezone modded bee spawns in Bumblezone dimension, the original bee is canceled so that only the non-Bumblezone modded bee spawns in its place 
 
 Fixed empty Productive Bees's Bee Cages being able to revive Honeycomb Brood Blocks from Dispensers

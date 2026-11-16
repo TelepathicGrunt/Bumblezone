@@ -114,6 +114,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     private int poseTicks;
     private int tradeHintCooldown = 0;
     private boolean isSpecialDay = false;
+    private final int tradeCooldown = 50;
     private static final WeightedTradeResult ESSENCE_DROP = new WeightedTradeResult(null, Optional.of(List.of(BzItems.ESSENCE_OF_THE_BEES.get())), 1, 1000, 1);
 
     public BeeQueenEntity(EntityType<? extends BeeQueenEntity> type, Level world) {
@@ -167,16 +168,16 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        output.putLong("throw_cooldown_end_time", getThrowCooldownEndTime());
-        output.putLong("bee_spawn_cooldown_end_time", getBeeSpawnCooldown());
+        tag.putLong("throw_cooldown_end_time", getThrowCooldownEndTime());
+        tag.putLong("bee_spawn_cooldown_end_time", getBeeSpawnCooldown());
         this.addPersistentAngerSaveData(tag);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        setThrowCooldown(input.getLong("throw_cooldown_end_time"));
-        setBeeSpawnCooldown(input.getLong("bee_spawn_cooldown_end_time"));
+        setThrowCooldown(tag.getLong("throw_cooldown_end_time"));
+        setBeeSpawnCooldown(tag.getLong("bee_spawn_cooldown_end_time"));
 
         this.readPersistentAngerSaveData(this.level(), tag);
     }
@@ -296,7 +297,9 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     !livingEntity.getType().is(BzTags.FORCED_BEE_CALM_AT) &&
                     !BeeAggression.isBeelikeEntity(livingEntity))
                 {
-                    if (livingEntity instanceof Player player && (level().getDifficulty() == Difficulty.PEACEFUL || player.isCreative())) {
+                    if (livingEntity instanceof Player player &&
+                        (level().getDifficulty() == Difficulty.PEACEFUL || player.isCreative()))
+                    {
                         spawnAngryParticles(6);
                         return super.hurt(source, amount);
                     }
@@ -452,7 +455,9 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     private void performAngryActions() {
-        if (level().getDifficulty() == Difficulty.PEACEFUL && this.getTarget() instanceof Player) {
+        if (this.getTarget() instanceof Player player &&
+            (level().getDifficulty() == Difficulty.PEACEFUL || player.isSpectator() || player.isCreative()))
+        {
             this.stopBeingAngry();
             return;
         }

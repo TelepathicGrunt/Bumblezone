@@ -134,12 +134,12 @@ public class EntityTeleportationBackend {
 
         // place hive block below player if they would've fallen out of dimension
         // because there's air all the way down to y = 0 below player
-        int heightCheck = bumblezoneWorld.getMinY();
+        int heightCheck = bumblezoneWorld.getMinBuildHeight();
         while(heightCheck <= validBlockPos.getY() && bumblezoneWorld.getBlockState(validBlockPos.below(heightCheck)).isAir()) {
             heightCheck++;
         }
         if(heightCheck > validBlockPos.getY()) {
-            bumblezoneWorld.setBlockAndUpdate(validBlockPos.getY() == bumblezoneWorld.getMinY() ? validBlockPos : validBlockPos.below(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
+            bumblezoneWorld.setBlockAndUpdate(validBlockPos.getY() == bumblezoneWorld.getMinBuildHeight() ? validBlockPos : validBlockPos.below(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
         }
 
         // teleportation spot finding complete. return spot
