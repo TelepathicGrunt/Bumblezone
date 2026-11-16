@@ -97,7 +97,6 @@
   "client": [
     "client.BlockRenderDispatcherAccessor",
     "client.ClientEntityMixin",
-    "client.ClientLevelAccessor",
     "client.ClientLevelMixin",
     "client.ClientPacketListenerMixin",
     "client.EntityRenderersAccessor",

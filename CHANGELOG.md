@@ -45,6 +45,8 @@ Adjusted mob spawning on chunk creation for Bumblezone dimension. Beehemoths now
 
 Beehemoths no longer get full health healing when they are unloaded and then loaded back in
 
+Fixed Heavy Air so it is visible if you are holding its item form in hand (creative obtainable only)
+
 #### Items:
 Added Bumblezone buckets and music discs to bottom of Tools tab
 
