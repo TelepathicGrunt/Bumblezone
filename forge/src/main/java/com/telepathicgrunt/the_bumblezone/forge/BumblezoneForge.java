@@ -156,7 +156,7 @@ public class BumblezoneForge {
         eventBus.addListener(BumblezoneForge::onInteractEntity);
         eventBus.addListener(BumblezoneForge::onBreakSpeed);
         eventBus.addListener(BumblezoneForge::onTagsUpdate);
-        eventBus.addListener(BumblezoneForge::onLevelTick);
+        eventBus.addListener(BumblezoneForge::onServerTick);
         eventBus.addListener(BumblezoneForge::onAddReloadListeners);
         eventBus.addListener(BumblezoneForge::onDatapackSync);
         eventBus.addListener(BumblezoneForge::onEntityAttacked);
@@ -363,10 +363,8 @@ public class BumblezoneForge {
         };
     }
 
-    private static void onLevelTick(TickEvent.LevelTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && event.level instanceof ServerLevel serverLevel) {
-            BzWorldSavedData.tick(serverLevel);
-        }
+    private static void onServerTick(TickEvent.ServerTickEvent event) {
+        BzWorldSavedData.tick(event.getServer());
     }
 
     private static void onAddReloadListeners(AddReloadListenerEvent event) {

@@ -10,6 +10,9 @@ Fixed possible issue where in presence of multiple players, Cosmic Crystal Entit
 
 Fixed visual issue where Cosmic Crystal Entity spazzes out when tracking spinning attack ends
 
+Fixed issue where if player enters Bumblezone from non-Overworld dimension, rides a mount that originated in Bumblezone, and try to exit Bumblezone dimension,
+ the bug would've spawned player and mount in Overworld instead of the player's original non-Overworld dimension.
+
 #### Items:
 Adjusted packet logic for syncing horse owner to clients from server so that it no longer broadcasts to all players.
  Reduces server load every time a horse is spawned into client's loaded chunks.
@@ -29,8 +32,6 @@ Ensured that `crystallineFlowerConsumeExperienceUI` and `crystallineFlowerConsum
 Fixed crash if Crystalline Flower has 2 or more books in it, and you enchant a book while scrolled down in list of enchantments and resultant list of enchantments is between 1 and 3.
 
 Fixed Crystalline Flower not marking itself as changed for chunk data saving when adding/removing items from flower's GUI.
-
-Fixed Crystalline Flower crash if one sets up `bz_crystalline_flower_data` in a way to have consumed items give 0 xp to flower.
 
 Fixed Honeycomb Brood Blocks not actually growing/spawning bees by random ticks
 

@@ -231,7 +231,7 @@ public class HoneycombBrood extends ProperFacingBlock {
     }
 
     @Override
-    protected void randomTick(BlockState state, ServerLevel level, BlockPos position, RandomSource random) {
+    public void randomTick(BlockState state, ServerLevel level, BlockPos position, RandomSource random) {
         super.randomTick(state, level, position, random);
         broodGrowth(state, level, position, random);
     }
@@ -248,8 +248,8 @@ public class HoneycombBrood extends ProperFacingBlock {
 
         List<LivingEntity> nearbyEntities = null;
 
-        if (world.getDifficulty() == Difficulty.PEACEFUL) {
-            nearbyEntities = world.getEntitiesOfClass(
+        if (level.getDifficulty() == Difficulty.PEACEFUL) {
+            nearbyEntities = level.getEntitiesOfClass(
                     LivingEntity.class,
                     new AABB(position).inflate(WrathOfTheHiveEffect.NEARBY_WRATH_EFFECT_RADIUS),
                     entity -> entity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get()));
@@ -258,21 +258,21 @@ public class HoneycombBrood extends ProperFacingBlock {
         int stage = state.getValue(STAGE);
         if (stage < 3) {
             if ((nearbyEntities != null && !nearbyEntities.isEmpty()) ||
-                (world.dimension().equals(BzDimension.BZ_WORLD_KEY) ? random.nextInt(10) == 0 : random.nextInt(22) == 0))
+                (level.dimension().equals(BzDimension.BZ_WORLD_KEY) ? random.nextInt(10) == 0 : random.nextInt(22) == 0))
             {
-                world.setBlock(position, state.setValue(STAGE, stage + 1), 2);
+                level.setBlock(position, state.setValue(STAGE, stage + 1), 2);
             }
         }
         else if(BzGeneralConfigs.broodBlocksBeeSpawnCapacity != 0) {
             boolean playerCloseEnough = false;
-            for (Player player : world.players()) {
+            for (Player player : level.players()) {
                 if (position.distManhattan(player.blockPosition()) < 40) {
                     playerCloseEnough = true;
                 }
             }
 
             if (playerCloseEnough) {
-                int livingEntitiesNearby = world.getEntitiesOfClass(
+                int livingEntitiesNearby = level.getEntitiesOfClass(
                     LivingEntity.class,
                     new AABB(
                         position.offset(-48, -48,-48),
@@ -281,7 +281,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                 ).size();
 
                 if(livingEntitiesNearby < BzGeneralConfigs.broodBlocksBeeSpawnCapacity) {
-                    spawnBroodMob(world, random, state, position, stage);
+                    spawnBroodMob(level, random, state, position, stage);
                 }
             }
         }
