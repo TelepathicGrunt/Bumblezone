@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import dev.architectury.injectables.annotations.PlatformOnly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.piston.PistonStructureResolver;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Final;
@@ -31,7 +32,7 @@ public class PistonStructureResolverMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/piston/PistonBaseBlock;isPushable(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;ZLnet/minecraft/core/Direction;)Z", ordinal = 0),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
-    private void bumblezone$pullableOnlyBlocks2(CallbackInfoReturnable<Boolean> cir, @Local(name = "nextState") BlockState nextState)
+    private void bumblezone$pullableOnlyBlocks2(CallbackInfoReturnable<Boolean> cir, @Local(ordinal = 0) BlockState nextState)
     {
         if (this.extending &&
             nextState.is(BzBlocks.ROYAL_JELLY_BLOCK.get()))

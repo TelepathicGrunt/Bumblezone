@@ -394,9 +394,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
          DamageSource damagesource = this.damageSources().mobAttack(this);
          if (livingEntity.hurt(damagesource, this.getAttackStrength())) {
             this.playSound(BzSounds.HONEY_SLIME_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-            if (this.level() instanceof ServerLevel serverlevel) {
-               EnchantmentHelper.doPostAttackEffects(serverlevel, livingEntity, damagesource);
-            }
+            this.doEnchantDamageEffects(this, livingEntity);
          }
       }
    }

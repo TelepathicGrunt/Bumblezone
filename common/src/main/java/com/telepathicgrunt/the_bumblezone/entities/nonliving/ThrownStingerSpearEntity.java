@@ -158,7 +158,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
             if (this.getOwner() instanceof LivingEntity ownerEntity) {
                 int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), this.spearItem);
                 if (neuroToxinLevel > 0) {
-                    this.spearItem.hurtAndBreak(4, ownerEntity, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                    this.spearItem.hurtAndBreak(4, ownerEntity, (entity) -> this.kill());
                 }
             }
         }
