@@ -1,3 +1,9 @@
+### **(V.7.19.1 Changes) (1.21.1 Minecraft)**
+
+#### Items:
+Dispenser's Flint and Steel will now only decrease durability if it successfully lights Super Candle/Potion Candle instead of per attempt
+
+
 ### **(V.7.19.0 Changes) (1.21.1 Minecraft)**
 
 > TLDR: Large amount of bugfixes backported from 26.1.2 MC Bumblezone's v7.19.0 update plus some additional bugs found and fixed for 1.21.1
