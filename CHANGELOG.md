@@ -138,6 +138,8 @@ Fixed case where Wrath of the Hive effect at level 3 or higher would remove itse
 
 Made `the_bumblezone:bee_aggression_in_dimension/wrath_activating_items_when_picked_up` item tag functional again for Wrath of the Hive
 
+Fixed it where multiple players together could cause one player's Wrath of the Hive client effects to be applied or not applied correctly
+
 (Forge): `neurotoxinMaxLevel` and `paralyzedMaxTickDuration` should take effect right away after editing config file without needing to restart game
 
 #### Sounds:

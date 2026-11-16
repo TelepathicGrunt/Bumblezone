@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenc
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.RadianceEssenceArmorMessage;
 import com.telepathicgrunt.the_bumblezone.client.screens.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
+import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.KeyInputEvent;
@@ -162,6 +163,9 @@ public class BumblezoneForgeClient {
         if (event.phase == TickEvent.Phase.END) {
             StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer());
             MusicHandler.tickMusicFader();
+            if (Minecraft.getInstance().player != null) {
+                BeeAggression.clientMainPlayerTick(Minecraft.getInstance().player);
+            }
         }
     }
 
