@@ -116,7 +116,7 @@ Fixed case where Wrath of the Hive effect at level 3 or higher would remove itse
 
 Made `the_bumblezone:bee_aggression_in_dimension/wrath_activating_items_when_picked_up` item tag functional again for Wrath of the Hive
 
-(NeoForge): `neurotoxinMaxLevel` and `paralyzedMaxTickDuration` should take effect right away after editing config file withouy needing to restart game
+(Forge): `neurotoxinMaxLevel` and `paralyzedMaxTickDuration` should take effect right away after editing config file without needing to restart game
 
 #### Sounds:
 Fixed memory leak with buzzing sound instance for Bumble Bee Chestplate and Beehemoth still retaining client worlds after exiting a world
@@ -125,3 +125,4 @@ Fixed memory leak with buzzing sound instance for Bumble Bee Chestplate and Beeh
 Fixed infinite loop if one sets `alternativeFluidToReplaceHoneyFluid` to Bumblezone's own Honey Fluid. Why would you do that? No idea. Don't do that.
 
 Fixed it so `ragingEssenceStrengthLevels` config is actually read now
+

@@ -42,7 +42,7 @@ public class BzConfigHandler {
 
     private static void onConfigReload(ModConfigEvent.Reloading event) {
         BzPotions.POTIONS.getEntries().forEach(p -> {
-            if (p instanceof ConfigSafePotion configSafePotion) {
+            if (p.get() instanceof ConfigSafePotion configSafePotion) {
                 configSafePotion.clearCachedEffectList();
             }
         });
