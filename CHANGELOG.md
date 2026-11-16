@@ -13,6 +13,8 @@ Added Bumblezone buckets to bottom of Tools tab
 #### Blocks:
 Fixed Crystalline Flower's ability to attract Experience Orbs nearby and max tier flowers will still attract orbs (due to client sync trickiness, figured it was best to still let it attract)
 
+Dispenser's Flint and Steel will now only decrease durability if it successfully lights Super Candle/Potion Candle instead of per attempt
+
 
 ### **(V.7.19.1 Changes) (26.1.2 Minecraft)**
 
