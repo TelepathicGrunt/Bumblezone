@@ -74,7 +74,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
 
    private static final EntityDataAccessor<Boolean> IN_HONEY = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.BOOLEAN);
    private static final EntityDataAccessor<Long> IN_HONEY_GROWTH_END_TIME = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.LONG);
-   private static final EntityDataAccessor<Long> ANGER_END_TIME = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.LONG);
+   private static final EntityDataAccessor<Integer> ANGRY_TIMER = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.INT);
    private static final UniformInt MAX_ANGER_DURATION = TimeUtil.rangeOfSeconds(22, 36);
    private UUID target_UUID;
 
@@ -297,7 +297,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
    private void getHoneyFromSlime(LivingEntity entity) {
       if (entity instanceof HoneySlimeEntity) {
          this.setInHoney(false);
-         this.setInHoneyGrowthTime(-14400);
+         this.setInHoneyGrowthEndTime(entity.level().getGameTime() + 14400L);
       }
    }
 
@@ -336,8 +336,6 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
       super.aiStep();
       if (this.isAlive()) {
          if (!isInHoney()) {
-            setInHoneyGrowthTime(getInHoneyGrowthTime() + 1);
-
             if(HONEY_BASED_BLOCKS.isEmpty()) {
                HONEY_BASED_BLOCKS.addAll(Stream.of(
                                Blocks.HONEY_BLOCK,
@@ -350,10 +348,13 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
 
             if(!this.level().isClientSide() && HONEY_BASED_BLOCKS.contains(this.level().getBlockState(this.blockPosition().below()).getBlock())) {
                if(this.random.nextFloat() < 0.001)
-                  setInHoneyGrowthTime(0);
+                  setInHoneyGrowthEndTime(0);
+            }
+
+            if (this.level().getGameTime() >= getInHoneyGrowthEndTime()) {
+               setInHoney(true);
             }
          }
-         setInHoney(getInHoneyGrowthTime() >= 0);
       }
    }
 

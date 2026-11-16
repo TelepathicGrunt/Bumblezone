@@ -187,7 +187,7 @@ public class RagingEssence extends AbilityEssenceItem {
                             .toList();
 
                     for (Holder<MobEffect> effectHolder : radianceEffects) {
-                        if (effectHolder.value() == MobEffects.DAMAGE_BOOST.value()) {
+                        if (effectHolder.value() == MobEffects.DAMAGE_BOOST) {
                             serverPlayer.addEffect(new MobEffectInstance(
                                     MobEffects.DAMAGE_BOOST,
                                     getEmpoweredTimeRemaining(stack) * 4,
