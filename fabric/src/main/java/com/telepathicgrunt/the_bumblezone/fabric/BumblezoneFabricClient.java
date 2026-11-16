@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.fabric;
 
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
+import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.fabricbase.FabricClientBaseEventManager;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
@@ -14,7 +15,10 @@ public class BumblezoneFabricClient implements ClientModInitializer {
     public void onInitializeClient() {
         BumblezoneClient.init();
         FabricClientBaseEventManager.init();
-        ClientTickEvents.END_CLIENT_TICK.register((mc) -> StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer()));
+        ClientTickEvents.END_CLIENT_TICK.register((mc) -> {
+            StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer());
+            MusicHandler.tickMusicFader();
+        });
 
         // Mod compat has to run after all mod's main init.
         FabricModChecker.setupModCompat();
