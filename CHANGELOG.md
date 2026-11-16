@@ -90,6 +90,8 @@ Crystalline Flower fixed to not consume more items from an itemstack than needed
 
 Fixed tier 1 Crystalline Flower showing level 1 enchantments already on input enchanted book
 
+Crystalline Flower inventory drops now respects doTileDrops gamerule instead of doMobLoot gamerule
+
 Fixed weird bug where placing a Super Candle/Potion Candle with wick waterlogged will replace that top candle with below Super Candle/Potion Candle block instead.
 
 Super Candle/Potion Candle wicks now can be replaced by flowing fluids and pistons
@@ -109,8 +111,6 @@ Fixed edge case where Royal Jelly Block couldn't be pulled by piston when it sho
  Now it should properly behave as a pull-only block
 
 Carving Carvable Wax block now preserves its facing property
-
-Crystalline Flower inventory drops now respects doTileDrops gamerule instead of doMobLoot gamerule
 
 Windy Air now plays its ambient sound properly
 
@@ -169,7 +169,9 @@ Fixed it so `ragingEssenceStrengthLevels` config is actually read now
 
 Made `dispensersDropGlassBottles` config option work for Honey Bottles filling Porous Honeycomb Block from Dispensers
 
+(Forge): Fixed `beeSoupBrewingRecipe` config not applying
+
 #### Mod Compat:
-(NeoForge): Fixed it so if non-Bumblezone modded bee spawns in Bumblezone dimension, the original bee is canceled so that only the  non-Bumblezone modded bee spawns in its place 
+(Forge): Fixed it so if non-Bumblezone modded bee spawns in Bumblezone dimension, the original bee is canceled so that only the  non-Bumblezone modded bee spawns in its place 
 
 Fixed empty Productive Bees's Bee Cages being able to revive Honeycomb Brood Blocks from Dispensers
