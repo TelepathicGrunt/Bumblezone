@@ -32,12 +32,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
-    private static final int[] shieldDurabilityBoostPerLevel = new int[]{0,20,45,75,110,150,195,245,316,632};
-    private static final int maxShieldLevel = shieldDurabilityBoostPerLevel.length - 1;
+    private static final int[] shieldDurabilityPerLevel = new int[]{40, 60, 85, 120, 170, 225, 285, 350, 430, 640};
+    private static final int maxShieldLevel = shieldDurabilityPerLevel.length - 1;
 
     public HoneyCrystalShield(Properties properties) {
         //starts off with 40 durability so it is super weak
-        super(properties.durability(40));
+        super(properties.durability(shieldDurabilityPerLevel[0]));
     }
 
     /**
@@ -81,7 +81,7 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
 
             int shieldLevel = Math.max(Math.min(stack.getOrCreateTag().getInt("ShieldLevel"), maxShieldLevel), 0);
             if (shieldLevel != 0) {
-                return stack.getItem().getMaxDamage() + shieldDurabilityBoostPerLevel[shieldLevel];
+                return shieldDurabilityPerLevel[shieldLevel];
             }
         }
         return stack.getItem().getMaxDamage();
