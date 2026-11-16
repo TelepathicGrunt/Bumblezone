@@ -1,6 +1,6 @@
 ### **(V.7.19.0 Changes) (1.20.1 Minecraft)**
 
-> TLDR: Large amount of bugfixes backported from 26.1.2 MC Bumblezone's v7.19.0 update plus some additional bugs found and fixed for 1.21.1
+> TLDR: Large amount of bugfixes backported from 26.1.2 MC Bumblezone's v7.19.0 update plus some additional bugs found and fixed for 1.20.1
 
 #### Teleportation:
 Adjusted teleportation queue logic to run only during server tick instead of all dimension ticks.

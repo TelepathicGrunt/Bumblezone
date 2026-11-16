@@ -22,7 +22,7 @@ public class BzArrowItemMixin extends ArrowItem {
 
     // No unique or prefix so this applies the neo method
     @Override
-    public boolean isInfinite(ItemStack stack, ItemStack bow, LivingEntity shooter) {
+    public boolean isInfinite(ItemStack stack, ItemStack bow, Player shooter) {
         OptionalBoolean infiniteResult = bz$isInfinite(stack, bow, shooter);
         if (infiniteResult.isPresent()) {
             return infiniteResult.get();
