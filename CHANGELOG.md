@@ -1,5 +1,8 @@
 ### **(V.7.19.1 Changes) (1.21.1 Minecraft)**
 
+#### Structures:
+Fixed Sempiternal Sanctums entry message not going away after initial entry.
+
 #### Items:
 Dispenser's Flint and Steel will now only decrease durability if it successfully lights Super Candle/Potion Candle instead of per attempt
 
