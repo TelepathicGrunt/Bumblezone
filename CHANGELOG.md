@@ -3,6 +3,8 @@
 #### Structures:
 Updated Bumblezone structure nbt files so that DataFixerUpper is not needed to be ran on them at runtime.
 
+Fixed Sempiternal Sanctums entry message not going away after initial entry.
+
 
 ### **(V.7.19.2 Changes) (26.1.2 Minecraft)**
 
