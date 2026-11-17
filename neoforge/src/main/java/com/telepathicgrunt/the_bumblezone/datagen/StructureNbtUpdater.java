@@ -43,10 +43,8 @@ public class StructureNbtUpdater implements DataProvider {
     @Override
     public @NotNull CompletableFuture<?> run(@Nonnull CachedOutput cache) {
         try {
-            for (var entry : resources.listResources(basePath, $ -> true).entrySet()) {
-                if (entry.getKey().getNamespace().equals(modid)) {
-                    process(entry.getKey(), entry.getValue(), cache);
-                }
+            for (var entry : resources.listResources(basePath, identifier -> identifier.getNamespace().equals(modid)).entrySet()) {
+                process(entry.getKey(), entry.getValue(), cache);
             }
             return CompletableFuture.completedFuture(null);
         }

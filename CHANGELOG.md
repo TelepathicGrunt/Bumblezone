@@ -1,3 +1,9 @@
+### **(V.7.19.3 Changes) (26.1.2 Minecraft)**
+
+#### Structures:
+Updated Bumblezone structure nbt files so that DataFixerUpper is not needed to be ran on them at runtime.
+
+
 ### **(V.7.19.2 Changes) (26.1.2 Minecraft)**
 
 #### Entities:

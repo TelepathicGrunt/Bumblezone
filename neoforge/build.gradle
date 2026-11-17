@@ -217,9 +217,12 @@ neoForge {
         serverData {
             serverData()
             systemProperty("terminal.ansi", "true")
-            programArguments.add("--all --mod the_bumblezone")
-            programArguments.add("--existing ${project.project(":common").file("src/main/resources").absolutePath}")
-            programArguments.add("--output ${project.project(":common").file("src/main/generated/resources").absolutePath}")
+            programArguments.addAll(
+                    '--mod', project.mod_id,
+                    '--all',
+                    '--output', project.project(":common").file('src/generated/resources/').getAbsolutePath(),
+                    '--existing', project.project(":common").file('src/main/resources/').getAbsolutePath()
+            )
         }
     }
 }
