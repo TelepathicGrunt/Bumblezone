@@ -49,10 +49,6 @@ public class RandomReplaceWithPropertiesProcessor extends StructureProcessor {
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader, BlockPos pos, BlockPos pos2, StructureTemplate.StructureBlockInfo infoIn1, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings settings) {
         if (structureBlockInfoWorld.state().getBlock() == inputBlock) {
-            if (GeneralUtils.isOutsideStructureAllowedBounds(settings, structureBlockInfoWorld.pos())) {
-                return structureBlockInfoWorld;
-            }
-
             BlockPos worldPos = structureBlockInfoWorld.pos();
             RandomSource random = RandomSource.create();
             int offSet = settings.getProcessors().indexOf(this) + 1;

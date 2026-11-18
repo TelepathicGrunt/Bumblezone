@@ -5,6 +5,8 @@ Updated Bumblezone structure nbt files so that DataFixerUpper is not needed to b
 
 Fixed Sempiternal Sanctums entry message not going away after initial entry.
 
+Fixed Lectern puzzle in Sempiternal Sanctum having the puzzle hint being messed up. (Also fixed the trap for it)
+
 
 ### **(V.7.19.2 Changes) (26.1.2 Minecraft)**
 
