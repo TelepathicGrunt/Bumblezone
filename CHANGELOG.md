@@ -3,6 +3,8 @@
 #### Structures:
 Fixed Sempiternal Sanctums entry message not going away after initial entry.
 
+Fixed Lectern puzzle in Sempiternal Sanctum having the puzzle hint being messed up.
+
 #### Items:
 Dispenser's Flint and Steel will now only decrease durability if it successfully lights Super Candle/Potion Candle instead of per attempt
 
