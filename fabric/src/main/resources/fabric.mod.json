@@ -51,7 +51,7 @@
         "fabricloader": ">=${fabric_loader_version}",
         "minecraft": ">=26.1",
         "fabric-api": ">=0.155.0",
-        "resourcefullib": ">=3.0.11",
+        "resourcefullib": ">=4.0.2",
         "midnightlib": "*"
     }
 }
