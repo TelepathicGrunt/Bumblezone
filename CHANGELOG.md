@@ -3,6 +3,8 @@
 #### Structures:
 Fixed Sempiternal Sanctums entry message not going away after initial entry.
 
+Fixed Lectern puzzle in Sempiternal Sanctum having the puzzle hint being messed up.
+
 
 ### **(V.7.19.0 Changes) (1.20.1 Minecraft)**
 
