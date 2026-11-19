@@ -1,3 +1,9 @@
+### **(V.7.19.4 Changes) (26.1.2 Minecraft)**
+
+#### Structures:
+Fix Sempiternal Sanctum showing incorrect message when player is already Essenced of the Bees.
+
+
 ### **(V.7.19.3 Changes) (26.1.2 Minecraft)**
 
 #### Structures:

@@ -30,7 +30,11 @@ public class SempiternalSanctumBehavior {
         if (detectedStructure.isValid()) {
             boolean newToStructure = PLAYERS_IN_SANCTUMS.add(serverPlayer.getUUID());
 
-            if (newToStructure && EssenceOfTheBees.hasEssence(serverPlayer)) {
+            if (EssenceOfTheBees.hasEssence(serverPlayer)) {
+                if (!newToStructure) {
+                    return;
+                }
+
                 BlockPos structureCenter = detectedStructure.getBoundingBox().getCenter().below(20);
 
                 // Only display message if sanctum is active with essence block
