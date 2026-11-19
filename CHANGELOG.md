@@ -1,3 +1,9 @@
+### **(V.7.19.5 Changes) (26.1.2 Minecraft)**
+
+#### Mod Compat:
+Adjusted Bee Queen Trade packet data encoding due to other mods (Polymer) adding validation onto ItemStackTemplate that was breaking the trade packet
+
+
 ### **(V.7.19.4 Changes) (26.1.2 Minecraft)**
 
 #### Structures:
