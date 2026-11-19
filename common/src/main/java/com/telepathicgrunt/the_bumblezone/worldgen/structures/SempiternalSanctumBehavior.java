@@ -42,7 +42,11 @@ public class SempiternalSanctumBehavior {
         if (detectedStructure.isValid()) {
             boolean newToStructure = PLAYERS_IN_SANCTUMS.add(serverPlayer.getUUID());
 
-            if (newToStructure && EssenceOfTheBees.hasEssence(serverPlayer)) {
+            if (EssenceOfTheBees.hasEssence(serverPlayer)) {
+                if (!newToStructure) {
+                    return;
+                }
+
                 BlockPos structureCenter = detectedStructure.getBoundingBox().getCenter().below(20);
 
                 // Only display message if sanctum is active with essence block
@@ -91,8 +95,10 @@ public class SempiternalSanctumBehavior {
             else if(!serverPlayer.isCreative() && !serverPlayer.isSpectator()) {
                 MobEffectInstance effect = serverPlayer.getEffect(MobEffects.DIG_SLOWDOWN);
                 if (effect == null || effect.getAmplifier() <= 2) {
-                    Component message = Component.translatable("system.the_bumblezone.no_essence").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
-                    serverPlayer.displayClientMessage(message, true);
+                    if (serverPlayer.tickCount % 20 == 0) {
+                        Component message = Component.translatable("system.the_bumblezone.no_essence").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+                        serverPlayer.displayClientMessage(message, true);
+                    }
                     serverPlayer.addEffect(new MobEffectInstance(
                             MobEffects.DIG_SLOWDOWN,
                             800,
