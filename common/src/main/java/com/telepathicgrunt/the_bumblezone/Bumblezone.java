@@ -251,6 +251,12 @@ public class Bumblezone {
 
     private static void setupBuiltInResourcePack(final BzAddBuiltinResourcePacks event) {
         event.add(
+                ResourceLocation.fromNamespaceAndPath(MODID, "modern_spawn_egg_textures"),
+                Component.literal("Bumblezone - Modern Spawn Egg Textures"),
+                BzAddBuiltinResourcePacks.PackMode.USER_CONTROLLED
+        );
+
+        event.add(
                 ResourceLocation.fromNamespaceAndPath(MODID, "anti_tropophobia"),
                 Component.literal("Bumblezone - Anti Trypophobia"),
                 BzAddBuiltinResourcePacks.PackMode.USER_CONTROLLED
