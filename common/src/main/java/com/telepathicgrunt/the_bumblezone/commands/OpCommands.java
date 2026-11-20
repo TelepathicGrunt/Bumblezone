@@ -340,8 +340,8 @@ public class OpCommands {
             final String argumentString,
             final ResourceKey<Registry<T>> registryKey) {
         return (ctx, builder) -> getResourceKey(ctx, argumentString, registryKey)
-                .flatMap(key -> ctx.getSource().registryAccess().get(key).map(registry -> {
-                    SharedSuggestionProvider.suggestResource(namesFunction.apply(registry.value()), builder);
+                .flatMap(key -> ctx.getSource().registryAccess().lookup(key).map(registry -> {
+                    SharedSuggestionProvider.suggestResource(namesFunction.apply(registry), builder);
                     return builder.buildFuture();
                 }))
                 .orElseGet(builder::buildFuture);

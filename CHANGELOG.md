@@ -1,3 +1,14 @@
+### **(V.7.19.6 Changes) (26.1.2 Minecraft)**
+
+#### Items:
+Fixed Honey Compass structure locating being broken because Mojang names methods in big dumb ways
+
+Fixed some Bumblezone tool items not allowing/disallowing certain enchantments due to again Mojang names methods in big dumb ways
+
+#### Commands:
+Fixed suggestions for tags in Bumblezone's commands
+
+
 ### **(V.7.19.5 Changes) (26.1.2 Minecraft)**
 
 #### Mod Compat:

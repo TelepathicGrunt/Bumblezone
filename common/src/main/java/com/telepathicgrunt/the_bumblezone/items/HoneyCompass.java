@@ -289,7 +289,7 @@ public class HoneyCompass extends Item {
         if (isFailed && targetStructureTag.isPresent()) {
             if (level instanceof ServerLevel serverLevel && serverLevel.getServer().getWorldGenSettings().options().generateStructures()) {
                 TagKey<Structure> structureTagKey = TagKey.create(Registries.STRUCTURE, Identifier.tryParse(targetStructureTag.get()));
-                Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().get(Registries.STRUCTURE).flatMap(registry -> registry.value().get(structureTagKey));
+                Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().lookup(Registries.STRUCTURE).flatMap(registry -> registry.get(structureTagKey));
                 boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> !serverLevel.getChunkSource().getGeneratorState().getPlacementsForStructure(structureHolder).isEmpty());
                 if (structureExists) {
                     isLoading = true;
@@ -329,7 +329,7 @@ public class HoneyCompass extends Item {
         }
 
         if (level instanceof ServerLevel serverLevel && !honeyCompassBaseData.isStructureCompass()) {
-            Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().get(Registries.STRUCTURE).flatMap(registry -> registry.value().get(BzTags.HONEY_COMPASS_DEFAULT_LOCATING));
+            Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().lookup(Registries.STRUCTURE).flatMap(registry -> registry.get(BzTags.HONEY_COMPASS_DEFAULT_LOCATING));
             boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> !serverLevel.getChunkSource().getGeneratorState().getPlacementsForStructure(structureHolder).isEmpty());
             if (structureExists) {
                 isLoading = true;

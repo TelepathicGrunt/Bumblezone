@@ -39,9 +39,9 @@ public class EnchantmentMixin {
     @Unique
     private void bumblezone$checkEnchantability(ItemStack itemStack, CallbackInfoReturnable<Boolean> cir) {
         if (itemStack.getItem() instanceof ItemExtension itemExtension) {
-            PlatformService.INSTANCE.getCurrentRegistryAccess().get(Registries.ENCHANTMENT).ifPresent(enchantmentRegistry -> {
-                enchantmentRegistry.value().getResourceKey((Enchantment) (Object) this).ifPresent(resourceKey -> {
-                    TriState result = itemExtension.bz$canEnchant(itemStack, enchantmentRegistry.value().getOrThrow(resourceKey));
+            PlatformService.INSTANCE.getCurrentRegistryAccess().lookup(Registries.ENCHANTMENT).ifPresent(enchantmentRegistry -> {
+                enchantmentRegistry.getResourceKey((Enchantment) (Object) this).ifPresent(resourceKey -> {
+                    TriState result = itemExtension.bz$canEnchant(itemStack, enchantmentRegistry.getOrThrow(resourceKey));
                     if (result != TriState.PASS) {
                         cir.setReturnValue(result == TriState.ALLOW);
                     }
