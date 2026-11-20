@@ -23,6 +23,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.protocol.game.ClientboundRemoveMobEffectPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -55,6 +56,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -86,9 +88,11 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -1179,6 +1183,32 @@ public class CosmicCrystalEntity extends LivingEntity {
         }
 
         this.firstTick = false;
+    }
+
+    @Override
+    protected void onEffectsRemoved(Collection<MobEffectInstance> effects) {
+        if (!this.level().isClientSide()) {
+            this.updateEffectVisibility();
+
+            for (MobEffectInstance effect : effects) {
+                effect.getEffect().value().removeAttributeModifiers(this.getAttributes());
+
+                ((ServerLevel) this.level()).getPlayers(p -> p.position().distanceTo(this.position()) < 80)
+                        .forEach(p -> p.connection.send(new ClientboundRemoveMobEffectPacket(this.getId(), effect.getEffect())));
+            }
+
+            this.refreshDirtyAttributes();
+        }
+    }
+
+    private void refreshDirtyAttributes() {
+        Set<AttributeInstance> attributesToUpdate = this.getAttributes().getAttributesToUpdate();
+
+        for (AttributeInstance changedAttributeInstance : attributesToUpdate) {
+            this.onAttributeUpdated(changedAttributeInstance.getAttribute());
+        }
+
+        attributesToUpdate.clear();
     }
 
     @Override

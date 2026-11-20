@@ -1,3 +1,9 @@
+### **(V.7.19.7 Changes) (26.1.2 Minecraft)*
+
+#### Entities:
+Fixed Cosmic Crystal Entity not resetting its color after being affected by a negative status effect.
+
+
 ### **(V.7.19.6 Changes) (26.1.2 Minecraft)**
 
 #### Items:
