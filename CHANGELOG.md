@@ -8,6 +8,9 @@ Fixed some Bumblezone tool items not allowing/disallowing certain enchantments d
 #### Commands:
 Fixed suggestions for tags in Bumblezone's commands
 
+#### Mod Compat:
+Fixed recipes viewers not showing a few Bumblezone recipes (Honey Compass, Bumblezone bottles and buckets, and Trans Bumblebee Chestplate )
+
 
 ### **(V.7.19.5 Changes) (26.1.2 Minecraft)**
 

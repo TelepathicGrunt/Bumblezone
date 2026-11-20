@@ -11,6 +11,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -18,6 +19,9 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.level.Level;
 import org.jspecify.annotations.Nullable;
 
@@ -80,6 +84,17 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
     @Override
     public boolean showNotification() {
         return this.commonInfo.showNotification();
+    }
+
+    @Override
+    public List<RecipeDisplay> display() {
+        return List.of(
+                new ShapelessCraftingRecipeDisplay(
+                        this.ingredients.stream().map(Ingredient::display).toList(),
+                        new SlotDisplay.ItemStackSlotDisplay(this.result),
+                        new SlotDisplay.ItemSlotDisplay(Items.CRAFTING_TABLE)
+                )
+        );
     }
 
     @Override

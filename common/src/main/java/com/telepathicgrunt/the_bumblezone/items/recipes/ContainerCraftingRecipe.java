@@ -19,6 +19,9 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.level.Level;
 import org.jspecify.annotations.Nullable;
 
@@ -80,6 +83,17 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
     }
 
     @Override
+    public List<RecipeDisplay> display() {
+        return List.of(
+                new ShapelessCraftingRecipeDisplay(
+                        this.ingredients.stream().map(Ingredient::display).toList(),
+                        new SlotDisplay.ItemStackSlotDisplay(this.result),
+                        new SlotDisplay.ItemSlotDisplay(Items.CRAFTING_TABLE)
+                )
+        );
+    }
+
+    @Override
     public boolean matches(CraftingInput input, Level level) {
         if (input.ingredientCount() != this.ingredients.size()) {
             return false;
@@ -105,28 +119,28 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
         NonNullList<ItemStack> remainingInv = NonNullList.withSize(craftingInput.size(), ItemStack.EMPTY);
         ItemStack resultStack = this.result.create();
         int containerOutput = PlatformService.INSTANCE.hasCraftingRemainder(resultStack) ? resultStack.getCount() : 0;
+        ItemStack resultContainer = PlatformService.INSTANCE.getCraftingRemainder(resultStack);
 
         for(int i = 0; i < remainingInv.size(); ++i) {
-            ItemStack itemStack = craftingInput.getItem(i);
-            ItemStack craftingContainer = PlatformService.INSTANCE.getCraftingRemainder(itemStack);
-            ItemStack recipeContainer = PlatformService.INSTANCE.getCraftingRemainder(resultStack);
-            if (craftingContainer.isEmpty() && HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.containsKey(itemStack.getItem())) {
-                craftingContainer = HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(itemStack.getItem()).getDefaultInstance();
+            ItemStack inputStack = craftingInput.getItem(i);
+            ItemStack inputContainer = PlatformService.INSTANCE.getCraftingRemainder(inputStack);
+            if (inputContainer.isEmpty() && HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.containsKey(inputStack.getItem())) {
+                inputContainer = HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(inputStack.getItem()).getDefaultInstance();
             }
-            if (recipeContainer.isEmpty() && HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.containsKey(resultStack.getItem())) {
-                recipeContainer = HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(resultStack.getItem()).getDefaultInstance();
+            if (resultContainer.isEmpty() && HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.containsKey(resultStack.getItem())) {
+                resultContainer = HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(resultStack.getItem()).getDefaultInstance();
             }
 
-            if (!craftingContainer.isEmpty()) {
+            if (!inputContainer.isEmpty()) {
                 if(containerOutput > 0 &&
-                    (resultStack.getItem() == craftingContainer.getItem() ||
-                    recipeContainer.getItem() == itemStack.getItem() ||
-                    recipeContainer.getItem() == craftingContainer.getItem()))
+                    (resultStack.getItem() == inputContainer.getItem() ||
+                    resultContainer.getItem() == inputStack.getItem() ||
+                    resultContainer.getItem() == inputContainer.getItem()))
                 {
                     containerOutput--;
                 }
                 else {
-                    remainingInv.set(i, craftingContainer);
+                    remainingInv.set(i, inputContainer);
                 }
             }
         }
