@@ -119,11 +119,6 @@ public class BumblezoneForgeClient {
 
     private static void onRegisterItemColors(RegisterColorHandlersEvent.Item event) {
         RegisterItemColorEvent.EVENT.invoke(new RegisterItemColorEvent(event::register, event.getBlockColors()::getColor));
-        BzItems.ITEMS.stream()
-                .map(RegistryEntry::get)
-                .filter(item -> item instanceof DispenserAddedSpawnEgg)
-                .map(item -> (DispenserAddedSpawnEgg) item)
-                .forEach(item -> event.register((stack, index) -> item.getColor(index), item));
     }
 
     private static void onRegisterBlockColors(RegisterColorHandlersEvent.Block event) {
