@@ -1,3 +1,9 @@
+### **(V.7.19.3 Changes) (1.21.1 Minecraft)**
+
+#### Mod Compat:
+(NeoForge): Fix crash whenever zombie villagers die due to my hook using Neo's FinalizeSpawnEvent for mod compat.
+
+
 ### **(V.7.19.2 Changes) (1.21.1 Minecraft)**
 
 #### Structures:
