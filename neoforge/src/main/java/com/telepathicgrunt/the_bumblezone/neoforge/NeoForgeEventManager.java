@@ -367,8 +367,11 @@ public class NeoForgeEventManager {
     }
 
     private static void onEntitySpawn(FinalizeSpawnEvent event) {
-        boolean replaced = BzEntitySpawnEvent.EVENT.invoke(new BzEntitySpawnEvent(event.getEntity(), event.getLevel(), event.getEntity().isBaby(), event.getSpawnType()), event.isCanceled());
-        event.setSpawnCancelled(replaced);
+        if (!event.getEntity().isAddedToLevel()) {
+            if (BzEntitySpawnEvent.EVENT.invoke(new BzEntitySpawnEvent(event.getEntity(), event.getLevel(), event.getEntity().isBaby(), event.getSpawnType()), event.isCanceled())) {
+                event.setSpawnCancelled(true);
+            }
+        }
     }
 
     private static void onEntityHurtLowest(LivingDamageEvent.Post event) {

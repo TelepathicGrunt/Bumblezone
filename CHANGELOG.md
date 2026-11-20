@@ -3,6 +3,9 @@
 #### Entities:
 Fixed Cosmic Crystal Entity not resetting its color after being affected by a negative status effect.
 
+#### Mod Compat:
+(NeoForge): Fix crash whenever zombie villagers die due to my hook using Neo's FinalizeSpawnEvent for mod compat.
+
 
 ### **(V.7.19.6 Changes) (26.1.2 Minecraft)**
 
