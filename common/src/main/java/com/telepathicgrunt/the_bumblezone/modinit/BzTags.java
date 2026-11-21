@@ -223,6 +223,7 @@ public class BzTags {
     public static final TagKey<Enchantment> ENCHANTABLES_STINGER_SPEAR_EXTRA_ALLOWED = TagKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "enchantables/stinger_spear_extra_allowed"));
 
     public static final TagKey<DamageType> COSMIC_CRYSTAL_RESISTANT_TO = TagKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "cosmic_crystal_resistant_to"));
+    public static final TagKey<DamageType> COSMIC_CRYSTAL_DIRECT_DIE_CALL_IMMUNE = TagKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "cosmic_crystal_direct_die_call_immune"));
 
     public static final TagKey<SoundEvent> ESSENCE_EVENT_MUSIC = TagKey.create(Registries.SOUND_EVENT, Identifier.fromNamespaceAndPath(Bumblezone.MODID, "essence_event_music"));
 

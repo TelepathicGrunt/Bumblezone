@@ -1460,8 +1460,15 @@ public class CosmicCrystalEntity extends LivingEntity {
 
     @Override
     public void kill(ServerLevel serverLevel) {
-        this.setHealth(0);
         this.die(this.damageSources().genericKill());
+    }
+
+    @Override
+    public void die(DamageSource source) {
+        if (!source.is(BzTags.COSMIC_CRYSTAL_DIRECT_DIE_CALL_IMMUNE)) {
+            this.setHealth(0);
+            super.die(source);
+        }
     }
 
     @Override

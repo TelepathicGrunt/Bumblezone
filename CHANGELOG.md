@@ -1,4 +1,11 @@
-### **(V.7.19.7 Changes) (26.1.2 Minecraft)*
+### **(V.7.19.8 Changes) (26.1.2 Minecraft)**
+
+#### Mod Compat:
+Make Cosmic Crystal Entity immune to Apotheosis's Execute Affix entirely. (The boss of White Sempiternal Sanctums)
+ A new damage type tag `the_bumblezone:cosmic_crystal_direct_die_call_immune` was added for people to add more modded damage type to if the mod calls `die` on the boss directly.
+
+
+### **(V.7.19.7 Changes) (26.1.2 Minecraft)**
 
 #### Entities:
 Fixed Cosmic Crystal Entity not resetting its color after being affected by a negative status effect.
