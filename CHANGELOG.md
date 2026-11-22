@@ -1,7 +1,10 @@
 ### **(V.7.19.8 Changes) (26.1.2 Minecraft)**
 
+#### Entities:
+Cosmic Crystals Entity respawning after an instant-kill attack now tries to reposition itself better right away (The boss of White Sempiternal Sanctums)
+
 #### Mod Compat:
-Make Cosmic Crystal Entity immune to Apotheosis's Execute Affix entirely. (The boss of White Sempiternal Sanctums)
+Make Cosmic Crystal Entity immune to Apotheosis's Execute Affix entirely.
  A new damage type tag `the_bumblezone:cosmic_crystal_direct_die_call_immune` was added for people to add more modded damage type to if the mod calls `die` on the boss directly.
 
 
