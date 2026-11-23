@@ -1,5 +1,8 @@
 ### **(V.7.19.8 Changes) (26.1.2 Minecraft)**
 
+#### Dimension:
+Fixed the dedicated Bumblezone bee spawning from spawning bes outside world top/bottom and causing bees to teleport out.
+
 #### Entities:
 Cosmic Crystals Entity respawning after an instant-kill attack now tries to reposition itself better right away (The boss of White Sempiternal Sanctums)
 
