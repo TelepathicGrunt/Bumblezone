@@ -143,7 +143,7 @@ public class GeneralUtils {
         BlockPos newBeePos;
         newBeePos = BlockPos.containing(
                 entity.getX() + (entity.getRandom().nextInt(maxRadius) + minRadius) * (entity.getRandom().nextBoolean() ? 1 : -1),
-                Doubles.constrainToRange(entity.getY() + (entity.getRandom().nextInt(maxRadius) + minRadius) * (entity.getRandom().nextBoolean() ? 1 : -1), entity.level().getMinBuildHeight(), entity.level().getMaxBuildHeight()),
+                Doubles.constrainToRange(entity.getY() + (entity.getRandom().nextInt(maxRadius) + minRadius) * (entity.getRandom().nextBoolean() ? 1 : -1), entity.level().getMinBuildHeight() + 2, entity.level().getMaxBuildHeight() - 2),
                 entity.getZ() + (entity.getRandom().nextInt(maxRadius) + minRadius) * (entity.getRandom().nextBoolean() ? 1 : -1));
         return newBeePos;
     }
